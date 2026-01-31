@@ -5,6 +5,8 @@
 #include "CStage.h"
 #include "CManagement.h"
 #include "CFontMgr.h"
+#include "CDInputMgr.h"
+#include "CLog.h"
 
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -53,6 +55,49 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 				return -1;
 			}
 		}
+			
+		// 입력 테스트
+		{
+			if (CDInputMgr::GetInstance()->Key_Down(DIK_Q))
+			{
+				CLog::Debug(L"Q DOWN\n");
+			}
+			if (CDInputMgr::GetInstance()->Key_Pressing(DIK_Q))
+			{
+				CLog::Debug(L"Q PRESSED\n");
+			}
+			if (CDInputMgr::GetInstance()->Key_Up(DIK_Q))
+			{
+				CLog::Debug(L"Q UP\n");
+			}
+
+			if (CDInputMgr::GetInstance()->Key_Down(DIK_LEFT))
+			{
+				CLog::Debug(L"DIK_LEFT DOWN\n");
+			}
+			if (CDInputMgr::GetInstance()->Key_Pressing(DIK_LEFT))
+			{
+				CLog::Debug(L"DIK_LEFT PRESSED\n");
+			}
+			if (CDInputMgr::GetInstance()->Key_Up(DIK_LEFT))
+			{
+				CLog::Debug(L"DIK_LEFT UP\n");
+			}
+
+			if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB))
+			{
+				CLog::Debug(L"M LB DOWN\n");
+			}
+			if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_RB))
+			{
+				CLog::Debug(L"M LB PRESSINg\n");
+			}
+			if (CDInputMgr::GetInstance()->Mouse_Up(DIM_RB))
+			{
+				CLog::Debug(L"M LB UP\n");
+			}
+		}
+		
 	}
 
 
