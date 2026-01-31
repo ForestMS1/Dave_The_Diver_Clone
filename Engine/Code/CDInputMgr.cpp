@@ -5,6 +5,15 @@ IMPLEMENT_SINGLETON(CDInputMgr)
 Engine::CDInputMgr::CDInputMgr(void)
 {
 	ZeroMemory(m_byKeyState, sizeof(m_byKeyState));
+	ZeroMemory(&m_tMouseState, sizeof(m_tMouseState));
+
+	ZeroMemory(m_bKeyUpState, sizeof(m_bKeyUpState));
+	ZeroMemory(m_bKeyDownState, sizeof(m_bKeyDownState));
+	ZeroMemory(m_bKeyPressingState, sizeof(m_bKeyPressingState));
+
+	ZeroMemory(m_bMouseUpState, sizeof(m_bMouseUpState));
+	ZeroMemory(m_bMouseDownState, sizeof(m_bMouseDownState));
+	ZeroMemory(m_bMousePressingState, sizeof(m_bMousePressingState));
 }
 
 Engine::CDInputMgr::~CDInputMgr(void)
@@ -59,6 +68,58 @@ void Engine::CDInputMgr::Update_InputDev(void)
 {
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
 	m_pMouse->GetDeviceState(sizeof(m_tMouseState), &m_tMouseState);
+
+	// 키 체킹
+	{
+		ZeroMemory(m_bKeyUpState, sizeof(m_bKeyUpState));
+		ZeroMemory(m_bKeyDownState, sizeof(m_bKeyDownState));
+		_byte keyDevState[256];
+		m_pKeyBoard->GetDeviceState(256, keyDevState);
+
+		for (int i = 0; i < 256; ++i)
+		{
+			bool nowPressed = keyDevState[i] & 0x80;
+			
+			// 이전에 눌렸는데 지금 안눌렸으면 UP
+			if (m_bKeyPressingState[i] && !nowPressed)
+			{
+				m_bKeyUpState[i] = true;
+			}
+			// 이전에 안 눌렸는데 지금 눌렸으면 DOWN
+			else if (!m_bKeyPressingState[i] && nowPressed)
+			{
+				m_bKeyDownState[i] = true;
+			}
+
+			m_bKeyPressingState[i] = nowPressed;
+		}
+	}
+
+	// 마우스 체킹
+	{
+		ZeroMemory(m_bMouseUpState, sizeof(m_bMouseUpState));
+		ZeroMemory(m_bMouseDownState, sizeof(m_bMouseDownState));
+		DIMOUSESTATE mouseDevState;
+		m_pMouse->GetDeviceState(sizeof(mouseDevState), &mouseDevState);
+		
+		for (int i = 0; i < DIM_END; ++i)
+		{
+			bool nowPressed = mouseDevState.rgbButtons[i] & 0x80;
+			
+			// 이전에 눌렸는데 지금 안눌렸으면 UP
+			if (m_bMousePressingState[i] && !nowPressed)
+			{
+				m_bMouseUpState[i] = true;
+			}
+			// 이전에 안 눌렸는데 지금 눌렸으면 DOWN
+			else if (!m_bMousePressingState[i] && nowPressed)
+			{
+				m_bMouseDownState[i] = true;
+			}
+
+			m_bMousePressingState[i] = nowPressed;
+		}
+	}
 }
 
 void Engine::CDInputMgr::Free(void)
