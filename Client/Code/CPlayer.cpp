@@ -1,0 +1,170 @@
+#include "pch.h"
+#include "CPlayer.h"
+#include "CProtoMgr.h"
+#include "CRenderer.h"
+#include "CManagement.h"
+
+CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CGameObject(pGraphicDev)
+{
+}
+
+CPlayer::CPlayer(const CGameObject& rhs)
+	: CGameObject(rhs)
+{
+}
+
+CPlayer::~CPlayer()
+{
+}
+
+HRESULT CPlayer::Ready_GameObject()
+{
+	if (FAILED(Add_Component()))
+		return E_FAIL;
+
+ 
+
+	return S_OK;
+}
+
+_int CPlayer::Update_GameObject(const _float& fTimeDelta)
+{
+	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
+
+	Set_OnTerrain();
+
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+	return iExit;
+}
+
+void CPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
+{
+	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	Key_Input(fTimeDelta);
+}
+
+void CPlayer::Render_GameObject()
+{
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
+	m_pTextureCom->Set_Texture(0);
+
+	m_pBufferCom->Render_Buffer();
+
+
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+HRESULT CPlayer::Add_Component()
+{
+	Engine::CComponent* pComponent = nullptr;
+
+	// buffer 
+	pComponent = m_pBufferCom = 
+		dynamic_cast<Engine::CRcTex*>
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_RcTex"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+
+	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent});
+
+	// texture 
+	pComponent = m_pTextureCom =
+		dynamic_cast<Engine::CTexture*>
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_PlayerTexture"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+
+	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+
+	// Transform
+	pComponent = m_pTransformCom =
+		dynamic_cast<Engine::CTransform*>
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Transform"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+	
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
+
+	// Calculator 
+	pComponent = m_pCalculatorCom =
+		dynamic_cast<Engine::CCalculator*>
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Calculator"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+
+	m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });
+
+	return S_OK;
+}
+
+void CPlayer::Key_Input(const _float& fTimeDelta)
+{
+	_vec3		vDir;
+	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
+
+	if (GetAsyncKeyState(VK_UP))
+	{
+		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
+	}
+
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), -10.f, fTimeDelta);
+	}
+
+	
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		m_pTransformCom->Rotation(ROT_Y, 180.f * fTimeDelta);
+	}
+
+	if (GetAsyncKeyState(VK_RIGHT))
+	{
+		m_pTransformCom->Rotation(ROT_Y, -180.f * fTimeDelta);
+	}
+}
+
+void CPlayer::Set_OnTerrain()
+{
+	_vec3		vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Engine::CTerrainTex* pTerrainVtxCom = dynamic_cast<Engine::CTerrainTex*>
+		(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+
+	if (nullptr == pTerrainVtxCom)
+		return;
+
+	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainVtxCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
+
+	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
+}
+
+CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CPlayer* pBackGround = new CPlayer(pGraphicDev);
+
+	if (FAILED(pBackGround->Ready_GameObject()))
+	{
+		Safe_Release(pBackGround);
+		MSG_BOX("pBackGround Create Failed");
+		return nullptr;
+	}
+
+	return pBackGround;
+}
+
+void CPlayer::Free()
+{
+	CGameObject::Free();
+}
