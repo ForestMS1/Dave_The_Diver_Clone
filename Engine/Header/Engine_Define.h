@@ -19,6 +19,8 @@
 #include "Engine_Typedef.h"
 #include "Engine_Function.h"
 
+#include <cstdarg>
+
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>
 

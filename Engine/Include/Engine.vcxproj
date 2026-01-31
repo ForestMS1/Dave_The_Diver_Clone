@@ -164,6 +164,7 @@ call Copy.bat</Command>
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
     <ClInclude Include="..\Header\CLayer.h" />
+    <ClInclude Include="..\Header\CLog.h" />
     <ClInclude Include="..\Header\CManagement.h" />
     <ClInclude Include="..\Header\CPipeline.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
@@ -198,6 +199,7 @@ call Copy.bat</Command>
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
+    <ClCompile Include="..\Code\CLog.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
     <ClCompile Include="..\Code\CPipeline.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
