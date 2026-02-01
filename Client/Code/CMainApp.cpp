@@ -5,9 +5,12 @@
 #include "CProtoMgr.h"
 #include "CFontMgr.h"
 #include "CDInputMgr.h"
+#include "CInfoMgr.h"
 
-CMainApp::CMainApp() : m_pDeviceClass(nullptr)
-, m_pManagement(CManagement::GetInstance())
+CMainApp::CMainApp()
+	: m_pDeviceClass(nullptr)
+	, m_pManagement(CManagement::GetInstance())
+	, m_pGraphicDev(nullptr)
 {
 }
 
@@ -23,7 +26,6 @@ HRESULT CMainApp::Ready_MainApp()
 	if (FAILED(Ready_Scene(m_pGraphicDev)))
 		return E_FAIL;
 
-	
 
 
 	return S_OK;
@@ -55,7 +57,9 @@ void CMainApp::Render_MainApp()
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 {
 	if (FAILED(CGraphicDev::GetInstance()->Ready_GraphicDev(g_hWnd, MODE_WIN,
-		WINCX, WINCY, &m_pDeviceClass)))
+		CInfoMgr::GetInstance()->Get_WINCX(),
+		CInfoMgr::GetInstance()->Get_WINCY(),
+		&m_pDeviceClass)))
 	{
 		MSG_BOX("GraphicDev Ready Failed");
 		return E_FAIL;
@@ -128,6 +132,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 
+	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();
 	CFontMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();

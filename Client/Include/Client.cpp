@@ -7,6 +7,7 @@
 #include "CMainApp.h"
 #include "CTimerMgr.h"
 #include "CFrameMgr.h"
+#include "CInfoMgr.h"
 
 #define MAX_LOADSTRING 100
 
@@ -147,11 +148,21 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
+    // 현재 시스템의 DPI, SCALEFACTOR 정보를 쿼리해서 CInfoMgr 에 저장
+    ::SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+    UINT systemDpi = ::GetDpiForSystem();
+    float fScaleFactor = systemDpi / 96.f; 
+    CInfoMgr::GetInstance()->Set_Dpi(systemDpi);
+    CInfoMgr::GetInstance()->Set_ScaleFactor(fScaleFactor);
+
     g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT    rc { 0,0, WINCX, WINCY };
+    // SCALEFACTOR를통해 창 생성 및 CInfoMgr에 저장
+    RECT    rc { 0,0, WINCX * fScaleFactor, WINCY * fScaleFactor };
+    CInfoMgr::GetInstance()->Set_WINCX(rc.right - rc.left);
+    CInfoMgr::GetInstance()->Set_WINCY(rc.bottom - rc.top);
 
-   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+    ::AdjustWindowRectExForDpi(&rc, WS_OVERLAPPEDWINDOW, FALSE, 0, systemDpi);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, 

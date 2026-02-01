@@ -1,5 +1,7 @@
 #include "CFont.h"
 
+#include "CInfoMgr.h"
+
 CFont::CFont(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), m_pSprite(nullptr), m_pFont(nullptr)
 {
@@ -15,9 +17,13 @@ HRESULT CFont::Ready_Font(const _tchar* pFontType, const _uint& iWidth, const _u
 	D3DXFONT_DESC			tFont_Desc;
 	ZeroMemory(&tFont_Desc, sizeof(D3DXFONT_DESC));
 
+	_float fScaleFactor = CInfoMgr::GetInstance()->Get_ScaleFactor();
+	_float scaledWidth = iWidth * fScaleFactor;
+	_float scaledHeight = iHeight * fScaleFactor;
+
 	tFont_Desc.CharSet = HANGUL_CHARSET;
-	tFont_Desc.Width = iWidth;
-	tFont_Desc.Height = iHeight;
+	tFont_Desc.Width = (UINT)scaledWidth;
+	tFont_Desc.Height = (UINT)scaledHeight;
 	tFont_Desc.Weight = iWeight;
 	lstrcpy(tFont_Desc.FaceName, pFontType);
 
