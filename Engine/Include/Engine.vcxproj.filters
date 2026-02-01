@@ -100,6 +100,9 @@
     <Filter Include="00. Manager\10. ImguiMgr\Imgui">
       <UniqueIdentifier>{63c02bb2-f791-4e39-b1df-c8160f025be7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\11. SoundMgr">
+      <UniqueIdentifier>{70519542-cd8e-412a-9962-2992d42c4dc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -210,6 +213,12 @@
     <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_widgets.cpp">
       <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CSoundMgr.cpp">
+      <Filter>00. Manager\11. SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHelper.cpp">
+      <Filter>00. Manager\08. Pipeline</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -316,6 +325,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CImguiMgr.h">
       <Filter>00. Manager\10. ImguiMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSoundMgr.h">
+      <Filter>00. Manager\11. SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHelper.h">
+      <Filter>00. Manager\08. Pipeline</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

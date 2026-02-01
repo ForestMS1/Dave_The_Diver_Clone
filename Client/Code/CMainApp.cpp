@@ -7,6 +7,7 @@
 #include "CFontMgr.h"
 #include "CDInputMgr.h"
 #include "CInfoMgr.h"
+#include "CSoundMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -28,6 +29,9 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
+		return E_FAIL;
+
+	if(FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
 
 	return S_OK;
@@ -145,6 +149,7 @@ void CMainApp::Free()
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
+	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();

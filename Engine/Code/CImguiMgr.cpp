@@ -28,6 +28,9 @@ HRESULT CImguiMgr::Ready_Imgui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
+	// 윈도우즈 기본 폰트 추가
+	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean());
+	
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 

@@ -71,14 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.92.5;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.92.5;$(ProjectDir)..\ThirdParty\fmod\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>../Bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.92.5;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.92.5;$(ProjectDir)..\ThirdParty\fmod\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -164,6 +164,7 @@ call Copy.bat</Command>
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
+    <ClInclude Include="..\Header\CHelper.h" />
     <ClInclude Include="..\Header\CImguiMgr.h" />
     <ClInclude Include="..\Header\CInfoMgr.h" />
     <ClInclude Include="..\Header\CLayer.h" />
@@ -175,6 +176,7 @@ call Copy.bat</Command>
     <ClInclude Include="..\Header\CRcTex.h" />
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
+    <ClInclude Include="..\Header\CSoundMgr.h" />
     <ClInclude Include="..\Header\CTerrainTex.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
@@ -201,6 +203,7 @@ call Copy.bat</Command>
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
+    <ClCompile Include="..\Code\CHelper.cpp" />
     <ClCompile Include="..\Code\CImguiMgr.cpp" />
     <ClCompile Include="..\Code\CInfoMgr.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
@@ -212,6 +215,7 @@ call Copy.bat</Command>
     <ClCompile Include="..\Code\CRcTex.cpp" />
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
+    <ClCompile Include="..\Code\CSoundMgr.cpp" />
     <ClCompile Include="..\Code\CTerrainTex.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
