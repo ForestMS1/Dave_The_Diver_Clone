@@ -15,6 +15,8 @@
 
 #include <process.h>
 
+#include "imgui.h"
+
 #pragma warning(disable : 4005)
 
 #ifdef _DEBUG
