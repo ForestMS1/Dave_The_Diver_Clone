@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CDynamicCamera.h"
 #include "CDInputMgr.h"
+#include "CInfoMgr.h"
 
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
     : CCamera(pGraphicDev),m_bFix(true), m_bCheck(true)
@@ -172,7 +173,9 @@ void CDynamicCamera::Mouse_Move()
 
 void CDynamicCamera::Mouse_Fix()
 {
-    POINT       ptMouse{ WINCX >> 1, WINCY >> 1 };
+    _int iwincx = CInfoMgr::GetInstance()->Get_WINCX();
+    _int iwincy = CInfoMgr::GetInstance()->Get_WINCY();
+    POINT       ptMouse{ iwincx >> 1, iwincy >> 1 };
 
     ClientToScreen(g_hWnd, &ptMouse);
     SetCursorPos(ptMouse.x, ptMouse.y);
