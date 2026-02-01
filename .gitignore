@@ -6,3 +6,5 @@ x64/
 **/Bin/
 
 imgui.ini
+
+/Engine/ThirdParty/fmod/lib

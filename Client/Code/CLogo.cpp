@@ -7,7 +7,8 @@
 #include "CFontMgr.h"
 #include "CDInputMgr.h"
 #include "CLog.h"
-
+#include "CSoundMgr.h"
+#include "CHelper.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(NULL)
@@ -97,7 +98,26 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 				CLog::Debug(L"M LB UP\n");
 			}
 		}
-		
+	}
+
+	// 사운드 테스트
+	{
+		ImGui::Begin("SOUND TEST");
+		_tchar wText[] = L"타다";
+		char utf8Buf[256];
+		CHelper::ConvertTCharToUTF8(wText, utf8Buf);
+		if (ImGui::Button(utf8Buf))
+		{
+			CLog::Debug(L"Clicked!1\n");
+			CSoundMgr::GetInstance()->PlaySoundOne(L"TADA.mp3", CSoundMgr::SFX, 1.f);
+		}
+			
+		if (ImGui::Button("BGM"))
+		{
+			CLog::Debug(L"Clicked!2\n");
+			CSoundMgr::GetInstance()->PlaySoundLoop(L"Success.wav", CSoundMgr::BGM, 1.f);
+		}	
+		ImGui::End();
 	}
 
 
