@@ -8,6 +8,7 @@
 #include "CTimerMgr.h"
 #include "CFrameMgr.h"
 #include "CInfoMgr.h"
+#include "CImguiMgr.h"
 
 #define MAX_LOADSTRING 100
 
@@ -195,6 +196,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (CImguiMgr::GetInstance()->WinProc(hWnd, message, wParam, lParam))
+    {
+        return true;
+    }
+
     switch (message)
     {
     case WM_COMMAND:

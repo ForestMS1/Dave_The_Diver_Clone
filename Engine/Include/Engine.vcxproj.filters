@@ -94,6 +94,12 @@
     <Filter Include="00. Manager\09. InfoMgr">
       <UniqueIdentifier>{e98680b0-d252-456c-a769-f84c70c11646}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\10. ImguiMgr">
+      <UniqueIdentifier>{4fabf95a-e78a-4748-a542-3c06d465d08e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\10. ImguiMgr\Imgui">
+      <UniqueIdentifier>{63c02bb2-f791-4e39-b1df-c8160f025be7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -179,6 +185,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\CInfoMgr.cpp">
       <Filter>00. Manager\09. InfoMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CImguiMgr.cpp">
+      <Filter>00. Manager\10. ImguiMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_demo.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_draw.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_impl_dx9.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_impl_win32.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_tables.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui-1.92.5\imgui_widgets.cpp">
+      <Filter>00. Manager\10. ImguiMgr\Imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CInfoMgr.h">
       <Filter>00. Manager\09. InfoMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CImguiMgr.h">
+      <Filter>00. Manager\10. ImguiMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

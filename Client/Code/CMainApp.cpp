@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "CImguiMgr.h"
 #include "CMainApp.h"
 #include "CTimerMgr.h"
 #include "CFrameMgr.h"
@@ -26,7 +27,8 @@ HRESULT CMainApp::Ready_MainApp()
 	if (FAILED(Ready_Scene(m_pGraphicDev)))
 		return E_FAIL;
 
-
+	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -34,7 +36,9 @@ HRESULT CMainApp::Ready_MainApp()
 int CMainApp::Update_MainApp(const float& fTimeDelta)
 {
 	CDInputMgr::GetInstance()->Update_InputDev();
-
+	
+	CImguiMgr::GetInstance()->Update_Imgui();
+	
 	m_pManagement->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -50,6 +54,8 @@ void CMainApp::Render_MainApp()
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 
 	m_pManagement->Render_Scene(m_pGraphicDev);
+
+	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 
 	m_pDeviceClass->Render_End();
 }
@@ -139,6 +145,7 @@ void CMainApp::Free()
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
+	CImguiMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }
