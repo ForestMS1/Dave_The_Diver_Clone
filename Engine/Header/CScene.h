@@ -13,11 +13,11 @@ protected:
 
 public:
 	CComponent* Get_Component(COMPONENTID eID,
-		const _tchar* pLayerTag,
-		const _tchar* pObjTag,
-		const _tchar* pComponentTag);
+		std::wstring_view svLayerTag,
+		std::wstring_view svObjTag,
+		std::wstring_view svComponentTag);
 
-	map<const _tchar*, CLayer*>* Get_Layer() { return &m_mapLayer; };
+	map<const std::wstring, CLayer*>* Get_Layer() { return &m_mapLayer; };
 
 public:
 	virtual			HRESULT		Ready_Scene();
@@ -26,7 +26,7 @@ public:
 	virtual			void		Render_Scene() = 0;
 
 protected:
-	map<const _tchar*, CLayer*>			m_mapLayer;
+	map<const std::wstring, CLayer*>			m_mapLayer;
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 
 protected:

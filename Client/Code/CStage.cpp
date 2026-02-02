@@ -48,7 +48,7 @@ void CStage::Render_Scene()
 	// debug ¿ë Ãâ·Â
 }
 
-HRESULT CStage::Ready_Environment_Layer(const _tchar* pLayerTag)
+HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
@@ -79,12 +79,12 @@ HRESULT CStage::Ready_Environment_Layer(const _tchar* pLayerTag)
 		return E_FAIL;
 	
 
-	m_mapLayer.insert({ pLayerTag, pLayer });
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
 }
 
-HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
+HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
@@ -120,12 +120,12 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 		return E_FAIL;
 
 
-	m_mapLayer.insert({ pLayerTag, pLayer });
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
 }
 
-HRESULT CStage::Ready_UI_Layer(const _tchar* pLayerTag)
+HRESULT CStage::Ready_UI_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
@@ -135,7 +135,7 @@ HRESULT CStage::Ready_UI_Layer(const _tchar* pLayerTag)
 
 
 
-	m_mapLayer.insert({ pLayerTag, pLayer });
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
 }

@@ -33,14 +33,14 @@ void CSoundMgr::Update_SoundMgr()
 {
 }
 
-void CSoundMgr::PlaySoundLoop(const _tchar* pSoundKey, CHANNELID eID, float fVolume)
+void CSoundMgr::PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float fVolume)
 {
-	map<const _tchar*, FMOD_SOUND*>::iterator iter;
+	map<const std::wstring, FMOD_SOUND*>::iterator iter;
 
 	iter = find_if(m_mapSound.begin(), m_mapSound.end(),
 		[&](auto& iter)->bool
 		{
-			return !lstrcmp(pSoundKey, iter.first);
+			return svSoundKey == iter.first;
 		});
 
 	if (iter == m_mapSound.end())
@@ -63,14 +63,14 @@ void CSoundMgr::PlaySoundLoop(const _tchar* pSoundKey, CHANNELID eID, float fVol
 	FMOD_System_Update(m_pSystem);
 }
 
-void CSoundMgr::PlaySoundOne(const _tchar* pSoundKey, CHANNELID eID, float fVolume)
+void CSoundMgr::PlaySoundOne(std::wstring_view svSoundKey, CHANNELID eID, float fVolume)
 {
-	map<const _tchar*, FMOD_SOUND*>::iterator iter;
+	map<const std::wstring, FMOD_SOUND*>::iterator iter;
 
 	iter = find_if(m_mapSound.begin(), m_mapSound.end(),
 		[&](auto& iter)->bool
 		{
-			return !lstrcmp(pSoundKey, iter.first);
+			return svSoundKey == iter.first;
 		});
 
 	if (iter == m_mapSound.end())
@@ -159,7 +159,8 @@ void CSoundMgr::LoadSoundFile()
 			// 아스키 코드 문자열을 유니코드 문자열로 변환시켜주는 함수
 			MultiByteToWideChar(CP_ACP, 0, fd.name, iLength, pSoundKey, iLength);
 
-			m_mapSound.insert({ pSoundKey, pSound });
+			m_mapSound.insert({ std::wstring(pSoundKey), pSound});
+			delete[] pSoundKey;
 		}
 		//_findnext : <io.h>에서 제공하며 다음 위치의 파일을 찾는 함수, 
 		// 더이상 없다면 -1을 리턴
@@ -176,7 +177,7 @@ void CSoundMgr::Free()
 {
 	for (auto& Mypair : m_mapSound)
 	{
-		delete[] Mypair.first;
+		//delete[] Mypair.first;
 		FMOD_Sound_Release(Mypair.second);
 	}
 	m_mapSound.clear();

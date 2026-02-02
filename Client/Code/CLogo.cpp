@@ -139,7 +139,7 @@ void CLogo::Render_Scene()
 
 }
 
-HRESULT CLogo::Ready_Environment_Layer(const _tchar* pLayerTag)
+HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
@@ -158,7 +158,7 @@ HRESULT CLogo::Ready_Environment_Layer(const _tchar* pLayerTag)
 		return E_FAIL;
 
 	
-	m_mapLayer.insert({ pLayerTag, pLayer });
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
 }

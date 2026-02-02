@@ -12,22 +12,22 @@ CProtoMgr::~CProtoMgr()
 	Free();
 }
 
-HRESULT CProtoMgr::Ready_Prototype(const _tchar* pComponentTag, 
+HRESULT CProtoMgr::Ready_Prototype(std::wstring_view svComponentTag,
 									CComponent* pComponent)
 {
-	CComponent* pInstance = Find_Prototype(pComponentTag);
+	CComponent* pInstance = Find_Prototype(svComponentTag);
 
 	if (nullptr != pInstance)
 		return E_FAIL;
 
-	m_mapPrototype.insert({ pComponentTag, pComponent });
+	m_mapPrototype.insert({ std::wstring(svComponentTag), pComponent });
 
 	return S_OK;
 }
 
-CComponent* CProtoMgr::Clone_Prototype(const _tchar* pComponentTag)
+CComponent* CProtoMgr::Clone_Prototype(std::wstring_view svComponentTag)
 {
-	CComponent* pInstance = Find_Prototype(pComponentTag);
+	CComponent* pInstance = Find_Prototype(svComponentTag);
 
 	if (nullptr == pInstance)
 		return nullptr;
@@ -36,10 +36,10 @@ CComponent* CProtoMgr::Clone_Prototype(const _tchar* pComponentTag)
 	return pInstance->Clone();
 }
 
-CComponent* CProtoMgr::Find_Prototype(const _tchar* pComponentTag)
+CComponent* CProtoMgr::Find_Prototype(std::wstring_view svComponentTag)
 {
 	auto		iter = find_if(m_mapPrototype.begin(), m_mapPrototype.end(),
-		CTag_Finder(pComponentTag));
+		CTag_FinderSV(svComponentTag));
 
 	if (iter == m_mapPrototype.end())
 		return nullptr;

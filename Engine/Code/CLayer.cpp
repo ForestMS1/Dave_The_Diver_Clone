@@ -8,23 +8,23 @@ CLayer::~CLayer()
 {
 }
 
-CComponent* CLayer::Get_Component(COMPONENTID eID, const _tchar* pObjTag, const _tchar* pComponentTag)
+CComponent* CLayer::Get_Component(COMPONENTID eID, std::wstring_view svObjTag, std::wstring_view svComponentTag)
 {
 	auto	iter = find_if(m_mapObject.begin(), m_mapObject.end(), 
-		CTag_Finder(pObjTag));
+		CTag_FinderSV(svObjTag));
 
 	if (iter == m_mapObject.end())
 		return nullptr;
 
-	return iter->second->Get_Component(eID, pComponentTag);
+	return iter->second->Get_Component(eID, svComponentTag);
 }
 
-HRESULT CLayer::Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject)
+HRESULT CLayer::Add_GameObject(std::wstring_view svObjTag, CGameObject* pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	m_mapObject.insert({ pObjTag, pGameObject });
+	m_mapObject.insert({ std::wstring(svObjTag), pGameObject });
 
 	return S_OK;
 }

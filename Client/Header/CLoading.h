@@ -13,7 +13,7 @@ public:
 	virtual ~CLoading();
 
 public:
-	const _tchar*	Get_String()	{ return m_szLoading;}
+	std::wstring_view	Get_String()	{ return m_sLoading;}
 	LOADINGID		Get_LoadingID() { return m_eLoadingID; }
 	_bool			Get_Finish()	{ return m_bFinish; }
 
@@ -29,7 +29,7 @@ public:
 
 private:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
-	_tchar				m_szLoading[128];
+	std::wstring				m_sLoading;
 
 	HANDLE				m_hThread;
 	LOADINGID			m_eLoadingID;

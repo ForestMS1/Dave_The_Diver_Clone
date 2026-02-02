@@ -14,17 +14,17 @@ private:
 	virtual ~CTimerMgr();
 
 public:
-	_float			Get_TimeDelta(const _tchar* pTimerTag);
-	void			Set_TimeDelta(const _tchar* pTimerTag);
+	_float			Get_TimeDelta(std::wstring_view svTimerTag);
+	void			Set_TimeDelta(std::wstring_view svTimerTag);
 
 public:
-	HRESULT			Ready_Timer(const _tchar* pTimerTag);
+	HRESULT			Ready_Timer(std::wstring_view svTimerTag);
 
 private:
-	CTimer* Find_Timer(const _tchar* pTimerTag);
+	CTimer* Find_Timer(std::wstring_view svTimerTag);
 
 private:
-	map<const _tchar*, CTimer*>		m_mapTimer;
+	map<const std::wstring, CTimer*>		m_mapTimer;
 
 private:
 	virtual void		Free();

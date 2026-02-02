@@ -21,14 +21,14 @@ private:
 	virtual ~CProtoMgr();
 
 public:
-	HRESULT		Ready_Prototype(const _tchar* pComponentTag, CComponent* pComponent);
-	CComponent* Clone_Prototype(const _tchar* pComponentTag);
+	HRESULT		Ready_Prototype(std::wstring_view svComponentTag, CComponent* pComponent);
+	CComponent* Clone_Prototype(std::wstring_view svComponentTag);
 
 private:
-	CComponent* Find_Prototype(const _tchar* pComponentTag);
+	CComponent* Find_Prototype(std::wstring_view svComponentTag);
 
 private:
-	map<const _tchar*, CComponent*>		m_mapPrototype;
+	map<const std::wstring, CComponent*>		m_mapPrototype;
 
 private:
 	virtual void	Free();

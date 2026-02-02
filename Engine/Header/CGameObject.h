@@ -12,7 +12,7 @@ protected:
 	virtual ~CGameObject();
 
 public:
-	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
+	CComponent* Get_Component(COMPONENTID eID, std::wstring_view svComponentTag);
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -21,12 +21,12 @@ public:
 	virtual			void		Render_GameObject() = 0;
 
 protected:
-	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
+	map<const std::wstring, CComponent*>			m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
 
 
 private:
-	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
+	CComponent* Find_Component(COMPONENTID eID, std::wstring_view svComponentTag);
 
 protected:
 	virtual		void		Free();
