@@ -168,6 +168,8 @@ call Copy.bat</Command>
     <ClInclude Include="..\Header\CImguiMgr.h" />
     <ClInclude Include="..\Header\CInfoMgr.h" />
     <ClInclude Include="..\Header\CLayer.h" />
+    <ClInclude Include="..\Header\CLight.h" />
+    <ClInclude Include="..\Header\CLightMgr.h" />
     <ClInclude Include="..\Header\CLog.h" />
     <ClInclude Include="..\Header\CManagement.h" />
     <ClInclude Include="..\Header\CPipeline.h" />
@@ -207,6 +209,8 @@ call Copy.bat</Command>
     <ClCompile Include="..\Code\CImguiMgr.cpp" />
     <ClCompile Include="..\Code\CInfoMgr.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
+    <ClCompile Include="..\Code\CLight.cpp" />
+    <ClCompile Include="..\Code\CLightMgr.cpp" />
     <ClCompile Include="..\Code\CLog.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
     <ClCompile Include="..\Code\CPipeline.cpp" />
