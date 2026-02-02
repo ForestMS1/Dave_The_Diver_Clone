@@ -3,6 +3,9 @@
 
 BEGIN(Engine)
 
+class CTerrainTex;
+class CTransform;
+
 class ENGINE_DLL CCalculator :   public CComponent
 {
 private:
@@ -17,6 +20,10 @@ public:
 										const _vec3* pTerrainVtxPos,
 										const _ulong& dwCntX,
 										const _ulong& dwCntZ);
+
+	_vec3		Picking_OnTerrain(HWND hWnd,
+									CTerrainTex* pTerrainBufferCom,
+									CTransform* pTerrainTransformCom);
 
 public:
 	static CCalculator* Create(LPDIRECT3DDEVICE9 pGraphicDev);

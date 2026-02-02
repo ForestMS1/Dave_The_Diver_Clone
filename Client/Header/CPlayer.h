@@ -26,6 +26,7 @@ private:
 	HRESULT			Add_Component();
 	void			Key_Input(const _float& fTimeDelta);
 	void			Set_OnTerrain();
+	_vec3			Picking_OnTerrain();
 
 private:
 	Engine::CRcTex*			m_pBufferCom;

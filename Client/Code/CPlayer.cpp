@@ -3,6 +3,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CDInputMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -132,6 +133,16 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_pTransformCom->Rotation(ROT_Y, -180.f * fTimeDelta);
 	}
+
+	if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+	{
+		_vec3 vPickPos = Picking_OnTerrain();
+		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
+
+		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
+	}
+
+
 }
 
 void CPlayer::Set_OnTerrain()
@@ -148,6 +159,23 @@ void CPlayer::Set_OnTerrain()
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainVtxCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
 	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
+}
+
+_vec3 CPlayer::Picking_OnTerrain()
+{
+	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>
+		(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+	
+	if (nullptr == pTerrainBufferCom)
+		return _vec3();
+
+	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic_Layer", L"Terrain", L"Com_Transform"));
+
+	if (nullptr == pTerrainTransformCom)
+		return _vec3();
+
+	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
