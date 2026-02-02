@@ -12,7 +12,7 @@ private:
 	virtual	   ~CTexture();
 
 public:
-	HRESULT		Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt);
+	HRESULT		Ready_Texture(TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt);
 	void		Set_Texture(const _uint& iIndex = 0);
 
 private:
@@ -21,7 +21,7 @@ private:
 public:
 	static CTexture* Create(LPDIRECT3DDEVICE9 pGraphicDev, 
 							TEXTUREID eID,
-							const _tchar* pPath, 
+							std::wstring_view svPath, 
 							const _uint& iCnt = 1);
 	virtual CComponent* Clone();
 

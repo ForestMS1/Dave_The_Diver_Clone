@@ -14,14 +14,14 @@ private:
 	virtual			~CFrameMgr();
 
 public:
-	HRESULT			Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit);
-	_bool			IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta);
+	HRESULT			Ready_Frame(std::wstring_view svFrameTag, const _float& fCallLimit);
+	_bool			IsPermit_Call(std::wstring_view svFrameTag, const _float& fTimeDelta);
 
 private:
-	CFrame*			Find_Frame(const _tchar* pFrameTag);
+	CFrame*			Find_Frame(std::wstring_view svFrameTag);
 
 private:
-	map<const _tchar*, CFrame*>		m_mapFrame;
+	map<const std::wstring, CFrame*>		m_mapFrame;
 
 public:
 	virtual void	Free();

@@ -35,8 +35,8 @@ public:
 	void Update_SoundMgr();
 
 public:
-	void PlaySoundLoop(const _tchar* pSoundKey, CHANNELID eID, float fVolume);
-	void PlaySoundOne(const _tchar* pSoundKey, CHANNELID eID, float fVolume);
+	void PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float fVolume);
+	void PlaySoundOne(std::wstring_view svSoundKey, CHANNELID eID, float fVolume);
 	bool IsChannelPlaying(CHANNELID eID);
 	void StopSound(CHANNELID eID);
 	void StopAll();
@@ -47,7 +47,7 @@ private:
 
 private:
 	// 사운드 리소스 정보를 갖는 객체 
-	map<const _tchar*, FMOD_SOUND*> m_mapSound;
+	map<const std::wstring, FMOD_SOUND*> m_mapSound;
 
 	// FMOD_CHANNEL : 재생하고 있는 사운드를 관리할 객체 
 	FMOD_CHANNEL* m_pChannelArr[MAXCHANNEL];

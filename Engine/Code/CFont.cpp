@@ -12,7 +12,7 @@ CFont::~CFont()
 {
 }
 
-HRESULT CFont::Ready_Font(const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+HRESULT CFont::Ready_Font(std::wstring_view svFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	D3DXFONT_DESC			tFont_Desc;
 	ZeroMemory(&tFont_Desc, sizeof(D3DXFONT_DESC));
@@ -25,7 +25,7 @@ HRESULT CFont::Ready_Font(const _tchar* pFontType, const _uint& iWidth, const _u
 	tFont_Desc.Width = (UINT)scaledWidth;
 	tFont_Desc.Height = (UINT)scaledHeight;
 	tFont_Desc.Weight = iWeight;
-	lstrcpy(tFont_Desc.FaceName, pFontType);
+	lstrcpy(tFont_Desc.FaceName, svFontType.data());
 
 	if (FAILED(D3DXCreateFontIndirect(m_pGraphicDev, &tFont_Desc, &m_pFont)))
 	{
@@ -43,22 +43,22 @@ HRESULT CFont::Ready_Font(const _tchar* pFontType, const _uint& iWidth, const _u
 	return S_OK;
 }
 
-void CFont::Render_Font(const _tchar* pString, const _vec2* pPos, D3DXCOLOR Color)
+void CFont::Render_Font(std::wstring_view svString, const _vec2* pPos, D3DXCOLOR Color)
 {
 	RECT rc {(_long)pPos->x, (_long)pPos->y};
 
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_pFont->DrawTextW(m_pSprite, pString, lstrlen(pString), &rc, DT_NOCLIP, Color);
+	m_pFont->DrawTextW(m_pSprite, svString.data(), lstrlen(svString.data()), &rc, DT_NOCLIP, Color);
 
 	m_pSprite->End();
 }
 
-CFont* CFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+CFont* CFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, std::wstring_view svFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	CFont* pFont = new CFont(pGraphicDev);
 
-	if (FAILED(pFont->Ready_Font(pFontType, iWidth, iHeight, iWeight)))
+	if (FAILED(pFont->Ready_Font(svFontType, iWidth, iHeight, iWeight)))
 	{
 		Safe_Release(pFont);
 		MSG_BOX("Font Create Failed");

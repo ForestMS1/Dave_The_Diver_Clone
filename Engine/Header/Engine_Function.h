@@ -66,6 +66,26 @@ namespace Engine
 		const _tchar*		m_pTargetTag = nullptr;
 	};
 
+	class CTag_FinderSV
+	{
+	public:
+		explicit CTag_FinderSV(std::wstring_view svTag) : m_svTargetTag(svTag) {}
+		~CTag_FinderSV(void) {}
+
+	public:
+		template<typename T>
+		_bool		operator()(const T& pair)
+		{
+			if (pair.first == m_svTargetTag)
+				return true;
+
+			return false;
+		}
+
+	private:
+		std::wstring_view m_svTargetTag;
+	};
+
 	class CDeleteObj
 	{
 	public:

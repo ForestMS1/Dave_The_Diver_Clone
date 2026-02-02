@@ -16,9 +16,9 @@ private:
 
 public:
 	CComponent* Get_Component(COMPONENTID eID,
-		const _tchar* pLayerTag,
-		const _tchar* pObjTag,
-		const _tchar* pComponentTag);
+		std::wstring_view svLayerTag,
+		std::wstring_view svObjTag,
+		std::wstring_view svComponentTag);
 
 	CScene* Get_Scene() const { return m_pScene; };
 

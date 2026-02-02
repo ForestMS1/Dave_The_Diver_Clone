@@ -11,10 +11,10 @@ CFrameMgr::~CFrameMgr()
     Free();
 }
 
-HRESULT CFrameMgr::Ready_Frame(const _tchar* pFrameTag, 
+HRESULT CFrameMgr::Ready_Frame(std::wstring_view svFrameTag,
                                 const _float& fCallLimit)
 {
-    CFrame* pFrame = Find_Frame(pFrameTag);
+    CFrame* pFrame = Find_Frame(svFrameTag);
 
     if (nullptr != pFrame)
         return E_FAIL;
@@ -23,15 +23,15 @@ HRESULT CFrameMgr::Ready_Frame(const _tchar* pFrameTag,
     if (nullptr == pFrame)
         return E_FAIL;
 
-    m_mapFrame.insert({pFrameTag, pFrame});
+    m_mapFrame.insert({std::wstring(svFrameTag), pFrame});
 
     return S_OK;
 }
 
-_bool CFrameMgr::IsPermit_Call(const _tchar* pFrameTag, 
+_bool CFrameMgr::IsPermit_Call(std::wstring_view svFrameTag,
                                 const _float& fTimeDelta)
 {
-    CFrame* pFrame = Find_Frame(pFrameTag);
+    CFrame* pFrame = Find_Frame(svFrameTag);
 
     if (nullptr == pFrame)
         return false;
@@ -39,9 +39,9 @@ _bool CFrameMgr::IsPermit_Call(const _tchar* pFrameTag,
     return pFrame->IsPermit_Call(fTimeDelta);
 }
 
-CFrame* CFrameMgr::Find_Frame(const _tchar* pFrameTag)
+CFrame* CFrameMgr::Find_Frame(std::wstring_view svFrameTag)
 {
-    auto		iter = find_if(m_mapFrame.begin(), m_mapFrame.end(), CTag_Finder(pFrameTag));
+    auto		iter = find_if(m_mapFrame.begin(), m_mapFrame.end(), CTag_FinderSV(svFrameTag));
 
     if (iter == m_mapFrame.end())
         return nullptr;

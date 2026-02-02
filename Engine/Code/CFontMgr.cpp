@@ -11,34 +11,34 @@ CFontMgr::~CFontMgr()
 	Free();
 }
 
-HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontTag, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, std::wstring_view svFontTag, std::wstring_view svFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
-	CFont* pMyFont = Find_Font(pFontTag);
+	CFont* pMyFont = Find_Font(svFontTag);
 
 	if (nullptr != pMyFont)
 		return E_FAIL;
 
-	pMyFont = CFont::Create(pGraphicDev, pFontType, iWidth, iHeight, iWeight);
+	pMyFont = CFont::Create(pGraphicDev, svFontType, iWidth, iHeight, iWeight);
 
 	if (nullptr == pMyFont)
 		return E_FAIL;
 
-	m_mapFont.insert({ pFontTag, pMyFont });
+	m_mapFont.insert({ std::wstring(svFontTag), pMyFont });
 
 	return S_OK;
 }
 
-void CFontMgr::Render_Font(const _tchar* pFontTag, const _tchar* pString, 
+void CFontMgr::Render_Font(std::wstring_view svFontTag, std::wstring_view svString,
 	const _vec2* pPos, D3DXCOLOR Color)
 {
-	CFont* pFont = Find_Font(pFontTag);
+	CFont* pFont = Find_Font(svFontTag);
 
-	pFont->Render_Font(pString, pPos, Color);
+	pFont->Render_Font(svString, pPos, Color);
 }
 
-CFont* CFontMgr::Find_Font(const _tchar* pFontTag)
+CFont* CFontMgr::Find_Font(std::wstring_view svFontTag)
 {
-	auto	iter = find_if(m_mapFont.begin(), m_mapFont.end(), CTag_Finder(pFontTag));
+	auto	iter = find_if(m_mapFont.begin(), m_mapFont.end(), CTag_FinderSV(svFontTag));
 
 	if (iter == m_mapFont.end())
 		return nullptr;

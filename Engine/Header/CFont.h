@@ -16,19 +16,19 @@ private:
 	LPD3DXFONT					m_pFont;		// 폰트 출력 담당
 
 public:
-	HRESULT			Ready_Font(const _tchar* pFontType,
+	HRESULT			Ready_Font(std::wstring_view svFontType,
 								const _uint& iWidth,
 								const _uint& iHeight,
 								const _uint& iWeight);
 
-	void			Render_Font(const _tchar* pString, 
+	void			Render_Font(std::wstring_view svString,
 								const _vec2* pPos,
 								D3DXCOLOR Color);
 
 
 public:
 	static CFont* Create(LPDIRECT3DDEVICE9 pGraphicDev,
-						const _tchar* pFontType, 
+						std::wstring_view svFontType, 
 						const _uint& iWidth, 
 						const _uint& iHeight, 
 						const _uint& iWeight);

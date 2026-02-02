@@ -16,9 +16,9 @@ CGameObject::~CGameObject()
 {
 }
 
-CComponent* CGameObject::Get_Component(COMPONENTID eID, const _tchar* pComponentTag)
+CComponent* CGameObject::Get_Component(COMPONENTID eID, std::wstring_view svComponentTag)
 {
-    CComponent* pComponent = Find_Component(eID, pComponentTag);
+    CComponent* pComponent = Find_Component(eID, svComponentTag);
 
     if (nullptr == pComponent)
         return nullptr;
@@ -45,11 +45,11 @@ void CGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
         pComponent.second->LateUpdate_Component();
 }
 
-CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
+CComponent* CGameObject::Find_Component(COMPONENTID eID, std::wstring_view svComponentTag)
 {
     auto        iter = find_if(m_mapComponent[eID].begin(),
                                 m_mapComponent[eID].end(), 
-                                 CTag_Finder(pComponentTag));
+                                 CTag_FinderSV(svComponentTag));
 
     if (iter == m_mapComponent[eID].end())
         return nullptr;

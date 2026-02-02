@@ -5,7 +5,7 @@
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev), m_bFinish(false), m_eLoadingID(LOADING_END)
 {
-    ZeroMemory(m_szLoading, sizeof(m_szLoading));
+    //ZeroMemory(m_szLoading, sizeof(m_szLoading));
     m_pGraphicDev->AddRef();
 }
 
@@ -33,7 +33,8 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_Stage()
 {
-    lstrcpy(m_szLoading, L"Buffer Loading.....................................");
+   // lstrcpy(m_szLoading, L"Buffer Loading.....................................");
+    m_sLoading = L"Buffer Loading.....................................";
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create(m_pGraphicDev))))
     	return E_FAIL;
@@ -47,7 +48,8 @@ _uint CLoading::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
-    lstrcpy(m_szLoading, L"Texture Loading.....................................");
+    //lstrcpy(m_szLoading, L"Texture Loading.....................................");
+    m_sLoading = L"Texture Loading.....................................";
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_PlayerTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg", 1))))
         return E_FAIL;
@@ -64,7 +66,8 @@ _uint CLoading::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture2", Engine::CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/160.dds", 1))))
         return E_FAIL;
 
-    lstrcpy(m_szLoading, L"Etc Loading.....................................");
+   // lstrcpy(m_szLoading, L"Etc Loading.....................................");
+    m_sLoading = L"Etc Loading.....................................";
 
      if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create(m_pGraphicDev))))
      	return E_FAIL;
@@ -72,7 +75,8 @@ _uint CLoading::Loading_Stage()
      if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create(m_pGraphicDev))))
          return E_FAIL;
 
-     lstrcpy(m_szLoading, L"Loading Complete !!!!");
+     //lstrcpy(m_szLoading, L"Loading Complete !!!!");
+     m_sLoading = L"Loading Complete !!!!";
 
      m_bFinish = true;     
 

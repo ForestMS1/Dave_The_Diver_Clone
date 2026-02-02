@@ -28,7 +28,7 @@ CTexture::~CTexture()
 {
 }
 
-HRESULT CTexture::Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt)
+HRESULT CTexture::Ready_Texture(TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt)
 {
 	m_vecTexture.reserve(iCnt);
 
@@ -38,7 +38,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint&
 	{
 		TCHAR szFileName[128] = L"";
 
-		wsprintf(szFileName, pPath, i);
+		wsprintf(szFileName, svPath.data(), i);
 
 		switch (eID)
 		{
@@ -71,11 +71,11 @@ void CTexture::Set_Texture(const _uint& iIndex)
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eID, const _tchar* pPath, const _uint& iCnt)
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt)
 {
 	CTexture* pTexture = new CTexture(pGraphicDev);
 
-	if (FAILED(pTexture->Ready_Texture(eID, pPath, iCnt)))
+	if (FAILED(pTexture->Ready_Texture(eID, svPath, iCnt)))
 	{
 		Safe_Release(pTexture);
 		MSG_BOX("Texture Create Failed");
