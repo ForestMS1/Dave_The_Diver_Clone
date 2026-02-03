@@ -36,7 +36,8 @@ HRESULT CImguiMgr::Ready_Imgui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
 
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.ScaleAllSizes(main_scale);        // Bake a fixed style scale. (until we have a solution for dynamic style scaling, changing this requires resetting Style + calling this again)
-	style.FontScaleDpi = main_scale;        // Set initial font scale. (in docking branch: using io.ConfigDpiScaleFonts=true automatically overrides this for every window depending on the current monitor)
+	//style.FontScaleDpi = main_scale;        // Set initial font scale. (in docking branch: using io.ConfigDpiScaleFonts=true automatically overrides this for every window depending on the current monitor)
+	//style.ScaleAllSizes
 
 	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(hWnd);

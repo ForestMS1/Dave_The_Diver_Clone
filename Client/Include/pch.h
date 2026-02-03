@@ -15,7 +15,15 @@
 
 #include <process.h>
 
+#include <cstdint>
+
 #include "imgui.h"
+#include "imgui_internal.h"
+#include "ImGuizmo.h"
+//#include "ImSequencer.h"
+//#include "ImZoomSlider.h"
+//#include "ImCurveEdit.h"
+//#include "GraphEditor.h"
 
 #pragma warning(disable : 4005)
 
