@@ -20,7 +20,7 @@ public:
 	void			LateUpdate_Layer(const _float& fTimeDelta);
 
 private:
-	map<const std::wstring, CGameObject*>			m_mapObject;
+	multimap<const std::wstring, CGameObject*>			m_mapObject;
 
 public:
 	static CLayer* Create();

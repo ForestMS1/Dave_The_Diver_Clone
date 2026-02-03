@@ -38,6 +38,11 @@ public:
 
 	_matrix* Compute_LookAtTarget(const _vec3* pTargetPos);
 
+	void			Set_World(_matrix* pWorld)
+	{
+		m_matWorld = *pWorld;
+	}
+
 public:
 	HRESULT		Ready_Transform();
 	virtual _int Update_Component(const _float& fTimeDelta);

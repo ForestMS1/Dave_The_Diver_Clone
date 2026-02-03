@@ -13,6 +13,7 @@ protected:
 
 public:
 	CComponent* Get_Component(COMPONENTID eID, std::wstring_view svComponentTag);
+	_float		Get_ViewZ() { return m_fViewZ; }
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -20,9 +21,13 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject() = 0;
 
+	void			Compute_ViewZ(const _vec3* pPos);
+
 protected:
 	map<const std::wstring, CComponent*>			m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
+
+	_float									m_fViewZ;
 
 
 private:
