@@ -49,6 +49,9 @@
     <Filter Include="02. GameObject\05. SkyBox">
       <UniqueIdentifier>{9241dcbf-cc3a-41d6-a19b-0bc9c1563e96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\06. Effect">
+      <UniqueIdentifier>{1859a1b2-1555-4c09-805c-37d9103f9cfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,6 +99,9 @@
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\05. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEffect.h">
+      <Filter>02. GameObject\06. Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -133,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEffect.cpp">
+      <Filter>02. GameObject\06. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
