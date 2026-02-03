@@ -4,6 +4,9 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include <DirectXMath.h>
+using namespace DirectX;
+
 #include <vector>
 #include <list>
 #include <map>
