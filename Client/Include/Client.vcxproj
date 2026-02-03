@@ -158,6 +158,8 @@
     <ClInclude Include="..\Header\CLoading.h" />
     <ClInclude Include="..\Header\CLogo.h" />
     <ClInclude Include="..\Header\CMainApp.h" />
+    <ClInclude Include="..\Header\CMapEditor.h" />
+    <ClInclude Include="..\Header\CMapEditorTerrain.h" />
     <ClInclude Include="..\Header\CMonster.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
@@ -175,6 +177,8 @@
     <ClCompile Include="..\Code\CLoading.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
+    <ClCompile Include="..\Code\CMapEditor.cpp" />
+    <ClCompile Include="..\Code\CMapEditorTerrain.cpp" />
     <ClCompile Include="..\Code\CMonster.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />

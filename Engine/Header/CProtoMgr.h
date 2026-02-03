@@ -5,7 +5,7 @@
 #include "CRcTex.h"
 #include "CTerrainTex.h"
 #include "CCubeTex.h"
-
+#include "CMapTerrainTex.h"
 #include "CTransform.h"
 #include "CTexture.h"
 #include "CCalculator.h"

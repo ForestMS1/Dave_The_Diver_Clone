@@ -48,6 +48,10 @@ _uint CLoading::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV))))
+        return E_FAIL;
+
     //lstrcpy(m_szLoading, L"Texture Loading.....................................");
     m_sLoading = L"Texture Loading.....................................";
 
@@ -82,6 +86,7 @@ _uint CLoading::Loading_Stage()
 
      return 0;
 }
+
 
 unsigned int CLoading::Thread_Main(void* pArg)
 {

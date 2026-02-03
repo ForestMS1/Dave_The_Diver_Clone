@@ -7,6 +7,7 @@
 
 #include "CLogo.h"
 
+
 //namespace Engine
 //{
 //	class CGraphicDev;
