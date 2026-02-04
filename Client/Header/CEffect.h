@@ -30,6 +30,7 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 	_float			m_fFrame;
+	_float			m_fDelTimer;
 
 public:
 	static CEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);

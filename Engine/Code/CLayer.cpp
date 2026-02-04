@@ -63,14 +63,25 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
 {
 	_int	iResult(0);
 
-	for (auto& pObjList : m_mapGameObjects)
+	for (auto& objMap : m_mapGameObjects)
 	{
-		for (auto& pObj : pObjList.second)
+		list<CGameObject*>* objList = &objMap.second;
+		for (auto iter = objList->begin(); iter != objList->end();)
 		{
-			iResult = pObj->Update_GameObject(fTimeDelta);
-
+			iResult = (*iter)->Update_GameObject(fTimeDelta);
 			if (iResult & 0x80000000)
+			{
 				return iResult;
+			}
+			else if (iResult == OBJ_DEAD)
+			{
+				Safe_Release(*iter);
+				iter = objList->erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
 		}
 	}
 
