@@ -151,7 +151,7 @@ void CSoundMgr::LoadSoundFile()
 
 		if (eRes == FMOD_OK)
 		{
-			int iLength = strlen(fd.name) + 1;
+			int iLength = (int)strlen(fd.name) + 1;
 
 			TCHAR* pSoundKey = new TCHAR[iLength];
 			ZeroMemory(pSoundKey, sizeof(TCHAR) * iLength);

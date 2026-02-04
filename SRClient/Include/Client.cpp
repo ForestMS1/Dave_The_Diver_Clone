@@ -159,7 +159,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
     // SCALEFACTOR를통해 창 생성 및 CInfoMgr에 저장
-    RECT    rc { 0,0, WINCX * fScaleFactor, WINCY * fScaleFactor };
+    RECT    rc { 0,0, LONG(WINCX * fScaleFactor), LONG(WINCY * fScaleFactor)};
     CInfoMgr::GetInstance()->Set_WINCX(rc.right - rc.left);
     CInfoMgr::GetInstance()->Set_WINCY(rc.bottom - rc.top);
 
