@@ -8,6 +8,7 @@ CCameraMgr::CCameraMgr()
 
 CCameraMgr::~CCameraMgr()
 {
+	Free();
 }
 
 HRESULT CCameraMgr::Change_Camera(CAMERAID ID)
@@ -31,4 +32,11 @@ HRESULT CCameraMgr::Change_Camera(CAMERAID ID)
 
 void CCameraMgr::Free()
 {
+	for (int i =0; i< CAM_END; ++i)
+	{
+		//delete[] Mypair.first;
+		Safe_Release(listCamera[i]);
+		listCamera[i] = nullptr;
+	}
+
 }

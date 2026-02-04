@@ -15,13 +15,16 @@ private:
 
 public:
 	CGameObject*		Get_Camera(CAMERAID ID)					 { return listCamera[ID]; }
-	void				Set_Camera(CAMERAID ID, CGameObject* pCamera) { listCamera[ID] = pCamera; }
+	void				Set_Camera(CAMERAID ID, CGameObject* pCamera) {
+		listCamera[ID] = pCamera;
+		pCamera->AddRef();
+	}
 
 	HRESULT			Change_Camera(CAMERAID ID);
 
 
 protected:
-	CGameObject * listCamera[CAM_END];
+	CGameObject* listCamera[CAM_END];
 	CAMERAID curCamera{ CAM_END };
 	CAMERAID prevCamera{ CAM_END};
 private:
