@@ -11,12 +11,20 @@ CManagement::~CManagement()
     Free();
 }
 
-CComponent* CManagement::Get_Component(COMPONENTID eID, std::wstring_view svLayerTag, std::wstring_view svObjTag, std::wstring_view svComponentTag)
+CComponent* CManagement::Get_FirstObjectComponent(COMPONENTID eID, std::wstring_view svLayerTag, std::wstring_view svObjTag, std::wstring_view svComponentTag)
 {
-    if (nullptr == m_pScene)
-        return nullptr;
+     if (nullptr == m_pScene)
+         return nullptr;
 
-    return m_pScene->Get_Component(eID, svLayerTag, svObjTag, svComponentTag);
+     CLayer* pLayer = m_pScene->Get_Layer(svLayerTag);
+     if (nullptr == pLayer)
+         return nullptr;
+
+     CGameObject* pGameObject = pLayer->Get_GameObjectFirst(svObjTag);
+     if (nullptr == pGameObject)
+         return nullptr;
+
+     return pGameObject->Get_Component(eID, svComponentTag);
 }
 
 HRESULT CManagement::Set_Scene(CScene* pScene)

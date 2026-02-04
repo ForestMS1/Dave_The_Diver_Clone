@@ -8,25 +8,50 @@ CLayer::~CLayer()
 {
 }
 
-CComponent* CLayer::Get_Component(COMPONENTID eID, std::wstring_view svObjTag, std::wstring_view svComponentTag)
-{
-	auto	iter = find_if(m_mapObject.begin(), m_mapObject.end(), 
-		CTag_FinderSV(svObjTag));
-
-	if (iter == m_mapObject.end())
-		return nullptr;
-
-	return iter->second->Get_Component(eID, svComponentTag);
-}
-
 HRESULT CLayer::Add_GameObject(std::wstring_view svObjTag, CGameObject* pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	m_mapObject.insert({ std::wstring(svObjTag), pGameObject });
+	auto	iter = find_if(m_mapGameObjects.begin(), m_mapGameObjects.end(),
+		CTag_FinderSV(svObjTag));
+
+	if (iter == m_mapGameObjects.end())
+	{
+		//m_mapObject.insert({ std::wstring(svObjTag), pGameObject });
+		m_mapGameObjects.insert({ std::wstring(svObjTag), {pGameObject} });
+	}
+	else
+	{
+		iter->second.push_back(pGameObject);
+	}
+
+	
+
 
 	return S_OK;
+}
+
+list<CGameObject*>* CLayer::Get_GameObjects(std::wstring_view svObjTag)
+{
+	auto	iter = find_if(m_mapGameObjects.begin(), m_mapGameObjects.end(),
+		CTag_FinderSV(svObjTag));
+
+	if (iter == m_mapGameObjects.end())
+		return nullptr;
+
+	return &(iter->second);
+}
+
+CGameObject* CLayer::Get_GameObjectFirst(std::wstring_view svObjTag)
+{
+	auto	iter = find_if(m_mapGameObjects.begin(), m_mapGameObjects.end(),
+		CTag_FinderSV(svObjTag));
+
+	if (iter == m_mapGameObjects.end())
+		return nullptr;
+	
+	return iter->second.front();
 }
 
 HRESULT CLayer::Ready_Layer()
@@ -38,12 +63,26 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
 {
 	_int	iResult(0);
 
-	for (auto& pObj : m_mapObject)
+	for (auto& objMap : m_mapGameObjects)
 	{
-		iResult = pObj.second->Update_GameObject(fTimeDelta);
-
-		if (iResult & 0x80000000)
-			return iResult;
+		list<CGameObject*>* objList = &objMap.second;
+		for (auto iter = objList->begin(); iter != objList->end();)
+		{
+			iResult = (*iter)->Update_GameObject(fTimeDelta);
+			if (iResult & 0x80000000)
+			{
+				return iResult;
+			}
+			else if (iResult == OBJ_DEAD)
+			{
+				Safe_Release(*iter);
+				iter = objList->erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
 	}
 
 	return iResult;
@@ -51,8 +90,13 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
 
 void CLayer::LateUpdate_Layer(const _float& fTimeDelta)
 {
-	for (auto& pObj : m_mapObject)
-		pObj.second->LateUpdate_GameObject(fTimeDelta);
+	for (auto& pObjList : m_mapGameObjects)
+	{
+		for (auto& pObj : pObjList.second)
+		{
+			pObj->LateUpdate_GameObject(fTimeDelta);
+		}
+	}
 }
 
 
@@ -72,6 +116,12 @@ CLayer* CLayer::Create()
 
 void CLayer::Free()
 {
-	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteMap());
-	m_mapObject.clear();
+	for (auto& pObjList : m_mapGameObjects)
+	{
+		for (auto& pObj : pObjList.second)
+		{
+			pObj->Release();
+		}
+	}
+	m_mapGameObjects.clear();
 }

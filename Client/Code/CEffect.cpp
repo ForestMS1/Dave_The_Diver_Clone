@@ -25,6 +25,7 @@ HRESULT CEffect::Ready_GameObject()
 	m_pTransformCom->Set_Pos(_float(rand() % 20), 0.f, _float(rand() % 20));
 
 	m_fFrame = 0.f;
+	m_fDelTimer = 0.f;
 
 	return S_OK;
 }
@@ -33,12 +34,23 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
+	m_fDelTimer += fTimeDelta;
+
 	m_fFrame += 90.f * fTimeDelta;
 
 	if (90.f < m_fFrame)
 		m_fFrame = 0.f;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+	if (m_fDelTimer > 3.f)
+	{
+		if (rand() % 2)
+		{
+			return OBJ_DEAD;
+		}
+		m_fDelTimer = 0.f;
+	}
 
 	return iExit;
 }
