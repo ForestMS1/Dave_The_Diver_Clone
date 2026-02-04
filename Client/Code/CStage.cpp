@@ -4,6 +4,7 @@
 #include "CDynamicCamera.h"
 #include "CSkyBox.h"
 #include "CLightMgr.h"
+#include "CEffect.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -132,6 +133,18 @@ HRESULT CStage::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	CGameObject* pGameObject = nullptr;
+
+	for (_uint i = 0; i < 50; ++i)
+	{
+		// Player
+		pGameObject = CEffect::Create(m_pGraphicDev);
+
+		if (nullptr == pGameObject)
+			return E_FAIL;
+
+		if (FAILED(pLayer->Add_GameObject(L"Effect", pGameObject)))
+			return E_FAIL;
+	}
 
 
 

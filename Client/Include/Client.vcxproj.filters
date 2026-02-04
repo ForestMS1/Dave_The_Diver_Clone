@@ -49,11 +49,8 @@
     <Filter Include="02. GameObject\05. SkyBox">
       <UniqueIdentifier>{9241dcbf-cc3a-41d6-a19b-0bc9c1563e96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\04. MapEditor">
-      <UniqueIdentifier>{5337bf87-55e2-4ddc-bd13-98384096b392}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\04. MapEditorTerrain">
-      <UniqueIdentifier>{2a1543d9-e2e7-43be-83a5-0cbd7014ebe0}</UniqueIdentifier>
+    <Filter Include="02. GameObject\06. Effect">
+      <UniqueIdentifier>{1859a1b2-1555-4c09-805c-37d9103f9cfc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +99,8 @@
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\05. SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMapEditor.h">
-      <Filter>01. Scene\04. MapEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMapEditorTerrain.h">
-      <Filter>02. GameObject\04. MapEditorTerrain</Filter>
+    <ClInclude Include="..\Header\CEffect.h">
+      <Filter>02. GameObject\06. Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -146,11 +140,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMapEditor.cpp">
-      <Filter>01. Scene\04. MapEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapEditorTerrain.cpp">
-      <Filter>02. GameObject\04. MapEditorTerrain</Filter>
+    <ClCompile Include="..\Code\CEffect.cpp">
+      <Filter>02. GameObject\06. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

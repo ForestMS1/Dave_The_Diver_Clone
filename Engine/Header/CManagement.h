@@ -15,7 +15,7 @@ private:
 	virtual		~CManagement();
 
 public:
-	CComponent* Get_Component(COMPONENTID eID,
+	CComponent* Get_FirstObjectComponent(COMPONENTID eID,
 		std::wstring_view svLayerTag,
 		std::wstring_view svObjTag,
 		std::wstring_view svComponentTag);

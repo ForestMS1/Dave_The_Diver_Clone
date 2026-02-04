@@ -11,8 +11,10 @@ private:
 	virtual ~CLayer();
 
 public:
-	CComponent*		Get_Component(COMPONENTID eID, std::wstring_view svObjTag, std::wstring_view svComponentTag);
 	HRESULT			Add_GameObject(std::wstring_view svObjTag, CGameObject* pGameObject);
+
+	list<CGameObject*> * Get_GameObjects(std::wstring_view svObjTag);
+	CGameObject* Get_GameObjectFirst(std::wstring_view svObjTag);
 
 public:
 	HRESULT			Ready_Layer();
@@ -20,7 +22,7 @@ public:
 	void			LateUpdate_Layer(const _float& fTimeDelta);
 
 private:
-	map<const std::wstring, CGameObject*>			m_mapObject;
+	map<const std::wstring, list<CGameObject*>> m_mapGameObjects;
 
 public:
 	static CLayer* Create();

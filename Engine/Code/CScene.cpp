@@ -10,14 +10,14 @@ CScene::~CScene()
 {
 }
 
-CComponent* CScene::Get_Component(COMPONENTID eID, std::wstring_view svLayerTag, std::wstring_view svObjTag, std::wstring_view svComponentTag)
+CLayer* CScene::Get_Layer(std::wstring_view svLayerTag)
 {
     auto    iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_FinderSV(svLayerTag));
 
     if (iter == m_mapLayer.end())
         return nullptr;
 
-    return iter->second->Get_Component(eID, svObjTag, svComponentTag);
+    return iter->second;
 }
 
 HRESULT CScene::Ready_Scene()
