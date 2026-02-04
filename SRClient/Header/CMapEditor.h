@@ -1,7 +1,7 @@
 #pragma once
 #include "CScene.h"
 
-#include "CTerrain.h"
+
 #include "CRoom.h"
 
 

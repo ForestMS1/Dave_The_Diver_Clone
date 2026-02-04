@@ -2,9 +2,11 @@
 #include "CMapEditor.h"
 
 #include "CProtoMgr.h"
+#include "CDynamicCamera.h"
  
 #include "CLightMgr.h"
 #include "CMapEditorTerrain.h"
+
 
 CMapEditor::CMapEditor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)

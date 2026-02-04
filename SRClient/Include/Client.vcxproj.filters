@@ -28,6 +28,15 @@
     <Filter Include="01. Scene\00. Logo\00. Loading">
       <UniqueIdentifier>{820d40aa-cccc-4b10-9955-1409d19a8b0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\99. MapEditor">
+      <UniqueIdentifier>{f80fe463-44c7-4d1a-961e-db4043a132b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\99. MapEditorTerrain">
+      <UniqueIdentifier>{aae33d21-16dd-4f8e-a33b-eeb9f024ce3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\98. DynamicCamera">
+      <UniqueIdentifier>{28f175b6-08bb-461e-b5a4-f4c3c7e3038b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,6 +63,15 @@
     <ClInclude Include="..\Header\CLoading.h">
       <Filter>01. Scene\00. Logo\00. Loading</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMapEditor.h">
+      <Filter>01. Scene\99. MapEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapEditorTerrain.h">
+      <Filter>02. GameObject\99. MapEditorTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDynamicCamera.h">
+      <Filter>02. GameObject\98. DynamicCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -70,6 +88,15 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapEditor.cpp">
+      <Filter>01. Scene\99. MapEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDynamicCamera.cpp">
+      <Filter>02. GameObject\98. DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapEditorTerrain.cpp">
+      <Filter>02. GameObject\99. MapEditorTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

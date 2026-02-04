@@ -1,5 +1,7 @@
 #pragma once
 #include "CBase.h"
+#include "CScene.h"
+
 #include "Engine_Define.h"
 
 BEGIN(Engine)
@@ -8,6 +10,7 @@ class ENGINE_DLL CRoom : public CBase
 {
 protected:
 	explicit CRoom(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRoom(LPDIRECT3DDEVICE9 pGraphicDev, const CScene*  pScene);
 	explicit CRoom(const CRoom& rhs);
 	virtual ~CRoom();
 
@@ -21,7 +24,7 @@ public:
 protected:
 
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
-
+	const CScene* m_pScene;
 protected:
 	virtual		void		Free();
 };
