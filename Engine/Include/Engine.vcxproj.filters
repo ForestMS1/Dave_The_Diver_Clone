@@ -112,6 +112,9 @@
     <Filter Include="00. Manager\10. ImguiMgr\Imguizmo">
       <UniqueIdentifier>{8a19f651-2d1d-4193-a326-1237e50ecee5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\13. CameraMgr">
+      <UniqueIdentifier>{7345c135-46c2-4baa-b354-09450c01ec6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -249,6 +252,9 @@
     <ClCompile Include="..\ThirdParty\imgui\ImGuizmo-1.83\ImSequencer.cpp">
       <Filter>00. Manager\10. ImguiMgr\Imguizmo</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CCameraMgr.cpp">
+      <Filter>00. Manager\13. CameraMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -367,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLightMgr.h">
       <Filter>00. Manager\12. LightMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCameraMgr.h">
+      <Filter>00. Manager\13. CameraMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

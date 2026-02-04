@@ -9,6 +9,7 @@
 #include "CInfoMgr.h"
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
+#include "CCameraMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -34,6 +35,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 	if(FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -153,6 +155,8 @@ void CMainApp::Free()
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
+	CCameraMgr::GetInstance()->DestroyInstance();
+
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

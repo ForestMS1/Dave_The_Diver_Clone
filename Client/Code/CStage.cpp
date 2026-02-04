@@ -4,7 +4,10 @@
 #include "CDynamicCamera.h"
 #include "CSkyBox.h"
 #include "CLightMgr.h"
+#include "CCameraMgr.h"
 #include "CEffect.h"
+
+
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -69,6 +72,8 @@ HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"DynamicCamera", pGameObject)))
 		return E_FAIL;
+	CCameraMgr::GetInstance()->Set_Camera(CAM_DYNAMIC, pGameObject);
+	CCameraMgr::GetInstance()->Change_Camera(CAM_DYNAMIC);
 
 	// SkyBox
 	pGameObject = CSkyBox::Create(m_pGraphicDev);

@@ -20,5 +20,6 @@ namespace Engine
 
 	enum MOUSEMOVESTATE {	DIMS_X, DIMS_Y, DIMS_Z, DIMS_END };
 
+	enum CAMERAID { CAM_DYNAMIC, CAM_END};
 }
 #endif // Engine_Enum_h__
