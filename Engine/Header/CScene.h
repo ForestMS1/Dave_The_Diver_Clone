@@ -12,12 +12,9 @@ protected:
 	virtual ~CScene();
 
 public:
-	CComponent* Get_Component(COMPONENTID eID,
-		std::wstring_view svLayerTag,
-		std::wstring_view svObjTag,
-		std::wstring_view svComponentTag);
 
 	map<const std::wstring, CLayer*>* Get_Layer() { return &m_mapLayer; };
+	CLayer* Get_Layer(std::wstring_view svLayertag);
 
 public:
 	virtual			HRESULT		Ready_Scene();

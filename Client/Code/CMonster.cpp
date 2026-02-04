@@ -41,17 +41,18 @@ void CMonster::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
-	Engine::CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>
-		(Engine::CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic_Layer", L"Player", L"Com_Transform"));
-
-	if (nullptr == pPlayerTransformCom)
-		return;
-
-	_vec3		vPlayerPos{};
-	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	m_pTransformCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
-
+	CLayer* pGameLogicLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"GameLogic_Layer");
+	list<CGameObject*>* pGameObjectList = pGameLogicLayer->Get_GameObjects(L"Player");
+	for (auto& pGameObj : *pGameObjectList)
+	{
+		Engine::CTransform* pPlayerTransformCom = dynamic_cast<Engine::CTransform*>(pGameObj->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+		if (pPlayerTransformCom)
+		{
+			_vec3		vPlayerPos{};
+			pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+			m_pTransformCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
+		}
+	}
 }
 
 void CMonster::Render_GameObject()

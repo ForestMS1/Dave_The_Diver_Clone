@@ -151,7 +151,7 @@ void CPlayer::Set_OnTerrain()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
 	Engine::CTerrainTex* pTerrainVtxCom = dynamic_cast<Engine::CTerrainTex*>
-		(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
 
 	if (nullptr == pTerrainVtxCom)
 		return;
@@ -164,13 +164,13 @@ void CPlayer::Set_OnTerrain()
 _vec3 CPlayer::Picking_OnTerrain()
 {
 	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>
-		(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
 	
 	if (nullptr == pTerrainBufferCom)
 		return _vec3();
 
 	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>
-		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic_Layer", L"Terrain", L"Com_Transform"));
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"GameLogic_Layer", L"Terrain", L"Com_Transform"));
 
 	if (nullptr == pTerrainTransformCom)
 		return _vec3();
