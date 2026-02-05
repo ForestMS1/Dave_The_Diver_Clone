@@ -5,6 +5,8 @@
 #include "CSkyBox.h"
 #include "CLightMgr.h"
 #include "CEffect.h"
+#include "Firework.h"
+#include "CParticleMgr.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -35,7 +37,6 @@ HRESULT CStage::Ready_Scene()
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
-
 	return iExit;
 }
 
@@ -63,7 +64,7 @@ HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	// DynamicCamera
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
-
+	//CParticleMgr::GetInstance()->set
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
