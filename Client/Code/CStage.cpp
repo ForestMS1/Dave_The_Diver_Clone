@@ -8,6 +8,8 @@
 #include "CBackGround.h"
 #include "CCube.h"
 #include "CDInputMgr.h"
+#include "Firework.h"
+#include "CParticleMgr.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -84,7 +86,7 @@ HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	// DynamicCamera
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
-
+	//CParticleMgr::GetInstance()->set
 	if (nullptr == pGameObject)
 		return E_FAIL;
 

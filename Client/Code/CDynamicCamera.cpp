@@ -2,6 +2,7 @@
 #include "CDynamicCamera.h"
 #include "CDInputMgr.h"
 #include "CInfoMgr.h"
+#include "CParticleMgr.h"
 
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
     : CCamera(pGraphicDev),m_bFix(true), m_bCheck(true)
@@ -108,7 +109,9 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
         m_vEye -= vLength;
         m_vAt -= vLength;
     }
-
+ /*   if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
+        CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, BULLET, m_vEye, 0);
+    }*/
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_TAB) & 0x80)
     {
         if (m_bCheck)
@@ -186,12 +189,14 @@ CDynamicCamera* CDynamicCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec
 {
     CDynamicCamera* pCamera = new CDynamicCamera(pGraphicDev);
 
+
     if (FAILED(pCamera->Ready_GameObject(pEye, pAt, pUp, fFov, fAspect, fNear, fFar)))
     {
         Safe_Release(pCamera);
         MSG_BOX("DynamicCamera Create Failed");
         return nullptr;
     }
+    CParticleMgr::GetInstance()->Set_Camera(pCamera);
 
     return pCamera;
 }

@@ -4,6 +4,8 @@
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CDInputMgr.h"
+#include "CParticleMgr.h"
+#include "Engine_Define.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -136,14 +138,24 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_pTransformCom->Rotation(ROT_Y, -180.f * fTimeDelta);
 	}
-
-	if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+	//if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+	//{
+	//	_vec3 origin{ 0,0,0 };
+	//	CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT ,origin, 500);
+	//}
+	_vec3 origin{ 0,0,0 };
+	_vec3 playerPo;
+	m_pTransformCom->Get_Info(INFO_POS, &playerPo);
+	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
+		CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, FIREWORK, playerPo, 200);
+	}
+	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
 	{
 		_vec3 vPickPos = Picking_OnTerrain();
 		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
 
 		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
-	}
+	}*/
 
 
 }

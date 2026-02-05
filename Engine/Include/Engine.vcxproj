@@ -155,6 +155,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CBullet.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCamera.h" />
     <ClInclude Include="..\Header\CComponent.h" />
@@ -166,6 +167,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
+    <ClInclude Include="..\Header\CGunshot.h" />
     <ClInclude Include="..\Header\CHelper.h" />
     <ClInclude Include="..\Header\CImguiMgr.h" />
     <ClInclude Include="..\Header\CInfoMgr.h" />
@@ -174,6 +176,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CLightMgr.h" />
     <ClInclude Include="..\Header\CLog.h" />
     <ClInclude Include="..\Header\CManagement.h" />
+    <ClInclude Include="..\Header\CParticleMgr.h" />
     <ClInclude Include="..\Header\CPipeline.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
     <ClInclude Include="..\Header\CRcCol.h" />
@@ -194,8 +197,11 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
+    <ClInclude Include="..\Header\Firework.h" />
+    <ClInclude Include="..\Header\PSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CBullet.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCamera.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
@@ -207,6 +213,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
+    <ClCompile Include="..\Code\CGunshot.cpp" />
     <ClCompile Include="..\Code\CHelper.cpp" />
     <ClCompile Include="..\Code\CImguiMgr.cpp" />
     <ClCompile Include="..\Code\CInfoMgr.cpp" />
@@ -215,6 +222,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CLightMgr.cpp" />
     <ClCompile Include="..\Code\CLog.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
+    <ClCompile Include="..\Code\CParticleMgr.cpp" />
     <ClCompile Include="..\Code\CPipeline.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
     <ClCompile Include="..\Code\CRcCol.cpp" />
@@ -229,6 +237,8 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CTransform.cpp" />
     <ClCompile Include="..\Code\CTriCol.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
+    <ClCompile Include="..\Code\Firework.cpp" />
+    <ClCompile Include="..\Code\PSystem.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui-1.83\imgui.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui-1.83\imgui_demo.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui-1.83\imgui_draw.cpp" />
