@@ -6,6 +6,15 @@
 #include "CDInputMgr.h"
 #include "CPlayerCam.h"
 
+#include "CPlayerState.h"
+#include "CPlayerIdle.h"
+#include "CPlayerAttack.h"
+
+#ifdef _DEBUG
+// Imgui µð¹ö±ë¿ë
+const char* enum_names[] = { "IDLE", "ATTCK", "DIE" };
+#endif
+
 CDSPlayer::CDSPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 	, m_pBufferCom(nullptr)
@@ -29,19 +38,25 @@ HRESULT CDSPlayer::Ready_GameObject()
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
+	if (FAILED(Add_State()))
+		return E_FAIL;
 
+	m_pState = m_mapState[PlayerState::IDLE];
+	m_eCurState = PlayerState::IDLE;
 
 	return S_OK;
 }
 
 _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
 	Key_Input(fTimeDelta);
 	Mouse_Move();
 	Set_Cam();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	m_pState->Update_State(fTimeDelta);
 
 	return iExit;
 }
@@ -49,6 +64,7 @@ _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 void CDSPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	m_pState->LateUpdate_State(fTimeDelta);
 }
 
 void CDSPlayer::Render_GameObject()
@@ -66,6 +82,7 @@ void CDSPlayer::Render_GameObject()
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", (float*)&vPos, 1.f - 1.f, 1.f);
 	ImGui::DragFloat3("Look", (float*)&vLook, 1.f - 1.f, 1.f);
+	ImGui::Text(enum_names[(_int)m_eCurState]);
 	ImGui::End();
 #endif
 }
@@ -113,6 +130,14 @@ HRESULT CDSPlayer::Add_Component()
 	return S_OK;
 }
 
+HRESULT CDSPlayer::Add_State()
+{
+	m_mapState.insert({ PlayerState::IDLE, new CPlayerIdle });
+	m_mapState.insert({ PlayerState::ATTACK, new CPlayerAttack });
+
+	return S_OK;
+}
+
 void CDSPlayer::Key_Input(const _float& fTimeDelta)
 {
 	_vec3		vDir, vRight;
@@ -146,6 +171,11 @@ void CDSPlayer::Key_Input(const _float& fTimeDelta)
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
 		m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
+	}
+
+	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
+	{
+		Set_State(PlayerState::ATTACK);
 	}
 }
 
@@ -192,6 +222,15 @@ void CDSPlayer::Set_OnTerrain()
 	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
 }
 
+void CDSPlayer::Set_State(PlayerState state)
+{
+	if (m_mapState[state] == m_pState)
+		return;
+
+	m_pState = m_mapState[state];
+	m_eCurState = state;
+}
+
 CDSPlayer* CDSPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CDSPlayer* pBackGround = new CDSPlayer(pGraphicDev);
@@ -209,4 +248,6 @@ CDSPlayer* CDSPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CDSPlayer::Free()
 {
 	CGameObject::Free();
+	for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
+	m_mapState.clear();
 }

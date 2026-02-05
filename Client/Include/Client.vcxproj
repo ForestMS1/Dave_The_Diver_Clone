@@ -163,7 +163,10 @@
     <ClInclude Include="..\Header\CMainApp.h" />
     <ClInclude Include="..\Header\CMonster.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
+    <ClInclude Include="..\Header\CPlayerAttack.h" />
     <ClInclude Include="..\Header\CPlayerCam.h" />
+    <ClInclude Include="..\Header\CPlayerIdle.h" />
+    <ClInclude Include="..\Header\CPlayerState.h" />
     <ClInclude Include="..\Header\CPlayerTestScene.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CStage.h" />
@@ -185,7 +188,10 @@
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CMonster.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
+    <ClCompile Include="..\Code\CPlayerAttack.cpp" />
     <ClCompile Include="..\Code\CPlayerCam.cpp" />
+    <ClCompile Include="..\Code\CPlayerIdle.cpp" />
+    <ClCompile Include="..\Code\CPlayerState.cpp" />
     <ClCompile Include="..\Code\CPlayerTestScene.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CStage.cpp" />

@@ -64,6 +64,15 @@
     <Filter Include="02. GameObject\DSPlayer">
       <UniqueIdentifier>{f297e91f-cd1f-4682-b72f-ad120661d19c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DSPlayer\PlayerState">
+      <UniqueIdentifier>{46a54173-d45e-4e86-a655-a515e4e43973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DSPlayer\PlayerState\Idle">
+      <UniqueIdentifier>{4a9afb67-7a70-41fa-b5a4-bf41f078b9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DSPlayer\PlayerState\Attack">
+      <UniqueIdentifier>{5546b252-6dff-4d29-a83d-3daaa2863572}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -126,6 +135,15 @@
     <ClInclude Include="..\Header\CDSPlayer.h">
       <Filter>02. GameObject\DSPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerState.h">
+      <Filter>02. GameObject\DSPlayer\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerIdle.h">
+      <Filter>02. GameObject\DSPlayer\PlayerState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerAttack.h">
+      <Filter>02. GameObject\DSPlayer\PlayerState\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -178,6 +196,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDSPlayer.cpp">
       <Filter>02. GameObject\DSPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerState.cpp">
+      <Filter>02. GameObject\DSPlayer\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerIdle.cpp">
+      <Filter>02. GameObject\DSPlayer\PlayerState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerAttack.cpp">
+      <Filter>02. GameObject\DSPlayer\PlayerState\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

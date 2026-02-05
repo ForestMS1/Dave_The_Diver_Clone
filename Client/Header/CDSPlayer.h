@@ -1,6 +1,5 @@
 #pragma once
 #include "CGameObject.h"
-
 namespace Engine
 {
 	class CRcTex;
@@ -8,6 +7,15 @@ namespace Engine
 	class CTransform;
 	class CCalculator;
 }
+
+class CPlayerState;
+
+enum class PlayerState 
+{
+	IDLE = 0,
+	ATTACK,
+	DIE,
+};
 
 class CDSPlayer : public CGameObject
 {
@@ -24,16 +32,23 @@ public:
 
 private:
 	HRESULT			Add_Component();
+	HRESULT			Add_State();
 	void			Key_Input(const _float& fTimeDelta);
 	void			Mouse_Move();
 	void			Set_Cam();
 	void			Set_OnTerrain();
+	void			Set_State(PlayerState state);
 
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 	Engine::CCalculator* m_pCalculatorCom;
+
+private:
+	CPlayerState* m_pState = nullptr;
+	PlayerState m_eCurState;
+	unordered_map<PlayerState, CPlayerState*> m_mapState;
 
 public:
 	static CDSPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
