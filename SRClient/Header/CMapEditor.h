@@ -24,12 +24,17 @@ private:
 
 	HRESULT			Ready_Light();
 
+private:
+	void			Show_Position();
+	
+
 public:
 	static CMapEditor* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 
 public:
-	vector <CRoom*> vecRoom;
+	list <CRoom*> vecRoom[15];
+	list <CGameObject*> vecMiniMap[15];
 
 private:
 	virtual void	Free();

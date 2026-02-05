@@ -37,6 +37,9 @@
     <Filter Include="02. GameObject\98. DynamicCamera">
       <UniqueIdentifier>{28f175b6-08bb-461e-b5a4-f4c3c7e3038b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\100. MiniMapTerrain">
+      <UniqueIdentifier>{a1506bef-8fba-4c84-9629-bcbd339bbf29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -72,6 +75,9 @@
     <ClInclude Include="..\Header\CDynamicCamera.h">
       <Filter>02. GameObject\98. DynamicCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMiniMapTerrain.h">
+      <Filter>02. GameObject\100. MiniMapTerrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -97,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMapEditorTerrain.cpp">
       <Filter>02. GameObject\99. MapEditorTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMiniMapTerrain.cpp">
+      <Filter>02. GameObject\100. MiniMapTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,85 +1,104 @@
 #include "pch.h"
-#include "CMapEditorTerrain.h"
+#include "CMiniMapTerrain.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 
-CMapEditorTerrain::CMapEditorTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
+CMiniMapTerrain::CMiniMapTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
 }
 
-CMapEditorTerrain::CMapEditorTerrain(const CGameObject& rhs)
+CMiniMapTerrain::CMiniMapTerrain(const CGameObject& rhs)
 	: CGameObject(rhs)
 {
 
 }
 
-CMapEditorTerrain::~CMapEditorTerrain()
+CMiniMapTerrain::~CMiniMapTerrain()
 {
 }
 
-HRESULT CMapEditorTerrain::Ready_GameObject()
+HRESULT CMiniMapTerrain::Ready_GameObject()
 {
-	
+
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
+
+	m_iTypeNum = 1;
 
 
 	return S_OK;
 }
 
-_int CMapEditorTerrain::Update_GameObject(const _float& fTimeDelta)
+_int CMiniMapTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return iExit;
 }
 
-void CMapEditorTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
+void CMiniMapTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
 }
 
-void CMapEditorTerrain::Render_GameObject()
+void CMiniMapTerrain::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	if (FAILED(Ready_Material()))
 		return;
 
-	m_pTextureCom->Set_Texture(1);
-	
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+
+	switch (m_iTypeNum) {
+	case 0:
+		m_pTextureCom->Set_Texture(0);
+		break;
+		
+	case 1:
+		m_pTextureCom->Set_Texture(1);
+
+		break;
+
+	case 2:
+
+		break;
+	default:
+
+		break;
+
+	}
+
+
 	m_pBufferCom->Render_Buffer();
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE, true);
 
-
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 }
 
-HRESULT CMapEditorTerrain::Add_Component()
+HRESULT CMiniMapTerrain::Add_Component()
 {
 	Engine::CComponent* pComponent = nullptr;
 
 	// buffer 
 	pComponent = m_pBufferCom =
 		dynamic_cast<Engine::CMapTerrainTex*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_MapTerrainTex"));
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_MiniMapTerrainTex"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
+	//Texture
 	pComponent = m_pTextureCom =
 		dynamic_cast<Engine::CTexture*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_TerrainTexture"));
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_MiniMapBlankTexture"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
@@ -92,12 +111,14 @@ HRESULT CMapEditorTerrain::Add_Component()
 	if (nullptr == pComponent)
 		return E_FAIL;
 
+
+
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 
 	return S_OK;
 }
 
-HRESULT CMapEditorTerrain::Ready_Material()
+HRESULT CMiniMapTerrain::Ready_Material()
 {
 	D3DMATERIAL9			tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
@@ -114,21 +135,21 @@ HRESULT CMapEditorTerrain::Ready_Material()
 	return S_OK;
 }
 
-CMapEditorTerrain* CMapEditorTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMiniMapTerrain* CMiniMapTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CMapEditorTerrain* pMapEditorTerrian = new CMapEditorTerrain(pGraphicDev);
+	CMiniMapTerrain* pMiniMapTerrain = new CMiniMapTerrain(pGraphicDev);
 
-	if (FAILED(pMapEditorTerrian->Ready_GameObject()))
+	if (FAILED(pMiniMapTerrain->Ready_GameObject()))
 	{
-		Safe_Release(pMapEditorTerrian);
-		MSG_BOX("pMapEditorTerrian Create Failed");
+		Safe_Release(pMiniMapTerrain);
+		MSG_BOX("pMiniMapTerrain Create Failed");
 		return nullptr;
 	}
 
-	return pMapEditorTerrian;
+	return pMiniMapTerrain;
 }
 
-void CMapEditorTerrain::Free()
+void CMiniMapTerrain::Free()
 {
 	CGameObject::Free();
 }

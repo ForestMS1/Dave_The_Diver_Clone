@@ -160,6 +160,7 @@
     <ClInclude Include="..\Header\CMainApp.h" />
     <ClInclude Include="..\Header\CMapEditor.h" />
     <ClInclude Include="..\Header\CMapEditorTerrain.h" />
+    <ClInclude Include="..\Header\CMiniMapTerrain.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CMapEditor.cpp" />
     <ClCompile Include="..\Code\CMapEditorTerrain.cpp" />
+    <ClCompile Include="..\Code\CMiniMapTerrain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -4,12 +4,12 @@
 #include "CInfoMgr.h"
 
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
-    : CCamera(pGraphicDev),m_bFix(true), m_bCheck(true)
+    : CCamera(pGraphicDev),m_bFix(false), m_bCheck(true)
 {
 }
 
 CDynamicCamera::CDynamicCamera(const CDynamicCamera& rhs)
-    : CCamera(rhs), m_bFix(true), m_bCheck(true)
+    : CCamera(rhs), m_bFix(false), m_bCheck(true)
 {
 }
 

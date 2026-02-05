@@ -88,15 +88,24 @@ _uint CLoading::Loading_MapEditor()
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev))))
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex",Engine::CMapTerrainTex::Create(m_pGraphicDev,10,10,0))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create(m_pGraphicDev, 14, 14, 1))))
+            return E_FAIL;
+
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapTerrainTex",Engine::CMapTerrainTex::Create(m_pGraphicDev,2,2,13))))
             return E_FAIL;
     }
 
 
     {
         m_sLoading = L"Texture Loading.....................................";
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Tile0.jpg", 1))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Tile0.jpg", 1))))
             return E_FAIL;
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapBlankTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Map/mapBlack%d.png", 2))))
+            return E_FAIL;
+
+
     }
 
     {

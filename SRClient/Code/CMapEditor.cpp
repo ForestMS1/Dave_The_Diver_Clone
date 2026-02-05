@@ -6,6 +6,8 @@
  
 #include "CLightMgr.h"
 #include "CMapEditorTerrain.h"
+#include "CMiniMapTerrain.h"
+#include "CManagement.h"
 
 
 CMapEditor::CMapEditor(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -19,6 +21,10 @@ CMapEditor::~CMapEditor()
 
 HRESULT CMapEditor::Ready_Scene()
 {
+	for(int i =0; i<15; ++i){
+		vecMiniMap[i].resize(15);
+	}
+
 	if (FAILED(Ready_Light()))
 		return E_FAIL;
 
@@ -30,6 +36,7 @@ HRESULT CMapEditor::Ready_Scene()
 
 	if (FAILED(Ready_UI_Layer(L"UI_Layer")))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -49,6 +56,7 @@ void CMapEditor::LateUpdate_Scene(const _float& fTimeDelta)
 void CMapEditor::Render_Scene()
 {
 	// debug ¿ë Ãâ·Â
+	Show_Position();
 }
 
 HRESULT CMapEditor::Ready_Environment_Layer(std::wstring_view svLayerTag)
@@ -59,9 +67,9 @@ HRESULT CMapEditor::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	_vec3	vEye{ 0.f, 100.f, 0.f };
-	_vec3	vAt{ 50.f, -30.f, 50.f };
-	_vec3	vUp{ 0.f, 1.f, 0.f };
+	_vec3	vEye{ 100.f, 250.f, 100.f };
+	_vec3	vAt{ 100.f, 50.f, 100.f };
+	_vec3	vUp{ 0.f, 0.f, 1.f };
 
 	// DynamicCamera
 	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
@@ -87,6 +95,7 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 
 	// MapEditorTerrain
+
 	pGameObject = CMapEditorTerrain::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
@@ -95,6 +104,28 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"MapEditorTerrain", pGameObject)))
 		return E_FAIL;
 
+
+
+
+	for (int i = 0; i < 15; ++i) {
+		for (int j = 0; j < 15; ++j) {
+	
+			// MiniMapTerrain
+			pGameObject = CMiniMapTerrain::Create(m_pGraphicDev);
+
+			if (nullptr == pGameObject)
+				return E_FAIL;
+
+			if (FAILED(pLayer->Add_GameObject(L"MiniMapTerrain", pGameObject)))
+				return E_FAIL;
+
+			static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(i * 13,50,j*13);
+
+		}
+	}
+
+
+	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
@@ -168,4 +199,11 @@ CMapEditor* CMapEditor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CMapEditor::Free()
 {
 	CScene::Free();
+}
+
+void CMapEditor::Show_Position() {
+	_vec3 Position{};
+	dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"GameLogic_Layer", L"MapEditorTerrain", L"Com_Transform"))->Get_Info(INFO_POS,&Position);
+
+	ImGui::SliderFloat3("Position", Position,100.f,100.f);
 }
