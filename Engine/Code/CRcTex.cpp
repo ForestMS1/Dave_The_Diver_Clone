@@ -1,11 +1,7 @@
 #include "CRcTex.h"
+#include "CGraphicDev.h"
 
 CRcTex::CRcTex()
-{
-}
-
-CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
 {
 }
 
@@ -76,9 +72,9 @@ void CRcTex::Render_Buffer()
 	CVIBuffer::Render_Buffer();
 }
 
-CRcTex* CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRcTex* CRcTex::Create()
 {
-	CRcTex* pRcTex = new CRcTex(pGraphicDev);
+	CRcTex* pRcTex = new CRcTex;
 
 	if (FAILED(pRcTex->Ready_Buffer()))
 	{

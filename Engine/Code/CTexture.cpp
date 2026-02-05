@@ -1,11 +1,7 @@
 #include "CTexture.h"
+#include "CGraphicDev.h"
 
 CTexture::CTexture()
-{
-}
-
-CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
-    : CComponent(pGraphicDev)
 {
 }
 
@@ -30,6 +26,7 @@ CTexture::~CTexture()
 
 HRESULT CTexture::Ready_Texture(TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt)
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	m_vecTexture.reserve(iCnt);
 
 	IDirect3DBaseTexture9* pTexture = nullptr;
@@ -44,14 +41,14 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eID, std::wstring_view svPath, const _
 		{
 		case TEX_NORMAL:
 
-			if (FAILED(D3DXCreateTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture)))
+			if (FAILED(D3DXCreateTextureFromFile(pGraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture)))
 				return E_FAIL;
 
 			break;
 
 		case TEX_CUBE:
 
-			if (FAILED(D3DXCreateCubeTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture)))
+			if (FAILED(D3DXCreateCubeTextureFromFile(pGraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture)))
 				return E_FAIL;
 
 			break;
@@ -65,15 +62,16 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eID, std::wstring_view svPath, const _
 
 void CTexture::Set_Texture(const _uint& iIndex)
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	if (m_vecTexture.size() <= iIndex)
 		return;
 
-	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+	pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt)
+CTexture* CTexture::Create(TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt)
 {
-	CTexture* pTexture = new CTexture(pGraphicDev);
+	CTexture* pTexture = new CTexture;
 
 	if (FAILED(pTexture->Ready_Texture(eID, svPath, iCnt)))
 	{

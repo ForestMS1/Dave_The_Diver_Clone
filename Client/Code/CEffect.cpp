@@ -2,9 +2,10 @@
 #include "CEffect.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CEffect::CEffect()
+	: CGameObject()
 {
 }
 
@@ -57,10 +58,11 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 
 void CEffect::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	_matrix		matBill, matWorld, matView;
 
 	matWorld = *m_pTransformCom->Get_World();
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMatrixIdentity(&matBill);
 
@@ -87,12 +89,14 @@ void CEffect::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CEffect::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pTextureCom->Set_Texture((_uint)m_fFrame);
 
 	m_pBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CEffect::Add_Component()
@@ -130,9 +134,9 @@ HRESULT CEffect::Add_Component()
 }
 
 
-CEffect* CEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CEffect* CEffect::Create()
 {
-	CEffect* pBackGround = new CEffect(pGraphicDev);
+	CEffect* pBackGround = new CEffect;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

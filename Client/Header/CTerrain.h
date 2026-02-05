@@ -12,7 +12,7 @@ namespace Engine
 class CTerrain : public CGameObject
 {
 private:
-	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTerrain();
 	explicit CTerrain(const CGameObject& rhs);
 	virtual ~CTerrain();
 
@@ -32,7 +32,7 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CTerrain* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTerrain* Create();
 
 private:
 	virtual void Free();

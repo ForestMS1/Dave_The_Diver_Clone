@@ -7,7 +7,6 @@ class ENGINE_DLL CTexture :  public CComponent
 {
 private:
 	explicit	CTexture();
-	explicit	CTexture(LPDIRECT3DDEVICE9	pGraphicDev);
 	explicit	CTexture(const CTexture& rhs);
 	virtual	   ~CTexture();
 
@@ -19,8 +18,7 @@ private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
 
 public:
-	static CTexture* Create(LPDIRECT3DDEVICE9 pGraphicDev, 
-							TEXTUREID eID,
+	static CTexture* Create(TEXTUREID eID,
 							std::wstring_view svPath, 
 							const _uint& iCnt = 1);
 	virtual CComponent* Clone();
