@@ -12,7 +12,7 @@ namespace Engine
 class CPlayer : public CGameObject
 {
 private:
-	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPlayer();
 	explicit CPlayer(const CGameObject& rhs);
 	virtual ~CPlayer();
 
@@ -36,7 +36,7 @@ private:
 	Engine::CCalculator*	m_pCalculatorCom;
 
 public:
-	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayer* Create();
 
 private:
 	virtual void Free();

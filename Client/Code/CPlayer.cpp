@@ -4,14 +4,12 @@
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CDInputMgr.h"
-#include "CPlayerCam.h"
+#include "CParticleMgr.h"
+#include "Engine_Define.h"
+#include "CGraphicDev.h"
 
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
-	, m_pBufferCom(nullptr)
-	, m_pCalculatorCom(nullptr)
-	, m_pTextureCom(nullptr)
-	, m_pTransformCom(nullptr)
+CPlayer::CPlayer()
+	: CGameObject()
 {
 }
 
@@ -53,21 +51,25 @@ void CPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CPlayer::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
 
-#ifdef _DEBUG
-	_vec3 vPos, vLook;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	ImGui::Begin("Player");
-	ImGui::DragFloat3("Pos", (float*)&vPos, 1.f - 1.f, 1.f);
-	ImGui::DragFloat3("Look", (float*)&vLook, 1.f - 1.f, 1.f);
-	ImGui::End();
-#endif
+	D3DXMATRIX matTmp;
+	D3DXMatrixIdentity(&matTmp);
+	pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CPlayer::Add_Component()
@@ -115,8 +117,8 @@ HRESULT CPlayer::Add_Component()
 
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	_vec3		vDir, vRight;
-	_vec3		vUp(0.f, 1.f, 0.f);
+
+	_vec3		vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 	D3DXVec3Cross(&vRight, &vDir, &vUp);
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
@@ -147,11 +149,22 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
 	}
-}
-
-void CPlayer::Mouse_Move()
-{
-	_long   dwMouseMove(0);
+	//if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+	//{
+	//	_vec3 origin{ 0,0,0 };
+	//	CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT ,origin, 500);
+	//}
+	_vec3 origin{ 0,0,0 };
+	_vec3 playerPo;
+	m_pTransformCom->Get_Info(INFO_POS, &playerPo);
+	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+		CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
+	}
+	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+	{
+		_vec3 vPickPos = Picking_OnTerrain();
+		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
 
 	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
 		m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
@@ -192,9 +205,26 @@ void CPlayer::Set_OnTerrain()
 	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+_vec3 CPlayer::Picking_OnTerrain()
 {
-	CPlayer* pBackGround = new CPlayer(pGraphicDev);
+	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+	
+	if (nullptr == pTerrainBufferCom)
+		return _vec3();
+
+	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"GameLogic_Layer", L"Terrain", L"Com_Transform"));
+
+	if (nullptr == pTerrainTransformCom)
+		return _vec3();
+
+	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
+}
+
+CPlayer* CPlayer::Create()
+{
+	CPlayer* pBackGround = new CPlayer;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

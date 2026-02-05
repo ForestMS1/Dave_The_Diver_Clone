@@ -1,10 +1,8 @@
 #include "CScene.h"
 #include <CHelper.h>
 
-CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
-    : m_pGraphicDev(pGraphicDev)
+CScene::CScene()
 {
-    m_pGraphicDev->AddRef();
 }
 
 CScene::~CScene()
@@ -141,6 +139,4 @@ void CScene::Free()
 {
     for_each(m_mapLayer.begin(), m_mapLayer.end(), CDeleteMap());
     m_mapLayer.clear();
-
-    Safe_Release(m_pGraphicDev);
 }

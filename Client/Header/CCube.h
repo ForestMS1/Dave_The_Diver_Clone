@@ -11,7 +11,7 @@ namespace Engine
 class CCube : public CGameObject
 {
 private:
-	explicit CCube(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCube();
 	explicit CCube(const CGameObject& rhs);
 	virtual ~CCube();
 
@@ -35,7 +35,7 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CCube* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCube* Create();
 
 private:
 	virtual void Free();

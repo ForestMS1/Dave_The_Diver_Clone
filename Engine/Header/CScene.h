@@ -8,7 +8,7 @@ BEGIN(Engine)
 class ENGINE_DLL CScene : public CBase
 {
 protected:
-	explicit CScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CScene();
 	virtual ~CScene();
 
 public:
@@ -24,7 +24,6 @@ public:
 
 protected:
 	map<const std::wstring, CLayer*>			m_mapLayer;
-	LPDIRECT3DDEVICE9					m_pGraphicDev;
 
 protected:
 	virtual void			Free();

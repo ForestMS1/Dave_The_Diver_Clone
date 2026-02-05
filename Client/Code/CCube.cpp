@@ -2,9 +2,10 @@
 #include "CCube.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CCube::CCube(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CCube::CCube()
+	: CGameObject()
 {
 }
 
@@ -55,6 +56,8 @@ void CCube::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CCube::Render_GameObject()
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
 	if (CGameObject* pParent = Get_Parent())
 	{
 		if (CTransform* pTransform = dynamic_cast<CTransform*>(pParent->Get_Component(ID_DYNAMIC, L"Com_Transform")))
@@ -63,23 +66,23 @@ void CCube::Render_GameObject()
 			_matrix myWorld = *m_pTransformCom->Get_World();
 			_matrix world = myWorld * parentWorld;
 			m_pTransformCom->Set_World(&world);
-			m_pGraphicDev->SetTransform(D3DTS_WORLD, &world);
+			pGraphicDev->SetTransform(D3DTS_WORLD, &world);
 		}
 	}
 	else
 	{
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+		pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	}
 
 	
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(3);
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
@@ -118,9 +121,9 @@ HRESULT CCube::Add_Component()
 }
 
 
-CCube* CCube::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCube* CCube::Create()
 {
-	CCube* pCube = new CCube(pGraphicDev);
+	CCube* pCube = new CCube;
 
 	if (FAILED(pCube->Ready_GameObject()))
 	{

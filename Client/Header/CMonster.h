@@ -10,7 +10,7 @@ namespace Engine
 class CMonster : public CGameObject
 {
 private:
-	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CMonster();
 	explicit CMonster(const CGameObject& rhs);
 	virtual ~CMonster();
 
@@ -28,7 +28,7 @@ private:
 	Engine::CTransform*		m_pTransformCom;
 
 public:
-	static CMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMonster* Create();
 
 private:
 	virtual void Free();

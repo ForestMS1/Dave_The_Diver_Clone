@@ -9,7 +9,7 @@ class CTransform;
 class ENGINE_DLL CCalculator :   public CComponent
 {
 private:
-	explicit CCalculator(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCalculator();
 	explicit CCalculator(const CCalculator& rhs);
 	virtual ~CCalculator();
 
@@ -26,7 +26,7 @@ public:
 									CTransform* pTerrainTransformCom);
 
 public:
-	static CCalculator* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCalculator* Create();
 	virtual CComponent* Clone();
 
 private:

@@ -11,7 +11,7 @@ namespace Engine
 class CSkyBox : public CGameObject
 {
 private:
-	explicit CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CSkyBox();
 	explicit CSkyBox(const CGameObject& rhs);
 	virtual ~CSkyBox();
 
@@ -30,7 +30,7 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CSkyBox* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSkyBox* Create();
 
 private:
 	virtual void Free();

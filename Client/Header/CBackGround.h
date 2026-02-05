@@ -10,7 +10,7 @@ namespace Engine
 class CBackGround : public CGameObject
 {
 private:
-	explicit CBackGround(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBackGround();
 	explicit CBackGround(const CGameObject& rhs);
 	virtual ~CBackGround();
 
@@ -28,7 +28,7 @@ private:
 	Engine::CTexture*		m_pTextureCom;
 
 public:
-	static CBackGround* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBackGround* Create();
 
 private:
 	virtual void Free();
