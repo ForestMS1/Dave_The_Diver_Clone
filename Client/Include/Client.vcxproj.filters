@@ -61,6 +61,9 @@
     <Filter Include="02. GameObject\PlayerCam">
       <UniqueIdentifier>{7c69a780-f400-4c0a-a0ff-77d4df5e4d07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DSPlayer">
+      <UniqueIdentifier>{f297e91f-cd1f-4682-b72f-ad120661d19c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -120,6 +123,9 @@
     <ClInclude Include="..\Header\CPlayerCam.h">
       <Filter>02. GameObject\PlayerCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDSPlayer.h">
+      <Filter>02. GameObject\DSPlayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -169,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerCam.cpp">
       <Filter>02. GameObject\PlayerCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDSPlayer.cpp">
+      <Filter>02. GameObject\DSPlayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

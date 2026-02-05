@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CPlayerTestScene.h"
 #include "CPlayerCam.h"
-#include "CPlayer.h"
+#include "CDSPlayer.h"
 #include "CTerrain.h"
 
 CPlayerTestScene::CPlayerTestScene(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -69,7 +69,7 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// Player
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	pGameObject = CDSPlayer::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
