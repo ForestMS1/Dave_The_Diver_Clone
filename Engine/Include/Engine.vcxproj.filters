@@ -118,6 +118,9 @@
     <Filter Include="02. Component\00. VIBuffer\05. MapEditorTerrain">
       <UniqueIdentifier>{f613e8aa-cffc-4edc-9940-72fca5259f49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Structure\02. GameObject\Lay">
+      <UniqueIdentifier>{1dbbe337-0754-4b97-af1d-3a6a1d3355c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -261,6 +264,9 @@
     <ClCompile Include="..\Code\CMapTerrainTex.cpp">
       <Filter>02. Component\00. VIBuffer\05. MapEditorTerrain</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CLay.cpp">
+      <Filter>01. Structure\02. GameObject\Lay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -385,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CMapTerrainTex.h">
       <Filter>02. Component\00. VIBuffer\05. MapEditorTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLay.h">
+      <Filter>01. Structure\02. GameObject\Lay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

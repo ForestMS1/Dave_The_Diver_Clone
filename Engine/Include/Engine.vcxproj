@@ -169,6 +169,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CHelper.h" />
     <ClInclude Include="..\Header\CImguiMgr.h" />
     <ClInclude Include="..\Header\CInfoMgr.h" />
+    <ClInclude Include="..\Header\CLay.h" />
     <ClInclude Include="..\Header\CLayer.h" />
     <ClInclude Include="..\Header\CLight.h" />
     <ClInclude Include="..\Header\CLightMgr.h" />
@@ -212,6 +213,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CHelper.cpp" />
     <ClCompile Include="..\Code\CImguiMgr.cpp" />
     <ClCompile Include="..\Code\CInfoMgr.cpp" />
+    <ClCompile Include="..\Code\CLay.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
     <ClCompile Include="..\Code\CLight.cpp" />
     <ClCompile Include="..\Code\CLightMgr.cpp" />

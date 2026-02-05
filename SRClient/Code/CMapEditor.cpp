@@ -205,5 +205,17 @@ void CMapEditor::Show_Position() {
 	_vec3 Position{};
 	dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"GameLogic_Layer", L"MapEditorTerrain", L"Com_Transform"))->Get_Info(INFO_POS,&Position);
 
+	//ImGui::Begin("Operation");
+	//if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
+	//	m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+	//ImGui::SameLine();
+	//if (ImGui::RadioButton("Rotate", m_CurrentGizmoOperation == ImGuizmo::ROTATE))
+	//	m_CurrentGizmoOperation = ImGuizmo::ROTATE;
+	//ImGui::SameLine();
+	//if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
+	//	m_CurrentGizmoOperation = ImGuizmo::SCALE;
+	//ImGui::End();
+
+	ImGuizmo::ROTATE;
 	ImGui::SliderFloat3("Position", Position,100.f,100.f);
 }
