@@ -60,6 +60,9 @@ void CPlayer::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
+	D3DXMATRIX matTmp;
+	D3DXMatrixIdentity(&matTmp);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
