@@ -21,13 +21,32 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject() = 0;
 
+public:
 	void			Compute_ViewZ(const _vec3* pPos);
+	void			Set_Dead() { m_bDead = true; }
+	bool			Get_Dead() const { return m_bDead; }
+	
+	
 
 protected:
-	map<const std::wstring, CComponent*>			m_mapComponent[ID_END];
+	map<const std::wstring, CComponent*>	m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
 
 	_float									m_fViewZ;
+	bool									m_bDead;
+
+// °èÃþ °ü·Ã
+public:
+	CGameObject * const Get_Parent() const { return m_pParentGameObject; }
+	list<CGameObject*> * const  Get_Children()  { return &m_childGameObjectList; }
+	void Set_Parent(CGameObject* const pNewParent);
+protected:
+	CGameObject* m_pParentGameObject;
+	list<CGameObject*> m_childGameObjectList;
+private:
+	void EraseChildGameObject(CGameObject* pParentGameObject, CGameObject* pDelTarget);
+
+
 
 
 private:
