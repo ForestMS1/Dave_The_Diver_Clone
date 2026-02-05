@@ -75,6 +75,49 @@ _uint CLoading::Loading_Stage()
      return 0;
 }
 
+_uint CLoading::Loading_MapEditor()
+{
+    {
+        m_sLoading = L"Buffer Loading.....................................";
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create(m_pGraphicDev))))
+            return E_FAIL;
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create(m_pGraphicDev))))
+            return E_FAIL;
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev))))
+            return E_FAIL;
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex",Engine::CMapTerrainTex::Create(m_pGraphicDev,10,10,0))))
+            return E_FAIL;
+    }
+
+
+    {
+        m_sLoading = L"Texture Loading.....................................";
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Tile0.jpg", 1))))
+            return E_FAIL;
+    }
+
+    {
+        m_sLoading = L"Etc Loading.....................................";
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create(m_pGraphicDev))))
+            return E_FAIL;
+
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create(m_pGraphicDev))))
+            return E_FAIL;
+    }
+
+
+    m_sLoading = L"Loading Complete !!!!";
+
+    m_bFinish = true;
+
+    return 0;
+}
+
+
 unsigned int CLoading::Thread_Main(void* pArg)
 {
     CLoading* pLoading = reinterpret_cast<CLoading*>(pArg);
@@ -87,6 +130,9 @@ unsigned int CLoading::Thread_Main(void* pArg)
     {
     case LOADING_STAGE:
         iFlag = pLoading->Loading_Stage();
+        break;
+    case LOADING_MAPEDITOR:
+        iFlag = pLoading->Loading_MapEditor();
         break;
 
     case LOADING_BOSS:

@@ -86,13 +86,13 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	CGameObject* pGameObject = nullptr;
 
 
-	// Terrain
+	// MapEditorTerrain
 	pGameObject = CMapEditorTerrain::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	if (FAILED(pLayer->Add_GameObject(L"Terrain", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"MapEditorTerrain", pGameObject)))
 		return E_FAIL;
 
 
@@ -158,7 +158,7 @@ CMapEditor* CMapEditor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pMapEditor->Ready_Scene()))
 	{
 		Safe_Release(pMapEditor);
-		MSG_BOX("Stage Create Failed");
+		MSG_BOX("CMapEditor Create Failed");
 		return nullptr;
 	}
 

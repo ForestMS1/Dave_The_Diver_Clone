@@ -7,6 +7,7 @@
 #include "CLog.h"
 #include "CSoundMgr.h"
 #include "CHelper.h"
+#include "CMapEditor.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(NULL)
@@ -28,9 +29,10 @@ HRESULT CLogo::Ready_Scene()
 	//if (FAILED(Ready_GameLogic_Layer(L"GameLogic_Layer")))
 	//	return E_FAIL;
 
-	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
+	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_MAPEDITOR);
 	if (nullptr == m_pLoading)
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -43,6 +45,21 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 	{
 		
 		//ImGui::Button("asdf");
+		if (GetAsyncKeyState(VK_RETURN))
+		{
+			Engine::CScene* pMapEditor = CMapEditor::Create(m_pGraphicDev);
+			//Engine::CScene* pStage = CMapEditor::Create(m_pGraphicDev);
+
+			if (nullptr == pMapEditor)
+				return -1;
+
+			if (FAILED(CManagement::GetInstance()->Set_Scene(pMapEditor)))
+			{
+				MSG_BOX("MapEditor Scene Change Failed");
+				return -1;
+			}
+		}
+
 	}
 
 
@@ -80,13 +97,11 @@ HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)
 HRESULT CLogo::Ready_Prototype()
 {
 	
-
-
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create(m_pGraphicDev))))
+	/*if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create(m_pGraphicDev))))
 		return E_FAIL;
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg", 1))))
-		return E_FAIL;
+		return E_FAIL;*/
 
 	return S_OK;
 }

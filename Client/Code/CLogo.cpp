@@ -3,7 +3,7 @@
 #include "CBackGround.h"
 #include "CProtoMgr.h"
 #include "CStage.h"
-#include "CMapEditor.h"
+
 #include "CManagement.h"
 #include "CFontMgr.h"
 #include "CDInputMgr.h"
@@ -46,8 +46,8 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 	{
 		if (GetAsyncKeyState(VK_RETURN))
 		{
-			//Engine::CScene* pStage = CStage::Create(m_pGraphicDev);
-			Engine::CScene* pStage = CMapEditor::Create(m_pGraphicDev);
+			Engine::CScene* pStage = CStage::Create(m_pGraphicDev);
+			//Engine::CScene* pStage = CMapEditor::Create(m_pGraphicDev);
 
 			if (nullptr == pStage)
 				return -1;

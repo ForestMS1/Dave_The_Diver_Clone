@@ -115,6 +115,9 @@
     <Filter Include="03. Room">
       <UniqueIdentifier>{477b186a-46df-4bae-81bb-96b1639df71f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\00. VIBuffer\05. MapEditorTerrain">
+      <UniqueIdentifier>{f613e8aa-cffc-4edc-9940-72fca5259f49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -252,9 +255,11 @@
     <ClCompile Include="..\ThirdParty\imgui\ImGuizmo-1.83\ImSequencer.cpp">
       <Filter>00. Manager\10. ImguiMgr\Imguizmo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMapTerrainTex.cpp" />
     <ClCompile Include="..\Code\CRoom.cpp">
       <Filter>03. Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapTerrainTex.cpp">
+      <Filter>02. Component\00. VIBuffer\05. MapEditorTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,9 +380,11 @@
     <ClInclude Include="..\Header\CLightMgr.h">
       <Filter>00. Manager\12. LightMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMapTerrainTex.h" />
     <ClInclude Include="..\Header\CRoom.h">
       <Filter>03. Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapTerrainTex.h">
+      <Filter>02. Component\00. VIBuffer\05. MapEditorTerrain</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
