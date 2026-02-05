@@ -10,15 +10,15 @@
 #include "CPlayerIdle.h"
 #include "CPlayerAttack.h"
 #include "CPlayerDie.h"
+#include "CGraphicDev.h"
 
 #ifdef _DEBUG
 // Imgui µð¹ö±ë¿ë
 const char* enum_names[] = { "IDLE", "ATTCK", "DIE" };
 #endif
 
-CDSPlayer::CDSPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
-	, m_pBufferCom(nullptr)
+CDSPlayer::CDSPlayer()
+	: m_pBufferCom(nullptr)
 	, m_pCalculatorCom(nullptr)
 	, m_pTextureCom(nullptr)
 	, m_pTransformCom(nullptr)
@@ -71,7 +71,9 @@ void CDSPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CDSPlayer::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pTextureCom->Set_Texture(0);
 
@@ -240,9 +242,9 @@ void CDSPlayer::Set_State(PlayerState state)
 	m_pState->Enter();
 }
 
-CDSPlayer* CDSPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CDSPlayer* CDSPlayer::Create()
 {
-	CDSPlayer* pBackGround = new CDSPlayer(pGraphicDev);
+	CDSPlayer* pBackGround = new CDSPlayer;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

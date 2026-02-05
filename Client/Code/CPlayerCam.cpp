@@ -5,8 +5,8 @@
 #include "CProtoMgr.h"
 #include "CManagement.h"
 #include "CPlayer.h"
-CPlayerCam::CPlayerCam(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CCamera(pGraphicDev), m_fSpeed(0.f)
+CPlayerCam::CPlayerCam()
+	: m_fSpeed(0.f)
 	, m_pCalculatorCom(nullptr)
 {
 }
@@ -96,9 +96,9 @@ HRESULT CPlayerCam::Add_Component()
 	return S_OK;
 }
 
-CPlayerCam* CPlayerCam::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)
+CPlayerCam* CPlayerCam::Create(const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)
 {
-	CPlayerCam* pPlayerCam = new CPlayerCam(pGraphicDev);
+	CPlayerCam* pPlayerCam = new CPlayerCam;
 	if (FAILED(pPlayerCam->Ready_GameObject(pEye, pAt, pUp, fFov, fAspect, fNear, fFar)))
 	{
 		Safe_Release(pPlayerCam);

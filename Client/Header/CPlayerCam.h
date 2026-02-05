@@ -10,7 +10,7 @@ namespace Engine
 class CPlayerCam : public CCamera
 {
 private:
-	explicit CPlayerCam(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPlayerCam();
 	explicit CPlayerCam(const CPlayerCam& rhs);
 	virtual ~CPlayerCam();
 
@@ -45,7 +45,7 @@ private:
 	Engine::CCalculator* m_pCalculatorCom;
 
 public:
-	static CPlayerCam* Create(LPDIRECT3DDEVICE9 pGraphicDev,
+	static CPlayerCam* Create(
 		const _vec3* pEye,
 		const _vec3* pAt,
 		const _vec3* pUp,

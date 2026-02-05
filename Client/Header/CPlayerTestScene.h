@@ -3,7 +3,7 @@
 class CPlayerTestScene : public CScene
 {
 protected:
-	explicit CPlayerTestScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPlayerTestScene();
 	virtual ~CPlayerTestScene();
 
 public:
@@ -20,7 +20,7 @@ private:
 	HRESULT			Ready_Light();
 
 public:
-	static CPlayerTestScene* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayerTestScene* Create();
 
 private:
 	virtual void	Free();

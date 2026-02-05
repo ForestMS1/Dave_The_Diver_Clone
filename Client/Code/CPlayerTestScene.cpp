@@ -4,8 +4,7 @@
 #include "CDSPlayer.h"
 #include "CTerrain.h"
 
-CPlayerTestScene::CPlayerTestScene(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CScene(pGraphicDev)
+CPlayerTestScene::CPlayerTestScene()
 {
 }
 
@@ -60,7 +59,7 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	_vec3	vUp{ 0.f, 1.f, 0.f };
 
 	// PlayerCam
-	pGameObject = CPlayerCam::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	pGameObject = CPlayerCam::Create(&vEye, &vAt, &vUp);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -69,7 +68,7 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// Player
-	pGameObject = CDSPlayer::Create(m_pGraphicDev);
+	pGameObject = CDSPlayer::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -78,7 +77,7 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// Terrain
-	pGameObject = CTerrain::Create(m_pGraphicDev);
+	pGameObject = CTerrain::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -106,9 +105,9 @@ HRESULT	 CPlayerTestScene::Ready_Light()
 
 }
 
-CPlayerTestScene* CPlayerTestScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayerTestScene* CPlayerTestScene::Create()
 {
-	CPlayerTestScene* pInstance = new CPlayerTestScene(pGraphicDev);
+	CPlayerTestScene* pInstance = new CPlayerTestScene;
 	if (FAILED(pInstance->Ready_Scene()))
 	{
 		Safe_Release(pInstance);

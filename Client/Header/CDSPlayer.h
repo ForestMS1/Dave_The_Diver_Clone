@@ -20,7 +20,7 @@ enum class PlayerState
 class CDSPlayer : public CGameObject
 {
 private:
-	explicit CDSPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CDSPlayer();
 	explicit CDSPlayer(const CGameObject& rhs);
 	virtual ~CDSPlayer();
 
@@ -53,7 +53,7 @@ private:
 	unordered_map<PlayerState, CPlayerState*> m_mapState;
 
 public:
-	static CDSPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDSPlayer* Create();
 
 private:
 	virtual void Free();
