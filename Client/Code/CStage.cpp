@@ -5,6 +5,9 @@
 #include "CSkyBox.h"
 #include "CLightMgr.h"
 #include "CEffect.h"
+#include "CBackGround.h"
+#include "CCube.h"
+#include "CDInputMgr.h"
 #include "Firework.h"
 #include "CParticleMgr.h"
 
@@ -37,6 +40,25 @@ HRESULT CStage::Ready_Scene()
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
+
+	if (CCube* pCube = dynamic_cast<CCube*>(this->Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst(L"Cube1")))
+	{
+		pCube->Get_Transform()->Rotation(ROT_X,  D3DXToRadian(10.f));
+	}
+
+	if (CCube* pCube = dynamic_cast<CCube*>(this->Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst(L"Cube2")))
+	{
+		pCube->Get_Transform()->Rotation(ROT_Y, D3DXToRadian(10.f));
+	}
+
+	if (ImGui::Button("DeadTest"))
+	{
+		if (CCube* pCube = dynamic_cast<CCube*>(this->Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst(L"Cube2")))
+		{
+			pCube->Set_Parent(nullptr);
+			//pCube->Set_Dead();
+		}
+	}
 	return iExit;
 }
 
@@ -102,6 +124,26 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	
 	if (FAILED(pLayer->Add_GameObject(L"Player", pGameObject)))
 		return E_FAIL;
+
+	CGameObject* pTmp = pGameObject;
+
+	pGameObject = CCube::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Cube1", pGameObject)))
+		return E_FAIL;
+
+	pGameObject->Set_Parent(pTmp);
+
+	pTmp = pGameObject;
+	pGameObject = CCube::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Cube2", pGameObject)))
+		return E_FAIL;
+
+	pGameObject->Set_Parent(pTmp);
+	
 	//
 	//// Monster
 	//pGameObject = CMonster::Create(m_pGraphicDev);

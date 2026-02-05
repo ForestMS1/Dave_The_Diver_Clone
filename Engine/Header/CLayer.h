@@ -13,13 +13,12 @@ private:
 public:
 	HRESULT			Add_GameObject(std::wstring_view svObjTag, CGameObject* pGameObject);
 
+	map<const std::wstring, list<CGameObject*>>* Get_GameObjects() { return &m_mapGameObjects; }
 	list<CGameObject*> * Get_GameObjects(std::wstring_view svObjTag);
 	CGameObject* Get_GameObjectFirst(std::wstring_view svObjTag);
 
 public:
 	HRESULT			Ready_Layer();
-	_int			Update_Layer(const _float& fTimeDelta);
-	void			LateUpdate_Layer(const _float& fTimeDelta);
 
 private:
 	map<const std::wstring, list<CGameObject*>> m_mapGameObjects;
