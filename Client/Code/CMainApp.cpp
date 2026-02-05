@@ -9,6 +9,7 @@
 #include "CInfoMgr.h"
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
+#include "CParticleMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -28,7 +29,8 @@ HRESULT CMainApp::Ready_MainApp()
 
 	if (FAILED(Ready_Scene(m_pGraphicDev)))
 		return E_FAIL;
-
+	//if (FAILED(CParticleMgr::GetInstance()))
+	//	return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
 
@@ -43,7 +45,9 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	CDInputMgr::GetInstance()->Update_InputDev();
 	
 	CImguiMgr::GetInstance()->Update_Imgui();
-	
+
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
+
 	m_pManagement->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -61,6 +65,8 @@ void CMainApp::Render_MainApp()
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
+	CParticleMgr::GetInstance()->Render_Particle(m_pGraphicDev);
+
 
 	m_pDeviceClass->Render_End();
 }
@@ -153,6 +159,7 @@ void CMainApp::Free()
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
+	CParticleMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

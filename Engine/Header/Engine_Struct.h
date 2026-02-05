@@ -49,6 +49,41 @@ namespace Engine
 
 	}INDEX32;	
 
+	struct Particle {
+		D3DXVECTOR3 _poisition;
+		D3DCOLOR _color;
+	};
+	const DWORD	FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+
+	struct BoundingBox {
+		D3DXVECTOR3 _min;
+		D3DXVECTOR3 _max;
+
+		bool isPointInside(D3DXVECTOR3& p) {
+			//지정된 포인트가 경계 상자 내에 있는가?
+			if (p.x >= _min.x && p.y >= _min.y && p.z >= _min.z &&
+				p.x <= _max.x && p.y <= _max.y && p.z <= _max.z) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	
+	};
+
+
+	struct Attribute {
+		D3DXVECTOR3 _position;
+		D3DXVECTOR3 velocity;
+		D3DXVECTOR3 acceleration;
+		float _lifeTime;
+		float _age;
+		D3DXCOLOR _color;
+		D3DXCOLOR _colorFade;
+		bool _isAlive;
+	};
+
 }
 
 

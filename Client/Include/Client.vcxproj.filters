@@ -52,6 +52,9 @@
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{1859a1b2-1555-4c09-805c-37d9103f9cfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. Cube">
+      <UniqueIdentifier>{955a8c83-782d-40d0-a9cd-a42edad6069f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\PlayerTestScene">
       <UniqueIdentifier>{879c7bda-e8be-456b-aeea-6a772afb6a1d}</UniqueIdentifier>
     </Filter>
@@ -108,6 +111,9 @@
     <ClInclude Include="..\Header\CEffect.h">
       <Filter>02. GameObject\06. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCube.h">
+      <Filter>02. GameObject\07. Cube</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CPlayerTestScene.h">
       <Filter>01. Scene\PlayerTestScene</Filter>
     </ClInclude>
@@ -154,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEffect.cpp">
       <Filter>02. GameObject\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCube.cpp">
+      <Filter>02. GameObject\07. Cube</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerTestScene.cpp">
       <Filter>01. Scene\PlayerTestScene</Filter>
