@@ -32,6 +32,7 @@ public:
 
 	PlayerState		Get_State() const { return m_eCurState; }
 
+	void			Set_State(PlayerState state);
 private:
 	HRESULT			Add_Component();
 	HRESULT			Add_State();
@@ -39,7 +40,6 @@ private:
 	void			Mouse_Move();
 	void			Set_Cam();
 	void			Set_OnTerrain();
-	void			Set_State(PlayerState state);
 
 private:
 	Engine::CRcTex* m_pBufferCom;

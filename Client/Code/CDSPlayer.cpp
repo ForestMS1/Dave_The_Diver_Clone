@@ -22,6 +22,7 @@ CDSPlayer::CDSPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pCalculatorCom(nullptr)
 	, m_pTextureCom(nullptr)
 	, m_pTransformCom(nullptr)
+	, m_eCurState(PlayerState::IDLE)
 {
 }
 
@@ -135,9 +136,9 @@ HRESULT CDSPlayer::Add_Component()
 
 HRESULT CDSPlayer::Add_State()
 {
-	m_mapState.insert({ PlayerState::IDLE, new CPlayerIdle });
-	m_mapState.insert({ PlayerState::ATTACK, new CPlayerAttack });
-	m_mapState.insert({ PlayerState::DIE, new CPlayerDie });
+	m_mapState.insert({ PlayerState::IDLE, CPlayerIdle::Create(this)});
+	m_mapState.insert({ PlayerState::ATTACK, CPlayerAttack::Create(this)});
+	m_mapState.insert({ PlayerState::DIE, CPlayerDie::Create(this)});
 
 	return S_OK;
 }
@@ -255,7 +256,7 @@ CDSPlayer* CDSPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CDSPlayer::Free()
 {
-	CGameObject::Free();
 	for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
 	m_mapState.clear();
+	CGameObject::Free();
 }
