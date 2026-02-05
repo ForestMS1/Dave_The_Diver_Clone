@@ -7,7 +7,7 @@ BEGIN(Engine)
 class ENGINE_DLL CCamera : public CGameObject
 {
 protected:
-	explicit CCamera(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCamera();
 	explicit CCamera(const CCamera& rhs);
 	virtual ~CCamera();
 

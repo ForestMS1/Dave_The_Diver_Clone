@@ -1,9 +1,10 @@
 #include "CCalculator.h"
 #include "CTerrainTex.h"
 #include "CTransform.h"
+#include "CGraphicDev.h"
 
-CCalculator::CCalculator(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CComponent(pGraphicDev)
+CCalculator::CCalculator()
+	:CComponent()
 {
 }
 
@@ -64,6 +65,8 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 	CTerrainTex* pTerrainBufferCom,
 	CTransform* pTerrainTransformCom)
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
 	POINT ptMouse{};
 	GetCursorPos(&ptMouse);
 	ScreenToClient(hWnd, &ptMouse);
@@ -73,7 +76,7 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 	_D3DVIEWPORT9 ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 
-	m_pGraphicDev->GetViewport(&ViewPort);
+	pGraphicDev->GetViewport(&ViewPort);
 
 	// 뷰포트 -> 투영
 	vMousePos.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
@@ -82,13 +85,13 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 
 	// 투영 -> 뷰 스페이스
 	_matrix matProj;
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 	D3DXMatrixInverse(&matProj, 0, &matProj);
 	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
 
 	// 뷰 스페이스 -> 월드
 	_matrix matView;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
 
 	_vec3 vRayPos{ 0.f, 0.f, 0.f };
@@ -156,9 +159,9 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 	return _vec3{0.f, 0.f, 0.f};
 }
 
-CCalculator* CCalculator::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCalculator* CCalculator::Create()
 {
-	CCalculator* pCalculator = new CCalculator(pGraphicDev);
+	CCalculator* pCalculator = new CCalculator;
 
 	if (FAILED(pCalculator->Ready_Calculator()))
 	{

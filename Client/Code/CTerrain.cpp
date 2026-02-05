@@ -2,9 +2,10 @@
 #include "CTerrain.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CTerrain::CTerrain()
+	: CGameObject()
 {
 }
 
@@ -44,8 +45,10 @@ void CTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CTerrain::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	if (FAILED(Ready_Material()))
 		return;
@@ -53,7 +56,7 @@ void CTerrain::Render_GameObject()
 	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CTerrain::Add_Component()
@@ -92,6 +95,8 @@ HRESULT CTerrain::Add_Component()
 
 HRESULT CTerrain::Ready_Material()
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
 	D3DMATERIAL9			tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
 
@@ -102,14 +107,14 @@ HRESULT CTerrain::Ready_Material()
 	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
 	tMtrl.Power = 0.f;
 
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	pGraphicDev->SetMaterial(&tMtrl);
 
 	return S_OK;
 }
 
-CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTerrain* CTerrain::Create()
 {
-	CTerrain* pBackGround = new CTerrain(pGraphicDev);
+	CTerrain* pBackGround = new CTerrain;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

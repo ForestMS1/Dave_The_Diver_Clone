@@ -7,7 +7,7 @@ BEGIN(Engine)
 class ENGINE_DLL CGameObject : public CBase
 {
 protected:
-	explicit CGameObject(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CGameObject();
 	explicit CGameObject(const CGameObject& rhs);
 	virtual ~CGameObject();
 
@@ -30,7 +30,6 @@ public:
 
 protected:
 	map<const std::wstring, CComponent*>	m_mapComponent[ID_END];
-	LPDIRECT3DDEVICE9						m_pGraphicDev;
 
 	_float									m_fViewZ;
 	bool									m_bDead;

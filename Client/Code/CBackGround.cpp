@@ -3,8 +3,8 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 
-CBackGround::CBackGround(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CBackGround::CBackGround()
+	: CGameObject()
 {
 }
 
@@ -75,9 +75,9 @@ HRESULT CBackGround::Add_Component()
 }
 
 
-CBackGround* CBackGround::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBackGround* CBackGround::Create()
 {
-	CBackGround* pBackGround = new CBackGround(pGraphicDev);
+	CBackGround* pBackGround = new CBackGround;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

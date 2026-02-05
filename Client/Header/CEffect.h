@@ -11,7 +11,7 @@ namespace Engine
 class CEffect : public CGameObject
 {
 private:
-	explicit CEffect(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CEffect();
 	explicit CEffect(const CGameObject& rhs);
 	virtual ~CEffect();
 
@@ -33,7 +33,7 @@ private:
 	_float			m_fDelTimer;
 
 public:
-	static CEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CEffect* Create();
 
 private:
 	virtual void Free();

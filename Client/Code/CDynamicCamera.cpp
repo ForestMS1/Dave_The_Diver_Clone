@@ -3,9 +3,10 @@
 #include "CDInputMgr.h"
 #include "CInfoMgr.h"
 #include "CParticleMgr.h"
+#include "CGraphicDev.h"
 
-CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
-    : CCamera(pGraphicDev),m_bFix(true), m_bCheck(true)
+CDynamicCamera::CDynamicCamera()
+    : CCamera(),m_bFix(true), m_bCheck(true)
 {
 }
 
@@ -185,9 +186,9 @@ void CDynamicCamera::Mouse_Fix()
 
 }
 
-CDynamicCamera* CDynamicCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)
+CDynamicCamera* CDynamicCamera::Create(const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)
 {
-    CDynamicCamera* pCamera = new CDynamicCamera(pGraphicDev);
+    CDynamicCamera* pCamera = new CDynamicCamera;
 
 
     if (FAILED(pCamera->Ready_GameObject(pEye, pAt, pUp, fFov, fAspect, fNear, fFar)))

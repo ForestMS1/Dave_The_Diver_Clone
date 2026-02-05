@@ -6,9 +6,10 @@
 #include "CDInputMgr.h"
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
+#include "CGraphicDev.h"
 
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CPlayer::CPlayer()
+	: CGameObject()
 {
 }
 
@@ -51,12 +52,14 @@ void CPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CPlayer::Render_GameObject()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pTextureCom->Set_Texture(0);
 
@@ -64,10 +67,10 @@ void CPlayer::Render_GameObject()
 
 	D3DXMATRIX matTmp;
 	D3DXMatrixIdentity(&matTmp);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+	pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CPlayer::Add_Component()
@@ -115,6 +118,7 @@ HRESULT CPlayer::Add_Component()
 
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
+
 	_vec3		vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 
@@ -147,7 +151,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	_vec3 playerPo;
 	m_pTransformCom->Get_Info(INFO_POS, &playerPo);
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
-		CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, FIREWORK, playerPo, 200);
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+		CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
 	}
 	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
 	{
@@ -193,9 +198,9 @@ _vec3 CPlayer::Picking_OnTerrain()
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayer* CPlayer::Create()
 {
-	CPlayer* pBackGround = new CPlayer(pGraphicDev);
+	CPlayer* pBackGround = new CPlayer;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

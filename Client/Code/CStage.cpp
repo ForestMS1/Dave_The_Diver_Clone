@@ -10,9 +10,10 @@
 #include "CDInputMgr.h"
 #include "Firework.h"
 #include "CParticleMgr.h"
+#include "CGraphicDev.h"
 
-CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CScene(pGraphicDev)
+CStage::CStage()
+	: CScene()
 {
 }
 
@@ -85,7 +86,7 @@ HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	_vec3	vUp{ 0.f, 1.f, 0.f };
 
 	// DynamicCamera
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	pGameObject = CDynamicCamera::Create( &vEye, &vAt, &vUp);
 	//CParticleMgr::GetInstance()->set
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -94,7 +95,7 @@ HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// SkyBox
-	pGameObject = CSkyBox::Create(m_pGraphicDev);
+	pGameObject = CSkyBox::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -117,7 +118,7 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	CGameObject* pGameObject = nullptr;
 
 	// Player
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	pGameObject = CPlayer::Create();
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -127,7 +128,7 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pTmp = pGameObject;
 
-	pGameObject = CCube::Create(m_pGraphicDev);
+	pGameObject = CCube::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"Cube1", pGameObject)))
@@ -136,7 +137,7 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	pGameObject->Set_Parent(pTmp);
 
 	pTmp = pGameObject;
-	pGameObject = CCube::Create(m_pGraphicDev);
+	pGameObject = CCube::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"Cube2", pGameObject)))
@@ -155,7 +156,7 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	//	return E_FAIL;
 
 	// Terrain
-	pGameObject = CTerrain::Create(m_pGraphicDev);
+	pGameObject = CTerrain::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -180,7 +181,7 @@ HRESULT CStage::Ready_UI_Layer(std::wstring_view svLayerTag)
 	for (_uint i = 0; i < 50; ++i)
 	{
 		// Player
-		pGameObject = CEffect::Create(m_pGraphicDev);
+		pGameObject = CEffect::Create();
 
 		if (nullptr == pGameObject)
 			return E_FAIL;
@@ -198,6 +199,8 @@ HRESULT CStage::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 HRESULT CStage::Ready_Light()
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
 	D3DLIGHT9	tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
@@ -209,7 +212,7 @@ HRESULT CStage::Ready_Light()
 
 	tLightInfo.Direction = { 1.f, -1.f, 1.f };
 
-	if (FAILED(CLightMgr::GetInstance()->Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+	if (FAILED(CLightMgr::GetInstance()->Ready_Light(pGraphicDev, &tLightInfo, 0)))
 		return E_FAIL;
 
 
@@ -229,9 +232,9 @@ HRESULT CStage::Ready_Light()
 
 
 
-CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CStage* CStage::Create()
 {
-	CStage* pStage = new CStage(pGraphicDev);
+	CStage* pStage = new CStage;
 
 	if (FAILED(pStage->Ready_Scene()))
 	{

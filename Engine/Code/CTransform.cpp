@@ -1,15 +1,8 @@
 #include "CTransform.h"
+#include "CGraphicDev.h"
 
 CTransform::CTransform()
     : m_vScale(1.f, 1.f, 1.f), m_vAngle(0.f, 0.f, 0.f)
-{
-    ZeroMemory(m_vInfo, sizeof(_vec3) * INFO_END);
-    D3DXMatrixIdentity(&m_matWorld);
-}
-
-CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
-    : CComponent(pGraphicDev)
-    , m_vScale(1.f, 1.f, 1.f), m_vAngle(0.f, 0.f, 0.f)
 {
     ZeroMemory(m_vInfo, sizeof(_vec3) * INFO_END);
     D3DXMatrixIdentity(&m_matWorld);
@@ -135,9 +128,9 @@ void CTransform::LateUpdate_Component()
 {
 }
 
-CTransform* CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTransform* CTransform::Create()
 {
-    CTransform* pTransform = new CTransform(pGraphicDev);
+    CTransform* pTransform = new CTransform;
 
     if (FAILED(pTransform->Ready_Transform()))
     {

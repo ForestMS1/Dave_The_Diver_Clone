@@ -110,7 +110,7 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	Engine::CScene* pLogo = CLogo::Create(pGraphicDev);
+	Engine::CScene* pLogo = CLogo::Create();
 
 	if (nullptr == pLogo)
 		return E_FAIL;

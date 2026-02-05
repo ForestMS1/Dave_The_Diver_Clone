@@ -4,11 +4,6 @@ CRcCol::CRcCol()
 {
 }
 
-CRcCol::CRcCol(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
-{
-}
-
 CRcCol::CRcCol(const CRcCol& rhs)
 	: CVIBuffer(rhs)
 {
@@ -116,9 +111,9 @@ void CRcCol::Render_Buffer()
 	CVIBuffer::Render_Buffer();
 }
 
-CRcCol* CRcCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRcCol* CRcCol::Create()
 {
-	CRcCol* pRcCol = new CRcCol(pGraphicDev);
+	CRcCol* pRcCol = new CRcCol;
 
 	if (FAILED(pRcCol->Ready_Buffer()))
 	{

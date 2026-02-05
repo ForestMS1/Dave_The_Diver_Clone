@@ -7,7 +7,7 @@
 class CStage : public CScene
 {
 protected:
-	explicit CStage(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CStage();
 	virtual ~CStage();
 
 public:
@@ -24,7 +24,7 @@ private:
 	HRESULT			Ready_Light();
 
 public:
-	static CStage* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CStage* Create();
 
 private:
 	virtual void	Free();
