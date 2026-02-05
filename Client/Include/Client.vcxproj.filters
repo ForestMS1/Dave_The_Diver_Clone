@@ -52,6 +52,12 @@
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{1859a1b2-1555-4c09-805c-37d9103f9cfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\PlayerTestScene">
+      <UniqueIdentifier>{879c7bda-e8be-456b-aeea-6a772afb6a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\PlayerCam">
+      <UniqueIdentifier>{7c69a780-f400-4c0a-a0ff-77d4df5e4d07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -102,6 +108,12 @@
     <ClInclude Include="..\Header\CEffect.h">
       <Filter>02. GameObject\06. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerTestScene.h">
+      <Filter>01. Scene\PlayerTestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerCam.h">
+      <Filter>02. GameObject\PlayerCam</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -142,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEffect.cpp">
       <Filter>02. GameObject\06. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerTestScene.cpp">
+      <Filter>01. Scene\PlayerTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerCam.cpp">
+      <Filter>02. GameObject\PlayerCam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
