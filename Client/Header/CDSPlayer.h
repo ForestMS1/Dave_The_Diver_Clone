@@ -30,6 +30,8 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
 
+	PlayerState		Get_State() const { return m_eCurState; }
+
 private:
 	HRESULT			Add_Component();
 	HRESULT			Add_State();

@@ -9,6 +9,7 @@
 #include "CPlayerState.h"
 #include "CPlayerIdle.h"
 #include "CPlayerAttack.h"
+#include "CPlayerDie.h"
 
 #ifdef _DEBUG
 // Imgui µð¹ö±ë¿ë
@@ -75,6 +76,8 @@ void CDSPlayer::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
+	m_pState->Render_State();
+
 #ifdef _DEBUG
 	_vec3 vPos, vLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -134,6 +137,7 @@ HRESULT CDSPlayer::Add_State()
 {
 	m_mapState.insert({ PlayerState::IDLE, new CPlayerIdle });
 	m_mapState.insert({ PlayerState::ATTACK, new CPlayerAttack });
+	m_mapState.insert({ PlayerState::DIE, new CPlayerDie });
 
 	return S_OK;
 }
@@ -227,8 +231,12 @@ void CDSPlayer::Set_State(PlayerState state)
 	if (m_mapState[state] == m_pState)
 		return;
 
+	m_pState->Exit();
+
 	m_pState = m_mapState[state];
 	m_eCurState = state;
+
+	m_pState->Enter();
 }
 
 CDSPlayer* CDSPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)

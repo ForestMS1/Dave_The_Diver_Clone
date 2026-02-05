@@ -1,6 +1,6 @@
 #pragma once
 #include "CPlayerState.h"
-class CPlayerIdle : public CPlayerState
+class CPlayerDie : public CPlayerState
 {
 public:
 	void Enter() override;
@@ -8,7 +8,6 @@ public:
 	void LateUpdate_State(const _float& fTimeDelta) override;
 	void Render_State() override;
 	void Exit() override;
-
 private:
 	void Free() override;
 };

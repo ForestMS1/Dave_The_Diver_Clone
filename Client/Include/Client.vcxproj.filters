@@ -73,6 +73,9 @@
     <Filter Include="02. GameObject\DSPlayer\PlayerState\Attack">
       <UniqueIdentifier>{5546b252-6dff-4d29-a83d-3daaa2863572}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DSPlayer\PlayerState\Die">
+      <UniqueIdentifier>{1f92c9af-0686-43a2-8e2d-7a9be3c91a35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="..\Header\CPlayerAttack.h">
       <Filter>02. GameObject\DSPlayer\PlayerState\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerDie.h">
+      <Filter>02. GameObject\DSPlayer\PlayerState\Die</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -205,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerAttack.cpp">
       <Filter>02. GameObject\DSPlayer\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerDie.cpp">
+      <Filter>02. GameObject\DSPlayer\PlayerState\Die</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -165,6 +165,7 @@
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CPlayerAttack.h" />
     <ClInclude Include="..\Header\CPlayerCam.h" />
+    <ClInclude Include="..\Header\CPlayerDie.h" />
     <ClInclude Include="..\Header\CPlayerIdle.h" />
     <ClInclude Include="..\Header\CPlayerState.h" />
     <ClInclude Include="..\Header\CPlayerTestScene.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CPlayerAttack.cpp" />
     <ClCompile Include="..\Code\CPlayerCam.cpp" />
+    <ClCompile Include="..\Code\CPlayerDie.cpp" />
     <ClCompile Include="..\Code\CPlayerIdle.cpp" />
     <ClCompile Include="..\Code\CPlayerState.cpp" />
     <ClCompile Include="..\Code\CPlayerTestScene.cpp" />
