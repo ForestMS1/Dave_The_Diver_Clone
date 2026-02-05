@@ -43,7 +43,7 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
-	if (m_fDelTimer > 3.f)
+	if (m_fDelTimer > 1.f)
 	{
 		if (rand() % 2)
 		{
