@@ -46,10 +46,10 @@ void CCameraMgr::LateUpdate_Camera(const _float& fTimeDelta)
 
 void CCameraMgr::Render_Camera()
 {
-	if (m_pCurCamera == nullptr)
-		return;
-
-	m_pCurCamera->Render_GameObject();
+	//if (m_pCurCamera == nullptr)
+	//	return;
+	//
+	//m_pCurCamera->Render_GameObject();
 
 #ifdef _DEBUG
 	ImGui::Begin("Camera list");

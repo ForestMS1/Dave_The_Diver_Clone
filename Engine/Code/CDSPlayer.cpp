@@ -50,6 +50,11 @@ HRESULT CDSPlayer::Ready_GameObject()
 
 _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	// 디버그/개발 용 방어코드
+#ifdef _DEBUG
+	if (dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera()) == nullptr)
+		return 0;
+#endif
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 	Key_Input(fTimeDelta);
@@ -64,6 +69,11 @@ _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 
 void CDSPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	// 디버그/개발 용 방어코드
+#ifdef _DEBUG
+	if (dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera()) == nullptr)
+		return;
+#endif
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 	m_pState->LateUpdate_State(fTimeDelta);
 }

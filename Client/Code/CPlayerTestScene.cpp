@@ -5,7 +5,7 @@
 #include "CTerrain.h"
 #include "CPlayerGun.h"
 #include "CCameraMgr.h"
-#include "CDynamicCamera.h"
+#include "CFreeCam.h"
 CPlayerTestScene::CPlayerTestScene()
 {
 }
@@ -75,12 +75,21 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	// TestCam1
 	vEye = { 0.f, 30.f, -10.f };
-	pCamera = CDynamicCamera::Create(&vEye, &vAt, &vUp);
+	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp);
 
 	if (nullptr == pCamera)
 		return E_FAIL;
 
 	CCameraMgr::GetInstance()->Set_Camera(L"TestCam1", pCamera);
+
+	// TestCam2
+	vEye = { 0.f, 20.f, -20.f };
+	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp);
+
+	if (nullptr == pCamera)
+		return E_FAIL;
+
+	CCameraMgr::GetInstance()->Set_Camera(L"TestCam2", pCamera);
 
 
 	// Player
