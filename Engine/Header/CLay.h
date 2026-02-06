@@ -7,7 +7,7 @@ class CTransform;
 class CLay : public CGameObject
 {
 protected:
-	explicit CLay(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLay();
 	explicit CLay(const CLay& rhs);
 	virtual ~CLay();
 

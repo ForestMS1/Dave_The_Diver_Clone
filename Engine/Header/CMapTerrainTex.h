@@ -7,7 +7,6 @@ class ENGINE_DLL CMapTerrainTex : public CVIBuffer
 {
 private:
 	explicit CMapTerrainTex();
-	explicit CMapTerrainTex(LPDIRECT3DDEVICE9	pGraphicDev);
 	explicit CMapTerrainTex(const CMapTerrainTex& rhs);
 	virtual ~CMapTerrainTex();
 
@@ -27,8 +26,7 @@ private:
 
 
 public:
-	static CMapTerrainTex* Create(LPDIRECT3DDEVICE9 pGraphicDev,
-		const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
+	static CMapTerrainTex* Create(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
 	virtual CComponent* Clone();
 
 private:

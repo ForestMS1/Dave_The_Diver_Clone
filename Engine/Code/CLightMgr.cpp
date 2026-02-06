@@ -11,11 +11,9 @@ CLightMgr::~CLightMgr()
     Free();
 }
 
-HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
-    const D3DLIGHT9* pLightInfo,
-    const _uint& iIndex)
+HRESULT CLightMgr::Ready_Light( const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 {
-    CLight* pLight = CLight::Create(pGraphicDev, pLightInfo, iIndex);
+    CLight* pLight = CLight::Create( pLightInfo, iIndex);
     if (nullptr == pLight)
         return E_FAIL;
 

@@ -1,10 +1,8 @@
 #include "CLight.h"
 
-CLight::CLight(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev), m_iIndex(0)
+CLight::CLight() : m_iIndex(0)
 {
 	ZeroMemory(&m_tLight, sizeof(D3DLIGHT9));
-	m_pGraphicDev->AddRef();
 }
 
 CLight::~CLight()
@@ -26,9 +24,9 @@ HRESULT CLight::Ready_Light(const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 }
 
 
-CLight* CLight::Create(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex)
+CLight* CLight::Create(const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 {
-	CLight* pLight = new CLight(pGraphicDev);
+	CLight* pLight = new CLight();
 
 	if (FAILED(pLight->Ready_Light(pLightInfo, iIndex)))
 	{
@@ -42,7 +40,5 @@ CLight* CLight::Create(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInf
 
 void CLight::Free()
 {
-	m_pGraphicDev->LightEnable(m_iIndex, FALSE);
 
-	Safe_Release(m_pGraphicDev);
 }

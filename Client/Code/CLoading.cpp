@@ -51,7 +51,7 @@ _uint CLoading::Loading_Stage()
         return E_FAIL;
 
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create( VTXCNTX, VTXCNTZ, VTXITV))))
         return E_FAIL;
 
     //lstrcpy(m_szLoading, L"Texture Loading.....................................");

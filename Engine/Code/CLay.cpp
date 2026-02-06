@@ -1,9 +1,8 @@
 #include "CLay.h"
 
+#include "CGraphicDev.h"
 
-
-CLay::CLay(LPDIRECT3DDEVICE9 pGraphicDev)
-    : CGameObject(pGraphicDev)
+CLay::CLay() : CGameObject()
 {
 }
 
@@ -49,8 +48,7 @@ _vec3 CLay::Map_Picking(HWND hWnd) {
 
 	D3DVIEWPORT9		ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
-
-	m_pGraphicDev->GetViewport(&ViewPort);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->GetViewport(&ViewPort);
 
 	// 뷰포트 -> 투영
 	vMousePos.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
@@ -60,14 +58,14 @@ _vec3 CLay::Map_Picking(HWND hWnd) {
 	// 투영 -> 뷰 스페이스
 
 	D3DXMATRIX		matProj;
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->GetTransform(D3DTS_PROJECTION, &matProj);
 	D3DXMatrixInverse(&matProj, 0, &matProj);
 	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
 
 	// 뷰 스페이스 -> 월드
 
 	D3DXMATRIX		matView;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
 
 	_vec3	vRayPos{ 0.f, 0.f, 0.f };

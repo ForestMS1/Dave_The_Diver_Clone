@@ -8,7 +8,7 @@
 class CMapEditor : public CScene
 {
 protected:
-	explicit CMapEditor(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CMapEditor();
 	virtual ~CMapEditor();
 
 public:
@@ -29,7 +29,7 @@ private:
 	
 
 public:
-	static CMapEditor* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMapEditor* Create();
 
 
 public:

@@ -2,9 +2,10 @@
 #include "CMapEditorTerrain.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CMapEditorTerrain::CMapEditorTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CMapEditorTerrain::CMapEditorTerrain()
+	: CGameObject()
 {
 }
 
@@ -46,10 +47,10 @@ void CMapEditorTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CMapEditorTerrain::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	if (FAILED(Ready_Material()))
 		return;
@@ -60,7 +61,7 @@ void CMapEditorTerrain::Render_GameObject()
 
 
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 }
 
@@ -109,14 +110,14 @@ HRESULT CMapEditorTerrain::Ready_Material()
 	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
 	tMtrl.Power = 0.f;
 
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetMaterial(&tMtrl);
 
 	return S_OK;
 }
 
-CMapEditorTerrain* CMapEditorTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMapEditorTerrain* CMapEditorTerrain::Create()
 {
-	CMapEditorTerrain* pMapEditorTerrian = new CMapEditorTerrain(pGraphicDev);
+	CMapEditorTerrain* pMapEditorTerrian = new CMapEditorTerrain();
 
 	if (FAILED(pMapEditorTerrian->Ready_GameObject()))
 	{

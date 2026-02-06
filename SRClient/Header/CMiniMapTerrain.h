@@ -12,7 +12,7 @@ namespace Engine
 class CMiniMapTerrain : public CGameObject
 {
 private:
-	explicit CMiniMapTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CMiniMapTerrain();
 	explicit CMiniMapTerrain(const CGameObject& rhs);
 	virtual ~CMiniMapTerrain();
 
@@ -37,7 +37,7 @@ private:
 private:
 	_int				m_iTypeNum;
 public:
-	static CMiniMapTerrain* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMiniMapTerrain* Create();
 
 private:
 	virtual void Free();

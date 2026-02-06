@@ -10,8 +10,8 @@
 #include "CManagement.h"
 
 
-CMapEditor::CMapEditor(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CScene(pGraphicDev)
+CMapEditor::CMapEditor()
+	: CScene()
 {
 }
 
@@ -72,7 +72,7 @@ HRESULT CMapEditor::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	_vec3	vUp{ 0.f, 0.f, 1.f };
 
 	// DynamicCamera
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	pGameObject = CDynamicCamera::Create( &vEye, &vAt, &vUp);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -96,7 +96,7 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	// MapEditorTerrain
 
-	pGameObject = CMapEditorTerrain::Create(m_pGraphicDev);
+	pGameObject = CMapEditorTerrain::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -111,7 +111,7 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		for (int j = 0; j < 15; ++j) {
 	
 			// MiniMapTerrain
-			pGameObject = CMiniMapTerrain::Create(m_pGraphicDev);
+			pGameObject = CMiniMapTerrain::Create();
 
 			if (nullptr == pGameObject)
 				return E_FAIL;
@@ -160,7 +160,7 @@ HRESULT CMapEditor::Ready_Light()
 
 	tLightInfo.Direction = { 1.f, -1.f, 1.f };
 
-	if (FAILED(CLightMgr::GetInstance()->Ready_Light(m_pGraphicDev, &tLightInfo, 0)))
+	if (FAILED(CLightMgr::GetInstance()->Ready_Light(&tLightInfo, 0)))
 		return E_FAIL;	
 	
 
@@ -182,9 +182,9 @@ HRESULT CMapEditor::Ready_Light()
 
 
 
-CMapEditor* CMapEditor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMapEditor* CMapEditor::Create()
 {
-	CMapEditor* pMapEditor = new CMapEditor(pGraphicDev);
+	CMapEditor* pMapEditor = new CMapEditor();
 
 	if (FAILED(pMapEditor->Ready_Scene()))
 	{

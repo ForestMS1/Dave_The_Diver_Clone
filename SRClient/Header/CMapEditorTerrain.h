@@ -12,7 +12,7 @@ namespace Engine
 class CMapEditorTerrain : public CGameObject
 {
 private:
-	explicit CMapEditorTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CMapEditorTerrain();
 	explicit CMapEditorTerrain(const CGameObject& rhs);
 	virtual ~CMapEditorTerrain();
 
@@ -36,7 +36,7 @@ private:
 
 	
 public:
-	static CMapEditorTerrain* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMapEditorTerrain* Create();
 
 private:
 	virtual void Free();

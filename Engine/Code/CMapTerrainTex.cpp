@@ -1,13 +1,10 @@
 #include "CMapTerrainTex.h"
 
-CMapTerrainTex::CMapTerrainTex() : m_pPos(nullptr)
+CMapTerrainTex::CMapTerrainTex() : CVIBuffer(), m_hFile(nullptr), m_pPos(nullptr)
 {
 }
 
-CMapTerrainTex::CMapTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev), m_hFile(nullptr), m_pPos(nullptr)
-{
-}
+
 
 CMapTerrainTex::CMapTerrainTex(const CMapTerrainTex& rhs)
 	: CVIBuffer(rhs)
@@ -105,10 +102,9 @@ void CMapTerrainTex::Render_Buffer()
 	CVIBuffer::Render_Buffer();
 }
 
-CMapTerrainTex* CMapTerrainTex::Create(LPDIRECT3DDEVICE9 pGraphicDev,
-	const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
+CMapTerrainTex* CMapTerrainTex::Create(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
-	CMapTerrainTex* pMapTerrainTex = new CMapTerrainTex(pGraphicDev);
+	CMapTerrainTex* pMapTerrainTex = new CMapTerrainTex();
 
 	if (FAILED(pMapTerrainTex->Ready_Buffer(dwCntX, dwCntZ, dwVtxItv)))
 	{

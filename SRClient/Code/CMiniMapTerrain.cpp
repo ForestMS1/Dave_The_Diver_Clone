@@ -2,9 +2,10 @@
 #include "CMiniMapTerrain.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CMiniMapTerrain::CMiniMapTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CMiniMapTerrain::CMiniMapTerrain()
+	: CGameObject()
 {
 }
 
@@ -48,12 +49,12 @@ void CMiniMapTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CMiniMapTerrain::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	if (FAILED(Ready_Material()))
 		return;
 
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
 	switch (m_iTypeNum) {
 	case 0:
@@ -76,8 +77,8 @@ void CMiniMapTerrain::Render_GameObject()
 
 
 	m_pBufferCom->Render_Buffer();
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE, true);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_POINTSIZE, true);
 
 
 }
@@ -130,14 +131,14 @@ HRESULT CMiniMapTerrain::Ready_Material()
 	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
 	tMtrl.Power = 0.f;
 
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetMaterial(&tMtrl);
 
 	return S_OK;
 }
 
-CMiniMapTerrain* CMiniMapTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMiniMapTerrain* CMiniMapTerrain::Create()
 {
-	CMiniMapTerrain* pMiniMapTerrain = new CMiniMapTerrain(pGraphicDev);
+	CMiniMapTerrain* pMiniMapTerrain = new CMiniMapTerrain();
 
 	if (FAILED(pMiniMapTerrain->Ready_GameObject()))
 	{

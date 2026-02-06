@@ -47,7 +47,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		//ImGui::Button("asdf");
 		if (GetAsyncKeyState(VK_RETURN))
 		{
-			Engine::CScene* pMapEditor = CMapEditor::Create(m_pGraphicDev);
+			Engine::CScene* pMapEditor = CMapEditor::Create();
 			//Engine::CScene* pStage = CMapEditor::Create(m_pGraphicDev);
 
 			if (nullptr == pMapEditor)
