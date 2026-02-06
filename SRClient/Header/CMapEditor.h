@@ -31,7 +31,7 @@ private:
 
 	void			PickMiniMap();
 
-	void			CreateRoom();
+	HRESULT			CreateRoom();
 	
 
 public:

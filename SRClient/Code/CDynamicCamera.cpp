@@ -30,7 +30,7 @@ HRESULT CDynamicCamera::Ready_GameObject(const _vec3* pEye, const _vec3* pAt, co
     if (FAILED(CCamera::Ready_GameObject()))
         return E_FAIL;
 
-    m_fSpeed = 10.f;
+    m_fSpeed = 500.f;
 
     return S_OK;
 }

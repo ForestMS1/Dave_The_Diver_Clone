@@ -106,6 +106,7 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 
 
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 
 	for (_uint i = 0; i < 15; ++i) {
@@ -117,7 +118,7 @@ HRESULT CMapEditor::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 			if (nullptr == pGameObject)
 				return E_FAIL;
 
-			ostringstream oss;
+
 
 			wstring L = L"MinMapTerrain";
 			_int Cnt = (i * 15 + j);
@@ -222,7 +223,9 @@ void CMapEditor::Show_Position() {
 		for (_uint i = 0; i < 15; ++i) {
 			for (_uint j = 0; j < 15; ++j) {
 				if (arrRoom[i][j] != nullptr) {
-					ImGui::Text("Room [%d][%d]",j,i);
+					_vec3 Num;
+					static_cast<CTransform*>(arrRoom[i][j]->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Info(INFO_POS, &Num);
+					ImGui::Text("Room [%d][%d] : Pos.x %lf pos.y %lf pos.z %lf",j,i, Num.x, Num.y, Num.z);
 			
 				}
 				
@@ -409,16 +412,32 @@ void CMapEditor::PickMiniMap() {
 	
 }
 
-void CMapEditor::CreateRoom() {
+HRESULT CMapEditor::CreateRoom() {
 	_vec2 RoomNum =	dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Get_RoomNum();
 
 	CGameObject* pGameObject = nullptr;
 
 
-	// MapEditorTerrain
+	arrRoom[int(RoomNum.y)][int(RoomNum.x)] = pGameObject = CMapEditorTerrain::Create();
 
-	arrRoom[int(RoomNum.y)][int(RoomNum.x)] =  CMapEditorTerrain::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	wstring L = L"MapTerrain";
+
+	wstring a = to_wstring(int(RoomNum.y));
+	wstring b = to_wstring(int(RoomNum.x));
+
+
+	if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"GameLogic_Layer")->Add_GameObject(L+a+b, pGameObject)))
+		return E_FAIL;
+
+	static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(int(RoomNum.x)*13, 0, int(RoomNum.y)*13);
+
+
 	dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Set_TypeNum(0);
 	e_MapEditorLevel = LEVEL1;
+
+	return S_OK;
 
 }
