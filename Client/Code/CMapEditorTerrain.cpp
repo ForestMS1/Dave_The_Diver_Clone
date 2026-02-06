@@ -2,15 +2,17 @@
 #include "CMapEditorTerrain.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CMapEditorTerrain::CMapEditorTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CMapEditorTerrain::CMapEditorTerrain()
+	: CGameObject()
 {
 }
 
 CMapEditorTerrain::CMapEditorTerrain(const CGameObject& rhs)
 	: CGameObject(rhs)
 {
+
 }
 
 CMapEditorTerrain::~CMapEditorTerrain()
@@ -19,6 +21,7 @@ CMapEditorTerrain::~CMapEditorTerrain()
 
 HRESULT CMapEditorTerrain::Ready_GameObject()
 {
+	
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
@@ -31,7 +34,7 @@ _int CMapEditorTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 	return iExit;
 }
@@ -44,15 +47,21 @@ void CMapEditorTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CMapEditorTerrain::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
+
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
 	if (FAILED(Ready_Material()))
 		return;
 
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(1);
 	
 	m_pBufferCom->Render_Buffer();
 
+
+
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 }
 
@@ -64,17 +73,22 @@ HRESULT CMapEditorTerrain::Add_Component()
 	pComponent = m_pBufferCom =
 		dynamic_cast<Engine::CMapTerrainTex*>
 		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_MapTerrainTex"));
-	if (nullptr == pComponent)
+	if (nullptr == pComponent) {
+		MSG_BOX("CMapTerrainTex Proto_MapTerrainTex Clone_Prototype Failed");
 		return E_FAIL;
+	}
+	
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
-	// texture 
 	pComponent = m_pTextureCom =
 		dynamic_cast<Engine::CTexture*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_TerrainTexture2"));
-	if (nullptr == pComponent)
+		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_TerrainTexture"));
+	if (nullptr == pComponent) {
+		MSG_BOX("CMapTerrainTex Proto_TerrainTexture Clone_Prototype Failed");
 		return E_FAIL;
+	}
+		
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
@@ -82,8 +96,11 @@ HRESULT CMapEditorTerrain::Add_Component()
 	pComponent = m_pTransformCom =
 		dynamic_cast<Engine::CTransform*>
 		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Transform"));
-	if (nullptr == pComponent)
+	if (nullptr == pComponent) {
+		MSG_BOX("CMapTerrainTex Proto_Transform Clone_Prototype Failed");
 		return E_FAIL;
+	}
+	
 
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 
@@ -102,23 +119,23 @@ HRESULT CMapEditorTerrain::Ready_Material()
 	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
 	tMtrl.Power = 0.f;
 
-	m_pGraphicDev->SetMaterial(&tMtrl);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetMaterial(&tMtrl);
 
 	return S_OK;
 }
 
-CMapEditorTerrain* CMapEditorTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMapEditorTerrain* CMapEditorTerrain::Create()
 {
-	CMapEditorTerrain* pBackGround = new CMapEditorTerrain(pGraphicDev);
+	CMapEditorTerrain* pMapEditorTerrian = new CMapEditorTerrain();
 
-	if (FAILED(pBackGround->Ready_GameObject()))
+	if (FAILED(pMapEditorTerrian->Ready_GameObject()))
 	{
-		Safe_Release(pBackGround);
-		MSG_BOX("pBackGround Create Failed");
+		Safe_Release(pMapEditorTerrian);
+		MSG_BOX("pMapEditorTerrian Create Failed");
 		return nullptr;
 	}
 
-	return pBackGround;
+	return pMapEditorTerrian;
 }
 
 void CMapEditorTerrain::Free()

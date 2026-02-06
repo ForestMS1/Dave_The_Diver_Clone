@@ -7,7 +7,7 @@
 #include "CLog.h"
 #include "CSoundMgr.h"
 #include "CHelper.h"
-#include "CMapEditor.h"
+
 
 CLogo::CLogo()
 	: CScene(), m_pLoading(NULL)
@@ -47,7 +47,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		//ImGui::Button("asdf");
 		if (GetAsyncKeyState(VK_RETURN))
 		{
-			Engine::CScene* pMapEditor = CMapEditor::Create();
+			Engine::CScene* pMapEditor{};
 			//Engine::CScene* pStage = CMapEditor::Create(m_pGraphicDev);
 
 			if (nullptr == pMapEditor)

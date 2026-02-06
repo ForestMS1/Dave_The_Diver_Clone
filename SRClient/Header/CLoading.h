@@ -23,7 +23,7 @@ public:
 	HRESULT		Ready_Loading(LOADINGID eID);
 
 	_uint		Loading_Stage();
-	_uint		Loading_MapEditor();
+
 
 public:
 	static unsigned int CALLBACK Thread_Main(void* pArg);
