@@ -114,12 +114,7 @@ void Firework::update(float fTimeDelta)
 		}
 	}
 	removeDeadParticles();
-	if (_particles.size() == 0) {
-		empty = true;
-	}
-	else {
-		empty = false;
-	}
+	
 }
 
 void Firework::Free()

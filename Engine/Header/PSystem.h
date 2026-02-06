@@ -40,23 +40,21 @@ public:
 protected:
 	virtual void removeDeadParticles();
 public:
-	int numOfParticles;
 
-	IDirect3DDevice9* _device;
-	D3DXVECTOR3 _origin;
-	BoundingBox _boundingBox;
-	float _emitRate;
-	float _size;
-	//IDirect3DBaseTexture9* _tex;
-	IDirect3DVertexBuffer9* _vb;
-	list<Attribute> _particles;
-	int _matParticles;
-	DWORD _vbSize;
-	DWORD _vbOffset;
-	DWORD _vbBatchSize;
-	bool empty;
+	IDirect3DDevice9*					_device;
+	D3DXVECTOR3							_origin;
+	BoundingBox							_boundingBox;
+	IDirect3DVertexBuffer9*				 _vb;
+	list<Attribute>						_particles;
+	DWORD								_vbSize;
+	DWORD								_vbOffset;
+	DWORD								_vbBatchSize;
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
-
+	float								_emitRate;
+	float								_size;
+	int									_matParticles;
+	int									numOfParticles;
+	bool								empty;
 };
 
 END

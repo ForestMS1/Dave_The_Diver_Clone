@@ -4,7 +4,7 @@
 PSystem::PSystem()
 {
 	//_device->AddRef();
-	empty = false;
+	//empty = false;
 	
 }
 
@@ -12,8 +12,8 @@ PSystem::PSystem(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	_device = pGraphicDev;
 	_device->AddRef();
-	empty = false;
 	numOfParticles = 0;
+	empty = false;
 }
 
 
@@ -227,6 +227,10 @@ void PSystem::Free()
 {
 	for_each(m_vecTexture.begin(), m_vecTexture.end(), Safe_Release<IDirect3DBaseTexture9*>);
 	m_vecTexture.clear();
+	list<Attribute>::iterator iter = _particles.begin();
+	for (iter; iter != _particles.end();) {
+		iter = _particles.erase(iter);
+	}
 	Safe_Release(_vb);
 	Safe_Release(_device);
 }
@@ -244,5 +248,8 @@ void PSystem::removeDeadParticles()
 		else {
 			i++;
 		}
+	}
+	if (_particles.size() == 0) {
+		empty = true;
 	}
 }
