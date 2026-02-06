@@ -1,17 +1,24 @@
 #include "PSystem.h"
+#include "CGraphicDev.h"
 
 
-PSystem::PSystem()
+
+
+PSystem::PSystem() 
 {
-	//_device->AddRef();
-	//empty = false;
-	
-}
-
-PSystem::PSystem(LPDIRECT3DDEVICE9 pGraphicDev) 
-{
-	_device = pGraphicDev;
+	_device = CGraphicDev::GetInstance()->Get_GraphicDev();
 	_device->AddRef();
+	_origin = { 0,0,0 };
+	_boundingBox.Center.x = _origin.x;
+	_boundingBox.Center.y = _origin.y;
+	_boundingBox.Center.z = _origin.z;
+	_particles;
+	_vbSize = 2048;
+	_vbOffset = 0;
+	_vbBatchSize = 512;
+	_emitRate = 0.f;
+	_size = { 0.f,0.f,0.f };
+	_matParticles = 0;
 	numOfParticles = 0;
 	empty = false;
 }
@@ -41,10 +48,11 @@ void PSystem::reset()
 }
 
 
-void PSystem::addParticle()
+void PSystem::addParticle(_vec3 position)
 {
 	Attribute attribute;
 	resetParticle(&attribute);
+	attribute._position = position;
 	_particles.push_back(attribute);
 }
 
@@ -53,7 +61,7 @@ void PSystem::preRender()
 	_device->SetRenderState(D3DRS_LIGHTING, false);
 	_device->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
 	_device->SetRenderState(D3DRS_POINTSCALEENABLE, true);
-	_device->SetRenderState(D3DRS_POINTSIZE, FtoDw(_size));
+	_device->SetRenderState(D3DRS_POINTSIZE, FtoDw(_size.x));
 	_device->SetRenderState(D3DRS_POINTSIZE_MIN, FtoDw(0.0f));
 
 	//거리에 따른 파티클 크기 제어

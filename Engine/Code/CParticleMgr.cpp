@@ -16,9 +16,14 @@ CParticleMgr::~CParticleMgr()
 	Free();
 }
 
-HRESULT CParticleMgr::Ready_Particle(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 {
-	
+	Firework* firework = Firework::Create();
+	particles.push_back(firework);
+	CGunShot* gunshot = CGunShot::Create();
+	particles.push_back(gunshot);
+	CBullet* bullet = CBullet::Create(m_pCamera);
+	particles.push_back(bullet);
 	return S_OK;
 }
 
@@ -43,7 +48,7 @@ void CParticleMgr::Update_Particle(float fTimeDelta)
 			
 		}
 	}
-	vector <PSystem*>::iterator i;
+	/*vector <PSystem*>::iterator i;
 	for (i = particles.begin(); i != particles.end();) {
 		if ((*i)->empty == true) {
 			Safe_Release(*i);
@@ -52,36 +57,45 @@ void CParticleMgr::Update_Particle(float fTimeDelta)
 		else {
 			i++;
 		}
-	}
+	}*/
 }
 
-void CParticleMgr::Render_Particle(LPDIRECT3DDEVICE9 pGraphicDev)
+void CParticleMgr::Render_Particle()
 {
 	for (auto particle : particles) {
 		particle->render();
 	}
 }
 
-void CParticleMgr::spwan_Particle(LPDIRECT3DDEVICE9 pGraphicDev,PARTICLETYPE type, _vec3 origin, int numofPariticles)
+void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles)
 {
 	switch(type) {
 	case FIREWORK: 
 	{
-		Firework* firework = Firework::Create(pGraphicDev, origin, numofPariticles);
-		temp.push_back(firework);
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[FIREWORK]->addParticle(origin);
+		}
+		/*Firework* firework = Firework::Create( origin, numofPariticles);
+		temp.push_back(firework);*/
 	}
 		break;
 	case GUNSHOT:
 	{
-		CGunShot* gunshot = CGunShot::Create(pGraphicDev, origin);
-		temp.push_back(gunshot);
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[GUNSHOT]->addParticle(origin);
+		}
+		/*CGunShot* gunshot = CGunShot::Create(origin);
+		temp.push_back(gunshot);*/
 	}
 	break;
 
 	case BULLET:
 	{
-		CBullet* bullet = CBullet::Create(pGraphicDev,m_pCamera);
-		temp.push_back(bullet);
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[BULLET]->addParticle(origin);
+		}
+	/*	CBullet* bullet = CBullet::Create(m_pCamera);
+		temp.push_back(bullet);*/
 	}
 	break;
 	}

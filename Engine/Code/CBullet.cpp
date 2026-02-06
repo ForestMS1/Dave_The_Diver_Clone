@@ -2,26 +2,17 @@
 #include "CParticleMgr.h"
 #include "CLog.h"
 
-CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev, CCamera* camera) :  PSystem(pGraphicDev)
+CBullet::CBullet( CCamera* camera) :  PSystem()
 {
 	m_pCamera = camera;
-	_size = 0.5f;
-	_vbSize = 2048;
-	_vbOffset = 0;
-	_vbBatchSize = 512;
+	_size = { 0.5f,0.5f,0.5f };
 	_origin = { 0,0,0 };
-	//_origin = camera->Get_Pos();
-	_boundingBox._min.x = _origin.x - _size;
-	_boundingBox._min.y = _origin.y - _size;
-	_boundingBox._min.z = _origin.z - _size;
-	_boundingBox._max.x = _origin.x + _size;
-	_boundingBox._max.y = _origin.y + _size;
-	_boundingBox._max.z = _origin.z + _size;
+
 
 	//AABB 디버깅용 매트릭스 
-	matView = m_pCamera->Get_ViewMatrix();
-	matProj = m_pCamera->Get_ProjMatrix();
-	matFinal = matWorld * matView * matProj;
+	//matView = m_pCamera->Get_ViewMatrix();
+	//matProj = m_pCamera->Get_ProjMatrix();
+	//matFinal = matWorld * matView * matProj;
 }
 
 
@@ -39,7 +30,7 @@ HRESULT CBullet::Ready_Buffer()
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
-	addParticle();
+	//addParticle();
 	
 
 	return S_OK;
@@ -47,9 +38,9 @@ HRESULT CBullet::Ready_Buffer()
 
 
 
-CBullet* CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev,CCamera* camera)
+CBullet* CBullet::Create(CCamera* camera)
 {
-	CBullet* bullet = new CBullet(pGraphicDev,camera);
+	CBullet* bullet = new CBullet(camera);
 
 	if (FAILED(bullet->Ready_Buffer()))
 	{
@@ -69,10 +60,7 @@ void CBullet::resetParticle(Attribute* attribute)
 	_vec3 cameraDir =  m_pCamera->Get_At() - cameraPos;
 	D3DXVec3Normalize(&cameraDir, &cameraDir);
 	attribute->_position = cameraPos + cameraDir* 2.f;
-	_vec3 size = { _size,_size,_size };
-	
-	_boundingBox._min = attribute->_position - size;
-	_boundingBox._max = attribute->_position + size;
+
 	//attribute->_position.y -= 1.0f;
 	attribute->velocity = cameraDir * 20.f;
 	attribute->_color = D3DXCOLOR(1.0f,1.0f,1.0f, 1.0f);
@@ -155,12 +143,9 @@ void CBullet::update(float fTimeDelta)
 		i->_position += i->velocity * fTimeDelta;
 		i->_age += fTimeDelta;
 		//_origin = i->_position;
-		_vec3 size = { _size,_size,_size };
-		_boundingBox._min = i->_position - size;
-		_boundingBox._max = i->_position + size;
 		
 		if (i->_age > i->_lifeTime) {
-			CParticleMgr::GetInstance()->spwan_Particle(_device, GUNSHOT, i->_position, 5);
+			CParticleMgr::GetInstance()->spwan_Particle(GUNSHOT, i->_position, 5);
 			i->_isAlive = false;
 		}
 	}
