@@ -6,6 +6,8 @@ CInfoMgr::CInfoMgr()
 	, m_iDpi(96)
 	, m_iWINCX(WINCX)
 	, m_iWINCY(WINCY)
+	, m_hWnd(nullptr)
+	, m_hInst(nullptr)
 {
 }
 

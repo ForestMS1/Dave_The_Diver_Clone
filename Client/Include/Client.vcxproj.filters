@@ -55,6 +55,12 @@
     <Filter Include="02. GameObject\07. Cube">
       <UniqueIdentifier>{955a8c83-782d-40d0-a9cd-a42edad6069f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\PlayerTestScene">
+      <UniqueIdentifier>{879c7bda-e8be-456b-aeea-6a772afb6a1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\PlayerTestScene\DSTestLoading">
+      <UniqueIdentifier>{5883b196-0096-41a0-bdf0-124a713de8e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -108,6 +114,12 @@
     <ClInclude Include="..\Header\CCube.h">
       <Filter>02. GameObject\07. Cube</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerTestScene.h">
+      <Filter>01. Scene\PlayerTestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDSTestLoading.h">
+      <Filter>01. Scene\PlayerTestScene\DSTestLoading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -151,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCube.cpp">
       <Filter>02. GameObject\07. Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerTestScene.cpp">
+      <Filter>01. Scene\PlayerTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDSTestLoading.cpp">
+      <Filter>01. Scene\PlayerTestScene\DSTestLoading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

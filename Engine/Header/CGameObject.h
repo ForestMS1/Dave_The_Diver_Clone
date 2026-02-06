@@ -18,6 +18,7 @@ protected:
 	virtual ~CGameObject();
 
 public:
+	//[[deprecated]]
 	CComponent* Get_Component(COMPONENTID eID, std::wstring_view svComponentTag);
 	_float		Get_ViewZ() { return m_fViewZ; }
 
@@ -69,7 +70,9 @@ protected:
 	template<typename T, COMPONENTID eComID>
 	HRESULT AddComponent(std::wstring_view svProtoTag, std::wstring_view svComponentName, T** ppComponent = nullptr);
 	
-
+public:
+	template<typename T, COMPONENTID eComID>
+	T* GetComponent(std::wstring_view svComponentTag);
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, std::wstring_view svComponentTag);
@@ -99,4 +102,14 @@ inline HRESULT CGameObject::AddComponent(std::wstring_view svProtoTag, std::wstr
 	m_mapComponent[eComID].insert({ std::wstring(svComponentName), pComponent });
 
 	return S_OK;
+}
+
+template<typename T, COMPONENTID eComID>
+inline T* CGameObject::GetComponent(std::wstring_view svComponentTag)
+{
+	CComponent* pComponent = Find_Component(eComID, svComponentTag);
+	if (nullptr == pComponent)
+		return nullptr;
+
+	return dynamic_cast<T*>(pComponent);
 }

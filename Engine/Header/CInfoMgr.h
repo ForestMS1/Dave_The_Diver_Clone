@@ -25,12 +25,21 @@ public:
 	_int Get_WINCY() const { return m_iWINCY; }
 	void Set_WINCY(_int iWINCY) { m_iWINCY = iWINCY; }
 
+	HWND const Get_HWND() const { return m_hWnd ; }
+	void Set_HWND(HWND hWnd) { m_hWnd = hWnd; }
+
+	HINSTANCE const Get_HINSTANCE() const { return m_hInst; }
+	void Set_HINSTANCE(HINSTANCE hInst) { m_hInst = hInst; }
+
 private:
 	_int m_iDpi;
 	_float m_fScaleFactor;
 
 	_int m_iWINCX;
 	_int m_iWINCY;
+
+	HWND m_hWnd;
+	HINSTANCE m_hInst;
 
 private:
 	virtual void	Free();
