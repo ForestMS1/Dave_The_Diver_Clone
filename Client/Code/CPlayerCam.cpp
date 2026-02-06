@@ -53,7 +53,7 @@ _int CPlayerCam::Update_GameObject(const _float& fTimeDelta)
 void CPlayerCam::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CCamera::LateUpdate_GameObject(fTimeDelta);
-	Mouse_Fix();
+	//Mouse_Fix();
 }
 
 void CPlayerCam::Render_GameObject()

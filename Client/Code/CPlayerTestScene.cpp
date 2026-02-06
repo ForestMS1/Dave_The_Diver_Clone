@@ -3,6 +3,7 @@
 #include "CPlayerCam.h"
 #include "CDSPlayer.h"
 #include "CTerrain.h"
+#include "CPlayerGun.h"
 
 CPlayerTestScene::CPlayerTestScene()
 {
@@ -77,6 +78,15 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Player", pGameObject)))
+		return E_FAIL;
+
+	// PlayerGun
+	pGameObject = CPlayerGun::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"PlayerGun", pGameObject)))
 		return E_FAIL;
 
 	// Terrain

@@ -160,6 +160,7 @@
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CCube.h" />
     <ClInclude Include="..\Header\CDSPlayer.h" />
+    <ClInclude Include="..\Header\CDSTestLoading.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CEffect.h" />
     <ClInclude Include="..\Header\CLoading.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CCube.cpp" />
     <ClCompile Include="..\Code\CDSPlayer.cpp" />
+    <ClCompile Include="..\Code\CDSTestLoading.cpp" />
     <ClCompile Include="..\Code\CDynamicCamera.cpp" />
     <ClCompile Include="..\Code\CEffect.cpp" />
     <ClCompile Include="..\Code\CLoading.cpp" />
