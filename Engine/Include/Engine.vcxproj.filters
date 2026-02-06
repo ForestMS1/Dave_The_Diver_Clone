@@ -127,6 +127,33 @@
     <Filter Include="00. Manager\13. ParticleMgr\03. Particles\02. Bullet">
       <UniqueIdentifier>{ff718e44-fe1f-410a-9bdc-fae1a2ea2ef5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject">
+      <UniqueIdentifier>{ab085ee8-e48d-4a35-9ee3-c1a1b8ac566a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\PlayerCam">
+      <UniqueIdentifier>{a47c69b7-891a-42d3-a4a6-da394f589aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer">
+      <UniqueIdentifier>{f07920a4-891a-4682-9d02-04bde001d625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer\PlayerBullet">
+      <UniqueIdentifier>{d6aadfa3-60e8-4339-9dad-2910fe82e924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer\PlayerGun">
+      <UniqueIdentifier>{bb40df52-ea5d-4ed5-ab30-8fe0f91d869b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer\PlayerState">
+      <UniqueIdentifier>{cd6d3d7d-6de7-4389-9dd7-fee30e919fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer\PlayerState\Attack">
+      <UniqueIdentifier>{e14cd4a9-a870-4787-b50e-ee153c2e3f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer\PlayerState\Die">
+      <UniqueIdentifier>{532d910a-c66e-492a-ae70-75ac784b3ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer\PlayerState\Idle">
+      <UniqueIdentifier>{28fe219a-2aaf-4ce9-bd43-b608d6c37917}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -279,6 +306,30 @@
     <ClCompile Include="..\Code\CBullet.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\02. Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CPlayerCam.cpp">
+      <Filter>03. GameObject\PlayerCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerBullet.cpp">
+      <Filter>03. GameObject\DSPlayer\PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerGun.cpp">
+      <Filter>03. GameObject\DSPlayer\PlayerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDSPlayer.cpp">
+      <Filter>03. GameObject\DSPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerState.cpp">
+      <Filter>03. GameObject\DSPlayer\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerAttack.cpp">
+      <Filter>03. GameObject\DSPlayer\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerDie.cpp">
+      <Filter>03. GameObject\DSPlayer\PlayerState\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerIdle.cpp">
+      <Filter>03. GameObject\DSPlayer\PlayerState\Idle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -412,6 +463,30 @@
     </ClInclude>
     <ClInclude Include="..\Header\CBullet.h">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\02. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerCam.h">
+      <Filter>03. GameObject\PlayerCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerBullet.h">
+      <Filter>03. GameObject\DSPlayer\PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerGun.h">
+      <Filter>03. GameObject\DSPlayer\PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDSPlayer.h">
+      <Filter>03. GameObject\DSPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerState.h">
+      <Filter>03. GameObject\DSPlayer\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerAttack.h">
+      <Filter>03. GameObject\DSPlayer\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerDie.h">
+      <Filter>03. GameObject\DSPlayer\PlayerState\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerIdle.h">
+      <Filter>03. GameObject\DSPlayer\PlayerState\Idle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

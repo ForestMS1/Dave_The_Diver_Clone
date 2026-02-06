@@ -1,4 +1,4 @@
-#include "pch.h"
+//#include "pch.h"
 #include "CPlayerDie.h"
 
 CPlayerDie::CPlayerDie(CDSPlayer* pPlayer)

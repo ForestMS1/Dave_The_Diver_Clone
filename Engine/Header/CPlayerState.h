@@ -4,7 +4,7 @@
 
 class CDSPlayer;
 
-class CPlayerState : public CBase
+class ENGINE_DLL CPlayerState : public CBase
 {
 protected:
 	explicit CPlayerState(CDSPlayer* pPlayer);
