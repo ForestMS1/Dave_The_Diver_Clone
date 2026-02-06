@@ -34,9 +34,10 @@ HRESULT CPlayer::Ready_GameObject()
 
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	Key_Input(fTimeDelta);
+	Mouse_Move();
+	Set_Cam();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
-
-	Set_OnTerrain();
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -46,8 +47,6 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-
-	Key_Input(fTimeDelta);
 }
 
 void CPlayer::Render_GameObject()
@@ -99,26 +98,34 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	_vec3		vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
-
-	if (GetAsyncKeyState(VK_UP))
+	D3DXVec3Cross(&vRight, &vDir, &vUp);
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
 	{
 		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
 	}
 
-	if (GetAsyncKeyState(VK_DOWN))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_S))
 	{
 		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), -10.f, fTimeDelta);
 	}
-
 	
-	if (GetAsyncKeyState(VK_LEFT))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
 	{
-		m_pTransformCom->Rotation(ROT_Y, 180.f * fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, 10.f, fTimeDelta);
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
 	{
-		m_pTransformCom->Rotation(ROT_Y, -180.f * fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, -10.f, fTimeDelta);
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_Q))
+	{
+		m_pTransformCom->Move_Pos(&vUp, 10.f, fTimeDelta);
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
+	{
+		m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
 	}
 	//if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
 	//{
@@ -137,10 +144,27 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		_vec3 vPickPos = Picking_OnTerrain();
 		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
 
-		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
-	}*/
+	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
+		m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
 
+	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_X))
+		m_pTransformCom->Rotation(ROT_Y, dwMouseMove / 10.f);
+}
+void CPlayer::Set_Cam()
+{
+	CPlayerCam* pPlayerCam = static_cast<CPlayerCam*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"PlayerCam"));
+	if (pPlayerCam == nullptr)
+		return;
 
+	_vec3 vPos, vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	_vec3 vEye, vAt;
+	vEye = vPos + vLook * 1.2f;
+	vAt = vEye + vLook;
+	pPlayerCam->Set_vEye(&vEye);
+	pPlayerCam->Set_vAt(&vAt);
 }
 
 void CPlayer::Set_OnTerrain()
