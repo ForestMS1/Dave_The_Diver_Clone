@@ -146,9 +146,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	_vec3 origin{ 0,0,0 };
 	_vec3 playerPo;
 	m_pTransformCom->Get_Info(INFO_POS, &playerPo);
-	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
-		CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, FIREWORK, playerPo, 200);
-	}
+	/*if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
+		CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT, origin, 200);
+	}*/
 	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
 	{
 		_vec3 vPickPos = Picking_OnTerrain();

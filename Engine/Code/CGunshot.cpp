@@ -1,4 +1,5 @@
 #include "CGunShot.h"
+#include "CParticleMgr.h"
 
 CGunShot::CGunShot()
 {
@@ -7,7 +8,7 @@ CGunShot::CGunShot()
 CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev) : PSystem(pGraphicDev)
 {
 	_origin = { 0,0,0 };
-	_size = 0.9f;
+	_size = 0.2f;
 	_vbSize = 2048;
 	_vbOffset = 0;
 	_vbBatchSize = 64;
@@ -16,8 +17,9 @@ CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev) : PSystem(pGraphicDev)
 
 CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin) : PSystem(pGraphicDev)
 {
+	//_origin = { 0,0,0 };
 	_origin = origin;
-	_size = 0.9f;
+	_size = 0.2f;
 	_vbSize = 2048;
 	_vbOffset = 0;
 	_vbBatchSize = 64;
@@ -70,7 +72,9 @@ CGunShot* CGunShot::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin)
 void CGunShot::resetParticle(Attribute* attribute)
 {
 	attribute->_isAlive = true;
-	attribute->_position = _origin;
+	//attribute->_position = _origin;
+	attribute->_position = { 0,0,0 };
+
 	_vec3 min = _vec3(-1.0f, -1.0f, 1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute->velocity, &min, &max);
@@ -78,7 +82,7 @@ void CGunShot::resetParticle(Attribute* attribute)
 	attribute->velocity *= 10.f;
 	attribute->_color = D3DXCOLOR(GetRandomFloat(0.6f, 1.0f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
 	attribute->_age = 0.0f;
-	attribute->_lifeTime = 2.0f;
+	attribute->_lifeTime = 0.5f;
 }
 
 void CGunShot::preRender()
@@ -101,6 +105,7 @@ void CGunShot::update(float fTimeDelta)
 	list<Attribute>::iterator i;
 	for (i = _particles.begin(); i != _particles.end(); i++) {
 		if (i->_isAlive) {
+			i->_position;
 			i->_position += i->velocity * fTimeDelta;
 			i->_age += fTimeDelta;
 			if (i->_age > i->_lifeTime) {
@@ -109,17 +114,11 @@ void CGunShot::update(float fTimeDelta)
 		}
 	}
 	removeDeadParticles();
-	if (_particles.size() == 0) {
-		empty = true;
-	}
-	else {
-		empty = false;
-	}
+
 }
 
 void CGunShot::Free()
 {
-
 	PSystem::Free();
 }
 
