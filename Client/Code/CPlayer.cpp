@@ -7,7 +7,7 @@
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
-
+#include "CPlayerCam.h"
 CPlayer::CPlayer()
 	: CGameObject()
 {
@@ -35,7 +35,7 @@ HRESULT CPlayer::Ready_GameObject()
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-	Mouse_Move();
+	//Mouse_Move();
 	Set_Cam();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -96,7 +96,8 @@ HRESULT CPlayer::Ready_Component()
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
 
-	_vec3		vDir;
+	_vec3		vDir, vRight;
+	_vec3		vUp(0.f, 1.f, 0.f);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 	D3DXVec3Cross(&vRight, &vDir, &vUp);
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
@@ -143,7 +144,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		_vec3 vPickPos = Picking_OnTerrain();
 		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
+	}*/
 
+	_long dwMouseMove(0);
 	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
 		m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
 
@@ -181,23 +184,6 @@ void CPlayer::Set_OnTerrain()
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainVtxCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
 	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
-}
-
-_vec3 CPlayer::Picking_OnTerrain()
-{
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<Engine::CTerrainTex*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
-	
-	if (nullptr == pTerrainBufferCom)
-		return _vec3();
-
-	Engine::CTransform* pTerrainTransformCom = dynamic_cast<Engine::CTransform*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"GameLogic_Layer", L"Terrain", L"Com_Transform"));
-
-	if (nullptr == pTerrainTransformCom)
-		return _vec3();
-
-	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
 CPlayer* CPlayer::Create()

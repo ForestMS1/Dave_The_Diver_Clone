@@ -10,6 +10,7 @@
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
 #include "CParticleMgr.h"
+#include "CCameraMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -160,6 +161,7 @@ void CMainApp::Free()
 	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
+	CCameraMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

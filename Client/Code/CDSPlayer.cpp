@@ -11,7 +11,7 @@
 #include "CPlayerAttack.h"
 #include "CPlayerDie.h"
 #include "CGraphicDev.h"
-
+#include "CCameraMgr.h"
 #ifdef _DEBUG
 // Imgui µð¹ö±ë¿ë
 const char* enum_names[] = { "IDLE", "ATTCK", "DIE" };
@@ -198,7 +198,7 @@ void CDSPlayer::Mouse_Move()
 }
 void CDSPlayer::Set_Cam()
 {
-	CPlayerCam* pPlayerCam = static_cast<CPlayerCam*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"PlayerCam"));
+	CPlayerCam* pPlayerCam = dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera());
 	if (pPlayerCam == nullptr)
 		return;
 

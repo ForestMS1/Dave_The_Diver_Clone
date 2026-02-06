@@ -4,7 +4,8 @@
 #include "CDSPlayer.h"
 #include "CTerrain.h"
 #include "CPlayerGun.h"
-
+#include "CCameraMgr.h"
+#include "CDynamicCamera.h"
 CPlayerTestScene::CPlayerTestScene()
 {
 }
@@ -48,6 +49,8 @@ void CPlayerTestScene::Render_Scene()
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 	ImGui::Text("DT: %.5f", ImGui::GetIO().DeltaTime);
 	ImGui::End();
+
+	CCameraMgr::GetInstance()->Render_Camera();
 }
 
 HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
@@ -63,13 +66,22 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	_vec3	vUp{ 0.f, 1.f, 0.f };
 
 	// PlayerCam
-	pGameObject = CPlayerCam::Create(&vEye, &vAt, &vUp);
+	CCamera* pCamera = CPlayerCam::Create(&vEye, &vAt, &vUp);
 
-	if (nullptr == pGameObject)
+	if (nullptr == pCamera)
 		return E_FAIL;
 
-	if (FAILED(pLayer->Add_GameObject(L"PlayerCam", pGameObject)))
+	CCameraMgr::GetInstance()->Set_Camera(L"PlayerCam", pCamera);
+
+	// TestCam1
+	vEye = { 0.f, 30.f, -10.f };
+	pCamera = CDynamicCamera::Create(&vEye, &vAt, &vUp);
+
+	if (nullptr == pCamera)
 		return E_FAIL;
+
+	CCameraMgr::GetInstance()->Set_Camera(L"TestCam1", pCamera);
+
 
 	// Player
 	pGameObject = CDSPlayer::Create();

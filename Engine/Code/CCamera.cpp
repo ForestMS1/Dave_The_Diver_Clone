@@ -4,6 +4,7 @@
 
 CCamera::CCamera()
     : CGameObject()
+    , m_bIsActive(false)
 {
 }
 
@@ -34,6 +35,9 @@ HRESULT CCamera::Ready_GameObject()
 
 _int CCamera::Update_GameObject(const _float& fTimeDelta)
 {
+    if (!m_bIsActive)
+        return 0;
+
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
@@ -45,6 +49,8 @@ _int CCamera::Update_GameObject(const _float& fTimeDelta)
 
 void CCamera::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+    if (!m_bIsActive)
+        return;
 }
 
 void CCamera::Free()
