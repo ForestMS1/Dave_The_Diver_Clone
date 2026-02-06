@@ -25,6 +25,7 @@ private:
 	virtual void	Free();
 	CCamera* m_pCamera;
 	vector <PSystem*> particles;
+	vector <PSystem*> temp;
 };
 
 END
