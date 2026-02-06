@@ -2,9 +2,10 @@
 #include "CSkyBox.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CGraphicDev.h"
 
-CSkyBox::CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CSkyBox::CSkyBox()
+	: CGameObject()
 {
 }
 
@@ -23,7 +24,7 @@ HRESULT CSkyBox::Ready_GameObject()
 		return E_FAIL;
 
 	m_pTransformCom->m_vScale = { 40.f, 40.f, 40.f };
-
+	
 	return S_OK;
 }
 
@@ -40,9 +41,10 @@ void CSkyBox::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	_matrix		matCamWorld;
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
 	D3DXMatrixInverse(&matCamWorld, 0 , &matCamWorld);
 
 	m_pTransformCom->Set_Pos(matCamWorld._41, matCamWorld._42 + 3.f, matCamWorld._43);
@@ -52,16 +54,18 @@ void CSkyBox::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CSkyBox::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(3);
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 HRESULT CSkyBox::Add_Component()
@@ -99,9 +103,9 @@ HRESULT CSkyBox::Add_Component()
 }
 
 
-CSkyBox* CSkyBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CSkyBox* CSkyBox::Create()
 {
-	CSkyBox* pSkyBox = new CSkyBox(pGraphicDev);
+	CSkyBox* pSkyBox = new CSkyBox;
 
 	if (FAILED(pSkyBox->Ready_GameObject()))
 	{

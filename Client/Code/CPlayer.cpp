@@ -4,9 +4,12 @@
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CDInputMgr.h"
+#include "CParticleMgr.h"
+#include "Engine_Define.h"
+#include "CGraphicDev.h"
 
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CPlayer::CPlayer()
+	: CGameObject()
 {
 }
 
@@ -21,7 +24,7 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Ready_GameObject()
 {
-	if (FAILED(Add_Component()))
+	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
  
@@ -49,12 +52,14 @@ void CPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CPlayer::Render_GameObject()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pTextureCom->Set_Texture(0);
 
@@ -62,57 +67,36 @@ void CPlayer::Render_GameObject()
 
 	D3DXMATRIX matTmp;
 	D3DXMatrixIdentity(&matTmp);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+	pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CPlayer::Add_Component()
+HRESULT CPlayer::Ready_Component()
 {
-	Engine::CComponent* pComponent = nullptr;
-
-	// buffer 
-	pComponent = m_pBufferCom = 
-		dynamic_cast<Engine::CRcTex*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_RcTex"));
-	if (nullptr == pComponent)
+	// 버퍼
+	if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent});
-
-	// texture 
-	pComponent = m_pTextureCom =
-		dynamic_cast<Engine::CTexture*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_PlayerTexture"));
-	if (nullptr == pComponent)
+	// 텍스쳐
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
-
-	// Transform
-	pComponent = m_pTransformCom =
-		dynamic_cast<Engine::CTransform*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Transform"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-	
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-
-	// Calculator 
-	pComponent = m_pCalculatorCom =
-		dynamic_cast<Engine::CCalculator*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Calculator"));
-	if (nullptr == pComponent)
+	// 트랜스폼
+	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });
+	// 칼큐레다
+	if (FAILED((AddComponent<Engine::CCalculator, ID_STATIC>(L"Proto_Calculator", L"Com_Calculator", &m_pCalculatorCom))))
+		return E_FAIL;
 
 	return S_OK;
 }
 
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
+
 	_vec3		vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 
@@ -136,14 +120,25 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_pTransformCom->Rotation(ROT_Y, -180.f * fTimeDelta);
 	}
-
-	if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+	//if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+	//{
+	//	_vec3 origin{ 0,0,0 };
+	//	CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT ,origin, 500);
+	//}
+	_vec3 origin{ 0,0,0 };
+	_vec3 playerPo;
+	m_pTransformCom->Get_Info(INFO_POS, &playerPo);
+	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+		CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
+	}
+	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
 	{
 		_vec3 vPickPos = Picking_OnTerrain();
 		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
 
 		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
-	}
+	}*/
 
 
 }
@@ -181,9 +176,9 @@ _vec3 CPlayer::Picking_OnTerrain()
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransformCom);
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayer* CPlayer::Create()
 {
-	CPlayer* pBackGround = new CPlayer(pGraphicDev);
+	CPlayer* pBackGround = new CPlayer;
 
 	if (FAILED(pBackGround->Ready_GameObject()))
 	{

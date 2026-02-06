@@ -2,9 +2,10 @@
 #include "CMonster.h"
 #include "CProtoMgr.h"
 #include "CManagement.h"
+#include "CGraphicDev.h"
 
-CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+CMonster::CMonster()
+	: CGameObject()
 {
 }
 
@@ -57,13 +58,15 @@ void CMonster::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CMonster::Render_GameObject()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CMonster::Add_Component()
@@ -92,9 +95,9 @@ HRESULT CMonster::Add_Component()
 }
 
 
-CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMonster* CMonster::Create()
 {
-	CMonster* pMonster = new CMonster(pGraphicDev);
+	CMonster* pMonster = new CMonster;
 
 	if (FAILED(pMonster->Ready_GameObject()))
 	{

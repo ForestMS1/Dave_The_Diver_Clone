@@ -9,7 +9,7 @@ public:
 	enum LOADINGID { LOADING_STAGE, LOADING_BOSS, LOADING_MAPEDITOR, LOADING_END };
 
 public:
-	explicit CLoading(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLoading();
 	virtual ~CLoading();
 
 public:
@@ -30,7 +30,6 @@ public:
 
 
 private:
-	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	std::wstring				m_sLoading;
 
 	HANDLE				m_hThread;
@@ -41,7 +40,7 @@ private:
 
 
 public:
-	static CLoading* Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eID);
+	static CLoading* Create(LOADINGID eID);
 
 private:
 	virtual void	Free();

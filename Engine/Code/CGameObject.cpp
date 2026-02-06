@@ -1,23 +1,21 @@
 #include "CGameObject.h"
 #include "CLog.h"
+#include "CGraphicDev.h"
+#include "CComponent.h"
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
-    : m_pGraphicDev(pGraphicDev)
-    , m_fViewZ(1.f)
+CGameObject::CGameObject()
+    : m_fViewZ(1.f)
     , m_pParentGameObject(nullptr)
     , m_bDead(false)
 {
-    m_pGraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
-    : m_pGraphicDev(rhs.m_pGraphicDev)
-    , m_fViewZ(1.f)
+    : m_fViewZ(1.f)
     , m_pParentGameObject(nullptr) // 복사생성시 계층구조는 가져오지 않는다.
     , m_bDead(false)
 
 {
-    m_pGraphicDev->AddRef();
 }
 
 CGameObject::~CGameObject()
@@ -55,8 +53,10 @@ void CGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CGameObject::Compute_ViewZ(const _vec3* pPos)
 {
+    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
     _matrix matCamWorld;
-    m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+    pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
     D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
 
     _vec3   vCamPos;
@@ -155,12 +155,22 @@ void CGameObject::Free()
         }
         m_childGameObjectList.clear();
     }
+
+    // 사망시 컴포넌트 오브젝트 널처리
+    // 아래에서 컴포넌트 어차피 지워질거지만 명시적으로 작성
+    {
+        for (int i = 0; i < ID_END; ++i)
+        {
+            for (auto& pComponent : m_mapComponent[i])
+            {
+                pComponent.second->Set_GameObject(nullptr);
+            }
+        }
+    }
     
     for (_uint i = 0; i < ID_END; ++i)
     {
         for_each(m_mapComponent[i].begin(), m_mapComponent[i].end(), CDeleteMap());
         m_mapComponent[i].clear();
     }
-
-    Safe_Release(m_pGraphicDev);
 }

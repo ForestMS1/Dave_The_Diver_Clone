@@ -7,7 +7,6 @@ class ENGINE_DLL CTerrainTex : public CVIBuffer
 {
 private:
 	explicit CTerrainTex();
-	explicit CTerrainTex(LPDIRECT3DDEVICE9	pGraphicDev);
 	explicit CTerrainTex(const CTerrainTex& rhs);
 	virtual ~CTerrainTex();
 
@@ -27,8 +26,7 @@ private:
 
 
 public:
-	static CTerrainTex* Create(LPDIRECT3DDEVICE9 pGraphicDev,
-		const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
+	static CTerrainTex* Create(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
 	virtual CComponent* Clone();
 
 private:

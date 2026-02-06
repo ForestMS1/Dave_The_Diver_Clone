@@ -4,11 +4,6 @@ CTriCol::CTriCol()
 {
 }
 
-CTriCol::CTriCol(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
-{
-}
-
 CTriCol::CTriCol(const CTriCol& rhs)
 	: CVIBuffer(rhs)
 {
@@ -67,9 +62,9 @@ void CTriCol::Render_Buffer()
 	CVIBuffer::Render_Buffer();
 }
 
-CTriCol* CTriCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTriCol* CTriCol::Create()
 {
-	CTriCol* pTriCol = new CTriCol(pGraphicDev);
+	CTriCol* pTriCol = new CTriCol;
 
 	if (FAILED(pTriCol->Ready_Buffer()))
 	{

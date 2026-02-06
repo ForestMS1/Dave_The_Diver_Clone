@@ -3,14 +3,12 @@
 #include "CProtoMgr.h"
 #include "CImguiMgr.h"
 
-CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
-    : m_pGraphicDev(pGraphicDev)
-    , m_bFinish(false)
+CLoading::CLoading()
+    : m_bFinish(false)
     , m_eLoadingID(LOADING_END)
     , m_Crt({})
     , m_hThread(nullptr)
 {
-    m_pGraphicDev->AddRef();
 }
 
 CLoading::~CLoading()
@@ -39,16 +37,16 @@ _uint CLoading::Loading_Stage()
 {
     {
         m_sLoading = L"Buffer Loading.....................................";
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create(m_pGraphicDev))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create())))
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create(m_pGraphicDev))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTex", Engine::CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTex", Engine::CTerrainTex::Create( VTXCNTX, VTXCNTZ, VTXITV))))
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create())))
             return E_FAIL;
     }
 
@@ -60,10 +58,10 @@ _uint CLoading::Loading_Stage()
     {
         m_sLoading = L"Etc Loading.....................................";
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create(m_pGraphicDev))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create())))
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create(m_pGraphicDev))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create())))
             return E_FAIL;
     }
     
@@ -155,9 +153,9 @@ unsigned int CLoading::Thread_Main(void* pArg)
     return iFlag;       // 0 리턴 시, _endthreadex가 자동 호출
 }
 
-CLoading* CLoading::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eID)
+CLoading* CLoading::Create(LOADINGID eID)
 {
-    CLoading* pLoading = new CLoading(pGraphicDev);
+    CLoading* pLoading = new CLoading;
 
     if (FAILED(pLoading->Ready_Loading(eID)))
     {
@@ -177,8 +175,4 @@ void CLoading::Free()
     CloseHandle(m_hThread);
 
     DeleteCriticalSection(&m_Crt);
-
-    Safe_Release(m_pGraphicDev);
-
-
 }
