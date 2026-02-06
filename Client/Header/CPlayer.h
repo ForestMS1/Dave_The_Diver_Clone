@@ -23,7 +23,7 @@ public:
 	virtual			void		Render_GameObject();
 
 private:
-	HRESULT			Add_Component();
+	HRESULT			Ready_Component();
 	void			Key_Input(const _float& fTimeDelta);
 	void			Set_OnTerrain();
 	_vec3			Picking_OnTerrain();
