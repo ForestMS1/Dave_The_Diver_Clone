@@ -76,6 +76,9 @@
     <Filter Include="02. GameObject\DSPlayer\PlayerState\Die">
       <UniqueIdentifier>{1f92c9af-0686-43a2-8e2d-7a9be3c91a35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DSPlayer\PlayerGun">
+      <UniqueIdentifier>{a9b92f8a-6987-4b16-b6f3-a584f3996318}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="..\Header\CPlayerDie.h">
       <Filter>02. GameObject\DSPlayer\PlayerState\Die</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerGun.h">
+      <Filter>02. GameObject\DSPlayer\PlayerGun</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -214,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerDie.cpp">
       <Filter>02. GameObject\DSPlayer\PlayerState\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerGun.cpp">
+      <Filter>02. GameObject\DSPlayer\PlayerGun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

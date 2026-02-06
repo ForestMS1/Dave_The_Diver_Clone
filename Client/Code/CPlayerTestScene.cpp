@@ -43,7 +43,10 @@ void CPlayerTestScene::LateUpdate_Scene(const _float& fTimeDelta)
 
 void CPlayerTestScene::Render_Scene()
 {
-
+	ImGui::Begin("FPS");
+	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::Text("DT: %.5f", ImGui::GetIO().DeltaTime);
+	ImGui::End();
 }
 
 HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)

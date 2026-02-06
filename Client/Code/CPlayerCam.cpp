@@ -78,6 +78,7 @@ void CPlayerCam::Mouse_Fix()
 
 	ClientToScreen(g_hWnd, &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
+	ShowCursor(false);
 }
 
 HRESULT CPlayerCam::Add_Component()
