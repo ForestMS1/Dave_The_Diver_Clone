@@ -1,10 +1,11 @@
-#include "pch.h"
 #include "CPlayerCam.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
 #include "CProtoMgr.h"
 #include "CManagement.h"
-#include "CPlayer.h"
+#include "CInfoMgr.h"
+//#include "CPlayer.h"
+
 CPlayerCam::CPlayerCam()
 	: m_fSpeed(0.f)
 	, m_pCalculatorCom(nullptr)
@@ -74,9 +75,12 @@ void CPlayerCam::Render_GameObject()
 
 void CPlayerCam::Mouse_Fix()
 {
+	
 	POINT       ptMouse{ WINCX >> 1, WINCY >> 1 };
 
-	ClientToScreen(g_hWnd, &ptMouse);
+
+
+	ClientToScreen(CInfoMgr::GetInstance()->Get_HWND(), &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
 	ShowCursor(false);
 }

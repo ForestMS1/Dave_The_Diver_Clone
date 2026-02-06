@@ -58,32 +58,8 @@
     <Filter Include="01. Scene\PlayerTestScene">
       <UniqueIdentifier>{879c7bda-e8be-456b-aeea-6a772afb6a1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\PlayerCam">
-      <UniqueIdentifier>{7c69a780-f400-4c0a-a0ff-77d4df5e4d07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer">
-      <UniqueIdentifier>{f297e91f-cd1f-4682-b72f-ad120661d19c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer\PlayerState">
-      <UniqueIdentifier>{46a54173-d45e-4e86-a655-a515e4e43973}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer\PlayerState\Idle">
-      <UniqueIdentifier>{4a9afb67-7a70-41fa-b5a4-bf41f078b9bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer\PlayerState\Attack">
-      <UniqueIdentifier>{5546b252-6dff-4d29-a83d-3daaa2863572}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer\PlayerState\Die">
-      <UniqueIdentifier>{1f92c9af-0686-43a2-8e2d-7a9be3c91a35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer\PlayerGun">
-      <UniqueIdentifier>{a9b92f8a-6987-4b16-b6f3-a584f3996318}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\PlayerTestScene\DSTestLoading">
       <UniqueIdentifier>{5883b196-0096-41a0-bdf0-124a713de8e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\DSPlayer\PlayerBullet">
-      <UniqueIdentifier>{f6e04fa8-1d85-484a-b93b-498fb8375c5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,32 +117,8 @@
     <ClInclude Include="..\Header\CPlayerTestScene.h">
       <Filter>01. Scene\PlayerTestScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CPlayerCam.h">
-      <Filter>02. GameObject\PlayerCam</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CDSPlayer.h">
-      <Filter>02. GameObject\DSPlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayerState.h">
-      <Filter>02. GameObject\DSPlayer\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayerIdle.h">
-      <Filter>02. GameObject\DSPlayer\PlayerState\Idle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayerAttack.h">
-      <Filter>02. GameObject\DSPlayer\PlayerState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayerDie.h">
-      <Filter>02. GameObject\DSPlayer\PlayerState\Die</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayerGun.h">
-      <Filter>02. GameObject\DSPlayer\PlayerGun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CDSTestLoading.h">
       <Filter>01. Scene\PlayerTestScene\DSTestLoading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayerBullet.h">
-      <Filter>02. GameObject\DSPlayer\PlayerBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,32 +167,8 @@
     <ClCompile Include="..\Code\CPlayerTestScene.cpp">
       <Filter>01. Scene\PlayerTestScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CPlayerCam.cpp">
-      <Filter>02. GameObject\PlayerCam</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CDSPlayer.cpp">
-      <Filter>02. GameObject\DSPlayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayerState.cpp">
-      <Filter>02. GameObject\DSPlayer\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayerIdle.cpp">
-      <Filter>02. GameObject\DSPlayer\PlayerState\Idle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayerAttack.cpp">
-      <Filter>02. GameObject\DSPlayer\PlayerState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayerDie.cpp">
-      <Filter>02. GameObject\DSPlayer\PlayerState\Die</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayerGun.cpp">
-      <Filter>02. GameObject\DSPlayer\PlayerGun</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CDSTestLoading.cpp">
       <Filter>01. Scene\PlayerTestScene\DSTestLoading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayerBullet.cpp">
-      <Filter>02. GameObject\DSPlayer\PlayerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

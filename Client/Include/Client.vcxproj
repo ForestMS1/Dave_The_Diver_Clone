@@ -159,7 +159,6 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CCube.h" />
-    <ClInclude Include="..\Header\CDSPlayer.h" />
     <ClInclude Include="..\Header\CDSTestLoading.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CEffect.h" />
@@ -168,13 +167,6 @@
     <ClInclude Include="..\Header\CMainApp.h" />
     <ClInclude Include="..\Header\CMonster.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
-    <ClInclude Include="..\Header\CPlayerAttack.h" />
-    <ClInclude Include="..\Header\CPlayerBullet.h" />
-    <ClInclude Include="..\Header\CPlayerCam.h" />
-    <ClInclude Include="..\Header\CPlayerDie.h" />
-    <ClInclude Include="..\Header\CPlayerGun.h" />
-    <ClInclude Include="..\Header\CPlayerIdle.h" />
-    <ClInclude Include="..\Header\CPlayerState.h" />
     <ClInclude Include="..\Header\CPlayerTestScene.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CStage.h" />
@@ -188,7 +180,6 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CCube.cpp" />
-    <ClCompile Include="..\Code\CDSPlayer.cpp" />
     <ClCompile Include="..\Code\CDSTestLoading.cpp" />
     <ClCompile Include="..\Code\CDynamicCamera.cpp" />
     <ClCompile Include="..\Code\CEffect.cpp" />
@@ -197,13 +188,6 @@
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CMonster.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
-    <ClCompile Include="..\Code\CPlayerAttack.cpp" />
-    <ClCompile Include="..\Code\CPlayerBullet.cpp" />
-    <ClCompile Include="..\Code\CPlayerCam.cpp" />
-    <ClCompile Include="..\Code\CPlayerDie.cpp" />
-    <ClCompile Include="..\Code\CPlayerGun.cpp" />
-    <ClCompile Include="..\Code\CPlayerIdle.cpp" />
-    <ClCompile Include="..\Code\CPlayerState.cpp" />
     <ClCompile Include="..\Code\CPlayerTestScene.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CStage.cpp" />
