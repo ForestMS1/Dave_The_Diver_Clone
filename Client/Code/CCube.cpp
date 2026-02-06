@@ -60,7 +60,7 @@ void CCube::Render_GameObject()
 
 	if (CGameObject* pParent = Get_Parent())
 	{
-		if (CTransform* pTransform = dynamic_cast<CTransform*>(pParent->Get_Component(ID_DYNAMIC, L"Com_Transform")))
+		if (auto* pTransform = pParent->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform"))
 		{
 			_matrix parentWorld = *pTransform->Get_World();
 			_matrix myWorld = *m_pTransformCom->Get_World();
