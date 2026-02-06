@@ -1,25 +1,20 @@
 #include "CGunShot.h"
 #include "CParticleMgr.h"
 
-CGunShot::CGunShot()
-{
-}
 
-CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev) : PSystem(pGraphicDev)
+
+CGunShot::CGunShot() : PSystem()
 {
 	_origin = { 0,0,0 };
-	_size = 0.2f;
-	_vbSize = 2048;
-	_vbOffset = 0;
-	_vbBatchSize = 64;
+	_size = { 0.2f,0.2f,0.2f };
 	numOfParticles = 5;
 }
 
-CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin) : PSystem(pGraphicDev)
+CGunShot::CGunShot(_vec3 origin) : PSystem()
 {
 	//_origin = { 0,0,0 };
 	_origin = origin;
-	_size = 0.2f;
+	_size = { 0.2f,0.2f,0.2f };
 	_vbSize = 2048;
 	_vbOffset = 0;
 	_vbBatchSize = 64;
@@ -42,7 +37,7 @@ HRESULT CGunShot::Ready_Buffer()
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
 	for (int i = 0; i < numOfParticles; i++)
-		addParticle();
+		//addParticle();
 
 	return S_OK;
 }
@@ -55,9 +50,9 @@ void CGunShot::render()
 	postRender();
 }
 
-CGunShot* CGunShot::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin)
+CGunShot* CGunShot::Create()
 {
-	CGunShot* gunshot = new CGunShot(pGraphicDev, origin );
+	CGunShot* gunshot = new CGunShot();
 
 	if (FAILED(gunshot->Ready_Buffer()))
 	{
@@ -80,7 +75,18 @@ void CGunShot::resetParticle(Attribute* attribute)
 	GetRandomVector(&attribute->velocity, &min, &max);
 	D3DXVec3Normalize(&attribute->velocity, &attribute->velocity);
 	attribute->velocity *= 10.f;
-	attribute->_color = D3DXCOLOR(GetRandomFloat(0.6f, 1.0f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
+	int random = rand() % 4;
+	switch (random) {
+	case 0:
+		attribute->_color = D3DXCOLOR(GetRandomFloat(0.0f, 0.1f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
+		break;
+	case 1:
+		attribute->_color = D3DXCOLOR(GetRandomFloat(0.0f, 0.1f), GetRandomFloat(0.7f, 0.9f), GetRandomFloat(0.9f, 1.0f), 1.0f);
+		break;
+	default:
+		attribute->_color = D3DXCOLOR(GetRandomFloat(1.0f, 1.0f), GetRandomFloat(1.0f, 1.0f), GetRandomFloat(1.0f, 1.0f), 1.0f);
+		break;
+	}
 	attribute->_age = 0.0f;
 	attribute->_lifeTime = 0.5f;
 }

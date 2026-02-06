@@ -29,8 +29,8 @@ HRESULT CMainApp::Ready_MainApp()
 
 	if (FAILED(Ready_Scene(m_pGraphicDev)))
 		return E_FAIL;
-	//if (FAILED(CParticleMgr::GetInstance()))
-	//	return E_FAIL;
+	if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
+		return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
 
@@ -65,7 +65,7 @@ void CMainApp::Render_MainApp()
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
-	CParticleMgr::GetInstance()->Render_Particle(m_pGraphicDev);
+	CParticleMgr::GetInstance()->Render_Particle();
 
 
 	m_pDeviceClass->Render_End();

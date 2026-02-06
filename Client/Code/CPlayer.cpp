@@ -125,13 +125,15 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//	_vec3 origin{ 0,0,0 };
 	//	CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT ,origin, 500);
 	//}
-	_vec3 origin{ 0,0,0 };
+	/*_vec3 origin{ 0,0,0 };
 	_vec3 playerPo;
 	m_pTransformCom->Get_Info(INFO_POS, &playerPo);
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
-		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-		CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
+		CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, playerPo, 200);
 	}
+	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB)) {
+		CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, origin, 200);
+	}*/
 	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
 	{
 		_vec3 vPickPos = Picking_OnTerrain();
