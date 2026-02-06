@@ -24,7 +24,7 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Ready_GameObject()
 {
-	if (FAILED(Add_Component()))
+	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
  
@@ -73,45 +73,23 @@ void CPlayer::Render_GameObject()
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CPlayer::Add_Component()
+HRESULT CPlayer::Ready_Component()
 {
-	Engine::CComponent* pComponent = nullptr;
-
-	// buffer 
-	pComponent = m_pBufferCom = 
-		dynamic_cast<Engine::CRcTex*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_RcTex"));
-	if (nullptr == pComponent)
+	// 버퍼
+	if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent});
-
-	// texture 
-	pComponent = m_pTextureCom =
-		dynamic_cast<Engine::CTexture*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_PlayerTexture"));
-	if (nullptr == pComponent)
+	// 텍스쳐
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
-
-	// Transform
-	pComponent = m_pTransformCom =
-		dynamic_cast<Engine::CTransform*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Transform"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-	
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-
-	// Calculator 
-	pComponent = m_pCalculatorCom =
-		dynamic_cast<Engine::CCalculator*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Calculator"));
-	if (nullptr == pComponent)
+	// 트랜스폼
+	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });
+	// 칼큐레다
+	if (FAILED((AddComponent<Engine::CCalculator, ID_STATIC>(L"Proto_Calculator", L"Com_Calculator", &m_pCalculatorCom))))
+		return E_FAIL;
 
 	return S_OK;
 }

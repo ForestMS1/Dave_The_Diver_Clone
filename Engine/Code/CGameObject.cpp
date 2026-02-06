@@ -1,6 +1,7 @@
 #include "CGameObject.h"
 #include "CLog.h"
 #include "CGraphicDev.h"
+#include "CComponent.h"
 
 CGameObject::CGameObject()
     : m_fViewZ(1.f)
@@ -153,6 +154,18 @@ void CGameObject::Free()
             pChild->m_pParentGameObject = nullptr;
         }
         m_childGameObjectList.clear();
+    }
+
+    // 사망시 컴포넌트 오브젝트 널처리
+    // 아래에서 컴포넌트 어차피 지워질거지만 명시적으로 작성
+    {
+        for (int i = 0; i < ID_END; ++i)
+        {
+            for (auto& pComponent : m_mapComponent[i])
+            {
+                pComponent.second->Set_GameObject(nullptr);
+            }
+        }
     }
     
     for (_uint i = 0; i < ID_END; ++i)
