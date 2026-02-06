@@ -59,6 +59,9 @@ _uint CDSTestLoading::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_GunTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Gun/Gun.png", 1))))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BulletTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Bullet/fireBall_%d.png", 4))))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png", 1))))
         return E_FAIL;
 

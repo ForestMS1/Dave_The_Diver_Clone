@@ -82,6 +82,9 @@
     <Filter Include="01. Scene\PlayerTestScene\DSTestLoading">
       <UniqueIdentifier>{5883b196-0096-41a0-bdf0-124a713de8e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DSPlayer\PlayerBullet">
+      <UniqueIdentifier>{f6e04fa8-1d85-484a-b93b-498fb8375c5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,6 +165,9 @@
     <ClInclude Include="..\Header\CDSTestLoading.h">
       <Filter>01. Scene\PlayerTestScene\DSTestLoading</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerBullet.h">
+      <Filter>02. GameObject\DSPlayer\PlayerBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -232,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDSTestLoading.cpp">
       <Filter>01. Scene\PlayerTestScene\DSTestLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerBullet.cpp">
+      <Filter>02. GameObject\DSPlayer\PlayerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

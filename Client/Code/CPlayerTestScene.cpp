@@ -104,11 +104,21 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 HRESULT	CPlayerTestScene::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 {
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 
 }
 HRESULT	CPlayerTestScene::Ready_UI_Layer(std::wstring_view svLayerTag)
 {
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
 

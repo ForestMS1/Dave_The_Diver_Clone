@@ -3,7 +3,7 @@
 #include "CDSPlayer.h"
 CPlayerAttack::CPlayerAttack(CDSPlayer* pPlayer)
     : CPlayerState(pPlayer)
-    , m_fAttackTime(0.f), m_fMaxAttakcTime(0.5f)
+    , m_fAttackTime(0.f), m_fMaxAttakcTime(0.02f)
 {
 }
 

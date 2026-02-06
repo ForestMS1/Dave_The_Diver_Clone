@@ -22,13 +22,14 @@ public:
 	virtual			void		Render_GameObject()												override;
 private:
 	HRESULT			Add_Component();
+	void			Set_ParentTransform(const _float& fTimeDelta);
+	void			Shot(const _float& fTimeDelta);
+	void			Set_BillBoard();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
-
-
 public:
 	static CPlayerGun* Create();
 

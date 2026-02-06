@@ -4,6 +4,7 @@
 #include "CDSPlayer.h"
 #include "CPlayerCam.h"
 #include "CGraphicDev.h"
+#include "CPlayerBullet.h"
 CPlayerGun::CPlayerGun()
 	: m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
@@ -28,38 +29,9 @@ HRESULT CPlayerGun::Ready_GameObject()
 
 _int CPlayerGun::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_pParentGameObject == nullptr)
-	{
-		CGameObject* pPlayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"Player");
-		Set_Parent(pPlayer);
-	}
-	else
-	{
-		CTransform* pPlayerTransform = dynamic_cast<CTransform*>(m_pParentGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-		_vec3 vPlayerPos, vPlayerLook;
-		pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-		pPlayerTransform->Get_Info(INFO_LOOK, &vPlayerLook);
-
-		_vec3 vPos = vPlayerPos + vPlayerLook * 10.f;
-		m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-	}
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-
-	//총 발사 모션
-	if (m_pParentGameObject != nullptr)
-	{
-		PlayerState ePlayerState = static_cast<CDSPlayer*>(m_pParentGameObject)->Get_State();
-
-		if (ePlayerState == PlayerState::ATTACK)
-		{
-
-		}
-		else
-		{
-
-		}
-	}
-
+	Set_ParentTransform(fTimeDelta);
+	Shot(fTimeDelta);
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 	return iExit;
@@ -67,25 +39,19 @@ _int CPlayerGun::Update_GameObject(const _float& fTimeDelta)
 
 void CPlayerGun::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	Set_BillBoard();
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
 void CPlayerGun::Render_GameObject()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	//_matrix ortho;
-	//D3DXMatrixOrthoLH(&ortho, WINCX, WINCY, 1.f, 100.f);
-	//pGraphicDev->SetTransform(D3DTS_PROJECTION, &ortho);
 
 	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
-	//CPlayerCam* pCam = dynamic_cast<CPlayerCam*>
-	//	(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"PlayerCam"));
-	//_matrix origin = pCam->Get_ProjMatrix();
-	//pGraphicDev->SetTransform(D3DTS_PROJECTION, &origin);
 
 #ifdef _DEBUG
 	_vec3 vPos, vLook;
@@ -122,6 +88,76 @@ HRESULT	CPlayerGun::Add_Component()
 
 
 	return S_OK;
+}
+
+void CPlayerGun::Set_ParentTransform(const _float& fTimeDelta)
+{
+	if (m_pParentGameObject == nullptr)
+	{
+		// Ready에서 해주면 씬 넘어오기 전에 Object를 찾게되어 에러
+		CGameObject* pPlayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"Player");
+		Set_Parent(pPlayer);
+	}
+	else
+	{
+		CTransform* pPlayerTransform = dynamic_cast<CTransform*>(m_pParentGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+		_vec3 vPlayerPos, vPlayerLook;
+		pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+		pPlayerTransform->Get_Info(INFO_LOOK, &vPlayerLook);
+
+		_vec3 vPos = vPlayerPos + vPlayerLook * 10.f;
+		m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	}
+}
+
+void CPlayerGun::Shot(const _float& fTimeDelta)
+{
+	// 총알 발사
+	if (m_pParentGameObject != nullptr)
+	{
+		PlayerState ePlayerState = static_cast<CDSPlayer*>(m_pParentGameObject)->Get_State();
+
+		if (ePlayerState == PlayerState::ATTACK)
+		{
+			CTransform* pPlayerTransform = dynamic_cast<CTransform*>(m_pParentGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+			_vec3 vPlayerLook;
+			pPlayerTransform->Get_Info(INFO_LOOK, &vPlayerLook);
+
+			_vec3 vCurPos;
+			m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+			CGameObject* pBullet = CPlayerBullet::Create(vCurPos, vPlayerLook, 20.f);
+			CManagement::GetInstance()->Get_Scene()->Get_Layer(L"GameLogic_Layer")->Add_GameObject(L"PlayerBullet", pBullet);
+		}
+	}
+}
+
+void CPlayerGun::Set_BillBoard()
+{
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	_matrix		matBill, matWorld, matView;
+
+	matWorld = *m_pTransformCom->Get_World();
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixIdentity(&matBill);
+
+	// y축 회전만 제거
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, 0, &matBill);
+
+	// 주의 할 것
+	matWorld = matBill * matWorld;
+
+	m_pTransformCom->Set_World(&matWorld);
+
+	_vec3		vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 CPlayerGun* CPlayerGun::Create()
