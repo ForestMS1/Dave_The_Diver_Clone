@@ -1,5 +1,5 @@
 #include "CLight.h"
-
+#include "CGraphicDev.h"
 CLight::CLight() : m_iIndex(0)
 {
 	ZeroMemory(&m_tLight, sizeof(D3DLIGHT9));
@@ -15,9 +15,9 @@ HRESULT CLight::Ready_Light(const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 
 	m_iIndex = iIndex;
 
-	m_pGraphicDev->SetLight(iIndex, pLightInfo);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->SetLight(iIndex, pLightInfo);
 
-	m_pGraphicDev->LightEnable(iIndex, TRUE);
+	CGraphicDev::GetInstance()->Get_GraphicDev()->LightEnable(iIndex, TRUE);
 
 
 	return S_OK;

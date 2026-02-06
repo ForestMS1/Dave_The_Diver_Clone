@@ -73,16 +73,22 @@ HRESULT CMapEditorTerrain::Add_Component()
 	pComponent = m_pBufferCom =
 		dynamic_cast<Engine::CMapTerrainTex*>
 		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_MapTerrainTex"));
-	if (nullptr == pComponent)
+	if (nullptr == pComponent) {
+		MSG_BOX("CMapTerrainTex Proto_MapTerrainTex Clone_Prototype Failed");
 		return E_FAIL;
+	}
+	
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom =
 		dynamic_cast<Engine::CTexture*>
 		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_TerrainTexture"));
-	if (nullptr == pComponent)
+	if (nullptr == pComponent) {
+		MSG_BOX("CMapTerrainTex Proto_TerrainTexture Clone_Prototype Failed");
 		return E_FAIL;
+	}
+		
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
@@ -90,8 +96,11 @@ HRESULT CMapEditorTerrain::Add_Component()
 	pComponent = m_pTransformCom =
 		dynamic_cast<Engine::CTransform*>
 		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_Transform"));
-	if (nullptr == pComponent)
+	if (nullptr == pComponent) {
+		MSG_BOX("CMapTerrainTex Proto_Transform Clone_Prototype Failed");
 		return E_FAIL;
+	}
+	
 
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 

@@ -29,7 +29,7 @@ HRESULT CLogo::Ready_Scene()
 	//if (FAILED(Ready_GameLogic_Layer(L"GameLogic_Layer")))
 	//	return E_FAIL;
 
-	m_pLoading = CLoading::Create( CLoading::LOADING_STAGE);
+	m_pLoading = CLoading::Create( CLoading::LOADING_MAPEDITOR);
 	if (nullptr == m_pLoading)
 		return E_FAIL;
 

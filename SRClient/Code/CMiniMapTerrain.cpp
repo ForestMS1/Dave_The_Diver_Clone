@@ -67,6 +67,7 @@ void CMiniMapTerrain::Render_GameObject()
 		break;
 
 	case 2:
+		m_pTextureCom->Set_Texture(2);
 
 		break;
 	default:

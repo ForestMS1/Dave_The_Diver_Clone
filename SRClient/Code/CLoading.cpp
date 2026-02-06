@@ -78,19 +78,24 @@ _uint CLoading::Loading_MapEditor()
     {
         m_sLoading = L"Buffer Loading.....................................";
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create())))
+
             return E_FAIL;
 
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
+
             return E_FAIL;
 
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create())))
+  
             return E_FAIL;
 
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create(14, 14, 1))))
+
             return E_FAIL;
 
 
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapTerrainTex",Engine::CMapTerrainTex::Create(2,2,13))))
+            
             return E_FAIL;
     }
 
@@ -98,9 +103,11 @@ _uint CLoading::Loading_MapEditor()
     {
         m_sLoading = L"Texture Loading.....................................";
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Tile0.jpg", 1))))
+          
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapBlankTexture", Engine::CTexture::Create( TEX_NORMAL, L"../Bin/Resource/Texture/Map/mapBlack%d.png", 2))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapBlankTexture", Engine::CTexture::Create( TEX_NORMAL, L"../Bin/Resource/Texture/Map/mapBlack%d.png", 3))))
+            
             return E_FAIL;
 
 
@@ -110,9 +117,11 @@ _uint CLoading::Loading_MapEditor()
         m_sLoading = L"Etc Loading.....................................";
 
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create())))
+         
             return E_FAIL;
 
         if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create())))
+
             return E_FAIL;
     }
 

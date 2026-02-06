@@ -7,6 +7,8 @@
 
 class CMapEditor : public CScene
 {
+public:
+	enum STATE { ROOM_PICKING = 0, LEVEL1 = 1, LEVEL2, LEVEL3 };
 protected:
 	explicit CMapEditor();
 	virtual ~CMapEditor();
@@ -26,6 +28,10 @@ private:
 
 private:
 	void			Show_Position();
+
+	void			PickMiniMap();
+
+	void			CreateRoom();
 	
 
 public:
@@ -33,8 +39,15 @@ public:
 
 
 public:
-	list <CRoom*> vecRoom[15];
-	list <CGameObject*> vecMiniMap[15];
+	CGameObject* arrRoom[15][15];
+
+	CGameObject* arrMiniMap[15][15];
+
+	STATE	e_MapEditorLevel{ LEVEL1 };
+	CGameObject* m_pPickMiniMap{nullptr};
+	CGameObject* m_pPickDirMiniMap{nullptr};
+
+
 
 private:
 	virtual void	Free();
