@@ -88,9 +88,7 @@ unsigned int CLoading::Thread_Main(void* pArg)
     case LOADING_STAGE:
         iFlag = pLoading->Loading_Stage();
         break;
-    case LOADING_MAPEDITOR:
-        iFlag = pLoading->Loading_MapEditor();
-        break;
+
 
     case LOADING_BOSS:
         break;

@@ -220,21 +220,78 @@ void CMapEditor::Show_Position() {
 
 		ImGui::Begin("ROOM_INFO");
 
-		for (_uint i = 0; i < 15; ++i) {
-			for (_uint j = 0; j < 15; ++j) {
-				if (arrRoom[i][j] != nullptr) {
-					_vec3 Num;
-					static_cast<CTransform*>(arrRoom[i][j]->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Info(INFO_POS, &Num);
-					ImGui::Text("Room [%d][%d] : Pos.x %lf pos.y %lf pos.z %lf",j,i, Num.x, Num.y, Num.z);
-			
-				}
+		switch (e_MapEditorLevel) {
+		case ROOM_PICKING:
+
+			break;
+		case LEVEL1:
+		case LEVEL2: {
+			const ImVec2 btnSize = ImVec2(350, 30);
+
+			ImGui::BeginChild("RoomList", ImVec2(0, 350), true);
+
+			for (_uint i = 0; i < 15; ++i)
+			{
+				for (_uint j = 0; j < 15; ++j)
+				{
+					if (arrRoom[i][j] == nullptr)
+						continue;
+
+		
+					char label[32];
+					sprintf_s(label, "Room %d,%d", j, i);
+
+					// 더블클릭 안정적으로 받기 위해 InvisibleButton + Text 조합
+					ImGui::PushID(i * 100 + j);
+
+					ImGui::InvisibleButton("RoomBtn", btnSize);
+
+					// 버튼처럼 보이게 그리기(선택사항)
+					ImVec2 pMin = ImGui::GetItemRectMin();
+					ImVec2 pMax = ImGui::GetItemRectMax();
+
+					ImDrawList* draw = ImGui::GetWindowDrawList();
+					ImU32 col = ImGui::IsItemHovered()
+						? IM_COL32(120, 160, 220, 255)
+						: IM_COL32(70, 70, 70, 255);
+
+					draw->AddRectFilled(pMin, pMax, col, 6.0f);
+					draw->AddRect(pMin, pMax, IM_COL32(30, 30, 30, 255), 6.0f);
+
 				
+					ImVec2 textPos = ImVec2(pMin.x + 10.0f, pMin.y + 7.0f);
+					draw->AddText(textPos, IM_COL32(255, 255, 255, 255), label);
 
+
+					if (ImGui::IsItemHovered() &&
+						ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+					{
+					
+					}
+
+					ImGui::PopID();
+
+				
+				
+				}
 			}
+
+			ImGui::EndChild();
+			
 		}
+		
 
+			break;
 
-	
+		case LEVEL3: {
+			_vec2 Num = dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Get_RoomNum();
+
+			ImGui::Text("Room [%d][%d]", Num.y, Num.x);
+		}
+			
+			break;
+
+		}
 		ImGui::End();
 	}
 
@@ -296,23 +353,24 @@ void CMapEditor::Show_Position() {
 
 			ImGui::Spacing();
 
-			if (ImGui::Button("InTo the Room", ImVec2(fullW, h)))
-			{
-				e_MapEditorLevel = LEVEL3;
-			}
-
-			ImGui::Spacing();
 
 			if (ImGui::Button("Back", ImVec2(fullW, h)))
 			{
+	
 				e_MapEditorLevel = LEVEL1;
+				// 클릭되어 있을때 텍스쳐가 2일떄
+				if (dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Get_TypeNum() == 2) {
+					dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Set_TypeNum(1);
+					e_MapEditorLevel = LEVEL1;
+
+				}
 			}
 
 			ImGui::PopStyleVar();
-			break;
-		}
 
-
+			
+		}  
+				   break;
 		case LEVEL3: {
 			float fullW = ImGui::GetContentRegionAvail().x;
 			float h = 55.0f;
@@ -399,17 +457,23 @@ void CMapEditor::PickMiniMap() {
 	if (Pos.x/13 <= 15 && Pos.z/13 <= 15 && Pos.x >=0 && Pos.z >=0) {
 		m_pPickMiniMap = arrMiniMap[(int)Pos.x/ 13][(int)Pos.z/ 13];
 	
-		// 클릭되어 있을때
-		if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB) && dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Get_TypeNum() != 0) {
+		// 클릭이 될떄 (기본 상태일때)
+		if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB) && dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Get_TypeNum() ==1) {
 			dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Set_TypeNum(2);
 			e_MapEditorLevel = LEVEL2;
 	
 		}
-		
-	}
 
+		// 방이 만들어 졌을떄 (0일때)
+		if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB) && dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Get_TypeNum() == 0) {
+		
+			e_MapEditorLevel = LEVEL2;
+
+		}
 
 	
+	}
+
 }
 
 HRESULT CMapEditor::CreateRoom() {
@@ -432,7 +496,7 @@ HRESULT CMapEditor::CreateRoom() {
 	if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"GameLogic_Layer")->Add_GameObject(L+a+b, pGameObject)))
 		return E_FAIL;
 
-	static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(int(RoomNum.x)*13, 0, int(RoomNum.y)*13);
+	static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(int(RoomNum.y)*13, 0, int(RoomNum.x)*13);
 
 
 	dynamic_cast<CMiniMapTerrain*>(m_pPickMiniMap)->Set_TypeNum(0);
