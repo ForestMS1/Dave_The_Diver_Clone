@@ -17,7 +17,7 @@ enum class PlayerState
 	DIE,
 };
 
-class CDSPlayer : public CGameObject
+class ENGINE_DLL CDSPlayer : public CGameObject
 {
 private:
 	explicit CDSPlayer();

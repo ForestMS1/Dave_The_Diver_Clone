@@ -7,7 +7,7 @@ namespace Engine
 	class CCalculator;
 }
 
-class CPlayerCam : public CCamera
+class ENGINE_DLL CPlayerCam : public CCamera
 {
 private:
 	explicit CPlayerCam();

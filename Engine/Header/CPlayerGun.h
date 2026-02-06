@@ -8,7 +8,7 @@ namespace Engine
 	class CTransform;
 }
 
-class CPlayerGun : public CGameObject
+class ENGINE_DLL CPlayerGun : public CGameObject
 {
 private:
 	explicit CPlayerGun();

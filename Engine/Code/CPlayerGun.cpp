@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CPlayerGun.h"
 #include "CManagement.h"
 #include "CDSPlayer.h"
