@@ -1,29 +1,20 @@
 #include "Firework.h"
 
-Firework::Firework()
-{
-}
 
-Firework::Firework(LPDIRECT3DDEVICE9 pGraphicDev) : PSystem(pGraphicDev), numOfParticles(2000)
+Firework::Firework() : PSystem()
 {
 	
 	_origin = { 0,0,0 };
-	_size = 0.9f;
-	_vbSize = 2048;
-	_vbOffset = 0;
-	_vbBatchSize = 64;
+	_size = { 0.9f,0.9f,0.9f };
+
 	
 }
 
-Firework::Firework(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin, int numParticles) : PSystem(pGraphicDev)
+Firework::Firework( _vec3 origin, int numParticles) : PSystem()
 {
-	_device = pGraphicDev;
-	_device->AddRef();
 	_origin = origin;
-	_size = 0.9f;
-	_vbSize = 2048;
-	_vbOffset = 0;
-	_vbBatchSize = 64;
+	_size = { 0.9f,0.9f,0.9f };;
+
 	numOfParticles = numParticles;
 }
 
@@ -43,8 +34,8 @@ HRESULT Firework::Ready_Buffer()
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
-	for (int i = 0; i < numOfParticles; i++)
-		addParticle();
+	//for (int i = 0; i < numOfParticles; i++)
+	//	addParticle();
 
 	return S_OK;
 }
@@ -57,9 +48,22 @@ void Firework::render()
 	postRender();
 }
 
-Firework* Firework::Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 origin, int numParticles)
+Firework* Firework::Create(_vec3 origin, int numParticles)
 {
-	Firework* firework = new Firework(pGraphicDev, origin, numParticles);
+	Firework* firework = new Firework(origin, numParticles);
+
+	if (FAILED(firework->Ready_Buffer()))
+	{
+		Safe_Release(firework);
+		MSG_BOX("firework Create Failed");
+		return nullptr;
+	}
+	return firework;
+}
+
+Firework* Firework::Create()
+{
+	Firework* firework = new Firework();
 
 	if (FAILED(firework->Ready_Buffer()))
 	{

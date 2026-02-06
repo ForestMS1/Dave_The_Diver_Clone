@@ -291,9 +291,6 @@
     <ClCompile Include="..\ThirdParty\imgui\ImGuizmo-1.83\ImSequencer.cpp">
       <Filter>00. Manager\10. ImguiMgr\Imguizmo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PSystem.cpp">
-      <Filter>00. Manager\13. ParticleMgr\03. Particles</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Firework.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\00. Firework</Filter>
     </ClCompile>
@@ -329,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerIdle.cpp">
       <Filter>03. GameObject\DSPlayer\PlayerState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PSystem.cpp">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

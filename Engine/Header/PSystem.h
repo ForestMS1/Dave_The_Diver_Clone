@@ -1,6 +1,6 @@
 #pragma once
 #include "CComponent.h"
-//#include "Engine_Define.h"
+#include <DirectXCollision.h >
 BEGIN(Engine)
 
 class ENGINE_DLL PSystem :
@@ -17,7 +17,7 @@ public:
 	virtual	HRESULT	 Ready_Buffer();
 	virtual void reset();
 	virtual void resetParticle(Attribute* attribute) = 0;
-	virtual void addParticle();
+	virtual void addParticle(_vec3 position);
 
 	virtual void update(float timeDelta) = 0;
 	virtual void preRender();
@@ -51,7 +51,7 @@ public:
 	DWORD								_vbBatchSize;
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
 	float								_emitRate;
-	float								_size;
+	_vec3								_size;
 	int									_matParticles;
 	int									numOfParticles;
 	bool								empty;
