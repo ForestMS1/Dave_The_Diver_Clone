@@ -5,7 +5,7 @@
 class CLogo :   public CScene
 {
 protected:
-	explicit CLogo(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLogo();
 	virtual ~CLogo();
 
 public:
@@ -26,7 +26,7 @@ private:
 	CLoading* m_pLoading;
 
 public:
-	static CLogo* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLogo* Create();
 
 private:
 	virtual void	Free();

@@ -1,11 +1,7 @@
 #include "CTerrainTex.h"
+#include "CGraphicDev.h"
 
 CTerrainTex::CTerrainTex() : m_pPos(nullptr)
-{
-}
-
-CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev), m_hFile(nullptr), m_pPos(nullptr)
 {
 }
 
@@ -144,10 +140,10 @@ void CTerrainTex::Render_Buffer()
 	CVIBuffer::Render_Buffer();
 }
 
-CTerrainTex* CTerrainTex::Create(LPDIRECT3DDEVICE9 pGraphicDev,
+CTerrainTex* CTerrainTex::Create(
 	const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
-	CTerrainTex* pTerrainTex = new CTerrainTex(pGraphicDev);
+	CTerrainTex* pTerrainTex = new CTerrainTex;
 
 	if (FAILED(pTerrainTex->Ready_Buffer(dwCntX, dwCntZ, dwVtxItv)))
 	{

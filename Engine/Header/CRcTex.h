@@ -7,7 +7,6 @@ class ENGINE_DLL CRcTex : public CVIBuffer
 {
 private:
 	explicit CRcTex();
-	explicit CRcTex(LPDIRECT3DDEVICE9	pGraphicDev);
 	explicit CRcTex(const CRcTex& rhs);
 	virtual ~CRcTex();
 
@@ -16,7 +15,7 @@ public:
 	virtual		void		Render_Buffer();
 
 public:
-	static CRcTex* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CRcTex* Create();
 	virtual CComponent* Clone();
 private:
 	virtual void	Free();

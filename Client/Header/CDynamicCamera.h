@@ -6,7 +6,7 @@
 class CDynamicCamera :   public CCamera
 {
 private:
-	explicit CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CDynamicCamera();
 	explicit CDynamicCamera(const CDynamicCamera& rhs);
 	virtual ~CDynamicCamera();
 
@@ -35,7 +35,7 @@ private:
 
 
 public:
-	static CDynamicCamera* Create(LPDIRECT3DDEVICE9 pGraphicDev,
+	static CDynamicCamera* Create(
 									const _vec3* pEye,
 									const _vec3* pAt,
 									const _vec3* pUp,

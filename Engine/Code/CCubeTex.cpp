@@ -1,11 +1,7 @@
 #include "CCubeTex.h"
+#include "CGraphicDev.h"
 
 CCubeTex::CCubeTex()
-{
-}
-
-CCubeTex::CCubeTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
 {
 }
 
@@ -138,9 +134,9 @@ void CCubeTex::Render_Buffer()
 	CVIBuffer::Render_Buffer();
 }
 
-CCubeTex* CCubeTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCubeTex* CCubeTex::Create()
 {
-	CCubeTex* pCubeTex = new CCubeTex(pGraphicDev);
+	CCubeTex* pCubeTex = new CCubeTex;
 
 	if (FAILED(pCubeTex->Ready_Buffer()))
 	{

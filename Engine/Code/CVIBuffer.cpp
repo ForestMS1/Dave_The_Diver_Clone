@@ -1,4 +1,5 @@
 #include "CVIBuffer.h"
+#include "CGraphicDev.h"
 
 CVIBuffer::CVIBuffer() : m_pVB(nullptr), m_pIB(nullptr)
 , m_dwVtxSize(0)
@@ -6,16 +7,6 @@ CVIBuffer::CVIBuffer() : m_pVB(nullptr), m_pIB(nullptr)
 , m_dwTriCnt(0)
 , m_dwFVF(0)
 , m_dwIdxSize(0)
-{
-}
-
-CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CComponent(pGraphicDev), m_pVB(nullptr), m_pIB(nullptr)
-	, m_dwVtxSize(0)
-	, m_dwVtxCnt(0)
-	, m_dwTriCnt(0)
-	, m_dwFVF(0)
-	, m_dwIdxSize(0)
 {
 }
 
@@ -43,7 +34,9 @@ HRESULT CVIBuffer::Ready_Buffer()
 	// D3DPOOL_SYSTEMMEM : 메인 메모리에 저장
 	// D3DPOOL_SCRATCH : 메인 메모리 저장(DX 장치로 접근 불가)
 
-	if (FAILED(m_pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,	// 버텍스 버퍼의 크기
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	if (FAILED(pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,	// 버텍스 버퍼의 크기
 												0,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
 												m_dwFVF,	// 버텍스 속성
 												D3DPOOL_MANAGED,	// 정적 버퍼인 경우 MANAGED
@@ -52,7 +45,7 @@ HRESULT CVIBuffer::Ready_Buffer()
 				return E_FAIL;
 
 
-	if (FAILED(m_pGraphicDev->CreateIndexBuffer(m_dwTriCnt * m_dwIdxSize,	// 인덱스 버퍼의 크기
+	if (FAILED(pGraphicDev->CreateIndexBuffer(m_dwTriCnt * m_dwIdxSize,	// 인덱스 버퍼의 크기
 												0,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
 												m_IdxFmt,	// 인덱스 속성
 												D3DPOOL_MANAGED,	// 정적 버퍼인 경우 MANAGED
@@ -65,15 +58,16 @@ HRESULT CVIBuffer::Ready_Buffer()
 
 void CVIBuffer::Render_Buffer()
 {
-	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 
-	m_pGraphicDev->SetFVF(m_dwFVF);
+	pGraphicDev->SetFVF(m_dwFVF);
 
 	// m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
 
-	m_pGraphicDev->SetIndices(m_pIB);
+	pGraphicDev->SetIndices(m_pIB);
 
-	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
+	pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
 
 }
 

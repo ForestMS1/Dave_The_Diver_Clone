@@ -8,8 +8,8 @@
 #include "CSoundMgr.h"
 #include "CHelper.h"
 
-CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CScene(pGraphicDev), m_pLoading(NULL)
+CLogo::CLogo()
+	: CScene(), m_pLoading(NULL)
 {
 }
 
@@ -28,7 +28,7 @@ HRESULT CLogo::Ready_Scene()
 	//if (FAILED(Ready_GameLogic_Layer(L"GameLogic_Layer")))
 	//	return E_FAIL;
 
-	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
+	m_pLoading = CLoading::Create( CLoading::LOADING_STAGE);
 	if (nullptr == m_pLoading)
 		return E_FAIL;
 
@@ -82,18 +82,18 @@ HRESULT CLogo::Ready_Prototype()
 	
 
 
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create(m_pGraphicDev))))
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create())))
 		return E_FAIL;
 
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg", 1))))
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg", 1))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-CLogo* CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CLogo* CLogo::Create()
 {
-	CLogo* pLogo = new CLogo(pGraphicDev);
+	CLogo* pLogo = new CLogo;
 
 	if (FAILED(pLogo->Ready_Scene()))
 	{
