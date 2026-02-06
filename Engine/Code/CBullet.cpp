@@ -1,4 +1,5 @@
 #include "CBullet.h"
+#include "CParticleMgr.h"
 #include "CLog.h"
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev, CCamera* camera) :  PSystem(pGraphicDev)
@@ -77,7 +78,7 @@ void CBullet::resetParticle(Attribute* attribute)
 	attribute->_color = D3DXCOLOR(1.0f,1.0f,1.0f, 1.0f);
 	//attribute->_color = D3DXCOLOR(GetRandomFloat(0.6f, 1.0f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
 	attribute->_age = 0.0f;
-	attribute->_lifeTime = 2.0f;
+	attribute->_lifeTime = 0.5f;
 }
 
 
@@ -159,19 +160,11 @@ void CBullet::update(float fTimeDelta)
 		_boundingBox._max = i->_position + size;
 		
 		if (i->_age > i->_lifeTime) {
+			CParticleMgr::GetInstance()->spwan_Particle(_device, GUNSHOT, i->_position, 5);
 			i->_isAlive = false;
 		}
 	}
 	removeDeadParticles();
-	if (_particles.size() == 0) {
-		empty = true;
-	}
-	else {
-		empty = false;
-	}
-
-	
-
 	
 }
 
