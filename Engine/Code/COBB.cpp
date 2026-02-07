@@ -25,7 +25,7 @@ HRESULT COBB::Ready_OBB(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation)
 
 COBB* COBB::Create(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation)
 {
-	return COBB::Create(vCenter, vExtents, {});
+	return COBB::Create(vCenter, vExtents, vOrientation, {});
 }
 
 COBB* COBB::Create(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation, std::wstring_view svTag, void* pVoid)
