@@ -23,10 +23,17 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject() {}
 
+
+public:
+	void		Set_Eye(_vec3 Eye) { m_vEye = Eye; }
+	void		Set_Up(_vec3 Up) { m_vUp = Up; }
+	void		Set_At(_vec3 pAt) { m_vAt = pAt; }
+	
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move();
 	void		Mouse_Fix();
+
 
 private:
 	_float			m_fSpeed;

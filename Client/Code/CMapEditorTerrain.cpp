@@ -34,34 +34,47 @@ _int CMapEditorTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	if (m_bRender) {
+
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	}
 
 	return iExit;
 }
 
 void CMapEditorTerrain::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
-
+	if (m_bRender) {
+		CGameObject::LateUpdate_GameObject(fTimeDelta);
+	}
 }
 
 void CMapEditorTerrain::Render_GameObject()
 {
-	CGraphicDev::GetInstance()->Get_GraphicDev()->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	if (m_bRender) {
+		CGraphicDev::GetInstance()->Get_GraphicDev()->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 
-	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		//CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	if (FAILED(Ready_Material()))
-		return;
+		CGraphicDev::GetInstance()->Get_GraphicDev()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
-	m_pTextureCom->Set_Texture(1);
+
+		if (FAILED(Ready_Material()))
+			return;
+
+		m_pTextureCom->Set_Texture(1);
+
+		m_pBufferCom->Render_Buffer();
+
+
+
+		CGraphicDev::GetInstance()->Get_GraphicDev()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
+
+		//CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
 	
-	m_pBufferCom->Render_Buffer();
-
-
-
-	CGraphicDev::GetInstance()->Get_GraphicDev()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 }
 

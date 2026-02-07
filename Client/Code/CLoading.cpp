@@ -108,7 +108,7 @@ _uint CLoading::Loading_MapEditor()
 
             return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create(14, 14, 1))))
+        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create(2, 2, 1))))
 
             return E_FAIL;
 
