@@ -42,12 +42,12 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
-	if (CCube* pCube = dynamic_cast<CCube*>(this->Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst(L"Cube1")))
+	if (auto pCube = Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst<CCube>(L"Cube1"))
 	{
 		pCube->Get_Transform()->Rotation(ROT_X,  D3DXToRadian(10.f));
 	}
 
-	if (CCube* pCube = dynamic_cast<CCube*>(this->Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst(L"Cube2")))
+	if (auto pCube = Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst<CCube>(L"Cube2"))
 	{
 		pCube->Get_Transform()->Rotation(ROT_Y, D3DXToRadian(10.f));
 	}
