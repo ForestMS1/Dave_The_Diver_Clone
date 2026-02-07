@@ -7,8 +7,7 @@ class ENGINE_DLL CGunShot : public PSystem
 {
 public:
 	explicit CGunShot();
-	explicit CGunShot(LPDIRECT3DDEVICE9	pGraphicDev);
-	explicit CGunShot(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin);
+	explicit CGunShot(_vec3 origin);
 	virtual ~CGunShot();
 
 public:
@@ -16,7 +15,7 @@ public:
 	virtual		void		render();
 
 public:
-	static CGunShot* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin);
+	static CGunShot* Create();
 
 	void resetParticle(Attribute* attribute);
 	void preRender();

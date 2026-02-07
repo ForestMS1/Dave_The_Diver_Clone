@@ -8,7 +8,6 @@ COBB::COBB(COLLIDERID eColliderID)
 
 COBB::~COBB()
 {
-	D3DXBoxBoundProbe;
 }
 
 HRESULT COBB::Ready_OBB(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation)

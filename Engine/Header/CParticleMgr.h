@@ -16,10 +16,10 @@ private:
 	virtual ~CParticleMgr();
 
 public:
-	HRESULT Ready_Particle(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev);
+	HRESULT Ready_Particle(HWND hWnd);
 	void Update_Particle(float fTimeDelta);
-	void Render_Particle(LPDIRECT3DDEVICE9 pGraphicDev);
-	void spwan_Particle(LPDIRECT3DDEVICE9 pGraphicDev, PARTICLETYPE type, _vec3 origin, int numofPariticles);
+	void Render_Particle( );
+	void spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles);
 	void Set_Camera(CCamera* camera) { m_pCamera = camera; }
 private:
 	virtual void	Free();
