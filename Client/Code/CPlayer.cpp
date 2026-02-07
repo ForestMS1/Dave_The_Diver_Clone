@@ -77,7 +77,7 @@ HRESULT CPlayer::Ready_Component()
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
-
+    
     // 텍스쳐
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
         return E_FAIL;
@@ -138,7 +138,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
     m_pTransformCom->Get_Info(INFO_POS, &playerPo);
     if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-        CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
+        //CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
     }
     /*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
     {

@@ -111,7 +111,7 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
         m_vAt -= vLength;
     }
     if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
-        CParticleMgr::GetInstance()->spwan_Particle(CGraphicDev::GetInstance()->Get_GraphicDev() , BULLET, { 0,0,0 }, 0);
+        //CParticleMgr::GetInstance()->spwan_Particle(CGraphicDev::GetInstance()->Get_GraphicDev() , BULLET, { 0,0,0 }, 0);
     }
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_TAB) & 0x80)
     {
