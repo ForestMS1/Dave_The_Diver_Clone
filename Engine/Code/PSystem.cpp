@@ -12,7 +12,7 @@ PSystem::PSystem()
 	_boundingBox.Center.x = _origin.x;
 	_boundingBox.Center.y = _origin.y;
 	_boundingBox.Center.z = _origin.z;
-	//_particles;
+	_particles;
 	_vbSize = 2048;
 	_vbOffset = 0;
 	_vbBatchSize = 512;
@@ -39,22 +39,20 @@ HRESULT	 PSystem::Ready_Buffer()
 	return S_OK;
 }
  
-void PSystem::reset(_vec3 position, D3DXCOLOR color)
+void PSystem::reset()
 {
 	list<Attribute>::iterator i;
 	for (i = _particles.begin(); i != _particles.end(); i++) {
-		_boundingBox.Center = (XMFLOAT3)position;
-		i->_position = position;
-		resetParticle(&(*i), color);
+		resetParticle(&(*i));
 	}
 }
 
 
-void PSystem::addParticle(_vec3 position, D3DXCOLOR color)
+void PSystem::addParticle(_vec3 position)
 {
 	Attribute attribute;
-	//attribute._position = position;
-	resetParticle(&attribute, color);
+	resetParticle(&attribute);
+	attribute._position = position;
 	_particles.push_back(attribute);
 }
 

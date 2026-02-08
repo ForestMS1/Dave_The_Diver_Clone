@@ -64,7 +64,7 @@ CGunShot* CGunShot::Create()
 }
 
 
-void CGunShot::resetParticle(Attribute* attribute, D3DXCOLOR color)
+void CGunShot::resetParticle(Attribute* attribute)
 {
 	attribute->_isAlive = true;
 	//attribute->_position = _origin;

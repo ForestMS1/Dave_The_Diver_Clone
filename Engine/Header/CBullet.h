@@ -19,7 +19,7 @@ public:
 public:
 	static CBullet* Create(CCamera* camera);
 
-	void resetParticle(Attribute* attribute, D3DXCOLOR color);
+	void resetParticle(Attribute* attribute);
 	void preRender();
 	void postRender();
 	void update(float fTimeDelta) override;
