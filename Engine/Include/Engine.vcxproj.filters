@@ -154,6 +154,9 @@
     <Filter Include="03. GameObject\DSPlayer\PlayerState\Idle">
       <UniqueIdentifier>{28fe219a-2aaf-4ce9-bd43-b608d6c37917}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\13. ParticleMgr\03. Particles\03. Weather">
+      <UniqueIdentifier>{64dc0068-ee2e-49e3-8809-5596f0801d13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -330,6 +333,9 @@
     <ClCompile Include="..\Code\PSystem.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CWeather.cpp">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\03. Weather</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -487,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CPlayerIdle.h">
       <Filter>03. GameObject\DSPlayer\PlayerState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeather.h">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\03. Weather</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

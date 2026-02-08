@@ -202,6 +202,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CTransform.h" />
     <ClInclude Include="..\Header\CTriCol.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
+    <ClInclude Include="..\Header\CWeather.h" />
     <ClInclude Include="..\Header\Engine_Define.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
     <ClInclude Include="..\Header\Engine_Function.h" />
@@ -257,6 +258,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CTransform.cpp" />
     <ClCompile Include="..\Code\CTriCol.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
+    <ClCompile Include="..\Code\CWeather.cpp" />
     <ClCompile Include="..\Code\Firework.cpp" />
     <ClCompile Include="..\Code\PSystem.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui-1.83\imgui.cpp">
