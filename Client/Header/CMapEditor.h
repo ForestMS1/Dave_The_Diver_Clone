@@ -36,23 +36,29 @@ private:
 
 
 	HRESULT			CreateRoom();
+
+	void			NameRefresh(std::wstring_view fileName);
+
 	
 
 public:
 	static CMapEditor* Create();
 
 
-public:
+private:
 	vector<vector<CGameObject*>> vec_Map;
 	_int						iRoom_Cnt{};
 	vector<CGameObject*>*	m_pPickRoom;
 
 	CGameObject* arrMiniMap[15][15];
-	STATE	e_MapEditorLevel{ ROOM_CHOICE };
+	STATE		 e_MapEditorLevel{ ROOM_CHOICE };
 	CGameObject* m_pPickMiniMap{nullptr};
 
+private:
 
-
+	vector <string> Name;
+	int nCurrentItem{ 1 };
+	int nPrevItem{1};
 
 private:
 	virtual void	Free();

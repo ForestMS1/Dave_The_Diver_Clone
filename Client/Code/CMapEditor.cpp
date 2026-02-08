@@ -11,6 +11,7 @@
 #include "CGraphicDev.h"
 #include "CDInputMgr.h"
 
+#include <io.h>
 
 CMapEditor::CMapEditor()
 	: CScene()
@@ -44,6 +45,8 @@ HRESULT CMapEditor::Ready_Scene()
 		return E_FAIL;
 
 
+
+	
 	return S_OK;
 }
 
@@ -86,6 +89,7 @@ HRESULT CMapEditor::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"DynamicCamera", pGameObject)))
 		return E_FAIL;
 
+	
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
@@ -390,7 +394,7 @@ void CMapEditor::Show_GUI() {
 
 					e_MapEditorLevel = ROOM_CUSTOM;
 					// 카메라 코드
-					MoveCamera({ Room.y * 13 + 7,17,Room.x * 13 + 7 }, { Room.y * 13 + 7,0,Room.x * 13 + 7 }, { 0.f,0.f,1.f });
+					MoveCamera({ Room.y * 13 + 7.5f ,14,Room.x * 13 + 7 }, { Room.y * 13 + 7.5f  ,0,Room.x * 13 + 7 }, { 0.f,0.f,1.f });
 
 				}
 
@@ -417,13 +421,14 @@ void CMapEditor::Show_GUI() {
 
 			ImGui::End();
 		}
+
 	}
 
 	// Custom 모드 일떄
 	if (ROOM_CUSTOM == e_MapEditorLevel) {
 		{
 
-			ImGui::SetNextWindowPos(ImVec2(WINCX / 5 * 5.7, WINCY / 5 * 0.5), ImGuiCond_Always);
+			ImGui::SetNextWindowPos(ImVec2(WINCX / 5 * 0.1, WINCY / 5 * 0.5), ImGuiCond_Always);
 			ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_Always);
 
 			ImGui::Begin("ROOM_INFO");
@@ -451,7 +456,50 @@ void CMapEditor::Show_GUI() {
 			ImGui::End();
 		}
 
+		{
 
+			ImGui::SetNextWindowPos(ImVec2(WINCX / 5 * 5.3, WINCY / 5 * 0.5), ImGuiCond_Always);
+			ImGui::SetNextWindowSize(ImVec2(520, 950), ImGuiCond_Always);
+			ImGui::Begin("RESOURCE");
+			float fullWidth = ImGui::GetContentRegionAvail().x;
+			ImGui::SetNextItemWidth(fullWidth);
+	
+
+			const char* items[] = { "OBJECT", "TILE" };
+	
+			ImGui::Combo("##2", &nCurrentItem, items, IM_ARRAYSIZE(items));
+		
+
+			switch (nCurrentItem) {
+			case 0:
+				// Object
+				if (nPrevItem != nCurrentItem) {
+					NameRefresh(L"");
+					nPrevItem = nCurrentItem;
+				}
+				break;
+
+			case 1:
+				// Texture
+				if (nPrevItem != nCurrentItem) {
+					NameRefresh(L"../Bin/Resource/Texture/Floor");
+					nPrevItem = nCurrentItem;
+				}
+			
+				break;
+			}
+		
+			for (auto i : Name) {
+				if (ImGui::Button(i.c_str())) {
+
+				}
+			
+			}
+		
+			ImGui::End();
+		}
+
+	
 	}
 }
 
@@ -557,10 +605,10 @@ HRESULT CMapEditor::CreateRoom() {
 
 	CGameObject* pGameObject = nullptr;
 	vec_Map.emplace_back();
-	vec_Map[iRoom_Cnt].reserve(15 * 15);
+	vec_Map[iRoom_Cnt].reserve(13 * 13);
 
-	for (int i = 0; i < 15; ++i) {
-		for (int j = 0; j < 15; ++j) {
+	for (int i = 0; i < 13; ++i) {
+		for (int j = 0; j < 13; ++j) {
 			pGameObject = CMapEditorTerrain::Create();
 			vec_Map[iRoom_Cnt].emplace_back(pGameObject);
 			if (nullptr == pGameObject)
@@ -593,3 +641,70 @@ HRESULT CMapEditor::CreateRoom() {
 
 }
 
+void CMapEditor::NameRefresh(std::wstring_view path) {
+
+	{
+
+		Name.clear();
+		Name.reserve(100);
+
+
+		int len = WideCharToMultiByte(
+			CP_UTF8, 0,
+			path.data(), (int)path.size(),
+			nullptr, 0,
+			nullptr, nullptr);
+
+		std::string pathName(len, 0);
+
+		WideCharToMultiByte(
+			CP_UTF8, 0,
+			path.data(), (int)path.size(),
+			pathName.data(), len,
+			nullptr, nullptr);
+
+
+		_finddata_t fd;
+		string plus = "/*.*";
+		string slash = "/";
+		string name = pathName + plus;
+		pathName += slash;
+		long long handle = _findfirst(name.data(), &fd);
+
+		int iResult = 0;
+	;
+		char* szCurPath = pathName.data();
+		
+		char szFullPath[128] = {};
+
+	
+
+		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_None);
+		ImGui::SetNextWindowSize(ImVec2(200, 700), ImGuiCond_None);
+
+		while (iResult != -1)
+		{
+			if (fd.name[0] == 'F')
+			{
+				strcpy_s(szFullPath, szCurPath);
+				strcat_s(szFullPath, fd.name);
+				Name.emplace_back(szFullPath);
+
+			}
+			if (fd.name[0] == 'A') {
+				strcpy_s(szFullPath, szCurPath);
+				strcat_s(szFullPath, fd.name);
+				string str1(szFullPath);
+				char a = str1[str1.size() - 5];
+				if (a == '0') {
+					Name.emplace_back(szFullPath);
+				}
+
+
+			}
+			iResult = _findnext(handle, &fd);
+		}
+
+
+	}
+}

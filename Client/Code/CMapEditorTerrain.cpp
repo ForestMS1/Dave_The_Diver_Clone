@@ -63,6 +63,7 @@ void CMapEditorTerrain::Render_GameObject()
 		if (FAILED(Ready_Material()))
 			return;
 
+
 		m_pTextureCom->Set_Texture(1);
 
 		m_pBufferCom->Render_Buffer();
@@ -94,16 +95,78 @@ HRESULT CMapEditorTerrain::Add_Component()
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
-	pComponent = m_pTextureCom =
-		dynamic_cast<Engine::CTexture*>
-		(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_TerrainTexture"));
-	if (nullptr == pComponent) {
-		MSG_BOX("CMapTerrainTex Proto_TerrainTexture Clone_Prototype Failed");
-		return E_FAIL;
-	}
+
+		pComponent = m_pTextureCom=
+			dynamic_cast<Engine::CTexture*>
+			(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_A_FloorBelt"));
+
+		if (nullptr == pComponent) {
+			MSG_BOX("CMapTerrainTex Proto_A_FloorBelt Clone_Prototype Failed");
+			return E_FAIL;
+		}
+		m_mapComponent[ID_STATIC].insert({ L"Com_TextureA_FloorBelt", pComponent });
+
+		m_MapTextureCom.emplace("A_FloorBelt",m_pTextureCom);
+
+		pComponent = m_pTextureCom =
+			dynamic_cast<Engine::CTexture*>
+			(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_A_FloorBeltCorner"));
+
+		if (nullptr == pComponent) {
+			MSG_BOX("CMapTerrainTex Proto_A_FloorBeltCorner Clone_Prototype Failed");
+			return E_FAIL;
+		}
+		m_mapComponent[ID_STATIC].insert({ L"Com_TextureProto_A_FloorBeltCorner", pComponent });
+		m_MapTextureCom.emplace("A_FloorBeltCorner", m_pTextureCom);
+
+		pComponent = m_pTextureCom =
+			dynamic_cast<Engine::CTexture*>
+			(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_A_FloorBlood"));
+
+		if (nullptr == pComponent) {
+			MSG_BOX("CMapTerrainTex Proto_A_FloorBlood Clone_Prototype Failed");
+			return E_FAIL;
+		}
+		m_mapComponent[ID_STATIC].insert({ L"Com_TextureProto_A_FloorBlood", pComponent });
+
+		m_MapTextureCom.emplace("A_FloorBlood", m_pTextureCom);
+
+		pComponent = m_pTextureCom =
+			dynamic_cast<Engine::CTexture*>
+			(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_FloorBomb"));
+
+		if (nullptr == pComponent) {
+			MSG_BOX("CMapTerrainTex Proto_FloorBomb Clone_Prototype Failed");
+			return E_FAIL;
+		}
+		m_mapComponent[ID_STATIC].insert({ L"Com_TextureProto_FloorBomb", pComponent });
+		m_MapTextureCom.emplace("FloorBomb", m_pTextureCom);
+
+		pComponent = m_pTextureCom =
+			dynamic_cast<Engine::CTexture*>
+			(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_FloorCrate"));
+
+		if (nullptr == pComponent) {
+			MSG_BOX("CMapTerrainTex Proto_FloorCrate Clone_Prototype Failed");
+			return E_FAIL;
+		}
+		m_mapComponent[ID_STATIC].insert({ L"Com_TextureProto_FloorCrate", pComponent });
+		m_MapTextureCom.emplace("FloorCrate", m_pTextureCom);
+
+		pComponent = m_pTextureCom =
+			dynamic_cast<Engine::CTexture*>
+			(CProtoMgr::GetInstance()->Clone_Prototype(L"Proto_FloorCrate0"));
+
+		if (nullptr == pComponent) {
+			MSG_BOX("CMapTerrainTex Proto_FloorCrate0 Clone_Prototype Failed");
+			return E_FAIL;
+		}
+		m_mapComponent[ID_STATIC].insert({ L"Com_TextureProto_FloorCrate0", pComponent });
+		m_MapTextureCom.emplace("FloorCrate0", m_pTextureCom);
+
 		
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+
 
 	// Transform
 	pComponent = m_pTransformCom =
