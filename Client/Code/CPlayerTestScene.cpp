@@ -6,6 +6,8 @@
 #include "CPlayerGun.h"
 #include "CCameraMgr.h"
 #include "CFreeCam.h"
+#include "CGraphicDev.h"
+#include "CLightMgr.h"
 CPlayerTestScene::CPlayerTestScene()
 {
 }
@@ -16,6 +18,9 @@ CPlayerTestScene::~CPlayerTestScene()
 
 HRESULT CPlayerTestScene::Ready_Scene()
 {
+	if (FAILED(Ready_Light()))
+		return E_FAIL;
+
 	if (FAILED(Ready_Environment_Layer(L"Environment_Layer")))
 		return E_FAIL;
 
@@ -145,8 +150,23 @@ HRESULT	CPlayerTestScene::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 HRESULT	 CPlayerTestScene::Ready_Light()
 {
-	return S_OK;
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
+	D3DLIGHT9	tLightInfo;
+	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+
+	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
+
+	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tLightInfo.Direction = { 1.f, -1.f, 1.f };
+
+	if (FAILED(CLightMgr::GetInstance()->Ready_Light(pGraphicDev, &tLightInfo, 0)))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CPlayerTestScene* CPlayerTestScene::Create()
