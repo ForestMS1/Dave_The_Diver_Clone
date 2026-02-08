@@ -3,19 +3,19 @@
 #include "PSystem.h"
 BEGIN(Engine)
 
-class ENGINE_DLL CGunShot : public PSystem
+class ENGINE_DLL CBulletSpark : public PSystem
 {
 public:
-	explicit CGunShot();
-	explicit CGunShot(_vec3 origin);
-	virtual ~CGunShot();
+	explicit CBulletSpark();
+	explicit CBulletSpark(_vec3 origin);
+	virtual ~CBulletSpark();
 
 public:
 	virtual		HRESULT		Ready_Buffer();
 	virtual		void		render();
 
 public:
-	static CGunShot* Create();
+	static CBulletSpark* Create();
 
 	void resetParticle(Attribute* attribute, D3DXCOLOR color);
 	void preRender();

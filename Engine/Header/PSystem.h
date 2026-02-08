@@ -14,7 +14,7 @@ public:
 	virtual ~PSystem();
 
 	virtual	HRESULT	 Ready_Buffer();
-	virtual void reset(_vec3 position, D3DXCOLOR color);
+	virtual void reset(_vec3 position, _vec3 center, _vec3 extents, D3DXCOLOR color);
 	virtual void resetParticle(Attribute* attribute, D3DXCOLOR color) = 0;
 	virtual void addParticle(_vec3 position, D3DXCOLOR color);
 
@@ -42,7 +42,6 @@ public:
 
 	IDirect3DDevice9*					_device;
 	D3DXVECTOR3							_origin;
-	TmpBoundingBox							_boundingBox;
 	IDirect3DVertexBuffer9*				 _vb;
 	list<Attribute>						_particles;
 	DWORD								_vbSize;

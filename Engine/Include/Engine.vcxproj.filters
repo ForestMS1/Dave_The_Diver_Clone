@@ -321,7 +321,7 @@
     <ClCompile Include="..\Code\CParticleMgr.cpp">
       <Filter>00. Manager\13. ParticleMgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CGunshot.cpp">
+    <ClCompile Include="..\Code\CBulletSpark.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\01. GunShot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBullet.cpp">
@@ -506,7 +506,7 @@
     <ClInclude Include="..\Header\CParticleMgr.h">
       <Filter>00. Manager\13. ParticleMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CGunshot.h">
+    <ClInclude Include="..\Header\CBulletSpark.h">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\01. GunShot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBullet.h">
