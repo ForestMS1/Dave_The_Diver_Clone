@@ -128,7 +128,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
     {
         m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
     }
-  /*  if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_O))
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_O))
     {
         CParticleMgr::GetInstance()->spwan_Weather(RAIN, { 0,0,0 }, 500, { 1,1,1,1 });
     }
@@ -143,7 +143,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_3))
     {
         CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { 20,20,20 }, 100);
-    }*/
+    }
 
     _long dwMouseMove(0);
     if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))

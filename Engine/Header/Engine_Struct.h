@@ -66,10 +66,10 @@ namespace Engine
 	};
 	const DWORD	FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 
-	struct TmpBoundingBox {
-		D3DXVECTOR3 _min;
-		D3DXVECTOR3 _max;
-	};
+	//struct TmpBoundingBox {
+	//	D3DXVECTOR3 _min;
+	//	D3DXVECTOR3 _max;
+	//};
 
 
 	struct Attribute {

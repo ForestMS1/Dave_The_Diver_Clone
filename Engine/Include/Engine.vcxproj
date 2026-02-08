@@ -178,7 +178,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
-    <ClInclude Include="..\Header\CGunshot.h" />
+    <ClInclude Include="..\Header\CBulletSpark.h" />
     <ClInclude Include="..\Header\CHelper.h" />
     <ClInclude Include="..\Header\CImguiMgr.h" />
     <ClInclude Include="..\Header\CInfoMgr.h" />
@@ -240,7 +240,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
-    <ClCompile Include="..\Code\CGunshot.cpp" />
+    <ClCompile Include="..\Code\CBulletSpark.cpp" />
     <ClCompile Include="..\Code\CHelper.cpp" />
     <ClCompile Include="..\Code\CImguiMgr.cpp" />
     <ClCompile Include="..\Code\CInfoMgr.cpp" />
