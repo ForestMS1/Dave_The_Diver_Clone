@@ -77,7 +77,7 @@ HRESULT CPlayer::Ready_Component()
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
-
+    
     // 텍스쳐
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
         return E_FAIL;

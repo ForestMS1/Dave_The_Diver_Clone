@@ -10,6 +10,7 @@
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
 #include "CParticleMgr.h"
+#include "CColliderMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -67,8 +68,12 @@ void CMainApp::Render_MainApp()
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 	CParticleMgr::GetInstance()->Render_Particle();
 
+	CColliderMgr::GetInstance()->Render();
 
 	m_pDeviceClass->Render_End();
+
+	// 프레임의 맨마지막에 호출하고싶은데 여기가 적당한듯
+	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -149,6 +154,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 
+	CColliderMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();

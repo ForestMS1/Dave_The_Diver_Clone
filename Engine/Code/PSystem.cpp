@@ -9,9 +9,6 @@ PSystem::PSystem()
 	_device = CGraphicDev::GetInstance()->Get_GraphicDev();
 	_device->AddRef();
 	_origin = { 0,0,0 };
-	_boundingBox.Center.x = _origin.x;
-	_boundingBox.Center.y = _origin.y;
-	_boundingBox.Center.z = _origin.z;
 	_particles;
 	_vbSize = 2048;
 	_vbOffset = 0;

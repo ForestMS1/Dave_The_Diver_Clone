@@ -16,6 +16,10 @@ public:
 	map<const std::wstring, list<CGameObject*>>* Get_GameObjects() { return &m_mapGameObjects; }
 	list<CGameObject*> * Get_GameObjects(std::wstring_view svObjTag);
 	CGameObject* Get_GameObjectFirst(std::wstring_view svObjTag);
+	template<typename T>
+	T* Get_GameObjectFirst(std::wstring_view svObjTag) { return dynamic_cast<T*>(Get_GameObjectFirst(svObjTag)); }
+	
+
 
 public:
 	HRESULT			Ready_Layer();

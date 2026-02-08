@@ -21,6 +21,18 @@ public:
 		*(((_float*)&m_vAngle) + eType) += fAngle;
 	}
 
+	void		Get_Rotation(_vec3 * pAngle)
+	{
+		*pAngle = m_vAngle;
+	}
+	void		Get_RotationRadian(_vec3* pAngle)
+	{
+		(*pAngle).x = D3DXToRadian(m_vAngle.x);
+		(*pAngle).y = D3DXToRadian(m_vAngle.y);
+		(*pAngle).z = D3DXToRadian(m_vAngle.z);
+		//memcpy(pAngle, m_vAngle, sizeof(_vec3));
+	}
+
 	_matrix*			Get_World() { return &m_matWorld;  }
  
 	void				Get_Info(INFO eType, _vec3* pInfo)
@@ -41,6 +53,15 @@ public:
 	{
 		m_matWorld = *pWorld;
 	}
+	void Set_Scale(_vec3 const* vScale)
+	{
+		m_vScale = *vScale;
+	}
+	void Get_Scale(_vec3* vScale)
+	{
+		*vScale = m_vScale;
+	}
+
 
 public:
 	HRESULT		Ready_Transform();

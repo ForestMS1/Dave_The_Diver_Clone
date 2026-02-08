@@ -4,6 +4,7 @@
 #include "CRcCol.h"
 #include "CRcTex.h"
 #include "CTerrainTex.h"
+#include "CCubeCol.h"
 #include "CCubeTex.h"
 
 #include "CTransform.h"
