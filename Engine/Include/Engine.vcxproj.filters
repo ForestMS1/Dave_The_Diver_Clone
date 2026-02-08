@@ -160,6 +160,9 @@
     <Filter Include="03. GameObject\FreeCam">
       <UniqueIdentifier>{167b8757-df8d-4946-affe-8b194b7de25c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\00. VIBuffer\Frustrum">
+      <UniqueIdentifier>{951f1250-7b9f-4744-8f23-e1a1b3396f13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -342,6 +345,9 @@
     <ClCompile Include="..\Code\CFreeCam.cpp">
       <Filter>03. GameObject\FreeCam</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CFrustrum.cpp">
+      <Filter>02. Component\00. VIBuffer\Frustrum</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -505,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CFreeCam.h">
       <Filter>03. GameObject\FreeCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFrustrum.h">
+      <Filter>02. Component\00. VIBuffer\Frustrum</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -56,7 +56,7 @@ _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 		return 0;
 #endif
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-
+	Set_OnTerrain();
 	Key_Input(fTimeDelta);
 	Mouse_Move();
 	Set_Cam();
@@ -228,7 +228,7 @@ void CDSPlayer::Set_OnTerrain()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
 	Engine::CTerrainTex* pTerrainVtxCom = dynamic_cast<Engine::CTerrainTex*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"Environment_Layer", L"Terrain", L"Com_Buffer"));
 
 	if (nullptr == pTerrainVtxCom)
 		return;

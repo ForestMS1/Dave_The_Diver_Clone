@@ -2,12 +2,14 @@
 #include "CCamera.h"
 #include "CHelper.h"
 #include "CGraphicDev.h"
+#include "CFrustrum.h"
 IMPLEMENT_SINGLETON(CCameraMgr)
 
 CCamera* g_pSelectedCamera = nullptr;
 
 CCameraMgr::CCameraMgr()
 	: m_pCurCamera(nullptr)
+	, m_pFrustrumCom(CFrustrum::Create())
 {
 }
 
@@ -53,107 +55,7 @@ void CCameraMgr::Render_Camera()
 	//	return;
 	//
 	//m_pCurCamera->Render_GameObject();
-
-#ifdef _DEBUG
-	ImGui::Begin("Camera Change list");
-	for (auto& iter : m_mapCamera)
-	{
-		CCamera* pCamera = iter.second;
-		string cName = to_string((_int)iter.second); // 카메라 이름을 매길 방법을 못찾아.. 그냥 주소값으로 구분해라
-		if (ImGui::Selectable(cName.c_str(), m_pCurCamera == pCamera))
-		{
-			Change_CurCamera(iter.first);
-		}
-	}
-	ImGui::End();
-
-	ImGui::Begin("Operation");
-	if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
-		m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
-	ImGui::SameLine();
-	if (ImGui::RadioButton("Rotate", m_CurrentGizmoOperation == ImGuizmo::ROTATE))
-		m_CurrentGizmoOperation = ImGuizmo::ROTATE;
-	ImGui::SameLine();
-	if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
-		m_CurrentGizmoOperation = ImGuizmo::SCALE;
-	ImGui::End();
-
-	ImGuizmo::BeginFrame();
-
-
-	if (g_pSelectedCamera != nullptr)
-	{
-		CCamera* pSelectedCam = dynamic_cast<CCamera*>(g_pSelectedCamera);
-		if (pSelectedCam == nullptr) return;
-
-		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-		ImGuiIO& io = ImGui::GetIO();
-		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-
-		_matrix matView, matProj;
-		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-		// 카메라의 현재 위치를 기반으로 임시 Gizmo용 월드 행렬 생성
-		_matrix matGizmoWorld;
-		_vec3 vEye = pSelectedCam->Get_Pos();
-		_vec3 vAt = pSelectedCam->Get_At();
-
-		D3DXMatrixIdentity(&matGizmoWorld);
-		D3DXMatrixTranslation(&matGizmoWorld, vEye.x, vEye.y, vEye.z);
-
-
-		ImGuizmo::Manipulate(
-			(float*)&matView,
-			(float*)&matProj,
-			m_CurrentGizmoOperation,
-			ImGuizmo::WORLD,
-			(float*)&matGizmoWorld
-		);
-
-		if (ImGuizmo::IsUsing())
-		{
-			_vec3 vNewEye = { matGizmoWorld._41, matGizmoWorld._42, matGizmoWorld._43 };
-
-			_vec3 vMoveDir = vNewEye - vEye;
-			_vec3 vNewAt = vAt + vMoveDir;
-
-			pSelectedCam->Set_Pos(vNewEye);
-			
-
-			float vPos[3], vRot[3], vScale[3];
-
-			ImGuizmo::DecomposeMatrixToComponents((float*)matGizmoWorld, vPos, vRot, vScale);
-
-			// 회전 변환
-			_matrix matRot[ROT_END];
-
-			D3DXMatrixRotationX(&matRot[ROT_X], D3DXToRadian(vRot[0]));
-			D3DXMatrixRotationY(&matRot[ROT_Y], D3DXToRadian(vRot[1]));
-			D3DXMatrixRotationZ(&matRot[ROT_Z], D3DXToRadian(vRot[2]));
-
-
-			for (_uint i = 0; i < ROT_END; ++i)
-			{
-				D3DXVec3TransformNormal(&vNewAt, &vNewAt, &matRot[i]);
-			}
-			pSelectedCam->Set_At(vNewAt);
-		}
-	}
-
-	ImGui::Begin("Camera Hierarchy");
-	for (auto& LayerIter : m_mapCamera)
-	{
-		CCamera* pCamera = LayerIter.second;
-		if (m_pCurCamera == pCamera)
-			continue;
-		if (ImGui::Selectable(to_string((_int)pCamera).c_str(), g_pSelectedCamera == pCamera))
-		{
-			g_pSelectedCamera = pCamera;
-		}
-	}
-	ImGui::End();
-#endif
+	Update_Gizmo();
 }
 
 void CCameraMgr::Change_CurCamera(wstring_view svCameraTag)
@@ -171,8 +73,95 @@ void CCameraMgr::Change_CurCamera(wstring_view svCameraTag)
 	m_pCurCamera->Set_Acitve(true);
 }
 
+void CCameraMgr::Update_Gizmo()
+{
+#ifdef _DEBUG
+	ImGui::Begin("Camera Change list");
+	for (auto& iter : m_mapCamera)
+	{
+		CCamera* pCamera = iter.second;
+		string sName(iter.first.begin(), iter.first.end());
+		if (ImGui::Selectable(sName.c_str(), m_pCurCamera == pCamera))
+		{
+			Change_CurCamera(iter.first);
+		}
+	}
+	ImGui::End();
+
+	ImGui::Begin("Operation");
+	if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
+		m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Rotate", m_CurrentGizmoOperation == ImGuizmo::ROTATE))
+		m_CurrentGizmoOperation = ImGuizmo::ROTATE;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
+		m_CurrentGizmoOperation = ImGuizmo::SCALE;
+	
+
+	ImGuizmo::BeginFrame();
+
+
+	if (g_pSelectedCamera != nullptr)
+	{
+		CCamera* pSelectedCam = dynamic_cast<CCamera*>(g_pSelectedCamera);
+		if (pSelectedCam == nullptr) return;
+
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+		ImGuiIO& io = ImGui::GetIO();
+		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+
+		_matrix matView, matProj;
+		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+		_matrix matGizmoWorld;
+		_matrix matSelectedView = pSelectedCam->Get_ViewMatrix();
+		D3DXMatrixInverse(&matGizmoWorld, nullptr, &matSelectedView);
+
+		ImGuizmo::Manipulate(
+			(float*)&matView,
+			(float*)&matProj,
+			m_CurrentGizmoOperation,
+			ImGuizmo::WORLD,
+			(float*)&matGizmoWorld
+		);
+
+		if (ImGuizmo::IsUsing())
+		{
+			_vec3 vNewEye = { matGizmoWorld._41, matGizmoWorld._42, matGizmoWorld._43 };
+			_vec3 vNewLook = { matGizmoWorld._31, matGizmoWorld._32, matGizmoWorld._33 };
+			D3DXVec3Normalize(&vNewLook, &vNewLook);
+			_float fDist = 10.f;
+			_vec3 vNewAt = vNewEye + vNewLook * fDist;
+
+			pSelectedCam->Set_Pos(vNewEye);
+			pSelectedCam->Set_At(vNewAt);
+		}
+		g_pSelectedCamera->Update_MatView();
+		m_pFrustrumCom->Render_Buffer(g_pSelectedCamera->Get_ViewMatrix(), g_pSelectedCamera->Get_ProjMatrix());
+	}
+
+	ImGui::Begin("Camera Hierarchy");
+	for (auto& LayerIter : m_mapCamera)
+	{
+		CCamera* pCamera = LayerIter.second;
+		if (m_pCurCamera == pCamera)
+			continue;
+		string sName(LayerIter.first.begin(), LayerIter.first.end());
+		if (ImGui::Selectable(sName.c_str(), g_pSelectedCamera == pCamera))
+		{
+			g_pSelectedCamera = pCamera;
+		}
+	}
+	ImGui::End();
+	ImGui::End();
+#endif
+}
+
 void CCameraMgr::Free()
 {
+	Safe_Release(m_pFrustrumCom);
 	for_each(m_mapCamera.begin(), m_mapCamera.end(), CDeleteMap());
 	m_mapCamera.clear();
 }

@@ -19,6 +19,9 @@ private:
 
 	HRESULT			Ready_Light();
 
+private:
+	ImGuizmo::OPERATION m_CurrentGizmoOperation;
+
 public:
 	static CPlayerTestScene* Create();
 

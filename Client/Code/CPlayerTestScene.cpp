@@ -8,6 +8,9 @@
 #include "CFreeCam.h"
 #include "CGraphicDev.h"
 #include "CLightMgr.h"
+
+CGameObject* g_pSelectedObject = nullptr;
+
 CPlayerTestScene::CPlayerTestScene()
 {
 }
@@ -55,6 +58,75 @@ void CPlayerTestScene::Render_Scene()
 	ImGui::Text("DT: %.5f", ImGui::GetIO().DeltaTime);
 	ImGui::End();
 
+	//ImGui::Begin("Operation");
+	//if (ImGui::RadioButton("Translate", m_CurrentGizmoOperation == ImGuizmo::TRANSLATE))
+	//	m_CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+	//ImGui::SameLine();
+	//if (ImGui::RadioButton("Rotate", m_CurrentGizmoOperation == ImGuizmo::ROTATE))
+	//	m_CurrentGizmoOperation = ImGuizmo::ROTATE;
+	//ImGui::SameLine();
+	//if (ImGui::RadioButton("Scale", m_CurrentGizmoOperation == ImGuizmo::SCALE))
+	//	m_CurrentGizmoOperation = ImGuizmo::SCALE;
+	//ImGui::End();
+
+	//ImGuizmo::BeginFrame();
+
+	//if (g_pSelectedObject != nullptr)
+	//{
+	//	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	//	ImGuiIO& io = ImGui::GetIO();
+	//	ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+
+	//	_matrix matView;
+	//	_matrix matProj;
+	//	_matrix* matWorld;
+	//	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	//	matWorld = static_cast<CTransform*>(g_pSelectedObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_World();
+	//	float* view = (float*)&matView;
+	//	float* proj = (float*)&matProj;
+	//	//* model = (float*)matWorld;
+
+
+	//	ImGuizmo::Manipulate(
+	//		view,
+	//		proj,
+	//		m_CurrentGizmoOperation,
+	//		ImGuizmo::WORLD,
+	//		(float*)matWorld
+	//	);
+
+	//	if (ImGuizmo::IsUsing())
+	//	{
+	//		float vPos[3], vRot[3], vScale[3];
+
+	//		ImGuizmo::DecomposeMatrixToComponents((float*)matWorld, vPos, vRot, vScale);
+
+
+	//		CTransform* pTransform = static_cast<CTransform*>(g_pSelectedObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	//		pTransform->m_vInfo[INFO_POS] = { vPos[0], vPos[1], vPos[2] };
+	//		pTransform->m_vAngle = { vRot[0], vRot[1], vRot[2] };
+	//		pTransform->m_vScale = { vScale[0], vScale[1], vScale[2] };
+	//	}
+	//}
+
+	//ImGui::Begin("Scene Hierarchy");
+	//for (auto& LayerIter : m_mapLayer)
+	//{
+	//	for (auto& ObjListIter : *LayerIter.second->Get_GameObjects())
+	//	{
+	//		for (auto& Obj : ObjListIter.second)
+	//		{
+	//			if (ImGui::Selectable(to_string((_int)Obj).c_str(), g_pSelectedObject == Obj))
+	//			{
+	//				g_pSelectedObject = Obj;
+	//			}
+	//		}
+	//	}
+	//}
+	//ImGui::End();
+
 	CCameraMgr::GetInstance()->Render_Camera();
 }
 
@@ -80,7 +152,7 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	// TestCam1
 	vEye = { 0.f, 30.f, -10.f };
-	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp);
+	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
 
 	if (nullptr == pCamera)
 		return E_FAIL;
@@ -89,7 +161,7 @@ HRESULT CPlayerTestScene::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	// TestCam2
 	vEye = { 0.f, 20.f, -20.f };
-	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp);
+	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
 
 	if (nullptr == pCamera)
 		return E_FAIL;

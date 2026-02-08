@@ -8,6 +8,7 @@
 BEGIN(Engine)
 
 class CCamera;
+class CFrustrum;
 
 class ENGINE_DLL CCameraMgr : public CBase
 {
@@ -28,12 +29,17 @@ public:
 	CCamera* Get_CurCamera() { return m_pCurCamera; }
 
 private:
+	void Update_Gizmo();
+
+private:
 	//여러 카메라들을 관리할 map
 	unordered_map<wstring_view, Engine::CCamera*> m_mapCamera;
 
 	// 현재 Update, LateUpdate 돌릴 카메라
 	Engine::CCamera* m_pCurCamera;
 
+	// 디버그용 절두체
+	Engine::CFrustrum* m_pFrustrumCom;
 private:
 	ImGuizmo::OPERATION m_CurrentGizmoOperation;
 private:
