@@ -44,7 +44,7 @@ _uint CLoading::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
     	return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeCol", Engine::CCubeCol::Create(D3DXCOLOR(1.f, 1.f, 1.f, 1.f)))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeCol", Engine::CCubeCol::Create(D3DXCOLOR(1.f, 0.f, 1.f, 1.f)))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTex", Engine::CTerrainTex::Create(VTXCNTX, VTXCNTZ, VTXITV))))

@@ -11,8 +11,10 @@ private:
 
 public:
 	BoundingOrientedBox  Get_BoundingOrientedBox() const { return m_BoundingOrientedBox; }
+	_vec3 Get_RefExtents() const { return m_vRefExtents; }
+	_vec3 Get_RefOri() const { return m_vRefOri; }
 	void  Set_BoundingOrientedBox(BoundingOrientedBox boundingOrientedBox) { m_BoundingOrientedBox = boundingOrientedBox; }
-	void  Set_BoundingOrientedBox(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation)
+	void  Set_BoundingOrientedBox(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation)
 	{
 		XMFLOAT3 center = { vCenter->x, vCenter->y, vCenter->z };
 		XMFLOAT3 extent = { vExtents->x, vExtents->y, vExtents->z };
@@ -22,13 +24,19 @@ public:
 		XMStoreFloat4(&rot, quat);
 		m_BoundingOrientedBox = BoundingOrientedBox(center, extent, rot);
 	}
+	void Set_OrientedBoxCenter(_vec3 const* vCenter)
+	{
+		XMFLOAT3 center = { vCenter->x, vCenter->y, vCenter->z };
+		m_BoundingOrientedBox.Center = center;
+	}
 
 public:
-	HRESULT Ready_OBB(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation);
+	HRESULT Ready_OBB(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation);
 	void Render() override;
 
-	static COBB* Create(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation);
-	static COBB* Create(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation, std::wstring_view svTag, void* pVoid = nullptr);
+public:
+	static COBB* Create(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation);
+	static COBB* Create(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation, std::wstring_view svTag, void* pVoid = nullptr);
 
 protected:
 	HRESULT Ready_Buffer() override;
@@ -37,5 +45,7 @@ private:
 	void Free() override;
 
 protected:
+	_vec3 m_vRefExtents;
+	_vec3 m_vRefOri;
 	BoundingOrientedBox m_BoundingOrientedBox;
 };

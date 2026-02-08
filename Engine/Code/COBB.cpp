@@ -10,24 +10,25 @@ COBB::~COBB()
 {
 }
 
-HRESULT COBB::Ready_OBB(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation)
+HRESULT COBB::Ready_OBB(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation)
 {
 	Set_BoundingOrientedBox(vCenter, vExtents, vOrientation);
 
-	if (FAILED(Ready_Buffer()))
-	{
-		return E_FAIL;
-	}
+	m_vRefExtents = *vExtents;
+	m_vRefOri = *vOrientation;
+
+	m_dwOriginalColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	m_dwIntersectColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 
 	return S_OK;
 }
 
-COBB* COBB::Create(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation)
+COBB* COBB::Create(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation)
 {
 	return COBB::Create(vCenter, vExtents, vOrientation, {});
 }
 
-COBB* COBB::Create(_vec3* vCenter, _vec3* vExtents, _vec3* vOrientation, std::wstring_view svTag, void* pVoid)
+COBB* COBB::Create(_vec3 const* vCenter, _vec3 const* vExtents, _vec3 const* vOrientation, std::wstring_view svTag, void* pVoid)
 {
 	COBB* pOBB = new COBB(COLL_OBB);
 	pOBB->Set_Tag(svTag);
@@ -53,8 +54,7 @@ HRESULT COBB::Ready_Buffer()
 	m_dwIdxSize = sizeof(INDEX32);
 	m_IdxFmt = D3DFMT_INDEX32;
 
-	m_dwOriginalColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
-	m_dwIntersectColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	m_dwCurrentColor = m_dwOriginalColor;
 
 	CCollider::Ready_Buffer();
 
@@ -129,6 +129,13 @@ HRESULT COBB::Ready_Buffer()
 
 void COBB::Render()
 {
+	if (!m_bRenderInitialized)
+	{
+		if (FAILED(Ready_Buffer()))
+		{
+			return;
+		}
+	}
 	XMFLOAT3 corners[8];
 	m_BoundingOrientedBox.GetCorners(corners);
 
@@ -142,19 +149,25 @@ void COBB::Render()
 	m_pVB->Unlock();
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 
-	pGraphicDev->SetFVF(m_dwFVF);
+	pGraphicDev->SetTexture(0, nullptr);
 
-	// m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
-
-	pGraphicDev->SetIndices(m_pIB);
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE); 
+	pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME); 
+
+	pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
+	pGraphicDev->SetFVF(m_dwFVF);
+	pGraphicDev->SetIndices(m_pIB);
+
+	D3DXMATRIX matIden;
+	D3DXMatrixIdentity(&matIden);
+	pGraphicDev->SetTransform(D3DTS_WORLD, &matIden);
+
+	pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+
 	pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
 

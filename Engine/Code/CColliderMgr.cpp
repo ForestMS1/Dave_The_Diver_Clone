@@ -5,7 +5,7 @@
 IMPLEMENT_SINGLETON(CColliderMgr)
 
 CColliderMgr::CColliderMgr()
-	: m_bRender(true)
+	: m_bRender(false)
 {
 }
 

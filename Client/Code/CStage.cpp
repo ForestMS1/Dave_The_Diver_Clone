@@ -11,6 +11,8 @@
 #include "Firework.h"
 #include "CParticleMgr.h"
 #include "CGraphicDev.h"
+#include "CTestCube.h"
+#include "CColliderMgr.h"
 
 CStage::CStage()
 	: CScene()
@@ -34,6 +36,7 @@ HRESULT CStage::Ready_Scene()
 	
 	if (FAILED(Ready_UI_Layer(L"UI_Layer")))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -59,6 +62,10 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 			pCube->Set_Parent(nullptr);
 			//pCube->Set_Dead();
 		}
+	}
+	if (ImGui::Button("Toggle Collider"))
+	{
+		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
 	}
 	return iExit;
 }
@@ -133,7 +140,6 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"Cube1", pGameObject)))
 		return E_FAIL;
-
 	pGameObject->Set_Parent(pTmp);
 
 	pTmp = pGameObject;
@@ -142,9 +148,52 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"Cube2", pGameObject)))
 		return E_FAIL;
-
 	pGameObject->Set_Parent(pTmp);
 	
+
+	{
+		_vec3 vPos = {10.f , 15.f, 10.f };
+		CTestCube* pGameObject = CTestCube::Create(&vPos, COLL_AABB);
+		pGameObject->Set_Speed(13.f);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TestCube", pGameObject)))
+			return E_FAIL;
+	}
+	{
+		_vec3 vPos = { 11.f , 16.f, 11.f };
+		CTestCube* pGameObject = CTestCube::Create(&vPos, COLL_OBB);
+		
+		pGameObject->Set_Speed(7.f);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TestCube", pGameObject)))
+			return E_FAIL;
+	}
+
+	{
+		_vec3 vPos = { 12.f , 17.f, 12.f };
+		CTestCube* pGameObject = CTestCube::Create(&vPos, COLL_SPHERE);
+
+		pGameObject->Set_Speed(5.f);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TestCube", pGameObject)))
+			return E_FAIL;
+	}
+
+	{
+		_vec3 vPos = { 13.f , 15.f, 13.f };
+		CTestCube* pGameObject = CTestCube::Create(&vPos, COLL_FRUSTUM);
+
+		pGameObject->Set_Speed(2.f);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TestCube", pGameObject)))
+			return E_FAIL;
+	}
+
+
 	//
 	//// Monster
 	//pGameObject = CMonster::Create(m_pGraphicDev);

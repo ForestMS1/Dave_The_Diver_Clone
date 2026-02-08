@@ -8,6 +8,13 @@ class ENGINE_DLL CCollider : public CBase
 protected:
 	explicit CCollider(COLLIDERID m_eColliderID);
 	virtual ~CCollider();
+
+public:
+	void Set_OriginalColor(_ulong color) { m_dwOriginalColor = color; }
+	void Set_IntersectColor(_ulong color) { m_dwIntersectColor = color; }
+	void Set_CurrentColorIntersect() { m_dwCurrentColor = m_dwIntersectColor; };
+	void Set_CurrentColorOriginal() { m_dwCurrentColor = m_dwOriginalColor; };
+
 public:
 	void* Get_VoidPtr() const { return m_pVoid; }
 	void Set_VoidPtr(void* pVoid) { m_pVoid = pVoid; }
@@ -15,11 +22,12 @@ public:
 	void Set_Tag(std::wstring_view svTag) { m_sTag = std::wstring(svTag); }
 
 public:
-	// Collider Intersect
 	bool Intersect(CCollider* pCollider);
-	// Ray Intersect
 	bool Intersect(_vec3* vPos, _vec3* vDir, float&  pOutDist);
 	void Transform(const float& fScale, _vec3* pVecRotate, _vec3* pVecTranslate);
+	void Transform(_matrix const * mat);
+
+public:
 	virtual void Render();
 
 protected:
@@ -30,13 +38,9 @@ protected:
 protected:
 	virtual HRESULT Ready_Buffer();
 
-public:
-	void Set_OriginalColor(_ulong color) { m_dwOriginalColor = color; }
-	void Set_IntersectColor(_ulong color) { m_dwIntersectColor = color; }
-	void Set_CurrentColorIntersect() { m_dwCurrentColor = m_dwIntersectColor; };
-	void Set_CurrentColorOriginal() { m_dwCurrentColor = m_dwOriginalColor; };
-
 protected:
+	bool m_bRenderInitialized;
+
 	_ulong m_dwOriginalColor;
 	_ulong m_dwIntersectColor;
 	_ulong m_dwCurrentColor;
