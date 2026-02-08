@@ -42,7 +42,7 @@ public:
 
 	IDirect3DDevice9*					_device;
 	D3DXVECTOR3							_origin;
-	BoundingBox							_boundingBox;
+	TmpBoundingBox							_boundingBox;
 	IDirect3DVertexBuffer9*				 _vb;
 	list<Attribute>						_particles;
 	DWORD								_vbSize;

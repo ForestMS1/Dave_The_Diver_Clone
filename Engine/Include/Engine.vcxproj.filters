@@ -127,6 +127,15 @@
     <Filter Include="00. Manager\13. ParticleMgr\03. Particles\02. Bullet">
       <UniqueIdentifier>{ff718e44-fe1f-410a-9bdc-fae1a2ea2ef5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\14. ColliderMgr">
+      <UniqueIdentifier>{ebb6f289-c8ef-4830-9903-06cfc59fcd67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\14. ColliderMgr\00. Collider">
+      <UniqueIdentifier>{4d6549c3-c2bd-417a-958d-875a924d871e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\14. ColliderMgr\00. Collider\00. AABB">
+      <UniqueIdentifier>{2e7c97ab-e99a-44e2-b79a-0a3f09e38927}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. GameObject">
       <UniqueIdentifier>{ab085ee8-e48d-4a35-9ee3-c1a1b8ac566a}</UniqueIdentifier>
     </Filter>
@@ -153,6 +162,18 @@
     </Filter>
     <Filter Include="03. GameObject\DSPlayer\PlayerState\Idle">
       <UniqueIdentifier>{28fe219a-2aaf-4ce9-bd43-b608d6c37917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\14. ColliderMgr\00. Collider\01. Sphere">
+      <UniqueIdentifier>{3009ba92-f8b0-443c-9f85-45329dd25f34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\14. ColliderMgr\00. Collider\02. OBB">
+      <UniqueIdentifier>{706da341-c586-4899-9568-472d836bbec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\14. ColliderMgr\00. Collider\03. Frustum">
+      <UniqueIdentifier>{0b1b4166-24b4-4ff3-b996-4e6d6dcaaecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Component\00. VIBuffer\05. CubeCol">
+      <UniqueIdentifier>{76b63552-6c8e-403d-85da-b4a3c027e2f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Manager\13. ParticleMgr\03. Particles\03. Weather">
       <UniqueIdentifier>{64dc0068-ee2e-49e3-8809-5596f0801d13}</UniqueIdentifier>
@@ -306,6 +327,15 @@
     <ClCompile Include="..\Code\CBullet.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\02. Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CColliderMgr.cpp">
+      <Filter>00. Manager\14. ColliderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollider.cpp">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAABB.cpp">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\00. AABB</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CPlayerCam.cpp">
       <Filter>03. GameObject\PlayerCam</Filter>
     </ClCompile>
@@ -329,6 +359,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerIdle.cpp">
       <Filter>03. GameObject\DSPlayer\PlayerState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoundingSphere.cpp">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\01. Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COBB.cpp">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\02. OBB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoundingFrustum.cpp">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\03. Frustum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCubeCol.cpp">
+      <Filter>02. Component\00. VIBuffer\05. CubeCol</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PSystem.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles</Filter>
@@ -470,6 +512,15 @@
     <ClInclude Include="..\Header\CBullet.h">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\02. Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CColliderMgr.h">
+      <Filter>00. Manager\14. ColliderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollider.h">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAABB.h">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\00. AABB</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CPlayerCam.h">
       <Filter>03. GameObject\PlayerCam</Filter>
     </ClInclude>
@@ -496,6 +547,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\CWeather.h">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\03. Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoundingSphere.h">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\01. Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COBB.h">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\02. OBB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCubeCol.h">
+      <Filter>02. Component\00. VIBuffer\05. CubeCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoundingFrustum.h">
+      <Filter>00. Manager\14. ColliderMgr\00. Collider\03. Frustum</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
