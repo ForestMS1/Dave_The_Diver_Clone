@@ -17,7 +17,7 @@ public:
 public:
 	static CGunShot* Create();
 
-	void resetParticle(Attribute* attribute);
+	void resetParticle(Attribute* attribute, D3DXCOLOR color);
 	void preRender();
 	void postRender();
 	void update(float fTimeDelta) override;
