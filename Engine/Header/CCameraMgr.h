@@ -33,6 +33,9 @@ private:
 
 	// 현재 Update, LateUpdate 돌릴 카메라
 	Engine::CCamera* m_pCurCamera;
+
+private:
+	ImGuizmo::OPERATION m_CurrentGizmoOperation;
 private:
 	virtual void Free();
 

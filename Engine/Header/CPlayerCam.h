@@ -40,6 +40,7 @@ private:
 
 private:
 	_float			m_fSpeed;
+	_bool			m_bFix;
 
 private:
 	Engine::CCalculator* m_pCalculatorCom;
