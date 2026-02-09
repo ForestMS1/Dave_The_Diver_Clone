@@ -222,7 +222,7 @@ HRESULT	CPlayerTestScene::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 HRESULT	 CPlayerTestScene::Ready_Light()
 {
-	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 	D3DLIGHT9	tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
@@ -235,7 +235,7 @@ HRESULT	 CPlayerTestScene::Ready_Light()
 
 	tLightInfo.Direction = { 1.f, -1.f, 1.f };
 
-	if (FAILED(CLightMgr::GetInstance()->Ready_Light(pGraphicDev, &tLightInfo, 0)))
+	if (FAILED(CLightMgr::GetInstance()->Ready_Light(&tLightInfo, 0)))
 		return E_FAIL;
 
 	return S_OK;

@@ -33,7 +33,7 @@ HRESULT CLogo::Ready_Scene()
 	//if (FAILED(Ready_GameLogic_Layer(L"GameLogic_Layer")))
 	//	return E_FAIL;
 
-	m_pLoading = CLoading::Create(CLoading::LOADING_MAPEDITOR);
+	m_pLoading = CLoading::Create(CLoading::LOADING_STAGE);
 	if (nullptr == m_pLoading)
 		return E_FAIL;
 
@@ -48,7 +48,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 	{
 		if (GetAsyncKeyState(VK_RETURN))
 		{
-			Engine::CScene* pStage = CMapEditor::Create();
+			Engine::CScene* pStage = CStage::Create();
 
 			if (nullptr == pStage)
 				return -1;
