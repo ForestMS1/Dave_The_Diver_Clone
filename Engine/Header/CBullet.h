@@ -7,7 +7,7 @@ BEGIN(Engine)
 class ENGINE_DLL CBullet : public PSystem
 {
 public:
-	explicit CBullet(LPDIRECT3DDEVICE9 pGraphicDev, CCamera* camera);
+	explicit CBullet(CCamera* camera);
 	//explicit CBullet(LPDIRECT3DDEVICE9	pGraphicDev);
 	//explicit CBullet(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin);
 	virtual ~CBullet();
@@ -17,9 +17,9 @@ public:
 	virtual		void		render();
 
 public:
-	static CBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev,CCamera* camera);
+	static CBullet* Create(CCamera* camera);
 
-	void resetParticle(Attribute* attribute);
+	void resetParticle(Attribute* attribute, D3DXCOLOR color);
 	void preRender();
 	void postRender();
 	void update(float fTimeDelta) override;

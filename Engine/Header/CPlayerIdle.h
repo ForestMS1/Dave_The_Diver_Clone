@@ -1,6 +1,6 @@
 #pragma once
 #include "CPlayerState.h"
-class CPlayerIdle : public CPlayerState
+class ENGINE_DLL CPlayerIdle : public CPlayerState
 {
 private:
 	explicit CPlayerIdle(CDSPlayer* pPlayer);

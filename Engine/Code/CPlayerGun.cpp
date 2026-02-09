@@ -1,10 +1,10 @@
-#include "pch.h"
 #include "CPlayerGun.h"
 #include "CManagement.h"
 #include "CDSPlayer.h"
 #include "CPlayerCam.h"
 #include "CGraphicDev.h"
 #include "CPlayerBullet.h"
+#include "CCameraMgr.h"
 CPlayerGun::CPlayerGun()
 	: m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
@@ -39,19 +39,53 @@ _int CPlayerGun::Update_GameObject(const _float& fTimeDelta)
 
 void CPlayerGun::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	Set_BillBoard();
+	//Set_BillBoard();
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
 void CPlayerGun::Render_GameObject()
 {
+	// 디버그/개발 용 방어코드
+#ifdef _DEBUG
+	if (dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera()) == nullptr)
+		return;
+#endif
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	// 상태 백업
+	_matrix matOldView, matOldProj;
+	//memcpy(&matOldView, &CCameraMgr::GetInstance()->Get_CurCamera()->Get_ViewMatrix(), sizeof(_matrix));
+	//memcpy(&matOldProj, &CCameraMgr::GetInstance()->Get_CurCamera()->Get_ProjMatrix(), sizeof(_matrix));
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matOldView);
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matOldProj);
+
+	// 단위 행렬 설정
+	_matrix matIdentity;
+	D3DXMatrixIdentity(&matIdentity);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matIdentity);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matIdentity);
+
+
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);      // 깊이 판정 끄기
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE); // 컬링 끄기
+
+	// 위치 강제 조정
+	// 0.5, -0.5 위치에 0.2 크기로 우측 하단에 배치
+	_matrix matScale, matTrans, matWorld;
+	D3DXMatrixScaling(&matScale, 0.3f, 0.3f, 1.f);
+	D3DXMatrixTranslation(&matTrans, 0.7f, -0.7f, 0.1f); // Z는 0.1f
+	matWorld = matScale * matTrans;
+
+	pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 
 	m_pTextureCom->Set_Texture(0);
-
 	m_pBufferCom->Render_Buffer();
+
+	// 복구
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matOldView);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOldProj);
 
 #ifdef _DEBUG
 	_vec3 vPos, vLook;

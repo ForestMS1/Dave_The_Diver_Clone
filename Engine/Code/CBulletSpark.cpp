@@ -1,25 +1,20 @@
-#include "CGunShot.h"
+#include "CBulletSpark.h"
 #include "CParticleMgr.h"
 
-CGunShot::CGunShot()
-{
-}
 
-CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev) : PSystem(pGraphicDev)
+
+CBulletSpark::CBulletSpark() : PSystem()
 {
 	_origin = { 0,0,0 };
-	_size = 0.2f;
-	_vbSize = 2048;
-	_vbOffset = 0;
-	_vbBatchSize = 64;
+	_size = { 0.2f,0.2f,0.2f };
 	numOfParticles = 5;
 }
 
-CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin) : PSystem(pGraphicDev)
+CBulletSpark::CBulletSpark(_vec3 origin) : PSystem()
 {
 	//_origin = { 0,0,0 };
 	_origin = origin;
-	_size = 0.2f;
+	_size = { 0.2f,0.2f,0.2f };
 	_vbSize = 2048;
 	_vbOffset = 0;
 	_vbBatchSize = 64;
@@ -28,11 +23,11 @@ CGunShot::CGunShot(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin) : PSystem(pGraph
 
 
 
-CGunShot::~CGunShot()
+CBulletSpark::~CBulletSpark()
 {
 }
 
-HRESULT CGunShot::Ready_Buffer()
+HRESULT CBulletSpark::Ready_Buffer()
 {
 
 	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/white.png", 1))) {
@@ -42,12 +37,12 @@ HRESULT CGunShot::Ready_Buffer()
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
 	for (int i = 0; i < numOfParticles; i++)
-		addParticle();
+		//addParticle();
 
 	return S_OK;
 }
 
-void CGunShot::render()
+void CBulletSpark::render()
 {
 	Set_Texture(0);
 	preRender();
@@ -55,21 +50,21 @@ void CGunShot::render()
 	postRender();
 }
 
-CGunShot* CGunShot::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 origin)
+CBulletSpark* CBulletSpark::Create()
 {
-	CGunShot* gunshot = new CGunShot(pGraphicDev, origin );
+	CBulletSpark* gunshot = new CBulletSpark();
 
 	if (FAILED(gunshot->Ready_Buffer()))
 	{
 		Safe_Release(gunshot);
-		MSG_BOX("CGunShot Create Failed");
+		MSG_BOX("CBulletSpark Create Failed");
 		return nullptr;
 	}
 	return gunshot;
 }
 
 
-void CGunShot::resetParticle(Attribute* attribute)
+void CBulletSpark::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	attribute->_isAlive = true;
 	//attribute->_position = _origin;
@@ -80,12 +75,23 @@ void CGunShot::resetParticle(Attribute* attribute)
 	GetRandomVector(&attribute->velocity, &min, &max);
 	D3DXVec3Normalize(&attribute->velocity, &attribute->velocity);
 	attribute->velocity *= 10.f;
-	attribute->_color = D3DXCOLOR(GetRandomFloat(0.6f, 1.0f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
+	int random = rand() % 4;
+	switch (random) {
+	case 0:
+		attribute->_color = D3DXCOLOR(GetRandomFloat(0.0f, 0.1f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
+		break;
+	case 1:
+		attribute->_color = D3DXCOLOR(GetRandomFloat(0.0f, 0.1f), GetRandomFloat(0.7f, 0.9f), GetRandomFloat(0.9f, 1.0f), 1.0f);
+		break;
+	default:
+		attribute->_color = D3DXCOLOR(GetRandomFloat(1.0f, 1.0f), GetRandomFloat(1.0f, 1.0f), GetRandomFloat(1.0f, 1.0f), 1.0f);
+		break;
+	}
 	attribute->_age = 0.0f;
 	attribute->_lifeTime = 0.5f;
 }
 
-void CGunShot::preRender()
+void CBulletSpark::preRender()
 {
 	PSystem::preRender();
 	_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
@@ -94,13 +100,13 @@ void CGunShot::preRender()
 
 }
 
-void CGunShot::postRender()
+void CBulletSpark::postRender()
 {
 	PSystem::postRender();
 	_device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
-void CGunShot::update(float fTimeDelta)
+void CBulletSpark::update(float fTimeDelta)
 {
 	list<Attribute>::iterator i;
 	for (i = _particles.begin(); i != _particles.end(); i++) {
@@ -117,7 +123,7 @@ void CGunShot::update(float fTimeDelta)
 
 }
 
-void CGunShot::Free()
+void CBulletSpark::Free()
 {
 	PSystem::Free();
 }

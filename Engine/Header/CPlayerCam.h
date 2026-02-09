@@ -7,7 +7,7 @@ namespace Engine
 	class CCalculator;
 }
 
-class CPlayerCam : public CCamera
+class ENGINE_DLL CPlayerCam : public CCamera
 {
 private:
 	explicit CPlayerCam();
@@ -40,6 +40,7 @@ private:
 
 private:
 	_float			m_fSpeed;
+	_bool			m_bFix;
 
 private:
 	Engine::CCalculator* m_pCalculatorCom;

@@ -34,10 +34,10 @@ HRESULT CPlayer::Ready_GameObject()
 
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
-    Key_Input(fTimeDelta);
-    //Mouse_Move();
-    Set_Cam();
-    _int iExit = CGameObject::Update_GameObject(fTimeDelta);
+	Key_Input(fTimeDelta);
+	//Mouse_Move();
+	Set_Cam();
+	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -77,7 +77,7 @@ HRESULT CPlayer::Ready_Component()
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
-
+    
     // 텍스쳐
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
         return E_FAIL;
@@ -96,14 +96,14 @@ HRESULT CPlayer::Ready_Component()
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
 
-    _vec3      vDir, vRight;
-    _vec3      vUp(0.f, 1.f, 0.f);
-    m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
-    D3DXVec3Cross(&vRight, &vDir, &vUp);
-    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
-    {
-        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
-    }
+	_vec3		vDir, vRight;
+	_vec3		vUp(0.f, 1.f, 0.f);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
+	D3DXVec3Cross(&vRight, &vDir, &vUp);
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
+	{
+		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
+	}
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_S))
     {
@@ -128,27 +128,26 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
     {
         m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
     }
-    //if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
-    //{
-    //   _vec3 origin{ 0,0,0 };
-    //   CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT ,origin, 500);
-    //}
-    _vec3 origin{ 0,0,0 };
-    _vec3 playerPo;
-    m_pTransformCom->Get_Info(INFO_POS, &playerPo);
-    if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
-        LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-        CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
-    }
-    /*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_O))
     {
-       _vec3 vPickPos = Picking_OnTerrain();
-       _vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
-    }*/
+        CParticleMgr::GetInstance()->spwan_Weather(RAIN, { 0,0,0 }, 500, { 1,1,1,1 });
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_1))
+    {
+        CParticleMgr::GetInstance()->spwan_Weather(SNOW, { 10,10,10 }, 500, { 1,1,1,1 });
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_2))
+    {
+        CParticleMgr::GetInstance()->spwan_Weather(DUST, { 20,20,20 }, 500, { 1,1,1,1 });
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_3))
+    {
+        CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { 20,20,20 }, 100);
+    }
 
-    _long dwMouseMove(0);
-    if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
-        m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
+	_long dwMouseMove(0);
+	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
+		m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
 
     if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_X))
         m_pTransformCom->Rotation(ROT_Y, dwMouseMove / 10.f);

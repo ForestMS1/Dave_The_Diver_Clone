@@ -1,13 +1,16 @@
-#include "pch.h"
 #include "CPlayerCam.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
 #include "CProtoMgr.h"
 #include "CManagement.h"
-#include "CPlayer.h"
+#include "CInfoMgr.h"
+#include "CDInputMgr.h"
+//#include "CPlayer.h"
+
 CPlayerCam::CPlayerCam()
 	: m_fSpeed(0.f)
 	, m_pCalculatorCom(nullptr)
+	, m_bFix(true)
 {
 }
 
@@ -45,6 +48,9 @@ _int CPlayerCam::Update_GameObject(const _float& fTimeDelta)
 {
 	// ImGUI 출력 하기위해 렌더러에 집어넣음.
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+		m_bFix = !m_bFix;
+
 	_int iExit = CCamera::Update_GameObject(fTimeDelta);
 
 	return iExit;
@@ -53,7 +59,9 @@ _int CPlayerCam::Update_GameObject(const _float& fTimeDelta)
 void CPlayerCam::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CCamera::LateUpdate_GameObject(fTimeDelta);
-	Mouse_Fix();
+	//if(m_bFix)
+	//	Mouse_Fix();
+	//ShowCursor(!m_bFix);
 }
 
 void CPlayerCam::Render_GameObject()
@@ -74,11 +82,13 @@ void CPlayerCam::Render_GameObject()
 
 void CPlayerCam::Mouse_Fix()
 {
+	
 	POINT       ptMouse{ WINCX >> 1, WINCY >> 1 };
 
-	ClientToScreen(g_hWnd, &ptMouse);
+
+
+	ClientToScreen(CInfoMgr::GetInstance()->Get_HWND(), &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
-	ShowCursor(false);
 }
 
 HRESULT CPlayerCam::Add_Component()

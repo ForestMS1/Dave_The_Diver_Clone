@@ -33,6 +33,17 @@ namespace Engine
 
 	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0); // 텍스처의 UV 좌표 값을 FLOAT형 3개로 표현하겠다는 매크로(괄호안의 숫자 0의 의미는 본래 버텍스에 텍스쳐 UV값이 여러개가 올 수 있는데 그중 0번째 값을 지정하겠다는 의미)
 
+	typedef struct tagVertexCubeColor
+	{
+		_vec3		vPosition;
+		_ulong		dwColor;
+
+	}VTXCUBECOL;
+
+	const _ulong	FVF_CUBECOL = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+
+
+
 	typedef struct tagIndex16
 	{
 		_ushort  _0;
@@ -55,22 +66,10 @@ namespace Engine
 	};
 	const DWORD	FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 
-	struct BoundingBox {
-		D3DXVECTOR3 _min;
-		D3DXVECTOR3 _max;
-
-		bool isPointInside(D3DXVECTOR3& p) {
-			//지정된 포인트가 경계 상자 내에 있는가?
-			if (p.x >= _min.x && p.y >= _min.y && p.z >= _min.z &&
-				p.x <= _max.x && p.y <= _max.y && p.z <= _max.z) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-	
-	};
+	//struct TmpBoundingBox {
+	//	D3DXVECTOR3 _min;
+	//	D3DXVECTOR3 _max;
+	//};
 
 
 	struct Attribute {

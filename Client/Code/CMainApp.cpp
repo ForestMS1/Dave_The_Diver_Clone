@@ -10,6 +10,8 @@
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
 #include "CParticleMgr.h"
+#include "CCameraMgr.h"
+#include "CColliderMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -29,8 +31,8 @@ HRESULT CMainApp::Ready_MainApp()
 
 	if (FAILED(Ready_Scene(m_pGraphicDev)))
 		return E_FAIL;
-	//if (FAILED(CParticleMgr::GetInstance()))
-	//	return E_FAIL;
+	if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
+		return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
 
@@ -65,10 +67,14 @@ void CMainApp::Render_MainApp()
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
-	CParticleMgr::GetInstance()->Render_Particle(m_pGraphicDev);
+	CParticleMgr::GetInstance()->Render_Particle();
 
+	CColliderMgr::GetInstance()->Render();
 
 	m_pDeviceClass->Render_End();
+
+	// 프레임의 맨마지막에 호출하고싶은데 여기가 적당한듯
+	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -149,6 +155,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 
+	CColliderMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();
@@ -160,6 +167,7 @@ void CMainApp::Free()
 	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
+	CCameraMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

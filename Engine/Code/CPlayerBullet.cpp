@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CPlayerBullet.h"
 #include "CGraphicDev.h"
 #include "CRenderer.h"

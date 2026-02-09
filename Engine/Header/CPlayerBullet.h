@@ -8,7 +8,7 @@ namespace Engine
 	class CTransform;
 }
 
-class CPlayerBullet : public CGameObject
+class ENGINE_DLL CPlayerBullet : public CGameObject
 {
 private:
 	explicit CPlayerBullet(_vec3 vOrigin, _vec3 vDir, _float speed);
