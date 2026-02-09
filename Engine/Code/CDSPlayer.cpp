@@ -10,7 +10,7 @@
 #include "CPlayerAttack.h"
 #include "CPlayerDie.h"
 #include "CGraphicDev.h"
-
+#include "CCameraMgr.h"
 #ifdef _DEBUG
 // Imgui 디버깅용
 const char* enum_names[] = { "IDLE", "ATTCK", "DIE" };
@@ -50,8 +50,13 @@ HRESULT CDSPlayer::Ready_GameObject()
 
 _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	// 디버그/개발 용 방어코드
+#ifdef _DEBUG
+	if (dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera()) == nullptr)
+		return 0;
+#endif
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-
+	Set_OnTerrain();
 	Key_Input(fTimeDelta);
 	Mouse_Move();
 	Set_Cam();
@@ -64,6 +69,11 @@ _int CDSPlayer::Update_GameObject(const _float& fTimeDelta)
 
 void CDSPlayer::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	// 디버그/개발 용 방어코드
+#ifdef _DEBUG
+	if (dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera()) == nullptr)
+		return;
+#endif
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 	m_pState->LateUpdate_State(fTimeDelta);
 }
@@ -197,7 +207,7 @@ void CDSPlayer::Mouse_Move()
 }
 void CDSPlayer::Set_Cam()
 {
-	CPlayerCam* pPlayerCam = static_cast<CPlayerCam*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"PlayerCam"));
+	CPlayerCam* pPlayerCam = dynamic_cast<CPlayerCam*>(CCameraMgr::GetInstance()->Get_CurCamera());
 	if (pPlayerCam == nullptr)
 		return;
 
@@ -218,7 +228,7 @@ void CDSPlayer::Set_OnTerrain()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
 	Engine::CTerrainTex* pTerrainVtxCom = dynamic_cast<Engine::CTerrainTex*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"GameLogic_Layer", L"Terrain", L"Com_Buffer"));
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_STATIC, L"Environment_Layer", L"Terrain", L"Com_Buffer"));
 
 	if (nullptr == pTerrainVtxCom)
 		return;

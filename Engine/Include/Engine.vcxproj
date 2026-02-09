@@ -165,6 +165,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CBullet.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCamera.h" />
+    <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CColliderMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
@@ -176,6 +177,8 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CFontMgr.h" />
     <ClInclude Include="..\Header\CFrame.h" />
     <ClInclude Include="..\Header\CFrameMgr.h" />
+    <ClInclude Include="..\Header\CFreeCam.h" />
+    <ClInclude Include="..\Header\CFrustrum.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
     <ClInclude Include="..\Header\CBulletSpark.h" />
@@ -229,6 +232,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CCamera.cpp" />
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CColliderMgr.cpp" />
+    <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
     <ClCompile Include="..\Code\CCubeCol.cpp" />
     <ClCompile Include="..\Code\CCubeTex.cpp" />
@@ -238,6 +242,8 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CFontMgr.cpp" />
     <ClCompile Include="..\Code\CFrame.cpp" />
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
+    <ClCompile Include="..\Code\CFreeCam.cpp" />
+    <ClCompile Include="..\Code\CFrustrum.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
     <ClCompile Include="..\Code\CBulletSpark.cpp" />

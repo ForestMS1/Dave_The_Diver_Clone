@@ -1,18 +1,13 @@
 #pragma once
 #include "CCamera.h"
 
-
-namespace Engine
-{
-	class CCalculator;
-}
-
-class ENGINE_DLL CPlayerCam : public CCamera
+BEGIN(Engine)
+class ENGINE_DLL CFreeCam : public CCamera
 {
 private:
-	explicit CPlayerCam();
-	explicit CPlayerCam(const CPlayerCam& rhs);
-	virtual ~CPlayerCam();
+	explicit CFreeCam();
+	explicit CFreeCam(const CFreeCam& rhs);
+	virtual ~CFreeCam();
 
 public:
 	HRESULT		Ready_GameObject(const _vec3* pEye,
@@ -35,18 +30,19 @@ public:
 	void	Set_vAt(_vec3* vAt) { memcpy(&m_vAt, vAt, sizeof(_vec3)); }
 private:
 	HRESULT		Add_Component();
-	void	Key_Input();
+	void	Key_Input(const _float& fTimeDelta);
+	void	Mouse_Move();
 	void	Mouse_Fix();
 
 private:
 	_float			m_fSpeed;
-	_bool			m_bFix;
-
+	_uint	m_iNum;
+	static _uint	g_iNum;
 private:
 	Engine::CCalculator* m_pCalculatorCom;
 
 public:
-	static CPlayerCam* Create(
+	static CFreeCam* Create(
 		const _vec3* pEye,
 		const _vec3* pAt,
 		const _vec3* pUp,
@@ -56,5 +52,6 @@ public:
 		const _float& fFar = 1000.f);
 private:
 	virtual void Free() override;
-};
 
+};
+END

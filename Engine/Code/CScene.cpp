@@ -1,5 +1,6 @@
 #include "CScene.h"
 #include <CHelper.h>
+#include "CCameraMgr.h"
 
 CScene::CScene()
 {
@@ -26,6 +27,9 @@ HRESULT CScene::Ready_Scene()
 
 _int CScene::Update_Scene(const _float& fTimeDelta)
 {
+	//현재 활성화 된 카메라 Update
+	CCameraMgr::GetInstance()->Update_Camera(fTimeDelta);
+	
 	vector<CGameObject*> pRootObjectList;
 
 	// 루프1. 루트 오브젝트를 추린다.
@@ -99,6 +103,9 @@ _int CScene::Update_Scene(const _float& fTimeDelta)
 
 void CScene::LateUpdate_Scene(const _float& fTimeDelta)
 {
+	//현재 활성화 된 카메라 LateUpdate
+	CCameraMgr::GetInstance()->LateUpdate_Camera(fTimeDelta);
+
 	vector<CGameObject*> pRootObjectList;
     for (auto& pLayer : m_mapLayer)
     {

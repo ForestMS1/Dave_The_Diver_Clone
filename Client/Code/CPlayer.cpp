@@ -34,10 +34,10 @@ HRESULT CPlayer::Ready_GameObject()
 
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
-    Key_Input(fTimeDelta);
-    //Mouse_Move();
-    Set_Cam();
-    _int iExit = CGameObject::Update_GameObject(fTimeDelta);
+	Key_Input(fTimeDelta);
+	//Mouse_Move();
+	Set_Cam();
+	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -96,14 +96,14 @@ HRESULT CPlayer::Ready_Component()
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
 
-    _vec3      vDir, vRight;
-    _vec3      vUp(0.f, 1.f, 0.f);
-    m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
-    D3DXVec3Cross(&vRight, &vDir, &vUp);
-    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
-    {
-        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
-    }
+	_vec3		vDir, vRight;
+	_vec3		vUp(0.f, 1.f, 0.f);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
+	D3DXVec3Cross(&vRight, &vDir, &vUp);
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
+	{
+		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
+	}
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_S))
     {
@@ -145,9 +145,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
         CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { 20,20,20 }, 100);
     }
 
-    _long dwMouseMove(0);
-    if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
-        m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
+	_long dwMouseMove(0);
+	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
+		m_pTransformCom->Rotation(ROT_X, dwMouseMove / 10.f);
 
     if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_X))
         m_pTransformCom->Rotation(ROT_Y, dwMouseMove / 10.f);
