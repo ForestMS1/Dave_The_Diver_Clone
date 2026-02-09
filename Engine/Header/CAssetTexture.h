@@ -2,6 +2,8 @@
 
 #include "CAsset.h"
 
+BEGIN(Engine)
+
 class ENGINE_DLL CAssetTexture : public CAsset
 {
 private:
@@ -25,3 +27,4 @@ private:
 	void Free() override;
 };
 
+END

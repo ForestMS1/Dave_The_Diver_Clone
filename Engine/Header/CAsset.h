@@ -2,6 +2,8 @@
 #include "CBase.h"
 #include "Engine_Define.h"
 
+BEGIN(Engine)
+
 class ENGINE_DLL CAsset : public CBase
 {
 public:
@@ -29,5 +31,10 @@ protected:
 	std::wstring m_sAssetTag;
 	std::wstring m_sAssetPath;
 	AssetState m_eAssetState;
+
+public:
+	void Free() override;
 };
+
+END
 

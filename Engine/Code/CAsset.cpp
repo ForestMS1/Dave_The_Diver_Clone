@@ -10,3 +10,7 @@ CAsset::CAsset(std::wstring_view svAssetPath)
 CAsset::~CAsset()
 {
 }
+
+void CAsset::Free()
+{
+}
