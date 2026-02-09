@@ -3,6 +3,10 @@
 #include "CProtoMgr.h"
 #include "CGraphicDev.h"
 
+#include "CAssetTexture.h"
+#include "CAssetCubeTexture.h"
+#include "CAssetMgr.h"
+
 CLoading::CLoading()
     : m_bFinish(false), m_eLoadingID(LOADING_END)
 {
@@ -33,16 +37,16 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_Stage()
 {
-   // lstrcpy(m_szLoading, L"Buffer Loading.....................................");
+    // lstrcpy(m_szLoading, L"Buffer Loading.....................................");
     m_sLoading = L"Buffer Loading.....................................";
-    
+
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create())))
-    	return E_FAIL;
-    
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
-    	return E_FAIL;
+        return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeCol", Engine::CCubeCol::Create(D3DXCOLOR(1.f, 0.f, 1.f, 1.f)))))
         return E_FAIL;
@@ -54,28 +58,49 @@ _uint CLoading::Loading_Stage()
         return E_FAIL;
 
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MapTerrainTex", Engine::CMapTerrainTex::Create( VTXCNTX, VTXCNTZ, VTXITV))))
-        return E_FAIL;
+
+    // 기존 로드하던 에셋들
+    {
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_Player", CAssetTexture::Create(L"../Bin/Resource/Texture/Player/Ma.jpg"));
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_Terrain0", CAssetTexture::Create(L"../Bin/Resource/Texture/Terrain/Terrain0.png"));
+        for (int i = 0; i < 2; ++i)
+        {
+            wstring s = L"../Bin/Resource/Texture/Terrain/Grass_" + ::to_wstring(i) + L".tga";
+            CAssetMgr::GetInstance()->AddAsset(L"Tex_TerrainGrass", CAssetTexture::Create(s.c_str()));
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            wstring s = L"../Bin/Resource/Texture/SkyBox/burger" + ::to_wstring(i) + L".dds";
+            CAssetMgr::GetInstance()->AddAsset(L"Tex_Burger", CAssetCubeTexture::Create(s.c_str()));
+        }
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_160", CAssetCubeTexture::Create(L"../Bin/Resource/Texture/160.dds"));
+        for (int i = 0; i < 90; ++i)
+        {
+            wstring s = L"../Bin/Resource/Texture/Explosion/Explosion" + ::to_wstring(i) + L".png";
+            CAssetMgr::GetInstance()->AddAsset(L"Tex_Explosion", CAssetTexture::Create(s.c_str()));
+        }
+    }
+    CAssetMgr::GetInstance()->LoadAsset();
 
     //lstrcpy(m_szLoading, L"Texture Loading.....................................");
     m_sLoading = L"Texture Loading.....................................";
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_PlayerTexture", Engine::CTexture::Create( TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ma.jpg", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_PlayerTexture", Engine::CTexture::Create(L"Tex_Player"))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(L"Tex_Terrain0"))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture2", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture2", Engine::CTexture::Create(L"Tex_TerrainGrass"))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(L"Tex_Burger"))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture2", Engine::CTexture::Create(TEX_CUBE, L"../Bin/Resource/Texture/160.dds", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture2", Engine::CTexture::Create(L"Tex_160"))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EffectTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EffectTexture", Engine::CTexture::Create(L"Tex_Explosion"))))
         return E_FAIL;
 
    // lstrcpy(m_szLoading, L"Etc Loading.....................................");
