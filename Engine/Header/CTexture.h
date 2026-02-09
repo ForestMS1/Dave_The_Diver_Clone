@@ -11,16 +11,15 @@ private:
 	virtual	   ~CTexture();
 
 public:
-	HRESULT		Ready_Texture(TEXTUREID eID, std::wstring_view svPath, const _uint& iCnt);
+	HRESULT		Ready_Texture(std::wstring_view svAssetLayerTag);
 	void		Set_Texture(const _uint& iIndex = 0);
 
 private:
-	vector<IDirect3DBaseTexture9*>		m_vecTexture;
+	std::wstring m_sAssetLayer;
 
 public:
-	static CTexture* Create(TEXTUREID eID,
-							std::wstring_view svPath, 
-							const _uint& iCnt = 1);
+
+	static CTexture* Create(std::wstring_view svAssetLayerTag);
 	virtual CComponent* Clone();
 
 private:

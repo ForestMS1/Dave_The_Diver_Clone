@@ -159,7 +159,12 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\AssetList.h" />
     <ClInclude Include="..\Header\CAABB.h" />
+    <ClInclude Include="..\Header\CAsset.h" />
+    <ClInclude Include="..\Header\CAssetCubeTexture.h" />
+    <ClInclude Include="..\Header\CAssetMgr.h" />
+    <ClInclude Include="..\Header\CAssetTexture.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
     <ClInclude Include="..\Header\CBullet.h" />
@@ -225,6 +230,10 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAABB.cpp" />
+    <ClCompile Include="..\Code\CAsset.cpp" />
+    <ClCompile Include="..\Code\CAssetCubeTexture.cpp" />
+    <ClCompile Include="..\Code\CAssetMgr.cpp" />
+    <ClCompile Include="..\Code\CAssetTexture.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />
     <ClCompile Include="..\Code\CBullet.cpp" />

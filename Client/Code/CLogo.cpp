@@ -9,6 +9,8 @@
 #include "CLog.h"
 #include "CSoundMgr.h"
 #include "CHelper.h"
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
 
 CLogo::CLogo()
 	: CScene(), m_pLoading(NULL)
@@ -168,7 +170,9 @@ HRESULT CLogo::Ready_Prototype()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create())))
 		return E_FAIL;
 
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg", 1))))
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_LOGO", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/IU.jpg"));
+	CAssetMgr::GetInstance()->LoadAsset();
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(L"Tex_LOGO"))))
 		return E_FAIL;
 
 	return S_OK;
