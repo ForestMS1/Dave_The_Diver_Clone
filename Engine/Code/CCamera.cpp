@@ -4,7 +4,7 @@
 
 CCamera::CCamera()
     : CGameObject()
-    , m_bIsActive(false)
+    , m_bIsActive(true)
 {
 }
 
