@@ -2,6 +2,9 @@
 #include "CBase.h"
 #include "Engine_Define.h"
 #include "CAsset.h"
+
+BEGIN(Engine)
+
 class ENGINE_DLL CAssetMgr : public CBase
 {
 	DECLARE_SINGLETON(CAssetMgr)
@@ -35,3 +38,4 @@ private:
 	virtual void		Free();
 };
 
+END

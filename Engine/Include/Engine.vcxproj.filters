@@ -426,6 +426,9 @@
     <ClCompile Include="..\Code\CAssetCubeTexture.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\03. CubeTexture</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CAssetFont.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -631,6 +634,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CAssetCubeTexture.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\03. CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetFont.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
