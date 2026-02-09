@@ -77,7 +77,7 @@ HRESULT CPlayer::Ready_Component()
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
-
+    
     // 텍스쳐
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
         return E_FAIL;
@@ -120,31 +120,30 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
         m_pTransformCom->Move_Pos(&vRight, -10.f, fTimeDelta);
     }
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_Q))
-	{
-		m_pTransformCom->Move_Pos(&vUp, 10.f, fTimeDelta);
-	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
-	{
-		m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
-	}
-	//if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
-	//{
-	//	_vec3 origin{ 0,0,0 };
-	//	CParticleMgr::GetInstance()->spwan_Particle(m_pGraphicDev, GUNSHOT ,origin, 500);
-	//}
-	//_vec3 origin{ 0,0,0 };
-	//_vec3 playerPo;
-	//m_pTransformCom->Get_Info(INFO_POS, &playerPo);
-	//if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB)) {
-	//	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	//	CParticleMgr::GetInstance()->spwan_Particle(pGraphicDev, FIREWORK, playerPo, 200);
-	//}
-	/*if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
-	{
-		_vec3 vPickPos = Picking_OnTerrain();
-		_vec3 vDir = vPickPos - m_pTransformCom->m_vInfo[INFO_POS];
-	}*/
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_Q))
+    {
+        m_pTransformCom->Move_Pos(&vUp, 10.f, fTimeDelta);
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
+    {
+        m_pTransformCom->Move_Pos(&vUp, -10.f, fTimeDelta);
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_O))
+    {
+        CParticleMgr::GetInstance()->spwan_Weather(RAIN, { 0,0,0 }, 500, { 1,1,1,1 });
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_1))
+    {
+        CParticleMgr::GetInstance()->spwan_Weather(SNOW, { 10,10,10 }, 500, { 1,1,1,1 });
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_2))
+    {
+        CParticleMgr::GetInstance()->spwan_Weather(DUST, { 20,20,20 }, 500, { 1,1,1,1 });
+    }
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_3))
+    {
+        CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { 20,20,20 }, 100);
+    }
 
 	_long dwMouseMove(0);
 	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))

@@ -52,7 +52,7 @@ CBullet* CBullet::Create(CCamera* camera)
 }
 
 
-void CBullet::resetParticle(Attribute* attribute)
+void CBullet::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	
 	attribute->_isAlive = true;
@@ -63,7 +63,7 @@ void CBullet::resetParticle(Attribute* attribute)
 
 	//attribute->_position.y -= 1.0f;
 	attribute->velocity = cameraDir * 20.f;
-	attribute->_color = D3DXCOLOR(1.0f,1.0f,1.0f, 1.0f);
+	attribute->_color = color;
 	//attribute->_color = D3DXCOLOR(GetRandomFloat(0.6f, 1.0f), GetRandomFloat(0.9f, 1.0f), GetRandomFloat(0.9f, 1.0f), 1.0f);
 	attribute->_age = 0.0f;
 	attribute->_lifeTime = 0.5f;

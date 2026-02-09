@@ -1,16 +1,16 @@
-#include "CGunShot.h"
+#include "CBulletSpark.h"
 #include "CParticleMgr.h"
 
 
 
-CGunShot::CGunShot() : PSystem()
+CBulletSpark::CBulletSpark() : PSystem()
 {
 	_origin = { 0,0,0 };
 	_size = { 0.2f,0.2f,0.2f };
 	numOfParticles = 5;
 }
 
-CGunShot::CGunShot(_vec3 origin) : PSystem()
+CBulletSpark::CBulletSpark(_vec3 origin) : PSystem()
 {
 	//_origin = { 0,0,0 };
 	_origin = origin;
@@ -23,11 +23,11 @@ CGunShot::CGunShot(_vec3 origin) : PSystem()
 
 
 
-CGunShot::~CGunShot()
+CBulletSpark::~CBulletSpark()
 {
 }
 
-HRESULT CGunShot::Ready_Buffer()
+HRESULT CBulletSpark::Ready_Buffer()
 {
 
 	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/white.png", 1))) {
@@ -42,7 +42,7 @@ HRESULT CGunShot::Ready_Buffer()
 	return S_OK;
 }
 
-void CGunShot::render()
+void CBulletSpark::render()
 {
 	Set_Texture(0);
 	preRender();
@@ -50,21 +50,21 @@ void CGunShot::render()
 	postRender();
 }
 
-CGunShot* CGunShot::Create()
+CBulletSpark* CBulletSpark::Create()
 {
-	CGunShot* gunshot = new CGunShot();
+	CBulletSpark* gunshot = new CBulletSpark();
 
 	if (FAILED(gunshot->Ready_Buffer()))
 	{
 		Safe_Release(gunshot);
-		MSG_BOX("CGunShot Create Failed");
+		MSG_BOX("CBulletSpark Create Failed");
 		return nullptr;
 	}
 	return gunshot;
 }
 
 
-void CGunShot::resetParticle(Attribute* attribute)
+void CBulletSpark::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	attribute->_isAlive = true;
 	//attribute->_position = _origin;
@@ -91,7 +91,7 @@ void CGunShot::resetParticle(Attribute* attribute)
 	attribute->_lifeTime = 0.5f;
 }
 
-void CGunShot::preRender()
+void CBulletSpark::preRender()
 {
 	PSystem::preRender();
 	_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
@@ -100,13 +100,13 @@ void CGunShot::preRender()
 
 }
 
-void CGunShot::postRender()
+void CBulletSpark::postRender()
 {
 	PSystem::postRender();
 	_device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
-void CGunShot::update(float fTimeDelta)
+void CBulletSpark::update(float fTimeDelta)
 {
 	list<Attribute>::iterator i;
 	for (i = _particles.begin(); i != _particles.end(); i++) {
@@ -123,7 +123,7 @@ void CGunShot::update(float fTimeDelta)
 
 }
 
-void CGunShot::Free()
+void CBulletSpark::Free()
 {
 	PSystem::Free();
 }

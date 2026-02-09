@@ -11,13 +11,12 @@ public:
 
 public:
 	explicit PSystem();
-	explicit PSystem(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~PSystem();
 
 	virtual	HRESULT	 Ready_Buffer();
-	virtual void reset();
-	virtual void resetParticle(Attribute* attribute) = 0;
-	virtual void addParticle(_vec3 position);
+	virtual void reset(_vec3 position, _vec3 center, _vec3 extents, D3DXCOLOR color);
+	virtual void resetParticle(Attribute* attribute, D3DXCOLOR color) = 0;
+	virtual void addParticle(_vec3 position, D3DXCOLOR color);
 
 	virtual void update(float timeDelta) = 0;
 	virtual void preRender();
@@ -43,7 +42,6 @@ public:
 
 	IDirect3DDevice9*					_device;
 	D3DXVECTOR3							_origin;
-	BoundingBox							_boundingBox;
 	IDirect3DVertexBuffer9*				 _vb;
 	list<Attribute>						_particles;
 	DWORD								_vbSize;
