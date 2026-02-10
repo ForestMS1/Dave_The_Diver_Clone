@@ -38,14 +38,16 @@ HRESULT CAssetDefaultFont::Load()
 	if (FAILED(D3DXCreateFontIndirect(pGraphicDev, &tFont_Desc, &m_pFont)))
 	{
 		m_eAssetState = LOADFAIL;
-		MSG_BOX("CAssetDefaultFont Font Create Failed");
+		wstring msg = L"CAssetDefaultFont Font Create Failed, Path: " + m_sAssetPath;
+		MSG_BOX_STR(msg.c_str());
 		return E_FAIL;
 	}
 
 	if (FAILED(D3DXCreateSprite(pGraphicDev, &m_pSprite)))
 	{
 		m_eAssetState = LOADFAIL;
-		MSG_BOX("CAssetDefaultFont Sprite Create Failed");
+		wstring msg = L"CAssetDefaultFont Sprite Create Failed, Path: " + m_sAssetPath;
+		MSG_BOX_STR(msg.c_str());
 		return E_FAIL;
 	}
 	m_eAssetState = LOADED;

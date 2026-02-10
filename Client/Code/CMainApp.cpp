@@ -14,6 +14,7 @@
 #include "CColliderMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
+#include "CAssetFmodSound.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -30,15 +31,13 @@ HRESULT CMainApp::Ready_MainApp()
 {
 	if (FAILED(Ready_DefaultSetting(&m_pGraphicDev)))
 		return E_FAIL;
-
+	if (FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
+		return E_FAIL;
 	if (FAILED(Ready_Scene(m_pGraphicDev)))
 		return E_FAIL;
 	if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
 		return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
-		return E_FAIL;
-
-	if(FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
 
 	return S_OK;
@@ -165,11 +164,11 @@ void CMainApp::Free()
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
-	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();
+	CSoundMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }
