@@ -12,6 +12,7 @@
 #include "CParticleMgr.h"
 #include "CCameraMgr.h"
 #include "CColliderMgr.h"
+#include "CAssetMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -168,6 +169,7 @@ void CMainApp::Free()
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
+	CAssetMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

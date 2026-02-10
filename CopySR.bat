@@ -14,5 +14,6 @@ xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\ImSequencer.h		.\Referen
 xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\ImZoomSlider.h		.\Reference\Header\
 xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\ImCurveEdit.h		.\Reference\Header\
 xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\GraphEditor.h		.\Reference\Header\
+xcopy				/y/I/E			.\Engine\ThirdParty\nlohmann_3.12.0\include					.\Reference\Header\
 
 xcopy				/y/I			.\Engine\ThirdParty\fmod\lib\x64\fmod.dll	.\SRClient\Bin\

@@ -73,13 +73,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>../Bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -159,7 +159,13 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\AssetList.h" />
     <ClInclude Include="..\Header\CAABB.h" />
+    <ClInclude Include="..\Header\CAsset.h" />
+    <ClInclude Include="..\Header\CAssetCubeTexture.h" />
+    <ClInclude Include="..\Header\CAssetFont.h" />
+    <ClInclude Include="..\Header\CAssetMgr.h" />
+    <ClInclude Include="..\Header\CAssetTexture.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
     <ClInclude Include="..\Header\CBullet.h" />
@@ -226,6 +232,11 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAABB.cpp" />
+    <ClCompile Include="..\Code\CAsset.cpp" />
+    <ClCompile Include="..\Code\CAssetCubeTexture.cpp" />
+    <ClCompile Include="..\Code\CAssetFont.cpp" />
+    <ClCompile Include="..\Code\CAssetMgr.cpp" />
+    <ClCompile Include="..\Code\CAssetTexture.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />
     <ClCompile Include="..\Code\CBullet.cpp" />
