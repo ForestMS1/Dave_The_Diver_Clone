@@ -159,7 +159,7 @@ void CMainApp::Free()
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();
-	CFontMgr::GetInstance()->DestroyInstance();
+	//CFontMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();
@@ -167,8 +167,8 @@ void CMainApp::Free()
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
+	m_pManagement->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();
-	m_pManagement->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

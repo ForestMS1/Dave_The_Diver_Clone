@@ -40,6 +40,6 @@ CAssetTexture* CAssetTexture::Create(std::wstring_view svPath)
 
 void CAssetTexture::Free()
 {
+	Unload();
 	CAsset::Free();
-	Safe_Release(m_pTexture);
 }

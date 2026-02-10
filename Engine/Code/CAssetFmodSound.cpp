@@ -36,13 +36,14 @@ HRESULT CAssetFmodSound::Unload()
 {
 	FMOD_Sound_Release(m_pFmodSound);
 	m_pFmodSound = nullptr;
+	m_eAssetState = UNLOAD;
 	return S_OK;
 }
 
 void CAssetFmodSound::Free()
 {
-	CAsset::Free();
 	Unload();
+	CAsset::Free();
 }
 
 CAssetFmodSound* CAssetFmodSound::Create(std::wstring_view m_sAssetPath)
