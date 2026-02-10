@@ -109,7 +109,10 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
         m_vEye -= vLength;
         m_vAt -= vLength;
     }
-   
+
+    if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB) & 0x80) {
+        CParticleMgr::GetInstance()->spwan_Particle(FLAMESHOT, { 0.f,0.f,0.f }, 2);
+    }
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_TAB) & 0x80)
     {
         if (m_bCheck)
@@ -170,6 +173,7 @@ void CDynamicCamera::Mouse_Move()
 
         m_vAt = m_vEye + vLook;
     }
+    
 }
 
 void CDynamicCamera::Mouse_Fix()

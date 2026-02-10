@@ -196,6 +196,9 @@
     <Filter Include="00. Manager\15. AssetMgr\00. Asset\03. CubeTexture">
       <UniqueIdentifier>{26600ba7-85f5-4322-b9bd-eb61d21e072d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\13. ParticleMgr\03. Particles\04. FlameShot">
+      <UniqueIdentifier>{2f0ec91e-487f-4b5b-b316-6c7ff227db71}</UniqueIdentifier>
+    </Filter>
     <Filter Include="00. Manager\CameraMgr">
       <UniqueIdentifier>{b6f5fc31-84b8-4819-85fa-1e84cbe3996a}</UniqueIdentifier>
     </Filter>
@@ -425,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CAssetTexture.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFlameShot.cpp">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\04. FlameShot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCameraMgr.cpp">
       <Filter>00. Manager\CameraMgr</Filter>
@@ -671,8 +677,8 @@
     <ClInclude Include="..\Header\CAssetDefaultFont.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMapMgr.h">
-      <Filter>00. Manager\16. MapManager</Filter>
+    <ClInclude Include="..\Header\CFlameShot.h">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\04. FlameShot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

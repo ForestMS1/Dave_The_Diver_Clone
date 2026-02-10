@@ -100,6 +100,7 @@ HRESULT CStage::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"DynamicCamera", pGameObject)))
 		return E_FAIL;
+	CParticleMgr::GetInstance()->Set_Camera(static_cast<CCamera*>(pGameObject));
 
 	// SkyBox
 	pGameObject = CSkyBox::Create();
