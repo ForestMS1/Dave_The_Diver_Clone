@@ -30,7 +30,7 @@ CBulletSpark::~CBulletSpark()
 HRESULT CBulletSpark::Ready_Buffer()
 {
 
-	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/white.png", 1))) {
+	if (FAILED(Ready_Texture(L"Tex_Spark", L"../Bin/Resource/Texture/white", 1))) {
 		return E_FAIL;
 	}
 
@@ -44,7 +44,7 @@ HRESULT CBulletSpark::Ready_Buffer()
 
 void CBulletSpark::render()
 {
-	Set_Texture(0);
+	Set_Texture(L"Tex_Spark",0);
 	preRender();
 	PSystem::render();
 	postRender();

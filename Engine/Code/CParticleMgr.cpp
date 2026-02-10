@@ -3,12 +3,15 @@
 #include "CBulletSpark.h"
 #include "CBullet.h"
 #include "CWeather.h"
+#include "CFlameShot.h"
+#include "CAssetMgr.h"
 
 
 IMPLEMENT_SINGLETON(CParticleMgr)
 
 CParticleMgr::CParticleMgr(): m_pCamera(nullptr)
 {
+	cameraOn = false;
 	particles.resize(0);
 }
 
@@ -23,15 +26,23 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 	particles.push_back(firework);
 	CBulletSpark* spark = CBulletSpark::Create();
 	particles.push_back(spark);
-	CBullet* bullet = CBullet::Create(m_pCamera);
-	particles.push_back(bullet);
 	CWeather* weather = CWeather::Create(500);
 	particles.push_back(weather);
+	//CAssetMgr::GetInstance()->LoadAsset();
 	return S_OK;
 }
 
 void CParticleMgr::Update_Particle(float fTimeDelta)
 {
+	if (!cameraOn) {
+		if (m_pCamera != nullptr) {
+			CBullet* bullet = CBullet::Create(m_pCamera);
+			particles.push_back(bullet);
+			CFlameShot* flame = CFlameShot::Create(m_pCamera);
+			particles.push_back(flame);
+			cameraOn = true;
+		}
+	}
 	
 	if (!particles.empty()) {
 
@@ -78,6 +89,11 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 		}
 
 	}
+	case FLAMESHOT:
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[FLAMESHOT]->addParticle(origin, { 1,1,1,1 });
+		}
+		break;
 	break;
 	}
 }
