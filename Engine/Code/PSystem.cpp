@@ -49,7 +49,6 @@ void PSystem::reset(_vec3 position, _vec3 center, _vec3 extents, D3DXCOLOR color
 void PSystem::addParticle(_vec3 position, D3DXCOLOR color)
 {
 	Attribute attribute;
-	//attribute._position = position;
 	resetParticle(&attribute, color);
 	_particles.push_back(attribute);
 }
