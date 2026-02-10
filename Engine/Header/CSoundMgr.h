@@ -31,8 +31,10 @@ private:
 	virtual ~CSoundMgr();
 
 public:
+	FMOD_SYSTEM* Get_System() const { return m_pSystem; }
+
+public:
 	HRESULT Ready_SoundMgr();
-	void Update_SoundMgr();
 
 public:
 	void PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float fVolume);
@@ -43,12 +45,8 @@ public:
 	void SetChannelVolume(CHANNELID eID, float fVolume);
 
 private:
-	void LoadSoundFile();
 
 private:
-	// 사운드 리소스 정보를 갖는 객체 
-	map<const std::wstring, FMOD_SOUND*> m_mapSound;
-
 	// FMOD_CHANNEL : 재생하고 있는 사운드를 관리할 객체 
 	FMOD_CHANNEL* m_pChannelArr[MAXCHANNEL];
 

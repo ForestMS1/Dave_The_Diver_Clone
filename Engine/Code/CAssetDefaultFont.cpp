@@ -38,33 +38,44 @@ HRESULT CAssetDefaultFont::Load()
 	if (FAILED(D3DXCreateFontIndirect(pGraphicDev, &tFont_Desc, &m_pFont)))
 	{
 		m_eAssetState = LOADFAIL;
-		MSG_BOX("CAssetDefaultFont Font Create Failed");
+		wstring msg = L"CAssetDefaultFont Font Create Failed, Path: " + m_sAssetPath;
+		MSG_BOX_STR(msg.c_str());
 		return E_FAIL;
 	}
 
 	if (FAILED(D3DXCreateSprite(pGraphicDev, &m_pSprite)))
 	{
 		m_eAssetState = LOADFAIL;
-		MSG_BOX("CAssetDefaultFont Sprite Create Failed");
+		wstring msg = L"CAssetDefaultFont Sprite Create Failed, Path: " + m_sAssetPath;
+		MSG_BOX_STR(msg.c_str());
 		return E_FAIL;
 	}
 	m_eAssetState = LOADED;
+
 	return S_OK;
 }
 
 void CAssetDefaultFont::Render_Font(std::wstring_view svString, const _vec2* pPos, D3DXCOLOR Color)
 {
-	RECT rc{ (_long)pPos->x, (_long)pPos->y };
+	if (m_pSprite != nullptr && m_pFont != nullptr)
+	{
+		RECT rc{ (_long)pPos->x, (_long)pPos->y };
 
-	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
+		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_pFont->DrawTextW(m_pSprite, svString.data(), lstrlen(svString.data()), &rc, DT_NOCLIP, Color);
+		m_pFont->DrawTextW(m_pSprite, svString.data(), lstrlen(svString.data()), &rc, DT_NOCLIP, Color);
 
-	m_pSprite->End();
+		m_pSprite->End();
+	}
 }
 
 HRESULT CAssetDefaultFont::Unload()
 {
+	// TODO: FIXME 이거왜 오류나는지?
+	// DEVICE LOST 되면 지워야다시 만들어야한다는데 그거 안해서 그런가??
+	//Safe_Release(m_pSprite);
+	//Safe_Release(m_pFont);
+	m_eAssetState = UNLOAD;
 	return S_OK;
 }
 
@@ -75,5 +86,6 @@ CAssetDefaultFont* CAssetDefaultFont::Create(std::wstring_view svFontType, const
 
 void CAssetDefaultFont::Free()
 {
+	Unload();
 	CAsset::Free();
 }

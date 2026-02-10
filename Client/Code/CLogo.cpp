@@ -112,13 +112,13 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		if (ImGui::Button(utf8Buf))
 		{
 			CLog::Debug(L"Clicked!1\n");
-			CSoundMgr::GetInstance()->PlaySoundOne(L"TADA.mp3", CSoundMgr::SFX, 1.f);
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_TADA", CSoundMgr::SFX, 1.f);
 		}
 			
 		if (ImGui::Button("BGM"))
 		{
 			CLog::Debug(L"Clicked!2\n");
-			CSoundMgr::GetInstance()->PlaySoundLoop(L"Success.wav", CSoundMgr::BGM, 1.f);
+			CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Success", CSoundMgr::BGM, 1.f);
 		}	
 		ImGui::End();
 	}
