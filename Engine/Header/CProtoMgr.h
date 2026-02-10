@@ -6,7 +6,7 @@
 #include "CTerrainTex.h"
 #include "CCubeCol.h"
 #include "CCubeTex.h"
-#include "CMapTerrainTex.h"
+
 #include "CTransform.h"
 #include "CTexture.h"
 #include "CCalculator.h"

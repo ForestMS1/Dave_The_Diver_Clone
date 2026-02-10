@@ -64,12 +64,6 @@
     <Filter Include="02. GameObject\08. TestCube">
       <UniqueIdentifier>{db86e52a-564b-4716-af24-bb9082502a67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\04. MapEditor">
-      <UniqueIdentifier>{3d172c9f-9955-410f-9983-ed3de2f1d499}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\08. MapEditor">
-      <UniqueIdentifier>{b46c6287-9b81-4c68-938b-1df887d5fd11}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -132,15 +126,6 @@
     <ClInclude Include="..\Header\CTestCube.h">
       <Filter>02. GameObject\08. TestCube</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMapEditor.h">
-      <Filter>01. Scene\04. MapEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMapEditorTerrain.h">
-      <Filter>02. GameObject\08. MapEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMiniMapTerrain.h">
-      <Filter>02. GameObject\08. MapEditor</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -193,15 +178,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestCube.cpp">
       <Filter>02. GameObject\08. TestCube</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapEditor.cpp">
-      <Filter>01. Scene\04. MapEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapEditorTerrain.cpp">
-      <Filter>02. GameObject\08. MapEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMiniMapTerrain.cpp">
-      <Filter>02. GameObject\08. MapEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

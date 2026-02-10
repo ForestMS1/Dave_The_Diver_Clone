@@ -208,17 +208,8 @@
     <Filter Include="02. Component\00. VIBuffer\Frustrum">
       <UniqueIdentifier>{951f1250-7b9f-4744-8f23-e1a1b3396f13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Room">
-      <UniqueIdentifier>{477b186a-46df-4bae-81bb-96b1639df71f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Component\00. VIBuffer\05. MapEditorTerrain">
-      <UniqueIdentifier>{f613e8aa-cffc-4edc-9940-72fca5259f49}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Structure\02. GameObject\Lay">
       <UniqueIdentifier>{1dbbe337-0754-4b97-af1d-3a6a1d3355c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Manager\16. MapManager">
-      <UniqueIdentifier>{88bc9017-0798-44a5-a06b-607b602e66ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -441,12 +432,6 @@
     <ClCompile Include="..\Code\CFrustrum.cpp">
       <Filter>02. Component\00. VIBuffer\Frustrum</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CRoom.cpp">
-      <Filter>03. Room</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapTerrainTex.cpp">
-      <Filter>02. Component\00. VIBuffer\05. MapEditorTerrain</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CLay.cpp">
       <Filter>01. Structure\02. GameObject\Lay</Filter>
     </ClCompile>
@@ -455,9 +440,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapMgr.cpp">
-      <Filter>00. Manager\16. MapManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -661,12 +643,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CFrustrum.h">
       <Filter>02. Component\00. VIBuffer\Frustrum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CRoom.h">
-      <Filter>03. Room</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMapTerrainTex.h">
-      <Filter>02. Component\00. VIBuffer\05. MapEditorTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CLay.h">
       <Filter>01. Structure\02. GameObject\Lay</Filter>

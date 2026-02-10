@@ -6,7 +6,6 @@
 #include "CManagement.h"
 
 #include "CLogo.h"
-#include "CMapEditor.h"
 
 
 //namespace Engine
