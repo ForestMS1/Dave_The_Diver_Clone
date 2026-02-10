@@ -21,7 +21,7 @@ CWeather::~CWeather()
 HRESULT CWeather::Ready_Buffer()
 {
 
-	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/white.png", 1))) {
+	if (FAILED(Ready_Texture(L"Tex_Weather", L"../Bin/Resource/Texture/white", 1))) {
 		return E_FAIL;
 	}
 
@@ -36,7 +36,7 @@ HRESULT CWeather::Ready_Buffer()
 void CWeather::render()
 {
 	if (Spawning) {
-		Set_Texture(0);
+		Set_Texture(L"Tex_Weather",0);
 		preRender();
 		PSystem::render();
 		postRender();

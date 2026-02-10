@@ -27,7 +27,7 @@ Firework::~Firework()
 HRESULT Firework::Ready_Buffer()
 {
 
-	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/flare.bmp", 1))) {
+	if (FAILED(Ready_Texture(L"Tex_Firework", L"../Bin/Resource/Texture/flare", 1))) {
 		return E_FAIL;
 	}
 
@@ -40,7 +40,7 @@ HRESULT Firework::Ready_Buffer()
 
 void Firework::render()
 {
-	Set_Texture(0);
+	Set_Texture(L"Tex_Firework",0);
 	preRender();
 	PSystem::render();
 	postRender();

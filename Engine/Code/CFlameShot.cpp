@@ -19,7 +19,7 @@ CFlameShot::~CFlameShot()
 HRESULT CFlameShot::Ready_Buffer()
 {
 
-	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/white.png", 1))) {
+	if (FAILED(Ready_Texture(L"Tex_Flame", L"../Bin/Resource/Texture/white", 1))) {
 		return E_FAIL;
 	}
 
@@ -89,7 +89,7 @@ void CFlameShot::resetParticle(Attribute* attribute, D3DXCOLOR color)
 void CFlameShot::render()
 {
 
-	Set_Texture(0);
+	Set_Texture(L"Tex_Flame",0);
 	preRender();
 	PSystem::render();
 	postRender();

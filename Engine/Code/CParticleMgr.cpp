@@ -4,6 +4,7 @@
 #include "CBullet.h"
 #include "CWeather.h"
 #include "CFlameShot.h"
+#include "CAssetMgr.h"
 
 
 IMPLEMENT_SINGLETON(CParticleMgr)
@@ -27,6 +28,7 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 	particles.push_back(spark);
 	CWeather* weather = CWeather::Create(500);
 	particles.push_back(weather);
+	//CAssetMgr::GetInstance()->LoadAsset();
 	return S_OK;
 }
 

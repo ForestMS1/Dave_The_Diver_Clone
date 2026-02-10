@@ -24,7 +24,7 @@ CBullet::~CBullet()
 HRESULT CBullet::Ready_Buffer()
 {
 
-	if (FAILED(Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/sprBullet_0.png", 1))) {
+	if (FAILED(Ready_Texture(L"Tex_Bullet", L"../Bin/Resource/Texture/sprBullet_", 1))) {
 		return E_FAIL;
 	}
 
@@ -73,7 +73,8 @@ void CBullet::render()
 
 	
 	// ½ÇÁ¦ ÃÑ¾Ë ·»´õ¸µ
-	Set_Texture(0);
+	Set_Texture(L"Tex_Bullet", 0);
+
 	PSystem::render();
 
 

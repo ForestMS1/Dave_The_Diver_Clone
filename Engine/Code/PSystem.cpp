@@ -1,5 +1,8 @@
 #include "PSystem.h"
 #include "CGraphicDev.h"
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
+#include "CAssetCubeTexture.h"
 
 
 
@@ -186,37 +189,50 @@ void PSystem::GetRandomVector(D3DXVECTOR3* out, D3DXVECTOR3* min, D3DXVECTOR3* m
 
 
 
-HRESULT PSystem::Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt)
+//HRESULT PSystem::Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt)
+//{
+//	m_vecTexture.reserve(iCnt);
+//
+//	IDirect3DBaseTexture9* pTexture = nullptr;
+//
+//	for (_uint i = 0; i < iCnt; ++i)
+//	{
+//		TCHAR szFileName[128] = L"";
+//
+//		wsprintf(szFileName, pPath, i);
+//
+//		switch (eID)
+//		{
+//		case TEX_NORMAL:
+//
+//			if (FAILED(D3DXCreateTextureFromFile(_device, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture)))
+//				return E_FAIL;
+//
+//			break;
+//
+//		case TEX_CUBE:
+//
+//			if (FAILED(D3DXCreateCubeTextureFromFile(_device, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture)))
+//				return E_FAIL;
+//
+//			break;
+//		}
+//
+//		m_vecTexture.push_back(pTexture);
+//	}
+//	return S_OK;
+//}
+
+HRESULT PSystem::Ready_Texture(std::wstring_view svLayerTag, std::wstring_view svPath, const _uint& iCnt)
 {
-	m_vecTexture.reserve(iCnt);
 
-	IDirect3DBaseTexture9* pTexture = nullptr;
-
-	for (_uint i = 0; i < iCnt; ++i)
+	for (int i = 0; i < iCnt; ++i)
 	{
-		TCHAR szFileName[128] = L"";
-
-		wsprintf(szFileName, pPath, i);
-
-		switch (eID)
-		{
-		case TEX_NORMAL:
-
-			if (FAILED(D3DXCreateTextureFromFile(_device, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture)))
-				return E_FAIL;
-
-			break;
-
-		case TEX_CUBE:
-
-			if (FAILED(D3DXCreateCubeTextureFromFile(_device, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture)))
-				return E_FAIL;
-
-			break;
-		}
-
-		m_vecTexture.push_back(pTexture);
+		wstring s = std::wstring(svPath) + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(svLayerTag, CAssetTexture::Create(s.c_str()));
 	}
+	CAssetMgr::GetInstance()->LoadAsset();
+
 	return S_OK;
 }
 
@@ -226,6 +242,22 @@ void PSystem::Set_Texture(const _uint& iIndex)
 		return;
 
 	_device->SetTexture(0, m_vecTexture[iIndex]);
+}
+
+
+void PSystem::Set_Texture(std::wstring_view svLayerTag,const _uint& iIndex)
+{
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	if (auto pAssTex = dynamic_cast<CAssetTexture*>((*CAssetMgr::GetInstance()->Get_Asset(svLayerTag))[iIndex]))
+	{
+		pGraphicDev->SetTexture(0, pAssTex->Get_Texture());
+	}
+	else if (auto pAssTex = dynamic_cast<CAssetCubeTexture*>((*CAssetMgr::GetInstance()->Get_Asset(svLayerTag))[iIndex]))
+	{
+		pGraphicDev->SetTexture(0, pAssTex->Get_CubeTexture());
+	}
+	
 }
 
 void PSystem::Free()
