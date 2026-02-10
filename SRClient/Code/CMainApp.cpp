@@ -9,6 +9,8 @@
 #include "CInfoMgr.h"
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetDefaultFont.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -92,12 +94,15 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	// ÆùÆ® Ãß°¡
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"¹ÙÅÁ", 15, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Jinji", CAssetDefaultFont::Create(L"±Ã¼­", 15, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Jinji");
+	//if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY)))
+	//	return E_FAIL;
 
-	if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY)))
-		return E_FAIL;
-
-	if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY)))
-		return E_FAIL;
+	//if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY)))
+	//	return E_FAIL;
 
 	// Dinput
 

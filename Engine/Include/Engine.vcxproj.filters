@@ -426,7 +426,7 @@
     <ClCompile Include="..\Code\CAssetCubeTexture.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\03. CubeTexture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CAssetFont.cpp">
+    <ClCompile Include="..\Code\CAssetDefaultFont.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
     </ClCompile>
   </ItemGroup>
@@ -635,7 +635,7 @@
     <ClInclude Include="..\Header\CAssetCubeTexture.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\03. CubeTexture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CAssetFont.h">
+    <ClInclude Include="..\Header\CAssetDefaultFont.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
     </ClInclude>
   </ItemGroup>
