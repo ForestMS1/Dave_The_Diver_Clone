@@ -28,6 +28,9 @@ public:
 	map<const std::wstring, vector<CAsset*>>* const Get_Asset() { return &m_AssetMap; };
 	vector<CAsset*>* const Get_Asset(std::wstring_view svLayerTag) { return Find_AssetLayer(svLayerTag); };
 
+	template<typename T>
+	T* const Get_AssetFirst(std::wstring_view svLayerTag) { return dynamic_cast<T*>(Find_AssetLayer(svLayerTag)->at(0)); };
+
 private:
 	vector<CAsset*>* Find_AssetLayer(std::wstring_view svLayerTag);
 

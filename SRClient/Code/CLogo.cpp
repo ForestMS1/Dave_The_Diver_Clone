@@ -9,6 +9,7 @@
 #include "CHelper.h"
 #include "CAssetTexture.h"
 #include "CAssetMgr.h"
+#include "CAssetDefaultFont.h"
 
 CLogo::CLogo()
 	: CScene(), m_pLoading(NULL)
@@ -62,7 +63,10 @@ void CLogo::Render_Scene()
 
 	_vec2	vPos{ 0.f, 0.f };
 
-	CFontMgr::GetInstance()->Render_Font(L"Font_Default", m_pLoading->Get_String(), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	//CFontMgr::GetInstance()->Render_Font(L"Font_Default", m_pLoading->Get_String(), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Jinji");
+	pDefFont->Render_Font(m_pLoading->Get_String(), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 }
 
