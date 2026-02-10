@@ -49,7 +49,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 	{
 		if (GetAsyncKeyState(VK_RETURN))
 		{
-			Engine::CScene* pStage = CMapEditor::Create();
+			Engine::CScene* pStage = CStage::Create();
 
 			if (nullptr == pStage)
 				return -1;

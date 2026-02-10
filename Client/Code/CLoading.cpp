@@ -149,31 +149,31 @@ _uint CLoading::Loading_MapEditor()
 
     {
         m_sLoading = L"Texture Loading.....................................";
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Tile0.jpg", 1))))
-            return E_FAIL;
-        // Floor
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Tile0.jpg", 1))))
+        //    return E_FAIL;
+        //// Floor
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_A_FloorBelt", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/A_FloorBelt%d.png", 4))))
-            return E_FAIL;
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_A_FloorBelt", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/A_FloorBelt%d.png", 4))))
+        //    return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_A_FloorBeltCorner", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/A_FloorBeltCorner%d.png", 4))))
-            return E_FAIL;
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_A_FloorBeltCorner", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/A_FloorBeltCorner%d.png", 4))))
+        //    return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_A_FloorBlood", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/A_FloorBlood%d.png", 4))))
-            return E_FAIL;
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_A_FloorBlood", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/A_FloorBlood%d.png", 4))))
+        //    return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_FloorBomb", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/FloorBomb.png", 1))))
-            return E_FAIL;
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_FloorBomb", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/FloorBomb.png", 1))))
+        //    return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_FloorCrate", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/FloorCrate.png", 1))))
-            return E_FAIL;
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_FloorCrate", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/FloorCrate.png", 1))))
+        //    return E_FAIL;
 
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_FloorCrate0", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/FloorCrate0.png", 1))))
-            return E_FAIL;
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_FloorCrate0", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/FLoor/FloorCrate0.png", 1))))
+        //    return E_FAIL;
 
-        //
-        if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapBlankTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Map/mapBlack%d.png", 3))))
-            return E_FAIL;
+        ////
+        //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MiniMapBlankTexture", Engine::CTexture::Create(TEX_NORMAL, L"../Bin/Resource/Texture/Map/mapBlack%d.png", 3))))
+        //    return E_FAIL;
 
 
     }

@@ -1,3 +1,4 @@
+#include "CMapMgr.h"
 #include "pch.h"
 #include "CMapEditor.h"
 
@@ -74,6 +75,7 @@ HRESULT CMapEditor::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
+	
 	CGameObject* pGameObject = nullptr;
 
 	_vec3	vEye{ 100.f, 250.f, 100.f };
@@ -502,6 +504,7 @@ void CMapEditor::Show_GUI() {
 	
 	}
 }
+
 
 void CMapEditor::PickMiniMap() {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
