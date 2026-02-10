@@ -32,8 +32,10 @@ public:
 		D3DXVECTOR3* max);
 
 public:
-	virtual HRESULT	Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt);
+	//virtual HRESULT	Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt);
+	HRESULT Ready_Texture(std::wstring_view svLayerTag, std::wstring_view svPath, const _uint& iCnt);
 	virtual void		Set_Texture(const _uint& iIndex = 0);
+	void Set_Texture(std::wstring_view svLayerTag, const _uint& iIndex);
 	virtual void Free();
 
 protected:

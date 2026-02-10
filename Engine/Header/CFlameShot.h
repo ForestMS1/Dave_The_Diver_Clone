@@ -4,29 +4,27 @@
 #include "CCamera.h"
 BEGIN(Engine)
 
-class ENGINE_DLL CBullet : public PSystem
+class ENGINE_DLL CFlameShot : public PSystem
 {
 public:
-	explicit CBullet(CCamera* camera);
-	virtual ~CBullet();
+	explicit CFlameShot(CCamera* camera);
+	virtual ~CFlameShot();
 
 public:
 	virtual		HRESULT		Ready_Buffer();
 	virtual		void		render();
 
 public:
-	static CBullet* Create(CCamera* camera);
+	static CFlameShot* Create(CCamera* camera);
 
 	void resetParticle(Attribute* attribute, D3DXCOLOR color);
 	void preRender();
 	void postRender();
 	void update(float fTimeDelta) override;
 	virtual void	Free();
-	D3DXVECTOR3 corners[8];
-	_matrix matWorld, matView, matProj, matFinal;
 
 private:
-	CCamera * m_pCamera;
+	CCamera* m_pCamera;
 };
 
 END
