@@ -35,6 +35,33 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
     return S_OK;
 }
 
+void CLoading::LoadAsset()
+{
+
+    // 기존 로드하던 에셋들
+    {
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_Player", CAssetTexture::Create(L"../Bin/Resource/Texture/Player/Ma.jpg"));
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_Terrain0", CAssetTexture::Create(L"../Bin/Resource/Texture/Terrain/Terrain0.png"));
+        for (int i = 0; i < 2; ++i)
+        {
+            wstring s = L"../Bin/Resource/Texture/Terrain/Grass_" + ::to_wstring(i) + L".tga";
+            CAssetMgr::GetInstance()->AddAsset(L"Tex_TerrainGrass", CAssetTexture::Create(s.c_str()));
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            wstring s = L"../Bin/Resource/Texture/SkyBox/burger" + ::to_wstring(i) + L".dds";
+            CAssetMgr::GetInstance()->AddAsset(L"Tex_Burger", CAssetCubeTexture::Create(s.c_str()));
+        }
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_160", CAssetCubeTexture::Create(L"../Bin/Resource/Texture/160.dds"));
+        for (int i = 0; i < 90; ++i)
+        {
+            wstring s = L"../Bin/Resource/Texture/Explosion/Explosion" + ::to_wstring(i) + L".png";
+            CAssetMgr::GetInstance()->AddAsset(L"Tex_Explosion", CAssetTexture::Create(s.c_str()));
+        }
+    }
+    CAssetMgr::GetInstance()->LoadAsset();
+}
+
 _uint CLoading::Loading_Stage()
 {
     // lstrcpy(m_szLoading, L"Buffer Loading.....................................");
@@ -59,28 +86,6 @@ _uint CLoading::Loading_Stage()
 
 
 
-    // 기존 로드하던 에셋들
-    {
-        CAssetMgr::GetInstance()->AddAsset(L"Tex_Player", CAssetTexture::Create(L"../Bin/Resource/Texture/Player/Ma.jpg"));
-        CAssetMgr::GetInstance()->AddAsset(L"Tex_Terrain0", CAssetTexture::Create(L"../Bin/Resource/Texture/Terrain/Terrain0.png"));
-        for (int i = 0; i < 2; ++i)
-        {
-            wstring s = L"../Bin/Resource/Texture/Terrain/Grass_" + ::to_wstring(i) + L".tga";
-            CAssetMgr::GetInstance()->AddAsset(L"Tex_TerrainGrass", CAssetTexture::Create(s.c_str()));
-        }
-        for (int i = 0; i < 4; ++i)
-        {
-            wstring s = L"../Bin/Resource/Texture/SkyBox/burger" + ::to_wstring(i) + L".dds";
-            CAssetMgr::GetInstance()->AddAsset(L"Tex_Burger", CAssetCubeTexture::Create(s.c_str()));
-        }
-        CAssetMgr::GetInstance()->AddAsset(L"Tex_160", CAssetCubeTexture::Create(L"../Bin/Resource/Texture/160.dds"));
-        for (int i = 0; i < 90; ++i)
-        {
-            wstring s = L"../Bin/Resource/Texture/Explosion/Explosion" + ::to_wstring(i) + L".png";
-            CAssetMgr::GetInstance()->AddAsset(L"Tex_Explosion", CAssetTexture::Create(s.c_str()));
-        }
-    }
-    CAssetMgr::GetInstance()->LoadAsset();
 
     //lstrcpy(m_szLoading, L"Texture Loading.....................................");
     m_sLoading = L"Texture Loading.....................................";
@@ -205,6 +210,8 @@ unsigned int CLoading::Thread_Main(void* pArg)
     int iFlag(0);
 
     EnterCriticalSection(pLoading->Get_Crt());
+
+    pLoading->LoadAsset();
 
     switch (pLoading->Get_LoadingID())
     {

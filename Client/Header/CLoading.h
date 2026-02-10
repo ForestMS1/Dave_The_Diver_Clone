@@ -28,6 +28,9 @@ public:
 public:
 	static unsigned int CALLBACK Thread_Main(void* pArg);
 
+public:
+	void LoadAsset();
+
 
 private:
 	std::wstring				m_sLoading;

@@ -222,7 +222,7 @@ HRESULT	CPlayerTestScene::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 HRESULT	 CPlayerTestScene::Ready_Light()
 {
-	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 	D3DLIGHT9	tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
