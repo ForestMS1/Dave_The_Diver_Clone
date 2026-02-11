@@ -1,5 +1,5 @@
 #include "CUIMgr.h"
-#include <yoga/Yoga.h>
+//#include <yoga/Yoga.h>
 #include "CGraphicDev.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
@@ -36,6 +36,7 @@ HRESULT CUIMgr::Ready()
 }
 void CUIMgr::Test()
 {
+    /*
     YGConfigRef config = YGConfigNew();
     YGConfigSetUseWebDefaults(config, false);
 
@@ -71,6 +72,8 @@ void CUIMgr::Test()
 
     YGNodeFreeRecursive(root);
     YGConfigFree(config);
+    
+    */
     
 }
 void CUIMgr::Render()
