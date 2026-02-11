@@ -86,6 +86,9 @@ _uint CLoading::Loading_Stage()
         CAssetMgr::GetInstance()->AddAsset(L"Sound_Success", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Success.wav"));
 
         CAssetMgr::GetInstance()->AddAsset(L"Fbx_Dancing", CAssetFbx::Create(L"../Bin/Resource/Fbx/Dancing.fbx"));
+
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_Button", CAssetTexture::Create(L"../Bin/Resource/Texture/Button.png"));
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_White1PX", CAssetTexture::Create(L"../Bin/Resource/Texture/White1PX.png"));
     }
     CAssetMgr::GetInstance()->LoadAsset();
 

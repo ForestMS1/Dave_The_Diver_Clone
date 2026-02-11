@@ -15,6 +15,7 @@
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
 #include "CAssetFmodSound.h"
+#include "CUIMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -39,6 +40,8 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
+
+	CUIMgr::GetInstance()->Ready();
 
 	return S_OK;
 }
@@ -159,6 +162,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 
+	CUIMgr::GetInstance()->DestroyInstance();
 	CColliderMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();

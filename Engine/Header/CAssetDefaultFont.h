@@ -18,6 +18,9 @@ private:
 	virtual ~CAssetDefaultFont();
 
 public:
+	LPD3DXFONT Get_Font() const { return m_pFont ; }
+
+public:
 	HRESULT Load() override;
 	HRESULT Unload() override;
 

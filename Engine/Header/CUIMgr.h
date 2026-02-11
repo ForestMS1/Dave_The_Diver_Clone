@@ -12,6 +12,14 @@ private:
 	explicit CUIMgr();
 	virtual ~CUIMgr();
 
+public:
+	HRESULT Ready();
+	void Test();
+
+	void Render();
+
+private:
+	LPD3DXSPRITE				m_pSprite;
 
 private:
 	virtual void		Free();
