@@ -85,7 +85,6 @@ _uint CLoading::Loading_Stage()
         CAssetMgr::GetInstance()->AddAsset(L"Sound_TADA", CAssetFmodSound::Create(L"../Bin/Resource/Sound/TADA.mp3"));
         CAssetMgr::GetInstance()->AddAsset(L"Sound_Success", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Success.wav"));
 
-        ;
         CAssetMgr::GetInstance()->AddAsset(L"Fbx_Dancing", CAssetFbx::Create(L"../Bin/Resource/Fbx/Dancing.fbx"));
     }
     CAssetMgr::GetInstance()->LoadAsset();
@@ -124,7 +123,7 @@ _uint CLoading::Loading_Stage()
          return E_FAIL;
 
      //lstrcpy(m_szLoading, L"Loading Complete !!!!");
-     m_sLoading = L"Loading Complete !!!!";
+     m_sLoading = L"Loading Complete !!!! 컴프리트";
 
      m_bFinish = true;     
 

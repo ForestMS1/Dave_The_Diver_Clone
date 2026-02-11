@@ -10,6 +10,11 @@ private:
 		const _uint& iWidth,
 		const _uint& iHeight,
 		const _uint& iWeight);
+	explicit CAssetDefaultFont(std::wstring_view svPath, 
+		std::wstring_view svFontType,
+		const _uint& iWidth,
+		const _uint& iHeight,
+		const _uint& iWeight);
 	virtual ~CAssetDefaultFont();
 
 public:
@@ -21,6 +26,12 @@ public:
 
 public:
 	static CAssetDefaultFont* Create(std::wstring_view svFontType,
+		const _uint& iWidth,
+		const _uint& iHeight,
+		const _uint& iWeight);
+
+	static CAssetDefaultFont* Create(std::wstring_view svPath,
+		std::wstring_view svFontType,
 		const _uint& iWidth,
 		const _uint& iHeight,
 		const _uint& iWeight);

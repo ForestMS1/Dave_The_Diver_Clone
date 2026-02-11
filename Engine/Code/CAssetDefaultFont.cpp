@@ -13,7 +13,16 @@ CAssetDefaultFont::CAssetDefaultFont(std::wstring_view svFontType, const _uint& 
 	, m_pFont(nullptr)
 {
 }
-
+CAssetDefaultFont::CAssetDefaultFont(std::wstring_view svPath, std::wstring_view svFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+	: CAsset(svPath)
+	, m_sFontType(svFontType)
+	, m_iWidth(iWidth)
+	, m_iHeight(iHeight)
+	, m_iWeight(iWeight)
+	, m_pSprite(nullptr)
+	, m_pFont(nullptr)
+{
+}
 CAssetDefaultFont::~CAssetDefaultFont()
 {
 }
@@ -21,6 +30,17 @@ CAssetDefaultFont::~CAssetDefaultFont()
 HRESULT CAssetDefaultFont::Load()
 {
 	m_eAssetState = LOADING;
+	if (!m_sAssetPath.empty())
+	{
+		if (0 == AddFontResourceEx(m_sAssetPath.c_str(), FR_PRIVATE, NULL))
+		{
+			m_eAssetState = LOADFAIL;
+			wstring msg = L"CAssetDefaultFont Load Fail, Path: " + m_sAssetPath;
+			MSG_BOX_STR(msg.c_str());
+			return E_FAIL;
+		}
+	}
+
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	D3DXFONT_DESC			tFont_Desc;
 	ZeroMemory(&tFont_Desc, sizeof(D3DXFONT_DESC));
@@ -29,7 +49,8 @@ HRESULT CAssetDefaultFont::Load()
 	_float scaledWidth = m_iWidth * fScaleFactor;
 	_float scaledHeight = m_iHeight * fScaleFactor;
 
-	tFont_Desc.CharSet = HANGUL_CHARSET;
+	// 이거 HANGUL_CHARSET 에서 DEFAULT_CHARSET으로 변경함
+	tFont_Desc.CharSet = DEFAULT_CHARSET;
 	tFont_Desc.Width = (UINT)scaledWidth;
 	tFont_Desc.Height = (UINT)scaledHeight;
 	tFont_Desc.Weight = m_iWeight;
@@ -75,6 +96,18 @@ HRESULT CAssetDefaultFont::Unload()
 	// DEVICE LOST 되면 지워야다시 만들어야한다는데 그거 안해서 그런가??
 	//Safe_Release(m_pSprite);
 	//Safe_Release(m_pFont);
+	
+	if (!m_sAssetPath.empty())
+	{
+		RemoveFontResourceEx(m_sAssetPath.c_str(), FR_PRIVATE, NULL);
+		//if (FAILED(AddFontResourceEx(m_sAssetPath.c_str(), FR_NOT_ENUM, NULL)))
+		//{
+		//	m_eAssetState = LOADFAIL;
+		//	wstring msg = L"CAssetDefaultFont Load Fail, Path: " + m_sAssetPath;
+		//	MSG_BOX_STR(msg.c_str());
+		//	return E_FAIL;
+		//}
+	}
 	m_eAssetState = UNLOAD;
 	return S_OK;
 }
@@ -82,6 +115,11 @@ HRESULT CAssetDefaultFont::Unload()
 CAssetDefaultFont* CAssetDefaultFont::Create(std::wstring_view svFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	return new CAssetDefaultFont{ svFontType, iWidth, iHeight, iWeight };
+}
+
+CAssetDefaultFont* CAssetDefaultFont::Create(std::wstring_view svPath, std::wstring_view svFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
+{
+	return new CAssetDefaultFont{ svPath,  svFontType, iWidth, iHeight, iWeight };
 }
 
 void CAssetDefaultFont::Free()
