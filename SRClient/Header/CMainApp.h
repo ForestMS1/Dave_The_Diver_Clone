@@ -33,6 +33,9 @@ private:
 	HRESULT			Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT			Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
 
+private:
+	HRESULT Load_PermanentAsset();
+
 
 private:
 	Engine::CGraphicDev* m_pDeviceClass;
@@ -42,6 +45,8 @@ private:
 public:
 	// 생성 함수
 	static CMainApp* Create();
+
+	
 
 	// 소멸 함수
 	virtual void			Free();

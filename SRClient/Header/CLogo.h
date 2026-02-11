@@ -1,6 +1,5 @@
 #pragma once
 #include "CScene.h"
-#include "CLoading.h"
 
 class CLogo :   public CScene
 {
@@ -18,12 +17,6 @@ private:
 	HRESULT			Ready_Environment_Layer(std::wstring_view svLayerTag);
 	HRESULT			Ready_GameLogic_Layer(std::wstring_view svLayerTag) { return S_OK; }
 	HRESULT			Ready_UI_Layer(std::wstring_view svLayerTag)			{ return S_OK; }
-
-private:
-	HRESULT			Ready_Prototype();
-
-private:
-	CLoading* m_pLoading;
 
 public:
 	static CLogo* Create();
