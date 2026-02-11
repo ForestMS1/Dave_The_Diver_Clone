@@ -18,6 +18,13 @@ protected:
 	virtual ~CTransition();
 
 public:
+	pair<std::wstring, map<const std::wstring, CLayer*>> Before_SceneChange() override;
+	void After_SceneChange(const pair<std::wstring, map<const std::wstring, CLayer*>>& transfer) override;
+
+private:
+	pair < std::wstring, map<const std::wstring, CLayer*>> m_reserveTransfer;
+
+public:
 	SCENE_ID Get_SrcScene() const { return m_eSrcScene; }
 	SCENE_ID Get_DstScene() const { return m_eDstScene; }
 

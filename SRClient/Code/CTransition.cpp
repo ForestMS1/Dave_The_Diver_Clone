@@ -14,11 +14,22 @@ CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	, m_bFinish(false)
 	, m_Crt({})
 	, m_hThread(nullptr)
+	, m_reserveTransfer({})
 {
 }
 
 CTransition::~CTransition()
 {
+}
+
+pair<std::wstring, map<const std::wstring, CLayer*>> CTransition::Before_SceneChange()
+{
+	return m_reserveTransfer;
+}
+
+void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstring, CLayer*>>& transfer)
+{
+	m_reserveTransfer = transfer;
 }
 
 	
