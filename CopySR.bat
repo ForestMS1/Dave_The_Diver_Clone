@@ -17,3 +17,4 @@ xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\GraphEditor.h		.\Referen
 xcopy				/y/I/E			.\Engine\ThirdParty\nlohmann_3.12.0\include					.\Reference\Header\
 
 xcopy				/y/I			.\Engine\ThirdParty\fmod\lib\x64\fmod.dll	.\SRClient\Bin\
+xcopy				/y/I			.\Engine\ThirdParty\assimp_6.0.4\lib\assimp-vc143-mt.dll 		.\SRClient\Bin\

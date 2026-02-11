@@ -73,14 +73,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(ProjectDir)..\ThirdParty\assimp_6.0.4\lib;$(LibraryPath)</LibraryPath>
     <OutDir>../Bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(ProjectDir)..\ThirdParty\assimp_6.0.4\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,7 +126,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>cd /d $(SolutionDir)
@@ -151,7 +151,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>cd /d $(SolutionDir)
@@ -164,6 +164,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAsset.h" />
     <ClInclude Include="..\Header\CAssetCubeTexture.h" />
     <ClInclude Include="..\Header\CAssetDefaultFont.h" />
+    <ClInclude Include="..\Header\CAssetFbx.h" />
     <ClInclude Include="..\Header\CAssetFmodSound.h" />
     <ClInclude Include="..\Header\CAssetMgr.h" />
     <ClInclude Include="..\Header\CAssetTexture.h" />
@@ -236,6 +237,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAsset.cpp" />
     <ClCompile Include="..\Code\CAssetCubeTexture.cpp" />
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp" />
+    <ClCompile Include="..\Code\CAssetFbx.cpp" />
     <ClCompile Include="..\Code\CAssetFmodSound.cpp" />
     <ClCompile Include="..\Code\CAssetMgr.cpp" />
     <ClCompile Include="..\Code\CAssetTexture.cpp" />
