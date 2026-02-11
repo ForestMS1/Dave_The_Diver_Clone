@@ -229,6 +229,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CTimerMgr.h" />
     <ClInclude Include="..\Header\Firework.h" />
     <ClInclude Include="..\Header\PSystem.h" />
+    <ClInclude Include="CMapMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAABB.cpp" />
@@ -342,6 +343,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
       <IncludeInUnityFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IncludeInUnityFile>
       <IncludeInUnityFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IncludeInUnityFile>
     </ClCompile>
+    <ClCompile Include="CMapMgr.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
