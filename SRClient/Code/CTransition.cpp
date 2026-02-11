@@ -36,12 +36,7 @@ void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstr
 
 HRESULT CTransition::Transition_INIT_TO_LOGO()
 {
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create())))
-		return E_FAIL;
-
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create())))
-		return E_FAIL;
-
+	
 
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
@@ -55,6 +50,10 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 HRESULT CTransition::Transition_LOGO_TO_SHIP()
 {
+
+
+
+
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
 #ifdef _DEBUG
 	Sleep(500);

@@ -31,6 +31,8 @@ public:
 	CRITICAL_SECTION* Get_Crt() { return &m_Crt; }
 
 public:
+	// init으로 올일이 없으니 이 전환 과정에서
+	// 로드되는 에셋 프로토타입들은 계속 사용되는 애들이다.
 	HRESULT Transition_INIT_TO_LOGO();
 	HRESULT Transition_LOGO_TO_SHIP();
 	HRESULT Transition_SHIP_TO_LOGO();
