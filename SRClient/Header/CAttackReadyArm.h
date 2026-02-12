@@ -17,6 +17,7 @@ public:
 
 private:
 	HRESULT Ready_Component();
+	void	Set_ParentTransform();
 	void	Rotate_ToMouse();
 
 private:

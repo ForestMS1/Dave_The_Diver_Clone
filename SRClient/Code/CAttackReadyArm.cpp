@@ -38,14 +38,9 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-	_vec3 vParentPos;
-	m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
-	_vec3 vOffSet = { 0.f, 0.4f, 0.f };
-	vOffSet.y *= m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
-	vParentPos += vOffSet;
-	m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
-	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
+	Set_ParentTransform();
 	Rotate_ToMouse();
+	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 	return iExit;
 }
 
@@ -90,27 +85,39 @@ HRESULT CAttackReadyArm::Ready_Component()
 	return S_OK;
 }
 
+void CAttackReadyArm::Set_ParentTransform()
+{
+	_vec3 vParentPos;
+	m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+	_vec3 vOffSet = { 0.f, 0.4f, 0.f };
+	vOffSet.y *= m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
+	vParentPos += vOffSet;
+	m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
+}
+
 void CAttackReadyArm::Rotate_ToMouse()
 {
-	_vec3 vRayPos, vRayDir;
-	CHelper::GetMousePointRay(&vRayPos, &vRayDir);
+	_vec3 vMousePos, vPlayerPos;
 
-	if (vRayDir.x <= 0.f)
-	{
-		_vec3 vRotateDir = { 0.f, -180.f, 0.f };
-		m_pTransformCom->m_vAngle.x = vRotateDir.x;
-		m_pTransformCom->m_vAngle.y = vRotateDir.y;
-		m_pTransformCom->m_vAngle.z = vRotateDir.z;
-	}
+	CHelper::GetMousePointInWorld(&vMousePos);
+	m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+
+	_vec3 vDir = vMousePos - vPlayerPos;
+
+	float fLengthSq = vDir.x * vDir.x + vDir.y * vDir.y;
+
+	// 너무 가까우면 회전 유지
+	if (fLengthSq < 0.001f)
+		return;
+
+	float fDegree = D3DXToDegree(atan2f(vDir.y, vDir.x));
+
+	if (vDir.x < 0.f)
+		m_pTransformCom->m_vAngle.x = 180.f;
 	else
-	{
-		_vec3 vRotateDir = { 0.f, 0.f, 0.f };
-		m_pTransformCom->m_vAngle.x = vRotateDir.x;
-		m_pTransformCom->m_vAngle.y = vRotateDir.y;
-		m_pTransformCom->m_vAngle.z = vRotateDir.z;
-	}
+		m_pTransformCom->m_vAngle.x = 0.f;
 
-	//m_pTransformCom->Rotation(ROT_Z, 30.f);
+	m_pTransformCom->m_vAngle.z = fDegree;
 }
 
 CAttackReadyArm* CAttackReadyArm::Create()
