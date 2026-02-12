@@ -8,7 +8,7 @@ namespace Engine
 	class CCalculator;
 }
 
-class CPlayerState;
+class Engine::CPlayerState;
 
 enum class PlayerState 
 {
@@ -48,9 +48,9 @@ private:
 	Engine::CCalculator* m_pCalculatorCom;
 
 private:
-	CPlayerState* m_pState = nullptr;
+	Engine::CPlayerState* m_pState = nullptr;
 	PlayerState m_eCurState;
-	unordered_map<PlayerState, CPlayerState*> m_mapState;
+	unordered_map<PlayerState, Engine::CPlayerState*> m_mapState;
 
 public:
 	static CDSPlayer* Create();
