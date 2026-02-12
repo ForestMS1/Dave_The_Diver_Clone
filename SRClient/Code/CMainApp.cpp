@@ -14,6 +14,7 @@
 #include "CColliderMgr.h"
 #include "CCameraMgr.h"
 #include "CTransition.h"
+#include "CGameMemMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -138,7 +139,6 @@ CMainApp* CMainApp::Create()
 		MSG_BOX("MainApp Create Failed");
 		return nullptr;
 	}
-
 	return pInstance;
 }
 
@@ -182,6 +182,7 @@ void CMainApp::Free()
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
+	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();

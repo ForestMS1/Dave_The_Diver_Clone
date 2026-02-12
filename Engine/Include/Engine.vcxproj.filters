@@ -214,6 +214,9 @@
     <Filter Include="00. Manager\16. UIMgr">
       <UniqueIdentifier>{b5464c8b-fba8-405e-ab1c-5ece42a5970d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\17. GameMemMgr">
+      <UniqueIdentifier>{9f0b5fc4-28fb-49df-935b-82bda2a779f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -450,6 +453,9 @@
     <ClCompile Include="..\Code\CUIMgr.cpp">
       <Filter>00. Manager\16. UIMgr</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CGameMemMgr.cpp">
+      <Filter>00. Manager\17. GameMemMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -670,6 +676,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUIMgr.h">
       <Filter>00. Manager\16. UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameMemMgr.h">
+      <Filter>00. Manager\17. GameMemMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
