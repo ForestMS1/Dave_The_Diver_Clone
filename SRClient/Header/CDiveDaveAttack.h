@@ -16,6 +16,9 @@ public:
 	void Exit() override;
 	void Clear() override;
 
+private:
+	void Mouse_Check();
+
 public:
 	static CDiveDaveAttack* Create(CGameObject* pOwner);
 private:

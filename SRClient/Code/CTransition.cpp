@@ -42,7 +42,7 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG
-	Sleep(500);
+	//Sleep(500);
 #endif // DEBUG
 	m_bFinish = true;
 
@@ -57,7 +57,7 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
 #ifdef _DEBUG
-	Sleep(500);
+	//Sleep(500);
 #endif // DEBUG
 	m_bFinish = true;
 
@@ -68,7 +68,7 @@ HRESULT CTransition::Transition_SHIP_TO_LOGO()
 {
 	m_sComment = L"Transition_SHIP_TO_LOGO COMPLETE";
 #ifdef _DEBUG
-	Sleep(500);
+	//Sleep(500);
 #endif // DEBUG
 	m_bFinish = true;
 
@@ -99,6 +99,12 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		s = L"../Bin/Resource/Texture/Dive_Player/Down_Move/MoveDown0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerMoveDown", CAssetTexture::Create(s.c_str()));
 	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Dive_Player/Attack/AttackReady0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackReady", CAssetTexture::Create(s.c_str()));
+	}
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveUp"))))
@@ -111,9 +117,11 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveDownTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveDown"))))
 		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackReadyTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackReady"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG
-	Sleep(500);
+	//Sleep(500);
 #endif // DEBUG
 	m_bFinish = true;
 

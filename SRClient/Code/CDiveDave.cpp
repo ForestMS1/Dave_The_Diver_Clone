@@ -128,6 +128,8 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveDownTexture", L"Com_MoveDownTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackReadyTexture", L"Com_AttackReadyTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// Æ®·£½ºÆû
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))

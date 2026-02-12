@@ -44,6 +44,9 @@ public:
 		m_pTransformCom->m_vAngle.y = vDir->y;
 		m_pTransformCom->m_vAngle.z = vDir->z;
 	}
+
+	void		Get_Pos(_vec3* vPos) { return m_pTransformCom->Get_Info(INFO_POS, vPos); }
+
 	_float		Get_Frame() { return m_fFrame; };
 	void		Init_Frame() { m_fFrame = 0.f; }
 	void		AddFrame(const _float& fTimeDelta, const _float& fSpeed,_uint size);
