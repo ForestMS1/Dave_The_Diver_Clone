@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
+    <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
     <ClInclude Include="..\Header\CDiveDave.h" />
@@ -181,6 +182,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />
     <ClCompile Include="..\Code\CDiveDave.cpp" />

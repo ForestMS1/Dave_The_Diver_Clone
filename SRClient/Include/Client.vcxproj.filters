@@ -46,20 +46,26 @@
     <Filter Include="02. GameObject\DiveDave">
       <UniqueIdentifier>{bc70a9e5-82f4-41b7-bcfe-eb6010122648}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\DiveDave\Idle">
-      <UniqueIdentifier>{c8cb48e1-3e9b-436b-91f5-fa88449b4bb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayerState">
       <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\DiveDave\Move">
-      <UniqueIdentifier>{37a72530-89cd-4d1f-b061-65df3a6a6c38}</UniqueIdentifier>
+    <Filter Include="02. GameObject\DiveDave\State">
+      <UniqueIdentifier>{d5f6e064-9cc8-4bf9-b2c6-1885c523f131}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\DiveDave\Attack">
+    <Filter Include="02. GameObject\DiveDave\State\Attack">
       <UniqueIdentifier>{28ba047b-b188-4b75-a12a-565ed449dbb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\DiveDave\Attack\AttackReadyArm">
+    <Filter Include="02. GameObject\DiveDave\State\Attack\AttackReadyArm">
       <UniqueIdentifier>{40605df8-4673-47c7-a832-b5f9404dec38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Move">
+      <UniqueIdentifier>{37a72530-89cd-4d1f-b061-65df3a6a6c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Idle">
+      <UniqueIdentifier>{c8cb48e1-3e9b-436b-91f5-fa88449b4bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\DiveDaveCam">
+      <UniqueIdentifier>{7a9fe6e0-8171-4e10-a037-1618cd090267}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,19 +112,22 @@
       <Filter>02. GameObject\DiveDave</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDiveDaveIdle.h">
-      <Filter>02. GameObject\DiveDave\Idle</Filter>
+      <Filter>02. GameObject\DiveDave\State\Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CPlayerState.h">
       <Filter>PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDiveDaveMove.h">
-      <Filter>02. GameObject\DiveDave\Move</Filter>
+      <Filter>02. GameObject\DiveDave\State\Move</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDiveDaveAttack.h">
-      <Filter>02. GameObject\DiveDave\Attack</Filter>
+      <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CAttackReadyArm.h">
-      <Filter>02. GameObject\DiveDave\Attack\AttackReadyArm</Filter>
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackReadyArm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveCam.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,19 +165,22 @@
       <Filter>02. GameObject\DiveDave</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp">
-      <Filter>02. GameObject\DiveDave\Idle</Filter>
+      <Filter>02. GameObject\DiveDave\State\Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerState.cpp">
       <Filter>PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveMove.cpp">
-      <Filter>02. GameObject\DiveDave\Move</Filter>
+      <Filter>02. GameObject\DiveDave\State\Move</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp">
-      <Filter>02. GameObject\DiveDave\Attack</Filter>
+      <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CAttackReadyArm.cpp">
-      <Filter>02. GameObject\DiveDave\Attack\AttackReadyArm</Filter>
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackReadyArm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveCam.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
