@@ -1,5 +1,6 @@
 #include "CDiveDaveAttack.h"
-
+#include "CDInputMgr.h"
+#include "CDiveDave.h"
 CDiveDaveAttack::CDiveDaveAttack(CGameObject* pOwner)
 	:CPlayerState(pOwner)
 {
@@ -11,16 +12,20 @@ CDiveDaveAttack::~CDiveDaveAttack()
 
 void CDiveDaveAttack::Enter()
 {
+	static_cast<CDiveDave*>(m_pPlayer)->Init_Frame();
 }
 
-void CDiveDaveAttack::Input()
+void CDiveDaveAttack::Input(const _float& fTimeDelta)
 {
-
+	if (CDInputMgr::GetInstance()->Mouse_Up(DIM_LB))
+	{
+		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
+	}
 }
 
 _int CDiveDaveAttack::Update_State(const _float& fTimeDelta)
 {
-	Input();
+	Input(fTimeDelta);
 	return _int();
 }
 

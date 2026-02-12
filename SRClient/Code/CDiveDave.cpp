@@ -7,6 +7,10 @@
 #include "CDiveDaveIdle.h"
 #include "CDiveDaveMove.h"
 #include "CDiveDaveAttack.h"
+
+
+string debugState[(_uint)DiveState::DAVE_STATE_END] = {"IDLE", "MOVE", "ATTACK", "DIE"};
+
 CDiveDave::CDiveDave()
 	: m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
@@ -31,16 +35,30 @@ HRESULT CDiveDave::Ready_GameObject()
 	if(FAILED(Add_State()))
 		return E_FAIL;
 	
-	Set_State(DiveState::IDLE);
+	_vec3 vScale = { 0.5f, 0.5f, 1.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
 
+	Set_State(DiveState::IDLE);
 	return S_OK;
 }
 
 _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	Key_Input();
+	Mouse_Input();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 	m_pState->Update_State(fTimeDelta);
+
+#ifdef _DEBUG
+	ImGui::Begin("DiveDave Info");
+	string state = "State : " + debugState[(_uint)m_eCurState];
+	ImGui::Text(state.c_str());
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
+	ImGui::End();
+#endif
 	return iExit;
 }
 
@@ -54,14 +72,15 @@ void CDiveDave::Render_GameObject()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
 	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
-	//m_pTextureCom->Set_Texture(0);
-
-	m_pBufferCom->Render_Buffer();
 
 	m_pState->Render_State();
 
+	m_pBufferCom->Render_Buffer();
+
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CDiveDave::Set_State(DiveState state)
@@ -78,6 +97,18 @@ void CDiveDave::Set_State(DiveState state)
 	m_pState->Enter();
 }
 
+void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
+{
+	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+}
+
+void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)
+{
+	m_fFrame += fSpeed * fTimeDelta;
+	if (m_fFrame > size)
+		m_fFrame = 0.f;
+}
+
 HRESULT CDiveDave::Ready_Component()
 {
 	// 버퍼
@@ -85,8 +116,18 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 
 	// 텍스쳐
-	//if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
-	//    return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerIdleTexture", L"Com_IdleTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveUpTexture", L"Com_MoveUpTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveSideUpTexture", L"Com_MoveSideUpTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveSideTexture", L"Com_MoveSideTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveSideDownTexture", L"Com_MoveSideDownTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveDownTexture", L"Com_MoveDownTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// 트랜스폼
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -105,6 +146,9 @@ HRESULT	CDiveDave::Add_State()
 
 void CDiveDave::Key_Input()
 {
+	if (m_eCurState != DiveState::IDLE)
+		return;
+
 	if(CDInputMgr::GetInstance()->Key_Down(DIK_W) || CDInputMgr::GetInstance()->Key_Down(DIK_A)
 		|| CDInputMgr::GetInstance()->Key_Down(DIK_S) || CDInputMgr::GetInstance()->Key_Down(DIK_D))
 		Set_State(DiveState::MOVE);
@@ -114,6 +158,7 @@ void CDiveDave::Mouse_Input()
 {
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
 		Set_State(DiveState::ATTACK);
+
 }
 
 
