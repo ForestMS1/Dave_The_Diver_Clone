@@ -1,0 +1,24 @@
+#pragma once
+#include "CPlayerState.h"
+
+class CDiveDaveIdle : public CPlayerState
+{
+private:
+	explicit CDiveDaveIdle(CGameObject* pOwner);
+	~CDiveDaveIdle();
+
+public:
+	void Enter() override;
+	void Input() override;
+	_int Update_State(const _float& fTimeDelta) override;
+	void LateUpdate_State(const _float& fTimeDelta) override;
+	void Render_State() override;
+	void Exit() override;
+	void Clear() override;
+
+public:
+	static CDiveDaveIdle* Create(CGameObject* pOwner);
+private:
+	virtual void Free() override;
+};
+

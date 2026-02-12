@@ -43,6 +43,21 @@
     <Filter Include="02. GameObject\01. Boat">
       <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave">
+      <UniqueIdentifier>{bc70a9e5-82f4-41b7-bcfe-eb6010122648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Idle">
+      <UniqueIdentifier>{c8cb48e1-3e9b-436b-91f5-fa88449b4bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerState">
+      <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Move">
+      <UniqueIdentifier>{37a72530-89cd-4d1f-b061-65df3a6a6c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Attack">
+      <UniqueIdentifier>{28ba047b-b188-4b75-a12a-565ed449dbb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,6 +99,21 @@
     <ClInclude Include="..\Header\CShipBoat.h">
       <Filter>02. GameObject\01. Boat</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDave.h">
+      <Filter>02. GameObject\DiveDave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveIdle.h">
+      <Filter>02. GameObject\DiveDave\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerState.h">
+      <Filter>PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveMove.h">
+      <Filter>02. GameObject\DiveDave\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveAttack.h">
+      <Filter>02. GameObject\DiveDave\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -115,6 +145,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipBoat.cpp">
       <Filter>02. GameObject\01. Boat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDave.cpp">
+      <Filter>02. GameObject\DiveDave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveIdle.cpp">
+      <Filter>02. GameObject\DiveDave\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerState.cpp">
+      <Filter>PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveMove.cpp">
+      <Filter>02. GameObject\DiveDave\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveAttack.cpp">
+      <Filter>02. GameObject\DiveDave\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

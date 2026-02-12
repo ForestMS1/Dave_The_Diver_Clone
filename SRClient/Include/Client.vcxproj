@@ -158,9 +158,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CDiveDaveAttack.h" />
+    <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
+    <ClInclude Include="..\Header\CDiveDave.h" />
+    <ClInclude Include="..\Header\CDiveDaveMove.h" />
     <ClInclude Include="..\Header\CLogo.h" />
     <ClInclude Include="..\Header\CMainApp.h" />
+    <ClInclude Include="..\Header\CPlayerState.h" />
     <ClInclude Include="..\Header\CShip.h" />
     <ClInclude Include="..\Header\CShipBoat.h" />
     <ClInclude Include="..\Header\CShipDave.h" />
@@ -173,9 +178,14 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />
+    <ClCompile Include="..\Code\CDiveDave.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveMove.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
+    <ClCompile Include="..\Code\CPlayerState.cpp" />
     <ClCompile Include="..\Code\CShip.cpp" />
     <ClCompile Include="..\Code\CShipBoat.cpp" />
     <ClCompile Include="..\Code\CShipDave.cpp" />
