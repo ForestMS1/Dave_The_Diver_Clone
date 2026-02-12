@@ -92,6 +92,48 @@ public:
 		D3DXVec3TransformCoord(pRayPos, &vRayPos, &matView);
 		D3DXVec3TransformNormal(pRayDir, &vRayDir, &matView);
 	}
+
+	static void GetMousePointInWorld(_vec3* pOut)
+	{
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+		POINT pt;
+		GetCursorPos(&pt);
+		ScreenToClient(CInfoMgr::GetInstance()->Get_HWND(), &pt);
+
+		D3DVIEWPORT9 vp;
+		pGraphicDev->GetViewport(&vp);
+
+		_matrix matProj, matView;
+		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+		_matrix matInvView, matInvProj;
+		D3DXMatrixInverse(&matInvView, 0, &matView);
+		D3DXMatrixInverse(&matInvProj, 0, &matProj);
+
+		// NDC
+		float ndcX = (2.f * pt.x / vp.Width) - 1.f;
+		float ndcY = 1.f - (2.f * pt.y / vp.Height);
+
+		// Near
+		_vec3 rayStart(ndcX, ndcY, 0.f);
+		D3DXVec3TransformCoord(&rayStart, &rayStart, &matInvProj);
+		D3DXVec3TransformCoord(&rayStart, &rayStart, &matInvView);
+
+		// Far
+		_vec3 rayEnd(ndcX, ndcY, 1.f);
+		D3DXVec3TransformCoord(&rayEnd, &rayEnd, &matInvProj);
+		D3DXVec3TransformCoord(&rayEnd, &rayEnd, &matInvView);
+
+		_vec3 rayDir = rayEnd - rayStart;
+		D3DXVec3Normalize(&rayDir, &rayDir);
+
+		// Z=0 평면과 교차
+		float t = -rayStart.z / rayDir.z;
+
+		*pOut = rayStart + rayDir * t;
+	}
 };
 
 END
