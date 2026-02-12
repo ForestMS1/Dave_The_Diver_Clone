@@ -65,7 +65,7 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	pGameObject = CShipBoat::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"ShipDave1", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });

@@ -16,6 +16,7 @@
 #include "CTransition.h"
 #include "CGameMemMgr.h"
 #include "CCollisionMgr.h"
+#include "CMapMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -53,6 +54,8 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	
+	CMapMgr::GetInstance()->Update_Map(fTimeDelta);
+
 	m_pManagement->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -71,7 +74,7 @@ void CMainApp::Render_MainApp()
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 	CParticleMgr::GetInstance()->Render_Particle();
-
+	CMapMgr::GetInstance()->Render_Map();
 	CColliderMgr::GetInstance()->Render();
 
 	m_pDeviceClass->Render_End();

@@ -8,6 +8,7 @@
 #include "CShip.h"
 #include "CSushi.h"
 #include "CDive.h"
+#include "CMapMgr.h"
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
 	, m_eDstScene(eDstScene)

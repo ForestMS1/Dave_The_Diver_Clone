@@ -201,6 +201,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CLightMgr.h" />
     <ClInclude Include="..\Header\CLog.h" />
     <ClInclude Include="..\Header\CManagement.h" />
+    <ClInclude Include="..\Header\CMapMgr.h" />
     <ClInclude Include="..\Header\COBB.h" />
     <ClInclude Include="..\Header\CParticleMgr.h" />
     <ClInclude Include="..\Header\CPipeline.h" />
@@ -234,7 +235,6 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CTimerMgr.h" />
     <ClInclude Include="..\Header\Firework.h" />
     <ClInclude Include="..\Header\PSystem.h" />
-    <ClInclude Include="CMapMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAABB.cpp" />
@@ -278,6 +278,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CLightMgr.cpp" />
     <ClCompile Include="..\Code\CLog.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
+    <ClCompile Include="..\Code\CMapMgr.cpp" />
     <ClCompile Include="..\Code\COBB.cpp" />
     <ClCompile Include="..\Code\CParticleMgr.cpp" />
     <ClCompile Include="..\Code\CPipeline.cpp" />
@@ -353,7 +354,6 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
       <IncludeInUnityFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IncludeInUnityFile>
       <IncludeInUnityFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IncludeInUnityFile>
     </ClCompile>
-    <ClCompile Include="CMapMgr.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

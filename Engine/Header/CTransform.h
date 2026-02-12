@@ -53,6 +53,9 @@ public:
 	{
 		m_matWorld = *pWorld;
 	}
+
+	
+
 	void Set_Scale(_vec3 const* vScale)
 	{
 		m_vScale = *vScale;
