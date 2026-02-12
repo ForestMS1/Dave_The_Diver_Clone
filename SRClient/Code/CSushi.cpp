@@ -3,6 +3,7 @@
 #include "CAssetDefaultFont.h"
 #include "CManagement.h"
 #include "CTransition.h"
+#include "CColliderMgr.h"
 
 CSushi::CSushi()
 	: CScene()
@@ -58,4 +59,5 @@ CSushi* CSushi::Create()
 void CSushi::Free()
 {
 	CScene::Free();
+	
 }
