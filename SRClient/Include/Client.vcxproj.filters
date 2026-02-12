@@ -37,6 +37,12 @@
     <Filter Include="01. Scene\04. Ship">
       <UniqueIdentifier>{5a518506-1d99-4b61-a67f-4111b4b9452e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. ShipDave">
+      <UniqueIdentifier>{e3d5e2fe-fdfc-422b-b1ac-57d30dfb677c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Boat">
+      <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -72,6 +78,12 @@
     <ClInclude Include="..\Header\CDive.h">
       <Filter>01. Scene\02. Dive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipDave.h">
+      <Filter>02. GameObject\00. ShipDave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipBoat.h">
+      <Filter>02. GameObject\01. Boat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -97,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDive.cpp">
       <Filter>01. Scene\02. Dive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDave.cpp">
+      <Filter>02. GameObject\00. ShipDave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipBoat.cpp">
+      <Filter>02. GameObject\01. Boat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

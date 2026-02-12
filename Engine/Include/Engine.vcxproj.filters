@@ -217,6 +217,9 @@
     <Filter Include="00. Manager\17. GameMemMgr">
       <UniqueIdentifier>{9f0b5fc4-28fb-49df-935b-82bda2a779f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\18. CollisionMgr">
+      <UniqueIdentifier>{edf9b37e-b4b8-4c40-8937-d3ecb0ac5160}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -456,6 +459,9 @@
     <ClCompile Include="..\Code\CGameMemMgr.cpp">
       <Filter>00. Manager\17. GameMemMgr</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CCollisionMgr.cpp">
+      <Filter>00. Manager\18. CollisionMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -679,6 +685,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CGameMemMgr.h">
       <Filter>00. Manager\17. GameMemMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionMgr.h">
+      <Filter>00. Manager\18. CollisionMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

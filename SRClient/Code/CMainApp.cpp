@@ -15,6 +15,7 @@
 #include "CCameraMgr.h"
 #include "CTransition.h"
 #include "CGameMemMgr.h"
+#include "CCollisionMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -171,7 +172,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 	
-	CColliderMgr::GetInstance()->DestroyInstance();
+	
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();
@@ -184,6 +185,8 @@ void CMainApp::Free()
 	CCameraMgr::GetInstance()->DestroyInstance();
 	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
+	CCollisionMgr::GetInstance()->DestroyInstance();
+	CColliderMgr::GetInstance()->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
