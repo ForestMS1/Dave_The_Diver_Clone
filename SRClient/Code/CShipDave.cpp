@@ -4,6 +4,8 @@
 #include "CGraphicDev.h"
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
 
 CShipDave::CShipDave()
     : CGameObject()
@@ -30,6 +32,10 @@ HRESULT CShipDave::Ready_GameObject()
 
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
   
+    m_iFrame = 0;
+    m_fAccFrameDelta = 0.f;
+    m_sCurrentMotion = L"Tex_ShipDave_Idle";
+    m_bSeeRight = true;
 
     return S_OK;
 }
@@ -40,6 +46,32 @@ _int CShipDave::Update_GameObject(const _float& fTimeDelta)
     
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
+    //m_fFrame += 2.f * fTimeDelta;
+
+    m_fAccFrameDelta += fTimeDelta;
+
+    if (m_fAccFrameDelta > 0.2f)
+    {
+        ++m_iFrame;
+        m_fAccFrameDelta = 0;
+    }
+   
+   auto zz = CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size();
+    if (CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size() <= m_iFrame)
+        m_iFrame = 0;
+
+    if (ImGui::Button("Tex_ShipDave_DiveReady"))
+    {
+        Motion_Change(L"Tex_ShipDave_DiveReady");
+    }
+    if (ImGui::Button("Tex_ShipDave_Walk"))
+    {
+        Motion_Change(L"Tex_ShipDave_Walk");
+    }
+    
+
+    string s = "Frame" + ::to_string(m_iFrame);
+    ImGui::Text(s.c_str());
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
     // 충돌체 그룹에 넣어줘야한다.
@@ -115,7 +147,14 @@ void CShipDave::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    //m_pTextureCom->Set_Texture(0);
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion))
+    {
+        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(m_iFrame)))
+        {
+            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+        }
+    }
+    
 
     m_pBufferCom->Render_Buffer();
 
@@ -133,10 +172,6 @@ HRESULT CShipDave::Ready_Component()
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
-    // 텍스쳐
-    //if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_PlayerTexture", L"Com_Texture", &m_pTextureCom))))
-    //    return E_FAIL;
-
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
@@ -147,30 +182,60 @@ HRESULT CShipDave::Ready_Component()
 void CShipDave::Key_Input(const _float& fTimeDelta)
 {
 
-    _vec3		vDirUp, vDirRight;
-    _vec3		vUp(0.f, 1.f, 0.f);
+    _vec3 vDirUp = {0.f, 1.f, 0.f};
+    _vec3 vDirRight = {1.f, 0.f, 0.f };
     m_pTransformCom->Get_Info(INFO_UP, &vDirUp);
     m_pTransformCom->Get_Info(INFO_RIGHT, &vDirRight);
+    bool m_bKeyInput = false;;
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
     {
-        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), 10.f, fTimeDelta);
+        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), 3.f, fTimeDelta);
     }
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_S))
     {
-        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), -10.f, fTimeDelta);
+        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), -3.f, fTimeDelta);
     }
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
     {
-        m_pTransformCom->Move_Pos(&vDirRight, -10.f, fTimeDelta);
+        m_bKeyInput = true;
+        Motion_Change(L"Tex_ShipDave_Walk");
+        m_pTransformCom->Move_Pos(&vDirRight, 3.f, fTimeDelta);
+        if (m_bSeeRight)
+        {
+            m_bSeeRight = false;
+            m_pTransformCom->Rotation(ROT_Y, 180.f);
+        }
     }
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
     {
-        m_pTransformCom->Move_Pos(&vDirRight, 10.f, fTimeDelta);
+        m_bKeyInput = true;
+        Motion_Change(L"Tex_ShipDave_Walk");
+        m_pTransformCom->Move_Pos(&vDirRight, 3.f, fTimeDelta);
+        if (!m_bSeeRight)
+        {
+            m_bSeeRight = true;
+            m_pTransformCom->Rotation(ROT_Y, 180.f);
+        }
     }
 
+    if (!m_bKeyInput)
+    {
+        Motion_Change(L"Tex_ShipDave_Idle");
+    }
+
+}
+
+void CShipDave::Motion_Change(wstring_view svMotion)
+{
+    if (m_sCurrentMotion != svMotion)
+    {
+        m_sCurrentMotion = svMotion;
+        m_iFrame = 0;
+        m_fAccFrameDelta = 0.f;
+    }
 }
 
 CShipDave* CShipDave::Create()
