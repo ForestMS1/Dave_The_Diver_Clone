@@ -196,6 +196,9 @@
     <Filter Include="00. Manager\18. CollisionMgr">
       <UniqueIdentifier>{edf9b37e-b4b8-4c40-8937-d3ecb0ac5160}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\AttackReadyArmTex">
+      <UniqueIdentifier>{e7848c61-cf96-4d6f-9c9d-e94b829cf519}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -414,6 +417,9 @@
     <ClCompile Include="..\Code\CCollisionMgr.cpp">
       <Filter>00. Manager\18. CollisionMgr</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CAttackReadyArmTex.cpp">
+      <Filter>02. Component\AttackReadyArmTex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -616,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CCollisionMgr.h">
       <Filter>00. Manager\18. CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAttackReadyArmTex.h">
+      <Filter>02. Component\AttackReadyArmTex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
