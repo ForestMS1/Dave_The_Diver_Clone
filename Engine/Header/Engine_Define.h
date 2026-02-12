@@ -1,6 +1,7 @@
 #ifndef Engine_Define_h__
 #define Engine_Define_h__
 
+#include <tweeny/tween.h>
 
 #include <nlohmann/json.hpp>
 
