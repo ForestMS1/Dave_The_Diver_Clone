@@ -32,14 +32,15 @@ public:
 	void			Compute_ViewZ(const _vec3* pPos);
 	void			Set_Dead() { m_bDead = true; }
 	bool			Get_Dead() const { return m_bDead; }
+	void			Set_Tag(std::wstring_view svTag) { m_sTag; }
+	wstring_view	Get_Tag() { return m_sTag; }
 	
-	
-
 protected:
 	map<const std::wstring, CComponent*>	m_mapComponent[ID_END];
 
 	_float									m_fViewZ;
 	bool									m_bDead;
+	std::wstring							m_sTag;
 
 // °èÃþ °ü·Ã
 public:

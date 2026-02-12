@@ -73,14 +73,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(ProjectDir)..\ThirdParty\yoga_3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(ProjectDir)..\ThirdParty\assimp_6.0.4\lib;$(ProjectDir)..\ThirdParty\yoga_3.2.1\lib;$(LibraryPath)</LibraryPath>
     <OutDir>../Bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(ProjectDir)..\ThirdParty\yoga_3.2.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(ProjectDir)..\ThirdParty\assimp_6.0.4\lib;$(ProjectDir)..\ThirdParty\yoga_3.2.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,7 +126,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;assimp-vc143-mt.lib;yogacore_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>cd /d $(SolutionDir)
@@ -151,7 +151,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;assimp-vc143-mt.lib;yogacore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>cd /d $(SolutionDir)
@@ -164,6 +164,8 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAsset.h" />
     <ClInclude Include="..\Header\CAssetCubeTexture.h" />
     <ClInclude Include="..\Header\CAssetDefaultFont.h" />
+    <ClInclude Include="..\Header\CAssetFbx.h" />
+    <ClInclude Include="..\Header\CAssetFmodSound.h" />
     <ClInclude Include="..\Header\CAssetMgr.h" />
     <ClInclude Include="..\Header\CAssetTexture.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
@@ -174,6 +176,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CColliderMgr.h" />
+    <ClInclude Include="..\Header\CCollisionMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
     <ClInclude Include="..\Header\CCubeCol.h" />
     <ClInclude Include="..\Header\CCubeTex.h" />
@@ -186,6 +189,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CFreeCam.h" />
     <ClInclude Include="..\Header\CFrustrum.h" />
+    <ClInclude Include="..\Header\CGameMemMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
     <ClInclude Include="..\Header\CBulletSpark.h" />
@@ -218,6 +222,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTransform.h" />
     <ClInclude Include="..\Header\CTriCol.h" />
+    <ClInclude Include="..\Header\CUIMgr.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
     <ClInclude Include="..\Header\CWeather.h" />
     <ClInclude Include="..\Header\Engine_Define.h" />
@@ -236,6 +241,8 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAsset.cpp" />
     <ClCompile Include="..\Code\CAssetCubeTexture.cpp" />
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp" />
+    <ClCompile Include="..\Code\CAssetFbx.cpp" />
+    <ClCompile Include="..\Code\CAssetFmodSound.cpp" />
     <ClCompile Include="..\Code\CAssetMgr.cpp" />
     <ClCompile Include="..\Code\CAssetTexture.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
@@ -246,6 +253,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CColliderMgr.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
+    <ClCompile Include="..\Code\CCollisionMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
     <ClCompile Include="..\Code\CCubeCol.cpp" />
     <ClCompile Include="..\Code\CCubeTex.cpp" />
@@ -258,6 +266,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CFreeCam.cpp" />
     <ClCompile Include="..\Code\CFrustrum.cpp" />
+    <ClCompile Include="..\Code\CGameMemMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
     <ClCompile Include="..\Code\CBulletSpark.cpp" />
@@ -291,6 +300,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CTimerMgr.cpp" />
     <ClCompile Include="..\Code\CTransform.cpp" />
     <ClCompile Include="..\Code\CTriCol.cpp" />
+    <ClCompile Include="..\Code\CUIMgr.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
     <ClCompile Include="..\Code\CWeather.cpp" />
     <ClCompile Include="..\Code\Firework.cpp" />

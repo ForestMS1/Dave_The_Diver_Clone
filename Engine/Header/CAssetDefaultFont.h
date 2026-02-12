@@ -10,7 +10,15 @@ private:
 		const _uint& iWidth,
 		const _uint& iHeight,
 		const _uint& iWeight);
+	explicit CAssetDefaultFont(std::wstring_view svPath, 
+		std::wstring_view svFontType,
+		const _uint& iWidth,
+		const _uint& iHeight,
+		const _uint& iWeight);
 	virtual ~CAssetDefaultFont();
+
+public:
+	LPD3DXFONT Get_Font() const { return m_pFont ; }
 
 public:
 	HRESULT Load() override;
@@ -21,6 +29,12 @@ public:
 
 public:
 	static CAssetDefaultFont* Create(std::wstring_view svFontType,
+		const _uint& iWidth,
+		const _uint& iHeight,
+		const _uint& iWeight);
+
+	static CAssetDefaultFont* Create(std::wstring_view svPath,
+		std::wstring_view svFontType,
 		const _uint& iWidth,
 		const _uint& iHeight,
 		const _uint& iWeight);

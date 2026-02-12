@@ -211,6 +211,18 @@
     <Filter Include="00. Manager\16. MapMgr">
       <UniqueIdentifier>{3bb5607f-bfd0-405d-9e6d-30a544b6f12c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\15. AssetMgr\00. Asset\04. Fbx">
+      <UniqueIdentifier>{ec8792f8-91f9-4462-8311-65c7fc9d7626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\16. UIMgr">
+      <UniqueIdentifier>{b5464c8b-fba8-405e-ab1c-5ece42a5970d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\17. GameMemMgr">
+      <UniqueIdentifier>{9f0b5fc4-28fb-49df-935b-82bda2a779f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\18. CollisionMgr">
+      <UniqueIdentifier>{edf9b37e-b4b8-4c40-8937-d3ecb0ac5160}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -441,6 +453,21 @@
     <ClCompile Include="CMapMgr.cpp">
       <Filter>00. Manager\16. MapMgr</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CAssetFmodSound.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\01. Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAssetFbx.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\04. Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIMgr.cpp">
+      <Filter>00. Manager\16. UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameMemMgr.cpp">
+      <Filter>00. Manager\17. GameMemMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionMgr.cpp">
+      <Filter>00. Manager\18. CollisionMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -650,11 +677,26 @@
     <ClInclude Include="..\Header\CAssetDefaultFont.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\00. Font</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CAssetFmodSound.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\01. Sound</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CFlameShot.h">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\04. FlameShot</Filter>
     </ClInclude>
     <ClInclude Include="CMapMgr.h">
       <Filter>00. Manager\16. MapMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetFbx.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\04. Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIMgr.h">
+      <Filter>00. Manager\16. UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameMemMgr.h">
+      <Filter>00. Manager\17. GameMemMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionMgr.h">
+      <Filter>00. Manager\18. CollisionMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,6 +22,10 @@ public:
 		XMFLOAT3 center = { vCenter->x, vCenter->y, vCenter->z };
 		m_BoundingSphere.Center = center;
 	}
+	_vec3 Get_Center() const
+	{
+		return { m_BoundingSphere.Center.x, m_BoundingSphere.Center.y ,m_BoundingSphere.Center.z };
+	}
 
 public:
 	HRESULT Ready_BoundingSphere(_vec3 const* vCenter, float& fRadius);

@@ -19,14 +19,29 @@
     <Filter Include="01. Scene">
       <UniqueIdentifier>{052a2359-6b00-4b0d-a5e0-e7cc64e0a640}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\00. Logo">
-      <UniqueIdentifier>{339cb370-5690-4389-993f-a4fb6d23faf9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject">
       <UniqueIdentifier>{e78f3682-56ed-4092-8b71-7094eed98c0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\00. Logo\00. Loading">
-      <UniqueIdentifier>{820d40aa-cccc-4b10-9955-1409d19a8b0c}</UniqueIdentifier>
+    <Filter Include="01. Scene\00. Transition">
+      <UniqueIdentifier>{ba41e6f3-7ff8-4e1a-beb3-16888745735f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\01. Logo">
+      <UniqueIdentifier>{43573b85-e6a5-448a-8c76-f3cf10fd11f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. Dive">
+      <UniqueIdentifier>{5255496e-73f3-45c5-9a01-9c75043f4d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi">
+      <UniqueIdentifier>{3dff25a1-c69e-47a5-988e-770de453e396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\04. Ship">
+      <UniqueIdentifier>{5a518506-1d99-4b61-a67f-4111b4b9452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. ShipDave">
+      <UniqueIdentifier>{e3d5e2fe-fdfc-422b-b1ac-57d30dfb677c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Boat">
+      <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,11 +63,26 @@
     <ClInclude Include="..\Header\CMainApp.h">
       <Filter>00. MainApp</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CLogo.h">
-      <Filter>01. Scene\00. Logo</Filter>
+    <ClInclude Include="..\Header\CTransition.h">
+      <Filter>01. Scene\00. Transition</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CLoading.h">
-      <Filter>01. Scene\00. Logo\00. Loading</Filter>
+    <ClInclude Include="..\Header\CLogo.h">
+      <Filter>01. Scene\01. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShip.h">
+      <Filter>01. Scene\04. Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSushi.h">
+      <Filter>01. Scene\03. Sushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDive.h">
+      <Filter>01. Scene\02. Dive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipDave.h">
+      <Filter>02. GameObject\00. ShipDave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipBoat.h">
+      <Filter>02. GameObject\01. Boat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,14 +92,29 @@
     <ClCompile Include="..\Code\CMainApp.cpp">
       <Filter>00. MainApp</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CLogo.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CLoading.cpp">
-      <Filter>01. Scene\00. Logo\00. Loading</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransition.cpp">
+      <Filter>01. Scene\00. Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLogo.cpp">
+      <Filter>01. Scene\01. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShip.cpp">
+      <Filter>01. Scene\04. Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSushi.cpp">
+      <Filter>01. Scene\03. Sushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDive.cpp">
+      <Filter>01. Scene\02. Dive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDave.cpp">
+      <Filter>02. GameObject\00. ShipDave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipBoat.cpp">
+      <Filter>02. GameObject\01. Boat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

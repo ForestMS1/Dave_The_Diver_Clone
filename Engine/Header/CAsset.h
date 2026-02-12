@@ -21,6 +21,8 @@ protected:
 
 public:
 	void Set_Tag(){}
+	std::wstring_view Get_AssetPath() const { return m_sAssetPath; }
+	AssetState Get_AssetState() const { return m_eAssetState; }
 
 public:
 	virtual HRESULT Load() = 0;
