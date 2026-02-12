@@ -22,7 +22,7 @@ public:
 		XMFLOAT3 center = { vCenter->x, vCenter->y, vCenter->z };
 		m_BoundingSphere.Center = center;
 	}
-	_vec3 Get_Center()
+	_vec3 Get_Center() const
 	{
 		return { m_BoundingSphere.Center.x, m_BoundingSphere.Center.y ,m_BoundingSphere.Center.z };
 	}

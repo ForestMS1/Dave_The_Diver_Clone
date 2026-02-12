@@ -29,11 +29,11 @@ public:
 		XMFLOAT3 center = { vCenter->x, vCenter->y, vCenter->z };
 		m_BoundingOrientedBox.Center = center;
 	}
-	_vec3 Get_Center()
+	_vec3 Get_Center() const
 	{
 		return { m_BoundingOrientedBox.Center.x,m_BoundingOrientedBox.Center.y,m_BoundingOrientedBox.Center.z };
 	}
-	_vec3 Get_Extents()
+	_vec3 Get_Extents() const
 	{
 		return { m_BoundingOrientedBox.Extents.x,m_BoundingOrientedBox.Extents.y,m_BoundingOrientedBox.Extents.z };
 	}

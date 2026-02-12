@@ -176,6 +176,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CColliderMgr.h" />
+    <ClInclude Include="..\Header\CCollisionMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
     <ClInclude Include="..\Header\CCubeCol.h" />
     <ClInclude Include="..\Header\CCubeTex.h" />
@@ -251,6 +252,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CColliderMgr.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
+    <ClCompile Include="..\Code\CCollisionMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
     <ClCompile Include="..\Code\CCubeCol.cpp" />
     <ClCompile Include="..\Code\CCubeTex.cpp" />

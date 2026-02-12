@@ -176,6 +176,8 @@
     <ClInclude Include="..\Header\CShip.h" />
     <ClInclude Include="..\Header\CSign.h" />
     <ClInclude Include="..\Header\CSpeaker.h" />
+    <ClInclude Include="..\Header\CShipBoat.h" />
+    <ClInclude Include="..\Header\CShipDave.h" />
     <ClInclude Include="..\Header\CSushi.h" />
     <ClInclude Include="..\Header\CSushiCamera.h" />
     <ClInclude Include="..\Header\CTable.h" />
@@ -206,6 +208,8 @@
     <ClCompile Include="..\Code\CShip.cpp" />
     <ClCompile Include="..\Code\CSign.cpp" />
     <ClCompile Include="..\Code\CSpeaker.cpp" />
+    <ClCompile Include="..\Code\CShipBoat.cpp" />
+    <ClCompile Include="..\Code\CShipDave.cpp" />
     <ClCompile Include="..\Code\CSushi.cpp" />
     <ClCompile Include="..\Code\CSushiCamera.cpp" />
     <ClCompile Include="..\Code\CTable.cpp" />

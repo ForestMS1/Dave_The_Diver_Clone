@@ -23,6 +23,7 @@
 #include "CSpeaker.h"
 
 CGameObject* g_pObject = nullptr;
+#include "CColliderMgr.h"
 
 CSushi::CSushi()
 	: CScene()
@@ -46,9 +47,9 @@ HRESULT CSushi::Ready_Scene()
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);       // ±íÀÌ Å×½ºÆ® ÄÑ±â
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);        // ±íÀÌ ¹öÆÛ ¾²±â Çã¿ë
-	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   // °¡±î¿î ÇÈ¼¿ ¿ì¼±
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);       // ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½Ñ±ï¿½
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¼ï¿½ ï¿½ì¼±
 
 	return S_OK;
 
@@ -88,13 +89,13 @@ void CSushi::Render_Scene()
 		{
 			ImGui::Begin("Transform Inspector");
 
-			// Position ÀÔ·Â
+			// Position ï¿½Ô·ï¿½
 			ImGui::InputFloat3("Position", (float*)&pTransform->m_vInfo[INFO_POS]);
 
-			// Rotation ÀÔ·Â
+			// Rotation ï¿½Ô·ï¿½
 			ImGui::InputFloat3("Rotation", (float*)&pTransform->m_vAngle);
 
-			// Scale ÀÔ·Â
+			// Scale ï¿½Ô·ï¿½
 			ImGui::InputFloat3("Scale", (float*)&pTransform->m_vScale);
 
 			ImGui::End();
@@ -113,7 +114,7 @@ void CSushi::Render_Scene()
 
 		matWorld = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_World();
 		if (matWorld == nullptr) {
-			MSG_BOX("¿ùµå Çà·Ä ¾øÀ½");
+			MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 		float* view = (float*)&matView;
 		float* proj = (float*)&matProj;
@@ -181,7 +182,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	CGameObject* pGameObject = nullptr;
-	//¹è°æ
+	//ï¿½ï¿½ï¿½
 	pGameObject = CBackground::Create();
 
 	if (nullptr == pGameObject)
@@ -190,7 +191,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Background", pGameObject)))
 		return E_FAIL;
 
-	//¹þ²É
+	//ï¿½ï¿½ï¿½ï¿½
 	pGameObject = CSakura::Create();
 
 	if (nullptr == pGameObject)
@@ -199,7 +200,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Sakura", pGameObject)))
 		return E_FAIL;
 
-	//ÁöºØ
+	//ï¿½ï¿½ï¿½ï¿½
 	pGameObject = CRoof::Create();
 
 	if (nullptr == pGameObject)
@@ -208,7 +209,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Roof", pGameObject)))
 		return E_FAIL;
 
-	//¿ïÅ¸¸®
+	//ï¿½ï¿½Å¸ï¿½ï¿½
 	pGameObject = CFence::Create();
 
 	if (nullptr == pGameObject)
@@ -217,70 +218,70 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Fence", pGameObject)))
 		return E_FAIL;
 
-	//ÈÄµå
+	//ï¿½Äµï¿½
 	pGameObject = CHood::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Hood", pGameObject)))
 		return E_FAIL;
-	//Å×ÀÌºí
+	//ï¿½ï¿½ï¿½Ìºï¿½
 	pGameObject = CTable::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Table", pGameObject)))
 		return E_FAIL;
 
-	//³ª¹« ±âµÕ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	pGameObject = CWood::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Wood", pGameObject)))
 		return E_FAIL;
-	//¸Þ´º	
+	//ï¿½Þ´ï¿½	
 	pGameObject = CMenu::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Menu", pGameObject)))
 		return E_FAIL;
-	//ÇÇ½Ã ÅÊÅ©	
+	//ï¿½Ç½ï¿½ ï¿½ï¿½Å©	
 	pGameObject = CFishTank::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"FishTank", pGameObject)))
 		return E_FAIL;
-	//ÆÐÅÏ ÇÁ·¹ÀÓ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	pGameObject = CPatternFrame::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Frame", pGameObject)))
 		return E_FAIL;
-	//»çÀÎ Æê¸»
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ê¸»
 	pGameObject = CSign::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Sign", pGameObject)))
 		return E_FAIL;
-	//¿ÀÇÂ »çÀÎ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	pGameObject = COpen::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Open", pGameObject)))
 		return E_FAIL;
-	//ÁÖ¹æ	
+	//ï¿½Ö¹ï¿½	
 	pGameObject = CKitchen::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Kitchen", pGameObject)))
 		return E_FAIL;
-	//ºÒºû
+	//ï¿½Òºï¿½
 
 	for (int i = 0; i < 4; i++) {
 		pGameObject = CLight::Create();
@@ -293,7 +294,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"Light", pGameObject)))
 			return E_FAIL;
 	}
-	//ÀÇÀÚ
+	//ï¿½ï¿½ï¿½ï¿½
 	for (int i = 0; i < 6; i++) {
 		pGameObject = CChair::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
@@ -306,7 +307,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 	}
 
-	//½ºÇÇÄ¿
+	//ï¿½ï¿½ï¿½ï¿½Ä¿
 	for (int i = 0; i < 2; i++) {
 		pGameObject = CSpeaker::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
@@ -337,9 +338,9 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	_vec3 vEye{ 0.f, 0.f, -10.f };   // Ä«¸Þ¶ó À§Ä¡
-	_vec3 vAt{ 0.f, 0.f, 0.f };      // ¹Ù¶óº¸´Â ´ë»ó
-	_vec3 vUp{ 0.f, 1.f, 0.f };      // À§ ¹æÇâ
+	_vec3 vEye{ 0.f, 0.f, -10.f };   // Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½Ä¡
+	_vec3 vAt{ 0.f, 0.f, 0.f };      // ï¿½Ù¶óº¸´ï¿½ ï¿½ï¿½ï¿½
+	_vec3 vUp{ 0.f, 1.f, 0.f };      // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	pGameObject = CSushiCamera::Create(&vEye, &vAt, &vUp);
 
@@ -356,4 +357,5 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 void CSushi::Free()
 {
 	CScene::Free();
+	
 }

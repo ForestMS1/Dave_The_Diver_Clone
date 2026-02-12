@@ -42,6 +42,11 @@
     </Filter>
     <Filter Include="01. Scene\03. Sushi\Camera">
       <UniqueIdentifier>{998908b0-12a3-45c5-a020-bc3b8fcea44f}</UniqueIdentifier>
+    <Filter Include="02. GameObject\00. ShipDave">
+      <UniqueIdentifier>{e3d5e2fe-fdfc-422b-b1ac-57d30dfb677c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Boat">
+      <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +133,11 @@
     </ClInclude>
     <ClInclude Include="..\Header\CSpeaker.h">
       <Filter>01. Scene\03. Sushi\Background</Filter>
+    <ClInclude Include="..\Header\CShipDave.h">
+      <Filter>02. GameObject\00. ShipDave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipBoat.h">
+      <Filter>02. GameObject\01. Boat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +215,11 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSpeaker.cpp">
       <Filter>01. Scene\03. Sushi\Background</Filter>
+    <ClCompile Include="..\Code\CShipDave.cpp">
+      <Filter>02. GameObject\00. ShipDave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipBoat.cpp">
+      <Filter>02. GameObject\01. Boat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

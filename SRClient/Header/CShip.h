@@ -12,6 +12,9 @@ public:
 	void		LateUpdate_Scene(const _float& fTimeDelta) override;
 	void		Render_Scene() override;
 
+private:
+	HRESULT			Ready_GameLogic_Layer(std::wstring_view svLayerTag);
+
 public:
 	static CShip* Create();
 
