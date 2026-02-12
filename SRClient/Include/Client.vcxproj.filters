@@ -37,6 +37,11 @@
     <Filter Include="01. Scene\04. Ship">
       <UniqueIdentifier>{5a518506-1d99-4b61-a67f-4111b4b9452e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Background">
+      <UniqueIdentifier>{ec8b1b07-0930-4645-889d-c5ef68405890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\Camera">
+      <UniqueIdentifier>{998908b0-12a3-45c5-a020-bc3b8fcea44f}</UniqueIdentifier>
     <Filter Include="02. GameObject\00. ShipDave">
       <UniqueIdentifier>{e3d5e2fe-fdfc-422b-b1ac-57d30dfb677c}</UniqueIdentifier>
     </Filter>
@@ -78,6 +83,56 @@
     <ClInclude Include="..\Header\CDive.h">
       <Filter>01. Scene\02. Dive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBackground.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSakura.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSushiCamera.h">
+      <Filter>01. Scene\03. Sushi\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRoof.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFence.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLight.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWood.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTable.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHood.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenu.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishTank.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPatternFrame.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSign.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CChair.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COpen.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CKitchen.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpeaker.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
     <ClInclude Include="..\Header\CShipDave.h">
       <Filter>02. GameObject\00. ShipDave</Filter>
     </ClInclude>
@@ -110,6 +165,56 @@
     <ClCompile Include="..\Code\CDive.cpp">
       <Filter>01. Scene\02. Dive</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CBackground.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSakura.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSushiCamera.cpp">
+      <Filter>01. Scene\03. Sushi\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRoof.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFence.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLight.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWood.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTable.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHood.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenu.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishTank.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPatternFrame.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSign.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CChair.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COpen.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CKitchen.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpeaker.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
     <ClCompile Include="..\Code\CShipDave.cpp">
       <Filter>02. GameObject\00. ShipDave</Filter>
     </ClCompile>
