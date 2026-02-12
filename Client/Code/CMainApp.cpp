@@ -15,6 +15,7 @@
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
 #include "CAssetFmodSound.h"
+#include "CUIMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -39,6 +40,8 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
+
+	CUIMgr::GetInstance()->Ready();
 
 	return S_OK;
 }
@@ -104,10 +107,14 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	// ÆùÆ® Ãß°¡
-	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"¹ÙÅÁ", 15, 20, FW_HEAVY));
-	CAssetMgr::GetInstance()->AddAsset(L"Font_Jinji", CAssetDefaultFont::Create(L"±Ã¼­", 15, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"¹ÙÅÁ", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Jinji", CAssetDefaultFont::Create(L"±Ã¼­", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Jinji");
+
+	//CAssetMgr::GetInstance()->AddAsset(L"Font_Roboto", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Roboto-Black.ttf", L"Roboto Black", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Griun", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Griun_PolSensibility-Rg.ttf", L"±×¸®¿î °æÂû°¨¼ºÃ¼", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Griun");
 
 
 	// Dinput
@@ -155,6 +162,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 
+	CUIMgr::GetInstance()->DestroyInstance();
 	CColliderMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();

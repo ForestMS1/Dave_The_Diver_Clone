@@ -32,9 +32,15 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
     if (nullptr == pScene)
         return  E_FAIL;
 
+    // 해당씬이 지워지기 전에 호출한다.
+    auto tmp = pScene->Before_SceneChange();
+
     Safe_Release(m_pScene);
 
     m_pScene = pScene;
+
+    // 해당씬이 장착되고 자서 호출한다.
+    m_pScene->After_SceneChange(tmp);
 
     return S_OK;
 }

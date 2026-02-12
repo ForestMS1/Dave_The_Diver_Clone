@@ -12,7 +12,7 @@ private:
 
 public:
 	LPDIRECT3DTEXTURE9 const Get_Texture() const { return m_pTexture; }
-
+	D3DXIMAGE_INFO const * Get_ImgInfo() const { return &m_ImgInfo ; }
 public:
 	HRESULT Load() override;
 	HRESULT Unload() override;
@@ -22,6 +22,7 @@ public:
 
 private:
 	LPDIRECT3DTEXTURE9 m_pTexture;
+	D3DXIMAGE_INFO m_ImgInfo;
 
 private:
 	void Free() override;

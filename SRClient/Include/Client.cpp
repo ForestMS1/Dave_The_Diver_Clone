@@ -157,6 +157,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     CInfoMgr::GetInstance()->Set_ScaleFactor(fScaleFactor);
 
     g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    CInfoMgr::GetInstance()->Set_HINSTANCE(g_hInst);
 
     // SCALEFACTOR를통해 창 생성 및 CInfoMgr에 저장
     RECT    rc { 0,0, LONG(WINCX * fScaleFactor), LONG(WINCY * fScaleFactor)};
@@ -177,6 +178,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
    g_hWnd = hWnd;
+   CInfoMgr::GetInstance()->Set_HWND(g_hWnd);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

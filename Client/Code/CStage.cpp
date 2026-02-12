@@ -13,6 +13,7 @@
 #include "CGraphicDev.h"
 #include "CTestCube.h"
 #include "CColliderMgr.h"
+#include "CUIMgr.h"
 
 CStage::CStage()
 	: CScene()

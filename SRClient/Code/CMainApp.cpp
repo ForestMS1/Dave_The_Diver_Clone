@@ -4,13 +4,17 @@
 #include "CTimerMgr.h"
 #include "CFrameMgr.h"
 #include "CProtoMgr.h"
-#include "CFontMgr.h"
 #include "CDInputMgr.h"
 #include "CInfoMgr.h"
 #include "CSoundMgr.h"
 #include "CLightMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
+#include "CParticleMgr.h"
+#include "CColliderMgr.h"
+#include "CCameraMgr.h"
+#include "CTransition.h"
+#include "CGameMemMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -27,17 +31,16 @@ HRESULT CMainApp::Ready_MainApp()
 {
 	if (FAILED(Ready_DefaultSetting(&m_pGraphicDev)))
 		return E_FAIL;
-
-	if (FAILED(Ready_Scene(m_pGraphicDev)))
+	if (FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
-
+	if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
+		return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
-
-
-	//if(FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
-	//	return E_FAIL;
-
+	if (FAILED(Load_PermanentAsset()))
+		return E_FAIL;
+	if (FAILED(Ready_Scene(m_pGraphicDev)))
+		return E_FAIL;
 	return S_OK;
 }
 
@@ -46,6 +49,8 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	CDInputMgr::GetInstance()->Update_InputDev();
 	
 	CImguiMgr::GetInstance()->Update_Imgui();
+
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	
 	m_pManagement->Update_Scene(fTimeDelta);
 
@@ -64,8 +69,14 @@ void CMainApp::Render_MainApp()
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
+	CParticleMgr::GetInstance()->Render_Particle();
+
+	CColliderMgr::GetInstance()->Render();
 
 	m_pDeviceClass->Render_End();
+
+	// 프레임의 맨마지막에 호출하고싶은데 여기가 적당한듯
+	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -93,36 +104,24 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
-	// 폰트 추가
-	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"바탕", 15, 20, FW_HEAVY));
-	CAssetMgr::GetInstance()->AddAsset(L"Font_Jinji", CAssetDefaultFont::Create(L"궁서", 15, 20, FW_HEAVY));
-	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
-	CAssetMgr::GetInstance()->LoadAsset(L"Font_Jinji");
-	//if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY)))
-	//	return E_FAIL;
-
-	//if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY)))
-	//	return E_FAIL;
-
-	// Dinput
+	
 
 	if (FAILED(CDInputMgr::GetInstance()->Ready_InputDev(g_hInst, g_hWnd)))
 		return E_FAIL;
-
 
 	return S_OK;
 }
 
 HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	Engine::CScene* pLogo = CLogo::Create();
+	Engine::CScene* pTransition = CTransition::Create(CTransition::SCENE_INIT, CTransition::SCENE_LOGO);
 
-	if (nullptr == pLogo)
+	if (nullptr == pTransition)
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Set_Scene(pLogo)))
+	if (FAILED(m_pManagement->Set_Scene(pTransition)))
 	{
-		Safe_Release(pLogo);
+		Safe_Release(pTransition);
 		MSG_BOX("SetScene Failed");
 		return E_FAIL;
 	}
@@ -140,25 +139,52 @@ CMainApp* CMainApp::Create()
 		MSG_BOX("MainApp Create Failed");
 		return nullptr;
 	}
-
 	return pInstance;
+}
+
+HRESULT CMainApp::Load_PermanentAsset()
+{
+	// 초기 로드용 폰트 추가
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"바탕", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create())))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create())))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create())))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TriCol", Engine::CTriCol::Create())))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 void CMainApp::Free()
 {
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
-
+	
+	CColliderMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();
-	CFontMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
-	CSoundMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
+	CParticleMgr::GetInstance()->DestroyInstance();
+	CCameraMgr::GetInstance()->DestroyInstance();
+	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
+	CAssetMgr::GetInstance()->DestroyInstance();
+	CSoundMgr::GetInstance()->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 }

@@ -7,6 +7,7 @@
 #include "CAssetCubeTexture.h"
 #include "CAssetFmodSound.h"
 #include "CAssetMgr.h"
+#include "CAssetFbx.h"
 
 CLoading::CLoading()
     : m_bFinish(false), m_eLoadingID(LOADING_END)
@@ -83,6 +84,11 @@ _uint CLoading::Loading_Stage()
 
         CAssetMgr::GetInstance()->AddAsset(L"Sound_TADA", CAssetFmodSound::Create(L"../Bin/Resource/Sound/TADA.mp3"));
         CAssetMgr::GetInstance()->AddAsset(L"Sound_Success", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Success.wav"));
+
+        CAssetMgr::GetInstance()->AddAsset(L"Fbx_Dancing", CAssetFbx::Create(L"../Bin/Resource/Fbx/Dancing.fbx"));
+
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_Button", CAssetTexture::Create(L"../Bin/Resource/Texture/Button.png"));
+        CAssetMgr::GetInstance()->AddAsset(L"Tex_White1PX", CAssetTexture::Create(L"../Bin/Resource/Texture/White1PX.png"));
     }
     CAssetMgr::GetInstance()->LoadAsset();
 
@@ -120,7 +126,7 @@ _uint CLoading::Loading_Stage()
          return E_FAIL;
 
      //lstrcpy(m_szLoading, L"Loading Complete !!!!");
-     m_sLoading = L"Loading Complete !!!!";
+     m_sLoading = L"Loading Complete !!!! 컴프리트";
 
      m_bFinish = true;     
 

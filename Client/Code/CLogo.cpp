@@ -137,9 +137,16 @@ void CLogo::Render_Scene()
 	// debug ¿ë Ãâ·Â
 
 	_vec2	vPos{ 0.f, 0.f };
-
-	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Jinji");
+	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Griun");
 	pDefFont->Render_Font(m_pLoading->Get_String(), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	_vec2	vPos2{ 0.f, 30.f };
+	CAssetDefaultFont* pDefFont2 = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
+	pDefFont2->Render_Font(m_pLoading->Get_String(), &vPos2, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	_vec2	vPos3{ 0.f, 60.f };
+	CAssetDefaultFont* pDefFont3 = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Jinji");
+	pDefFont3->Render_Font(m_pLoading->Get_String(), &vPos3, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)
