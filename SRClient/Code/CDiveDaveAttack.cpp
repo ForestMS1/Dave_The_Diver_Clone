@@ -71,10 +71,11 @@ void CDiveDaveAttack::Clear()
 
 void CDiveDaveAttack::Mouse_Check()
 {
-	_vec3 vRayPos, vRayDir;
-	CHelper::GetMousePointRay(&vRayPos, &vRayDir);
-	
-	if (vRayDir.x <= 0.f)
+	_vec3 vMousePos, vPlayerPos;
+	CHelper::GetMousePointInWorld(&vMousePos);
+	static_cast<CDiveDave*>(m_pPlayer)->Get_Pos(&vPlayerPos);
+
+	if (vMousePos.x <= vPlayerPos.x)
 	{
 		_vec3 vRotateDir = { 0.f, -180.f, 0.f };
 		static_cast<CDiveDave*>(m_pPlayer)->Set_RotateDir(&vRotateDir);
