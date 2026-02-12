@@ -7,7 +7,7 @@
 #include "CDiveDaveIdle.h"
 #include "CDiveDaveMove.h"
 #include "CDiveDaveAttack.h"
-
+#include "CAttackReadyArm.h"
 
 string debugState[(_uint)DiveState::DAVE_STATE_END] = {"IDLE", "MOVE", "ATTACK", "DIE"};
 

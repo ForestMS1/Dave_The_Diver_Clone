@@ -4,6 +4,7 @@
 #include "CManagement.h"
 #include "CTransition.h"
 #include "CDiveDave.h"
+#include "CAttackReadyArm.h"
 #include "CCameraMgr.h"
 #include "CFreeCam.h"
 #include "CColliderMgr.h"
@@ -68,11 +69,18 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	pGameObject = CDiveDave::Create();
+	CGameObject* pDiveDave = CDiveDave::Create();
+	if (nullptr == pDiveDave)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDave", pDiveDave)))
+		return E_FAIL;
+
+	pGameObject = CAttackReadyArm::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveDave", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"AttackReadyArm", pGameObject)))
 		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
