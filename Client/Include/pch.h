@@ -8,6 +8,9 @@
 #define PCH_H
 
 // 여기에 미리 컴파일하려는 헤더 추가
+
+#include <tweeny/tween.h>
+
 #include "framework.h"
 
 #include <nlohmann/json.hpp>

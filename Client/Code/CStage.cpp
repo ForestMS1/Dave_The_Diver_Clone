@@ -126,6 +126,7 @@ HRESULT CStage::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
+
 	// Player
 	pGameObject = CPlayer::Create();
 	
