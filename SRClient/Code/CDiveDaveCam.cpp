@@ -56,7 +56,9 @@ _int CDiveDaveCam::Update_GameObject(const _float& fTimeDelta)
 	m_vAt += (vDesiredAt - m_vAt) * m_fLerpSpeed * fTimeDelta;
 
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
 	pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	return 0;
 }

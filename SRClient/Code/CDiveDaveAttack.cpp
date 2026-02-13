@@ -3,6 +3,8 @@
 #include "CDInputMgr.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CCameraMgr.h"
+#include "CDiveDaveCam.h"
 CDiveDaveAttack::CDiveDaveAttack(CGameObject* pOwner)
 	:CPlayerState(pOwner)
 {
@@ -27,7 +29,17 @@ void CDiveDaveAttack::Enter()
 
 void CDiveDaveAttack::Input(const _float& fTimeDelta)
 {
-	if (CDInputMgr::GetInstance()->Mouse_Up(DIM_LB))
+	CDiveDaveCam* pCam = static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_CurCamera());
+	//ChaseToPlayerCam
+	if (pCam == nullptr)
+		return;
+
+	if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+	{
+		if (D3DXToDegree(pCam->GetFov()) > 55.f)
+			pCam->ZoomIn(fTimeDelta * 10.f);
+	}
+	else
 	{
 		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
 	}
@@ -38,7 +50,7 @@ _int CDiveDaveAttack::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 1);
 	Mouse_Check();
-	return _int();
+	return 0;
 }
 
 void CDiveDaveAttack::LateUpdate_State(const _float& fTimeDelta)

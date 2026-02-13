@@ -2,6 +2,8 @@
 #include "CDiveDaveIdle.h"
 #include "CDInputMgr.h"
 #include "CDiveDave.h"
+#include "CCameraMgr.h"
+#include "CDiveDaveCam.h"
 CDiveDaveIdle::CDiveDaveIdle(CGameObject* pOwner)
 	:CPlayerState(pOwner)
 {
@@ -26,15 +28,15 @@ void CDiveDaveIdle::Enter()
 
 void CDiveDaveIdle::Input(const _float& fTimeDelta)
 {
-	
+
 }
 
 _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 {
 	Input(fTimeDelta);
+	Restore_Fov(fTimeDelta);
 	static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 8);
-
-	return _int();
+	return 0;
 }
 
 void CDiveDaveIdle::LateUpdate_State(const _float& fTimeDelta)
@@ -63,6 +65,15 @@ void CDiveDaveIdle::Exit()
 
 void CDiveDaveIdle::Clear()
 {
+}
+
+void CDiveDaveIdle::Restore_Fov(const _float& fTimeDelta)
+{
+	CDiveDaveCam* pCam = static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_CurCamera());
+	if (pCam == nullptr)
+		return;
+	if (D3DXToDegree(pCam->GetFov()) < 60.f)
+		pCam->ZoomOut(fTimeDelta * 10.f);
 }
 
 CDiveDaveIdle* CDiveDaveIdle::Create(CGameObject* pOwner)

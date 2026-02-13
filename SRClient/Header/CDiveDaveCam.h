@@ -27,6 +27,9 @@ public:
 	void		Set_vEye(_vec3* vEye) { memcpy(&m_vEye, vEye, sizeof(_vec3)); }
 	void		Set_vAt(_vec3* vAt) { memcpy(&m_vAt, vAt, sizeof(_vec3)); }
 	void		Set_Target(_vec3* pTarget) { m_pTargetPos = pTarget; }
+	void		ZoomIn(const _float& fAngle) { m_fFov -= D3DXToRadian(fAngle); }
+	void		ZoomOut(const _float& fAngle) { m_fFov += D3DXToRadian(fAngle); }
+	_float		GetFov() { return m_fFov; }
 private:
 	HRESULT		Add_Component();
 

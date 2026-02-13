@@ -31,6 +31,7 @@ public:
 
 private:
 	void Go_Dir(const _float& fTimeDelta);
+	void Restore_Fov(const _float& fTimeDelta);
 private:
 	DIR m_eDir = DIR_END;
 

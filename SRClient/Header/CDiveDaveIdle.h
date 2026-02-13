@@ -16,6 +16,8 @@ public:
 	void Exit() override;
 	void Clear() override;
 
+private:
+	void Restore_Fov(const _float& fTimeDelta);
 public:
 	static CDiveDaveIdle* Create(CGameObject* pOwner);
 private:
