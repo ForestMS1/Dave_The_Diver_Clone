@@ -31,7 +31,6 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 
 	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
-
 	return S_OK;
 }
 
@@ -53,6 +52,10 @@ void CAttackReadyArm::LateUpdate_GameObject(const _float& fTimeDelta)
 		return;
 
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	//_vec3 vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//Compute_ViewZ(&vPos);
 }
 
 void CAttackReadyArm::Render_GameObject()

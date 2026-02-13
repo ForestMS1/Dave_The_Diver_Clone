@@ -66,6 +66,10 @@ void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 	m_pState->LateUpdate_State(fTimeDelta);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 }
 
 void CDiveDave::Render_GameObject()
