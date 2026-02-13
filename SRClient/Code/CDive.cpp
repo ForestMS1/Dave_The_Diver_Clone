@@ -3,6 +3,13 @@
 #include "CAssetDefaultFont.h"
 #include "CManagement.h"
 #include "CTransition.h"
+#include "CDiveDave.h"
+#include "CAttackReadyArm.h"
+#include "CCameraMgr.h"
+#include "CFreeCam.h"
+#include "CDiveDaveCam.h"
+#include "CColliderMgr.h"
+#include "CShipBoat.h"
 
 CDive::CDive()
 	: CScene()
@@ -14,6 +21,30 @@ CDive::~CDive()
 
 HRESULT CDive::Ready_Scene()
 {
+	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
+		return E_FAIL;
+
+	//카메라
+	_vec3	vEye{ 0.f, 0.f, -10.f };
+	_vec3	vAt{ 0.f, 0.f, 0.f };
+	_vec3	vUp{ 0.f, 1.f, 0.f };
+	_matrix	matView, matProj;
+
+	// ChaseToPlayerCam
+	CCamera* pCamera = CDiveDaveCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
+	if (nullptr == pCamera)
+		return E_FAIL;
+	CCameraMgr::GetInstance()->Set_Camera(L"ChaseToPlayerCam", pCamera);
+	CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	static_cast<CDiveDaveCam*>(pCamera)->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
+
+	// 개발용 FreeCam
+	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
+	if (nullptr == pCamera)
+		return E_FAIL;
+	CCameraMgr::GetInstance()->Set_Camera(L"FreeCam", pCamera);
+
 	return S_OK;
 }
 
@@ -42,6 +73,40 @@ void CDive::Render_Scene()
 	pDefFont->Render_Font(L"Here is CDive", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
+HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+	CGameObject* pDiveDave = CDiveDave::Create();
+	if (nullptr == pDiveDave)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDave", pDiveDave)))
+		return E_FAIL;
+
+	pGameObject = CAttackReadyArm::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"AttackReadyArm", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+
+	//테스트용
+	pGameObject = CShipBoat::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pGameObject)))
+		return E_FAIL;
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+
+	return S_OK;
+}
+
 CDive* CDive::Create()
 {
 	CDive* pDive = new CDive;
@@ -58,4 +123,5 @@ CDive* CDive::Create()
 void CDive::Free()
 {
 	CScene::Free();
+	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 }

@@ -61,6 +61,12 @@ public:
 	{
 		*vScale = m_vScale;
 	}
+	void	Multiply_Scale(_vec3* vScale)
+	{
+		m_vScale.x *= vScale->x;
+		m_vScale.y *= vScale->y;
+		m_vScale.z *= vScale->z;
+	}
 
 
 public:

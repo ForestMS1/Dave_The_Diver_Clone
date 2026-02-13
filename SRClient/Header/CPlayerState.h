@@ -1,17 +1,16 @@
 #pragma once
 #include "CBase.h"
-#include "Engine_Define.h"
+#include "CGameObject.h"
 
-class CDSPlayer;
-
-class ENGINE_DLL CPlayerState : public CBase
+class CPlayerState : public CBase
 {
-protected:
-	explicit CPlayerState(CDSPlayer* pPlayer);
+public:
+	explicit CPlayerState(CGameObject* pPlayer);
 	virtual ~CPlayerState();
 
 public:
 	virtual void Enter() = 0; // 상태 진입 시 한번만 실행
+	virtual void Input(const _float& fTimeDelta) = 0; // 현재 상태에서만 받을 키,마우스 입력
 	virtual _int Update_State(const _float& fTimeDelta) = 0;
 	virtual void LateUpdate_State(const _float& fTimeDelta) = 0;
 	virtual void Render_State() = 0;
@@ -21,9 +20,9 @@ protected:
 	virtual void Clear() = 0; // 상태마다의 값, 플래그 초기화 (Enter에서 호출)
 
 protected:
-	CDSPlayer* m_pPlayer;
+	CGameObject* m_pPlayer;
 
 protected:
-	void Free() override;
+	virtual void Free() override;
 };
 
