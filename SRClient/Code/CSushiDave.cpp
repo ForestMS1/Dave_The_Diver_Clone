@@ -41,17 +41,23 @@ _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
     switch (curState)
     {
     case IDLE:
-        m_fFrame += 5.f * fTimeDelta;
+        m_fFrame += 2.f * fTimeDelta;
 
-        if (5.f < m_fFrame)
+        if (2.f < m_fFrame)
             m_fFrame = 0.f;
         break;
-    case COOK:
-        m_fFrame += 3.f * fTimeDelta;
-        if (3.f < m_fFrame)
+    case SUSHI_IDLE:
+        m_fFrame += 2.f * fTimeDelta;
+        if (2.f < m_fFrame)
+            m_fFrame = 0.f;
+        break;
+    default:
+        m_fFrame += 8.f * fTimeDelta;
+        if (8.f < m_fFrame)
             m_fFrame = 0.f;
         break;
     }
+
 
 
     return iExit;

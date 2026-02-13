@@ -16,7 +16,7 @@ private:
 	virtual ~CSushiDave();
 
 public:
-	enum State { IDLE, COOK, STATE_END };
+	enum State { IDLE,WALK, RUN,TIRED, SUSHI_IDLE, SUSHI_WALK, SUSHI_RUN, SUSHI_TIRED, STATE_END };
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
