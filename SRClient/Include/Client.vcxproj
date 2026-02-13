@@ -199,29 +199,29 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CBackground.cpp" />
-    <ClCompile Include="..\Code\CBancho.cpp" />
-    <ClCompile Include="..\Code\CChair.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />
+    <ClCompile Include="..\Code\CDiveDave.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveMove.cpp" />
+    <ClCompile Include="..\Code\CLogo.cpp" />
+    <ClCompile Include="..\Code\CMainApp.cpp" />
+    <ClCompile Include="..\Code\CPlayerState.cpp" />
+    <ClCompile Include="..\Code\CBackground.cpp" />
+    <ClCompile Include="..\Code\CBancho.cpp" />
+    <ClCompile Include="..\Code\CChair.cpp" />
     <ClCompile Include="..\Code\CFence.cpp" />
     <ClCompile Include="..\Code\CFishTank.cpp" />
     <ClCompile Include="..\Code\CHood.cpp" />
     <ClCompile Include="..\Code\CKitchen.cpp" />
     <ClCompile Include="..\Code\CLight.cpp" />
-    <ClCompile Include="..\Code\CDiveDave.cpp" />
-    <ClCompile Include="..\Code\CDiveDaveMove.cpp" />
-    <ClCompile Include="..\Code\CLogo.cpp" />
-    <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CMenu.cpp" />
     <ClCompile Include="..\Code\COpen.cpp" />
     <ClCompile Include="..\Code\CPatternFrame.cpp" />
     <ClCompile Include="..\Code\CRoof.cpp" />
     <ClCompile Include="..\Code\CSakura.cpp" />
-    <ClCompile Include="..\Code\CPlayerState.cpp" />
     <ClCompile Include="..\Code\CShip.cpp" />
     <ClCompile Include="..\Code\CSign.cpp" />
     <ClCompile Include="..\Code\CSpeaker.cpp" />

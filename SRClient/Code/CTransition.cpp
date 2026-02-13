@@ -9,8 +9,8 @@
 #include "CShip.h"
 #include "CSushi.h"
 #include "CDive.h"
-#include "CAssetTexture.h"
 #include "CAttackReadyArmTex.h"
+#include "CAssetTexture.h"
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
 	, m_eDstScene(eDstScene)
@@ -197,7 +197,7 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Speaker", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/BackGround/Speaker.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SpeakerTex", Engine::CTexture::Create(L"Tex_Speaker"))))
 		return E_FAIL;
-	/////////¾Ö´Ï¸ŞÀÌ¼Ç
+	/////////ì• ë‹ˆë©”ì´ì…˜
 	for (int i = 1; i < 10; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/SushiBar/BackGround/tank/Sushibar_tank0" + ::to_wstring(i) + L".png";
@@ -256,12 +256,12 @@ HRESULT CTransition::Transition_SUSHI_TO_SHIP()
 HRESULT CTransition::Ready_Scene()
 {
 	InitializeCriticalSection(&m_Crt);
-	m_hThread = (HANDLE)_beginthreadex(NULL, // º¸¾È ¼Ó¼º(ÇÚµéÀÇ »ó¼Ó ¿©ºÎ, NULLÀÎ °æ¿ì »ó¼Ó¿¡¼­ Á¦¿Ü)
-		0,  // µğÆúÆ® ½ºÅÈ »çÀÌÁî(1 ¹ÙÀÌÆ®)
-		Thread_Main, // ±¸µ¿ÇÒ ¾²·¹µå ÇÔ¼ö
-		this,          // 3¹ø ¸Å°³ º¯¼ö ÇÔ¼ö¸¦ ÅëÇØ °¡°øÇÒ µ¥ÀÌÅÍ ÁÖ¼Ò
-		0,             // ¾²·¹µå »ı¼º ¹× ½ÇÇàÀ» Á¶Á¤ÇÏ±â À§ÇÑ ¿É¼Ç
-		NULL);         // ¾²·¹µå ID
+	m_hThread = (HANDLE)_beginthreadex(NULL, // ë³´ì•ˆ ì†ì„±(í•¸ë“¤ì˜ ìƒì† ì—¬ë¶€, NULLì¸ ê²½ìš° ìƒì†ì—ì„œ ì œì™¸)
+		0,  // ë””í´íŠ¸ ìŠ¤íƒ¯ ì‚¬ì´ì¦ˆ(1 ë°”ì´íŠ¸)
+		Thread_Main, // êµ¬ë™í•  ì“°ë ˆë“œ í•¨ìˆ˜
+		this,          // 3ë²ˆ ë§¤ê°œ ë³€ìˆ˜ í•¨ìˆ˜ë¥¼ í†µí•´ ê°€ê³µí•  ë°ì´í„° ì£¼ì†Œ
+		0,             // ì“°ë ˆë“œ ìƒì„± ë° ì‹¤í–‰ì„ ì¡°ì •í•˜ê¸° ìœ„í•œ ì˜µì…˜
+		NULL);         // ì“°ë ˆë“œ ID
 	return S_OK;
 }
 
@@ -384,5 +384,5 @@ unsigned int CTransition::Thread_Main(void* pArg)
 
 	//_endthreadex(0);
 
-	return iFlag;       // 0 ¸®ÅÏ ½Ã, _endthreadex°¡ ÀÚµ¿ È£Ãâ
+	return iFlag;       // 0 ë¦¬í„´ ì‹œ, _endthreadexê°€ ìë™ í˜¸ì¶œ
 }
