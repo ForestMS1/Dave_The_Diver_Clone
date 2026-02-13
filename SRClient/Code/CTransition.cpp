@@ -2,12 +2,14 @@
 #include "CTransition.h"
 #include "CAssetDefaultFont.h"
 #include "CAssetMgr.h"
+#include "CAssetTexture.h"
 #include "CManagement.h"
 #include "CLogo.h"
 #include "CProtoMgr.h"
 #include "CShip.h"
 #include "CSushi.h"
 #include "CDive.h"
+#include "CAttackReadyArmTex.h"
 #include "CAssetTexture.h"
 
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
@@ -43,7 +45,7 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG
-	Sleep(500);
+	//Sleep(500);
 #endif // DEBUG
 	m_bFinish = true;
 
@@ -82,9 +84,58 @@ HRESULT CTransition::Transition_SHIP_TO_LOGO()
 HRESULT CTransition::Transition_SHIP_TO_DIVE()
 {
 	m_sComment = L"Transition_SHIP_TO_DIVE COMPLETE";
-//#ifdef _DEBUG
-//	Sleep(500);
-//#endif // DEBUG
+
+	for (int i = 0; i < 8; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Dive_Player/Idle/Idle0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerIdle", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/Dive_Player/Up_Move/MoveUp0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerMoveUp", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/Dive_Player/Side_Up/MoveSideUp0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerMoveSideUp", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/Dive_Player/Side_Move/MoveSide0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerMoveSide", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/Dive_Player/Side_Down/MoveSideDown0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerMoveSideDown", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/Dive_Player/Down_Move/MoveDown0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerMoveDown", CAssetTexture::Create(s.c_str()));
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Dive_Player/Attack/AttackReady0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackReady", CAssetTexture::Create(s.c_str()));
+	}
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_AttackReadyArm", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack/AttackReadyArms.png"));
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveUp"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveSideUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveSideUp"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveSideTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveSide"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveSideDownTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveSideDown"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveDownTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveDown"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackReadyTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackReady"))))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AttackReadyArmTexture", Engine::CTexture::Create(L"Tex_AttackReadyArm"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AttackReadyArmBuffer", Engine::CAttackReadyArmTex::Create())))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->LoadAsset();
+#ifdef _DEBUG
+	//Sleep(500);
+#endif // DEBUG
 	m_bFinish = true;
 
 	return S_OK;
@@ -150,7 +201,7 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Speaker", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/BackGround/Speaker.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SpeakerTex", Engine::CTexture::Create(L"Tex_Speaker"))))
 		return E_FAIL;
-	/////////¾Ö´Ï¸ŞÀÌ¼Ç
+	/////////ì• ë‹ˆë©”ì´ì…˜
 	for (int i = 1; i < 10; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/SushiBar/BackGround/tank/Sushibar_tank0" + ::to_wstring(i) + L".png";
@@ -165,6 +216,22 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Open", CAssetTexture::Create(s.c_str()));
 	}
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OpenTexture", Engine::CTexture::Create(L"Tex_Open"))))
+		return E_FAIL;
+
+	for (int i = 1; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Bancho/Bancho_Cook0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Cook", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CookTexture", Engine::CTexture::Create(L"Tex_Cook"))))
+		return E_FAIL;
+
+	for (int i = 1; i < 6; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Bancho/Bancho_Idle00" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_BanchoIdle", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BanchoIdleTexture", Engine::CTexture::Create(L"Tex_BanchoIdle"))))
 		return E_FAIL;
 	///////
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Sakura", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/BackGround/sakura_stick.png"));
@@ -255,12 +322,12 @@ HRESULT CTransition::Common_SHIP_Unload()
 HRESULT CTransition::Ready_Scene()
 {
 	InitializeCriticalSection(&m_Crt);
-	m_hThread = (HANDLE)_beginthreadex(NULL, // º¸¾È ¼Ó¼º(ÇÚµéÀÇ »ó¼Ó ¿©ºÎ, NULLÀÎ °æ¿ì »ó¼Ó¿¡¼­ Á¦¿Ü)
-		0,  // µğÆúÆ® ½ºÅÈ »çÀÌÁî(1 ¹ÙÀÌÆ®)
-		Thread_Main, // ±¸µ¿ÇÒ ¾²·¹µå ÇÔ¼ö
-		this,          // 3¹ø ¸Å°³ º¯¼ö ÇÔ¼ö¸¦ ÅëÇØ °¡°øÇÒ µ¥ÀÌÅÍ ÁÖ¼Ò
-		0,             // ¾²·¹µå »ı¼º ¹× ½ÇÇàÀ» Á¶Á¤ÇÏ±â À§ÇÑ ¿É¼Ç
-		NULL);         // ¾²·¹µå ID
+	m_hThread = (HANDLE)_beginthreadex(NULL, // ë³´ì•ˆ ì†ì„±(í•¸ë“¤ì˜ ìƒì† ì—¬ë¶€, NULLì¸ ê²½ìš° ìƒì†ì—ì„œ ì œì™¸)
+		0,  // ë””í´íŠ¸ ìŠ¤íƒ¯ ì‚¬ì´ì¦ˆ(1 ë°”ì´íŠ¸)
+		Thread_Main, // êµ¬ë™í•  ì“°ë ˆë“œ í•¨ìˆ˜
+		this,          // 3ë²ˆ ë§¤ê°œ ë³€ìˆ˜ í•¨ìˆ˜ë¥¼ í†µí•´ ê°€ê³µí•  ë°ì´í„° ì£¼ì†Œ
+		0,             // ì“°ë ˆë“œ ìƒì„± ë° ì‹¤í–‰ì„ ì¡°ì •í•˜ê¸° ìœ„í•œ ì˜µì…˜
+		NULL);         // ì“°ë ˆë“œ ID
 	return S_OK;
 }
 
@@ -383,5 +450,5 @@ unsigned int CTransition::Thread_Main(void* pArg)
 
 	//_endthreadex(0);
 
-	return iFlag;       // 0 ¸®ÅÏ ½Ã, _endthreadex°¡ ÀÚµ¿ È£Ãâ
+	return iFlag;       // 0 ë¦¬í„´ ì‹œ, _endthreadexê°€ ìë™ í˜¸ì¶œ
 }

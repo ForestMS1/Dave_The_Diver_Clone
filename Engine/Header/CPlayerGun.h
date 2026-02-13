@@ -36,4 +36,3 @@ public:
 private:
 	virtual void Free();
 };
-

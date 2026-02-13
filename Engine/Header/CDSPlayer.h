@@ -10,7 +10,7 @@ namespace Engine
 
 class CPlayerState;
 
-enum class PlayerState 
+enum class PlayerState
 {
 	IDLE = 0,
 	ATTACK,
@@ -59,4 +59,3 @@ private:
 	virtual void Free();
 
 };
-
