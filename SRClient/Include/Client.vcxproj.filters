@@ -49,6 +49,12 @@
     <Filter Include="02. GameObject\01. Boat">
       <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Bancho">
+      <UniqueIdentifier>{00379c55-c7bf-4eb3-8237-c8153ac6c3c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\Dave">
+      <UniqueIdentifier>{88d9acb6-172e-4bea-9626-e3807551745a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\DiveDave">
       <UniqueIdentifier>{bc70a9e5-82f4-41b7-bcfe-eb6010122648}</UniqueIdentifier>
     </Filter>
@@ -165,6 +171,12 @@
     <ClInclude Include="..\Header\CShipBoat.h">
       <Filter>02. GameObject\01. Boat</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBancho.h">
+      <Filter>01. Scene\03. Sushi\Bancho</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSushiDave.h">
+      <Filter>01. Scene\03. Sushi\Dave</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CDiveDave.h">
       <Filter>02. GameObject\DiveDave</Filter>
     </ClInclude>
@@ -268,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipBoat.cpp">
       <Filter>02. GameObject\01. Boat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBancho.cpp">
+      <Filter>01. Scene\03. Sushi\Bancho</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSushiDave.cpp">
+      <Filter>01. Scene\03. Sushi\Dave</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDave.cpp">
       <Filter>02. GameObject\DiveDave</Filter>

@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackground.h" />
+    <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="..\Header\CShipDave.h" />
     <ClInclude Include="..\Header\CSushi.h" />
     <ClInclude Include="..\Header\CSushiCamera.h" />
+    <ClInclude Include="..\Header\CSushiDave.h" />
     <ClInclude Include="..\Header\CTable.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
@@ -198,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBackground.cpp" />
+    <ClCompile Include="..\Code\CBancho.cpp" />
     <ClCompile Include="..\Code\CChair.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
@@ -226,6 +229,7 @@
     <ClCompile Include="..\Code\CShipDave.cpp" />
     <ClCompile Include="..\Code\CSushi.cpp" />
     <ClCompile Include="..\Code\CSushiCamera.cpp" />
+    <ClCompile Include="..\Code\CSushiDave.cpp" />
     <ClCompile Include="..\Code\CTable.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />

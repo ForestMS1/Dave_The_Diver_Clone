@@ -213,6 +213,22 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	}
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OpenTexture", Engine::CTexture::Create(L"Tex_Open"))))
 		return E_FAIL;
+
+	for (int i = 1; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Bancho/Bancho_Cook0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Cook", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CookTexture", Engine::CTexture::Create(L"Tex_Cook"))))
+		return E_FAIL;
+
+	for (int i = 1; i < 6; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Bancho/Bancho_Idle00" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_BanchoIdle", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BanchoIdleTexture", Engine::CTexture::Create(L"Tex_BanchoIdle"))))
+		return E_FAIL;
 	///////
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Sakura", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/BackGround/sakura_stick.png"));
 	CAssetMgr::GetInstance()->LoadAsset();
