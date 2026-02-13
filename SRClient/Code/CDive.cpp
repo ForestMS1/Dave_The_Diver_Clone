@@ -123,4 +123,5 @@ CDive* CDive::Create()
 void CDive::Free()
 {
 	CScene::Free();
+	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 }
