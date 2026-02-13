@@ -166,6 +166,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAssetDefaultFont.h" />
     <ClInclude Include="..\Header\CAssetFbx.h" />
     <ClInclude Include="..\Header\CAssetFmodSound.h" />
+    <ClInclude Include="..\Header\CAssetJson.h" />
     <ClInclude Include="..\Header\CAssetMgr.h" />
     <ClInclude Include="..\Header\CAssetTexture.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
@@ -243,6 +244,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp" />
     <ClCompile Include="..\Code\CAssetFbx.cpp" />
     <ClCompile Include="..\Code\CAssetFmodSound.cpp" />
+    <ClCompile Include="..\Code\CAssetJson.cpp" />
     <ClCompile Include="..\Code\CAssetMgr.cpp" />
     <ClCompile Include="..\Code\CAssetTexture.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />

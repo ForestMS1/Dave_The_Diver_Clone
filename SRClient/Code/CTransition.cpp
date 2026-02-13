@@ -9,6 +9,7 @@
 #include "CSushi.h"
 #include "CDive.h"
 #include "CMapMgr.h"
+#include "CAssetJson.h"
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
 	, m_eDstScene(eDstScene)
@@ -38,7 +39,8 @@ void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstr
 HRESULT CTransition::Transition_INIT_TO_LOGO()
 {
 	
-
+	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Data/Map1.json"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Json_Map");
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG

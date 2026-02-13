@@ -1,4 +1,6 @@
 #include "CMapMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetJson.h"
 #include <fstream>
 
 IMPLEMENT_SINGLETON(CMapMgr)
@@ -13,111 +15,74 @@ CMapMgr::~CMapMgr()
 
 void CMapMgr::Load(char* buffer) {
 	using json = nlohmann::json;
+	json scene;
 
-
-	string  a = buffer;
-	std::string path = "../Bin/Data/" + a + ".json";
-	std::ifstream file(path);
-
-	if (file.is_open()) {
-		json scene;
-		file >> scene;
+	scene = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetJson>(L"Json_Map")->Get_Json();
 	
-		auto& scene0 = scene["Scene"][0];
 
-		
-		for (auto& i : scene["Scene"]) {
-			std::string layerName = i["LayerName"].get<std::string>();
-			CLayer* m_Layer = m_Scene->Get_Layer(StringToWString(layerName));
-			for (auto& j : i["Layer"]) {
-				std::string GameObjectLayerName = j["GameObjectLayerName"].get<std::string>();
-				list<CGameObject*> CGameObjectLayer  = *m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName));
-				auto it = CGameObjectLayer.begin();
-				for (auto& k : j["GameObjectLayer"]) {
-					int ObjCnt = k["ObjCnt"];
-					
-					for (auto& elem : k["Transform"]) {
-						std::string type = elem[0];
 
-						if (type == "pos")
-						{
-						
-							float x = elem[1];
-							float y = elem[2];
-							float z = elem[3];
-							dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(x,y,z);
+	for (auto& i : scene["Scene"]) {
+		std::string layerName = i["LayerName"];
+		CLayer* m_Layer = m_Scene->Get_Layer(StringToWString(layerName));
+		for (auto& j : i["Layer"]) {
+			std::string GameObjectLayerName = j["GameObjectLayerName"].get<std::string>();
+			list<CGameObject*> CGameObjectLayer = *m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName));
+			auto it = CGameObjectLayer.begin();
+			for (auto& k : j["GameObjectLayer"]) {
+				int ObjCnt = k["ObjCnt"];
 
-						}
-						else if (type == "rot")
-						{
-							float rx = elem[1];
-							float ry = elem[2];
-							float rz = elem[3];
-						}
-						else if (type == "scale")
-						{
-							float sx = elem[1];
-							float sy = elem[2];
-							float sz = elem[3];
-						}
+				for (auto& elem : k["Transform"]) {
+					std::string type = elem[0];
+
+					if (type == "pos")
+					{
+
+						float x = elem[1];
+						float y = elem[2];
+						float z = elem[3];
+						dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(x, y, z);
+
 					}
-					++it;
+					else if (type == "rot")
+					{
+						float rx = elem[1];
+						float ry = elem[2];
+						float rz = elem[3];
+					}
+					else if (type == "scale")
+					{
+						float sx = elem[1];
+						float sy = elem[2];
+						float sz = elem[3];
+					}
 				}
-
-
+				++it;
 			}
+
+
 		}
+	}
 
 
-		file.close();
-		MSG_BOX("File Load");
-	}
-	else {
-		MSG_BOX("File Open FAILED");
-	}
+
+	
 
 }
 
 void CMapMgr::Save(char* buffer)
 {
 	using json = nlohmann::json;
-	//Scene: 이름
-	//
-	//Layer 종류
-	//
-	//Object 종류 : 지형
-	//
-	//Object 컴포넌트 :
-	//
-	//
-	//"Transform" : {
-	//	"Pos": [0, 0, 0] ,
-	//		"Rot" : [0, 0, 0, 1] ,
-	//		"Scale" : [1, 1, 1]
-	//},
-	//
-	//Object 컴포넌트 :
-	//
-	//
-	//"Transform" : {
-	//	"Pos": [0, 0, 0] ,
-	//		"Rot" : [0, 0, 0, 1] ,
-	//		"Scale" : [1, 1, 1]
-	//},
 
-	string  a = buffer;
-	std::string path = "../Bin/Data/" + a + ".json";
-	std::ofstream file(path);
 	json Scene;
 	Scene["Scene"] = json::array();
 
 	for (auto i : *m_Scene->Get_Layer()) {
 		json Layer;
-		
+
 		Layer["Layer"] = json::array();
 		for (auto j : *i.second->Get_GameObjects()) {
 			json GameObjectLayer;
-	
+
 			GameObjectLayer["GameObjectLayer"] = json::array();
 			int Cnt = 0;
 			for (auto o : j.second) {
@@ -126,7 +91,7 @@ void CMapMgr::Save(char* buffer)
 				dynamic_cast<CTransform*>(o->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Rotation(&rot);
 				dynamic_cast<CTransform*>(o->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Scale(&scale);
 				json jObj;
-			
+
 				jObj["ObjCnt"] = Cnt++;
 				jObj["Transform"] = { { "pos",pos.x,pos.y,pos.z},
 										{ "rot",rot.x,rot.y,rot.z},
@@ -142,15 +107,7 @@ void CMapMgr::Save(char* buffer)
 		Scene["Scene"].push_back(Layer);
 	}
 
-	if (file.is_open()) {
-	
-		file << Scene.dump(4);
-		file.close();
-		MSG_BOX("File Save");
-	}
-	else {
-		MSG_BOX("File Save FAILED");
-	}
+	CAssetMgr::GetInstance()->Get_AssetFirst<CAssetJson>(L"Json_Map")->Save(Scene);
 
 }
 
