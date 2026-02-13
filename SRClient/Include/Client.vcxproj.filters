@@ -94,6 +94,9 @@
     <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
       <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\TargetEffect">
+      <UniqueIdentifier>{9b7ba632-d80f-47c3-a6fa-3ff4ed0858c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,6 +228,12 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTargetCurveStart.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTargetArrow.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -346,6 +355,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveCam.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTargetCurveStart.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTargetArrow.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

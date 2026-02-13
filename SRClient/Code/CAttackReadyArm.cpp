@@ -21,7 +21,7 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
-	_vec3 vScale = { 0.2f, 0.2f, 1.f };
+	_vec3 vScale = { 0.3f, 0.3f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	_float fWidth = 39.f;
@@ -37,6 +37,9 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 
 _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 {
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return 0;
+
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	Set_ParentTransform();
 	Rotate_ToMouse();
@@ -46,6 +49,9 @@ _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 
 void CAttackReadyArm::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return;
+
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 

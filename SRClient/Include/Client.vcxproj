@@ -193,6 +193,8 @@
     <ClInclude Include="..\Header\CSushiCamera.h" />
     <ClInclude Include="..\Header\CSushiDave.h" />
     <ClInclude Include="..\Header\CTable.h" />
+    <ClInclude Include="..\Header\CTargetArrow.h" />
+    <ClInclude Include="..\Header\CTargetCurveStart.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="Client.h" />
@@ -238,6 +240,8 @@
     <ClCompile Include="..\Code\CSushiCamera.cpp" />
     <ClCompile Include="..\Code\CSushiDave.cpp" />
     <ClCompile Include="..\Code\CTable.cpp" />
+    <ClCompile Include="..\Code\CTargetArrow.cpp" />
+    <ClCompile Include="..\Code\CTargetCurveStart.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="Client.cpp" />
