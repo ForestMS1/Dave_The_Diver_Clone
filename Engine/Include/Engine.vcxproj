@@ -182,6 +182,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CCubeCol.h" />
     <ClInclude Include="..\Header\CCubeTex.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
+    <ClInclude Include="..\Header\CDSPlayer.h" />
     <ClInclude Include="..\Header\CFlameShot.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
@@ -204,7 +205,13 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\COBB.h" />
     <ClInclude Include="..\Header\CParticleMgr.h" />
     <ClInclude Include="..\Header\CPipeline.h" />
+    <ClInclude Include="..\Header\CPlayerAttack.h" />
+    <ClInclude Include="..\Header\CPlayerBullet.h" />
     <ClInclude Include="..\Header\CPlayerCam.h" />
+    <ClInclude Include="..\Header\CPlayerDie.h" />
+    <ClInclude Include="..\Header\CPlayerGun.h" />
+    <ClInclude Include="..\Header\CPlayerIdle.h" />
+    <ClInclude Include="..\Header\CPlayerState.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
     <ClInclude Include="..\Header\CRcCol.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
@@ -252,6 +259,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CCubeCol.cpp" />
     <ClCompile Include="..\Code\CCubeTex.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
+    <ClCompile Include="..\Code\CDSPlayer.cpp" />
     <ClCompile Include="..\Code\CFlameShot.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
@@ -274,7 +282,13 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\COBB.cpp" />
     <ClCompile Include="..\Code\CParticleMgr.cpp" />
     <ClCompile Include="..\Code\CPipeline.cpp" />
+    <ClCompile Include="..\Code\CPlayerAttack.cpp" />
+    <ClCompile Include="..\Code\CPlayerBullet.cpp" />
     <ClCompile Include="..\Code\CPlayerCam.cpp" />
+    <ClCompile Include="..\Code\CPlayerDie.cpp" />
+    <ClCompile Include="..\Code\CPlayerGun.cpp" />
+    <ClCompile Include="..\Code\CPlayerIdle.cpp" />
+    <ClCompile Include="..\Code\CPlayerState.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
     <ClCompile Include="..\Code\CRcCol.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />

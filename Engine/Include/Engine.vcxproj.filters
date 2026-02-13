@@ -202,6 +202,27 @@
     <Filter Include="03. GameObject\PlayerCam">
       <UniqueIdentifier>{35ab7043-a87d-4770-b774-6be89a6ff47d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\PlayerState">
+      <UniqueIdentifier>{31289a6f-788e-4157-ac6c-0c69ad3f5307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\PlayerState\Die">
+      <UniqueIdentifier>{4f41b10e-6aa3-4405-8688-4ed046eafaa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\PlayerGun">
+      <UniqueIdentifier>{ac66136b-a0b9-41f0-9003-ea8ecdfdb586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\PlayerState\Idle">
+      <UniqueIdentifier>{a9464548-5827-4ab4-b067-2c4a5a6dc4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\PlayerState\Attack">
+      <UniqueIdentifier>{aaf9718c-4245-4837-846b-5ef3aab3711a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\PlayerBullet">
+      <UniqueIdentifier>{4325f936-06b3-4406-a272-4afb822932b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\DSPlayer">
+      <UniqueIdentifier>{8d2b687e-8bc8-436a-8670-e10dfde18eb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -426,6 +447,27 @@
     <ClCompile Include="..\Code\CPlayerCam.cpp">
       <Filter>03. GameObject\PlayerCam</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CPlayerState.cpp">
+      <Filter>03. GameObject\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerDie.cpp">
+      <Filter>03. GameObject\PlayerState\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerGun.cpp">
+      <Filter>03. GameObject\PlayerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerIdle.cpp">
+      <Filter>03. GameObject\PlayerState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerAttack.cpp">
+      <Filter>03. GameObject\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerBullet.cpp">
+      <Filter>03. GameObject\PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDSPlayer.cpp">
+      <Filter>03. GameObject\DSPlayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -634,6 +676,27 @@
     </ClInclude>
     <ClInclude Include="..\Header\CPlayerCam.h">
       <Filter>03. GameObject\PlayerCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerState.h">
+      <Filter>03. GameObject\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerDie.h">
+      <Filter>03. GameObject\PlayerState\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerGun.h">
+      <Filter>03. GameObject\PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerIdle.h">
+      <Filter>03. GameObject\PlayerState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerAttack.h">
+      <Filter>03. GameObject\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerBullet.h">
+      <Filter>03. GameObject\PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDSPlayer.h">
+      <Filter>03. GameObject\DSPlayer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

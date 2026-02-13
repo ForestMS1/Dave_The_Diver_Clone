@@ -8,9 +8,9 @@ namespace Engine
 	class CCalculator;
 }
 
-class Engine::CPlayerState;
+class CPlayerState;
 
-enum class PlayerState 
+enum class PlayerState
 {
 	IDLE = 0,
 	ATTACK,
@@ -48,9 +48,9 @@ private:
 	Engine::CCalculator* m_pCalculatorCom;
 
 private:
-	Engine::CPlayerState* m_pState = nullptr;
+	CPlayerState* m_pState = nullptr;
 	PlayerState m_eCurState;
-	unordered_map<PlayerState, Engine::CPlayerState*> m_mapState;
+	unordered_map<PlayerState, CPlayerState*> m_mapState;
 
 public:
 	static CDSPlayer* Create();
@@ -59,4 +59,3 @@ private:
 	virtual void Free();
 
 };
-
