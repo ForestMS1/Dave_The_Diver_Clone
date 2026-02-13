@@ -21,9 +21,10 @@
 #include "COpen.h"
 #include "CKitchen.h"
 #include "CSpeaker.h"
+#include "CBancho.h"
+#include "CColliderMgr.h"
 
 CGameObject* g_pObject = nullptr;
-#include "CColliderMgr.h"
 
 CSushi::CSushi()
 	: CScene()
@@ -182,7 +183,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	CGameObject* pGameObject = nullptr;
-	//���
+	
 	pGameObject = CBackground::Create();
 
 	if (nullptr == pGameObject)
@@ -191,7 +192,6 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Background", pGameObject)))
 		return E_FAIL;
 
-	//����
 	pGameObject = CSakura::Create();
 
 	if (nullptr == pGameObject)
@@ -200,7 +200,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Sakura", pGameObject)))
 		return E_FAIL;
 
-	//����
+
 	pGameObject = CRoof::Create();
 
 	if (nullptr == pGameObject)
@@ -209,7 +209,6 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Roof", pGameObject)))
 		return E_FAIL;
 
-	//��Ÿ��
 	pGameObject = CFence::Create();
 
 	if (nullptr == pGameObject)
@@ -218,71 +217,75 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Fence", pGameObject)))
 		return E_FAIL;
 
-	//�ĵ�
+
 	pGameObject = CHood::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Hood", pGameObject)))
 		return E_FAIL;
-	//���̺�
+
 	pGameObject = CTable::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Table", pGameObject)))
 		return E_FAIL;
 
-	//���� ���
+
 	pGameObject = CWood::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Wood", pGameObject)))
 		return E_FAIL;
-	//�޴�	
+
 	pGameObject = CMenu::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Menu", pGameObject)))
 		return E_FAIL;
-	//�ǽ� ��ũ	
+
 	pGameObject = CFishTank::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"FishTank", pGameObject)))
 		return E_FAIL;
-	//���� ������
+
 	pGameObject = CPatternFrame::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Frame", pGameObject)))
 		return E_FAIL;
-	//���� �긻
+	
 	pGameObject = CSign::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Sign", pGameObject)))
 		return E_FAIL;
-	//���� ����
+
 	pGameObject = COpen::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Open", pGameObject)))
 		return E_FAIL;
-	//�ֹ�	
 	pGameObject = CKitchen::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Kitchen", pGameObject)))
 		return E_FAIL;
-	//�Һ�
 
+	pGameObject = CBancho::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Bancho", pGameObject)))
+		return E_FAIL;
 	for (int i = 0; i < 4; i++) {
 		pGameObject = CLight::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
@@ -294,7 +297,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"Light", pGameObject)))
 			return E_FAIL;
 	}
-	//����
+	
 	for (int i = 0; i < 6; i++) {
 		pGameObject = CChair::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
@@ -307,7 +310,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 	}
 
-	//����Ŀ
+
 	for (int i = 0; i < 2; i++) {
 		pGameObject = CSpeaker::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
@@ -338,9 +341,9 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	_vec3 vEye{ 0.f, 0.f, -10.f };   // ī�޶� ��ġ
-	_vec3 vAt{ 0.f, 0.f, 0.f };      // �ٶ󺸴� ���
-	_vec3 vUp{ 0.f, 1.f, 0.f };      // �� ����
+	_vec3 vEye{ 0.f, 0.f, -10.f };   
+	_vec3 vAt{ 0.f, 0.f, 0.f };      
+	_vec3 vUp{ 0.f, 1.f, 0.f };      
 
 	pGameObject = CSushiCamera::Create(&vEye, &vAt, &vUp);
 
