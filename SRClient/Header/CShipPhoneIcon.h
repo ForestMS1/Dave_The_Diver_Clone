@@ -1,12 +1,12 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAABB.h"
-class CShipDave : public CGameObject
+class CShipPhoneIcon : public CGameObject
 {
 private:
-	explicit CShipDave();
-	explicit CShipDave(const CShipDave& rhs);
-	virtual ~CShipDave();
+	explicit CShipPhoneIcon();
+	explicit CShipPhoneIcon(const CShipPhoneIcon& rhs);
+	virtual ~CShipPhoneIcon();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -16,24 +16,21 @@ public:
 
 private:
 	HRESULT			Ready_Component();
-	void			Key_Input(const _float& fTimeDelta);
-	void			Motion_Change(wstring_view svMotion);
+
+public:
+	HRESULT Open_Phone();
+	HRESULT Close_Phone();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 	CAABB* m_pAABB;
 
-	wstring m_sCurrentMotion;
-	_uint			m_iFrame;
-	_float m_fAccFrameDelta;
-	bool m_bSeeRight;
-
+	bool m_bPhoneOpen;
 public:
-	static CShipDave* Create();
+	static CShipPhoneIcon* Create();
 
 private:
 	virtual void Free();
-
 };
 

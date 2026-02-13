@@ -25,6 +25,10 @@ public:
 	{
 		*pAngle = m_vAngle;
 	}
+	void Set_Rotation(_vec3* pAngle)
+	{
+		m_vAngle = *pAngle;
+	}
 	void		Get_RotationRadian(_vec3* pAngle)
 	{
 		(*pAngle).x = D3DXToRadian(m_vAngle.x);

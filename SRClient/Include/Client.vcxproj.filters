@@ -43,10 +43,16 @@
     <Filter Include="01. Scene\03. Sushi\Camera">
       <UniqueIdentifier>{998908b0-12a3-45c5-a020-bc3b8fcea44f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. ShipDave">
+    <Filter Include="02. GameObject\00. Ship">
+      <UniqueIdentifier>{74aa3529-9847-401f-819b-8d3cf0700677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\02. ShipDiverBox">
+      <UniqueIdentifier>{d4c1f274-c066-4b65-a013-1dae95bd8265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\00. ShipDave">
       <UniqueIdentifier>{e3d5e2fe-fdfc-422b-b1ac-57d30dfb677c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Boat">
+    <Filter Include="02. GameObject\00. Ship\01. Boat">
       <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\03. Sushi\Bancho">
@@ -78,6 +84,15 @@
     </Filter>
     <Filter Include="02. GameObject\DiveDave\DiveDaveCam">
       <UniqueIdentifier>{7a9fe6e0-8171-4e10-a037-1618cd090267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\03. ShipPhone">
+      <UniqueIdentifier>{b945b131-3196-4b22-ab1d-647318ca7d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\04. ShipPhoneIcon">
+      <UniqueIdentifier>{6e78a967-9f24-4ee0-a98f-5290eea9e3b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
+      <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,10 +181,22 @@
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipDave.h">
-      <Filter>02. GameObject\00. ShipDave</Filter>
+      <Filter>02. GameObject\00. Ship\00. ShipDave</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipBoat.h">
-      <Filter>02. GameObject\01. Boat</Filter>
+      <Filter>02. GameObject\00. Ship\01. Boat</Filter>
+    </ClInclude>
+    <ClInclude Include="CShipDiverBox.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhone.h">
+      <Filter>02. GameObject\00. Ship\03. ShipPhone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIcon.h">
+      <Filter>02. GameObject\00. Ship\04. ShipPhoneIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneApp.h">
+      <Filter>02. GameObject\00. Ship\05. ShipPhoneApp</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBancho.h">
       <Filter>01. Scene\03. Sushi\Bancho</Filter>
@@ -276,10 +303,22 @@
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipDave.cpp">
-      <Filter>02. GameObject\00. ShipDave</Filter>
+      <Filter>02. GameObject\00. Ship\00. ShipDave</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipBoat.cpp">
-      <Filter>02. GameObject\01. Boat</Filter>
+      <Filter>02. GameObject\00. Ship\01. Boat</Filter>
+    </ClCompile>
+    <ClCompile Include="CShipDiverBox.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhone.cpp">
+      <Filter>02. GameObject\00. Ship\03. ShipPhone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIcon.cpp">
+      <Filter>02. GameObject\00. Ship\04. ShipPhoneIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneApp.cpp">
+      <Filter>02. GameObject\00. Ship\05. ShipPhoneApp</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBancho.cpp">
       <Filter>01. Scene\03. Sushi\Bancho</Filter>
