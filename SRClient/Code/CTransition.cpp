@@ -221,6 +221,29 @@ HRESULT CTransition::Common_SHIP_Load()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_ShipDave_DiveReady", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_ShipDave_DiveReady");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBoxTmp", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxTmp.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBoxTmp");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_MainMenu_Phone.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneIcon");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/PhoneBG.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneBG");
+
+	for (int i = 1; i <= 22; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp/SmartPhoneApp" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneApp", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneApp");
+
+	for (int i = 1; i <= 22; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneAppAlpha/SmartPhoneAppAlpha" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneAppAlpha");
 	return S_OK;
 }
 

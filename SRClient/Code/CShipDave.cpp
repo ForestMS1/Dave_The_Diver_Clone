@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "CShipDave.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
@@ -240,16 +241,16 @@ void CShipDave::Motion_Change(wstring_view svMotion)
 
 CShipDave* CShipDave::Create()
 {
-    CShipDave* pBackGround = new CShipDave;
+    CShipDave* pShipDave = new CShipDave;
 
-    if (FAILED(pBackGround->Ready_GameObject()))
+    if (FAILED(pShipDave->Ready_GameObject()))
     {
-        Safe_Release(pBackGround);
-        MSG_BOX("pBackGround Create Failed");
+        Safe_Release(pShipDave);
+        MSG_BOX("pShipDave Create Failed");
         return nullptr;
     }
 
-    return pBackGround;
+    return pShipDave;
 }
 
 void CShipDave::Free()
