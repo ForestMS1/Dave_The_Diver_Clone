@@ -204,6 +204,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\COBB.h" />
     <ClInclude Include="..\Header\CParticleMgr.h" />
     <ClInclude Include="..\Header\CPipeline.h" />
+    <ClInclude Include="..\Header\CPlayerCam.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
     <ClInclude Include="..\Header\CRcCol.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
@@ -273,6 +274,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\COBB.cpp" />
     <ClCompile Include="..\Code\CParticleMgr.cpp" />
     <ClCompile Include="..\Code\CPipeline.cpp" />
+    <ClCompile Include="..\Code\CPlayerCam.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
     <ClCompile Include="..\Code\CRcCol.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />
