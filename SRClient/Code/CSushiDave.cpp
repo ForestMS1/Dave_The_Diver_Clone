@@ -6,10 +6,12 @@
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
+#include "CDInputMgr.h"
 CSushiDave::CSushiDave()
     : CGameObject()
 {
     curState = IDLE;
+    holdingSushi = false;
 }
 
 CSushiDave::CSushiDave(const CGameObject& rhs)
@@ -47,8 +49,8 @@ _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
             m_fFrame = 0.f;
         break;
     case SUSHI_IDLE:
-        m_fFrame += 2.f * fTimeDelta;
-        if (2.f < m_fFrame)
+        m_fFrame += 1.f * fTimeDelta;
+        if (1.f < m_fFrame)
             m_fFrame = 0.f;
         break;
     default:
@@ -89,8 +91,26 @@ void CSushiDave::Render_GameObject()
     case IDLE:
         m_pIdleTextureCom->Set_Texture((_uint)m_fFrame);
         break;
-    case COOK:
-        m_pCookTextureCom->Set_Texture((_uint)m_fFrame);
+    case WALK:
+        m_pWalkTextureCom->Set_Texture((_uint)m_fFrame);
+        break;
+    case RUN:
+        m_pRunTextureCom->Set_Texture((_uint)m_fFrame);
+        break;
+    case TIRED:
+        m_pTiredTextureCom->Set_Texture((_uint)m_fFrame);
+        break;
+    case SUSHI_IDLE:
+        m_pSushiIdleTextureCom->Set_Texture((_uint)m_fFrame);
+        break;
+    case SUSHI_WALK:
+        m_pSushiWalkTextureCom->Set_Texture((_uint)m_fFrame);
+        break;
+    case SUSHI_RUN:
+        m_pSushiRunTextureCom->Set_Texture((_uint)m_fFrame);
+        break;
+    case SUSHI_TIRED:
+        m_pSushiTiredTextureCom->Set_Texture((_uint)m_fFrame);
         break;
     }
 
@@ -110,21 +130,53 @@ HRESULT CSushiDave::Ready_Component()
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
-    // 텍스쳐
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BanchoIdleTexture", L"Com_Texture", &m_pIdleTextureCom))))
+    // 스시 없을때
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveIdleTexture", L"Com_Texture", &m_pIdleTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_CookTexture", L"Com_Texture", &m_pCookTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveWalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
+        return E_FAIL;
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveRunTexture", L"Com_Texture", &m_pRunTextureCom))))
+        return E_FAIL;
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveTiredTexture", L"Com_Texture", &m_pTiredTextureCom))))
+        return E_FAIL;
+
+    //스시 들고 있을때
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiIdleTexture", L"Com_Texture", &m_pSushiIdleTextureCom))))
+        return E_FAIL;
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiWalkTexture", L"Com_Texture", &m_pSushiWalkTextureCom))))
+        return E_FAIL;
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiRunTexture", L"Com_Texture", &m_pSushiRunTextureCom))))
+        return E_FAIL;
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiTiredTexture", L"Com_Texture", &m_pSushiTiredTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 1.f, 1.5f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 8.8f, -2.0f, 1.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 8.8f, -2.0f, 0.f };
     return S_OK;
 }
 
+void CSushiDave::Key_Input(const _float& fTimeDelta)
+{
 
+  
+   /* if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
+    {
+        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), 10.f, fTimeDelta);
+    }
+
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_S))
+    {
+        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDir, &vDir), -10.f, fTimeDelta);
+    }
+
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
+    {
+        m_pTransformCom->Move_Pos(&vRight, 10.f, fTimeDelta);
+    }*/
+}
 CSushiDave* CSushiDave::Create()
 {
     CSushiDave* pBackGround = new CSushiDave;

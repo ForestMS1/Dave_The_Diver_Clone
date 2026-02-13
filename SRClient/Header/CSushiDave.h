@@ -28,15 +28,23 @@ private:
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pIdleTextureCom;
-	Engine::CTexture* m_pCookTextureCom;
+	Engine::CTexture* m_pWalkTextureCom;
+	Engine::CTexture* m_pRunTextureCom;
+	Engine::CTexture* m_pTiredTextureCom;
+	Engine::CTexture* m_pSushiIdleTextureCom;
+	Engine::CTexture* m_pSushiWalkTextureCom;
+	Engine::CTexture* m_pSushiRunTextureCom;
+	Engine::CTexture* m_pSushiTiredTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 public:
+	void Key_Input(const _float& fTimeDelta);
 	static CSushiDave* Create();
 
 private:
 	State			curState;
 	_float			m_fFrame;
+	bool			holdingSushi;
 	virtual void Free();
 
 };

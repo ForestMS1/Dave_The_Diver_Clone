@@ -22,6 +22,7 @@
 #include "CKitchen.h"
 #include "CSpeaker.h"
 #include "CBancho.h"
+#include "CSushiDave.h"
 #include "CColliderMgr.h"
 
 CGameObject* g_pObject = nullptr;
@@ -330,6 +331,20 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 HRESULT CSushi::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 {
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+	pGameObject = CSushiDave::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Dave", pGameObject)))
+		return E_FAIL;
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
 
