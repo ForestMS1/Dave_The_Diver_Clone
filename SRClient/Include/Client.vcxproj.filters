@@ -46,9 +46,6 @@
     <Filter Include="02. GameObject\00. Ship">
       <UniqueIdentifier>{74aa3529-9847-401f-819b-8d3cf0700677}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. Ship\02. ShipDiverBox">
-      <UniqueIdentifier>{d4c1f274-c066-4b65-a013-1dae95bd8265}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\00. Ship\00. ShipDave">
       <UniqueIdentifier>{e3d5e2fe-fdfc-422b-b1ac-57d30dfb677c}</UniqueIdentifier>
     </Filter>
@@ -93,6 +90,12 @@
     </Filter>
     <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
       <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\02. ShipDiverBoxInventory">
+      <UniqueIdentifier>{d4c1f274-c066-4b65-a013-1dae95bd8265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\06. ShipDiverBox">
+      <UniqueIdentifier>{251c9393-d453-4d59-a117-96861ef4e846}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,8 +189,8 @@
     <ClInclude Include="..\Header\CShipBoat.h">
       <Filter>02. GameObject\00. Ship\01. Boat</Filter>
     </ClInclude>
-    <ClInclude Include="CShipDiverBox.h">
-      <Filter>02. GameObject\00. Ship\02. ShipDiverBox</Filter>
+    <ClInclude Include="CShipDiverBoxInventory.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipPhone.h">
       <Filter>02. GameObject\00. Ship\03. ShipPhone</Filter>
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CDiveDaveCam.h">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBox.h">
+      <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,8 +314,8 @@
     <ClCompile Include="..\Code\CShipBoat.cpp">
       <Filter>02. GameObject\00. Ship\01. Boat</Filter>
     </ClCompile>
-    <ClCompile Include="CShipDiverBox.cpp">
-      <Filter>02. GameObject\00. Ship\02. ShipDiverBox</Filter>
+    <ClCompile Include="CShipDiverBoxInventory.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhone.cpp">
       <Filter>02. GameObject\00. Ship\03. ShipPhone</Filter>
@@ -346,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveCam.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBox.cpp">
+      <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

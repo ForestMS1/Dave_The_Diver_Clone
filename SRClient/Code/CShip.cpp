@@ -9,10 +9,11 @@
 #include "CColliderMgr.h"
 #include "CGraphicDev.h"
 #include "CShipBoat.h"
-#include "CShipDiverBox.h"
+#include "CShipDiverBoxInventory.h"
 #include "CShipPhoneIcon.h"
 #include "CShipPhone.h"
 #include "CShipPhoneApp.h"
+#include "CShipDiverBox.h"
 
 CShip::CShip()
 	: CScene()
@@ -70,11 +71,12 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pShipBoat)))
 		return E_FAIL;
 
-	//pGameObject = CShipDiverBox::Create();
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pLayer->Add_GameObject(L"ShipDiverBox", pGameObject)))
-	//	return E_FAIL;
+	CShipDiverBox* pShipDiverBox = CShipDiverBox::Create();
+	if (nullptr == pShipDiverBox)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipDiverBox", pShipDiverBox)))
+		return E_FAIL;
+
 
 	CShipPhoneIcon* pShipPhoneIcon = CShipPhoneIcon::Create();
 	if (nullptr == pShipPhoneIcon)
