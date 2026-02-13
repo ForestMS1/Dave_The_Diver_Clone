@@ -199,6 +199,9 @@
     <Filter Include="02. Component\AttackReadyArmTex">
       <UniqueIdentifier>{e7848c61-cf96-4d6f-9c9d-e94b829cf519}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\PlayerCam">
+      <UniqueIdentifier>{35ab7043-a87d-4770-b774-6be89a6ff47d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -420,6 +423,9 @@
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp">
       <Filter>02. Component\AttackReadyArmTex</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CPlayerCam.cpp">
+      <Filter>03. GameObject\PlayerCam</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -625,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CAttackReadyArmTex.h">
       <Filter>02. Component\AttackReadyArmTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerCam.h">
+      <Filter>03. GameObject\PlayerCam</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
