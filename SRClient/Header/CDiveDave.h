@@ -1,6 +1,5 @@
 #pragma once
 #include "CGameObject.h"
-#include "CDiveDaveIdleTex.h"
 
 class CPlayerState;
 
