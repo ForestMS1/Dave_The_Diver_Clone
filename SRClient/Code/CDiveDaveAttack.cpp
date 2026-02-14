@@ -7,6 +7,10 @@
 #include "CDiveDaveCam.h"
 #include "CAttackSubReady.h"
 #include "CAttackSubFire.h"
+
+string debugSubState[(_uint)ATTACKSUBSTATE::SUB_END] = { "ATTACK_READY", "ATTACK_FIRE", "ATTACK_FIGHT", "ATTACK_FAIL" };
+
+
 CDiveDaveAttack::CDiveDaveAttack(CGameObject* pOwner)
 	:CPlayerState(pOwner)
 	,m_eCurSubState(ATTACKSUBSTATE::SUB_END)
@@ -38,6 +42,10 @@ _int CDiveDaveAttack::Update_State(const _float& fTimeDelta)
 void CDiveDaveAttack::LateUpdate_State(const _float& fTimeDelta)
 {
 	m_pSubState->LateUpdate_State(fTimeDelta);
+	ImGui::Begin("DiveDave Info");
+	string state = "AttackSubState : " + debugSubState[(_uint)m_eCurSubState];
+	ImGui::Text(state.c_str());
+	ImGui::End();
 }
 
 void CDiveDaveAttack::Render_State()
