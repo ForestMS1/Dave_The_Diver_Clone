@@ -10,7 +10,7 @@
 #include "CLightMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
-#include "CParticleMgr.h"
+//#include "CParticleMgr.h"
 #include "CColliderMgr.h"
 #include "CCameraMgr.h"
 #include "CTransition.h"
@@ -34,8 +34,8 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
-	if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
-		return E_FAIL;
+	//if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
+	//	return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
 	if (FAILED(Load_PermanentAsset()))
@@ -51,7 +51,7 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	
 	CImguiMgr::GetInstance()->Update_Imgui();
 
-	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
+	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	
 	m_pManagement->Update_Scene(fTimeDelta);
 
@@ -70,7 +70,7 @@ void CMainApp::Render_MainApp()
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
-	CParticleMgr::GetInstance()->Render_Particle();
+	//CParticleMgr::GetInstance()->Render_Particle();
 
 	CColliderMgr::GetInstance()->Render();
 
@@ -181,7 +181,7 @@ void CMainApp::Free()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
-	CParticleMgr::GetInstance()->DestroyInstance();
+	//CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
