@@ -10,7 +10,7 @@
 #include "CLightMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
-#include "CParticleMgr.h"
+//#include "CParticleMgr.h"
 #include "CColliderMgr.h"
 #include "CCameraMgr.h"
 #include "CTransition.h"
@@ -35,8 +35,8 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
-	if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
-		return E_FAIL;
+	//if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
+	//	return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
 	if (FAILED(Load_PermanentAsset()))
@@ -52,7 +52,7 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	
 	CImguiMgr::GetInstance()->Update_Imgui();
 
-	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
+	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	
 	CMapMgr::GetInstance()->Update_Map(fTimeDelta);
 
@@ -105,8 +105,8 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);	// Z 버퍼에 Z값을 보관할 것인지 묻는 옵션
 
 
-	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
 	
 
@@ -184,7 +184,7 @@ void CMainApp::Free()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
-	CParticleMgr::GetInstance()->DestroyInstance();
+	//CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();

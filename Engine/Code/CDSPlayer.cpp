@@ -147,9 +147,9 @@ HRESULT CDSPlayer::Add_Component()
 
 HRESULT CDSPlayer::Add_State()
 {
-	m_mapState.insert({ PlayerState::IDLE, CPlayerIdle::Create(this)});
-	m_mapState.insert({ PlayerState::ATTACK, CPlayerAttack::Create(this)});
-	m_mapState.insert({ PlayerState::DIE, CPlayerDie::Create(this)});
+	m_mapState.insert({ PlayerState::IDLE, CPlayerIdle::Create(this) });
+	m_mapState.insert({ PlayerState::ATTACK, CPlayerAttack::Create(this) });
+	m_mapState.insert({ PlayerState::DIE, CPlayerDie::Create(this) });
 
 	return S_OK;
 }

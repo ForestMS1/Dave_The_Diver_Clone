@@ -42,6 +42,11 @@ public:
 	HRESULT Transition_SUSHI_TO_SHIP();
 
 
+private:
+	HRESULT Common_SHIP_Load();
+	HRESULT Common_SHIP_Unload();
+
+
 public:
 	HRESULT		Ready_Scene() override;
 	_int		Update_Scene(const _float& fTimeDelta) override;

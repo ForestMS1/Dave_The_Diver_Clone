@@ -1,4 +1,4 @@
-#include "CPlayerBullet.h"
+ï»¿#include "CPlayerBullet.h"
 #include "CGraphicDev.h"
 #include "CRenderer.h"
 CPlayerBullet::CPlayerBullet(_vec3 vOrigin, _vec3 vDir, _float speed)
@@ -48,7 +48,7 @@ void CPlayerBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	Set_BillBoard();
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-	
+
 	if (m_fLifeTime > 10.f)
 		m_bDead = true;
 }
@@ -107,7 +107,7 @@ void CPlayerBullet::Set_BillBoard()
 
 	D3DXMatrixIdentity(&matBill);
 
-	// yÃà È¸Àü¸¸ Á¦°Å
+	// yÃƒÃ  ÃˆÂ¸Ã€Ã¼Â¸Â¸ ÃÂ¦Â°Ã…
 	matBill._11 = matView._11;
 	matBill._13 = matView._13;
 	matBill._31 = matView._31;
@@ -115,7 +115,7 @@ void CPlayerBullet::Set_BillBoard()
 
 	D3DXMatrixInverse(&matBill, 0, &matBill);
 
-	// ÁÖÀÇ ÇÒ °Í
+	// ÃÃ–Ã€Ã‡ Ã‡Ã’ Â°Ã
 	matWorld = matBill * matWorld;
 
 	m_pTransformCom->Set_World(&matWorld);

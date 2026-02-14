@@ -15,6 +15,7 @@ xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\ImZoomSlider.h		.\Refere
 xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\ImCurveEdit.h		.\Reference\Header\
 xcopy				/y/I			.\Engine\ThirdParty\imgui\ImGuizmo-1.83\GraphEditor.h		.\Reference\Header\
 xcopy				/y/I/E			.\Engine\ThirdParty\nlohmann_3.12.0\include					.\Reference\Header\
+xcopy				/y/I/E			.\Engine\ThirdParty\tweeny-3.2.1\include					.\Reference\Header\
 
 xcopy				/y/I			.\Engine\ThirdParty\fmod\lib\x64\fmod.dll	.\Client\Bin\
 xcopy				/y/I			.\Engine\ThirdParty\assimp_6.0.4\lib\assimp-vc143-mt.dll 		.\Client\Bin\

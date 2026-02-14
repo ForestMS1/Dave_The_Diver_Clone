@@ -82,7 +82,7 @@ void CPlayerCam::Render_GameObject()
 
 void CPlayerCam::Mouse_Fix()
 {
-	
+
 	POINT       ptMouse{ WINCX >> 1, WINCY >> 1 };
 
 

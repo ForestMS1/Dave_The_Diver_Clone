@@ -46,4 +46,3 @@ void CPlayerDie::Free()
 {
     CPlayerState::Free();
 }
-

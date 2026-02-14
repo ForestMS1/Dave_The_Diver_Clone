@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "CShipBoat.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"

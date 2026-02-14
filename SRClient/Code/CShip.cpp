@@ -9,6 +9,10 @@
 #include "CColliderMgr.h"
 #include "CGraphicDev.h"
 #include "CShipBoat.h"
+#include "CShipDiverBox.h"
+#include "CShipPhoneIcon.h"
+#include "CShipPhone.h"
+#include "CShipPhoneApp.h"
 
 CShip::CShip()
 	: CScene()
@@ -20,7 +24,7 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
-	CColliderMgr::GetInstance()->Set_Render(true);
+	//CColliderMgr::GetInstance()->Set_Render(true);
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
@@ -53,20 +57,33 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
-	CGameObject* pGameObject = nullptr;
-
-	pGameObject = CShipDave::Create();
-	if (nullptr == pGameObject)
+	CShipDave* pShipDave = CShipDave::Create();
+	if (nullptr == pShipDave)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
 
 
-	pGameObject = CShipBoat::Create();
-	if (nullptr == pGameObject)
+	CShipBoat* pShipBoat = CShipBoat::Create();
+	if (nullptr == pShipBoat)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipDave1", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pShipBoat)))
 		return E_FAIL;
+
+	//pGameObject = CShipDiverBox::Create();
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipDiverBox", pGameObject)))
+	//	return E_FAIL;
+
+	CShipPhoneIcon* pShipPhoneIcon = CShipPhoneIcon::Create();
+	if (nullptr == pShipPhoneIcon)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipPhoneIcon", pShipPhoneIcon)))
+		return E_FAIL;
+
+	
+
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

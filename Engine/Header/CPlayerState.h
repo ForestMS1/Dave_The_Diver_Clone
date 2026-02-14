@@ -26,4 +26,3 @@ protected:
 protected:
 	void Free() override;
 };
-

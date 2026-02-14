@@ -73,13 +73,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(ProjectDir)..\ThirdParty\yoga_3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(ProjectDir)..\ThirdParty\yoga_3.2.1\include;$(ProjectDir)..\ThirdParty\tweeny-3.2.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(ProjectDir)..\ThirdParty\assimp_6.0.4\lib;$(ProjectDir)..\ThirdParty\yoga_3.2.1\lib;$(LibraryPath)</LibraryPath>
     <OutDir>../Bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(ProjectDir)..\ThirdParty\yoga_3.2.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(ProjectDir)..\ThirdParty\imgui\imgui-1.83;$(ProjectDir)..\ThirdParty\fmod\inc;$(ProjectDir)..\ThirdParty\imgui\ImGuizmo-1.83;$(ProjectDir)..\ThirdParty\nlohmann_3.12.0\include;$(ProjectDir)..\ThirdParty\assimp_6.0.4\include;$(ProjectDir)..\ThirdParty\yoga_3.2.1\include;$(ProjectDir)..\ThirdParty\tweeny-3.2.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\x64;$(ProjectDir)..\ThirdParty\fmod\lib\x64;$(ProjectDir)..\ThirdParty\assimp_6.0.4\lib;$(ProjectDir)..\ThirdParty\yoga_3.2.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -170,6 +170,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAssetJson.h" />
     <ClInclude Include="..\Header\CAssetMgr.h" />
     <ClInclude Include="..\Header\CAssetTexture.h" />
+    <ClInclude Include="..\Header\CAttackReadyArmTex.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
     <ClInclude Include="..\Header\CBullet.h" />
@@ -250,6 +251,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAssetJson.cpp" />
     <ClCompile Include="..\Code\CAssetMgr.cpp" />
     <ClCompile Include="..\Code\CAssetTexture.cpp" />
+    <ClCompile Include="..\Code\CAttackReadyArmTex.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />
     <ClCompile Include="..\Code\CBullet.cpp" />
