@@ -166,6 +166,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAssetDefaultFont.h" />
     <ClInclude Include="..\Header\CAssetFbx.h" />
     <ClInclude Include="..\Header\CAssetFmodSound.h" />
+    <ClInclude Include="..\Header\CAssetGlb.h" />
     <ClInclude Include="..\Header\CAssetJson.h" />
     <ClInclude Include="..\Header\CAssetMgr.h" />
     <ClInclude Include="..\Header\CAssetTexture.h" />
@@ -192,6 +193,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CFrustrum.h" />
     <ClInclude Include="..\Header\CGameMemMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
+    <ClInclude Include="..\Header\CGlbTex.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
     <ClInclude Include="..\Header\CBulletSpark.h" />
     <ClInclude Include="..\Header\CHelper.h" />
@@ -244,6 +246,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp" />
     <ClCompile Include="..\Code\CAssetFbx.cpp" />
     <ClCompile Include="..\Code\CAssetFmodSound.cpp" />
+    <ClCompile Include="..\Code\CAssetGlb.cpp" />
     <ClCompile Include="..\Code\CAssetJson.cpp" />
     <ClCompile Include="..\Code\CAssetMgr.cpp" />
     <ClCompile Include="..\Code\CAssetTexture.cpp" />
@@ -270,6 +273,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CFrustrum.cpp" />
     <ClCompile Include="..\Code\CGameMemMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
+    <ClCompile Include="..\Code\CGlbTex.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
     <ClCompile Include="..\Code\CBulletSpark.cpp" />
     <ClCompile Include="..\Code\CHelper.cpp" />

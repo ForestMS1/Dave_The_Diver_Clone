@@ -43,6 +43,9 @@
     <Filter Include="02. GameObject\01. Boat">
       <UniqueIdentifier>{f31252f1-f899-4f7f-9a52-c0c33f252a82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. TestGlb">
+      <UniqueIdentifier>{a783af74-29a5-4b5b-b7f5-ddbe8df41409}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,6 +87,9 @@
     <ClInclude Include="..\Header\CShipBoat.h">
       <Filter>02. GameObject\01. Boat</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTestGlb.h">
+      <Filter>02. GameObject\02. TestGlb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -115,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipBoat.cpp">
       <Filter>02. GameObject\01. Boat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTestGlb.cpp">
+      <Filter>02. GameObject\02. TestGlb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

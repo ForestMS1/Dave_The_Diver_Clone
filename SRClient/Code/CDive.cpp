@@ -5,6 +5,7 @@
 #include "CTransition.h"
 #include "CMapMgr.h"
 #include "CShipDave.h"
+#include "CTestGlb.h"
 #include <CShipBoat.h>
 CDive::CDive()
 	: CScene()
@@ -23,11 +24,12 @@ HRESULT CDive::Ready_Scene()
 
 	CGameObject* pGameObject = nullptr;
 
-	pGameObject = CShipDave::Create();
+	pGameObject = CTestGlb::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
 		return E_FAIL;
+	dynamic_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(0, 0, 0);
 
 	pGameObject = CShipBoat::Create();
 	if (nullptr == pGameObject)

@@ -165,6 +165,7 @@
     <ClInclude Include="..\Header\CShipBoat.h" />
     <ClInclude Include="..\Header\CShipDave.h" />
     <ClInclude Include="..\Header\CSushi.h" />
+    <ClInclude Include="..\Header\CTestGlb.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="..\Code\CShipBoat.cpp" />
     <ClCompile Include="..\Code\CShipDave.cpp" />
     <ClCompile Include="..\Code\CSushi.cpp" />
+    <ClCompile Include="..\Code\CTestGlb.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
