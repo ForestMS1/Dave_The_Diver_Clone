@@ -134,6 +134,11 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackReadyTexture", L"Com_AttackReadyTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFireTexture", L"Com_AttackFireTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFailTexture", L"Com_AttackFailTexture", &m_pTextureCom))))
+		return E_FAIL;
+
 
 	// Æ®·£½ºÆû
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -152,12 +157,7 @@ HRESULT	CDiveDave::Add_State()
 
 void CDiveDave::Key_Input()
 {
-	if (m_eCurState != DiveState::IDLE)
-		return;
 
-	if(CDInputMgr::GetInstance()->Key_Down(DIK_W) || CDInputMgr::GetInstance()->Key_Down(DIK_A)
-		|| CDInputMgr::GetInstance()->Key_Down(DIK_S) || CDInputMgr::GetInstance()->Key_Down(DIK_D))
-		Set_State(DiveState::MOVE);
 }
 
 void CDiveDave::Mouse_Input()

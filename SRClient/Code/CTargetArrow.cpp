@@ -38,11 +38,6 @@ HRESULT CTargetArrow::Ready_GameObject()
 
 _int CTargetArrow::Update_GameObject(const _float& fTimeDelta)
 {
-    ImGui::Begin("Arrow");
-    _vec3 vPos;
-    m_pTransformCom->Get_Info(INFO_POS, &vPos);
-    ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
-    ImGui::End();
     if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
         return 0;
 

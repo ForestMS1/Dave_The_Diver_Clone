@@ -114,8 +114,11 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	}
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_AttackReadyArm", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack/AttackReadyArms.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_TargetCurveStart", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack_Effect/Target_CurveStart.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_TargetArrowGun", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack_Effect/Target_Arrow.png"));
-
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TargetArrow", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack_Effect/Target_Arrow.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonGun", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonGun.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonProjectile", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonProjectile.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
@@ -131,8 +134,16 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackReadyTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackReady"))))
 		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackFireTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackFire"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackFailTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackFail"))))
+		return E_FAIL;
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AttackReadyArmTexture", Engine::CTexture::Create(L"Tex_AttackReadyArm"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HarpoonTexture", Engine::CTexture::Create(L"Tex_HarpoonGun"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HarpoonProjectileTexture", Engine::CTexture::Create(L"Tex_HarpoonProjectile"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AttackReadyArmBuffer", Engine::CAttackReadyArmTex::Create())))
 		return E_FAIL;
@@ -140,7 +151,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetCurveStartTexture", Engine::CTexture::Create(L"Tex_TargetCurveStart"))))
 		return E_FAIL;
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetArrowGunTexture", Engine::CTexture::Create(L"Tex_TargetArrowGun"))))
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetArrowGunTexture", Engine::CTexture::Create(L"Tex_TargetArrow"))))
 		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG

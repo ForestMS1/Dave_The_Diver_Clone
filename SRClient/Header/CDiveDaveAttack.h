@@ -1,7 +1,17 @@
 #pragma once
 #include "CPlayerState.h"
-class CDiveDaveAttack :
-    public CPlayerState
+#include "CAttackSubState.h"
+
+enum class ATTACKSUBSTATE
+{
+	ATTACK_READY,
+	ATTACK_FIRE,
+	ATTACK_FIGHT,
+	ATTACK_FAIL,
+	SUB_END
+};
+
+class CDiveDaveAttack : public CPlayerState
 {
 private:
 	explicit CDiveDaveAttack(CGameObject* pOwner);
@@ -16,8 +26,17 @@ public:
 	void Exit() override;
 	void Clear() override;
 
+public:
+	ATTACKSUBSTATE		Get_State() const { return m_eCurSubState; }
+	void			Set_State(ATTACKSUBSTATE state);
+
 private:
-	void Mouse_Check();
+	void Add_SubState();
+
+private:
+	CAttackSubState* m_pSubState = nullptr;
+	ATTACKSUBSTATE m_eCurSubState;
+	unordered_map<ATTACKSUBSTATE, CAttackSubState*> m_mapSubState;
 
 public:
 	static CDiveDaveAttack* Create(CGameObject* pOwner);

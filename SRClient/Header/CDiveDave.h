@@ -50,6 +50,9 @@ public:
 	void		Init_Frame() { m_fFrame = 0.f; }
 	void		AddFrame(const _float& fTimeDelta, const _float& fSpeed,_uint size);
 
+	void		Set_FishCaught(_bool bFishCaught) { m_bFishCaught = bFishCaught; }
+	_bool		Is_FishCaught()					  { return m_bFishCaught; }
+
 private:
 	HRESULT Ready_Component();
 	HRESULT	Add_State();
@@ -71,6 +74,7 @@ private:
 private:
 	_float m_fSpeed = 5.f;
 	_float m_fFrame = 0.f;
+	_bool  m_bFishCaught = false;
 
 public:
 	static CDiveDave* Create();
