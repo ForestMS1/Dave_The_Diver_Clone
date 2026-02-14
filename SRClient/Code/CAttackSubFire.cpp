@@ -4,6 +4,8 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CDiveDaveAttack.h"
+#include "CManagement.h"
+#include "CHarpoonProjectile.h"
 CAttackSubFire::CAttackSubFire(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
     :CAttackSubState(pPlayer, pParentState)
 {
@@ -24,6 +26,12 @@ void CAttackSubFire::Enter()
     _vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
     static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
     static_cast<CDiveDave*>(m_pPlayer)->Set_TextureCom(L"Com_AttackFireTexture");
+
+
+    // น฿ป็
+    CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>
+        (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
+    pProjectile->TriggerOn();
 }
 
 void CAttackSubFire::Input(const _float& fTimeDelta)
@@ -49,8 +57,8 @@ void CAttackSubFire::LateUpdate_State(const _float& fTimeDelta)
 
     if (static_cast<CDiveDave*>(m_pPlayer)->Is_FishCaught())
         m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FIGHT);
-    else
-        static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
+   // else
+   //     static_cast<CDiveDave*>(m_pPlayer)->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
 }
 
 void CAttackSubFire::Render_State()

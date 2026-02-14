@@ -3,6 +3,7 @@
 #include "CGraphicDev.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CColliderMgr.h"
 CHarpoonProjectile::CHarpoonProjectile()
 {
 }
@@ -31,6 +32,15 @@ HRESULT CHarpoonProjectile::Ready_GameObject()
 
 	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
+
+
+	//-------------AABB Collider----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+
+	_vec3 vPos = { 00.0f, 0.0f, 0.0f };
+
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Projectile", this);
+	//CColliderMgr::GetInstance()->Set_Render(true);
 	return S_OK;
 }
 
@@ -40,8 +50,23 @@ _int CHarpoonProjectile::Update_GameObject(const _float& fTimeDelta)
 		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-	Set_ParentTransform();
-	Rotate_ToMouse();
+	// 충돌체 그룹에 넣어줘야한다.
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Dive", m_pAABB);
+	m_pAABB->Transform(m_pTransformCom->Get_World());
+	
+
+	if (m_eState == READY)
+	{
+		Set_ParentTransform();
+		Rotate_ToMouse();
+		Shot_ToMouse();
+	}
+	else if(m_eState == FIRE)
+	{
+		Go_ToDir(fTimeDelta);
+	}
+	Change_ProjectileState();
+
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 	return iExit;
 }
@@ -129,6 +154,45 @@ void CHarpoonProjectile::Rotate_ToMouse()
 	m_pTransformCom->m_vAngle.z = fDegree;
 }
 
+void CHarpoonProjectile::Shot_ToMouse()
+{
+	_vec3 vMousePos, vProjectilePos;
+	
+	CHelper::GetMousePointInWorld(&vMousePos);
+	m_pTransformCom->Get_Info(INFO_POS, &vProjectilePos);
+	
+	m_vDir = vMousePos - vProjectilePos;
+}
+
+void CHarpoonProjectile::Go_ToDir(const _float& fTimeDelta)
+{
+	if (m_fAccRange < m_fRange)
+	{
+		m_pTransformCom->Move_Pos(&m_vDir, m_fSpeed, fTimeDelta);
+		m_fAccRange += m_fSpeed * fTimeDelta;
+	}
+}
+
+void CHarpoonProjectile::Change_ProjectileState()
+{
+	if (m_fAccRange >= m_fRange)
+	{
+		m_fAccRange = 0.f;
+		m_eState = READY;
+		static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
+	}
+
+
+	// TODO
+	// if(물고기랑 충돌했으면)
+	// m_eState = HIT
+	// static_cast<CDiveDave*>(m_pParentGameObject)->Set_FishCaught(true);
+	// else if(최대 거리까지 왔는데도 물고기랑 충돌 못했으면)
+	// m_eState = NONE_HIT
+	// static_cast<CDiveDave*>(m_pParentGameObject)->Set_FishCaught(false);
+
+}
+
 CHarpoonProjectile* CHarpoonProjectile::Create()
 {
 	CHarpoonProjectile* pHarpoonProjectile = new CHarpoonProjectile;
@@ -145,4 +209,5 @@ CHarpoonProjectile* CHarpoonProjectile::Create()
 void CHarpoonProjectile::Free()
 {
 	CGameObject::Free();
+	Safe_Release(m_pAABB);
 }
