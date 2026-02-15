@@ -17,6 +17,7 @@ private:
 
 public:
 	enum State { IDLE,WALK, RUN,TIRED, SUSHI_IDLE, SUSHI_WALK, SUSHI_RUN, SUSHI_TIRED, STATE_END };
+	enum Facing { LEFT, RIGHT, FACE_END };
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
@@ -45,6 +46,8 @@ private:
 	State			curState;
 	_float			m_fFrame;
 	bool			holdingSushi;
+	Facing			curDir;
+	Facing			prevDir;
 	virtual void Free();
 
 };

@@ -337,6 +337,7 @@ HRESULT CSushi::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
+
 	pGameObject = CSushiDave::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
