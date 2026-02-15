@@ -26,8 +26,8 @@ private:
 public:
 
 	void    SetScene(CScene* Scene) { m_Scene = Scene;}
-	void	Load(char* buffer);
-	void	Save(char* buffer);
+	void	Load();
+	void	Save();
 
 public:
 

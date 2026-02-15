@@ -18,6 +18,7 @@
 #include "CCollisionMgr.h"
 #include "CMapMgr.h"
 
+
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
 	, m_pManagement(CManagement::GetInstance())
@@ -73,8 +74,8 @@ void CMainApp::Render_MainApp()
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
-	CParticleMgr::GetInstance()->Render_Particle();
-	CMapMgr::GetInstance()->Render_Map();
+	//CParticleMgr::GetInstance()->Render_Particle();
+	//CMapMgr::GetInstance()->Render_Map();
 	CColliderMgr::GetInstance()->Render();
 
 	m_pDeviceClass->Render_End();

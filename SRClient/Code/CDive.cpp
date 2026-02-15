@@ -10,6 +10,8 @@
 #include "CDiveDaveCam.h"
 #include "CColliderMgr.h"
 #include "CShipBoat.h"
+#include "CMapMgr.h"
+
 
 CDive::CDive()
 	: CScene()
@@ -45,6 +47,7 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 	CCameraMgr::GetInstance()->Set_Camera(L"FreeCam", pCamera);
 
+	CMapMgr::GetInstance()->SetScene(this);
 	return S_OK;
 }
 
@@ -76,7 +79,8 @@ void CDive::Render_Scene()
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(L"Here is CDive", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
+	CCameraMgr::GetInstance()->Render_Camera();
+	CMapMgr::GetInstance()->Render_Map();
 
 }
 

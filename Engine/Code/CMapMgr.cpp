@@ -13,7 +13,7 @@ CMapMgr::~CMapMgr()
 {
 }
 
-void CMapMgr::Load(char* buffer) {
+void CMapMgr::Load() {
 	using json = nlohmann::json;
 	json scene;
 
@@ -69,7 +69,7 @@ void CMapMgr::Load(char* buffer) {
 
 }
 
-void CMapMgr::Save(char* buffer)
+void CMapMgr::Save()
 {
 	using json = nlohmann::json;
 
@@ -126,8 +126,7 @@ void CMapMgr::Show_GUI()
 void CMapMgr::Object_Show()
 {
 
-	ImGui::SetNextWindowPos(ImVec2(50, 50), ImGuiCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(400, 600), ImGuiCond_Always);
+
 
 	ImGui::Begin("Object");
 
@@ -142,7 +141,7 @@ void CMapMgr::Object_Show()
 					buffer = to_string(Cnt);
 
 					pStr = pStr + buffer;
-					ImGui::Button(pStr.c_str());
+					ImGui::Selectable(pStr.c_str());
 					Cnt++;
 				}
 			}
@@ -153,20 +152,18 @@ void CMapMgr::Object_Show()
 
 void CMapMgr::SaveLoad_Show()
 {
-	ImGui::SetNextWindowPos(ImVec2(1600, 50), ImGuiCond_Always);
 
 	ImGui::Begin("SaveLoad");
 
 
-    static char buffer[256] = "";
-	ImGui::InputText("File Name", buffer, IM_ARRAYSIZE(buffer));
+
 
 	if (ImGui::Button("SAVE")) {
-		Save(buffer);
+		Save();
 	}
 	
 	if (ImGui::Button("LOAD")) {
-		Load(buffer);
+		Load();
 	}
 	ImGui::End();
 
@@ -174,7 +171,7 @@ void CMapMgr::SaveLoad_Show()
 
 void CMapMgr::Update_Map(const _float& fTimeDelta)
 {
-	Show_GUI();
+
 }
 
 void CMapMgr::LateUpdate_Map(const _float& fTimeDelta)
@@ -183,6 +180,7 @@ void CMapMgr::LateUpdate_Map(const _float& fTimeDelta)
 
 void CMapMgr::Render_Map()
 {
+	Show_GUI();
 }
 
 void CMapMgr::Free()

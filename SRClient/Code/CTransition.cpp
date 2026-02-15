@@ -50,16 +50,16 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 
 	//CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/PolybrushMesh-3786884.glb"));
-	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/UnderwaterLake_SeaAnemone001.glb"));
-	CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
+	//CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/UnderwaterLake_SeaAnemone001.glb"));
+	//CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
 
-	
+	//
 
-	CProtoMgr::GetInstance()->Ready_Prototype(L"Test_GLB",CGlbTex::Create(
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_VtxCnt(),
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_TriCnt(),
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vertices(),
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
+	//CProtoMgr::GetInstance()->Ready_Prototype(L"Test_GLB",CGlbTex::Create(
+	//	CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_VtxCnt(),
+	//	CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_TriCnt(),
+	//	CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vertices(),
+	//	CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
 	
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
