@@ -31,7 +31,20 @@ public:
 public:
 	static CAssetSpine* Create(std::wstring_view m_sAssetPath);
 
+public:
+	void TEMP_LOCK_BUFFER(LPDIRECT3DVERTEXBUFFER9 pVB, LPDIRECT3DINDEXBUFFER9 pIB);
+
+public:
+	_ulong Get_NumVertex() const { return m_iNumVertex; };
+	_ulong Get_NumTri() const { return m_iNumTri; }
+	spine::Skeleton* Get_Skeleton() const { return m_pSkeleton.get(); }
+
+	void Set_AniState(std::wstring_view svAniName);
+
+	std::wstring Get_TextureName() const;
 private:
+	_ulong m_iNumVertex;
+	_ulong m_iNumTri;
 	class CMySpineTextureLoader;
 	unique_ptr<CMySpineTextureLoader> m_pTexLoader;
 	unique_ptr<spine::Atlas> m_pAtlas;

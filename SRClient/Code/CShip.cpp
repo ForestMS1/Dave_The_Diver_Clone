@@ -13,6 +13,7 @@
 #include "CShipPhoneIcon.h"
 #include "CShipPhone.h"
 #include "CShipPhoneApp.h"
+#include "CTestAmericanLobster.h"
 
 CShip::CShip()
 	: CScene()
@@ -57,11 +58,19 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
+	CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
+	if (nullptr == pTest)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+		return E_FAIL;
+
 	CShipDave* pShipDave = CShipDave::Create();
 	if (nullptr == pShipDave)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
+
+
 
 
 	CShipBoat* pShipBoat = CShipBoat::Create();

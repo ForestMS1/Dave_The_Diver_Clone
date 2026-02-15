@@ -157,6 +157,22 @@ HRESULT CMainApp::Load_PermanentAsset()
 	CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
 
 
+	//_ulong			dwBufferUsage,
+		//D3DPOOL			dwBufferPool,
+		//_ulong			dwFVF,
+		//_ulong			dwVtxSize,
+		//_ulong          dwIdxSize,
+		//D3DFORMAT		IdxFmt
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DynamicBuffer_TestAmericanLobster", Engine::CDynamicBuffer::Create(
+		D3DUSAGE_DYNAMIC,
+		D3DPOOL_DEFAULT,
+		FVF_COLTEX,
+		sizeof(VTXCOLTEX),
+		sizeof(INDEX16),
+		D3DFMT_INDEX16
+	));
+
+
 
 	// 초기 로드용 폰트 추가
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"바탕", 0, 20, FW_HEAVY));

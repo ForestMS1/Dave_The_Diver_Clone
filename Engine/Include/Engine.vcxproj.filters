@@ -663,7 +663,7 @@
     <ClCompile Include="..\Code\CAssetSpine.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\Spine</Filter>
     </ClCompile>
-    <ClCompile Include="CDynamicBuffer.cpp">
+    <ClCompile Include="..\Code\CDynamicBuffer.cpp">
       <Filter>02. Component\00. VIBuffer\DynamicBuffer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -899,7 +899,7 @@
     <ClInclude Include="..\Header\CAssetSpine.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\Spine</Filter>
     </ClInclude>
-    <ClInclude Include="CDynamicBuffer.h">
+    <ClInclude Include="..\Header\CDynamicBuffer.h">
       <Filter>02. Component\00. VIBuffer\DynamicBuffer</Filter>
     </ClInclude>
   </ItemGroup>

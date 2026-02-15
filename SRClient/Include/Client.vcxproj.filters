@@ -94,6 +94,12 @@
     <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
       <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\TestFish">
+      <UniqueIdentifier>{8ffb29d7-de74-4113-9ad3-5d4d3d624000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\TestFish\AmericanLobster">
+      <UniqueIdentifier>{4351c481-9179-4df2-9631-261aaafe2ea4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,6 +231,9 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTestAmericanLobster.h">
+      <Filter>02. GameObject\TestFish\AmericanLobster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -346,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveCam.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTestAmericanLobster.cpp">
+      <Filter>02. GameObject\TestFish\AmericanLobster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
