@@ -223,6 +223,15 @@
     <Filter Include="03. GameObject\DSPlayer">
       <UniqueIdentifier>{8d2b687e-8bc8-436a-8670-e10dfde18eb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\15. AssetMgr\00. Asset\Spine">
+      <UniqueIdentifier>{10d8ab59-4ba4-47da-90e1-013daa20efcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp">
+      <UniqueIdentifier>{f1acaae3-afe4-40db-92dc-5aabf2693002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Component\00. VIBuffer\DynamicBuffer">
+      <UniqueIdentifier>{b9ff09de-e092-4216-9f53-9bb5b77b4857}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -468,6 +477,195 @@
     <ClCompile Include="..\Code\CDSPlayer.cpp">
       <Filter>03. GameObject\DSPlayer</Filter>
     </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Animation.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\AnimationState.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\AnimationStateData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Atlas.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\AtlasAttachmentLoader.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Attachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\AttachmentLoader.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\AttachmentTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Bone.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\BoneData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\BoundingBoxAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\ClippingAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\ColorTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\ConstraintData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\CurveTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\DeformTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\DrawOrderTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Event.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\EventData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\EventTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Extension.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\IkConstraint.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\IkConstraintData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\IkConstraintTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Json.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\LinkedMesh.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Log.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\MathUtil.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\MeshAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PathAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PathConstraint.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PathConstraintData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PathConstraintMixTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PathConstraintPositionTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PathConstraintSpacingTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\PointAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\RegionAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\RotateTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\RTTI.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\ScaleTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\ShearTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Skeleton.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SkeletonBinary.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SkeletonBounds.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SkeletonClipping.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SkeletonData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SkeletonJson.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Skin.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Slot.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SlotData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\SpineObject.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\TextureLoader.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Timeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\TransformConstraint.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\TransformConstraintData.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\TransformConstraintTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\TranslateTimeline.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Triangulator.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\Updatable.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\VertexAttachment.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\spine-cpp-4.0\spine-cpp\src\spine\VertexEffect.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine\spine_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAssetSpine.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine</Filter>
+    </ClCompile>
+    <ClCompile Include="CDynamicBuffer.cpp">
+      <Filter>02. Component\00. VIBuffer\DynamicBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -697,6 +895,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CDSPlayer.h">
       <Filter>03. GameObject\DSPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetSpine.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\Spine</Filter>
+    </ClInclude>
+    <ClInclude Include="CDynamicBuffer.h">
+      <Filter>02. Component\00. VIBuffer\DynamicBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

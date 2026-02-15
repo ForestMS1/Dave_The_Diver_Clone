@@ -16,6 +16,7 @@
 #include "CTransition.h"
 #include "CGameMemMgr.h"
 #include "CCollisionMgr.h"
+#include "CAssetSpine.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -55,6 +56,9 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	
 	m_pManagement->Update_Scene(fTimeDelta);
 
+
+	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempUpdate(fTimeDelta);
+
 	return 0;
 }
 
@@ -69,10 +73,14 @@ void CMainApp::Render_MainApp()
 
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
+	
+	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempRender();
+
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 	//CParticleMgr::GetInstance()->Render_Particle();
 
 	CColliderMgr::GetInstance()->Render();
+
 
 	m_pDeviceClass->Render_End();
 
@@ -145,10 +153,16 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
+	CAssetMgr::GetInstance()->AddAsset(L"Test_Spine", CAssetSpine::Create(L"../Bin/Resource/Texture/Ship/SpineTest/AmericanLobster/American_Lobster"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
+
+
+
 	// 초기 로드용 폰트 추가
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"바탕", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 
+	
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create())))
 		return E_FAIL;
 

@@ -1,6 +1,16 @@
 #ifndef Engine_Define_h__
 #define Engine_Define_h__
 
+// ENGINE_EXPORTS 는
+// 엔진프로젝트에만 적용되는 매크로이다
+// 여기에 정의하는것들은 클라에 안들어간다
+#ifdef	ENGINE_EXPORTS
+
+#include <spine/spine.h>
+using namespace spine;
+
+#endif
+
 #include <tweeny/tween.h>
 
 #include <nlohmann/json.hpp>
