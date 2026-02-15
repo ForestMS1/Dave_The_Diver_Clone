@@ -1,12 +1,12 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAABB.h"
-class CShipDave : public CGameObject
+class CShipDiverBox : public CGameObject
 {
 private:
-	explicit CShipDave();
-	explicit CShipDave(const CShipDave& rhs);
-	virtual ~CShipDave();
+	explicit CShipDiverBox();
+	explicit CShipDiverBox(const CShipDiverBox& rhs);
+	virtual ~CShipDiverBox();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -16,24 +16,16 @@ public:
 
 private:
 	HRESULT			Ready_Component();
-	void			Key_Input(const _float& fTimeDelta);
-	void			Motion_Change(wstring_view svMotion);
 
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 	CAABB* m_pAABB;
 
-	wstring m_sCurrentMotion;
-	_uint			m_iFrame;
-	_float m_fAccFrameDelta;
-	bool m_bSeeRight;
-
 public:
-	static CShipDave* Create();
+	static CShipDiverBox* Create();
 
 private:
 	virtual void Free();
-
 };
 

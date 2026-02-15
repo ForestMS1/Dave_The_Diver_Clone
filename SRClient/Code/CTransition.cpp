@@ -11,6 +11,7 @@
 #include "CDive.h"
 #include "CAttackReadyArmTex.h"
 #include "CAssetTexture.h"
+
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
 	, m_eDstScene(eDstScene)
@@ -54,7 +55,10 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 HRESULT CTransition::Transition_LOGO_TO_SHIP()
 {
 
-
+	if (FAILED(Common_SHIP_Load()))
+	{
+		return E_FAIL;
+	}
 
 
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
@@ -303,6 +307,68 @@ HRESULT CTransition::Transition_SUSHI_TO_SHIP()
 #endif // DEBUG
 	m_bFinish = true;
 
+	return S_OK;
+}
+
+HRESULT CTransition::Common_SHIP_Load()
+{
+	for (int i = 1; i <= 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/Dave_Idle_/Dave_Idle_0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_ShipDave_Idle", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_ShipDave_Idle");
+
+	for (int i = 1; i <= 6; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/Dave_Walk_/Dave_Walk_0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_ShipDave_Walk", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_ShipDave_Walk");
+
+	for (int i = 1; i <= 12; ++i)
+	{
+		wstring s;
+		if (i > 9)
+		{
+			s = L"../Bin/Resource/Texture/Ship/Dave_DiveReady/Dave_DiveReady" + ::to_wstring(i) + L".png";
+		}
+		else
+		{
+			s = L"../Bin/Resource/Texture/Ship/Dave_DiveReady/Dave_DiveReady0" + ::to_wstring(i) + L".png";
+		}
+		
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_ShipDave_DiveReady", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_ShipDave_DiveReady");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBoxTmp", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxTmp.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBoxTmp");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_MainMenu_Phone.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneIcon");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/PhoneBG.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneBG");
+
+	for (int i = 1; i <= 22; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp/SmartPhoneApp" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneApp", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneApp");
+
+	for (int i = 1; i <= 22; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneAppAlpha/SmartPhoneAppAlpha" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneAppAlpha");
+	return S_OK;
+}
+
+HRESULT CTransition::Common_SHIP_Unload()
+{
 	return S_OK;
 }
 
