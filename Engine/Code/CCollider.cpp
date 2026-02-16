@@ -193,6 +193,10 @@ bool CCollider::Intersect(CCollider* pCollider)
 bool CCollider::Intersect(_vec3* vPos, _vec3* vDir, float& pOutDist)
 {
 	XMVECTOR vTrans = XMVectorSet(vPos->x, vPos->y, vPos->z, 1.0f);
+	if (D3DXVec3Length(vDir) < 0.00001f)
+	{
+		return false;
+	}
 	D3DXVec3Normalize(vDir, vDir);
 	FXMVECTOR vRot = XMVectorSet(vDir->x, vDir->y, vDir->z, 0.0f);
 	if (m_eColliderID == COLL_AABB)
@@ -233,7 +237,11 @@ bool CCollider::Intersect(_vec3* vPos, _vec3* vDir, float& pOutDist)
 
 void CCollider::Transform(const float& fScale, _vec3* pVecRotate, _vec3* pVecTranslate)
 {
-	
+	if (D3DXVec3Length(pVecRotate) < 0.00001f)
+	{
+		return;
+	}
+	//D3DXVec3Normalize(pVecRotate, pVecRotate);
 	XMVECTOR vRot = XMVectorSet(pVecRotate->x, pVecRotate->y, pVecRotate->z, 0.0f);
 	XMVECTOR qRot = XMQuaternionRotationRollPitchYawFromVector(vRot);
 	XMVECTOR vTrans = XMVectorSet(pVecTranslate->x, pVecTranslate->y, pVecTranslate->z, 1.0f);
