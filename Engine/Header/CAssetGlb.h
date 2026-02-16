@@ -23,17 +23,20 @@ private:
 public:
 	_ulong	Get_VtxCnt() { return m_dwVtxCnt; }
 	_ulong	Get_TriCnt() { return m_dwTriCnt; }
+	_ulong	Get_MeshCnt() { return m_dwMeshCnt; }
 	vector<VTXTEX>*	Get_vertices() { return &vertices; }
 	INDEX32*	Get_Index() { return pIndex; }
-	LPDIRECT3DTEXTURE9 Get_Texture() { return tex; }
+	vector<LPDIRECT3DTEXTURE9>* Get_Texture() { return &tex; }
+	vector<pair<_uint, _uint>>* Get_vecTexVtxTriCnt() { return &vecTexVtxTriCnt; }
 private:
 	_ulong m_dwVtxCnt;
 	_ulong m_dwTriCnt;
-
-	std::vector<VTXTEX> vertices;
+	_ulong m_dwMeshCnt;
+	vector<VTXTEX> vertices;
 	INDEX32* pIndex;
-
-	LPDIRECT3DTEXTURE9 tex;
+	vector<LPDIRECT3DTEXTURE9> tex;
+	vector<pair<_uint,_uint>> vecTexVtxTriCnt;
+	
 public:
 
 	HRESULT Load() override;

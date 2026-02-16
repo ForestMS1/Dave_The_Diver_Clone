@@ -51,9 +51,6 @@ HRESULT CGlbTex::Ready_Buffer(const _ulong& _dwVtxCnt, const _ulong& _dwTriCnt, 
 
 	}
 
-	
-
-
 
 	INDEX32* pIndex = nullptr;
 
@@ -102,6 +99,14 @@ void CGlbTex::Render_Buffer()
 {
 	CVIBuffer::Render_Buffer();
 }
+
+void CGlbTex::Render_Buffer(const _ulong& startIndex, const _ulong& TriCount)
+{
+	CVIBuffer::Render_Buffer(startIndex, TriCount);
+}
+
+
+
 
 CGlbTex* CGlbTex::Create(const _ulong& _dwVtxCnt, const _ulong& _dwTriCnt, std::vector<VTXTEX>* vertices, INDEX32* Index)
 {

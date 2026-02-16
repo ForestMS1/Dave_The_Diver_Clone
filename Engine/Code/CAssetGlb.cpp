@@ -54,7 +54,8 @@ HRESULT CAssetGlb::Load()
 		MSG_BOX("Assimp error: %s\n", m_pImpl->importer.GetErrorString());
 
 	}
-
+	m_dwMeshCnt = m_pImpl->scene->mNumMeshes;
+	vecTexVtxTriCnt.resize(m_dwMeshCnt);
 	size_t totalV = 0, totalF = 0;
 	for (unsigned i = 0; i < m_pImpl->scene->mNumMeshes; ++i) {
 		aiMesh* mesh = m_pImpl->scene->mMeshes[i];
@@ -72,7 +73,7 @@ HRESULT CAssetGlb::Load()
 
 	size_t vBase = 0;
 	size_t fBase = 0;
-
+	tex.resize(m_pImpl->scene->mNumMeshes);
 	for (unsigned i = 0; i < m_pImpl->scene->mNumMeshes; ++i) {
 		aiMesh* mesh = m_pImpl->scene->mMeshes[i];
 
@@ -93,7 +94,7 @@ HRESULT CAssetGlb::Load()
 				v.vTexUV = { uv.x, uv.y };
 			}
 		}
-
+		
 		
 		for (unsigned j = 0; j < mesh->mNumFaces; ++j) {
 			const aiFace& face = mesh->mFaces[j];
@@ -101,11 +102,13 @@ HRESULT CAssetGlb::Load()
 			pIndex[fBase + j]._1 = (UINT)(vBase + face.mIndices[1]);
 			pIndex[fBase + j]._2 = (UINT)(vBase + face.mIndices[2]);
 		}
-
+		
 		vBase += mesh->mNumVertices;
 		fBase += mesh->mNumFaces;
 
 		
+		vecTexVtxTriCnt[i] = { (fBase - mesh->mNumFaces)*3,mesh->mNumFaces };
+
 		aiMaterial* mat = m_pImpl->scene->mMaterials[mesh->mMaterialIndex];
 		aiString texPath;
 		if (mat->GetTexture(aiTextureType_BASE_COLOR, 0, &texPath) != AI_SUCCESS)
@@ -118,13 +121,12 @@ HRESULT CAssetGlb::Load()
 			int idx = std::atoi(path.c_str() + 1);   // 0
 			aiTexture* atex = m_pImpl->scene->mTextures[idx];
 
-			tex = nullptr;
-
+	
 			HRESULT hr = D3DXCreateTextureFromFileInMemory(
 				CGraphicDev::GetInstance()->Get_GraphicDev(),
 				atex->pcData,
 				(UINT)atex->mWidth,   
-				&tex
+				&tex[i]
 			);
 
 			if (FAILED(hr)) {
@@ -149,6 +151,8 @@ void CAssetGlb::Free()
 {
 	Safe_Delete_Array(pIndex);
 	vertices.clear();
+	tex.clear();
+	vecTexVtxTriCnt.clear();
 	
 }
 

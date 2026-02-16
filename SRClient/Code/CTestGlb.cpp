@@ -30,7 +30,9 @@ HRESULT CTestGlb::Ready_GameObject()
     _vec3 vPos = { 00.0f, 0.0f, 0.f };
 
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_GLB", this);
-    m_pTransformCom->Set_Pos(-3.f, -3.f, 800.f);
+    m_pTransformCom->Set_Pos(-3.f, -3.f, 100.f);
+    _vec3 Rot = { -90.f,180.f,0.f};
+    m_pTransformCom->Set_Rotation(&Rot);
     return S_OK;
 }
 
@@ -59,17 +61,19 @@ void CTestGlb::Render_GameObject()
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
   //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-    pGraphicDev->SetTexture(0,CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Texture());
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+    for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_MeshCnt(); ++i) {
+        pGraphicDev->SetTexture(0, (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Texture())[i]);
 
-    //m_pTextureCom->Set_Texture(0);
+        _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vecTexVtxTriCnt())[i].first;
+        _uint second = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vecTexVtxTriCnt())[i].second;
+        m_pBufferCom->Render_Buffer(first, second);
 
-    m_pBufferCom->Render_Buffer();
+    }
 
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-
    // pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

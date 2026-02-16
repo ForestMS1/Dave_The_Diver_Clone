@@ -50,7 +50,7 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 
 	//CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/PolybrushMesh-3786884.glb"));
-	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian.glb"));
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Rock4.glb"));
 	CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
 
 	
