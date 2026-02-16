@@ -34,7 +34,7 @@ HRESULT CImguiMgr::Ready_Imgui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
+	io.FontGlobalScale = main_scale;
 	// TODO: 한글폰트 로딩하면 메모리많이쓰던데 정상인지확인 필요
 	//	- 26.2.4 한글폰트 로딩 하면 176 메가점유, 로딩안하면 47 메가 점유
 	// io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean());
