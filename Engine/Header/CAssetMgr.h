@@ -31,6 +31,9 @@ public:
 	template<typename T>
 	T* const Get_AssetFirst(std::wstring_view svLayerTag) { return dynamic_cast<T*>(Find_AssetLayer(svLayerTag)->at(0)); };
 
+public:
+	void Update_ImGui();
+
 private:
 	vector<CAsset*>* Find_AssetLayer(std::wstring_view svLayerTag);
 

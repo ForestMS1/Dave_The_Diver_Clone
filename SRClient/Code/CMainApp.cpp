@@ -53,9 +53,10 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	CImguiMgr::GetInstance()->Update_Imgui();
 
 	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
-	
+
 	m_pManagement->Update_Scene(fTimeDelta);
 
+	CAssetMgr::GetInstance()->Update_ImGui();
 
 	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempUpdate(fTimeDelta);
 
@@ -76,10 +77,11 @@ void CMainApp::Render_MainApp()
 	
 	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempRender();
 
+	CColliderMgr::GetInstance()->Render();
+
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 	//CParticleMgr::GetInstance()->Render_Particle();
 
-	CColliderMgr::GetInstance()->Render();
 
 
 	m_pDeviceClass->Render_End();

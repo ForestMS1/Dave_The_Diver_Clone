@@ -14,6 +14,23 @@ public:
 		LOADFAIL,
 		LOADED
 	};
+	std::string Get_AssetStateString()
+	{
+		switch (m_eAssetState)
+		{
+		case Engine::CAsset::UNLOAD:
+			return "UNLOAD";
+		case Engine::CAsset::LOADING:
+			return "LOADING";
+		case Engine::CAsset::LOADFAIL:
+			return "LOADFAIL";
+		case Engine::CAsset::LOADED:
+			return "LOADED";
+		default:
+			return "...??";
+		}
+	}
+
 
 protected:
 	explicit CAsset(std::wstring_view m_sAssetPath);
