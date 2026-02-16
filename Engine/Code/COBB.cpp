@@ -60,7 +60,7 @@ HRESULT COBB::Ready_Buffer()
 
 	INDEX32* pIndex = nullptr;
 
-	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+	m_pIB->Lock(0, 0, (void**)&pIndex, D3DLOCK_DISCARD);
 
 	// X+
 	pIndex[0]._0 = 1;
@@ -140,7 +140,7 @@ void COBB::Render()
 	m_BoundingOrientedBox.GetCorners(corners);
 
 	VTXCUBECOL* pVertex = NULL;
-	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+	m_pVB->Lock(0, 0, (void**)&pVertex, D3DLOCK_DISCARD);
 	for (int i = 0; i < 8; ++i) {
 		_vec3 pos = { corners[i].x, corners[i].y, corners[i].z };
 		pVertex[i].vPosition = pos;

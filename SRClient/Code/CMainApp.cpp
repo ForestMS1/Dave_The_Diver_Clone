@@ -163,8 +163,8 @@ HRESULT CMainApp::Load_PermanentAsset()
 		//_ulong			dwVtxSize,
 		//_ulong          dwIdxSize,
 		//D3DFORMAT		IdxFmt
-	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DynamicBuffer_TestAmericanLobster", Engine::CDynamicBuffer::Create(
-		D3DUSAGE_DYNAMIC,
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DynamicBuffer_Spine", Engine::CDynamicBuffer::Create(
+		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
 		D3DPOOL_DEFAULT,
 		FVF_COLTEX,
 		sizeof(VTXCOLTEX),

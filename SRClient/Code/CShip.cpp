@@ -25,7 +25,7 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
-	//CColliderMgr::GetInstance()->Set_Render(true);
+	CColliderMgr::GetInstance()->Set_Render(true);
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;

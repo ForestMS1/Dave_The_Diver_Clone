@@ -150,7 +150,7 @@ void CTestAmericanLobster::Render_GameObject()
 HRESULT CTestAmericanLobster::Ready_Component()
 {
     // ¹öÆÛ
-    if (FAILED((AddComponent<Engine::CDynamicBuffer, ID_STATIC>(L"Proto_DynamicBuffer_TestAmericanLobster", L"Com_Buffer", &m_pBufferCom))))
+    if (FAILED((AddComponent<Engine::CDynamicBuffer, ID_STATIC>(L"Proto_DynamicBuffer_Spine", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     auto pAssSpine =CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine");
