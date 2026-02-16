@@ -13,14 +13,13 @@ CCollider::CCollider(COLLIDERID eColliderID)
 	, m_dwOriginalColor(D3DXCOLOR(0.f, 0.f, 0.f, 1.f))
 	, m_dwIntersectColor(D3DXCOLOR(0.f, 0.f, 0.f, 1.f))
 	, m_dwCurrentColor(D3DXCOLOR(0.f, 0.f, 0.f, 1.f))
-	, m_pVB(nullptr)
-	, m_pIB(nullptr)
 	, m_dwVtxSize(0)
 	, m_dwVtxCnt(0)
 	, m_dwTriCnt(0)
 	, m_dwFVF(0)
 	, m_dwIdxSize(0)
 	, m_IdxFmt(D3DFMT_INDEX32)
+	, m_pDynamicBufferCom(nullptr)
 {
 }
 
@@ -343,23 +342,18 @@ void CCollider::Render()
 
 HRESULT CCollider::Ready_Buffer()
 {
-	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	if (FAILED(pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,	// 버텍스 버퍼의 크기
-		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
-		m_dwFVF,	// 버텍스 속성
-		D3DPOOL_DEFAULT,	// 정적 버퍼인 경우 MANAGED
-		&m_pVB,		// 버텍스 버퍼 객체 생성
-		NULL)))		// 공유할 일 없기 때문에 NULL
-		return E_FAIL;
+	m_pDynamicBufferCom = CDynamicBuffer::Create(
+		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
+		D3DPOOL_DEFAULT,
+		m_dwFVF,
+		m_dwVtxSize,
+		m_dwIdxSize,
+		m_IdxFmt
+	);
+	m_pDynamicBufferCom->Set_VertexCnt(m_dwVtxCnt);
+	m_pDynamicBufferCom->Set_TriCnt(m_dwTriCnt);
 
-
-	if (FAILED(pGraphicDev->CreateIndexBuffer(m_dwTriCnt * m_dwIdxSize,	// 인덱스 버퍼의 크기
-		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
-		m_IdxFmt,	// 인덱스 속성
-		D3DPOOL_DEFAULT,	// 정적 버퍼인 경우 MANAGED
-		&m_pIB,		// 인덱스 버퍼 객체 생성
-		NULL)))		// 공유할 일 없기 때문에 NULL
-		return E_FAIL;
+	m_pDynamicBufferCom->Ready_Buffer();
 
 	m_bRenderInitialized = true;
 
@@ -368,6 +362,5 @@ HRESULT CCollider::Ready_Buffer()
 
 void CCollider::Free()
 {
-	Safe_Release(m_pVB);
-	Safe_Release(m_pIB);
+	Safe_Release(m_pDynamicBufferCom);
 }
