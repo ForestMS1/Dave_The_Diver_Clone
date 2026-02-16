@@ -11,6 +11,7 @@
 #include "CColliderMgr.h"
 #include "CShipBoat.h"
 #include "CMapMgr.h"
+#include "CTestGlb.h"
 
 
 CDive::CDive()
@@ -112,6 +113,15 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pGameObject)))
 		return E_FAIL;
+
+	//테스트용
+	pGameObject = CTestGlb::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
+		return E_FAIL;
+	_vec3 size = { 0.1, 0.1f, 0.1f };
+	dynamic_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Scale(&size);
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

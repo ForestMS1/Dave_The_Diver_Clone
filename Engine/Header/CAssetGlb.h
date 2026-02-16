@@ -25,12 +25,15 @@ public:
 	_ulong	Get_TriCnt() { return m_dwTriCnt; }
 	vector<VTXTEX>*	Get_vertices() { return &vertices; }
 	INDEX32*	Get_Index() { return pIndex; }
+	LPDIRECT3DTEXTURE9 Get_Texture() { return tex; }
 private:
 	_ulong m_dwVtxCnt;
 	_ulong m_dwTriCnt;
 
 	std::vector<VTXTEX> vertices;
 	INDEX32* pIndex;
+
+	LPDIRECT3DTEXTURE9 tex;
 public:
 
 	HRESULT Load() override;

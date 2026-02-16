@@ -1,6 +1,6 @@
 #include "CAssetGlb.h"
 #include "CHelper.h"
-
+#include "CGraphicDev.h"
 #ifdef new
 #undef new  
 #endif
@@ -26,6 +26,7 @@ struct CAssetGlb::Impl
 CAssetGlb::CAssetGlb(std::wstring_view m_sAssetPath) : CAsset(m_sAssetPath)
 {
 	m_pImpl = new Impl();
+
 }
 
 CAssetGlb::~CAssetGlb()
@@ -35,7 +36,8 @@ CAssetGlb::~CAssetGlb()
 
 HRESULT CAssetGlb::Load()
 {
-
+	m_dwVtxCnt = 0;
+	m_dwTriCnt = 0;
 	m_eAssetState = LOADING;
 	unsigned int flags = aiProcess_Triangulate | // 삼각형화 (DX 필수)
 		aiProcess_ConvertToLeftHanded |   // 오른손 -> 왼손 좌표계 (DX 필수)
@@ -53,72 +55,86 @@ HRESULT CAssetGlb::Load()
 
 	}
 
+	size_t totalV = 0, totalF = 0;
+	for (unsigned i = 0; i < m_pImpl->scene->mNumMeshes; ++i) {
+		aiMesh* mesh = m_pImpl->scene->mMeshes[i];
+		totalV += mesh->mNumVertices;
+		totalF += mesh->mNumFaces;
+	}
+	m_dwVtxCnt = (DWORD)totalV;
+	m_dwTriCnt = (DWORD)totalF;
 
-	aiMesh* mesh = m_pImpl->scene->mMeshes[0];
-	m_dwVtxCnt = mesh->mNumVertices;
-	m_dwTriCnt = mesh->mNumFaces;
+	vertices.clear();
+	vertices.resize(totalV);
 
-	vertices.resize(mesh->mNumVertices);
-	
 
-	
-	for (unsigned i = 0; i < mesh->mNumVertices; ++i)
-	{
-		auto p = mesh->mVertices[i];
+	pIndex = new INDEX32[totalF];
 
-	
-		vertices[i].vPosition.x = p.x;
-		vertices[i].vPosition.y = p.y;
-		vertices[i].vPosition.z = p.z;
+	size_t vBase = 0;
+	size_t fBase = 0;
 
-		if (mesh->HasNormals()) {
-			auto n = mesh->mNormals[i];
-			vertices[i].vNormal.x = n.x;
-			vertices[i].vNormal.y = n.y;
-			vertices[i].vNormal.z = n.z;
-		}
+	for (unsigned i = 0; i < m_pImpl->scene->mNumMeshes; ++i) {
+		aiMesh* mesh = m_pImpl->scene->mMeshes[i];
 
-		if (mesh->HasTextureCoords(0)) {
-			auto uv = mesh->mTextureCoords[0][i];
-			vertices[i].vTexUV.x = uv.x;
-			vertices[i].vTexUV.y = uv.y;
+
+		for (unsigned j = 0; j < mesh->mNumVertices; ++j) {
+			auto& v = vertices[vBase + j];   
+			auto p = mesh->mVertices[j];
+
+			v.vPosition = { p.x, p.y, p.z };
+
+			if (mesh->HasNormals()) {
+				auto n = mesh->mNormals[j];
+				v.vNormal = { n.x, n.y, n.z };
+			}
+
+			if (mesh->HasTextureCoords(0)) {
+				auto uv = mesh->mTextureCoords[0][j];
+				v.vTexUV = { uv.x, uv.y };
+			}
 		}
 
 		
-	
-	}
+		for (unsigned j = 0; j < mesh->mNumFaces; ++j) {
+			const aiFace& face = mesh->mFaces[j];
+			pIndex[fBase + j]._0 = (UINT)(vBase + face.mIndices[0]); 
+			pIndex[fBase + j]._1 = (UINT)(vBase + face.mIndices[1]);
+			pIndex[fBase + j]._2 = (UINT)(vBase + face.mIndices[2]);
+		}
 
-	pIndex = new INDEX32[m_dwTriCnt];
-	for (int i = 0; i < m_dwTriCnt; ++i) {
-		const aiFace& face = mesh->mFaces[i];
-		pIndex[i]._0 = face.mIndices[0];
-		pIndex[i]._1 = face.mIndices[1];
-		pIndex[i]._2 = face.mIndices[2];
-	}
-	aiMaterial* mat = m_pImpl->scene->mMaterials[m_pImpl->scene->mNumMeshes];
+		vBase += mesh->mNumVertices;
+		fBase += mesh->mNumFaces;
 
-	aiString texPath;
-	if (mat->GetTexture(aiTextureType_DIFFUSE, 0, &texPath) == AI_SUCCESS)
-	{
-		const aiTexture* tex = m_pImpl->scene->GetEmbeddedTexture(texPath.C_Str());
-
-		if (tex)
+		
+		aiMaterial* mat = m_pImpl->scene->mMaterials[mesh->mMaterialIndex];
+		aiString texPath;
+		if (mat->GetTexture(aiTextureType_BASE_COLOR, 0, &texPath) != AI_SUCCESS)
 		{
-			if (tex->mHeight == 0)
-			{
-				// compressed (jpg/png)
-				// tex->pcData = binary blob
-				// tex->mWidth = data size
-			}
-			else
-			{
-				// raw RGBA
+			mat->GetTexture(aiTextureType_DIFFUSE, 0, &texPath);
+		}
+		std::string path = texPath.C_Str();
+		if (!path.empty() && path[0] == '*')
+		{
+			int idx = std::atoi(path.c_str() + 1);   // 0
+			aiTexture* atex = m_pImpl->scene->mTextures[idx];
+
+			tex = nullptr;
+
+			HRESULT hr = D3DXCreateTextureFromFileInMemory(
+				CGraphicDev::GetInstance()->Get_GraphicDev(),
+				atex->pcData,
+				(UINT)atex->mWidth,   
+				&tex
+			);
+
+			if (FAILED(hr)) {
+				m_eAssetState = LOADFAIL;
+				MSG_BOX("Texture error: %s\n", m_pImpl->importer.GetErrorString());
 			}
 		}
 	}
 
-
-
+	
 	m_eAssetState = LOADED;
 	return S_OK;
 }

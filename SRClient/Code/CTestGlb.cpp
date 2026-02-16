@@ -3,6 +3,8 @@
 #include "CRenderer.h"
 #include "CGraphicDev.h"
 #include "CColliderMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetGlb.h"
 
 CTestGlb::CTestGlb()
     : CGameObject()
@@ -25,10 +27,10 @@ HRESULT CTestGlb::Ready_GameObject()
 
     _vec3 vExtents = { 1.0f, 1.0f, 1.0f };
 
-    _vec3 vPos = { 00.0f, 0.0f, 0.0f };
+    _vec3 vPos = { 00.0f, 0.0f, 0.f };
 
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_GLB", this);
-    m_pTransformCom->Set_Pos(-3.f, -3.f, 0.f);
+    m_pTransformCom->Set_Pos(-3.f, -3.f, 800.f);
     return S_OK;
 }
 
@@ -36,7 +38,7 @@ _int CTestGlb::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
     // 충돌체 그룹에 넣어줘야한다.
     CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_GLB", m_pAABB);
@@ -55,9 +57,9 @@ void CTestGlb::Render_GameObject()
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+  //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-
+    pGraphicDev->SetTexture(0,CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Texture());
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
     //m_pTextureCom->Set_Texture(0);
@@ -68,7 +70,7 @@ void CTestGlb::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+   // pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
