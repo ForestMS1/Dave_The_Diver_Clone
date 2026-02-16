@@ -18,9 +18,11 @@ protected:
 	virtual ~CGameObject();
 
 public:
-	//[[deprecated]]
 	CComponent* Get_Component(COMPONENTID eID, std::wstring_view svComponentTag);
 	_float		Get_ViewZ() { return m_fViewZ; }
+
+public:
+	virtual void Update_ImGui();
 
 public:
 	virtual			HRESULT		Ready_GameObject();

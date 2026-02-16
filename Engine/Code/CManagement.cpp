@@ -1,4 +1,5 @@
 #include "CManagement.h"
+#include "CHelper.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
@@ -69,4 +70,93 @@ void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 void CManagement::Free()
 {
     Safe_Release(m_pScene);
+}
+
+void CManagement::Update_ImGui()
+{
+    ImGui::Begin("MANAGEMENT");
+
+    if (ImGui::TreeNode("RAW"))
+    {
+        for (auto& pLayerPair : *m_pScene->Get_Layer())
+        {
+            string s = CHelper::WStringToString(pLayerPair.first);
+            if (ImGui::TreeNode(s.c_str()))
+            {
+                for (auto& pGamePair : *pLayerPair.second->Get_GameObjects())
+                {
+                    string s = "[" + ::to_string(pGamePair.second.size()) + "]#" + CHelper::WStringToString(pGamePair.first);
+                    if (ImGui::TreeNode(s.c_str()))
+                    {
+                        for (auto& pGameObj : pGamePair.second)
+                        {
+                            pGameObj->Update_ImGui();
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+                ImGui::TreePop();
+            }
+        }
+
+        ImGui::TreePop();
+    }
+
+    if (ImGui::TreeNode("TREE"))
+    {
+        vector<CGameObject*> pRootObjectList;
+        unordered_map< CGameObject*, std::string> mapDebug;
+
+        // 루프1. 루트 오브젝트를 추린다.
+        for (auto& pLayer : *m_pScene->Get_Layer())
+        {
+            for (auto& pObjMap : *(pLayer.second->Get_GameObjects()))
+            {
+                int i = 0;
+                for (auto& pObj : pObjMap.second)
+                {
+                    std::string s = CHelper::WStringToString(pObjMap.first) + "_" + std::to_string(i);
+                    mapDebug.insert({ pObj, s });
+                    if (!pObj->Get_Parent())
+                    {
+                        pRootObjectList.push_back(pObj);
+                    }
+                    ++i;
+                }
+            }
+        }
+
+        std::function<void(CGameObject*)> RecursiveImguiUpdate = [&](CGameObject* pGObj)
+        {
+            if (ImGui::TreeNode((void*)pGObj, mapDebug[pGObj].c_str()))
+            {
+                pGObj->Update_ImGui();
+
+                if (!pGObj->Get_Children()->empty())
+                {
+                    if (ImGui::TreeNode("Childs"))
+                    {
+                        for (auto& pChild : *pGObj->Get_Children())
+                        {
+                            RecursiveImguiUpdate(pChild);
+                        }
+                        ImGui::TreePop();
+                    }
+                }
+
+                ImGui::TreePop();
+            }
+        };
+
+
+        for (auto iter = pRootObjectList.begin(); iter != pRootObjectList.end(); ++iter)
+        {
+            RecursiveImguiUpdate(*iter);
+        }
+
+        ImGui::TreePop();
+    }
+
+
+    ImGui::End();
 }
