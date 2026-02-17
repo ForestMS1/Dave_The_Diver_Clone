@@ -1,7 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
-class CPlayerState;
+#include "CPlayerState.h"
 
 enum class DiveState
 {
@@ -29,6 +28,7 @@ public:
 
 public:
 	DiveState		Get_State() const { return m_eCurState; }
+	ATTACKSUBSTATE	Get_AttackSubState();
 	void			Set_State(DiveState state);
 
 

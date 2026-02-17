@@ -3,6 +3,7 @@
 #include "CGraphicDev.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CPlayerState.h"
 CAttackReadyArm::CAttackReadyArm()
 {
 }
@@ -106,6 +107,9 @@ void CAttackReadyArm::Set_ParentTransform()
 
 void CAttackReadyArm::Rotate_ToMouse()
 {
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT)
+		return;
+
 	_vec3 vMousePos, vPlayerPos;
 
 	CHelper::GetMousePointInWorld(&vMousePos);

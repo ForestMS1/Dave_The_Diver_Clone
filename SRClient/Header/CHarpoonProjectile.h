@@ -2,6 +2,9 @@
 #include "CGameObject.h"
 #include "CAttackReadyArmTex.h"
 #include "CAABB.h"
+
+enum class PROJECTILESTATE { READY, FIRE, HIT, NONE_HIT, STATE_END };
+
 class CHarpoonProjectile : public CGameObject
 {
 private:
@@ -16,8 +19,8 @@ public:
 	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
 	void		Render_GameObject() override;
 
-	void		TriggerOn() { m_eState = FIRE; }
-	_bool		IsTriggerOn() { return m_eState != READY; }
+	void		TriggerOn() { m_eState = PROJECTILESTATE::FIRE; }
+	_bool		IsTriggerOn() { return m_eState != PROJECTILESTATE::READY; }
 
 private:
 	HRESULT Ready_Component();
@@ -29,12 +32,20 @@ private:
 	void	Change_ProjectileState();
 
 private:
-	enum PROJECTILESTATE { READY, FIRE, HIT, NONE_HIT, STATE_END };
+	void FSM(const _float& fTimeDelta);
+	void Ready_Act();
+	void Fire_Act(const _float& fTimeDelta);
+	void Hit_Act(const _float& fTimeDelta);
+	void NoneHit_Act(const _float& fTimeDelta);
+
+public:
+	//enum PROJECTILESTATE { READY, FIRE, HIT, NONE_HIT, STATE_END };
+	PROJECTILESTATE GetProjectilState() { return m_eState; }
 
 private:
-	PROJECTILESTATE			m_eState = READY;
-	_float					m_fSpeed = 5.f;
-	_float					m_fRange = 2.f;
+	PROJECTILESTATE			m_eState = PROJECTILESTATE::READY;
+	_float					m_fSpeed = 10.f;
+	_float					m_fRange = 5.f;
 	_float					m_fAccRange = 0.f;
 	_vec3					m_vDir;
 private:
@@ -42,6 +53,9 @@ private:
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 	CAABB* m_pAABB;
+
+private:
+	_bool m_bIsHitFish = false;
 
 public:
 	static CHarpoonProjectile* Create();

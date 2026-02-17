@@ -4,6 +4,7 @@
 #include "CDiveDave.h"
 #include "CHelper.h"
 #include "CColliderMgr.h"
+#include "CCollisionMgr.h"
 CHarpoonProjectile::CHarpoonProjectile()
 {
 }
@@ -40,7 +41,7 @@ HRESULT CHarpoonProjectile::Ready_GameObject()
 	_vec3 vPos = { 00.0f, 0.0f, 0.0f };
 
 	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Projectile", this);
-	//CColliderMgr::GetInstance()->Set_Render(true);
+	CColliderMgr::GetInstance()->Set_Render(true);
 	return S_OK;
 }
 
@@ -51,23 +52,15 @@ _int CHarpoonProjectile::Update_GameObject(const _float& fTimeDelta)
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	// 충돌체 그룹에 넣어줘야한다.
-	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Dive", m_pAABB);
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Ship", m_pAABB);
 	m_pAABB->Transform(m_pTransformCom->Get_World());
 	
 
-	if (m_eState == READY)
-	{
-		Set_ParentTransform();
-		Rotate_ToMouse();
-		Shot_ToMouse();
-	}
-	else if(m_eState == FIRE)
-	{
-		Go_ToDir(fTimeDelta);
-	}
+	FSM(fTimeDelta);
 	Change_ProjectileState();
 
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
+
 	return iExit;
 }
 
@@ -77,6 +70,59 @@ void CHarpoonProjectile::LateUpdate_GameObject(const _float& fTimeDelta)
 		return;
 
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Ship"))
+	{
+		// 충돌체 순회
+		for (auto& pCollider : *pColliders)
+		{
+			// 내가 아닌것들과 체크
+			if (m_pAABB != pCollider)
+			{
+				// 충돌체 끼리 충돌 체크
+				if (m_pAABB->Intersect(pCollider))
+				{
+					// Some Logic
+					// 
+
+					if (pCollider->Get_Tag() == L"AABB_Boat")
+					{
+						CCollisionMgr::COLL_RECT_EX_INFO info;
+						if (CCollisionMgr::GetInstance()->Collision_RectEx(m_pAABB, dynamic_cast<CAABB*>(pCollider), &info))
+						{
+							_vec3 vPos;
+							m_pTransformCom->Get_Info(INFO_POS, &vPos);
+							if (info.eDir == CCollisionMgr::DIR_DOWN)
+							{
+								vPos.y += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_UP)
+							{
+								vPos.y -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_LEFT)
+							{
+								vPos.x -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_RIGHT)
+							{
+								vPos.x += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+
+							m_bIsHitFish = true;
+							m_pTransformCom->Update_Component(fTimeDelta);
+							m_pAABB->Transform(m_pTransformCom->Get_World());
+						}
+					}
+				}
+			}
+		}
+	}
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -162,6 +208,7 @@ void CHarpoonProjectile::Shot_ToMouse()
 	m_pTransformCom->Get_Info(INFO_POS, &vProjectilePos);
 	
 	m_vDir = vMousePos - vProjectilePos;
+	D3DXVec3Normalize(&m_vDir, &m_vDir);
 }
 
 void CHarpoonProjectile::Go_ToDir(const _float& fTimeDelta)
@@ -175,13 +222,18 @@ void CHarpoonProjectile::Go_ToDir(const _float& fTimeDelta)
 
 void CHarpoonProjectile::Change_ProjectileState()
 {
-	if (m_fAccRange >= m_fRange)
+	if (m_bIsHitFish)
 	{
-		m_fAccRange = 0.f;
-		m_eState = READY;
-		static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
+		m_eState = PROJECTILESTATE::HIT;
+		//static_cast<CDiveDave*>(m_pParentGameObject)->Set_FishCaught(true);
 	}
 
+	if (m_fAccRange >= m_fRange && !m_bIsHitFish)
+	{
+		m_fAccRange = 0.f;
+		m_eState = PROJECTILESTATE::READY;
+		static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
+	}
 
 	// TODO
 	// if(물고기랑 충돌했으면)
@@ -191,6 +243,51 @@ void CHarpoonProjectile::Change_ProjectileState()
 	// m_eState = NONE_HIT
 	// static_cast<CDiveDave*>(m_pParentGameObject)->Set_FishCaught(false);
 
+}
+
+void CHarpoonProjectile::FSM(const _float& fTimeDelta)
+{
+	switch (m_eState)
+	{
+	case PROJECTILESTATE::READY:
+		Ready_Act();
+		break;
+
+	case PROJECTILESTATE::FIRE:
+		Fire_Act(fTimeDelta);
+		break;
+
+	case PROJECTILESTATE::HIT:
+		Hit_Act(fTimeDelta);
+		break;
+
+	case PROJECTILESTATE::NONE_HIT:
+		NoneHit_Act(fTimeDelta);
+		break;
+	default:
+		break;
+	}
+}
+
+void CHarpoonProjectile::Ready_Act()
+{
+	Set_ParentTransform();
+	Rotate_ToMouse();
+	Shot_ToMouse();
+}
+
+void CHarpoonProjectile::Fire_Act(const _float& fTimeDelta)
+{
+	Go_ToDir(fTimeDelta);
+}
+
+void CHarpoonProjectile::Hit_Act(const _float& fTimeDelta)
+{
+}
+
+void CHarpoonProjectile::NoneHit_Act(const _float& fTimeDelta)
+{
+	
 }
 
 CHarpoonProjectile* CHarpoonProjectile::Create()

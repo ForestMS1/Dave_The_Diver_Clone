@@ -2,14 +2,14 @@
 #include "CPlayerState.h"
 #include "CAttackSubState.h"
 
-enum class ATTACKSUBSTATE
-{
-	ATTACK_READY,
-	ATTACK_FIRE,
-	ATTACK_FIGHT,
-	ATTACK_FAIL,
-	SUB_END
-};
+//enum class ATTACKSUBSTATE
+//{
+//	ATTACK_READY,
+//	ATTACK_FIRE,
+//	ATTACK_FIGHT,
+//	ATTACK_FAIL,
+//	SUB_END
+//};
 
 class CDiveDaveAttack : public CPlayerState
 {

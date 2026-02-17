@@ -106,6 +106,9 @@ void CHarpoon::Set_ParentTransform()
 
 void CHarpoon::Rotate_ToMouse()
 {
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT)
+		return;
+
 	_vec3 vMousePos, vPlayerPos;
 
 	CHelper::GetMousePointInWorld(&vMousePos);

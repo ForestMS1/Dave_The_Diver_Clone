@@ -2,6 +2,15 @@
 #include "CBase.h"
 #include "CGameObject.h"
 
+enum class ATTACKSUBSTATE
+{
+	ATTACK_READY,
+	ATTACK_FIRE,
+	ATTACK_FIGHT,
+	ATTACK_FAIL,
+	SUB_END
+};
+
 class CPlayerState : public CBase
 {
 public:

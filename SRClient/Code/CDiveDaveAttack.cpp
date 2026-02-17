@@ -7,6 +7,8 @@
 #include "CDiveDaveCam.h"
 #include "CAttackSubReady.h"
 #include "CAttackSubFire.h"
+#include "CAttackSubFail.h"
+#include "CAttackSubFight.h"
 
 string debugSubState[(_uint)ATTACKSUBSTATE::SUB_END] = { "ATTACK_READY", "ATTACK_FIRE", "ATTACK_FIGHT", "ATTACK_FAIL" };
 
@@ -82,8 +84,8 @@ void CDiveDaveAttack::Add_SubState()
 {
 	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_READY, CAttackSubReady::Create(m_pPlayer, this) });
 	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIRE, CAttackSubFire::Create(m_pPlayer, this) });
-	//m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIGHT,  CAttackSubFight::Create(m_pPlayer, this) });
-	//m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FAIL, CAttackSubFail::Create(m_pPlayer, this) });
+	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIGHT,  CAttackSubFight::Create(m_pPlayer, this) });
+	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FAIL, CAttackSubFail::Create(m_pPlayer, this) });
 }
 
 CDiveDaveAttack* CDiveDaveAttack::Create(CGameObject* pOwner)

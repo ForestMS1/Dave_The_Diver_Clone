@@ -55,10 +55,14 @@ void CAttackSubFire::LateUpdate_State(const _float& fTimeDelta)
     if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
         return;
 
-    if (static_cast<CDiveDave*>(m_pPlayer)->Is_FishCaught())
+
+    CHarpoonProjectile* pHarpoonProjectile = dynamic_cast<CHarpoonProjectile*>
+        (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
+
+    if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::HIT)
         m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FIGHT);
-   // else
-   //     static_cast<CDiveDave*>(m_pPlayer)->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
+    if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::NONE_HIT)
+        m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
 }
 
 void CAttackSubFire::Render_State()

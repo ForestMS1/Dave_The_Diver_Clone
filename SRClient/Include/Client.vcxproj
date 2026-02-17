@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CAttackSubFail.h" />
+    <ClInclude Include="..\Header\CAttackSubFight.h" />
     <ClInclude Include="..\Header\CAttackSubFire.h" />
     <ClInclude Include="..\Header\CAttackSubReady.h" />
     <ClInclude Include="..\Header\CAttackSubState.h" />
@@ -213,6 +214,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CAttackSubFail.cpp" />
+    <ClCompile Include="..\Code\CAttackSubFight.cpp" />
     <ClCompile Include="..\Code\CAttackSubFire.cpp" />
     <ClCompile Include="..\Code\CAttackSubReady.cpp" />
     <ClCompile Include="..\Code\CAttackSubState.cpp" />

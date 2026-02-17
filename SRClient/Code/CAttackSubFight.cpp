@@ -1,18 +1,18 @@
-#include "CAttackSubFail.h"
+#include "CAttackSubFight.h"
 #include "CDiveDave.h"
 #include "CDInputMgr.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
-CAttackSubFail::CAttackSubFail(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
-    :CAttackSubState(pPlayer, pParentState)
+CAttackSubFight::CAttackSubFight(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
+    : CAttackSubState(pPlayer, pParentState)
 {
 }
 
-CAttackSubFail::~CAttackSubFail()
+CAttackSubFight::~CAttackSubFight()
 {
 }
 
-void CAttackSubFail::Enter()
+void CAttackSubFight::Enter()
 {
     static_cast<CDiveDave*>(m_pPlayer)->Init_Frame();
     _float fWidth = 47.f;
@@ -22,35 +22,32 @@ void CAttackSubFail::Enter()
 
     _vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
     static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
-    static_cast<CDiveDave*>(m_pPlayer)->Set_TextureCom(L"Com_AttackFailTexture");
+    static_cast<CDiveDave*>(m_pPlayer)->Set_TextureCom(L"Com_AttackFightTexture");
 }
 
-void CAttackSubFail::Input(const _float& fTimeDelta)
+void CAttackSubFight::Input(const _float& fTimeDelta)
 {
 }
 
-_int CAttackSubFail::Update_State(const _float& fTimeDelta)
+_int CAttackSubFight::Update_State(const _float& fTimeDelta)
 {
     if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
         return 0;
 
     Input(fTimeDelta);
-    static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 1);
+    static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 8);
     //Mouse_Check();
-    m_fFailDelay += fTimeDelta;
-    if (m_fFailDelay < 1.f)
-        static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
 
     return 0;
 }
 
-void CAttackSubFail::LateUpdate_State(const _float& fTimeDelta)
+void CAttackSubFight::LateUpdate_State(const _float& fTimeDelta)
 {
     if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
         return;
 }
 
-void CAttackSubFail::Render_State()
+void CAttackSubFight::Render_State()
 {
     if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
         return;
@@ -62,7 +59,7 @@ void CAttackSubFail::Render_State()
     pPlayerTextureCom->Set_Texture((_uint)fFrame);
 }
 
-void CAttackSubFail::Exit()
+void CAttackSubFight::Exit()
 {
     _float fWidth = 47.f;
     _float fHeight = 54.f;
@@ -73,17 +70,17 @@ void CAttackSubFail::Exit()
     static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
 }
 
-void CAttackSubFail::Clear()
+void CAttackSubFight::Clear()
 {
 }
-CAttackSubFail* CAttackSubFail::Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
+
+CAttackSubFight* CAttackSubFight::Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
 {
-    CAttackSubFail* pSubState = new CAttackSubFail(pPlayer, pParentState);
+    CAttackSubFight* pSubState = new CAttackSubFight(pPlayer, pParentState);
 
     return pSubState;
 }
 
-
-void CAttackSubFail::Free()
+void CAttackSubFight::Free()
 {
 }

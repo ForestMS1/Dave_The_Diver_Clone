@@ -273,6 +273,9 @@
     <ClInclude Include="..\Header\CAttackSubFail.h">
       <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fail</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CAttackSubFight.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -418,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CAttackSubFail.cpp">
       <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAttackSubFight.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

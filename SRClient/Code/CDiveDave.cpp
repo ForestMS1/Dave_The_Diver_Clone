@@ -87,6 +87,12 @@ void CDiveDave::Render_GameObject()
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
+ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
+{
+	if (m_eCurState == DiveState::ATTACK) 
+		return static_cast<CDiveDaveAttack*>(m_pState)->Get_State();
+}
+
 void CDiveDave::Set_State(DiveState state)
 {
 	if (m_mapState[state] == m_pState)
@@ -138,7 +144,8 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFailTexture", L"Com_AttackFailTexture", &m_pTextureCom))))
 		return E_FAIL;
-
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFightTexture", L"Com_AttackFightTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// Æ®·£½ºÆû
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
