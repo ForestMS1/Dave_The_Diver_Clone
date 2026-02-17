@@ -18,7 +18,7 @@ protected:
 	virtual ~CComponent();
 
 public:
-	CGameObject* const Get_GameObject() const { return m_pGameObject; }
+	CGameObject*  Get_GameObject() const { return m_pGameObject; }
 	void Set_GameObject(CGameObject * pGameObject) { m_pGameObject = pGameObject; }
 
 
