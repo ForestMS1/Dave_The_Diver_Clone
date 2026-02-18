@@ -267,4 +267,12 @@ CSushiDave* CSushiDave::Create()
 void CSushiDave::Free()
 {
     CGameObject::Free();
+    Safe_Release(m_pIdleTextureCom);
+    Safe_Release(m_pWalkTextureCom);
+    Safe_Release(m_pRunTextureCom);
+    Safe_Release(m_pTiredTextureCom);
+    Safe_Release(m_pSushiIdleTextureCom);
+    Safe_Release(m_pSushiRunTextureCom);
+    Safe_Release(m_pSushiTiredTextureCom);
+    Safe_Release(m_pSushiWalkTextureCom);
 }

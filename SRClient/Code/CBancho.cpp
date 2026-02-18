@@ -136,4 +136,6 @@ CBancho* CBancho::Create()
 void CBancho::Free()
 {
     CGameObject::Free();
+    Safe_Release(m_pIdleTextureCom);
+    Safe_Release(m_pCookTextureCom);
 }

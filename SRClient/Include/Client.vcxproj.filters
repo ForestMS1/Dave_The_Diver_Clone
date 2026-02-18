@@ -94,6 +94,12 @@
     <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
       <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Customers">
+      <UniqueIdentifier>{2a4f828d-912f-4c22-a1f6-a4201a3d3e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\UI">
+      <UniqueIdentifier>{373216ba-9fcf-4c05-b906-17e1704635f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -225,6 +231,21 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCustomer1.h">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenuFrame.h">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAddMenuButton.h">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CConfirm.h">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRecipe.h">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -346,6 +367,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveCam.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCustomer1.cpp">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenuFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAddMenuButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CConfirm.cpp">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRecipe.cpp">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

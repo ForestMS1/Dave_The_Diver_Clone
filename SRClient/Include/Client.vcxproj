@@ -158,10 +158,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CAddMenuButton.h" />
     <ClInclude Include="..\Header\CBackground.h" />
     <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
+    <ClInclude Include="..\Header\CConfirm.h" />
+    <ClInclude Include="..\Header\CCustomer1.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="..\Header\CMenu.h" />
     <ClInclude Include="..\Header\COpen.h" />
     <ClInclude Include="..\Header\CPatternFrame.h" />
+    <ClInclude Include="..\Header\CRecipe.h" />
     <ClInclude Include="..\Header\CRoof.h" />
     <ClInclude Include="..\Header\CSakura.h" />
     <ClInclude Include="..\Header\CPlayerState.h" />
@@ -195,6 +199,7 @@
     <ClInclude Include="..\Header\CTable.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
+    <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CShipDiverBox.h" />
     <ClInclude Include="framework.h" />
@@ -203,7 +208,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CAddMenuButton.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
+    <ClCompile Include="..\Code\CConfirm.cpp" />
+    <ClCompile Include="..\Code\CCustomer1.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
@@ -224,6 +232,7 @@
     <ClCompile Include="..\Code\CMenu.cpp" />
     <ClCompile Include="..\Code\COpen.cpp" />
     <ClCompile Include="..\Code\CPatternFrame.cpp" />
+    <ClCompile Include="..\Code\CRecipe.cpp" />
     <ClCompile Include="..\Code\CRoof.cpp" />
     <ClCompile Include="..\Code\CSakura.cpp" />
     <ClCompile Include="..\Code\CShip.cpp" />
@@ -240,6 +249,7 @@
     <ClCompile Include="..\Code\CTable.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
+    <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CShipDiverBox.cpp" />
     <ClCompile Include="pch.cpp">

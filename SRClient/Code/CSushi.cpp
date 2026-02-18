@@ -23,7 +23,10 @@
 #include "CSpeaker.h"
 #include "CBancho.h"
 #include "CSushiDave.h"
+#include "CCustomer1.h"
 #include "CColliderMgr.h"
+#include "CMenuFrame.h"
+#include "CDInputMgr.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -49,9 +52,9 @@ HRESULT CSushi::Ready_Scene()
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);       // ���� �׽�Ʈ �ѱ�
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);        // ���� ���� ���� ���
-	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   // ����� �ȼ� �켱
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);      
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);       
+	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   
 
 	return S_OK;
 
@@ -67,6 +70,7 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP));
 	}
 	ImGui::End();
+	Key_Input();
 	return iExit;
 }
 
@@ -345,6 +349,14 @@ HRESULT CSushi::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Dave", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CCustomer1::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Customer", pGameObject)))
+		return E_FAIL;
+
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
@@ -369,8 +381,37 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Camera", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CMenuFrame::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"MenuFrame", pGameObject)))
+		return E_FAIL;
+
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
+}
+
+void CSushi::Key_Input()
+{
+	if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_I))
+	{
+		list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"MenuFrame");
+		list<CGameObject*>::iterator iter = button->begin();
+		for (iter; iter != button->end(); iter++) {
+			static_cast<CMenuFrame*>(*iter)->Show();
+		}
+	}
+	if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
+	{
+		list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"MenuFrame");
+		list<CGameObject*>::iterator iter = button->begin();
+		for (iter; iter != button->end(); iter++) {
+			static_cast<CMenuFrame*>(*iter)->Hide();
+		}
+	}
 }
 
 void CSushi::Free()
