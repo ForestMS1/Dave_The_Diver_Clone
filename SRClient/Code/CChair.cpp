@@ -9,6 +9,7 @@
 CChair::CChair()
     : CGameObject()
 {
+    isEmpty = true;
 }
 
 CChair::CChair(const CGameObject& rhs)
