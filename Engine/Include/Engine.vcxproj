@@ -165,10 +165,13 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAssetCubeTexture.h" />
     <ClInclude Include="..\Header\CAssetDefaultFont.h" />
     <ClInclude Include="..\Header\CAssetFbx.h" />
+    <ClInclude Include="..\Header\CAssetFbx2.h" />
     <ClInclude Include="..\Header\CAssetFmodSound.h" />
     <ClInclude Include="..\Header\CAssetMgr.h" />
     <ClInclude Include="..\Header\CAssetSpine.h" />
     <ClInclude Include="..\Header\CAssetTexture.h" />
+    <ClInclude Include="..\Header\CAssetTextureFromCreate.h" />
+    <ClInclude Include="..\Header\CAssetTextureFromInMem.h" />
     <ClInclude Include="..\Header\CAttackReadyArmTex.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
@@ -244,10 +247,13 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAssetCubeTexture.cpp" />
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp" />
     <ClCompile Include="..\Code\CAssetFbx.cpp" />
+    <ClCompile Include="..\Code\CAssetFbx2.cpp" />
     <ClCompile Include="..\Code\CAssetFmodSound.cpp" />
     <ClCompile Include="..\Code\CAssetMgr.cpp" />
     <ClCompile Include="..\Code\CAssetSpine.cpp" />
     <ClCompile Include="..\Code\CAssetTexture.cpp" />
+    <ClCompile Include="..\Code\CAssetTextureFromCreate.cpp" />
+    <ClCompile Include="..\Code\CAssetTextureFromInMem.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />

@@ -666,6 +666,15 @@
     <ClCompile Include="..\Code\CDynamicBuffer.cpp">
       <Filter>02. Component\00. VIBuffer\DynamicBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CAssetFbx2.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\04. Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAssetTextureFromCreate.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAssetTextureFromInMem.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -901,6 +910,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CDynamicBuffer.h">
       <Filter>02. Component\00. VIBuffer\DynamicBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetFbx2.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\04. Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetTextureFromCreate.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetTextureFromInMem.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

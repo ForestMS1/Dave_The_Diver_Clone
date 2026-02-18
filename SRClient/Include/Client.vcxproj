@@ -194,6 +194,7 @@
     <ClInclude Include="..\Header\CSushiDave.h" />
     <ClInclude Include="..\Header\CTable.h" />
     <ClInclude Include="..\Header\CTestAmericanLobster.h" />
+    <ClInclude Include="..\Header\CTestDancing.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="Client.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="..\Code\CSushiDave.cpp" />
     <ClCompile Include="..\Code\CTable.cpp" />
     <ClCompile Include="..\Code\CTestAmericanLobster.cpp" />
+    <ClCompile Include="..\Code\CTestDancing.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="Client.cpp" />

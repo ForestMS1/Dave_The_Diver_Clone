@@ -100,6 +100,9 @@
     <Filter Include="02. GameObject\TestFish\AmericanLobster">
       <UniqueIdentifier>{4351c481-9179-4df2-9631-261aaafe2ea4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\TestFish\Dancing">
+      <UniqueIdentifier>{40b7c6cc-07ec-41d2-bbfd-213ed62fdb8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -234,6 +237,9 @@
     <ClInclude Include="..\Header\CTestAmericanLobster.h">
       <Filter>02. GameObject\TestFish\AmericanLobster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTestDancing.h">
+      <Filter>02. GameObject\TestFish\Dancing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -358,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestAmericanLobster.cpp">
       <Filter>02. GameObject\TestFish\AmericanLobster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTestDancing.cpp">
+      <Filter>02. GameObject\TestFish\Dancing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

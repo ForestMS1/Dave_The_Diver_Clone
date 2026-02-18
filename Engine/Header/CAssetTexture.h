@@ -6,7 +6,7 @@ BEGIN(Engine)
 
 class ENGINE_DLL CAssetTexture : public CAsset
 {
-private:
+protected:
 	explicit CAssetTexture(std::wstring_view m_sAssetPath);
 	virtual ~CAssetTexture();
 
@@ -20,7 +20,7 @@ public:
 public:
 	static CAssetTexture* Create(std::wstring_view svPath);
 
-private:
+protected:
 	LPDIRECT3DTEXTURE9 m_pTexture;
 	D3DXIMAGE_INFO m_ImgInfo;
 

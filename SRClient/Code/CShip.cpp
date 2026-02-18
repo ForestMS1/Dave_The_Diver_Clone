@@ -14,6 +14,7 @@
 #include "CShipPhone.h"
 #include "CShipPhoneApp.h"
 #include "CTestAmericanLobster.h"
+#include "CTestDancing.h"
 
 CShip::CShip()
 	: CScene()
@@ -62,6 +63,12 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pTest)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+		return E_FAIL;
+
+	CTestDancing* pDancing = CTestDancing::Create();
+	if (nullptr == pDancing)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipestDancing", pDancing)))
 		return E_FAIL;
 
 	CShipDave* pShipDave = CShipDave::Create();

@@ -7,6 +7,12 @@
 #ifdef	ENGINE_EXPORTS
 
 #include <spine/spine.h>
+
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 using namespace spine;
 
 #endif

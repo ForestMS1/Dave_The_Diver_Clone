@@ -75,7 +75,7 @@ void CMainApp::Render_MainApp()
 
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
-	
+
 	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempRender();
 
 	CColliderMgr::GetInstance()->Render();
@@ -173,6 +173,15 @@ HRESULT CMainApp::Load_PermanentAsset()
 		sizeof(VTXCOLTEX),
 		sizeof(INDEX16),
 		D3DFMT_INDEX16
+	));
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DynamicBuffer_Fbx", Engine::CDynamicBuffer::Create(
+		    D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
+		    D3DPOOL_DEFAULT,
+		    FVF_TEX,
+		    sizeof(VTXTEX),
+		    sizeof(INDEX32),
+		    D3DFMT_INDEX32
 	));
 
 
