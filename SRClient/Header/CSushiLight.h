@@ -1,3 +1,5 @@
+
+
 #pragma once
 #include "CGameObject.h"
 
@@ -8,36 +10,32 @@ namespace Engine
 	class CTransform;
 }
 
-class CAddMenuButton : public CGameObject
+class CSushiLight : public CGameObject
 {
 private:
-	explicit CAddMenuButton();
-	explicit CAddMenuButton(const CGameObject& rhs);
-	virtual ~CAddMenuButton();
+	explicit CSushiLight();
+	explicit CSushiLight(const CGameObject& rhs);
+	virtual ~CSushiLight();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-	void			Set_Selected(bool flag) { m_bSelected = flag; }
+
 private:
 	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pAddTextureCom;
-	Engine::CTexture* m_pSelectTextureCom;
+	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 public:
-
-	static CAddMenuButton* Create();
-	bool render;
+	static CSushiLight* Create();
 
 private:
 	virtual void Free();
-	bool m_bSelected;
 
 };
 

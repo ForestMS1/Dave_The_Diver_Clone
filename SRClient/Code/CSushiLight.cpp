@@ -1,26 +1,26 @@
 #include "pch.h"
-#include "CLight.h"
+#include "CSushiLight.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
-CLight::CLight()
+CSushiLight::CSushiLight()
     : CGameObject()
 {
 }
 
-CLight::CLight(const CGameObject& rhs)
+CSushiLight::CSushiLight(const CGameObject& rhs)
     : CGameObject(rhs)
 {
 }
 
-CLight::~CLight()
+CSushiLight::~CSushiLight()
 {
 }
 
-HRESULT CLight::Ready_GameObject()
+HRESULT CSushiLight::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -30,7 +30,7 @@ HRESULT CLight::Ready_GameObject()
     return S_OK;
 }
 
-_int CLight::Update_GameObject(const _float& fTimeDelta)
+_int CSushiLight::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -39,7 +39,7 @@ _int CLight::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void CLight::LateUpdate_GameObject(const _float& fTimeDelta)
+void CSushiLight::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 
@@ -49,7 +49,7 @@ void CLight::LateUpdate_GameObject(const _float& fTimeDelta)
     Compute_ViewZ(&vPos);
 }
 
-void CLight::Render_GameObject()
+void CSushiLight::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -72,7 +72,7 @@ void CLight::Render_GameObject()
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CLight::Ready_Component()
+HRESULT CSushiLight::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -92,9 +92,9 @@ HRESULT CLight::Ready_Component()
 }
 
 
-CLight* CLight::Create()
+CSushiLight* CSushiLight::Create()
 {
-    CLight* pBackGround = new CLight;
+    CSushiLight* pBackGround = new CSushiLight;
 
     if (FAILED(pBackGround->Ready_GameObject()))
     {
@@ -106,7 +106,7 @@ CLight* CLight::Create()
     return pBackGround;
 }
 
-void CLight::Free()
+void CSushiLight::Free()
 {
     CGameObject::Free();
 }
