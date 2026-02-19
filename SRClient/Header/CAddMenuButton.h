@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include "CGameObject.h"
 
@@ -10,34 +8,35 @@ namespace Engine
 	class CTransform;
 }
 
-class CChair : public CGameObject
+class CAddMenuButton : public CGameObject
 {
 private:
-	explicit CChair();
-	explicit CChair(const CGameObject& rhs);
-	virtual ~CChair();
+	explicit CAddMenuButton();
+	explicit CAddMenuButton(const CGameObject& rhs);
+	virtual ~CAddMenuButton();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-	bool						isEmtpy() { return isEmpty; }
-	void						Set_Emtpy(bool flag) { isEmpty = flag; }
+	void			Set_Selected(bool flag) { m_bSelected = flag; }
 private:
 	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pTextureCom;
+	Engine::CTexture* m_pAddTextureCom;
+	Engine::CTexture* m_pSelectTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CChair* Create();
+	static CAddMenuButton* Create();
+	bool render;
 
 private:
 	virtual void Free();
-	bool	isEmpty;
+	bool m_bSelected;
 
 };
 

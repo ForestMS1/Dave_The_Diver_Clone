@@ -1,5 +1,3 @@
-
-
 #pragma once
 #include "CGameObject.h"
 
@@ -10,34 +8,32 @@ namespace Engine
 	class CTransform;
 }
 
-class CChair : public CGameObject
+class CConfirm : public CGameObject
 {
 private:
-	explicit CChair();
-	explicit CChair(const CGameObject& rhs);
-	virtual ~CChair();
+	explicit CConfirm();
+	explicit CConfirm(const CGameObject& rhs);
+	virtual ~CConfirm();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-	bool						isEmtpy() { return isEmpty; }
-	void						Set_Emtpy(bool flag) { isEmpty = flag; }
 private:
 	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pTextureCom;
+	Engine::CTexture* m_pConfirmTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CChair* Create();
+	static CConfirm* Create();
+	bool render;
 
 private:
 	virtual void Free();
-	bool	isEmpty;
 
 };
 
