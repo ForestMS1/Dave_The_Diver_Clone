@@ -90,7 +90,7 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 	}
 	else if(pProjectile->m_fAccRange >= pProjectile->m_fRange)
 	{
-		pProjectile->Set_State(PROJECTILESTATE::READY);
+		pProjectile->Set_State(PROJECTILESTATE::RETURN);
 		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DiveState::IDLE);
 	}
 }
