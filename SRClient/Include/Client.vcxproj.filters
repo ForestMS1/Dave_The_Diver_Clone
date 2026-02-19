@@ -139,6 +139,9 @@
     <Filter Include="01. Scene\03. Sushi\UI">
       <UniqueIdentifier>{373216ba-9fcf-4c05-b906-17e1704635f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\Gun">
+      <UniqueIdentifier>{afc3ee72-12a1-4f2f-9f71-693413ada00e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -324,6 +327,12 @@
     <ClInclude Include="..\Header\CRecipe.h">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveGun.h">
+      <Filter>02. GameObject\DiveDave\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveMeeleAttack.h">
+      <Filter>02. GameObject\DiveDave\State\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -499,6 +508,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CRecipe.cpp">
       <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveGun.cpp">
+      <Filter>02. GameObject\DiveDave\Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveMeeleAttack.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
