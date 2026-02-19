@@ -22,7 +22,8 @@ public:
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-
+	bool						isEmtpy() { return isEmpty; }
+	void						Set_Emtpy(bool flag) { isEmpty = flag; }
 private:
 	HRESULT			Ready_Component();
 
@@ -36,6 +37,7 @@ public:
 
 private:
 	virtual void Free();
+	bool	isEmpty;
 
 };
 

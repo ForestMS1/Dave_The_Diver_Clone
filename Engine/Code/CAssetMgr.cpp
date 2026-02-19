@@ -1,5 +1,5 @@
 #include "CAssetMgr.h"
-
+#include "CHelper.h"
 
 IMPLEMENT_SINGLETON(CAssetMgr)
 
@@ -61,6 +61,27 @@ void CAssetMgr::DelAsset(std::wstring_view svLayerTag)
 			iter = pAssetLayer->erase(iter);
 		}
 	}
+}
+
+void CAssetMgr::Update_ImGui()
+{
+	ImGui::Begin("ASSET_MGR");
+
+	for (auto& pair : m_AssetMap)
+	{
+		string s = "[" + ::to_string(pair.second.size()) + "]#" +  CHelper::WStringToString(pair.first);
+		if (ImGui::TreeNode(s.c_str()))
+		{
+			for (auto& pAsset : pair.second)
+			{
+				string s = "(" + pAsset->Get_AssetStateString() + ")" + CHelper::WStringToString(pAsset->Get_AssetPath());
+				ImGui::Text(s.c_str());
+			}
+			ImGui::TreePop();
+		}
+	}
+
+	ImGui::End();
 }
 
 vector<CAsset*>* CAssetMgr::Find_AssetLayer(std::wstring_view svLayerTag)

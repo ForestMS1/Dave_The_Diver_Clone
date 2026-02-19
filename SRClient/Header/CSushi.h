@@ -19,6 +19,8 @@ private:
 	HRESULT			Ready_Environment_Layer(std::wstring_view svLayerTag);
 	HRESULT			Ready_GameLogic_Layer(std::wstring_view svLayerTag);
 	HRESULT			Ready_UI_Layer(std::wstring_view svLayerTag);
+
+	void Key_Input();
 	void Free() override;
 private:
 	ImGuizmo::OPERATION m_CurrentGizmoOperation;

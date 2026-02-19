@@ -7,6 +7,8 @@ CVIBuffer::CVIBuffer() : m_pVB(nullptr), m_pIB(nullptr)
 , m_dwTriCnt(0)
 , m_dwFVF(0)
 , m_dwIdxSize(0)
+, m_dwBufferUsage(0)
+, m_dwBufferPool(D3DPOOL_MANAGED)
 {
 }
 
@@ -18,6 +20,8 @@ CVIBuffer::CVIBuffer(const CVIBuffer& rhs)
 	, m_dwFVF(rhs.m_dwFVF)
 	, m_dwIdxSize(rhs.m_dwIdxSize)
 	, m_IdxFmt(rhs.m_IdxFmt)
+	, m_dwBufferUsage(rhs.m_dwBufferUsage)
+	, m_dwBufferPool(rhs.m_dwBufferPool)
 {
 	m_pVB->AddRef();
 	m_pIB->AddRef();
@@ -37,18 +41,18 @@ HRESULT CVIBuffer::Ready_Buffer()
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 	if (FAILED(pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,	// 버텍스 버퍼의 크기
-												0,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
+												m_dwBufferUsage,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
 												m_dwFVF,	// 버텍스 속성
-												D3DPOOL_MANAGED,	// 정적 버퍼인 경우 MANAGED
+												m_dwBufferPool,	// 정적 버퍼인 경우 MANAGED
 												&m_pVB,		// 버텍스 버퍼 객체 생성
 												NULL)))		// 공유할 일 없기 때문에 NULL
 				return E_FAIL;
 
 
 	if (FAILED(pGraphicDev->CreateIndexBuffer(m_dwTriCnt * m_dwIdxSize,	// 인덱스 버퍼의 크기
-												0,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
+												m_dwBufferUsage,			// 0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC인 경우 동적 버퍼
 												m_IdxFmt,	// 인덱스 속성
-												D3DPOOL_MANAGED,	// 정적 버퍼인 경우 MANAGED
+												m_dwBufferPool,	// 정적 버퍼인 경우 MANAGED
 												&m_pIB,		// 인덱스 버퍼 객체 생성
 												NULL)))		// 공유할 일 없기 때문에 NULL
 												return E_FAIL;

@@ -2,6 +2,7 @@
 #include "CBase.h"
 #include "Engine_Define.h"
 #include "CVIBuffer.h"
+#include "CDynamicBuffer.h"
 
 class ENGINE_DLL CCollider : public CBase
 {
@@ -45,12 +46,12 @@ protected:
 	_ulong m_dwIntersectColor;
 	_ulong m_dwCurrentColor;
 
-	LPDIRECT3DVERTEXBUFFER9		m_pVB;
+	CDynamicBuffer* m_pDynamicBufferCom;
+
 	_ulong			m_dwVtxSize;
 	_ulong			m_dwVtxCnt;
 	_ulong			m_dwTriCnt;
 	_ulong			m_dwFVF;
-	LPDIRECT3DINDEXBUFFER9		m_pIB;
 	_ulong			m_dwIdxSize;
 	D3DFORMAT		m_IdxFmt;
 

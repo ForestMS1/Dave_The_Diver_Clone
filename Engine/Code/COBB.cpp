@@ -59,8 +59,8 @@ HRESULT COBB::Ready_Buffer()
 	CCollider::Ready_Buffer();
 
 	INDEX32* pIndex = nullptr;
-
-	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+	
+	m_pDynamicBufferCom->Get_IndexBuffer()->Lock(0, 0, (void**)&pIndex, D3DLOCK_DISCARD);
 
 	// X+
 	pIndex[0]._0 = 1;
@@ -122,7 +122,7 @@ HRESULT COBB::Ready_Buffer()
 	pIndex[11]._1 = 2;
 	pIndex[11]._2 = 3;
 
-	m_pIB->Unlock();
+	m_pDynamicBufferCom->Get_IndexBuffer()->Unlock();
 
 	return S_OK;
 }
@@ -138,15 +138,15 @@ void COBB::Render()
 	}
 	XMFLOAT3 corners[8];
 	m_BoundingOrientedBox.GetCorners(corners);
-
+	
 	VTXCUBECOL* pVertex = NULL;
-	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+	m_pDynamicBufferCom->Get_VertexBuffer()->Lock(0, 0, (void**)&pVertex, D3DLOCK_DISCARD);
 	for (int i = 0; i < 8; ++i) {
 		_vec3 pos = { corners[i].x, corners[i].y, corners[i].z };
 		pVertex[i].vPosition = pos;
 		pVertex[i].dwColor = m_dwCurrentColor;
 	}
-	m_pVB->Unlock();
+	m_pDynamicBufferCom->Get_VertexBuffer()->Unlock();
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -156,16 +156,14 @@ void COBB::Render()
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE); 
 	pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME); 
 
-	pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
-	pGraphicDev->SetFVF(m_dwFVF);
-	pGraphicDev->SetIndices(m_pIB);
-
+	
 	D3DXMATRIX matIden;
 	D3DXMatrixIdentity(&matIden);
 	pGraphicDev->SetTransform(D3DTS_WORLD, &matIden);
 
-	pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+	m_pDynamicBufferCom->Render_Buffer();
 
+	
 	pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);

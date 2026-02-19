@@ -16,13 +16,17 @@
 #include "CFishTank.h"
 #include "CPatternFrame.h"
 #include "CSign.h"
-#include "CLight.h"
+#include "CSushiLight.h"
 #include "CChair.h"
 #include "COpen.h"
 #include "CKitchen.h"
 #include "CSpeaker.h"
 #include "CBancho.h"
+#include "CSushiDave.h"
+#include "CCustomer1.h"
 #include "CColliderMgr.h"
+#include "CMenuFrame.h"
+#include "CDInputMgr.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -48,9 +52,9 @@ HRESULT CSushi::Ready_Scene()
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);       // ���� �׽�Ʈ �ѱ�
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);        // ���� ���� ���� ���
-	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   // ����� �ȼ� �켱
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);      
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);       
+	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   
 
 	return S_OK;
 
@@ -66,6 +70,7 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP));
 	}
 	ImGui::End();
+	Key_Input();
 	return iExit;
 }
 
@@ -82,84 +87,84 @@ void CSushi::Render_Scene()
 	pDefFont->Render_Font(L"Here is CSushi", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 
-	if (g_pObject != nullptr)
-	{
+	//if (g_pObject != nullptr)
+	//{
 
-		CTransform* pTransform = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-		if (pTransform != nullptr)
-		{
-			ImGui::Begin("Transform Inspector");
+	//	CTransform* pTransform = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	//	if (pTransform != nullptr)
+	//	{
+	//		ImGui::Begin("Transform Inspector");
 
-			// Position �Է�
-			ImGui::InputFloat3("Position", (float*)&pTransform->m_vInfo[INFO_POS]);
+	//		// Position �Է�
+	//		ImGui::InputFloat3("Position", (float*)&pTransform->m_vInfo[INFO_POS]);
 
-			// Rotation �Է�
-			ImGui::InputFloat3("Rotation", (float*)&pTransform->m_vAngle);
+	//		// Rotation �Է�
+	//		ImGui::InputFloat3("Rotation", (float*)&pTransform->m_vAngle);
 
-			// Scale �Է�
-			ImGui::InputFloat3("Scale", (float*)&pTransform->m_vScale);
+	//		// Scale �Է�
+	//		ImGui::InputFloat3("Scale", (float*)&pTransform->m_vScale);
 
-			ImGui::End();
-		}
+	//		ImGui::End();
+	//	}
 
-		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-		ImGuiIO& io = ImGui::GetIO();
-		ImGuizmo::SetDrawlist();
-		ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-		//ImGuizmo::SetDrawlist(ImGui::GetWindowDrawList());
-		_matrix matView;
-		_matrix matProj;
-		_matrix* matWorld;
-		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	//	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	//	ImGuiIO& io = ImGui::GetIO();
+	//	ImGuizmo::SetDrawlist();
+	//	ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+	//	//ImGuizmo::SetDrawlist(ImGui::GetWindowDrawList());
+	//	_matrix matView;
+	//	_matrix matProj;
+	//	_matrix* matWorld;
+	//	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
-		matWorld = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_World();
-		if (matWorld == nullptr) {
-			MSG_BOX("���� ��� ����");
-		}
-		float* view = (float*)&matView;
-		float* proj = (float*)&matProj;
-		//* model = (float*)matWorld;
+	//	matWorld = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_World();
+	//	if (matWorld == nullptr) {
+	//		MSG_BOX("���� ��� ����");
+	//	}
+	//	float* view = (float*)&matView;
+	//	float* proj = (float*)&matProj;
+	//	//* model = (float*)matWorld;
 
-		ImGuizmo::Manipulate(
-			view,
-			proj,
-			m_CurrentGizmoOperation,
-			ImGuizmo::WORLD,
-			(float*)matWorld
-		);
+	//	ImGuizmo::Manipulate(
+	//		view,
+	//		proj,
+	//		m_CurrentGizmoOperation,
+	//		ImGuizmo::WORLD,
+	//		(float*)matWorld
+	//	);
 
-		if (ImGuizmo::IsUsing())
-		{
-			float vPos[3], vRot[3], vScale[3];
+	//	if (ImGuizmo::IsUsing())
+	//	{
+	//		float vPos[3], vRot[3], vScale[3];
 
-			ImGuizmo::DecomposeMatrixToComponents((float*)matWorld, vPos, vRot, vScale);
+	//		ImGuizmo::DecomposeMatrixToComponents((float*)matWorld, vPos, vRot, vScale);
 
 
-			CTransform* pTransform = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-			pTransform->m_vInfo[INFO_POS] = { vPos[0], vPos[1], vPos[2] };
-			pTransform->m_vAngle = { vRot[0], vRot[1], vRot[2] };
-			pTransform->m_vScale = { vScale[0], vScale[1], vScale[2] };
-		}
-	}
+	//		CTransform* pTransform = static_cast<CTransform*>(g_pObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	//		pTransform->m_vInfo[INFO_POS] = { vPos[0], vPos[1], vPos[2] };
+	//		pTransform->m_vAngle = { vRot[0], vRot[1], vRot[2] };
+	//		pTransform->m_vScale = { vScale[0], vScale[1], vScale[2] };
+	//	}
+	//}
+	////ImGui::End();
+
+
+	//ImGui::Begin("Scene Hierarchy");
+	//for (auto& LayerIter : m_mapLayer)
+	//{
+	//	for (auto& ObjListIter : *LayerIter.second->Get_GameObjects())
+	//	{
+	//		for (auto& Obj : ObjListIter.second)
+	//		{
+	//			if (ImGui::Selectable(to_string((_int)Obj).c_str(), g_pObject == Obj))
+	//			{
+	//				g_pObject = Obj;
+	//			}
+	//		}
+	//	}
+	//}
 	//ImGui::End();
-
-
-	ImGui::Begin("Scene Hierarchy");
-	for (auto& LayerIter : m_mapLayer)
-	{
-		for (auto& ObjListIter : *LayerIter.second->Get_GameObjects())
-		{
-			for (auto& Obj : ObjListIter.second)
-			{
-				if (ImGui::Selectable(to_string((_int)Obj).c_str(), g_pObject == Obj))
-				{
-					g_pObject = Obj;
-				}
-			}
-		}
-	}
-	ImGui::End();
 
 }
 
@@ -287,7 +292,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Bancho", pGameObject)))
 		return E_FAIL;
 	for (int i = 0; i < 4; i++) {
-		pGameObject = CLight::Create();
+		pGameObject = CSushiLight::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 		pTransform->m_vScale = { 0.4f,1.3f,1.f };
 		pTransform->m_vInfo[INFO_POS] = {-4.8f + (3.f*i),3.f,-3.f};
@@ -330,6 +335,32 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 HRESULT CSushi::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 {
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+
+	pGameObject = CSushiDave::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Dave", pGameObject)))
+		return E_FAIL;
+
+	for (int i = 0; i < 5; i++) {
+		pGameObject = CCustomer1::Create();
+		if (nullptr == pGameObject)
+			return E_FAIL;
+
+		if (FAILED(pLayer->Add_GameObject(L"Customer", pGameObject)))
+			return E_FAIL;
+	}
+	
+
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
 
@@ -353,8 +384,37 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Camera", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CMenuFrame::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"MenuFrame", pGameObject)))
+		return E_FAIL;
+
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
+}
+
+void CSushi::Key_Input()
+{
+	if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_I))
+	{
+		list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"MenuFrame");
+		list<CGameObject*>::iterator iter = button->begin();
+		for (iter; iter != button->end(); iter++) {
+			static_cast<CMenuFrame*>(*iter)->Show();
+		}
+	}
+	if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
+	{
+		list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"MenuFrame");
+		list<CGameObject*>::iterator iter = button->begin();
+		for (iter; iter != button->end(); iter++) {
+			static_cast<CMenuFrame*>(*iter)->Hide();
+		}
+	}
 }
 
 void CSushi::Free()

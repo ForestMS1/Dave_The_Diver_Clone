@@ -13,6 +13,8 @@
 #include "CShipPhoneIcon.h"
 #include "CShipPhone.h"
 #include "CShipPhoneApp.h"
+#include "CTestAmericanLobster.h"
+#include "CTestDancing.h"
 
 CShip::CShip()
 	: CScene()
@@ -24,7 +26,7 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
-	//CColliderMgr::GetInstance()->Set_Render(true);
+	CColliderMgr::GetInstance()->Set_Render(true);
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
@@ -57,11 +59,25 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
+	CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
+	if (nullptr == pTest)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+		return E_FAIL;
+
+	CTestDancing* pDancing = CTestDancing::Create();
+	if (nullptr == pDancing)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipestDancing", pDancing)))
+		return E_FAIL;
+
 	CShipDave* pShipDave = CShipDave::Create();
 	if (nullptr == pShipDave)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
+
+
 
 
 	CShipBoat* pShipBoat = CShipBoat::Create();

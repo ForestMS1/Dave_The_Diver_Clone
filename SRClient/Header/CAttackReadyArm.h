@@ -25,6 +25,9 @@ private:
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
+private:
+	_bool m_bIsFlip = false;
+
 public:
 	static CAttackReadyArm* Create();
 

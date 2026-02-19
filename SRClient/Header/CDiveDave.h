@@ -1,17 +1,24 @@
 #pragma once
 #include "CGameObject.h"
-
-class CPlayerState;
+#include "CPlayerState.h"
 
 enum class DiveState
 {
 	IDLE = 0,
 	MOVE,
-	ATTACK,
+	ATTACK,			// 작살, 총 공격
+	MELEEATTACK,	// 근접 공격
 	DIE,
 	DAVE_STATE_END
 };
 
+enum class EQUIPPED
+{
+	MELEE, // 근접무기
+	HARPOON, // 작살
+	GUN,	// 총
+	EQUIPPED_END
+};
 
 class CDiveDave : public CGameObject
 {
@@ -29,7 +36,11 @@ public:
 
 public:
 	DiveState		Get_State() const { return m_eCurState; }
+	ATTACKSUBSTATE	Get_AttackSubState();
 	void			Set_State(DiveState state);
+
+	EQUIPPED		Get_CurEquipped() const { return m_eCurEquipped; }
+	void			Set_CurEquipeed(EQUIPPED equip) { m_eCurEquipped = equip; }
 
 
 	CTexture*	Get_TextureCom() { return m_pTextureCom; }
@@ -50,6 +61,9 @@ public:
 	void		Init_Frame() { m_fFrame = 0.f; }
 	void		AddFrame(const _float& fTimeDelta, const _float& fSpeed,_uint size);
 
+	void		Set_FishCaught(_bool bFishCaught) { m_bFishCaught = bFishCaught; }
+	_bool		Is_FishCaught()					  { return m_bFishCaught; }
+
 private:
 	HRESULT Ready_Component();
 	HRESULT	Add_State();
@@ -69,8 +83,12 @@ private:
 	unordered_map<DiveState, CPlayerState*> m_mapState;
 
 private:
+	EQUIPPED m_eCurEquipped = EQUIPPED::MELEE;
+
+private:
 	_float m_fSpeed = 5.f;
 	_float m_fFrame = 0.f;
+	_bool  m_bFishCaught = false;
 
 public:
 	static CDiveDave* Create();
