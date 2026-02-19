@@ -82,14 +82,8 @@
     <Filter Include="02. GameObject\DiveDave\DiveDaveCam">
       <UniqueIdentifier>{7a9fe6e0-8171-4e10-a037-1618cd090267}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. Ship\03. ShipPhone">
-      <UniqueIdentifier>{b945b131-3196-4b22-ab1d-647318ca7d56}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\00. Ship\04. ShipPhoneIcon">
       <UniqueIdentifier>{6e78a967-9f24-4ee0-a98f-5290eea9e3b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
-      <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\DiveDave\State\Attack\TargetEffect">
       <UniqueIdentifier>{9b7ba632-d80f-47c3-a6fa-3ff4ed0858c9}</UniqueIdentifier>
@@ -159,6 +153,39 @@
     </Filter>
     <Filter Include="02. GameObject\00. Ship\06. ShipDiverBox">
       <UniqueIdentifier>{251c9393-d453-4d59-a117-96861ef4e846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\08. ShipTransformCam">
+      <UniqueIdentifier>{2da4c83f-e67d-4348-b01e-7e26b9bdb455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone">
+      <UniqueIdentifier>{cf91ed14-7dd4-49c7-9517-93551208780b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\03. ShipPhone">
+      <UniqueIdentifier>{b945b131-3196-4b22-ab1d-647318ca7d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App">
+      <UniqueIdentifier>{aaa83f43-4968-417a-b7ad-8f78b49e2de6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver">
+      <UniqueIdentifier>{0698294a-c91c-446b-ad27-22361e2bc5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem">
+      <UniqueIdentifier>{d6ba13d0-2541-44d0-895d-ed18d5b9621e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\10. ShipPhoneIDiverItemImg">
+      <UniqueIdentifier>{f06a9b4b-e093-40cd-8fd8-284b3d7e42cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\11. ShipPhoneIDiverSelectEdge">
+      <UniqueIdentifier>{5207da97-c313-4262-93c2-c075d4b44a82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\07. ShipPhoneIDiverBG">
+      <UniqueIdentifier>{20bff5a0-cfb4-4129-a2f3-9b394e4e3d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\05. ShipPhoneApp">
+      <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade">
+      <UniqueIdentifier>{d5f2a878-0cdd-4c8a-9206-ab50011cb0e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -256,13 +283,13 @@
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipPhone.h">
-      <Filter>02. GameObject\00. Ship\03. ShipPhone</Filter>
+      <Filter>02. GameObject\00. Ship\Phone\03. ShipPhone</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipPhoneIcon.h">
       <Filter>02. GameObject\00. Ship\04. ShipPhoneIcon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipPhoneApp.h">
-      <Filter>02. GameObject\00. Ship\05. ShipPhoneApp</Filter>
+      <Filter>02. GameObject\00. Ship\Phone\App\05. ShipPhoneApp</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBancho.h">
       <Filter>01. Scene\03. Sushi\Bancho</Filter>
@@ -369,6 +396,24 @@
     <ClInclude Include="..\Header\CShipDiverBox.h">
       <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverBG.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\07. ShipPhoneIDiverBG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipTransformCam.h">
+      <Filter>02. GameObject\00. Ship\08. ShipTransformCam</Filter>
+    </ClInclude>
+    <ClInclude Include="CShipPhoneIDiverItem.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\10. ShipPhoneIDiverItemImg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverSelectEdge.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\11. ShipPhoneIDiverSelectEdge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverUpgrade.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -456,13 +501,13 @@
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhone.cpp">
-      <Filter>02. GameObject\00. Ship\03. ShipPhone</Filter>
+      <Filter>02. GameObject\00. Ship\Phone\03. ShipPhone</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneIcon.cpp">
       <Filter>02. GameObject\00. Ship\04. ShipPhoneIcon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneApp.cpp">
-      <Filter>02. GameObject\00. Ship\05. ShipPhoneApp</Filter>
+      <Filter>02. GameObject\00. Ship\Phone\App\05. ShipPhoneApp</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBancho.cpp">
       <Filter>01. Scene\03. Sushi\Bancho</Filter>
@@ -568,6 +613,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBox.cpp">
       <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverBG.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\07. ShipPhoneIDiverBG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipTransformCam.cpp">
+      <Filter>02. GameObject\00. Ship\08. ShipTransformCam</Filter>
+    </ClCompile>
+    <ClCompile Include="CShipPhoneIDiverItem.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\10. ShipPhoneIDiverItemImg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverSelectEdge.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\11. ShipPhoneIDiverSelectEdge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverUpgrade.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

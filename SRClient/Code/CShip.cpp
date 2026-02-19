@@ -16,6 +16,10 @@
 #include "CTestAmericanLobster.h"
 #include "CTestDancing.h"
 #include "CShipDiverBox.h"
+#include "CShipPhoneIDiverBG.h"
+#include "CShipTransformCam.h"
+#include "CShipPhoneIDiverItem.h"
+#include "CShipPhoneIDiverUpgrade.h"
 
 CShip::CShip()
 	: CScene()
@@ -27,29 +31,19 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
-	CColliderMgr::GetInstance()->Set_Render(true);
+	CColliderMgr::GetInstance()->Set_Render(false);
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	//// 임시 카메라
-	_vec3	vEye{ 0.f, 0.f, -10.f };
-	_vec3	vAt{ 0.f, 0.f, 0.f };
-	_vec3	vUp{ 0.f, 1.f, 0.f };
+
 	_matrix	matView, matProj;
 
-	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
-	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
 	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	
-	//// TestCam1
-	//CCamera* pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
-	//if (nullptr == pCamera)
-	//	return E_FAIL;
-	//CCameraMgr::GetInstance()->Set_Camera(L"TestCam1", pCamera);
 
 	return S_OK;
 }
@@ -60,24 +54,30 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
-	CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
-	if (nullptr == pTest)
+	//CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
+	//if (nullptr == pTest)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+	//	return E_FAIL;
+
+	//CTestDancing* pDancing = CTestDancing::Create();
+	//if (nullptr == pDancing)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipestDancing", pDancing)))
+	//	return E_FAIL;
+
+	CShipTransformCam* pCam = CShipTransformCam::Create();
+	if (nullptr == pCam)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+	if (FAILED(pLayer->Add_GameObject(L"ShipCam", pCam)))
 		return E_FAIL;
 
-	CTestDancing* pDancing = CTestDancing::Create();
-	if (nullptr == pDancing)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipestDancing", pDancing)))
-		return E_FAIL;
 
 	CShipDave* pShipDave = CShipDave::Create();
 	if (nullptr == pShipDave)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
-
 
 
 
@@ -100,8 +100,20 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"ShipPhoneIcon", pShipPhoneIcon)))
 		return E_FAIL;
 
-	
+	//CShipPhoneIDiverItem
+	//CShipPhoneIDiverItem* pShipItem = CShipPhoneIDiverItem::Create();
+	//if (nullptr == pShipItem)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipPhoneIDIverItem", pShipItem)))
+	//	return E_FAIL;
 
+	// CShipPhoneIDiverUpgrade
+
+	CShipPhoneIDiverUpgrade* pShipIDiverUpgrade = CShipPhoneIDiverUpgrade::Create(0.f, 0.f);
+	if (nullptr == pShipIDiverUpgrade)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipPhoneUpgrade", pShipIDiverUpgrade)))
+		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

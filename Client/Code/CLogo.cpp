@@ -147,6 +147,8 @@ void CLogo::Render_Scene()
 	_vec2	vPos3{ 0.f, 60.f };
 	CAssetDefaultFont* pDefFont3 = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Jinji");
 	pDefFont3->Render_Font(m_pLoading->Get_String(), &vPos3, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
 }
 
 HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)

@@ -9,6 +9,7 @@
 #include "CDInputMgr.h"
 #include "CHelper.h"
 #include "CLog.h"
+#include "CShipPhoneIDiverBG.h"
 
 CShipPhone::CShipPhone()
     : CGameObject()
@@ -53,6 +54,9 @@ HRESULT		CShipPhone::Ready_GameObject()
     m_tweenClose = m_tweenClose.from(0.f).to(-10.f).during(100);
     m_bCloseTween = false;
 
+    m_bOnFocus = false;
+    m_bOnUnFocus = true;
+
     //m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
 
     // PosX, PosY, RotX, RotY
@@ -62,7 +66,7 @@ HRESULT		CShipPhone::Ready_GameObject()
 
     // PosX, PosY, RotX, RotY
     m_tweenUnFocus = m_tweenUnFocus.from(0.f, 0.f, 0.f, 0.f).to(-5.f, 0.f, 10, -15.f).during(300);
-    m_bUnFocus = true;
+    //m_bUnFocus = true;
     m_bUnFocusing = false;
 
     return S_OK;
@@ -108,8 +112,10 @@ _int		CShipPhone::Update_GameObject(const _float& fTimeDelta)
             if (m_tweenClose.progress() >= 1.0f) {
                 m_bOpenTween = false;
 
-                CGameObject* pGameObj = this;
-                CHelper::TreeLevelTraversal(pGameObj, [](CGameObject* pObj) { pObj->Set_Dead(); });
+                Set_DeadCascade();
+                //CGameObject* pGameObj = this;
+
+                //CHelper::TreeLevelTraversal(pGameObj, [](CGameObject* pObj) { pObj->Set_Dead(); });
             }
         }
 
@@ -122,10 +128,10 @@ _int		CShipPhone::Update_GameObject(const _float& fTimeDelta)
             m_pTransformCom->Set_Pos(val[0], val[1], vPos.z);
             _vec3 vRot = { val[2], val[3], 0.f };
             m_pTransformCom->Set_Rotation(&vRot);
-            CLog::Debug(L"val: 0: %f, 1: %f, 2: %f, 3: %f \n", val[0], val[1], val[2], val[3]);
+            //CLog::Debug(L"val: 0: %f, 1: %f, 2: %f, 3: %f \n", val[0], val[1], val[2], val[3]);
             if (m_tweenFocus.progress() >= 1.0f) {
                 m_bFocus = true;
-                m_bUnFocus = false;
+                //m_bUnFocus = false;
                 m_bFocusing = false;
                 m_tweenFocus.seek(0.f);
             }
@@ -142,7 +148,7 @@ _int		CShipPhone::Update_GameObject(const _float& fTimeDelta)
             m_pTransformCom->Set_Rotation(&vRot);
             if (m_tweenUnFocus.progress() >= 1.0f) {
                 m_bFocus = false;
-                m_bUnFocus = true;
+                //m_bUnFocus = true;
                 m_bUnFocusing = false;
                 m_tweenUnFocus.seek(0.f);
             }
@@ -153,31 +159,51 @@ _int		CShipPhone::Update_GameObject(const _float& fTimeDelta)
     {
         if (ImGui::Button("UnFocus"))
         {
-            m_bUnFocusing = true;
+            UnFocus_App();
         }
+
+        if (!m_bOnFocus)
+        {
+            m_bOnFocus = true;
+            m_bOnUnFocus = false;
+            OnFocus_App();
+        }
+
+        OnFocusing_App();
     }
-   
+    else 
+    {
+        if (!m_bOnUnFocus)
+        {
+            m_bOnFocus = false;
+            m_bOnUnFocus = true;
+            OnUnFocus_App();
+        }
+
+        OnUnFocusing_App();
+    }
+    
 
    
 
-    if (CDInputMgr::GetInstance()->Key_Pressing(DIK_RIGHT))
-    {
-        _vec3 dir = { 1.f, 0.f, 0.f };
-        m_pTransformCom->Move_Pos(&dir, 1.f, fTimeDelta);
-    }
-    if (CDInputMgr::GetInstance()->Key_Pressing(DIK_LEFT))
-    {
-        _vec3 dir = { -1.f, 0.f, 0.f };
-        m_pTransformCom->Move_Pos(&dir, 1.f, fTimeDelta);
-    }
-    if (CDInputMgr::GetInstance()->Key_Pressing(DIK_UP))
-    {
-        m_pTransformCom->Rotation(ROT_Y, 1.f);
-    }
-    if (CDInputMgr::GetInstance()->Key_Pressing(DIK_DOWN))
-    {
-        m_pTransformCom->Rotation(ROT_Y, -1.f);
-    }
+    //if (CDInputMgr::GetInstance()->Key_Pressing(DIK_RIGHT))
+    //{
+    //    _vec3 dir = { 1.f, 0.f, 0.f };
+    //    m_pTransformCom->Move_Pos(&dir, 1.f, fTimeDelta);
+    //}
+    //if (CDInputMgr::GetInstance()->Key_Pressing(DIK_LEFT))
+    //{
+    //    _vec3 dir = { -1.f, 0.f, 0.f };
+    //    m_pTransformCom->Move_Pos(&dir, 1.f, fTimeDelta);
+    //}
+    //if (CDInputMgr::GetInstance()->Key_Pressing(DIK_UP))
+    //{
+    //    m_pTransformCom->Rotation(ROT_Y, 1.f);
+    //}
+    //if (CDInputMgr::GetInstance()->Key_Pressing(DIK_DOWN))
+    //{
+    //    m_pTransformCom->Rotation(ROT_Y, -1.f);
+    //}
 
     return iExit;
 }
@@ -220,12 +246,17 @@ void CShipPhone::Focus_App(wstring_view svFocusAppName)
     if (!m_bFocus)
     {
         m_bFocusing = true;
+        m_sFocusedAppName = svFocusAppName;
     }
 }
 
-void CShipPhone::UnFocus_App(wstring_view svFocusAppName)
+void CShipPhone::UnFocus_App()
 {
     m_bUnFocusing = true;
+
+    m_bFocus = false;
+    m_bOnFocus = false;
+
 }
 
 HRESULT			CShipPhone::Ready_Component()
@@ -239,6 +270,33 @@ HRESULT			CShipPhone::Ready_Component()
         return E_FAIL;
 
     return S_OK;
+}
+void CShipPhone::OnFocus_App()
+{
+    auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
+    CShipPhoneIDiverBG* pShipPhoneIDiverBG = CShipPhoneIDiverBG::Create();
+    pLayer->Add_GameObject(L"ShipPhoneIDiverBG", pShipPhoneIDiverBG);
+}
+void CShipPhone::OnFocusing_App()
+{
+    if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+    {
+        UnFocus_App();
+    }
+}
+void CShipPhone::OnUnFocus_App()
+{
+    if (auto pGameObj = CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")
+        ->Get_GameObjectFirst(L"ShipPhoneIDiverBG"))
+    {
+        pGameObj->Set_DeadCascade();
+    }
+}
+void CShipPhone::OnUnFocusing_App()
+{
+
 }
 CShipPhone* CShipPhone::Create()
 {

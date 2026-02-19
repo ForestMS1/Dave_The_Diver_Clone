@@ -27,7 +27,7 @@ HRESULT		CShipDiverBoxInventory::Ready_GameObject()
     _vec3 vExtents = { 1.0f, 1.0f, 1.0f };
 
     _vec3 vPos = { 00.0f, 0.0f, 0.0f };
-    _vec3 v = { 2.f , 2.f, 2.f };
+    _vec3 v = { 5.f , 5.f, 5.f };
     m_pTransformCom->Set_Scale(&v);
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
     return S_OK;

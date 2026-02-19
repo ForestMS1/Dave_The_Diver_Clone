@@ -494,6 +494,18 @@ HRESULT CTransition::Common_SHIP_Load()
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_PotionCraft_DiverBox/UI_PotionCraft_DiverBox.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBox");
+
+	//Tex_PhoneIDiverBG
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneIDiverBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiverBG.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneIDiverBG");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_IDiverItem", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_IDiverItem.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_IDiverItem");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_IDiverUpgrade", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/IDiverUpgradeUI.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_IDiverUpgrade");
 	return S_OK;
 }
 

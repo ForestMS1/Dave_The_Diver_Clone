@@ -182,6 +182,11 @@
     <ClInclude Include="..\Header\CHarpoonProjectile.h" />
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverBG.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverSelectEdge.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverUpgrade.h" />
+    <ClInclude Include="..\Header\CShipTransformCam.h" />
     <ClInclude Include="..\Header\CSushiLight.h" />
     <ClInclude Include="..\Header\CDiveDave.h" />
     <ClInclude Include="..\Header\CDiveDaveMove.h" />
@@ -223,6 +228,7 @@
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CShipDiverBoxInventory.h" />
+    <ClInclude Include="CShipPhoneIDiverItem.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -258,6 +264,11 @@
     <ClCompile Include="..\Code\CFishTank.cpp" />
     <ClCompile Include="..\Code\CHood.cpp" />
     <ClCompile Include="..\Code\CKitchen.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverBG.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverSelectEdge.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverUpgrade.cpp" />
+    <ClCompile Include="..\Code\CShipTransformCam.cpp" />
     <ClCompile Include="..\Code\CSushiLight.cpp" />
     <ClCompile Include="..\Code\CMenu.cpp" />
     <ClCompile Include="..\Code\COpen.cpp" />
@@ -294,6 +305,7 @@
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CShipDiverBoxInventory.cpp" />
+    <ClCompile Include="CShipPhoneIDiverItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
