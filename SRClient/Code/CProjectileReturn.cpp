@@ -70,15 +70,16 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 		pProjectile->m_pTransformCom->Move_Pos(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
 
 		// 플레이어가 물고기 잡기에 성공했다면 물고기 끌어당김
-		if (pProjectile->m_pCaughtFish != nullptr)
+		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
 			static_cast<CTestFish*>(pProjectile->m_pCaughtFish)->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
 	}
 	else
 	{
-		if (pProjectile->m_pCaughtFish != nullptr)
+		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
 		{
 			pProjectile->m_pCaughtFish->Set_Dead();
 			pProjectile->m_pCaughtFish = nullptr;
+			static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_FishCaught(false);
 		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
