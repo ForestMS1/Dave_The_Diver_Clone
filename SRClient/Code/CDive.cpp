@@ -15,6 +15,11 @@
 #include "CHarpoon.h"
 #include "CHarpoonProjectile.h"
 #include "CDiveDaveGun.h"
+#include "CMapMgr.h"
+#include "CTestGlb.h"
+#include "CSkyBox.h"
+
+
 
 CDive::CDive()
 	: CScene()
@@ -26,6 +31,9 @@ CDive::~CDive()
 
 HRESULT CDive::Ready_Scene()
 {
+	//if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+	//	return E_FAIL;
+
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
 
@@ -50,6 +58,7 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 	CCameraMgr::GetInstance()->Set_Camera(L"FreeCam", pCamera);
 
+	CMapMgr::GetInstance()->SetScene(this);
 	return S_OK;
 }
 
@@ -57,9 +66,11 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
+
 	ImGui::Begin("Curr Scene: CDive");
 	if (ImGui::Button("Go Ship Scene"))
 	{
+		CMapMgr::GetInstance()->SetScene(nullptr);
 		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP));
 	}
 	ImGui::End();
@@ -69,6 +80,9 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 void CDive::LateUpdate_Scene(const _float& fTimeDelta)
 {
 	CScene::LateUpdate_Scene(fTimeDelta);
+
+	
+
 }
 
 void CDive::Render_Scene()
@@ -76,6 +90,34 @@ void CDive::Render_Scene()
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(L"Here is CDive", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	CCameraMgr::GetInstance()->Render_Camera();
+	CMapMgr::GetInstance()->Render_Map();
+
+}
+
+HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+
+
+	// SkyBox
+	pGameObject = CSkyBox::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"SkyBox", pGameObject)))
+		return E_FAIL;
+
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+
+	return S_OK;
 }
 
 HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
@@ -141,6 +183,15 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pGameObject)))
 		return E_FAIL;
+
+	//테스트용
+	pGameObject = CTestGlb::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
+		return E_FAIL;
+
+	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

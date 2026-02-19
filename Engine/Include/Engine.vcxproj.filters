@@ -184,6 +184,9 @@
     <Filter Include="02. Component\00. VIBuffer\Frustrum">
       <UniqueIdentifier>{951f1250-7b9f-4744-8f23-e1a1b3396f13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\16. MapMgr">
+      <UniqueIdentifier>{3bb5607f-bfd0-405d-9e6d-30a544b6f12c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="00. Manager\15. AssetMgr\00. Asset\04. Fbx">
       <UniqueIdentifier>{ec8792f8-91f9-4462-8311-65c7fc9d7626}</UniqueIdentifier>
     </Filter>
@@ -195,6 +198,18 @@
     </Filter>
     <Filter Include="00. Manager\18. CollisionMgr">
       <UniqueIdentifier>{edf9b37e-b4b8-4c40-8937-d3ecb0ac5160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\15. AssetMgr\00. Asset\05. Glb">
+      <UniqueIdentifier>{76749eb8-7fa0-4d7d-8f6a-7f395bf6a0c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\15. AssetMgr\00. Asset\06. Json">
+      <UniqueIdentifier>{541a9eae-3d21-4e81-a483-aea973f9a2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Component\00. VIBuffer\06. GlbTex">
+      <UniqueIdentifier>{29fe4189-844d-418e-a0ba-e14af8c5e7e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Component\AttackReadyArmTex">
+      <UniqueIdentifier>{e7848c61-cf96-4d6f-9c9d-e94b829cf519}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. GameObject\PlayerCam">
       <UniqueIdentifier>{35ab7043-a87d-4770-b774-6be89a6ff47d}</UniqueIdentifier>
@@ -452,6 +467,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionMgr.cpp">
       <Filter>00. Manager\18. CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapMgr.cpp">
+      <Filter>00. Manager\16. MapMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAssetJson.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\06. Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAssetGlb.cpp">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\05. Glb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGlbTex.cpp">
+      <Filter>02. Component\00. VIBuffer\06. GlbTex</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp">
       <Filter>02. Component\00. VIBuffer\AttackReadyArmTex</Filter>
@@ -883,6 +910,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\CCollisionMgr.h">
       <Filter>00. Manager\18. CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapMgr.h">
+      <Filter>00. Manager\16. MapMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetJson.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\06. Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAssetGlb.h">
+      <Filter>00. Manager\15. AssetMgr\00. Asset\05. Glb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGlbTex.h">
+      <Filter>02. Component\00. VIBuffer\06. GlbTex</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CAttackReadyArmTex.h">
       <Filter>02. Component\00. VIBuffer\AttackReadyArmTex</Filter>

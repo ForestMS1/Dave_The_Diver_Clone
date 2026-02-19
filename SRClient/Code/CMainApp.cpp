@@ -17,6 +17,8 @@
 #include "CGameMemMgr.h"
 #include "CCollisionMgr.h"
 #include "CAssetSpine.h"
+#include "CMapMgr.h"
+
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -55,6 +57,8 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	CImguiMgr::GetInstance()->Update_Imgui();
 
 	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
+	
+	CMapMgr::GetInstance()->Update_Map(fTimeDelta);
 
 	m_pManagement->Update_Scene(fTimeDelta);
 
@@ -77,14 +81,10 @@ void CMainApp::Render_MainApp()
 
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
-
-	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempRender();
-
-	CColliderMgr::GetInstance()->Render();
-
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 	//CParticleMgr::GetInstance()->Render_Particle();
 
+	CColliderMgr::GetInstance()->Render();
 
 
 	m_pDeviceClass->Render_End();
@@ -216,7 +216,7 @@ void CMainApp::Free()
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
 	
-	
+	CMapMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();

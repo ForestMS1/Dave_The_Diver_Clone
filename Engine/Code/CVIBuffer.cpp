@@ -75,6 +75,23 @@ void CVIBuffer::Render_Buffer()
 
 }
 
+void CVIBuffer::Render_Buffer(_ulong startIndex, _ulong TriCount)
+{
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
+
+	pGraphicDev->SetFVF(m_dwFVF);
+
+	// m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);
+
+	pGraphicDev->SetIndices(m_pIB);
+
+	pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, startIndex, TriCount);
+
+
+}
+
+
 void CVIBuffer::Free()
 {
 	Safe_Release(m_pVB);

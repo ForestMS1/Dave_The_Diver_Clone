@@ -25,5 +25,7 @@ namespace Engine
 
 	enum COLLIDERID { COLL_SPHERE, COLL_AABB, COLL_OBB, COLL_FRUSTUM, COLL_END};
 
+	enum GAMEOBJECTID { OBJ_PLAYER, OBJ_FISH,OBJ_END };
+
 }
 #endif // Engine_Enum_h__
