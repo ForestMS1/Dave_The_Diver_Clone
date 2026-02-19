@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\CTestDancing.h" />
     <ClInclude Include="..\Header\CTargetArrow.h" />
     <ClInclude Include="..\Header\CTargetCurveStart.h" />
+    <ClInclude Include="..\Header\CTestFish.h" />
     <ClInclude Include="..\Header\CTestGlb.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="..\Code\CTestDancing.cpp" />
     <ClCompile Include="..\Code\CTargetArrow.cpp" />
     <ClCompile Include="..\Code\CTargetCurveStart.cpp" />
+    <ClCompile Include="..\Code\CTestFish.cpp" />
     <ClCompile Include="..\Code\CTestGlb.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />

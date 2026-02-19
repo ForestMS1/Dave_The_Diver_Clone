@@ -18,7 +18,7 @@
 #include "CMapMgr.h"
 #include "CTestGlb.h"
 #include "CSkyBox.h"
-
+#include "CTestFish.h"
 
 
 CDive::CDive()
@@ -176,19 +176,18 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
-
-	//테스트용
-	pGameObject = CShipBoat::Create();
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pGameObject)))
-		return E_FAIL;
-
 	//테스트용
 	pGameObject = CTestGlb::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
+		return E_FAIL;
+
+	//테스트용
+	pGameObject = CTestFish::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TestFish", pGameObject)))
 		return E_FAIL;
 
 	

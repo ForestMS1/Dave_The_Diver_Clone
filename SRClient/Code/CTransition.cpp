@@ -199,6 +199,14 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetArrowGunTexture", Engine::CTexture::Create(L"Tex_TargetArrow"))))
 		return E_FAIL;
+
+
+	//테스트용
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TestFish", CAssetTexture::Create(L"../Bin/Resource/Texture/Player1.jpg"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))
+		return E_FAIL;
+
+
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG
 	//Sleep(500);

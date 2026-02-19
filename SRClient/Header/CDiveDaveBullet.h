@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAABB.h"
 class CDiveDaveBullet :
     public CGameObject
 {
@@ -28,6 +29,7 @@ private:
 	_vec3 m_vDir;
 	_float m_fZAngle = 0.f;
 	_float m_fLifeTime = 0.f;
+	CAABB* m_pAABB;
 
 public:
 	static CDiveDaveBullet* Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle);

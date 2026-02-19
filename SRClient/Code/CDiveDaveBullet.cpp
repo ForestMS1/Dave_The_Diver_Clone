@@ -1,6 +1,8 @@
 #include "CDiveDaveBullet.h"
 #include "CGraphicDev.h"
 #include "CRenderer.h"
+#include "CColliderMgr.h"
+#include "CCollisionMgr.h"
 CDiveDaveBullet::CDiveDaveBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
     : m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -34,6 +36,12 @@ HRESULT CDiveDaveBullet::Ready_GameObject()
 	vScale *= 0.1f;
 	m_pTransformCom->Multiply_Scale(&vScale);
 
+	//-------------AABB Collider----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+
+	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
+
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_DiveDaveBullet", this);
 	return S_OK;
 }
 
@@ -42,6 +50,10 @@ _int CDiveDaveBullet::Update_GameObject(const _float& fTimeDelta)
 	if (m_fLifeTime > 3.f)
 		m_bDead = true;
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	// 충돌체 그룹에 넣어줘야한다.
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Ship", m_pAABB);
+	m_pAABB->Transform(m_pTransformCom->Get_World());
+
 
 	m_fLifeTime += fTimeDelta;
 	m_pTransformCom->Move_Pos(&m_vDir, 10.f, fTimeDelta);
@@ -54,6 +66,58 @@ _int CDiveDaveBullet::Update_GameObject(const _float& fTimeDelta)
 void CDiveDaveBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Ship"))
+	{
+		// 충돌체 순회
+		for (auto& pCollider : *pColliders)
+		{
+			// 내가 아닌것들과 체크
+			if (m_pAABB != pCollider)
+			{
+				// 충돌체 끼리 충돌 체크
+				if (m_pAABB->Intersect(pCollider))
+				{
+					// Some Logic
+					// 
+
+					if (pCollider->Get_Tag() == L"AABB_Boat")
+					{
+						CCollisionMgr::COLL_RECT_EX_INFO info;
+						if (CCollisionMgr::GetInstance()->Collision_RectEx(m_pAABB, dynamic_cast<CAABB*>(pCollider), &info))
+						{
+							_vec3 vPos;
+							m_pTransformCom->Get_Info(INFO_POS, &vPos);
+							if (info.eDir == CCollisionMgr::DIR_DOWN)
+							{
+								vPos.y += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_UP)
+							{
+								vPos.y -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_LEFT)
+							{
+								vPos.x -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_RIGHT)
+							{
+								vPos.x += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+
+							m_bDead = true;
+							m_pTransformCom->Update_Component(fTimeDelta);
+							m_pAABB->Transform(m_pTransformCom->Get_World());
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void CDiveDaveBullet::Render_GameObject()
@@ -104,5 +168,6 @@ CDiveDaveBullet* CDiveDaveBullet::Create(_vec3 vOrigin, _vec3 vDir, _float fZAng
 
 void CDiveDaveBullet::Free()
 {
+	Safe_Release(m_pAABB);
 	CGameObject::Free();
 }
