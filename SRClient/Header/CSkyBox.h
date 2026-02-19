@@ -1,21 +1,19 @@
-
-
 #pragma once
 #include "CGameObject.h"
 
 namespace Engine
 {
-	class CRcTex;
+	class CCubeTex;
 	class CTexture;
 	class CTransform;
 }
 
-class CLight : public CGameObject
+class CSkyBox : public CGameObject
 {
 private:
-	explicit CLight();
-	explicit CLight(const CGameObject& rhs);
-	virtual ~CLight();
+	explicit CSkyBox();
+	explicit CSkyBox(const CGameObject& rhs);
+	virtual ~CSkyBox();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -24,15 +22,15 @@ public:
 	virtual			void		Render_GameObject();
 
 private:
-	HRESULT			Ready_Component();
+	HRESULT			Add_Component();
 
 private:
-	Engine::CRcTex* m_pBufferCom;
+	Engine::CCubeTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CLight* Create();
+	static CSkyBox* Create();
 
 private:
 	virtual void Free();

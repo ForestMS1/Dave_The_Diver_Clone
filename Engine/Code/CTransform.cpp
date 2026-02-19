@@ -22,6 +22,13 @@ CTransform::~CTransform()
 {
 }
 
+void CTransform::Update_ImGui()
+{
+    ImGui::DragFloat3("Position", &m_vInfo[INFO_POS].x, 0.1f);
+    ImGui::DragFloat3("Aangle", &m_vAngle.x, 0.1f);
+    ImGui::DragFloat3("Scale", &m_vScale.x, 0.1f);
+}
+
 void CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta)
 {
     _vec3       vDir = *pTargetPos - m_vInfo[INFO_POS];

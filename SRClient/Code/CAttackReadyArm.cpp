@@ -3,6 +3,7 @@
 #include "CGraphicDev.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CPlayerState.h"
 CAttackReadyArm::CAttackReadyArm()
 {
 }
@@ -21,7 +22,7 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
-	_vec3 vScale = { 0.2f, 0.2f, 1.f };
+	_vec3 vScale = { 0.3f, 0.3f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	_float fWidth = 39.f;
@@ -31,14 +32,16 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 
 	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
-
 	return S_OK;
 }
 
 _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	Set_ParentTransform();
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return 0;
+
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	Rotate_ToMouse();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 	return iExit;
@@ -46,7 +49,14 @@ _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 
 void CAttackReadyArm::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return;
+
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	//_vec3 vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//Compute_ViewZ(&vPos);
 }
 
 void CAttackReadyArm::Render_GameObject()
@@ -89,7 +99,16 @@ void CAttackReadyArm::Set_ParentTransform()
 {
 	_vec3 vParentPos;
 	m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+
 	_vec3 vOffSet = { 0.f, 0.4f, 0.f };
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT
+		|| static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIRE)
+	{
+		if(m_bIsFlip)
+			vOffSet = { 0.15f, 0.3f, 0.f };
+		else
+			vOffSet = {-0.15f, 0.3f, 0.f };
+	}
 	vOffSet.y *= m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
 	vParentPos += vOffSet;
 	m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
@@ -97,6 +116,9 @@ void CAttackReadyArm::Set_ParentTransform()
 
 void CAttackReadyArm::Rotate_ToMouse()
 {
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT)
+		return;
+
 	_vec3 vMousePos, vPlayerPos;
 
 	CHelper::GetMousePointInWorld(&vMousePos);
@@ -113,9 +135,15 @@ void CAttackReadyArm::Rotate_ToMouse()
 	float fDegree = D3DXToDegree(atan2f(vDir.y, vDir.x));
 
 	if (vDir.x < 0.f)
+	{
 		m_pTransformCom->m_vAngle.x = 180.f;
+		m_bIsFlip = true;
+	}
 	else
+	{
 		m_pTransformCom->m_vAngle.x = 0.f;
+		m_bIsFlip = false;
+	}
 
 	m_pTransformCom->m_vAngle.z = fDegree;
 }

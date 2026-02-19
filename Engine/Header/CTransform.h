@@ -11,6 +11,9 @@ private:
 	virtual ~CTransform();
 
 public:
+	virtual void Update_ImGui() override;
+
+public:
 	void		Move_Pos(const _vec3* pDir, const _float& fSpeed, const _float& fTimeDelta)
 	{
 		m_vInfo[INFO_POS] += *pDir * fSpeed * fTimeDelta;
@@ -57,6 +60,9 @@ public:
 	{
 		m_matWorld = *pWorld;
 	}
+
+	
+
 	void Set_Scale(_vec3 const* vScale)
 	{
 		m_vScale = *vScale;
