@@ -309,7 +309,67 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	}
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DaveSushiWalkTexture", Engine::CTexture::Create(L"Tex_DaveSushiWalk"))))
 		return E_FAIL;
+
+	for (int i = 1; i < 9; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer1/Walk0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer1Walk", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1WalkTexture", Engine::CTexture::Create(L"Tex_Customer1Walk"))))
+		return E_FAIL;
+	for (int i = 1; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer1/Wait0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer1Wait", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1WaitTexture", Engine::CTexture::Create(L"Tex_Customer1Wait"))))
+		return E_FAIL;
+	for (int i = 1; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer1/Eat0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer1Eat", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1EatTexture", Engine::CTexture::Create(L"Tex_Customer1Eat"))))
+		return E_FAIL;
+	for (int i = 1; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer1/Happy0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer1Happy", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1HappyTexture", Engine::CTexture::Create(L"Tex_Customer1Happy"))))
+		return E_FAIL;
+	for (int i = 1; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer1/Anger0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer1Anger", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1AngerTexture", Engine::CTexture::Create(L"Tex_Customer1Anger"))))
+		return E_FAIL;
 	///////
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer1Menu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Customer/Customer1/Menu.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1MenuTex", Engine::CTexture::Create(L"Tex_Customer1Menu"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_AddMenu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/AddMenuButton.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AddMenuTex", Engine::CTexture::Create(L"Tex_AddMenu"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SelectMenu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SelectFrame.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SelectTex", Engine::CTexture::Create(L"Tex_SelectMenu"))))
+		return E_FAIL;
+
+	//메뉴
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_MenuFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/MenuBar.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MenuFrameTex", Engine::CTexture::Create(L"Tex_MenuFrame"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_AddButton", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/AddButton.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AddButtonTex", Engine::CTexture::Create(L"Tex_AddButton"))))
+		return E_FAIL;
+
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Recipe", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/recipe.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RecipeTex", Engine::CTexture::Create(L"Tex_Recipe"))))
+		return E_FAIL;
+
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveSushiIdle", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Dave/dave_sushiIdle0.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DaveSushiIdleTex", Engine::CTexture::Create(L"Tex_DaveSushiIdle"))))
 		return E_FAIL;
