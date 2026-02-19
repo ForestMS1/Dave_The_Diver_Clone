@@ -7,9 +7,11 @@
 #include "CDiveDaveIdle.h"
 #include "CDiveDaveMove.h"
 #include "CDiveDaveAttack.h"
+#include "CDiveDaveMeeleAttack.h"
 #include "CAttackReadyArm.h"
 
-string debugState[(_uint)DiveState::DAVE_STATE_END] = {"IDLE", "MOVE", "ATTACK", "DIE"};
+string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "DIE" };
+string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = { "MELEE", "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
 	: m_pBufferCom(nullptr)
@@ -54,6 +56,8 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	ImGui::Begin("DiveDave Info");
 	string state = "State : " + debugState[(_uint)m_eCurState];
 	ImGui::Text(state.c_str());
+	string Equipped = "Equipped : " + debugEquipped[(_uint)m_eCurEquipped];
+	ImGui::Text(Equipped.c_str());
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
@@ -66,6 +70,10 @@ void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 	m_pState->LateUpdate_State(fTimeDelta);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 }
 
 void CDiveDave::Render_GameObject()
@@ -81,6 +89,12 @@ void CDiveDave::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
+{
+	if (m_eCurState == DiveState::ATTACK) 
+		return static_cast<CDiveDaveAttack*>(m_pState)->Get_State();
 }
 
 void CDiveDave::Set_State(DiveState state)
@@ -130,6 +144,14 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackReadyTexture", L"Com_AttackReadyTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFireTexture", L"Com_AttackFireTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFailTexture", L"Com_AttackFailTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFightTexture", L"Com_AttackFightTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMeleeDaggerAttack", L"Com_MeleeDaggerAttackTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// Æ®·£½ºÆû
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -141,6 +163,7 @@ HRESULT	CDiveDave::Add_State()
 	m_mapState.insert({ DiveState::IDLE, CDiveDaveIdle::Create(this) });
 	m_mapState.insert({ DiveState::MOVE, CDiveDaveMove::Create(this) });
 	m_mapState.insert({ DiveState::ATTACK, CDiveDaveAttack::Create(this) });
+	m_mapState.insert({ DiveState::MELEEATTACK, CDiveDaveMeeleAttack::Create(this) });
 	//m_mapState.insert({ DiveState::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
@@ -148,18 +171,30 @@ HRESULT	CDiveDave::Add_State()
 
 void CDiveDave::Key_Input()
 {
-	if (m_eCurState != DiveState::IDLE)
-		return;
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 
-	if(CDInputMgr::GetInstance()->Key_Down(DIK_W) || CDInputMgr::GetInstance()->Key_Down(DIK_A)
-		|| CDInputMgr::GetInstance()->Key_Down(DIK_S) || CDInputMgr::GetInstance()->Key_Down(DIK_D))
-		Set_State(DiveState::MOVE);
 }
 
 void CDiveDave::Mouse_Input()
 {
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
-		Set_State(DiveState::ATTACK);
+	{
+		switch (m_eCurEquipped)
+		{
+		case EQUIPPED::MELEE:
+			Set_State(DiveState::MELEEATTACK);
+			break;
+		case EQUIPPED::HARPOON:
+			Set_State(DiveState::ATTACK);
+			break;
+		case EQUIPPED::GUN:
+			Set_State(DiveState::ATTACK);
+			break;
+		default:
+			break;
+		}
+	}
 
 }
 

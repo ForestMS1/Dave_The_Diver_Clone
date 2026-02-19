@@ -1,12 +1,13 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAttackReadyArmTex.h"
-class CAttackReadyArm : public CGameObject
+class CDiveDaveGun :
+    public CGameObject
 {
 private:
-	explicit CAttackReadyArm();
-	explicit CAttackReadyArm(const CAttackReadyArm& rhs);
-	virtual ~CAttackReadyArm();
+	explicit CDiveDaveGun();
+	explicit CDiveDaveGun(const CDiveDaveGun& rhs);
+	virtual ~CDiveDaveGun();
 
 
 public:
@@ -14,6 +15,8 @@ public:
 	_int		Update_GameObject(const _float& fTimeDelta) override;
 	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
 	void		Render_GameObject() override;
+
+	void	Fire();
 
 private:
 	HRESULT Ready_Component();
@@ -29,7 +32,7 @@ private:
 	_bool m_bIsFlip = false;
 
 public:
-	static CAttackReadyArm* Create();
+	static CDiveDaveGun* Create();
 
 private:
 	virtual void Free() override;

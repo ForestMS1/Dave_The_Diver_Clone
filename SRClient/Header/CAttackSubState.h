@@ -2,20 +2,14 @@
 #include "CBase.h"
 #include "CGameObject.h"
 
-enum class ATTACKSUBSTATE
-{
-	ATTACK_READY,
-	ATTACK_FIRE,
-	ATTACK_FIGHT,
-	ATTACK_FAIL,
-	SUB_END
-};
+class CDiveDaveAttack;
 
-class CPlayerState : public CBase
+class CAttackSubState :
+    public CBase
 {
 public:
-	explicit CPlayerState(CGameObject* pPlayer);
-	virtual ~CPlayerState();
+	explicit CAttackSubState(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+	virtual ~CAttackSubState();
 
 public:
 	virtual void Enter() = 0; // 상태 진입 시 한번만 실행
@@ -30,6 +24,7 @@ protected:
 
 protected:
 	CGameObject* m_pPlayer;
+	CDiveDaveAttack* m_pParentState;
 
 protected:
 	virtual void Free() override;

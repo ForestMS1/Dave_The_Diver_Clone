@@ -196,9 +196,6 @@
     <Filter Include="00. Manager\18. CollisionMgr">
       <UniqueIdentifier>{edf9b37e-b4b8-4c40-8937-d3ecb0ac5160}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Component\AttackReadyArmTex">
-      <UniqueIdentifier>{e7848c61-cf96-4d6f-9c9d-e94b829cf519}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. GameObject\PlayerCam">
       <UniqueIdentifier>{35ab7043-a87d-4770-b774-6be89a6ff47d}</UniqueIdentifier>
     </Filter>
@@ -231,6 +228,12 @@
     </Filter>
     <Filter Include="02. Component\00. VIBuffer\DynamicBuffer">
       <UniqueIdentifier>{b9ff09de-e092-4216-9f53-9bb5b77b4857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Component\00. VIBuffer\AttackReadyArmTex">
+      <UniqueIdentifier>{e7848c61-cf96-4d6f-9c9d-e94b829cf519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Component\00. VIBuffer\TargetArrowTex">
+      <UniqueIdentifier>{446a9302-3659-4524-9258-55b3d7a17103}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -451,7 +454,7 @@
       <Filter>00. Manager\18. CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp">
-      <Filter>02. Component\AttackReadyArmTex</Filter>
+      <Filter>02. Component\00. VIBuffer\AttackReadyArmTex</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerCam.cpp">
       <Filter>03. GameObject\PlayerCam</Filter>
@@ -675,6 +678,9 @@
     <ClCompile Include="..\Code\CAssetTextureFromInMem.cpp">
       <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CTargetArrowTex.cpp">
+      <Filter>02. Component\00. VIBuffer\TargetArrowTex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -879,7 +885,7 @@
       <Filter>00. Manager\18. CollisionMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CAttackReadyArmTex.h">
-      <Filter>02. Component\AttackReadyArmTex</Filter>
+      <Filter>02. Component\00. VIBuffer\AttackReadyArmTex</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CPlayerCam.h">
       <Filter>03. GameObject\PlayerCam</Filter>
@@ -919,6 +925,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CAssetTextureFromInMem.h">
       <Filter>00. Manager\15. AssetMgr\00. Asset\02. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTargetArrowTex.h">
+      <Filter>02. Component\00. VIBuffer\TargetArrowTex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

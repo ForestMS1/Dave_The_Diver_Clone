@@ -10,6 +10,11 @@
 #include "CDiveDaveCam.h"
 #include "CColliderMgr.h"
 #include "CShipBoat.h"
+#include "CTargetCurveStart.h"
+#include "CTargetArrow.h"
+#include "CHarpoon.h"
+#include "CHarpoonProjectile.h"
+#include "CDiveDaveGun.h"
 
 CDive::CDive()
 	: CScene()
@@ -91,6 +96,41 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"AttackReadyArm", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CTargetCurveStart::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TargetCurveStart", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CTargetArrow::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TargetArrow", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CHarpoon::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Harpoon", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CHarpoonProjectile::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"HarpoonProjectile", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CDiveDaveGun::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGun", pGameObject)))
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 

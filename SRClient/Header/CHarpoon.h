@@ -1,12 +1,13 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAttackReadyArmTex.h"
-class CAttackReadyArm : public CGameObject
+class CHarpoon :
+    public CGameObject
 {
 private:
-	explicit CAttackReadyArm();
-	explicit CAttackReadyArm(const CAttackReadyArm& rhs);
-	virtual ~CAttackReadyArm();
+	explicit CHarpoon();
+	explicit CHarpoon(const CHarpoon& rhs);
+	virtual ~CHarpoon();
 
 
 public:
@@ -29,7 +30,7 @@ private:
 	_bool m_bIsFlip = false;
 
 public:
-	static CAttackReadyArm* Create();
+	static CHarpoon* Create();
 
 private:
 	virtual void Free() override;

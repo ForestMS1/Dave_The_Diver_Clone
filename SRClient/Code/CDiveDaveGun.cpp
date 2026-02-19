@@ -1,32 +1,31 @@
-#include "CAttackReadyArm.h"
+#include "CDiveDaveGun.h"
 #include "CManagement.h"
 #include "CGraphicDev.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
-#include "CPlayerState.h"
-CAttackReadyArm::CAttackReadyArm()
+CDiveDaveGun::CDiveDaveGun()
 {
 }
 
-CAttackReadyArm::CAttackReadyArm(const CAttackReadyArm& rhs)
+CDiveDaveGun::CDiveDaveGun(const CDiveDaveGun& rhs)
 	: CGameObject(rhs)
 {
 }
 
-CAttackReadyArm::~CAttackReadyArm()
+CDiveDaveGun::~CDiveDaveGun()
 {
 }
 
-HRESULT CAttackReadyArm::Ready_GameObject()
+HRESULT CDiveDaveGun::Ready_GameObject()
 {
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
-	_vec3 vScale = { 0.3f, 0.3f, 1.f };
+	_vec3 vScale = { 0.4f, 0.4f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	_float fWidth = 39.f;
-	_float fHeight = 14.f;
+	_float fWidth = 32.f;
+	_float fHeight = 12.f;
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
@@ -35,33 +34,38 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 	return S_OK;
 }
 
-_int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
+_int CDiveDaveGun::Update_GameObject(const _float& fTimeDelta)
 {
-	Set_ParentTransform();
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return 0;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	Set_ParentTransform();
 	Rotate_ToMouse();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 	return iExit;
 }
 
-void CAttackReadyArm::LateUpdate_GameObject(const _float& fTimeDelta)
+void CDiveDaveGun::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 		return;
-
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
+		return;
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
-	//_vec3 vPos;
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//Compute_ViewZ(&vPos);
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 }
 
-void CAttackReadyArm::Render_GameObject()
+void CDiveDaveGun::Render_GameObject()
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -78,14 +82,14 @@ void CAttackReadyArm::Render_GameObject()
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CAttackReadyArm::Ready_Component()
+HRESULT CDiveDaveGun::Ready_Component()
 {
 	// 버퍼
 	if (FAILED((AddComponent<Engine::CAttackReadyArmTex, ID_STATIC>(L"Proto_AttackReadyArmBuffer", L"Com_Buffer", &m_pBufferCom))))
 		return E_FAIL;
 
 	// 텍스쳐
-	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_AttackReadyArmTexture", L"Com_Texture", &m_pTextureCom))))
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BasicRifleTexture", L"Com_Texture", &m_pTextureCom))))
 		return E_FAIL;
 
 	// 트랜스폼
@@ -95,26 +99,28 @@ HRESULT CAttackReadyArm::Ready_Component()
 	return S_OK;
 }
 
-void CAttackReadyArm::Set_ParentTransform()
+void CDiveDaveGun::Set_ParentTransform()
 {
 	_vec3 vParentPos;
 	m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
 
-	_vec3 vOffSet = { 0.f, 0.4f, 0.f };
+
+	_vec3 vOffSet = { 0.f, 0.5f, 0.f };
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT
 		|| static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIRE)
 	{
-		if(m_bIsFlip)
-			vOffSet = { 0.15f, 0.3f, 0.f };
+		if (m_bIsFlip)
+			vOffSet = { 0.2f, 0.4f, 0.f };
 		else
-			vOffSet = {-0.15f, 0.3f, 0.f };
+			vOffSet = { -0.2f, 0.4f, 0.f };
 	}
+
 	vOffSet.y *= m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
 	vParentPos += vOffSet;
 	m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
 }
 
-void CAttackReadyArm::Rotate_ToMouse()
+void CDiveDaveGun::Rotate_ToMouse()
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT)
 		return;
@@ -148,20 +154,26 @@ void CAttackReadyArm::Rotate_ToMouse()
 	m_pTransformCom->m_vAngle.z = fDegree;
 }
 
-CAttackReadyArm* CAttackReadyArm::Create()
+void CDiveDaveGun::Fire()
 {
-	CAttackReadyArm* pArm = new CAttackReadyArm;
-
-	if (FAILED(pArm->Ready_GameObject()))
-	{
-		Safe_Release(pArm);
-		MSG_BOX("AttackReadyArm Create Failed");
-		return nullptr;
-	}
-	return pArm;
+	//총알 발사 후 IDLE
+	static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
 }
 
-void CAttackReadyArm::Free()
+CDiveDaveGun* CDiveDaveGun::Create()
+{
+	CDiveDaveGun* pGun = new CDiveDaveGun;
+
+	if (FAILED(pGun->Ready_GameObject()))
+	{
+		Safe_Release(pGun);
+		MSG_BOX("DiveDaveGun Create Failed");
+		return nullptr;
+	}
+	return pGun;
+}
+
+void CDiveDaveGun::Free()
 {
 	CGameObject::Free();
 }

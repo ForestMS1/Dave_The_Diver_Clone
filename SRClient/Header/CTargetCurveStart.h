@@ -1,12 +1,11 @@
 #pragma once
 #include "CGameObject.h"
-#include "CAttackReadyArmTex.h"
-class CAttackReadyArm : public CGameObject
+class CTargetCurveStart : public CGameObject
 {
 private:
-	explicit CAttackReadyArm();
-	explicit CAttackReadyArm(const CAttackReadyArm& rhs);
-	virtual ~CAttackReadyArm();
+	explicit CTargetCurveStart();
+	explicit CTargetCurveStart(const CTargetCurveStart& rhs);
+	virtual ~CTargetCurveStart();
 
 
 public:
@@ -18,18 +17,19 @@ public:
 private:
 	HRESULT Ready_Component();
 	void	Set_ParentTransform();
-	void	Rotate_ToMouse();
+	void	Mouse_Check();
+
 
 private:
-	Engine::CAttackReadyArmTex* m_pBufferCom;
+	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 private:
-	_bool m_bIsFlip = false;
+	_vec3 m_vOffset;
 
 public:
-	static CAttackReadyArm* Create();
+	static CTargetCurveStart* Create();
 
 private:
 	virtual void Free() override;

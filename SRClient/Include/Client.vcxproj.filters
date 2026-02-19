@@ -94,6 +94,45 @@
     <Filter Include="02. GameObject\00. Ship\05. ShipPhoneApp">
       <UniqueIdentifier>{8b8e5f6e-c502-4afe-9ff8-618cfd6f2103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\TargetEffect">
+      <UniqueIdentifier>{9b7ba632-d80f-47c3-a6fa-3ff4ed0858c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon">
+      <UniqueIdentifier>{4668e2c5-ed6c-4fd9-ac75-ab3c265f739f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Projectile">
+      <UniqueIdentifier>{afcabb09-5a46-41f7-bf44-f3c657cb6221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\AttackSubState">
+      <UniqueIdentifier>{a0aec28b-7349-4686-bba0-e6baf00758ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\AttackSubState\Ready">
+      <UniqueIdentifier>{a66ac31b-38bc-42ec-bd2e-dfb24aba5cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\AttackSubState\Fire">
+      <UniqueIdentifier>{ce3d1e95-930b-4744-8ad7-b4b6dcd79e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\AttackSubState\Fight">
+      <UniqueIdentifier>{787b46bd-ea69-4397-98b8-57378c8de11f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Attack\AttackSubState\Fail">
+      <UniqueIdentifier>{4cafe1e7-f778-4be8-b905-de0738cbd29a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState">
+      <UniqueIdentifier>{8541f10e-1fce-4cf0-89c1-72ea4d42f679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Ready">
+      <UniqueIdentifier>{4c29e9ef-4116-475e-b4c3-62b3b685cb3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Fire">
+      <UniqueIdentifier>{70b9e993-83d8-4918-9d8e-9e0e8bac5166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Hit">
+      <UniqueIdentifier>{7a988740-095c-4cda-8d9f-1da723b7ea43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Return">
+      <UniqueIdentifier>{eb4b5691-41d9-4520-a7df-5d4429cc9eb8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\03. Sushi\Customers">
       <UniqueIdentifier>{2a4f828d-912f-4c22-a1f6-a4201a3d3e52}</UniqueIdentifier>
     </Filter>
@@ -108,6 +147,9 @@
     </Filter>
     <Filter Include="02. GameObject\TestFish\Dancing">
       <UniqueIdentifier>{40b7c6cc-07ec-41d2-bbfd-213ed62fdb8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\Gun">
+      <UniqueIdentifier>{afc3ee72-12a1-4f2f-9f71-693413ada00e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +282,45 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTargetCurveStart.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTargetArrow.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHarpoon.h">
+      <Filter>02. GameObject\DiveDave\Harpoon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHarpoonProjectile.h">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAttackSubState.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAttackSubReady.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Ready</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAttackSubFire.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAttackSubFail.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAttackSubFight.h">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CProjectileReady.h">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Ready</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CProjectileFire.h">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CProjectileHit.h">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CProjectileReturn.h">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Return</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CCustomer1.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
@@ -260,6 +341,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CTestDancing.h">
       <Filter>02. GameObject\TestFish\Dancing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveGun.h">
+      <Filter>02. GameObject\DiveDave\Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveMeeleAttack.h">
+      <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -383,6 +470,45 @@
     <ClCompile Include="..\Code\CDiveDaveCam.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveCam</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CTargetCurveStart.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTargetArrow.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\TargetEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHarpoon.cpp">
+      <Filter>02. GameObject\DiveDave\Harpoon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHarpoonProjectile.cpp">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAttackSubState.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAttackSubReady.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Ready</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAttackSubFire.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAttackSubFail.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAttackSubFight.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack\AttackSubState\Fight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CProjectileReady.cpp">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Ready</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CProjectileFire.cpp">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CProjectileHit.cpp">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CProjectileReturn.cpp">
+      <Filter>02. GameObject\DiveDave\Harpoon\Projectile\ProjectileState\Return</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CCustomer1.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClCompile>
@@ -403,6 +529,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestDancing.cpp">
       <Filter>02. GameObject\TestFish\Dancing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveGun.cpp">
+      <Filter>02. GameObject\DiveDave\Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveMeeleAttack.cpp">
+      <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

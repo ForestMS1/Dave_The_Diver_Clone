@@ -223,6 +223,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CSoundMgr.h" />
+    <ClInclude Include="..\Header\CTargetArrowTex.h" />
     <ClInclude Include="..\Header\CTerrainTex.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
@@ -305,6 +306,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CSoundMgr.cpp" />
+    <ClCompile Include="..\Code\CTargetArrowTex.cpp" />
     <ClCompile Include="..\Code\CTerrainTex.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />

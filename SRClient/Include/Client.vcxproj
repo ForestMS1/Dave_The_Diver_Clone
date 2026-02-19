@@ -159,6 +159,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CAddMenuButton.h" />
+    <ClInclude Include="..\Header\CAttackSubFail.h" />
+    <ClInclude Include="..\Header\CAttackSubFight.h" />
+    <ClInclude Include="..\Header\CAttackSubFire.h" />
+    <ClInclude Include="..\Header\CAttackSubReady.h" />
+    <ClInclude Include="..\Header\CAttackSubState.h" />
     <ClInclude Include="..\Header\CBackground.h" />
     <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CChair.h" />
@@ -169,8 +174,12 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
+    <ClInclude Include="..\Header\CDiveDaveMeeleAttack.h" />
     <ClInclude Include="..\Header\CFence.h" />
     <ClInclude Include="..\Header\CFishTank.h" />
+    <ClInclude Include="..\Header\CDiveDaveGun.h" />
+    <ClInclude Include="..\Header\CHarpoon.h" />
+    <ClInclude Include="..\Header\CHarpoonProjectile.h" />
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
     <ClInclude Include="..\Header\CLight.h" />
@@ -181,6 +190,10 @@
     <ClInclude Include="..\Header\CMenu.h" />
     <ClInclude Include="..\Header\COpen.h" />
     <ClInclude Include="..\Header\CPatternFrame.h" />
+    <ClInclude Include="..\Header\CProjectileFire.h" />
+    <ClInclude Include="..\Header\CProjectileHit.h" />
+    <ClInclude Include="..\Header\CProjectileReady.h" />
+    <ClInclude Include="..\Header\CProjectileReturn.h" />
     <ClInclude Include="..\Header\CRecipe.h" />
     <ClInclude Include="..\Header\CRoof.h" />
     <ClInclude Include="..\Header\CSakura.h" />
@@ -199,6 +212,8 @@
     <ClInclude Include="..\Header\CTable.h" />
     <ClInclude Include="..\Header\CTestAmericanLobster.h" />
     <ClInclude Include="..\Header\CTestDancing.h" />
+    <ClInclude Include="..\Header\CTargetArrow.h" />
+    <ClInclude Include="..\Header\CTargetCurveStart.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
@@ -214,12 +229,21 @@
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CConfirm.cpp" />
     <ClCompile Include="..\Code\CCustomer1.cpp" />
+    <ClCompile Include="..\Code\CAttackSubFail.cpp" />
+    <ClCompile Include="..\Code\CAttackSubFight.cpp" />
+    <ClCompile Include="..\Code\CAttackSubFire.cpp" />
+    <ClCompile Include="..\Code\CAttackSubReady.cpp" />
+    <ClCompile Include="..\Code\CAttackSubState.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />
     <ClCompile Include="..\Code\CDiveDave.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveMeeleAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveMove.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveGun.cpp" />
+    <ClCompile Include="..\Code\CHarpoon.cpp" />
+    <ClCompile Include="..\Code\CHarpoonProjectile.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CPlayerState.cpp" />
@@ -235,6 +259,10 @@
     <ClCompile Include="..\Code\COpen.cpp" />
     <ClCompile Include="..\Code\CPatternFrame.cpp" />
     <ClCompile Include="..\Code\CRecipe.cpp" />
+    <ClCompile Include="..\Code\CProjectileFire.cpp" />
+    <ClCompile Include="..\Code\CProjectileHit.cpp" />
+    <ClCompile Include="..\Code\CProjectileReady.cpp" />
+    <ClCompile Include="..\Code\CProjectileReturn.cpp" />
     <ClCompile Include="..\Code\CRoof.cpp" />
     <ClCompile Include="..\Code\CSakura.cpp" />
     <ClCompile Include="..\Code\CShip.cpp" />
@@ -251,6 +279,8 @@
     <ClCompile Include="..\Code\CTable.cpp" />
     <ClCompile Include="..\Code\CTestAmericanLobster.cpp" />
     <ClCompile Include="..\Code\CTestDancing.cpp" />
+    <ClCompile Include="..\Code\CTargetArrow.cpp" />
+    <ClCompile Include="..\Code\CTargetCurveStart.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
