@@ -4,6 +4,8 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CRenderer.h"
+#include "CShipDiverBoxInventory.h"
+#include "CManagement.h"
 
 CShipDiverBox::CShipDiverBox()
     : CGameObject()
@@ -25,10 +27,23 @@ HRESULT		CShipDiverBox::Ready_GameObject()
         return E_FAIL;
 
     _vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+    _vec3 vScale = { 1.0f, 1.0f, 1.0f };
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DiverBox"))
+    {
+        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        {
+            float fWidth = pTexture->Get_ImgInfo()->Width / 100.f;
+            float fHeight = pTexture->Get_ImgInfo()->Height / 100.f;
+            vScale = { fWidth, fHeight, 1.f };
+        }
+    }
 
-    _vec3 vPos = { 00.0f, 0.0f, 0.0f };
-    _vec3 v = { 2.f , 2.f, 2.f };
-    m_pTransformCom->Set_Scale(&v);
+    m_fViewZ = 1.1f;
+
+    _vec3 vPos = { 0.0f, 0.0f, 0.0f };
+    m_pTransformCom->Set_Scale(&vScale);
+
+   
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
     return S_OK;
 }
@@ -38,6 +53,21 @@ _int		CShipDiverBox::Update_GameObject(const _float& fTimeDelta)
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+
+    if (ImGui::Button("open diver box inventory"))
+    {
+        auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
+        CShipDiverBoxInventory* pShipDiverBoxInventory = CShipDiverBoxInventory::Create();
+        if (nullptr == pShipDiverBoxInventory)
+	        return E_FAIL;
+        if (FAILED(pLayer->Add_GameObject(L"ShipDiverBoxInventory", pShipDiverBoxInventory)))
+	        return E_FAIL;
+    }
+    
+
+        //
+
 
     return iExit;
 }
@@ -56,7 +86,7 @@ void		CShipDiverBox::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DiverBoxTmp"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DiverBox"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -70,6 +100,8 @@ void		CShipDiverBox::Render_GameObject()
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+
+    pGraphicDev->SetTexture(0, nullptr);
 
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

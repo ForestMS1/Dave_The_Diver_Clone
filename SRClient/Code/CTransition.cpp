@@ -469,8 +469,8 @@ HRESULT CTransition::Common_SHIP_Load()
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_ShipDave_DiveReady");
 
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBoxTmp", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxTmp.png"));
-	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBoxTmp");
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBoxInvenTmp", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxTmp.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBoxInvenTmp");
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_MainMenu_Phone.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneIcon");
@@ -491,6 +491,9 @@ HRESULT CTransition::Common_SHIP_Load()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneAppAlpha");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_PotionCraft_DiverBox/UI_PotionCraft_DiverBox.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBox");
 	return S_OK;
 }
 
