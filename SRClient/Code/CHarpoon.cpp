@@ -38,6 +38,8 @@ _int CHarpoon::Update_GameObject(const _float& fTimeDelta)
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 		return 0;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
+		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	Set_ParentTransform();
@@ -50,6 +52,8 @@ void CHarpoon::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 		return;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
+		return;
 
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
@@ -61,6 +65,8 @@ void CHarpoon::LateUpdate_GameObject(const _float& fTimeDelta)
 void CHarpoon::Render_GameObject()
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();

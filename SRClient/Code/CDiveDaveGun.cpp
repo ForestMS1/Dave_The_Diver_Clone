@@ -24,8 +24,8 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 	_vec3 vScale = { 0.4f, 0.4f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	_float fWidth = 80.f;
-	_float fHeight = 28.f;
+	_float fWidth = 32.f;
+	_float fHeight = 12.f;
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
@@ -37,6 +37,8 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 _int CDiveDaveGun::Update_GameObject(const _float& fTimeDelta)
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return 0;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -50,7 +52,8 @@ void CDiveDaveGun::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 		return;
-
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
+		return;
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
 	_vec3 vPos;
@@ -61,6 +64,8 @@ void CDiveDaveGun::LateUpdate_GameObject(const _float& fTimeDelta)
 void CDiveDaveGun::Render_GameObject()
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		return;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -84,7 +89,7 @@ HRESULT CDiveDaveGun::Ready_Component()
 		return E_FAIL;
 
 	// 텍스쳐
-	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_HarpoonTexture", L"Com_Texture", &m_pTextureCom))))
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BasicRifleTexture", L"Com_Texture", &m_pTextureCom))))
 		return E_FAIL;
 
 	// 트랜스폼
@@ -105,9 +110,9 @@ void CDiveDaveGun::Set_ParentTransform()
 		|| static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIRE)
 	{
 		if (m_bIsFlip)
-			vOffSet = { 0.15f, 0.4f, 0.f };
+			vOffSet = { 0.2f, 0.4f, 0.f };
 		else
-			vOffSet = { -0.15f, 0.4f, 0.f };
+			vOffSet = { -0.2f, 0.4f, 0.f };
 	}
 
 	vOffSet.y *= m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
@@ -147,6 +152,12 @@ void CDiveDaveGun::Rotate_ToMouse()
 	}
 
 	m_pTransformCom->m_vAngle.z = fDegree;
+}
+
+void CDiveDaveGun::Fire()
+{
+	//총알 발사 후 IDLE
+	static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
 }
 
 CDiveDaveGun* CDiveDaveGun::Create()

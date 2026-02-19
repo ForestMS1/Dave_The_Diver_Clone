@@ -14,6 +14,7 @@
 #include "CTargetArrow.h"
 #include "CHarpoon.h"
 #include "CHarpoonProjectile.h"
+#include "CDiveDaveGun.h"
 
 CDive::CDive()
 	: CScene()
@@ -123,6 +124,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"HarpoonProjectile", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CDiveDaveGun::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGun", pGameObject)))
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 

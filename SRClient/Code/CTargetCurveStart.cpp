@@ -107,6 +107,9 @@ void CTargetCurveStart::Set_ParentTransform()
 
 void CTargetCurveStart::Mouse_Check()
 {
+    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT)
+        return;
+
     _vec3 vMousePos, vPlayerPos;
     CHelper::GetMousePointInWorld(&vMousePos);
     static_cast<CDiveDave*>(m_pParentGameObject)->Get_Pos(&vPlayerPos);

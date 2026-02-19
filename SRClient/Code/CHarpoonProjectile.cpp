@@ -62,6 +62,8 @@ _int CHarpoonProjectile::Update_GameObject(const _float& fTimeDelta)
 {
 	//if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 	//	return 0;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
+		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	// 충돌체 그룹에 넣어줘야한다.
@@ -80,6 +82,8 @@ void CHarpoonProjectile::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 		return;
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
+		return;
 
 	m_pState->LateUpdate_State(fTimeDelta);
 
@@ -97,6 +101,8 @@ void CHarpoonProjectile::Render_GameObject()
 		if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
 			return;
 	}
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
+		return;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 

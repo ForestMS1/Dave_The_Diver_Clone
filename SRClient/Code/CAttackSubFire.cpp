@@ -6,6 +6,7 @@
 #include "CDiveDaveAttack.h"
 #include "CManagement.h"
 #include "CHarpoonProjectile.h"
+#include "CDiveDaveGun.h"
 CAttackSubFire::CAttackSubFire(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
     :CAttackSubState(pPlayer, pParentState)
 {
@@ -29,9 +30,18 @@ void CAttackSubFire::Enter()
 
 
     // น฿ป็
-    CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>
-        (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
-    pProjectile->TriggerOn();
+    if (static_cast<CDiveDave*>(m_pPlayer)->Get_CurEquipped() == EQUIPPED::HARPOON)
+    {
+        CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>
+            (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
+        pProjectile->TriggerOn();
+    }
+    else if (static_cast<CDiveDave*>(m_pPlayer)->Get_CurEquipped() == EQUIPPED::GUN)
+    {
+        CDiveDaveGun* pGun = static_cast<CDiveDaveGun*>
+            (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDaveGun"));
+        pGun->Fire();
+    }
 }
 
 void CAttackSubFire::Input(const _float& fTimeDelta)
@@ -56,11 +66,14 @@ void CAttackSubFire::LateUpdate_State(const _float& fTimeDelta)
         return;
 
 
-    CHarpoonProjectile* pHarpoonProjectile = dynamic_cast<CHarpoonProjectile*>
-        (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
+    if (static_cast<CDiveDave*>(m_pPlayer)->Get_CurEquipped() == EQUIPPED::HARPOON)
+    {
+        CHarpoonProjectile* pHarpoonProjectile = dynamic_cast<CHarpoonProjectile*>
+            (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
 
-    if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::HIT)
-        m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FIGHT);
+        if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::HIT)
+            m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FIGHT);
+    }
 }
 
 void CAttackSubFire::Render_State()

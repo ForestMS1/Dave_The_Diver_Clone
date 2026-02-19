@@ -16,6 +16,8 @@ public:
 	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
 	void		Render_GameObject() override;
 
+	void	Fire();
+
 private:
 	HRESULT Ready_Component();
 	void	Set_ParentTransform();

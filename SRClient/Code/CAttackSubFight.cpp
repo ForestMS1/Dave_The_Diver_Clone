@@ -31,6 +31,8 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
     if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
     {
         m_fAttackGauge += 1.f;
+        if (m_fAttackGauge > 10.f)
+            static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
     }
 
     m_fDecreaseDelay += fTimeDelta;

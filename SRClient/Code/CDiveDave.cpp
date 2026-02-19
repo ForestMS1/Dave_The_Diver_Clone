@@ -189,6 +189,7 @@ void CDiveDave::Mouse_Input()
 			Set_State(DiveState::ATTACK);
 			break;
 		case EQUIPPED::GUN:
+			Set_State(DiveState::ATTACK);
 			break;
 		default:
 			break;
