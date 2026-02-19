@@ -29,7 +29,17 @@ public:
 	vector<CAsset*>*  Get_Asset(std::wstring_view svLayerTag) { return Find_AssetLayer(svLayerTag); };
 
 	template<typename T>
-	T* Get_AssetFirst(std::wstring_view svLayerTag) { return dynamic_cast<T*>(Find_AssetLayer(svLayerTag)->at(0)); };
+	T* Get_AssetFirst(std::wstring_view svLayerTag)
+	{
+		if (auto pAsset = Find_AssetLayer(svLayerTag))
+		{
+			return dynamic_cast<T*>(pAsset->at(0));
+		}
+		else
+		{
+			return nullptr;
+		}
+	};
 
 public:
 	void Update_ImGui();
