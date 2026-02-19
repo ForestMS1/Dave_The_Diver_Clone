@@ -1,11 +1,11 @@
 #pragma once
-#include "CAttackSubState.h"
-class CAttackSubFight :
-    public CAttackSubState
+#include "CPlayerState.h"
+class CProjectileHit :
+    public CPlayerState
 {
 private:
-    explicit CAttackSubFight(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
-    virtual ~CAttackSubFight();
+    explicit CProjectileHit(CGameObject* pOwner);
+    ~CProjectileHit();
 
 public:
     void Enter() override;
@@ -17,12 +17,7 @@ public:
     void Clear() override;
 
 public:
-    static CAttackSubFight* Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
-
-private:
-    _float m_fAttackGauge = 2.f;
-    _float m_fDecreaseDelay = 0.f;
-
+    static CProjectileHit* Create(CGameObject* pOwner);
 private:
     virtual void Free() override;
 };

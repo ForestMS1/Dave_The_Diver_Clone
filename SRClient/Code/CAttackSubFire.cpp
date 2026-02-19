@@ -61,8 +61,6 @@ void CAttackSubFire::LateUpdate_State(const _float& fTimeDelta)
 
     if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::HIT)
         m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FIGHT);
-    if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::NONE_HIT)
-        m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
 }
 
 void CAttackSubFire::Render_State()

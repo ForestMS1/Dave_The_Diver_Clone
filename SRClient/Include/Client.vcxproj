@@ -185,6 +185,10 @@
     <ClInclude Include="..\Header\CMenu.h" />
     <ClInclude Include="..\Header\COpen.h" />
     <ClInclude Include="..\Header\CPatternFrame.h" />
+    <ClInclude Include="..\Header\CProjectileFire.h" />
+    <ClInclude Include="..\Header\CProjectileHit.h" />
+    <ClInclude Include="..\Header\CProjectileReady.h" />
+    <ClInclude Include="..\Header\CProjectileReturn.h" />
     <ClInclude Include="..\Header\CRoof.h" />
     <ClInclude Include="..\Header\CSakura.h" />
     <ClInclude Include="..\Header\CPlayerState.h" />
@@ -240,6 +244,10 @@
     <ClCompile Include="..\Code\CMenu.cpp" />
     <ClCompile Include="..\Code\COpen.cpp" />
     <ClCompile Include="..\Code\CPatternFrame.cpp" />
+    <ClCompile Include="..\Code\CProjectileFire.cpp" />
+    <ClCompile Include="..\Code\CProjectileHit.cpp" />
+    <ClCompile Include="..\Code\CProjectileReady.cpp" />
+    <ClCompile Include="..\Code\CProjectileReturn.cpp" />
     <ClCompile Include="..\Code\CRoof.cpp" />
     <ClCompile Include="..\Code\CSakura.cpp" />
     <ClCompile Include="..\Code\CShip.cpp" />

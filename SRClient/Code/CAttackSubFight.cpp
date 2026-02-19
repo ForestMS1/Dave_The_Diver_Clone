@@ -3,6 +3,7 @@
 #include "CDInputMgr.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CDiveDaveAttack.h"
 CAttackSubFight::CAttackSubFight(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
     : CAttackSubState(pPlayer, pParentState)
 {
@@ -27,6 +28,25 @@ void CAttackSubFight::Enter()
 
 void CAttackSubFight::Input(const _float& fTimeDelta)
 {
+    if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
+    {
+        m_fAttackGauge += 1.f;
+    }
+
+    m_fDecreaseDelay += fTimeDelta;
+
+    if (m_fDecreaseDelay > 0.2f)
+    {
+        m_fDecreaseDelay = 0.f;
+        m_fAttackGauge -= 0.6f;
+
+        if (m_fAttackGauge < 0.f)
+            m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
+    }
+
+    ImGui::Begin("AttackGauge");
+    ImGui::Text("m_fAttackGauge : %f", m_fAttackGauge);
+    ImGui::End();
 }
 
 _int CAttackSubFight::Update_State(const _float& fTimeDelta)
@@ -68,10 +88,14 @@ void CAttackSubFight::Exit()
 
     _vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
     static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
+
+    Clear();
 }
 
 void CAttackSubFight::Clear()
 {
+    m_fAttackGauge = 2.f;
+    m_fDecreaseDelay = 0.f;
 }
 
 CAttackSubFight* CAttackSubFight::Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
