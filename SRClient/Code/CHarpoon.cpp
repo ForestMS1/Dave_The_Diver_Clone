@@ -98,7 +98,18 @@ void CHarpoon::Set_ParentTransform()
 {
 	_vec3 vParentPos;
 	m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+
+
 	_vec3 vOffSet = { 0.f, 0.5f, 0.f };
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT
+		|| static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIRE)
+	{
+		if (m_bIsFlip)
+			vOffSet = { 0.15f, 0.4f, 0.f };
+		else
+			vOffSet = { -0.15f, 0.4f, 0.f };
+	}
+
 	vOffSet.y *= m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
 	vParentPos += vOffSet;
 	m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
@@ -125,9 +136,15 @@ void CHarpoon::Rotate_ToMouse()
 	float fDegree = D3DXToDegree(atan2f(vDir.y, vDir.x));
 
 	if (vDir.x < 0.f)
+	{
 		m_pTransformCom->m_vAngle.x = 180.f;
+		m_bIsFlip = true;
+	}
 	else
+	{
 		m_pTransformCom->m_vAngle.x = 0.f;
+		m_bIsFlip = false;
+	}
 
 	m_pTransformCom->m_vAngle.z = fDegree;
 }
