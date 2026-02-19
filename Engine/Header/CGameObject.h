@@ -18,9 +18,11 @@ protected:
 	virtual ~CGameObject();
 
 public:
-	//[[deprecated]]
 	CComponent* Get_Component(COMPONENTID eID, std::wstring_view svComponentTag);
 	_float		Get_ViewZ() { return m_fViewZ; }
+
+public:
+	virtual void Update_ImGui();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -44,8 +46,8 @@ protected:
 
 // °èÃþ °ü·Ã
 public:
-	CGameObject * const Get_Parent() const { return m_pParentGameObject; }
-	list<CGameObject*> * const  Get_Children()  { return &m_childGameObjectList; }
+	CGameObject *  Get_Parent() const { return m_pParentGameObject; }
+	list<CGameObject*> * Get_Children()  { return &m_childGameObjectList; }
 	void Set_Parent(CGameObject* const pNewParent);
 protected:
 	CGameObject* m_pParentGameObject;

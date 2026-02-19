@@ -18,8 +18,12 @@ protected:
 	virtual ~CComponent();
 
 public:
-	CGameObject* const Get_GameObject() const { return m_pGameObject; }
+	CGameObject*  Get_GameObject() const { return m_pGameObject; }
 	void Set_GameObject(CGameObject * pGameObject) { m_pGameObject = pGameObject; }
+
+
+public:
+	virtual void Update_ImGui() {};
 
 public:
 	virtual _int Update_Component(const _float& fTimeDelta) { return 0; }

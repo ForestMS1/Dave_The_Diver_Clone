@@ -16,6 +16,7 @@
 #include "CTransition.h"
 #include "CGameMemMgr.h"
 #include "CCollisionMgr.h"
+#include "CAssetSpine.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -52,8 +53,13 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	CImguiMgr::GetInstance()->Update_Imgui();
 
 	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
-	
+
 	m_pManagement->Update_Scene(fTimeDelta);
+
+	m_pManagement->Update_ImGui();
+	CAssetMgr::GetInstance()->Update_ImGui();
+
+	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempUpdate(fTimeDelta);
 
 	return 0;
 }
@@ -69,10 +75,15 @@ void CMainApp::Render_MainApp()
 
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
+
+	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempRender();
+
+	CColliderMgr::GetInstance()->Render();
+
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
 	//CParticleMgr::GetInstance()->Render_Particle();
 
-	CColliderMgr::GetInstance()->Render();
+
 
 	m_pDeviceClass->Render_End();
 
@@ -145,10 +156,41 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
+	//CAssetMgr::GetInstance()->AddAsset(L"Test_Spine", CAssetSpine::Create(L"../Bin/Resource/Texture/Ship/SpineTest/AmericanLobster/American_Lobster"));
+	//CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
+
+
+	//_ulong			dwBufferUsage,
+		//D3DPOOL			dwBufferPool,
+		//_ulong			dwFVF,
+		//_ulong			dwVtxSize,
+		//_ulong          dwIdxSize,
+		//D3DFORMAT		IdxFmt
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DynamicBuffer_Spine", Engine::CDynamicBuffer::Create(
+		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
+		D3DPOOL_DEFAULT,
+		FVF_COLTEX,
+		sizeof(VTXCOLTEX),
+		sizeof(INDEX16),
+		D3DFMT_INDEX16
+	));
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DynamicBuffer_Fbx", Engine::CDynamicBuffer::Create(
+		    D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
+		    D3DPOOL_DEFAULT,
+		    FVF_TEX,
+		    sizeof(VTXTEX),
+		    sizeof(INDEX32),
+		    D3DFMT_INDEX32
+	));
+
+
+
 	// 초기 로드용 폰트 추가
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"바탕", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 
+	
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create())))
 		return E_FAIL;
 

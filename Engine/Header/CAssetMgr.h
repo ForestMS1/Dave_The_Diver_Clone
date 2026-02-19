@@ -25,11 +25,14 @@ public:
 	void LoadAsset();
 	void LoadAsset(std::wstring_view svLayerTag);
 	void DelAsset(std::wstring_view svLayerTag);
-	map<const std::wstring, vector<CAsset*>>* const Get_Asset() { return &m_AssetMap; };
-	vector<CAsset*>* const Get_Asset(std::wstring_view svLayerTag) { return Find_AssetLayer(svLayerTag); };
+	map<const std::wstring, vector<CAsset*>>* Get_Asset() { return &m_AssetMap; };
+	vector<CAsset*>*  Get_Asset(std::wstring_view svLayerTag) { return Find_AssetLayer(svLayerTag); };
 
 	template<typename T>
-	T* const Get_AssetFirst(std::wstring_view svLayerTag) { return dynamic_cast<T*>(Find_AssetLayer(svLayerTag)->at(0)); };
+	T* Get_AssetFirst(std::wstring_view svLayerTag) { return dynamic_cast<T*>(Find_AssetLayer(svLayerTag)->at(0)); };
+
+public:
+	void Update_ImGui();
 
 private:
 	vector<CAsset*>* Find_AssetLayer(std::wstring_view svLayerTag);

@@ -2,6 +2,7 @@
 #include "CLog.h"
 #include "CGraphicDev.h"
 #include "CComponent.h"
+#include "CHelper.h"
 
 CGameObject::CGameObject()
     : m_fViewZ(1.f)
@@ -20,6 +21,52 @@ CGameObject::CGameObject(const CGameObject& rhs)
 
 CGameObject::~CGameObject()
 {
+}
+
+void CGameObject::Update_ImGui()
+{
+    if (ImGui::TreeNode("Components"))
+    {
+        for (int i = 0; i < ID_END; ++i)
+        {
+            if (i == ID_DYNAMIC)
+            {
+                if (ImGui::TreeNode("DYNAMIC"))
+                {
+                    for (auto& pComPair : m_mapComponent[ID_DYNAMIC])
+                    {
+                        if (ImGui::TreeNode(CHelper::WStringToString(pComPair.first).c_str()))
+                        {
+                            pComPair.second->Update_ImGui();
+
+                            ImGui::TreePop();
+                        }
+                    }
+
+                    ImGui::TreePop();
+                }
+            }
+            else if (i == ID_STATIC)
+            {
+                if (ImGui::TreeNode("STATIC"))
+                {
+                    for (auto& pComPair : m_mapComponent[ID_STATIC])
+                    {
+                        if (ImGui::TreeNode(CHelper::WStringToString(pComPair.first).c_str()))
+                        {
+                            pComPair.second->Update_ImGui();
+
+                            ImGui::TreePop();
+                        }
+                    }
+
+                    ImGui::TreePop();
+                }
+            }
+        }
+
+        ImGui::TreePop();
+    }
 }
 
 CComponent* CGameObject::Get_Component(COMPONENTID eID, std::wstring_view svComponentTag)
