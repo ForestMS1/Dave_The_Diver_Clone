@@ -64,6 +64,12 @@ public:
 	void		Set_FishCaught(_bool bFishCaught) { m_bFishCaught = bFishCaught; }
 	_bool		Is_FishCaught()					  { return m_bFishCaught; }
 
+public:
+	void Set_CanKeyInput(_bool canKey) { m_bCanKeyInput = canKey; }
+	void Set_CanMouseInput(_bool canMouse) { m_bCanMouseInput = canMouse; }
+	_bool Get_CanKeyInput() const { return m_bCanKeyInput; }
+	_bool Get_CanMouseInput() const { return m_bCanMouseInput; }
+
 private:
 	HRESULT Ready_Component();
 	HRESULT	Add_State();
@@ -89,6 +95,9 @@ private:
 	_float m_fSpeed = 5.f;
 	_float m_fFrame = 0.f;
 	_bool  m_bFishCaught = false;
+
+	_bool  m_bCanKeyInput = true;
+	_bool  m_bCanMouseInput = true;
 
 public:
 	static CDiveDave* Create();

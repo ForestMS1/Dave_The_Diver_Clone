@@ -14,6 +14,9 @@ CProjectileReturn::~CProjectileReturn()
 
 void CProjectileReturn::Enter()
 {
+	// 잠시 키 DiveDave 키입력 막음
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanKeyInput(false);
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanMouseInput(false);
 }
 
 void CProjectileReturn::Input(const _float& fTimeDelta)
@@ -43,6 +46,10 @@ void CProjectileReturn::Clear()
 {
 	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
 	pProjectile->m_pCaughtFish = nullptr;
+
+	// 키 입력 잠금 해제
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanKeyInput(true);
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanMouseInput(true);
 }
 
 CProjectileReturn* CProjectileReturn::Create(CGameObject* pOwner)

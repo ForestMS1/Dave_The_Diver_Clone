@@ -28,6 +28,10 @@ void CDiveDaveIdle::Enter()
 
 void CDiveDaveIdle::Input(const _float& fTimeDelta)
 {
+	if (!static_cast<CDiveDave*>(m_pPlayer)->Get_CanMouseInput())
+		return;
+
+
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_W) || CDInputMgr::GetInstance()->Key_Down(DIK_A)
 		|| CDInputMgr::GetInstance()->Key_Down(DIK_S) || CDInputMgr::GetInstance()->Key_Down(DIK_D))
 		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::MOVE);

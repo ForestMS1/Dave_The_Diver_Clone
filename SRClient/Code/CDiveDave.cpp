@@ -171,6 +171,10 @@ HRESULT	CDiveDave::Add_State()
 
 void CDiveDave::Key_Input()
 {
+	if (!m_bCanKeyInput)
+		return;
+
+
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
 		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 
@@ -178,6 +182,9 @@ void CDiveDave::Key_Input()
 
 void CDiveDave::Mouse_Input()
 {
+	if (!m_bCanMouseInput)
+		return;
+
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
 	{
 		switch (m_eCurEquipped)
