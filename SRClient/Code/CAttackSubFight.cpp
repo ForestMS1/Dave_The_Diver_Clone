@@ -27,6 +27,9 @@ void CAttackSubFight::Enter()
 
 
     static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(false);
+
+    // 카메라 쉐이킹 시작
+    static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingStart(m_fAttackTime);
 }
 
 void CAttackSubFight::Input(const _float& fTimeDelta)
@@ -42,14 +45,18 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
     }
 
     m_fDecreaseDelay += fTimeDelta;
+    m_fAttackTime -= fTimeDelta;
 
     if (m_fDecreaseDelay > 0.2f)
     {
         m_fDecreaseDelay = 0.f;
         m_fAttackGauge -= 0.6f;
 
-        if (m_fAttackGauge < 0.f)
+        if (m_fAttackGauge < 0.f || m_fAttackTime < 0.f)
+        {
+            static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(false);
             m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
+        }
     }
 
     ImGui::Begin("AttackGauge");
@@ -104,6 +111,10 @@ void CAttackSubFight::Clear()
 {
     m_fAttackGauge = 2.f;
     m_fDecreaseDelay = 0.f;
+    m_fAttackTime = 5.f;
+
+    // 카메라 쉐이킹 강종
+    static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingEnd();
 }
 
 CAttackSubFight* CAttackSubFight::Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState)

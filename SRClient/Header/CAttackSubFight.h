@@ -22,6 +22,7 @@ public:
 private:
     _float m_fAttackGauge = 2.f;
     _float m_fDecreaseDelay = 0.f;
+    _float m_fAttackTime = 5.f; // 물고기와 씨름 할 제한시간
 
 private:
     virtual void Free() override;
