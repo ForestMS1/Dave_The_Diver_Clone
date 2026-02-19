@@ -30,6 +30,12 @@ public:
 	void		ZoomIn(const _float& fAngle) { m_fFov -= D3DXToRadian(fAngle); }
 	void		ZoomOut(const _float& fAngle) { m_fFov += D3DXToRadian(fAngle); }
 	_float		GetFov() { return m_fFov; }
+
+	//Fight 상태에서 쉐이킹
+	void		FightShakingStart(const _float& fDuration); //쉐이킹 시작, 외부에서 호출
+	void		FightShakingUpdate(const _float& fTimeDelta);
+	void		FightShakingEnd(); //쉐이킹 끝내기, 외부에서 호출
+
 private:
 	HRESULT		Add_Component();
 
@@ -51,6 +57,12 @@ public:
 private:
 	_vec3* m_pTargetPos = nullptr;
 	_vec3   m_vOffset = { 0.f, 0.f, -10.f };
+
+	// 흔들기용
+	_float	m_fAccShakingDuration = 0.f;
+	_vec3	m_vOriginEye;
+	_vec3	m_vOriginAt;
+	_bool   m_bShaked = false;
 
 private:
 	virtual void Free() override;
