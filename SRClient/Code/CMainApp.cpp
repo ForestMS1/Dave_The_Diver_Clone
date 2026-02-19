@@ -156,8 +156,8 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
-	CAssetMgr::GetInstance()->AddAsset(L"Test_Spine", CAssetSpine::Create(L"../Bin/Resource/Texture/Ship/SpineTest/AmericanLobster/American_Lobster"));
-	CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
+	//CAssetMgr::GetInstance()->AddAsset(L"Test_Spine", CAssetSpine::Create(L"../Bin/Resource/Texture/Ship/SpineTest/AmericanLobster/American_Lobster"));
+	//CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
 
 
 	//_ulong			dwBufferUsage,

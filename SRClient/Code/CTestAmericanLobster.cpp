@@ -42,7 +42,11 @@ HRESULT CTestAmericanLobster::Ready_GameObject()
     _vec3 vScale = {0.1f, 0.1f, 0.1f};
     m_pTransformCom->Set_Scale(&vScale);
 
-    CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->Set_AniState(L"move");
+    if (auto pAsset = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine"))
+    {
+        pAsset->Set_AniState(L"move");
+    }
+   
 
     return S_OK;
 }
@@ -67,7 +71,11 @@ _int CTestAmericanLobster::Update_GameObject(const _float& fTimeDelta)
     //if (CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size() <= m_iFrame)
     //    m_iFrame = 0;
 
-    CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempUpdate(fTimeDelta);
+    if (auto pAsset = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine"))
+    {
+        pAsset->TempUpdate(fTimeDelta);
+    }
+   
 
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -124,18 +132,20 @@ void CTestAmericanLobster::Render_GameObject()
     //m_pBufferCom->Render_Buffer();
 
 
-    auto pAssSpine = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine");
-
-
-    pGraphicDev->SetTexture(0, CAssetMgr::GetInstance()->Get_AssetFirst<CAssetTexture>(pAssSpine->Get_TextureName())->Get_Texture());
-
+    if (auto pAssSpine = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine"))
     {
-        
-        pAssSpine->TEMP_LOCK_BUFFER(m_pBufferCom->Get_VertexBuffer(), m_pBufferCom->Get_IndexBuffer());
-        
+        pGraphicDev->SetTexture(0, CAssetMgr::GetInstance()->Get_AssetFirst<CAssetTexture>(pAssSpine->Get_TextureName())->Get_Texture());
+
+        {
+
+            pAssSpine->TEMP_LOCK_BUFFER(m_pBufferCom->Get_VertexBuffer(), m_pBufferCom->Get_IndexBuffer());
+
+        }
+
+        m_pBufferCom->Render_Buffer();
     }
 
-    m_pBufferCom->Render_Buffer();
+  
 
 
 
@@ -153,11 +163,13 @@ HRESULT CTestAmericanLobster::Ready_Component()
     if (FAILED((AddComponent<Engine::CDynamicBuffer, ID_STATIC>(L"Proto_DynamicBuffer_Spine", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
-    auto pAssSpine =CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine");
+    if (auto pAssSpine = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine"))
+    {
+        m_pBufferCom->Set_VertexCnt(pAssSpine->Get_NumVertex());
+        m_pBufferCom->Set_TriCnt(pAssSpine->Get_NumTri());
+        m_pBufferCom->Ready_Buffer();
+    };
     
-    m_pBufferCom->Set_VertexCnt(pAssSpine->Get_NumVertex());
-    m_pBufferCom->Set_TriCnt(pAssSpine->Get_NumTri());
-    m_pBufferCom->Ready_Buffer();
 
     // Æ®·£½ºÆû
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
