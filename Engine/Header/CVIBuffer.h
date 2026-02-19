@@ -18,6 +18,9 @@ public:
 protected:
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 
+	_ulong			m_dwBufferUsage;
+	D3DPOOL			m_dwBufferPool;
+
 	_ulong			m_dwVtxSize;
 	_ulong			m_dwVtxCnt;
 	_ulong			m_dwTriCnt;

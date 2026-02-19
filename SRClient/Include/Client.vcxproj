@@ -210,6 +210,8 @@
     <ClInclude Include="..\Header\CSushiCamera.h" />
     <ClInclude Include="..\Header\CSushiDave.h" />
     <ClInclude Include="..\Header\CTable.h" />
+    <ClInclude Include="..\Header\CTestAmericanLobster.h" />
+    <ClInclude Include="..\Header\CTestDancing.h" />
     <ClInclude Include="..\Header\CTargetArrow.h" />
     <ClInclude Include="..\Header\CTargetCurveStart.h" />
     <ClInclude Include="..\Header\CTransition.h" />
@@ -275,6 +277,8 @@
     <ClCompile Include="..\Code\CSushiCamera.cpp" />
     <ClCompile Include="..\Code\CSushiDave.cpp" />
     <ClCompile Include="..\Code\CTable.cpp" />
+    <ClCompile Include="..\Code\CTestAmericanLobster.cpp" />
+    <ClCompile Include="..\Code\CTestDancing.cpp" />
     <ClCompile Include="..\Code\CTargetArrow.cpp" />
     <ClCompile Include="..\Code\CTargetCurveStart.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />

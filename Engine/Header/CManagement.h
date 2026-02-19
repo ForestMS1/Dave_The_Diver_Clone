@@ -28,6 +28,9 @@ public:
 	void			LateUpdate_Scene(const _float& fTimeDelta);
 	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
 
+public:
+	void			Update_ImGui();
+
 private:
 	CScene*					m_pScene;
 
