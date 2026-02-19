@@ -171,6 +171,7 @@
     <ClInclude Include="..\Header\CConfirm.h" />
     <ClInclude Include="..\Header\CCustomer1.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
+    <ClInclude Include="..\Header\CDiveDaveBullet.h" />
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="..\Code\CAttackSubReady.cpp" />
     <ClCompile Include="..\Code\CAttackSubState.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveBullet.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />

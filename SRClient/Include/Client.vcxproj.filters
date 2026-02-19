@@ -157,6 +157,9 @@
     <Filter Include="02. GameObject\03. SkyBox">
       <UniqueIdentifier>{9a009614-2047-446b-ac77-1c7582a4022c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\Gun\Bullet">
+      <UniqueIdentifier>{9aa50c91-277a-4144-9438-47026fa0a512}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -363,6 +366,9 @@
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\03. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveBullet.h">
+      <Filter>02. GameObject\DiveDave\Gun\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -559,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>02. GameObject\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveBullet.cpp">
+      <Filter>02. GameObject\DiveDave\Gun\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
