@@ -24,6 +24,9 @@ void CAttackSubFight::Enter()
     _vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
     static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
     static_cast<CDiveDave*>(m_pPlayer)->Set_TextureCom(L"Com_AttackFightTexture");
+
+
+    static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(false);
 }
 
 void CAttackSubFight::Input(const _float& fTimeDelta)
@@ -32,7 +35,10 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
     {
         m_fAttackGauge += 1.f;
         if (m_fAttackGauge > 10.f)
+        {
             static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
+            static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(true);
+        }
     }
 
     m_fDecreaseDelay += fTimeDelta;

@@ -46,7 +46,7 @@ private:
 	_float					m_fAccRange = 0.f;
 	_vec3					m_vDir;
 
-
+	CGameObject*			m_pCaughtFish = nullptr;
 private:
 	Engine::CAttackReadyArmTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;

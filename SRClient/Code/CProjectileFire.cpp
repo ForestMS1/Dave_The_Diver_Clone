@@ -74,6 +74,7 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 							}
 
 							m_bIsHitFish = true;
+							pProjectile->m_pCaughtFish = static_cast<CGameObject*>(pCollider->Get_VoidPtr()); // 충돌한 물고기의 포인터 들고 옴
 							pProjectile->m_pTransformCom->Update_Component(fTimeDelta);
 							pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
 						}

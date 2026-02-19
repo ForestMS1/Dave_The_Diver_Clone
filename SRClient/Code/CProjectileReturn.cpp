@@ -1,6 +1,7 @@
 #include "CProjectileReturn.h"
 #include "CHarpoonProjectile.h"
-#include <CDiveDave.h>
+#include "CDiveDave.h"
+#include "CTestFish.h"
 
 CProjectileReturn::CProjectileReturn(CGameObject* pOwner)
     : CPlayerState(pOwner)
@@ -35,10 +36,13 @@ void CProjectileReturn::Render_State()
 
 void CProjectileReturn::Exit()
 {
+	Clear();
 }
 
 void CProjectileReturn::Clear()
 {
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	pProjectile->m_pCaughtFish = nullptr;
 }
 
 CProjectileReturn* CProjectileReturn::Create(CGameObject* pOwner)
@@ -62,9 +66,20 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 	D3DXVec3Length(&vDiff);
 
 	if (D3DXVec3Length(&vDiff) > 1.f)
+	{
 		pProjectile->m_pTransformCom->Move_Pos(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+
+		// 플레이어가 물고기 잡기에 성공했다면 물고기 끌어당김
+		if (pProjectile->m_pCaughtFish != nullptr)
+			static_cast<CTestFish*>(pProjectile->m_pCaughtFish)->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+	}
 	else
 	{
+		if (pProjectile->m_pCaughtFish != nullptr)
+		{
+			pProjectile->m_pCaughtFish->Set_Dead();
+			pProjectile->m_pCaughtFish = nullptr;
+		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
 	}

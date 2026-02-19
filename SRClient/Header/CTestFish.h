@@ -15,6 +15,10 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
 
+
+	// 작살로 물고기 끌어당기기위함
+	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
+
 private:
 	HRESULT			Ready_Component();
 
