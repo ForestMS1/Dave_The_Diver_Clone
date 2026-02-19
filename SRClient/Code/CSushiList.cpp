@@ -1,27 +1,27 @@
 #include "pch.h"
-#include "CRecipe.h"
+#include "CSushiList.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
-CRecipe::CRecipe()
+CSushiList::CSushiList()
     : CGameObject()
 {
     render = false;
 }
 
-CRecipe::CRecipe(const CGameObject& rhs)
+CSushiList::CSushiList(const CGameObject& rhs)
     : CGameObject(rhs)
 {
 }
 
-CRecipe::~CRecipe()
+CSushiList::~CSushiList()
 {
 }
 
-HRESULT CRecipe::Ready_GameObject()
+HRESULT CSushiList::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -31,7 +31,7 @@ HRESULT CRecipe::Ready_GameObject()
     return S_OK;
 }
 
-_int CRecipe::Update_GameObject(const _float& fTimeDelta)
+_int CSushiList::Update_GameObject(const _float& fTimeDelta)
 {
     if (render) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
@@ -42,7 +42,7 @@ _int CRecipe::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void CRecipe::LateUpdate_GameObject(const _float& fTimeDelta)
+void CSushiList::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     if (render) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -55,7 +55,7 @@ void CRecipe::LateUpdate_GameObject(const _float& fTimeDelta)
 
 }
 
-void CRecipe::Render_GameObject()
+void CSushiList::Render_GameObject()
 {
     if (render) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -66,7 +66,7 @@ void CRecipe::Render_GameObject()
 
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-        m_pRecipeTextureCom->Set_Texture(0);
+        m_pListextureCom->Set_Texture(0);
         m_pBufferCom->Render_Buffer();
 
         D3DXMATRIX matTmp;
@@ -79,40 +79,40 @@ void CRecipe::Render_GameObject()
 
 }
 
-HRESULT CRecipe::Ready_Component()
+HRESULT CSushiList::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     // 텍스쳐
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_RecipeTex", L"Com_Texture", &m_pRecipeTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_SushiListTex", L"Com_Texture", &m_pListextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
 
-    m_pTransformCom->m_vScale = { 1.5f, 3.0f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 0.f,0.f,-4.5f };
+    m_pTransformCom->m_vScale = { 2.0f, 3.0f, 1.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 3.5f,0.f,-4.5f };
     return S_OK;
 }
 
 
-CRecipe* CRecipe::Create()
+CSushiList* CSushiList::Create()
 {
-    CRecipe* pBackGround = new CRecipe;
+    CSushiList* pBackGround = new CSushiList;
 
     if (FAILED(pBackGround->Ready_GameObject()))
     {
         Safe_Release(pBackGround);
-        MSG_BOX("AddButton Create Failed");
+        MSG_BOX("List Create Failed");
         return nullptr;
     }
 
     return pBackGround;
 }
 
-void CRecipe::Free()
+void CSushiList::Free()
 {
     CGameObject::Free();
 }

@@ -182,7 +182,7 @@
     <ClInclude Include="..\Header\CHarpoonProjectile.h" />
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
-    <ClInclude Include="..\Header\CLight.h" />
+    <ClInclude Include="..\Header\CSushiLight.h" />
     <ClInclude Include="..\Header\CDiveDave.h" />
     <ClInclude Include="..\Header\CDiveDaveMove.h" />
     <ClInclude Include="..\Header\CLogo.h" />
@@ -209,6 +209,7 @@
     <ClInclude Include="..\Header\CSushi.h" />
     <ClInclude Include="..\Header\CSushiCamera.h" />
     <ClInclude Include="..\Header\CSushiDave.h" />
+    <ClInclude Include="..\Header\CSushiList.h" />
     <ClInclude Include="..\Header\CTable.h" />
     <ClInclude Include="..\Header\CTestAmericanLobster.h" />
     <ClInclude Include="..\Header\CTestDancing.h" />
@@ -254,7 +255,7 @@
     <ClCompile Include="..\Code\CFishTank.cpp" />
     <ClCompile Include="..\Code\CHood.cpp" />
     <ClCompile Include="..\Code\CKitchen.cpp" />
-    <ClCompile Include="..\Code\CLight.cpp" />
+    <ClCompile Include="..\Code\CSushiLight.cpp" />
     <ClCompile Include="..\Code\CMenu.cpp" />
     <ClCompile Include="..\Code\COpen.cpp" />
     <ClCompile Include="..\Code\CPatternFrame.cpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="..\Code\CSushi.cpp" />
     <ClCompile Include="..\Code\CSushiCamera.cpp" />
     <ClCompile Include="..\Code\CSushiDave.cpp" />
+    <ClCompile Include="..\Code\CSushiList.cpp" />
     <ClCompile Include="..\Code\CTable.cpp" />
     <ClCompile Include="..\Code\CTestAmericanLobster.cpp" />
     <ClCompile Include="..\Code\CTestDancing.cpp" />

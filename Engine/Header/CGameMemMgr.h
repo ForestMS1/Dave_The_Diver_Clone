@@ -13,12 +13,22 @@ class ENGINE_DLL CGameMemMgr : public CBase
 private:
 	explicit CGameMemMgr();
 	virtual ~CGameMemMgr();
-
+public:
+	typedef struct tagFish {
+		string name;
+		int quantity;
+		int level;
+		int cost;
+	}FISH;
 public:
 	HRESULT Ready();
+	void addFish(string name, int quantity);
+	vector<FISH*>& getFishes() { return fishes; }
 
+	void levelUp(string name);
 private:
 	virtual void		Free();
+	vector<FISH*> fishes;
 };
 
 END

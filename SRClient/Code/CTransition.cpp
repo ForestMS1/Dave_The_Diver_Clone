@@ -380,6 +380,9 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Recipe", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/recipe.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RecipeTex", Engine::CTexture::Create(L"Tex_Recipe"))))
 		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_List", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/sushi_list.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SushiListTex", Engine::CTexture::Create(L"Tex_List"))))
+		return E_FAIL;
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveSushiIdle", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Dave/dave_sushiIdle0.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DaveSushiIdleTex", Engine::CTexture::Create(L"Tex_DaveSushiIdle"))))

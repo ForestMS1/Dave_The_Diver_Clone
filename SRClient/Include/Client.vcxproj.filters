@@ -201,7 +201,7 @@
     <ClInclude Include="..\Header\CFence.h">
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CLight.h">
+    <ClInclude Include="..\Header\CSushiLight.h">
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWood.h">
@@ -336,6 +336,9 @@
     <ClInclude Include="..\Header\CRecipe.h">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSushiList.h">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CTestAmericanLobster.h">
       <Filter>02. GameObject\TestFish\AmericanLobster</Filter>
     </ClInclude>
@@ -389,7 +392,7 @@
     <ClCompile Include="..\Code\CFence.cpp">
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CLight.cpp">
+    <ClCompile Include="..\Code\CSushiLight.cpp">
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWood.cpp">
@@ -522,6 +525,9 @@
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CRecipe.cpp">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSushiList.cpp">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestAmericanLobster.cpp">
