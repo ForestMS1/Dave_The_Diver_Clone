@@ -15,6 +15,7 @@
 #include "CGlbTex.h"
 #include "CAttackReadyArmTex.h"
 #include "CAssetTexture.h"
+#include "CAssetCubeTexture.h"
 
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
@@ -50,7 +51,7 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 
 	//CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/PolybrushMesh-3786884.glb"));
-	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Rock4.glb"));
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian.glb"));
 	CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
 
 	
@@ -62,7 +63,12 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
 
 
+	CAssetMgr::GetInstance()->AddAsset(L"CubeTex", CAssetCubeTexture::Create(L"../Bin/Resource/Texture/Map/SkyBox.dds"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create())))
+		return E_FAIL;
 	
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(L"CubeTex"))))
+		return E_FAIL;
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG

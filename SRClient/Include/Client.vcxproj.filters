@@ -97,6 +97,9 @@
     <Filter Include="02. GameObject\02. TestGlb">
       <UniqueIdentifier>{a783af74-29a5-4b5b-b7f5-ddbe8df41409}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\03. SkyBox">
+      <UniqueIdentifier>{9a009614-2047-446b-ac77-1c7582a4022c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="..\Header\CTestGlb.h">
       <Filter>02. GameObject\02. TestGlb</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSkyBox.h">
+      <Filter>02. GameObject\03. SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -355,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestGlb.cpp">
       <Filter>02. GameObject\02. TestGlb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSkyBox.cpp">
+      <Filter>02. GameObject\03. SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,8 @@
 #include "CShipBoat.h"
 #include "CMapMgr.h"
 #include "CTestGlb.h"
+#include "CSkyBox.h"
+
 
 
 CDive::CDive()
@@ -24,6 +26,9 @@ CDive::~CDive()
 
 HRESULT CDive::Ready_Scene()
 {
+	//if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+	//	return E_FAIL;
+
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
 
@@ -85,6 +90,31 @@ void CDive::Render_Scene()
 
 }
 
+HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+
+
+	// SkyBox
+	pGameObject = CSkyBox::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"SkyBox", pGameObject)))
+		return E_FAIL;
+
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+
+	return S_OK;
+}
+
 HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
@@ -120,8 +150,8 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
 		return E_FAIL;
-	_vec3 size = { 0.1, 0.1f, 0.1f };
-	dynamic_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Scale(&size);
+
+	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

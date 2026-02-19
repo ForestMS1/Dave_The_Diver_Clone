@@ -186,6 +186,7 @@
     <ClInclude Include="..\Header\CShipPhoneApp.h" />
     <ClInclude Include="..\Header\CShipPhoneIcon.h" />
     <ClInclude Include="..\Header\CSign.h" />
+    <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CSpeaker.h" />
     <ClInclude Include="..\Header\CShipBoat.h" />
     <ClInclude Include="..\Header\CShipDave.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="..\Code\CShipPhoneApp.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIcon.cpp" />
     <ClCompile Include="..\Code\CSign.cpp" />
+    <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CSpeaker.cpp" />
     <ClCompile Include="..\Code\CShipBoat.cpp" />
     <ClCompile Include="..\Code\CShipDave.cpp" />

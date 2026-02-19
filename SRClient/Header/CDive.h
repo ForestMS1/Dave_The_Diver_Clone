@@ -14,6 +14,7 @@ public:
 
 private:
 	HRESULT Ready_GameLogic_Layer(std::wstring_view svLayerTag);
+	HRESULT Ready_Environment_Layer(std::wstring_view svLayerTag);
 public:
 	static CDive* Create();
 

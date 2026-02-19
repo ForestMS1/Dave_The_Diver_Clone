@@ -27,12 +27,10 @@ HRESULT CTestGlb::Ready_GameObject()
 
     _vec3 vExtents = { 1.0f, 1.0f, 1.0f };
 
-    _vec3 vPos = { 00.0f, 0.0f, 0.f };
+    _vec3 vPos = { 0.0f, 0.0f, 0.f };
 
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_GLB", this);
-    m_pTransformCom->Set_Pos(-3.f, -3.f, 100.f);
-    _vec3 Rot = { -90.f,180.f,0.f};
-    m_pTransformCom->Set_Rotation(&Rot);
+
     return S_OK;
 }
 
