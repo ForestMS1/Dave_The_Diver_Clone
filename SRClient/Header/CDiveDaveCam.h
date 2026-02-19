@@ -29,6 +29,7 @@ public:
 	void		Set_Target(_vec3* pTarget) { m_pTargetPos = pTarget; }
 	void		ZoomIn(const _float& fAngle) { m_fFov -= D3DXToRadian(fAngle); }
 	void		ZoomOut(const _float& fAngle) { m_fFov += D3DXToRadian(fAngle); }
+	void		SetFov(const _float& fAngle) { m_fFov = D3DXToRadian(fAngle); }
 	_float		GetFov() { return m_fFov; }
 
 	//Fight 상태에서 쉐이킹
