@@ -169,6 +169,9 @@
     <Filter Include="02. GameObject\DiveDave\State\Tanning">
       <UniqueIdentifier>{677e8561-3ccc-4f79-94a4-ce84be69e49a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Open">
+      <UniqueIdentifier>{318ee7c5-a6a4-4dbf-8f34-a8107f3c3928}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -387,6 +390,9 @@
     <ClInclude Include="..\Header\CDiveDaveTanning.h">
       <Filter>02. GameObject\DiveDave\State\Tanning</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveOpen.h">
+      <Filter>02. GameObject\DiveDave\State\Open</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -595,6 +601,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveTanning.cpp">
       <Filter>02. GameObject\DiveDave\State\Tanning</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveOpen.cpp">
+      <Filter>02. GameObject\DiveDave\State\Open</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

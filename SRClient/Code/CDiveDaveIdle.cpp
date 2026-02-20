@@ -28,9 +28,9 @@ void CDiveDaveIdle::Enter()
 
 void CDiveDaveIdle::Input(const _float& fTimeDelta)
 {
-	// 일단 임시로 충돌처리 없이 TANNING 진입
+	// 일단 임시로 충돌처리 없이 OPEN 진입
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
-		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::TANNING);
+		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::OPEN);
 
 
 	if (!static_cast<CDiveDave*>(m_pPlayer)->Get_CanMouseInput())

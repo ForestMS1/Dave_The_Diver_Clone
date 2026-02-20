@@ -1,7 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "CPlayerState.h"
-
+#include "CAABB.h"
 enum class DiveState
 {
 	IDLE = 0,
@@ -9,6 +9,7 @@ enum class DiveState
 	ATTACK,			// 작살, 총 공격
 	MELEEATTACK,	// 근접 공격
 	TANNING,
+	OPEN,
 	DIE,
 	DAVE_STATE_END
 };
@@ -83,6 +84,7 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
+	CAABB* m_pAABB;
 
 private:
 	CPlayerState* m_pState = nullptr;

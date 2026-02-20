@@ -10,8 +10,11 @@
 #include "CDiveDaveMeeleAttack.h"
 #include "CAttackReadyArm.h"
 #include "CDiveDaveTanning.h"
+#include "CDiveDaveOpen.h"
+#include "CCollisionMgr.h"
+#include "CColliderMgr.h"
 
-string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "DIE" };
+string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = { "MELEE", "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
@@ -42,12 +45,25 @@ HRESULT CDiveDave::Ready_GameObject()
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	Set_State(DiveState::IDLE);
+
+
+	//-------------AABB Collider With ItemBox----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+	_vec3 vPos = { 00.0f, 0.0f, 0.0f };
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_DiveDaveWithItemBox", this);
+
+	CColliderMgr::GetInstance()->Set_Render(true);
+
 	return S_OK;
 }
 
 _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 {
+	// 충돌체 그룹에 넣어줘야한다.
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_ItemBox", m_pAABB);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	m_pAABB->Transform(m_pTransformCom->Get_World());
+
 	Key_Input();
 	Mouse_Input();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -155,6 +171,8 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMeleeDaggerAttack", L"Com_MeleeDaggerAttackTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerOpenTexture", L"Com_OpenTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// 트랜스폼
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -168,6 +186,7 @@ HRESULT	CDiveDave::Add_State()
 	m_mapState.insert({ DiveState::ATTACK, CDiveDaveAttack::Create(this) });
 	m_mapState.insert({ DiveState::MELEEATTACK, CDiveDaveMeeleAttack::Create(this) });
 	m_mapState.insert({ DiveState::TANNING, CDiveDaveTanning::Create(this) });
+	m_mapState.insert({ DiveState::OPEN, CDiveDaveOpen::Create(this) });
 	//m_mapState.insert({ DiveState::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
@@ -223,6 +242,7 @@ CDiveDave* CDiveDave::Create()
 
 void CDiveDave::Free()
 {
+	Safe_Release(m_pAABB);
 	for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
 	m_mapState.clear();
 	CGameObject::Free();
