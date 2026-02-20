@@ -23,17 +23,13 @@ private:
 	void	Rotate_ToMouse();
 
 private:
-	void	Update_Points();
-
-private:
 	Engine::CAttackReadyArmTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	Engine::CLineBuffer* m_pLineBuffer;
+
 
 private:
 	_bool m_bIsFlip = false;
-	vector<_vec3> m_vecHarpoonToProjectilePoints;
 
 public:
 	static CHarpoon* Create();

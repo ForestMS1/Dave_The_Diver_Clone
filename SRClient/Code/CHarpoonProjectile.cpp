@@ -9,6 +9,8 @@
 #include "CProjectileFire.h"
 #include "CProjectileHit.h"
 #include "CProjectileReturn.h"
+#include "CCameraMgr.h"
+#include "CCamera.h"
 CHarpoonProjectile::CHarpoonProjectile()
 {
 }
@@ -60,8 +62,6 @@ HRESULT CHarpoonProjectile::Ready_GameObject()
 
 _int CHarpoonProjectile::Update_GameObject(const _float& fTimeDelta)
 {
-	//if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
-	//	return 0;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return 0;
 
@@ -80,14 +80,14 @@ _int CHarpoonProjectile::Update_GameObject(const _float& fTimeDelta)
 
 void CHarpoonProjectile::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
-		return;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return;
 
 	m_pState->LateUpdate_State(fTimeDelta);
 
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	Update_Points();
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -115,6 +115,12 @@ void CHarpoonProjectile::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
+	_matrix view = CCameraMgr::GetInstance()->Get_CurCamera()->Get_ViewMatrix();
+	_matrix proj = CCameraMgr::GetInstance()->Get_CurCamera()->Get_ProjMatrix();
+	_matrix matVP = view * proj;
+
+	m_pLineBuffer->Render_Buffer(m_vecHarpoonToProjectilePoints, matVP);
+
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -130,6 +136,10 @@ HRESULT CHarpoonProjectile::Ready_Component()
 
 	// 트랜스폼
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
+		return E_FAIL;
+
+	// 라인버퍼
+	if (FAILED((AddComponent<Engine::CLineBuffer, ID_STATIC>(L"Proto_LineBuffer", L"Com_LineBuffer", &m_pLineBuffer))))
 		return E_FAIL;
 
 	return S_OK;
@@ -169,4 +179,21 @@ void CHarpoonProjectile::Set_State(PROJECTILESTATE state)
 	m_eState = state;
 
 	m_pState->Enter();
+}
+
+
+void CHarpoonProjectile::Update_Points()
+{
+	m_vecHarpoonToProjectilePoints.clear();
+
+	_vec3 vHarpoonPos, vProjectilePos;
+	m_pTransformCom->Get_Info(INFO_POS, &vProjectilePos);
+
+	CTransform* pHarpoonPosTransform = static_cast<CTransform*>
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"Harpoon", L"Com_Transform"));
+
+	pHarpoonPosTransform->Get_Info(INFO_POS, &vHarpoonPos);
+
+	m_vecHarpoonToProjectilePoints.push_back(vProjectilePos);
+	m_vecHarpoonToProjectilePoints.push_back(vHarpoonPos);
 }
