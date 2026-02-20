@@ -34,7 +34,7 @@ void CAttackSubFight::Enter()
 
 void CAttackSubFight::Input(const _float& fTimeDelta)
 {
-    if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
+    if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB) || CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
         m_fAttackGauge += 1.f;
         if (m_fAttackGauge > 10.f)
