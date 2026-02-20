@@ -171,6 +171,7 @@
     <ClInclude Include="..\Header\CConfirm.h" />
     <ClInclude Include="..\Header\CCustomer1.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
+    <ClInclude Include="..\Header\CDiveDaveBullet.h" />
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="..\Header\CTestDancing.h" />
     <ClInclude Include="..\Header\CTargetArrow.h" />
     <ClInclude Include="..\Header\CTargetCurveStart.h" />
+    <ClInclude Include="..\Header\CTestFish.h" />
     <ClInclude Include="..\Header\CTestGlb.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CWood.h" />
@@ -239,6 +241,7 @@
     <ClCompile Include="..\Code\CAttackSubReady.cpp" />
     <ClCompile Include="..\Code\CAttackSubState.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveBullet.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />
@@ -288,6 +291,7 @@
     <ClCompile Include="..\Code\CTestDancing.cpp" />
     <ClCompile Include="..\Code\CTargetArrow.cpp" />
     <ClCompile Include="..\Code\CTargetCurveStart.cpp" />
+    <ClCompile Include="..\Code\CTestFish.cpp" />
     <ClCompile Include="..\Code\CTestGlb.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />

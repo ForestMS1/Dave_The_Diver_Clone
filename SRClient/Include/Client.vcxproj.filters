@@ -160,6 +160,12 @@
     <Filter Include="02. GameObject\00. Ship\06. ShipDiverBox">
       <UniqueIdentifier>{251c9393-d453-4d59-a117-96861ef4e846}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\Gun\Bullet">
+      <UniqueIdentifier>{9aa50c91-277a-4144-9438-47026fa0a512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\TestFish">
+      <UniqueIdentifier>{17c6124b-79a3-4b5e-aa3c-eb42e469ba1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -369,6 +375,12 @@
     <ClInclude Include="..\Header\CShipDiverBox.h">
       <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveBullet.h">
+      <Filter>02. GameObject\DiveDave\Gun\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTestFish.h">
+      <Filter>02. GameObject\DiveDave\TestFish</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -568,6 +580,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBox.cpp">
       <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveBullet.cpp">
+      <Filter>02. GameObject\DiveDave\Gun\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTestFish.cpp">
+      <Filter>02. GameObject\DiveDave\TestFish</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

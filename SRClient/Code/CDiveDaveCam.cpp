@@ -47,6 +47,9 @@ _int CDiveDaveCam::Update_GameObject(const _float& fTimeDelta)
 	if (!m_pTargetPos)
 		return 0;
 
+	// 카메라 쉐이킹
+	FightShakingUpdate(fTimeDelta);
+
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 	_vec3 vDesiredAt = *m_pTargetPos;
@@ -70,6 +73,46 @@ void CDiveDaveCam::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CDiveDaveCam::Render_GameObject()
 {
+}
+
+void CDiveDaveCam::FightShakingStart(const _float& fDuration)
+{
+	m_vOriginEye = m_vEye;
+	m_vOriginAt = m_vAt;
+	m_fAccShakingDuration = fDuration;
+	m_bShaked = true;
+	SetFov(45.f);
+}
+
+void CDiveDaveCam::FightShakingUpdate(const _float& fTimeDelta)
+{
+	if (m_bShaked == true && m_fAccShakingDuration > 0.f)
+	{
+		m_fAccShakingDuration -= fTimeDelta;
+
+		_vec3 vShake = { 1.f, 1.f, - 10.f };
+		_float fIntensity = 0.002f;
+		_float r = _float(rand() % 100) * fIntensity;
+		vShake *= r;
+		vShake.z = -10.f;
+
+		m_vEye = *m_pTargetPos + vShake;
+		m_vEye.z = -10.f;
+		m_vAt = m_vEye + m_vOffset;
+		m_vAt.z = -10.f;
+	}
+	else if(m_bShaked == true)
+	{
+		m_vEye = m_vOriginEye;
+		m_vAt = m_vOriginAt;
+		m_bShaked = false;
+	}
+}
+
+void CDiveDaveCam::FightShakingEnd()
+{
+	m_bShaked = false;
+	//SetFov(60.f);
 }
 
 HRESULT	CDiveDaveCam::Add_Component()
