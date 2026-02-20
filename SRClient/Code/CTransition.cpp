@@ -17,6 +17,7 @@
 #include "CAssetTexture.h"
 #include "CTargetArrowTex.h"
 #include "CAssetCubeTexture.h"
+#include "CLineBuffer.h"
 
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
@@ -200,6 +201,10 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetArrowGunTexture", Engine::CTexture::Create(L"Tex_TargetArrow"))))
 		return E_FAIL;
 
+
+	// 작살 줄
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))
+		return E_FAIL;
 
 	//테스트용
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_TestFish", CAssetTexture::Create(L"../Bin/Resource/Texture/Player1.jpg"));

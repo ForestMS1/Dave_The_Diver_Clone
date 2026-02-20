@@ -166,6 +166,9 @@
     <Filter Include="02. GameObject\DiveDave\TestFish">
       <UniqueIdentifier>{17c6124b-79a3-4b5e-aa3c-eb42e469ba1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\Harpoon\Line">
+      <UniqueIdentifier>{b8e98348-a068-4e66-9dc7-23fcab3eaa9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
