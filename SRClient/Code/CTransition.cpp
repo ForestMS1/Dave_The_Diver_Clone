@@ -537,6 +537,15 @@ HRESULT CTransition::Common_SHIP_Load()
 	//MoneyUI
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_Money", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/MoneyUI/MoneyUI.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_Money");
+
+	// DiverBoxDave
+	for (int i = 1; i < 8; ++i)
+	{
+		//02_Dave_01
+		wstring s = L"../Bin/Resource/Texture/Ship/DiverBoxDave/02_Dave_0" + to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_DiverBoxDave", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_DiverBoxDave");
 	return S_OK;
 }
 

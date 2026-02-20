@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
+    <ClInclude Include="..\Header\CShipDiverBoxDave.h" />
     <ClInclude Include="..\Header\CShipFakeBG.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverBG.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="..\Code\CHood.cpp" />
     <ClCompile Include="..\Code\CKitchen.cpp" />
     <ClCompile Include="..\Code\CShipBG.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBoxDave.cpp" />
     <ClCompile Include="..\Code\CShipFakeBG.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverBG.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp" />

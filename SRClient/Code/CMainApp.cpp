@@ -211,6 +211,9 @@ HRESULT CMainApp::Load_PermanentAsset()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
 		return E_FAIL;
 
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TextureFrame", Engine::CTextureFrame::Create())))
+		return E_FAIL;
+
 	return S_OK;
 }
 

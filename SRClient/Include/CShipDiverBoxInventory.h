@@ -9,6 +9,9 @@ private:
 	virtual ~CShipDiverBoxInventory();
 
 public:
+	Engine::CTransform* Get_Transform() const { return m_pTransformCom; }
+
+public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);

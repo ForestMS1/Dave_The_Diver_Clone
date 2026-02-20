@@ -5,6 +5,8 @@
 #include "CAssetTexture.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include "CShipDiverBoxDave.h"
+#include "CManagement.h"
 
 CShipDiverBoxInventory::CShipDiverBoxInventory()
     : CGameObject()
@@ -33,7 +35,7 @@ HRESULT		CShipDiverBoxInventory::Ready_GameObject()
     m_pTransformCom->Set_Pos(0.f, -10.f, 0.f);
     //m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
 
-    m_fViewZ = 0.1f; // 0.1이면 맨앞이다 ㅇㅈ?
+    m_fViewZ = 0.5f;
 
 
     m_bOpen = false;
@@ -43,6 +45,12 @@ HRESULT		CShipDiverBoxInventory::Ready_GameObject()
 
     m_bCloseTween = false;
     m_tweenClose = m_tweenClose.from(0.f).to(-10.f).during(200);
+
+
+    //CShipDiverBoxDave
+    CShipDiverBoxDave* pDave = CShipDiverBoxDave::Create();
+    pDave->Set_Parent(this);
+    CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"ShipDiverBoxDave", pDave);
 
     return S_OK;
 }

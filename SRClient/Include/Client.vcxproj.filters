@@ -441,6 +441,9 @@
     <ClInclude Include="..\Header\CShipUIMoney.h">
       <Filter>02. GameObject\00. Ship\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBoxDave.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -679,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipUIMoney.cpp">
       <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxDave.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

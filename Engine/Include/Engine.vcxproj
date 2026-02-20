@@ -230,6 +230,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CTargetArrowTex.h" />
     <ClInclude Include="..\Header\CTerrainTex.h" />
     <ClInclude Include="..\Header\CTexture.h" />
+    <ClInclude Include="..\Header\CTextureFrame.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTransform.h" />
     <ClInclude Include="..\Header\CTriCol.h" />
@@ -317,6 +318,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CTargetArrowTex.cpp" />
     <ClCompile Include="..\Code\CTerrainTex.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
+    <ClCompile Include="..\Code\CTextureFrame.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />
     <ClCompile Include="..\Code\CTransform.cpp" />
