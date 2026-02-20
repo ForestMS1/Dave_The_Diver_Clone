@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\CSakura.h" />
     <ClInclude Include="..\Header\CPlayerState.h" />
     <ClInclude Include="..\Header\CShip.h" />
+    <ClInclude Include="..\Header\CShipDiverBox.h" />
     <ClInclude Include="..\Header\CShipPhone.h" />
     <ClInclude Include="..\Header\CShipPhoneApp.h" />
     <ClInclude Include="..\Header\CShipPhoneIcon.h" />
@@ -223,7 +224,7 @@
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="CShipDiverBox.h" />
+    <ClInclude Include="CShipDiverBoxInventory.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="..\Code\CRoof.cpp" />
     <ClCompile Include="..\Code\CSakura.cpp" />
     <ClCompile Include="..\Code\CShip.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBox.cpp" />
     <ClCompile Include="..\Code\CShipPhone.cpp" />
     <ClCompile Include="..\Code\CShipPhoneApp.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIcon.cpp" />
@@ -295,7 +297,7 @@
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="CShipDiverBox.cpp" />
+    <ClCompile Include="CShipDiverBoxInventory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
