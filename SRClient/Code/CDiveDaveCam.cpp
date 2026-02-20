@@ -107,12 +107,6 @@ void CDiveDaveCam::FightShakingUpdate(const _float& fTimeDelta)
 		m_vAt = m_vOriginAt;
 		m_bShaked = false;
 	}
-
-	if (m_bShaked == false)
-	{
-		if(m_fFov < D3DXToRadian(60.f))
-		m_fFov += D3DXToRadian(fTimeDelta * 10.f);
-	}
 }
 
 void CDiveDaveCam::FightShakingEnd()
