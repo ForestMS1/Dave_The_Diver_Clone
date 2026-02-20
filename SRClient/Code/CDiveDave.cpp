@@ -175,7 +175,7 @@ void CDiveDave::Key_Input()
 		return;
 
 
-	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+	if (m_eCurState == DiveState::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
 		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 
 }
