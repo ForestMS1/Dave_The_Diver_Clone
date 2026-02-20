@@ -91,7 +91,8 @@ void CDiveDaveCam::FightShakingUpdate(const _float& fTimeDelta)
 		m_fAccShakingDuration -= fTimeDelta;
 
 		_vec3 vShake = { 1.f, 1.f, - 10.f };
-		_int r = rand() % 2;
+		_float fIntensity = 0.002f;
+		_float r = _float(rand() % 100) * fIntensity;
 		vShake *= r;
 		vShake.z = -10.f;
 
@@ -106,12 +107,18 @@ void CDiveDaveCam::FightShakingUpdate(const _float& fTimeDelta)
 		m_vAt = m_vOriginAt;
 		m_bShaked = false;
 	}
+
+	if (m_bShaked == false)
+	{
+		if(m_fFov < D3DXToRadian(60.f))
+		m_fFov += D3DXToRadian(fTimeDelta * 10.f);
+	}
 }
 
 void CDiveDaveCam::FightShakingEnd()
 {
 	m_bShaked = false;
-	SetFov(60.f);
+	//SetFov(60.f);
 }
 
 HRESULT	CDiveDaveCam::Add_Component()
