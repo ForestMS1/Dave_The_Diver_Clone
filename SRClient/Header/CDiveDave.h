@@ -8,6 +8,7 @@ enum class DiveState
 	MOVE,
 	ATTACK,			// 작살, 총 공격
 	MELEEATTACK,	// 근접 공격
+	TANNING,
 	DIE,
 	DAVE_STATE_END
 };

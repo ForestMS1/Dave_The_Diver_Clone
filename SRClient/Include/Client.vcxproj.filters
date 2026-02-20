@@ -166,8 +166,8 @@
     <Filter Include="02. GameObject\DiveDave\TestFish">
       <UniqueIdentifier>{17c6124b-79a3-4b5e-aa3c-eb42e469ba1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\DiveDave\Harpoon\Line">
-      <UniqueIdentifier>{b8e98348-a068-4e66-9dc7-23fcab3eaa9b}</UniqueIdentifier>
+    <Filter Include="02. GameObject\DiveDave\State\Tanning">
+      <UniqueIdentifier>{677e8561-3ccc-4f79-94a4-ce84be69e49a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +384,9 @@
     <ClInclude Include="..\Header\CTestFish.h">
       <Filter>02. GameObject\DiveDave\TestFish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveTanning.h">
+      <Filter>02. GameObject\DiveDave\State\Tanning</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -589,6 +592,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestFish.cpp">
       <Filter>02. GameObject\DiveDave\TestFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveTanning.cpp">
+      <Filter>02. GameObject\DiveDave\State\Tanning</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

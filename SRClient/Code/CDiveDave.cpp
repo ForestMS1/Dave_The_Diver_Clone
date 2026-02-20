@@ -9,8 +9,9 @@
 #include "CDiveDaveAttack.h"
 #include "CDiveDaveMeeleAttack.h"
 #include "CAttackReadyArm.h"
+#include "CDiveDaveTanning.h"
 
-string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "DIE" };
+string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = { "MELEE", "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
@@ -142,6 +143,8 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveDownTexture", L"Com_MoveDownTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerTanningTexture", L"Com_TanningTexture", &m_pTextureCom))))
+		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackReadyTexture", L"Com_AttackReadyTexture", &m_pTextureCom))))
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFireTexture", L"Com_AttackFireTexture", &m_pTextureCom))))
@@ -164,6 +167,7 @@ HRESULT	CDiveDave::Add_State()
 	m_mapState.insert({ DiveState::MOVE, CDiveDaveMove::Create(this) });
 	m_mapState.insert({ DiveState::ATTACK, CDiveDaveAttack::Create(this) });
 	m_mapState.insert({ DiveState::MELEEATTACK, CDiveDaveMeeleAttack::Create(this) });
+	m_mapState.insert({ DiveState::TANNING, CDiveDaveTanning::Create(this) });
 	//m_mapState.insert({ DiveState::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
@@ -177,7 +181,6 @@ void CDiveDave::Key_Input()
 
 	if (m_eCurState == DiveState::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
 		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
-
 }
 
 void CDiveDave::Mouse_Input()
