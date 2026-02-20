@@ -480,14 +480,14 @@ HRESULT CTransition::Common_SHIP_Load()
 
 	for (int i = 1; i <= 22; ++i)
 	{
-		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp/SmartPhoneApp" + ::to_wstring(i) + L".png";
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp_2/SmartPhoneApp" + ::to_wstring(i) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneApp", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneApp");
 
 	for (int i = 1; i <= 22; ++i)
 	{
-		wstring s = L"../Bin/Resource/Texture/Ship/PhoneAppAlpha/SmartPhoneAppAlpha" + ::to_wstring(i) + L".png";
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp_2Alpha/SmartPhoneApp" + ::to_wstring(i) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneAppAlpha");
@@ -506,6 +506,37 @@ HRESULT CTransition::Common_SHIP_Load()
 	//UI_IDiverItem.png
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_IDiverUpgrade", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/IDiverUpgradeUI.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_IDiverUpgrade");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_BG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/Tmp2.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_BG");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_FakeBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/Tmp3.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_FakeBG");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_DiveBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiveBtn/DiveBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_DiveBtn");
+
+	for (int i = 1; i <= 38; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/DiveBtn/Sheet/BtnMake-Sheet_" + to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_DiveSpriteBtn", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_DiveSpriteBtn");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_GoBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoBoatBtn/UI_LobbyExit_Normal.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_GoBtn");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_GoBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoBoatBtn/UI_LobbyExit_NormalAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_GoBtnAlpha");
+
+	//Space_Key_Dark_Symbol
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_SpaceKey", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Space_Key_Dark_Symbol.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_SpaceKey");
+
+	//MoneyUI
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_Money", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/MoneyUI/MoneyUI.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_Money");
 	return S_OK;
 }
 

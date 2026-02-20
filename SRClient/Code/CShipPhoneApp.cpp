@@ -51,12 +51,12 @@ _int		CShipPhoneApp::Update_GameObject(const _float& fTimeDelta)
 
     if (m_bSelect)
     {
-        _vec3 vScale = { 0.35f , 0.35f, 0.35f };
+        _vec3 vScale = { 0.35f , 0.48125f, 0.35f };
         m_pTransformCom->Set_Scale(&vScale);
     }
     else
     {
-        _vec3 vScale = { 0.3f , 0.3f, 0.3f };
+        _vec3 vScale = { 0.3f , 0.4125f, 0.3f };
         m_pTransformCom->Set_Scale(&vScale);
     }
 

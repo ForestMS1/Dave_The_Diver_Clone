@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CShipPhoneIDiverUpgrade.h"
+#include "CShipFakeBG.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -7,31 +7,31 @@
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
 
-CShipPhoneIDiverUpgrade::CShipPhoneIDiverUpgrade(float fPosX, float fPosY)
+CShipFakeBG::CShipFakeBG(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
 {
 }
 
-CShipPhoneIDiverUpgrade::~CShipPhoneIDiverUpgrade()
+CShipFakeBG::~CShipFakeBG()
 {
 }
 
 
-HRESULT		CShipPhoneIDiverUpgrade::Ready_GameObject()
+HRESULT		CShipFakeBG::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_UI_IDiverUpgrade"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_FakeBG"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
-            float fWidth = pTexture->Get_ImgInfo()->Width / 284.f;
-            float fHeight = pTexture->Get_ImgInfo()->Height / 260.f;
+            float fWidth = pTexture->Get_ImgInfo()->Width / 180.f;
+            float fHeight = pTexture->Get_ImgInfo()->Height / 180.f;
             vScale = { fWidth, fHeight, 1.f };
         }
     }
@@ -42,7 +42,7 @@ HRESULT		CShipPhoneIDiverUpgrade::Ready_GameObject()
     return S_OK;
 }
 
-_int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
+_int		CShipFakeBG::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -52,23 +52,21 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void		CShipPhoneIDiverUpgrade::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CShipFakeBG::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CShipPhoneIDiverUpgrade::Render_GameObject()
+void		CShipFakeBG::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-    
+    //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_UI_IDiverUpgrade"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_FakeBG"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -83,20 +81,11 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-    if (auto pFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default"))
-    {
-        _vec3 vWorldPos;
-        m_pTransformCom->Get_Info(INFO_POS, &vWorldPos);
-        _vec3 vScreenPos;
-        CHelper::GetScreenPointFromWorld(&vScreenPos, &vWorldPos);
-        _vec2 vPos{ vScreenPos.x, vScreenPos.y };
-        pFont->Render_Font(L"AASSDFSDF", &vPos, D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
-    }
 }
 
-HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()
+HRESULT			CShipFakeBG::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -108,21 +97,21 @@ HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()
 }
 
 
-CShipPhoneIDiverUpgrade* CShipPhoneIDiverUpgrade::Create(float fPosX, float fPosY)
+CShipFakeBG* CShipFakeBG::Create(float fPosX, float fPosY)
 {
-    CShipPhoneIDiverUpgrade* pIDiverUpgrade = new CShipPhoneIDiverUpgrade{ fPosX , fPosY };
+    CShipFakeBG* pShipFakeBG = new CShipFakeBG{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipFakeBG->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipFakeBG);
+        MSG_BOX("pShipFakeBG Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipFakeBG;
 }
 
-void CShipPhoneIDiverUpgrade::Free()
+void CShipFakeBG::Free()
 {
     CGameObject::Free();
 }

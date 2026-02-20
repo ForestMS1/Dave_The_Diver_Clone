@@ -4,6 +4,7 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CRenderer.h"
+#include "CDInputMgr.h"
 
 CShipDiverBoxInventory::CShipDiverBoxInventory()
     : CGameObject()
@@ -29,13 +30,60 @@ HRESULT		CShipDiverBoxInventory::Ready_GameObject()
     _vec3 vPos = { 00.0f, 0.0f, 0.0f };
     _vec3 v = { 5.f , 5.f, 5.f };
     m_pTransformCom->Set_Scale(&v);
-    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
+    m_pTransformCom->Set_Pos(0.f, -10.f, 0.f);
+    //m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
+
+    m_fViewZ = 0.1f; // 0.1이면 맨앞이다 ㅇㅈ?
+
+
+    m_bOpen = false;
+
+    m_bOpenTween = true;
+    m_tweenOpen = m_tweenOpen.from(-10.f).to(0.f).during(200);
+
+    m_bCloseTween = false;
+    m_tweenClose = m_tweenClose.from(0.f).to(-10.f).during(200);
+
     return S_OK;
 }
 
 _int		CShipDiverBoxInventory::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
+
+    if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+    {
+        m_bCloseTween = true;
+    }
+
+    if (m_bOpenTween)
+    {
+        // PosY, RotX, RotY
+        auto val = m_tweenOpen.step(int(fTimeDelta * 1000.f));
+        _vec3 dir = { 0.f, 1.f, 0.f };
+        _vec3 vPos;
+
+        m_pTransformCom->Get_Info(INFO_POS, &vPos);
+        m_pTransformCom->Set_Pos(vPos.x, val, vPos.z);
+
+        if (m_tweenOpen.progress() >= 1.0f) {
+            m_bOpenTween = false;
+            m_bOpen = true;
+        }
+    }
+
+    if (m_bCloseTween)
+    {
+        auto val = m_tweenClose.step(int(fTimeDelta * 1000.f));
+        _vec3 dir = { 0.f, 1.f, 0.f };
+        _vec3 vPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vPos);
+        m_pTransformCom->Set_Pos(vPos.x, val, vPos.z);
+        if (m_tweenClose.progress() >= 1.0f) {
+
+            Set_DeadCascade();
+        }
+    }
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -104,5 +152,5 @@ CShipDiverBoxInventory* CShipDiverBoxInventory::Create()
 void CShipDiverBoxInventory::Free()
 {
     CGameObject::Free();
-    Safe_Release(m_pAABB);
+    //Safe_Release(m_pAABB);
 }

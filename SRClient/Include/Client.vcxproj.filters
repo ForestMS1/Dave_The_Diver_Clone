@@ -187,6 +187,12 @@
     <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade">
       <UniqueIdentifier>{d5f2a878-0cdd-4c8a-9206-ab50011cb0e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Ship\BG">
+      <UniqueIdentifier>{fd2e465e-d405-4bae-8296-d2a4a7d6ceb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\UI">
+      <UniqueIdentifier>{e1fa637e-cf69-49a7-bce6-07bc876c09bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -414,6 +420,27 @@
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgrade.h">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipBG.h">
+      <Filter>02. GameObject\00. Ship\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipFakeBG.h">
+      <Filter>02. GameObject\00. Ship\BG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipUIDiveBtn.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTriggerAABB.h">
+      <Filter>02. GameObject\00. Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipUIGoBtn.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipUISpaceKey.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipUIMoney.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -631,6 +658,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgrade.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipBG.cpp">
+      <Filter>02. GameObject\00. Ship\BG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipFakeBG.cpp">
+      <Filter>02. GameObject\00. Ship\BG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIDiveBtn.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTriggerAABB.cpp">
+      <Filter>02. GameObject\00. Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIGoBtn.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUISpaceKey.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIMoney.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

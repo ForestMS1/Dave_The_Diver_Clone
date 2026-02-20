@@ -1,12 +1,13 @@
 #pragma once
 #include "CGameObject.h"
-#include "CAABB.h"
-class CShipDiverBoxInventory : public CGameObject
+class CShipUIGoBtn : public CGameObject
 {
 private:
-	explicit CShipDiverBoxInventory();
-	explicit CShipDiverBoxInventory(const CShipDiverBoxInventory& rhs);
-	virtual ~CShipDiverBoxInventory();
+	explicit CShipUIGoBtn(float fPosX, float fPosY);
+	virtual ~CShipUIGoBtn();
+
+public:
+	void SetActive(bool bActive) { m_bActive = bActive; }
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -18,19 +19,22 @@ private:
 	HRESULT			Ready_Component();
 
 private:
+	const float m_fPosX;
+	const float m_fPosY;
+
+private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
-	//CAABB* m_pAABB;
 
-
-	bool m_bOpen;
-	tweeny::tween<float> m_tweenOpen;
-	bool m_bOpenTween;
-	tweeny::tween<float> m_tweenClose;
-	bool m_bCloseTween;
+	bool m_bActive;
+	wstring m_sImgName;
+	float m_fScaleX;
+	float m_fScaleY;
+	float m_fActiveScaleX;
+	float m_fActiveScaleY;
 
 public:
-	static CShipDiverBoxInventory* Create();
+	static CShipUIGoBtn* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();

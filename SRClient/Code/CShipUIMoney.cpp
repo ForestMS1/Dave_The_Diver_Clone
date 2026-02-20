@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CShipPhoneIDiverUpgrade.h"
+#include "CShipUIMoney.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -7,31 +7,37 @@
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
 
-CShipPhoneIDiverUpgrade::CShipPhoneIDiverUpgrade(float fPosX, float fPosY)
+CShipUIMoney::CShipUIMoney(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
 {
 }
 
-CShipPhoneIDiverUpgrade::~CShipPhoneIDiverUpgrade()
+CShipUIMoney::~CShipUIMoney()
 {
 }
 
+void CShipUIMoney::Update_ImGui()
+{
+    ImGui::DragFloat("fontXOffset", &m_fFontOffsetX, 0.1);
+    ImGui::DragFloat("fontYOffset", &m_fFontOffsetY, 0.1);
+}
 
-HRESULT		CShipPhoneIDiverUpgrade::Ready_GameObject()
+
+HRESULT		CShipUIMoney::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_UI_IDiverUpgrade"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_UI_Money"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
-            float fWidth = pTexture->Get_ImgInfo()->Width / 284.f;
-            float fHeight = pTexture->Get_ImgInfo()->Height / 260.f;
+            float fWidth = pTexture->Get_ImgInfo()->Width / 180.f;
+            float fHeight = pTexture->Get_ImgInfo()->Height / 180.f;
             vScale = { fWidth, fHeight, 1.f };
         }
     }
@@ -39,10 +45,13 @@ HRESULT		CShipPhoneIDiverUpgrade::Ready_GameObject()
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
+
+    m_fFontOffsetX = -90.f;
+    m_fFontOffsetY = -16.f;
     return S_OK;
 }
 
-_int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
+_int		CShipUIMoney::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -52,23 +61,21 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void		CShipPhoneIDiverUpgrade::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CShipUIMoney::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CShipPhoneIDiverUpgrade::Render_GameObject()
+void		CShipUIMoney::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-    
+    //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_UI_IDiverUpgrade"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_UI_Money"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -82,21 +89,25 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    _vec3 vInfoPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
 
-    if (auto pFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default"))
-    {
-        _vec3 vWorldPos;
-        m_pTransformCom->Get_Info(INFO_POS, &vWorldPos);
-        _vec3 vScreenPos;
-        CHelper::GetScreenPointFromWorld(&vScreenPos, &vWorldPos);
-        _vec2 vPos{ vScreenPos.x, vScreenPos.y };
-        pFont->Render_Font(L"AASSDFSDF", &vPos, D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
-    }
+    _vec3 vScreenPos;
+    CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+
+    _vec2 vPos = { vScreenPos.x + m_fFontOffsetX, vScreenPos.y + m_fFontOffsetY };
+    CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL");
+
+    //TODO replace gamememmgr money
+    pDefFont->Render_Font(L"10000", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
-HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()
+HRESULT			CShipUIMoney::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -108,9 +119,9 @@ HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()
 }
 
 
-CShipPhoneIDiverUpgrade* CShipPhoneIDiverUpgrade::Create(float fPosX, float fPosY)
+CShipUIMoney* CShipUIMoney::Create(float fPosX, float fPosY)
 {
-    CShipPhoneIDiverUpgrade* pIDiverUpgrade = new CShipPhoneIDiverUpgrade{ fPosX , fPosY };
+    CShipUIMoney* pIDiverUpgrade = new CShipUIMoney{ fPosX , fPosY };
 
     if (FAILED(pIDiverUpgrade->Ready_GameObject()))
     {
@@ -122,7 +133,7 @@ CShipPhoneIDiverUpgrade* CShipPhoneIDiverUpgrade::Create(float fPosX, float fPos
     return pIDiverUpgrade;
 }
 
-void CShipPhoneIDiverUpgrade::Free()
+void CShipUIMoney::Free()
 {
     CGameObject::Free();
 }
