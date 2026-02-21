@@ -166,8 +166,10 @@
     <ClInclude Include="..\Header\CAttackSubState.h" />
     <ClInclude Include="..\Header\CBackground.h" />
     <ClInclude Include="..\Header\CBancho.h" />
+    <ClInclude Include="..\Header\CBluejongR.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
+    <ClInclude Include="..\Header\CClownFishR.h" />
     <ClInclude Include="..\Header\CConfirm.h" />
     <ClInclude Include="..\Header\CCustomer1.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="..\Header\CHarpoonProjectile.h" />
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
+    <ClInclude Include="..\Header\CSushiFrame.h" />
     <ClInclude Include="..\Header\CO2Capsule.h" />
     <ClInclude Include="..\Header\CSushiLight.h" />
     <ClInclude Include="..\Header\CDiveDave.h" />
@@ -227,8 +230,11 @@
     <ClInclude Include="..\Header\CTestFish.h" />
     <ClInclude Include="..\Header\CTestGlb.h" />
     <ClInclude Include="..\Header\CTransition.h" />
+    <ClInclude Include="..\Header\CTunaAkamiR.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
+    <ClInclude Include="..\Header\CYellowbackR.h" />
+    <ClInclude Include="..\Header\CYellowTangR.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CShipDiverBoxInventory.h" />
     <ClInclude Include="framework.h" />
@@ -239,6 +245,8 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CAddMenuButton.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
+    <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CClownFishR.cpp" />
     <ClCompile Include="..\Code\CConfirm.cpp" />
     <ClCompile Include="..\Code\CCustomer1.cpp" />
     <ClCompile Include="..\Code\CAttackSubFail.cpp" />
@@ -273,6 +281,7 @@
     <ClCompile Include="..\Code\CFishTank.cpp" />
     <ClCompile Include="..\Code\CHood.cpp" />
     <ClCompile Include="..\Code\CKitchen.cpp" />
+    <ClCompile Include="..\Code\CSushiFrame.cpp" />
     <ClCompile Include="..\Code\CSushiLight.cpp" />
     <ClCompile Include="..\Code\CMenu.cpp" />
     <ClCompile Include="..\Code\COpen.cpp" />
@@ -306,8 +315,11 @@
     <ClCompile Include="..\Code\CTestFish.cpp" />
     <ClCompile Include="..\Code\CTestGlb.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
+    <ClCompile Include="..\Code\CTunaAkamiR.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
+    <ClCompile Include="..\Code\CYellowbackR.cpp" />
+    <ClCompile Include="..\Code\CYellowTangR.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CShipDiverBoxInventory.cpp" />
     <ClCompile Include="pch.cpp">

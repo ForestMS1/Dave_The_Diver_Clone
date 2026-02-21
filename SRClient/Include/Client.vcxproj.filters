@@ -166,6 +166,15 @@
     <Filter Include="02. GameObject\DiveDave\TestFish">
       <UniqueIdentifier>{17c6124b-79a3-4b5e-aa3c-eb42e469ba1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\UI\SushiIcon">
+      <UniqueIdentifier>{664dc4d6-5af4-4015-912f-9221c0359927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\UI\SushiIcon\SushiPicture">
+      <UniqueIdentifier>{741cb2f5-3723-43b5-92e0-9fece505b6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\UI\Frame">
+      <UniqueIdentifier>{eb8e79b9-da0b-4e10-a0ad-08b9ff5cd0ba}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\DiveDave\State\Tanning">
       <UniqueIdentifier>{677e8561-3ccc-4f79-94a4-ce84be69e49a}</UniqueIdentifier>
     </Filter>
@@ -357,19 +366,10 @@
     <ClInclude Include="..\Header\CCustomer1.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMenuFrame.h">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CAddMenuButton.h">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CConfirm.h">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CRecipe.h">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSushiList.h">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTestAmericanLobster.h">
@@ -389,6 +389,33 @@
     </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\03. SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBluejongR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CClownFishR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CYellowbackR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CYellowTangR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTunaAkamiR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenuFrame.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSushiFrame.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRecipe.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSushiList.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShipDiverBox.h">
       <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>
@@ -581,19 +608,10 @@
     <ClCompile Include="..\Code\CCustomer1.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMenuFrame.cpp">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CAddMenuButton.cpp">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CConfirm.cpp">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CRecipe.cpp">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CSushiList.cpp">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestAmericanLobster.cpp">
@@ -613,6 +631,33 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>02. GameObject\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBluejongR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CClownFishR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CYellowbackR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CYellowTangR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTunaAkamiR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSushiFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenuFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRecipe.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSushiList.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBox.cpp">
       <Filter>02. GameObject\00. Ship\06. ShipDiverBox</Filter>

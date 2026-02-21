@@ -55,7 +55,10 @@ HRESULT CSushi::Ready_Scene()
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);      
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);       
 	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   
+	CColliderMgr::GetInstance()->Set_Render(false);
 
+	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_SEMIBOLD));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 15, FW_SEMIBOLD));
 	return S_OK;
 
 }
@@ -85,6 +88,8 @@ void CSushi::Render_Scene()
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(L"Here is CSushi", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
 
 
 	//if (g_pObject != nullptr)

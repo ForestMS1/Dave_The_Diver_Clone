@@ -103,7 +103,7 @@ void CCustomer1::LateUpdate_GameObject(const _float& fTimeDelta)
 
     if (Sitted && !ChoosingMenu) {
         _vec3 right = { 1,0,0 };
-        m_pTransformCom->Move_Pos(&right, 0.5f, fTimeDelta);
+        m_pTransformCom->Move_Pos(&right, 0.9f, fTimeDelta);
         if (fabsf(vPos.x - targetPos.x) < 0.1f) {
             curState = MENU;
             ChoosingMenu = true;

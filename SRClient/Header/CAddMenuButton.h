@@ -33,7 +33,6 @@ private:
 public:
 
 	static CAddMenuButton* Create();
-	bool render;
 
 private:
 	virtual void Free();

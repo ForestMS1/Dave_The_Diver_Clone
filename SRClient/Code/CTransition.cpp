@@ -464,6 +464,30 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Sakura", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/BackGround/sakura_stick.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SakuraTex", Engine::CTexture::Create(L"Tex_Sakura"))))
 		return E_FAIL;
+	//스시 아이콘
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SushiBox.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SushiFrameTex", Engine::CTexture::Create(L"Tex_SushiFrame"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiSelected", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi_Focus.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SushiSelectedTex", Engine::CTexture::Create(L"Tex_SushiSelected"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Bluejong", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_RedtoothedTriggerfish.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BluejongTex", Engine::CTexture::Create(L"Tex_Bluejong"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_ClownFish", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_ClownFish.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClownFishTex", Engine::CTexture::Create(L"Tex_ClownFish"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TunaAkami", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowFin_Tuna_Akami.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TunaAkamiTex", Engine::CTexture::Create(L"Tex_TunaAkami"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowTang", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowTang.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowTangTex", Engine::CTexture::Create(L"Tex_YellowTang"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBack", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowbackFusilier.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackTex", Engine::CTexture::Create(L"Tex_YellowBack"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);
