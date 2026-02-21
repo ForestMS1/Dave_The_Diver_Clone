@@ -197,6 +197,12 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+		return E_FAIL;
+
 	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3);
 	if (nullptr == pGameObject)
 		return E_FAIL;

@@ -5,7 +5,8 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CDiveDave.h"
-wstring wsItemBoxTex[(_uint)ITEMBOXTEX::CHEST_END] = { L"Tex_Chest_A", L"Tex_Chest_Aopen", L"Tex_Chest_Weapon", L"Tex_Chest_WeaponOpen"};
+wstring wsItemBoxTex[(_uint)ITEMBOXTEX::CHEST_END] = 
+{ L"Tex_Chest_A", L"Tex_Chest_Aopen", L"Tex_Chest_Box", L"Tex_Chest_Box_open", L"Tex_Chest_Weapon", L"Tex_Chest_WeaponOpen"};
 
 CDiveItemBox::CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z)
 	: m_pBufferCom(nullptr)

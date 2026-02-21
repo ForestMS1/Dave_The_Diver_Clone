@@ -172,6 +172,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	// DiveItemBox
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_A", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_A.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Aopen", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Aopen.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Box", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Box.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Box_open", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Box_open.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Weapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Weapon.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_WeaponOpen", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_WeaponOpen.png"));
 
