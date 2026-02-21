@@ -193,6 +193,9 @@
     <Filter Include="02. GameObject\00. Ship\UI">
       <UniqueIdentifier>{e1fa637e-cf69-49a7-bce6-07bc876c09bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgradeSuccess">
+      <UniqueIdentifier>{b770bb5e-d2f0-44e3-b1f7-be45eebe07f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -456,6 +459,12 @@
     <ClInclude Include="..\Header\CShipDiverBoxinventoryDesc.h">
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeSuccess.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgradeSuccess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeBtn.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -709,6 +718,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBoxinventoryDesc.cpp">
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeSuccess.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgradeSuccess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeBtn.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

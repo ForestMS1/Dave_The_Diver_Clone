@@ -78,13 +78,20 @@ HRESULT CAssetDefaultFont::Load()
 
 void CAssetDefaultFont::Render_Font(std::wstring_view svString, const _vec2* pPos, D3DXCOLOR Color)
 {
+	Render_Font(svString, pPos, Color, DT_NOCLIP);
+}
+
+void CAssetDefaultFont::Render_Font(std::wstring_view svString, const _vec2* pPos, D3DXCOLOR Color, DWORD dwOption)
+{
 	if (m_pSprite != nullptr && m_pFont != nullptr)
 	{
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 		if (pPos)
 		{
-			RECT rc{ (_long)pPos->x, (_long)pPos->y };
-			m_pFont->DrawTextW(m_pSprite, svString.data(), lstrlen(svString.data()), &rc, DT_NOCLIP, Color);
+			//RECT rc{ (_long)pPos->x, (_long)pPos->y };
+
+			RECT rc = { (_long)pPos->x, (_long)pPos->y, (_long)pPos->x, (_long)pPos->y };
+			m_pFont->DrawTextW(m_pSprite, svString.data(), lstrlen(svString.data()), &rc, dwOption, Color);
 		}
 
 		m_pSprite->End();

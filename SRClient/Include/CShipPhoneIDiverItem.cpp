@@ -4,16 +4,33 @@
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
 #include "CRenderer.h"
+#include "CManagement.h"
+#include "CShipPhoneIDiverItemImg.h"
+#include "CAssetDefaultFont.h"
+#include "CColliderMgr.h"
 
-CShipPhoneIDiverItem::CShipPhoneIDiverItem(float fPosX, float fPosY)
+CShipPhoneIDiverItem::CShipPhoneIDiverItem(_int iIdx, float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
+    , m_iIdx(iIdx)
 {
 }
 
 CShipPhoneIDiverItem::~CShipPhoneIDiverItem()
 {
+}
+
+void CShipPhoneIDiverItem::Ready_AfterCreate()
+
+{
+    CShipPhoneIDiverItemImg* pItemImg = CShipPhoneIDiverItemImg::Create(-1.5f, 0.15f);
+    pItemImg->Set_Parent(this);
+    pItemImg->Set_AssetName(m_sAssetName);
+    CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")
+        ->Add_GameObject(L"ShipPhoneIDIverItemImg", pItemImg);
 }
 
 
@@ -37,6 +54,16 @@ HRESULT		CShipPhoneIDiverItem::Ready_GameObject()
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
+
+
+
+    float refX = 0.92f / 2.f;
+    float refY = 0.88f / 2.f;
+    _vec3 vExtents = { 1.f, 1.f, 0.01f };
+    _vec3 vPos = { 0.0f, 0.0f, 0.0f };
+    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
+    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_IDiverItem", this);
+
     return S_OK;
 }
 
@@ -46,6 +73,9 @@ _int		CShipPhoneIDiverItem::Update_GameObject(const _float& fTimeDelta)
 
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_IDiver", m_pAABB);
+    m_pAABB->Transform(m_pTransformCom->Get_World());
 
     return iExit;
 }
@@ -58,9 +88,6 @@ void		CShipPhoneIDiverItem::LateUpdate_GameObject(const _float& fTimeDelta)
 void		CShipPhoneIDiverItem::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
@@ -78,8 +105,172 @@ void		CShipPhoneIDiverItem::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+    // Title
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.f;
+        float fOffsetY = 0.5f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+        {
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+
+    // LEFT TOP
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.f;
+        float fOffsetY = 0.11f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sLeftTop, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+        }
+    }
+
+    // LEFT MIDDLE
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.f;
+        float fOffsetY = -0.08;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sLeftMiddle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+        }
+    }
+
+
+    // LEFT BOTTOM
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.f;
+        float fOffsetY = -0.3f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sLeftBottom, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+        }
+    }
+
+
+    // RIGHT TOP
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.7f;
+        float fOffsetY = 0.11f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sRightTop, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+        }
+    }
+
+    // RIGHT MIDDLE
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.7f;
+        float fOffsetY = -0.08;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sRightMiddle, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+        }
+    }
+
+
+    // RIGHT BOTTOM
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.7f;
+        float fOffsetY = -0.3f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sRightBottom, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+        }
+    }
+
+    // Money
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.5f;
+        float fOffsetY = -0.3f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            D3DXCOLOR col;
+            if (m_bMoneyLack)
+            {
+                col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+            }
+            else
+            {
+                col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+            }
+            pDefFont->Render_Font(m_sMoney, &vPos, col);
+        }
+    }
+
 }
 
 HRESULT			CShipPhoneIDiverItem::Ready_Component()
@@ -94,9 +285,9 @@ HRESULT			CShipPhoneIDiverItem::Ready_Component()
 }
 
 
-CShipPhoneIDiverItem* CShipPhoneIDiverItem::Create(float fPosX, float fPosY)
+CShipPhoneIDiverItem* CShipPhoneIDiverItem::Create(_int iIdx, float fPosX, float fPosY)
 {
-    CShipPhoneIDiverItem* pIDiverItem = new CShipPhoneIDiverItem{ fPosX , fPosY };
+    CShipPhoneIDiverItem* pIDiverItem = new CShipPhoneIDiverItem{ iIdx, fPosX , fPosY };
 
     if (FAILED(pIDiverItem->Ready_GameObject()))
     {
@@ -105,10 +296,13 @@ CShipPhoneIDiverItem* CShipPhoneIDiverItem::Create(float fPosX, float fPosY)
         return nullptr;
     }
 
+
+
     return pIDiverItem;
 }
 
 void CShipPhoneIDiverItem::Free()
 {
     CGameObject::Free();
+    Safe_Release(m_pAABB);
 }

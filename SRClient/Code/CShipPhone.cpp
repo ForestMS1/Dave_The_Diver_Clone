@@ -279,10 +279,10 @@ void CShipPhone::OnFocus_App()
 }
 void CShipPhone::OnFocusing_App()
 {
-    if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
-    {
-        UnFocus_App();
-    }
+    //if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+    //{
+    //    UnFocus_App();
+    //}
 }
 void CShipPhone::OnUnFocus_App()
 {

@@ -579,6 +579,37 @@ HRESULT CTransition::Common_SHIP_Load()
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel");
 
 
+	// Item_Sanso.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Sanso", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Sanso.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Sanso");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Clothes", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Clothes.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Clothes");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Cage", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Cage.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Cage");
+
+	// Item_Jaksal.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Jaksal", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Jaksal.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Jaksal");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Edge", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Edge.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Edge");
+
+	//UpgradeSuccess.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeSuccess", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgradeSuccess.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeSuccess");
+
+	//UpgrddeBtn.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeBtn");
+
+	//UpgrddeBtnAlpha.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgrddeBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtnAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgrddeBtnAlpha");
+
 	return S_OK;
 }
 

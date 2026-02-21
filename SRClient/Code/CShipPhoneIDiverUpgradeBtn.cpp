@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "CShipPhoneIDiverItemImg.h"
+#include "CShipPhoneIDiverUpgradeBtn.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
 #include "CRenderer.h"
 
-CShipPhoneIDiverItemImg::CShipPhoneIDiverItemImg(float fPosX, float fPosY)
+CShipPhoneIDiverUpgradeBtn::CShipPhoneIDiverUpgradeBtn(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
@@ -13,12 +13,12 @@ CShipPhoneIDiverItemImg::CShipPhoneIDiverItemImg(float fPosX, float fPosY)
 {
 }
 
-CShipPhoneIDiverItemImg::~CShipPhoneIDiverItemImg()
+CShipPhoneIDiverUpgradeBtn::~CShipPhoneIDiverUpgradeBtn()
 {
 }
 
 
-HRESULT		CShipPhoneIDiverItemImg::Ready_GameObject()
+HRESULT		CShipPhoneIDiverUpgradeBtn::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -38,10 +38,12 @@ HRESULT		CShipPhoneIDiverItemImg::Ready_GameObject()
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
+
+    m_fViewZ = 0.29f;
     return S_OK;
 }
 
-_int		CShipPhoneIDiverItemImg::Update_GameObject(const _float& fTimeDelta)
+_int		CShipPhoneIDiverUpgradeBtn::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -63,7 +65,7 @@ _int		CShipPhoneIDiverItemImg::Update_GameObject(const _float& fTimeDelta)
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
             float fWidth = pTexture->Get_ImgInfo()->Width / 284.f;
-            float fHeight = pTexture->Get_ImgInfo()->Height / 284.f;
+            float fHeight = pTexture->Get_ImgInfo()->Height / 260.f;
             vScale = { fWidth, fHeight, 1.f };
         }
     }
@@ -74,16 +76,15 @@ _int		CShipPhoneIDiverItemImg::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void		CShipPhoneIDiverItemImg::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CShipPhoneIDiverUpgradeBtn::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CShipPhoneIDiverItemImg::Render_GameObject()
+void		CShipPhoneIDiverUpgradeBtn::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -103,10 +104,9 @@ void		CShipPhoneIDiverItemImg::Render_GameObject()
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT			CShipPhoneIDiverItemImg::Ready_Component()
+HRESULT			CShipPhoneIDiverUpgradeBtn::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -118,9 +118,9 @@ HRESULT			CShipPhoneIDiverItemImg::Ready_Component()
 }
 
 
-CShipPhoneIDiverItemImg* CShipPhoneIDiverItemImg::Create(float fPosX, float fPosY)
+CShipPhoneIDiverUpgradeBtn* CShipPhoneIDiverUpgradeBtn::Create(float fPosX, float fPosY)
 {
-    CShipPhoneIDiverItemImg* pIDiverItemImg = new CShipPhoneIDiverItemImg{ fPosX , fPosY };
+    CShipPhoneIDiverUpgradeBtn* pIDiverItemImg = new CShipPhoneIDiverUpgradeBtn{ fPosX , fPosY };
 
     if (FAILED(pIDiverItemImg->Ready_GameObject()))
     {
@@ -132,7 +132,7 @@ CShipPhoneIDiverItemImg* CShipPhoneIDiverItemImg::Create(float fPosX, float fPos
     return pIDiverItemImg;
 }
 
-void CShipPhoneIDiverItemImg::Free()
+void CShipPhoneIDiverUpgradeBtn::Free()
 {
     CGameObject::Free();
 }

@@ -193,6 +193,8 @@
     <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverSelectEdge.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgrade.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeBtn.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeSuccess.h" />
     <ClInclude Include="..\Header\CShipTransformCam.h" />
     <ClInclude Include="..\Header\CShipUIDiveBtn.h" />
     <ClInclude Include="..\Header\CShipUIGoBtn.h" />
@@ -287,6 +289,8 @@
     <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverSelectEdge.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgrade.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeBtn.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeSuccess.cpp" />
     <ClCompile Include="..\Code\CShipTransformCam.cpp" />
     <ClCompile Include="..\Code\CShipUIDiveBtn.cpp" />
     <ClCompile Include="..\Code\CShipUIGoBtn.cpp" />

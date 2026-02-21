@@ -24,7 +24,7 @@ HRESULT		CShipPhoneIDiverSelectEdge::Ready_GameObject()
 
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_UI_IDiverItem"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_IDiver_Edge"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -64,7 +64,7 @@ void		CShipPhoneIDiverSelectEdge::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_UI_IDiverItem"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_IDiver_Edge"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {

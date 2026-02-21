@@ -6,6 +6,13 @@
 #include "CRenderer.h"
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
+#include "CDInputMgr.h"
+
+#include "CManagement.h"
+#include "CShipPhoneIDiverUpgradeSuccess.h"
+#include "CShipPhoneIDiverUpgradeBtn.h"
+
+#include "CShipPhoneIDiverItemImg.h"
 
 CShipPhoneIDiverUpgrade::CShipPhoneIDiverUpgrade(float fPosX, float fPosY)
     : CGameObject()
@@ -39,12 +46,72 @@ HRESULT		CShipPhoneIDiverUpgrade::Ready_GameObject()
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
+
+    m_fViewZ = 0.3f;
+
+
+    CShipPhoneIDiverUpgradeBtn* pUpBtn = CShipPhoneIDiverUpgradeBtn::Create(-0.8f, -2.45f);
+    pUpBtn->Set_Parent(this);
+    pUpBtn->Set_AssetName(L"Tex_Ship_IDiver_UpgradeBtn");
+
+    CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")
+        ->Add_GameObject(L"ShipPhoneIDiverUpgradeBtn", pUpBtn);
+
+
+
+    CShipPhoneIDiverItemImg* pImg = CShipPhoneIDiverItemImg::Create(0.f, 2.f);
+    pImg->Set_Parent(this);
+    pImg->Set_AssetName(L"Tex_Ship_IDiver_Item_Sanso");
+    pImg->Set_ViewZ(0.29f);
+    CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")
+        ->Add_GameObject(L"ShipPhoneIDiverUpgradeImg", pImg);
     return S_OK;
 }
 
 _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
+
+    //m_bSuccessOpen
+    auto pExists = CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"ShipPhoneIDiverUpgradeSuccess");
+
+    if (pExists)
+    {
+        m_bSuccessOpen = true;
+    }
+    else
+    {
+        m_bSuccessOpen = false;
+    }
+
+    if (!m_bSuccessOpen)
+    {
+        if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+        {
+            Set_DeadCascade();
+        }
+    }
+    
+
+    if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+    {
+        if (!m_bSuccessOpen)
+        {
+            CShipPhoneIDiverUpgradeSuccess* pUpSucess = CShipPhoneIDiverUpgradeSuccess::Create(0.f, 0.f);
+            pUpSucess->Set_Parent(this);
+
+            CManagement::GetInstance()
+                ->Get_Scene()
+                ->Get_Layer(L"0_GameLogic_Layer")
+                ->Add_GameObject(L"ShipPhoneIDiverUpgradeSuccess", pUpSucess);
+        }
+    }
 
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -61,7 +128,6 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
     
 
@@ -82,18 +148,184 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-    if (auto pFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default"))
+
+    // Title
     {
-        _vec3 vWorldPos;
-        m_pTransformCom->Get_Info(INFO_POS, &vWorldPos);
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -0.3f;
+        float fOffsetY = 2.7f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
         _vec3 vScreenPos;
-        CHelper::GetScreenPointFromWorld(&vScreenPos, &vWorldPos);
-        _vec2 vPos{ vScreenPos.x, vScreenPos.y };
-        pFont->Render_Font(L"AASSDFSDF", &vPos, D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+        {
+            pDefFont->Render_Font(L"Á¦¸ñ", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
     }
+
+    // LeftTop
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.2f;
+        float fOffsetY = 1.1f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+        {
+            pDefFont->Render_Font(L"Lv1", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+    // LeftMiddle
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.2f;
+        float fOffsetY = 0.8f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(L"asdf", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+    // LeftBottom
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.2f;
+        float fOffsetY = 0.5f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(L"11 f", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+
+    // RgihtTop
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.7f;
+        float fOffsetY = 1.1f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+        {
+            pDefFont->Render_Font(L"Lv1", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+    // RgihtMiddle
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.7f;
+        float fOffsetY = 0.8f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(L"asdf", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+    // RgihtBottom
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.7f;
+        float fOffsetY = 0.5f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(L"11 f", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+
+    // Desc
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -0.0f;
+        float fOffsetY = -0.5f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(L"DESCdsafsdfasdf", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f),(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+        }
+    }
+
+
+    // Money
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 0.2f;
+        float fOffsetY = -1.8f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+           
+            pDefFont->Render_Font(L"123", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+        }
+    }
+
+
 }
 
 HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()

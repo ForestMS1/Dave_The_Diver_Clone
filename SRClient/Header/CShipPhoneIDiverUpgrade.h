@@ -23,6 +23,7 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 
+	bool m_bSuccessOpen;
 public:
 	static CShipPhoneIDiverUpgrade* Create(float fPosX, float fPosY);
 
