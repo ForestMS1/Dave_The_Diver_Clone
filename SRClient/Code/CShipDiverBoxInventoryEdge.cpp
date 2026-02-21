@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CShipUIMoney.h"
+#include "CShipDiverBoxInventoryEdge.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -7,66 +7,75 @@
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
 
-CShipUIMoney::CShipUIMoney(float fPosX, float fPosY)
+CShipDiverBoxInventoryEdge::CShipDiverBoxInventoryEdge(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
 {
 }
 
-CShipUIMoney::~CShipUIMoney()
+CShipDiverBoxInventoryEdge::~CShipDiverBoxInventoryEdge()
 {
 }
 
-void CShipUIMoney::Update_ImGui()
-{
-    ImGui::DragFloat("fontXOffset", &m_fFontOffsetX, 0.1);
-    ImGui::DragFloat("fontYOffset", &m_fFontOffsetY, 0.1);
-}
 
-
-HRESULT		CShipUIMoney::Ready_GameObject()
+HRESULT		CShipDiverBoxInventoryEdge::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_UI_Money"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_InventoryBoxEdge"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
-            float fWidth = pTexture->Get_ImgInfo()->Width / 180.f;
-            float fHeight = pTexture->Get_ImgInfo()->Height / 180.f;
+           // 92 88;
+            auto a = pTexture->Get_ImgInfo()->Width;
+            auto b = pTexture->Get_ImgInfo()->Height * 2;
+            float fWidth = float(pTexture->Get_ImgInfo()->Width) / 190.f;
+            float fHeight = float(pTexture->Get_ImgInfo()->Height) / 190.f;
+            m_fFirstScaleX = fWidth;
+            m_fFirstScaleY = fHeight;
             vScale = { fWidth, fHeight, 1.f };
         }
     }
-
+    m_fCustomScaleX = 1.f;
+    m_fCustomScaleY = 1.f;
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
-    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
+    m_pTransformCom->Set_Pos(0.f, -10.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
-    m_fFontOffsetX = -0.7f;
-    m_fFontOffsetY = 0.1f;
+
+    m_fViewZ = 0.47f;
     return S_OK;
 }
 
-_int		CShipUIMoney::Update_GameObject(const _float& fTimeDelta)
+_int		CShipDiverBoxInventoryEdge::Update_GameObject(const _float& fTimeDelta)
 {
-    _int iExit = CGameObject::Update_GameObject(fTimeDelta);
+    _vec3 vPos;
+    m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
 
+    float fOffsetX = m_fPosX;
+    float fOffsetY = m_fPosY;
+    vPos.x += fOffsetX;
+    vPos.y += fOffsetY;
 
+    m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+    _vec3 vScale = { m_fFirstScaleX * m_fCustomScaleX, m_fFirstScaleY * m_fCustomScaleY, 0.f };
+    m_pTransformCom->Set_Scale(&vScale);
+    
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-
+    _int iExit = CGameObject::Update_GameObject(fTimeDelta);
     return iExit;
 }
 
-void		CShipUIMoney::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CShipDiverBoxInventoryEdge::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CShipUIMoney::Render_GameObject()
+void		CShipDiverBoxInventoryEdge::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -75,7 +84,7 @@ void		CShipUIMoney::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_UI_Money"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_InventoryBoxEdge"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -89,30 +98,12 @@ void		CShipUIMoney::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-    _vec3 vInfoPos;
-    m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-
-    vInfoPos.x += m_fFontOffsetX;
-    vInfoPos.y += m_fFontOffsetY;
-
-    _vec3 vScreenPos;
-    CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
-
-
-    _vec2 vPos = { vScreenPos.x , vScreenPos.y};
-    if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
-    {
-        //TODO replace gamememmgr money
-        pDefFont->Render_Font(L"10000", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-    }
-   
-
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
 
-HRESULT			CShipUIMoney::Ready_Component()
+HRESULT			CShipDiverBoxInventoryEdge::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -124,9 +115,9 @@ HRESULT			CShipUIMoney::Ready_Component()
 }
 
 
-CShipUIMoney* CShipUIMoney::Create(float fPosX, float fPosY)
+CShipDiverBoxInventoryEdge* CShipDiverBoxInventoryEdge::Create(float fPosX, float fPosY)
 {
-    CShipUIMoney* pIDiverUpgrade = new CShipUIMoney{ fPosX , fPosY };
+    CShipDiverBoxInventoryEdge* pIDiverUpgrade = new CShipDiverBoxInventoryEdge{ fPosX , fPosY };
 
     if (FAILED(pIDiverUpgrade->Ready_GameObject()))
     {
@@ -138,7 +129,7 @@ CShipUIMoney* CShipUIMoney::Create(float fPosX, float fPosY)
     return pIDiverUpgrade;
 }
 
-void CShipUIMoney::Free()
+void CShipDiverBoxInventoryEdge::Free()
 {
     CGameObject::Free();
 }

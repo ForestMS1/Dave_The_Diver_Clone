@@ -3,10 +3,21 @@
 #include "CAABB.h"
 class CShipDiverBoxInventory : public CGameObject
 {
+public:
+	typedef struct tagDiverBoxItem
+	{
+		std::wstring sItemName;
+		std::wstring sItemDesc;
+		_uint iCnt;
+		std::wstring sAssetName;
+	} DIVERBOX_ITEM;
 private:
 	explicit CShipDiverBoxInventory();
 	explicit CShipDiverBoxInventory(const CShipDiverBoxInventory& rhs);
 	virtual ~CShipDiverBoxInventory();
+
+public:
+	bool Is_Open() const { return m_bOpen ; }
 
 public:
 	Engine::CTransform* Get_Transform() const { return m_pTransformCom; }
@@ -32,6 +43,9 @@ private:
 	tweeny::tween<float> m_tweenClose;
 	bool m_bCloseTween;
 
+	int m_iSelectItemIdx;
+
+	map<_uint, DIVERBOX_ITEM> m_mapInventory;
 public:
 	static CShipDiverBoxInventory* Create();
 

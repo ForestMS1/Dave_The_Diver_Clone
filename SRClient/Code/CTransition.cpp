@@ -546,6 +546,39 @@ HRESULT CTransition::Common_SHIP_Load()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_DiverBoxDave", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_DiverBoxDave");
+
+
+	//InventoryBoxEdge
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryBoxEdge", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/InventoryBoxEdge2.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryBoxEdge");
+
+
+	//Jaksal
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Jaksal", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Jaksal.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Jaksal");
+
+	//Gun
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Gun", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Gun.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Gun");
+
+	//Knief
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Knief", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Knief.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Knief");
+
+	//Jusin
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Jusin", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Jusin.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Jusin");
+
+
+	//ItemDescUI.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Inventory_ItemDescUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/ItemDescUI.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Inventory_ItemDescUI");
+
+	//WoodPanel.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/lowerItem/WoodPanel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel");
+
+
 	return S_OK;
 }
 

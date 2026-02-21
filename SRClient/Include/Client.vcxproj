@@ -184,6 +184,10 @@
     <ClInclude Include="..\Header\CKitchen.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
     <ClInclude Include="..\Header\CShipDiverBoxDave.h" />
+    <ClInclude Include="..\Header\CShipDiverBoxinventoryDesc.h" />
+    <ClInclude Include="..\Header\CShipDiverBoxInventoryEdge.h" />
+    <ClInclude Include="..\Header\CShipDiverBoxInventoryItemArea.h" />
+    <ClInclude Include="..\Header\CShipDiverBoxInventoryItemImg.h" />
     <ClInclude Include="..\Header\CShipFakeBG.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverBG.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h" />
@@ -274,6 +278,10 @@
     <ClCompile Include="..\Code\CKitchen.cpp" />
     <ClCompile Include="..\Code\CShipBG.cpp" />
     <ClCompile Include="..\Code\CShipDiverBoxDave.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBoxinventoryDesc.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBoxInventoryEdge.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBoxInventoryItemArea.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBoxInventoryItemImg.cpp" />
     <ClCompile Include="..\Code\CShipFakeBG.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverBG.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp" />

@@ -444,6 +444,18 @@
     <ClInclude Include="..\Header\CShipDiverBoxDave.h">
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBoxInventoryEdge.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBoxInventoryItemArea.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBoxInventoryItemImg.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBoxinventoryDesc.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -684,6 +696,18 @@
       <Filter>02. GameObject\00. Ship\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBoxDave.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxInventoryEdge.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxInventoryItemArea.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxInventoryItemImg.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxinventoryDesc.cpp">
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClCompile>
   </ItemGroup>

@@ -29,6 +29,7 @@
 #include "CShipUISpaceKey.h"
 #include "CDInputMgr.h"
 #include "CShipUIMoney.h"
+#include "CShipDiverBoxInventoryEdge.h"
 
 CShip::CShip()
 	: CScene()
@@ -87,6 +88,9 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
+
+
+
 
 
 
