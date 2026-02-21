@@ -177,6 +177,10 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Weapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Weapon.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_WeaponOpen", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_WeaponOpen.png"));
 
+	// Item
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Capsule", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_O2Capsule.png"));
+
+
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveUp"))))

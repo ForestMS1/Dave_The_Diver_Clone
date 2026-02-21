@@ -53,7 +53,7 @@ HRESULT CDiveDave::Ready_GameObject()
 	_vec3 vPos = { 00.0f, 0.0f, 0.0f };
 	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_DiveDaveWithItemBox", this);
 
-	CColliderMgr::GetInstance()->Set_Render(true);
+	//CColliderMgr::GetInstance()->Set_Render(true);
 
 	return S_OK;
 }

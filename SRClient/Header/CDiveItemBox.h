@@ -29,7 +29,7 @@ public:
 	void		Render_GameObject() override;
 
 public:
-	void		Set_Open() { m_bIsOpen = true; m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1); }
+	void		Set_Open();
 	_bool		Is_Open() const { return m_bIsOpen; }
 
 private:

@@ -175,6 +175,12 @@
     <Filter Include="02. GameObject\Dive_ItemBox">
       <UniqueIdentifier>{c782fb06-9918-4f36-820c-105380482e21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Dive_Item">
+      <UniqueIdentifier>{5cc8d97b-bbcb-4780-a112-91c76618d097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_O2Capsule">
+      <UniqueIdentifier>{690660f6-3366-476b-8131-9c48434900c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -399,6 +405,12 @@
     <ClInclude Include="..\Header\CDiveItemBox.h">
       <Filter>02. GameObject\Dive_ItemBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveItem.h">
+      <Filter>02. GameObject\Dive_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CO2Capsule.h">
+      <Filter>02. GameObject\Dive_Item\Item_O2Capsule</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -613,6 +625,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveItemBox.cpp">
       <Filter>02. GameObject\Dive_ItemBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItem.cpp">
+      <Filter>02. GameObject\Dive_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2Capsule.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_O2Capsule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

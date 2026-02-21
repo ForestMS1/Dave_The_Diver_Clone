@@ -5,6 +5,8 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CDiveDave.h"
+#include "CO2Capsule.h"
+#include "CManagement.h"
 wstring wsItemBoxTex[(_uint)ITEMBOXTEX::CHEST_END] = 
 { L"Tex_Chest_A", L"Tex_Chest_Aopen", L"Tex_Chest_Box", L"Tex_Chest_Box_open", L"Tex_Chest_Weapon", L"Tex_Chest_WeaponOpen"};
 
@@ -94,6 +96,20 @@ void CDiveItemBox::Render_GameObject()
 	}
 
 	m_pBufferCom->Render_Buffer();
+}
+
+void CDiveItemBox::Set_Open()
+{
+	m_bIsOpen = true; 
+	m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	CO2Capsule* pItem = CO2Capsule::Create(vPos);
+	if (pItem != nullptr)
+	{
+		CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"Item", pItem);
+	}
 }
 
 HRESULT CDiveItemBox::Ready_Component()
