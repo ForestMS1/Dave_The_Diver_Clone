@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
+#include "CAABB.h"
 enum class ITEMSTATE
 {
 	STARTDROP = 0,
@@ -23,16 +23,19 @@ public:
 protected:
 	void FSM(const _float& fTimeDelta);
 	void StartDrop(const _float& fTimeDelta);
+	void	Collision_With_DiveDave();
 
 
 protected:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
+	CAABB* m_pAABB; // DiveDave와 충돌체크 용
 	ITEMSTATE m_eCurState = ITEMSTATE::STARTDROP;
 
 protected:
 	_vec3 m_vOriginPos; // 드랍 시작 위치, 드랍 멈출 위치
 	_float m_fAccTime = 0.f;
+	_bool m_bIsCollWithMe = false;
 
 protected:
 	virtual void Free() override;

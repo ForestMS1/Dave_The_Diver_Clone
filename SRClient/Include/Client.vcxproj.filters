@@ -181,6 +181,9 @@
     <Filter Include="02. GameObject\Dive_Item\Item_O2Capsule">
       <UniqueIdentifier>{690660f6-3366-476b-8131-9c48434900c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\PickUp">
+      <UniqueIdentifier>{cf5d5b1b-8f2b-45df-83ec-5f9091f2578b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -411,6 +414,9 @@
     <ClInclude Include="..\Header\CO2Capsule.h">
       <Filter>02. GameObject\Dive_Item\Item_O2Capsule</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDavePickUp.h">
+      <Filter>02. GameObject\DiveDave\State\PickUp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -631,6 +637,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CO2Capsule.cpp">
       <Filter>02. GameObject\Dive_Item\Item_O2Capsule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDavePickUp.cpp">
+      <Filter>02. GameObject\DiveDave\State\PickUp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,6 +32,10 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 	if (static_cast<CDiveDave*>(m_pPlayer)->m_bIsOnItemBox && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
 		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::OPEN);
 
+	// Item 충돌상태에서 SPACE 누르면 아이템 줍기
+	if(static_cast<CDiveDave*>(m_pPlayer)->m_bIsOnItem && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::PICKUP);
+
 
 	if (!static_cast<CDiveDave*>(m_pPlayer)->Get_CanMouseInput())
 		return;

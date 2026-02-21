@@ -1,4 +1,7 @@
 #include "CDiveItem.h"
+#include "CColliderMgr.h"
+#include "CCollisionMgr.h"
+#include "CDiveDave.h"
 
 CDiveItem::CDiveItem(_vec3 vOriginPos)
     : m_vOriginPos(vOriginPos)
@@ -52,7 +55,41 @@ void CDiveItem::StartDrop(const _float& fTimeDelta)
     }
 }
 
+void CDiveItem::Collision_With_DiveDave()
+{
+	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Item"))
+	{
+		// 충돌체 순회
+		for (auto& pCollider : *pColliders)
+		{
+			// 내가 아닌것들과 체크
+			if (m_pAABB != pCollider)
+			{
+				// 충돌체 끼리 충돌 체크
+				if (m_pAABB->Intersect(pCollider))
+				{
+					if (pCollider->Get_Tag() == L"AABB_DiveDaveWithItem")
+					{
+						m_bIsCollWithMe = true; // 나랑 플레이어랑 충돌중임
+						CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+                        pDiveDave->Set_IsOnItem(true);
+                        pDiveDave->Set_CurOnItem(this);
+					}
+				}
+				else if (m_bIsCollWithMe) //나랑 플레이어랑 충돌중이었다가 벗어났을 때
+				{
+                    m_bIsCollWithMe = false;
+                    CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+                    pDiveDave->Set_IsOnItem(false);
+                    pDiveDave->Set_CurOnItem(nullptr);
+				}
+			}
+		}
+	}
+}
+
 void CDiveItem::Free()
 {
-    CGameObject::Free();
+    Safe_Release(m_pAABB);
 }

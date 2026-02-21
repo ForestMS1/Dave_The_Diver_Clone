@@ -4,6 +4,7 @@
 #include "CAABB.h"
 #include "CDiveDaveIdle.h"
 #include "CDiveDaveOpen.h"
+#include "CDiveDavePickUp.h"
 enum class DiveState
 {
 	IDLE = 0,
@@ -12,6 +13,7 @@ enum class DiveState
 	MELEEATTACK,	// 근접 공격
 	TANNING,
 	OPEN,
+	PICKUP,
 	DIE,
 	DAVE_STATE_END
 };
@@ -28,6 +30,7 @@ class CDiveDave : public CGameObject
 {
 	friend class CDiveDaveIdle;
 	friend class CDiveDaveOpen;
+	friend class CDiveDavePickUp;
 
 private:
 	explicit CDiveDave();
@@ -75,6 +78,9 @@ public:
 	// With DiveItemBox
 	void		Set_IsOnItemBox(_bool isOn) { m_bIsOnItemBox = isOn; }
 	void		Set_CurOnItemBox(CGameObject* pItemBox) { m_pCurOnItemBox = pItemBox; }
+	// With DiveItem
+	void		Set_IsOnItem(_bool isOn) { m_bIsOnItem = isOn; }
+	void		Set_CurOnItem(CGameObject* pItem) { m_pCurOnItem = pItem; }
 
 public:
 	void Set_CanKeyInput(_bool canKey) { m_bCanKeyInput = canKey; }
@@ -94,7 +100,8 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	CAABB* m_pAABB;
+	CAABB* m_pAABB; // 아이템 상자랑 충돌 용
+	CAABB* m_pAABBItem; // 아이템이랑 충돌 용
 
 private:
 	CPlayerState* m_pState = nullptr;
@@ -114,8 +121,11 @@ private:
 
 	_bool m_bIsOnItemBox = false;
 
+	_bool m_bIsOnItem = false;
+
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;
+	CGameObject* m_pCurOnItem = nullptr;
 
 public:
 	static CDiveDave* Create();

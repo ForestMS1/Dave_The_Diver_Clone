@@ -3,6 +3,7 @@
 #include "CRenderer.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CColliderMgr.h"
 CO2Capsule::CO2Capsule(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -38,11 +39,22 @@ HRESULT CO2Capsule::Ready_GameObject()
 
 	m_pTransformCom->Set_Pos(m_vOriginPos.x, m_vOriginPos.y, m_vOriginPos.z);
 
+
+	//-------------AABB Collider With DiveDave----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+	_vec3 vPos = { 00.0f, 0.0f, 0.0f };
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Item", this);
+
 	return S_OK;
 }
 
 _int CO2Capsule::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_eCurState == ITEMSTATE::ACQUIRED)
+		return 0;
+
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Item", m_pAABB);
+	m_pAABB->Transform(m_pTransformCom->Get_World());
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	CDiveItem::FSM(fTimeDelta);
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -52,6 +64,9 @@ _int CO2Capsule::Update_GameObject(const _float& fTimeDelta)
 
 void CO2Capsule::LateUpdate_GameObject(const _float& fTimeDelta)
 {
+	if (m_eCurState == ITEMSTATE::ACQUIRED)
+		return;
+	CDiveItem::Collision_With_DiveDave();
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
@@ -101,6 +116,7 @@ CO2Capsule* CO2Capsule::Create(_vec3 vOriginPos)
 void CO2Capsule::Free()
 {
 	CDiveItem::Free();
+	CGameObject::Free();
 }
 
 void CO2Capsule::UseItem()
