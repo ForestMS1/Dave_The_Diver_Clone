@@ -89,8 +89,6 @@ void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 	m_pState->LateUpdate_State(fTimeDelta);
 
-	Collision_With_ItemBox();
-
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
@@ -228,39 +226,6 @@ void CDiveDave::Mouse_Input()
 		}
 	}
 
-}
-
-void CDiveDave::Collision_With_ItemBox()
-{
-	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
-	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_ItemBox"))
-	{
-		// 충돌체 순회
-		for (auto& pCollider : *pColliders)
-		{
-			// 내가 아닌것들과 체크
-			if (m_pAABB != pCollider)
-			{
-				// 충돌체 끼리 충돌 체크
-				if (m_pAABB->Intersect(pCollider))
-				{
-					if (pCollider->Get_Tag() == L"AABB_ItemBox")
-					{
-						m_pCurOnItemBox = static_cast<CGameObject*>(pCollider->Get_VoidPtr());
-						if (!static_cast<CDiveItemBox*>(m_pCurOnItemBox)->Is_Open())
-							m_bIsOnItemBox = true;
-						else
-							m_bIsOnItemBox = false;
-					}
-				}
-				else
-				{
-					m_bIsOnItemBox = false;
-					m_pCurOnItemBox = nullptr;
-				}
-			}
-		}
-	}
 }
 
 

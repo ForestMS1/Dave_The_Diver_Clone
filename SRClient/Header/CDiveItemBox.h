@@ -15,7 +15,7 @@ enum class ITEMBOXTEX
 class CDiveItemBox : public CGameObject
 {
 private:
-	explicit CDiveItemBox();
+	explicit CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z);
 	explicit CDiveItemBox(const CDiveItemBox& rhs);
 	virtual ~CDiveItemBox();
 
@@ -32,6 +32,7 @@ public:
 
 private:
 	HRESULT Ready_Component();
+	void	Collision_With_DiveDave();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -39,11 +40,13 @@ private:
 	CAABB* m_pAABB;
 
 private:
+	_vec3 m_vInitPos; 
 	ITEMBOXTEX m_eCurBoxTex = ITEMBOXTEX::CHEST_A;
 	_bool m_bIsOpen = false;
+	_bool m_bIsCollWithMe = false;
 
 public:
-	static CDiveItemBox* Create();
+	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0);
 
 private:
 	virtual void Free() override;

@@ -4,13 +4,16 @@
 #include "CRenderer.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
-
+#include "CDiveDave.h"
 wstring wsItemBoxTex[(_uint)ITEMBOXTEX::CHEST_END] = { L"Tex_Chest_A", L"Tex_Chest_Aopen", L"Tex_Chest_Weapon", L"Tex_Chest_WeaponOpen"};
 
-CDiveItemBox::CDiveItemBox()
+CDiveItemBox::CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z)
 	: m_pBufferCom(nullptr)
 	, m_pTransformCom(nullptr)
+	, m_eCurBoxTex(ItemBoxType)
+	, m_vInitPos({x,y,z})
 {
+
 }
 
 CDiveItemBox::CDiveItemBox(const CDiveItemBox& rhs)
@@ -27,6 +30,9 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
+	_vec3 vScale = { 0.5f, 0.5f, 1.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
+
 	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(wsItemBoxTex[(_uint)m_eCurBoxTex])->at(0))->Get_ImgInfo();
 	imgInfo.Width;
 
@@ -35,8 +41,10 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
-	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 0.f };
-	m_pTransformCom->m_vScale = vScale;
+	vScale = { fWidth / fAspect, fHeight / fAspect, 0.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
+
+	m_pTransformCom->Set_Pos(m_vInitPos.x, m_vInitPos.y, m_vInitPos.z);
 
 	//-------------AABB Collider With ItemBox----------------
 	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
@@ -62,6 +70,8 @@ _int CDiveItemBox::Update_GameObject(const _float& fTimeDelta)
 void CDiveItemBox::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	Collision_With_DiveDave();
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -99,9 +109,47 @@ HRESULT CDiveItemBox::Ready_Component()
 	return S_OK;
 }
 
-CDiveItemBox* CDiveItemBox::Create()
+void CDiveItemBox::Collision_With_DiveDave()
 {
-	CDiveItemBox* pItemBox = new CDiveItemBox;
+	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_ItemBox"))
+	{
+		// 충돌체 순회
+		for (auto& pCollider : *pColliders)
+		{
+			// 내가 아닌것들과 체크
+			if (m_pAABB != pCollider)
+			{
+				// 충돌체 끼리 충돌 체크
+				if (m_pAABB->Intersect(pCollider))
+				{
+					if (pCollider->Get_Tag() == L"AABB_DiveDaveWithItemBox")
+					{
+						m_bIsCollWithMe = true; // 나랑 플레이어랑 충돌중임
+						CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+						pDiveDave->Set_CurOnItemBox(this);
+						if (!m_bIsOpen)
+							pDiveDave->Set_IsOnItemBox(true);
+						else
+							pDiveDave->Set_IsOnItemBox(false);
+					}
+				}
+				else if(m_bIsCollWithMe) //나랑 플레이어랑 충돌중이었다가 벗어났을 때
+				{
+					CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+					m_bIsCollWithMe = false;
+					pDiveDave->Set_IsOnItemBox(false);
+					pDiveDave->Set_CurOnItemBox(nullptr);
+				}
+			}
+		}
+	}
+
+}
+
+CDiveItemBox* CDiveItemBox::Create(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z)
+{
+	CDiveItemBox* pItemBox = new CDiveItemBox(ItemBoxType, x, y, z);
 	if (FAILED(pItemBox->Ready_GameObject()))
 	{
 		Safe_Release(pItemBox);

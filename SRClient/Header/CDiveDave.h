@@ -71,6 +71,11 @@ public:
 	void		Set_FishCaught(_bool bFishCaught) { m_bFishCaught = bFishCaught; }
 	_bool		Is_FishCaught()					  { return m_bFishCaught; }
 
+
+	// With DiveItemBox
+	void		Set_IsOnItemBox(_bool isOn) { m_bIsOnItemBox = isOn; }
+	void		Set_CurOnItemBox(CGameObject* pItemBox) { m_pCurOnItemBox = pItemBox; }
+
 public:
 	void Set_CanKeyInput(_bool canKey) { m_bCanKeyInput = canKey; }
 	void Set_CanMouseInput(_bool canMouse) { m_bCanMouseInput = canMouse; }
@@ -84,7 +89,6 @@ private:
 private:
 	void	Key_Input();
 	void	Mouse_Input();
-	void	Collision_With_ItemBox();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
