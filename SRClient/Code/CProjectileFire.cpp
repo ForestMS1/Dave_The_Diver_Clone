@@ -74,6 +74,7 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 							}
 
 							m_bIsHitFish = true;
+							pProjectile->m_pCaughtFish = static_cast<CGameObject*>(pCollider->Get_VoidPtr()); // 충돌한 물고기의 포인터 들고 옴
 							pProjectile->m_pTransformCom->Update_Component(fTimeDelta);
 							pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
 						}
@@ -90,7 +91,7 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 	}
 	else if(pProjectile->m_fAccRange >= pProjectile->m_fRange)
 	{
-		pProjectile->Set_State(PROJECTILESTATE::READY);
+		pProjectile->Set_State(PROJECTILESTATE::RETURN);
 		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DiveState::IDLE);
 	}
 }

@@ -3,6 +3,7 @@
 #include "CGraphicDev.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CDiveDaveBullet.h"
 CDiveDaveGun::CDiveDaveGun()
 {
 }
@@ -157,6 +158,12 @@ void CDiveDaveGun::Rotate_ToMouse()
 void CDiveDaveGun::Fire()
 {
 	//ÃÑ¾Ë ¹ß»ç ÈÄ IDLE
+	_vec3 vOrigin, vDir;
+	m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
+	D3DXVec3Normalize(&vDir, &vDir);
+	m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
+	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->
+		Add_GameObject(L"DiveDaveBullet", CDiveDaveBullet::Create(vOrigin, vDir, m_pTransformCom->m_vAngle.z));
 	static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
 }
 

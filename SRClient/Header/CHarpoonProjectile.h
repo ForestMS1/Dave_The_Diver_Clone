@@ -42,11 +42,11 @@ private:
 	PROJECTILESTATE			m_eState = PROJECTILESTATE::READY;
 	unordered_map<PROJECTILESTATE, CPlayerState*> m_mapState;
 	_float					m_fSpeed = 20.f;
-	_float					m_fRange = 5.f;
+	_float					m_fRange = 8.f;
 	_float					m_fAccRange = 0.f;
 	_vec3					m_vDir;
 
-
+	CGameObject*			m_pCaughtFish = nullptr;
 private:
 	Engine::CAttackReadyArmTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;

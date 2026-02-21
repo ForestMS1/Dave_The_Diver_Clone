@@ -154,6 +154,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonGun", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonGun.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonProjectile", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonProjectile.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_BasicRifle", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/BasicRifle.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Bullet", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Bullet.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
 
@@ -188,6 +189,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BasicRifleTexture", Engine::CTexture::Create(L"Tex_BasicRifle"))))
 		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BulletTexture", Engine::CTexture::Create(L"Tex_Bullet"))))
+		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AttackReadyArmBuffer", Engine::CAttackReadyArmTex::Create())))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetArrowBuffer", Engine::CTargetArrowTex::Create())))
@@ -196,6 +199,14 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetArrowGunTexture", Engine::CTexture::Create(L"Tex_TargetArrow"))))
 		return E_FAIL;
+
+
+	//테스트용
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TestFish", CAssetTexture::Create(L"../Bin/Resource/Texture/Player1.jpg"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))
+		return E_FAIL;
+
+
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG
 	//Sleep(500);
@@ -493,8 +504,8 @@ HRESULT CTransition::Common_SHIP_Load()
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_ShipDave_DiveReady");
 
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBoxTmp", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxTmp.png"));
-	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBoxTmp");
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBoxInvenTmp", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxTmp.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBoxInvenTmp");
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_MainMenu_Phone.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneIcon");
@@ -515,6 +526,9 @@ HRESULT CTransition::Common_SHIP_Load()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneAppAlpha");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_PotionCraft_DiverBox/UI_PotionCraft_DiverBox.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBox");
 	return S_OK;
 }
 
