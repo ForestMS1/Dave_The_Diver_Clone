@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAttackReadyArmTex.h"
+#include "CLineBuffer.h"
 class CHarpoon :
     public CGameObject
 {
@@ -25,6 +26,7 @@ private:
 	Engine::CAttackReadyArmTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
+
 
 private:
 	_bool m_bIsFlip = false;

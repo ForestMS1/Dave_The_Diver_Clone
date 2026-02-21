@@ -175,6 +175,24 @@
     <Filter Include="01. Scene\03. Sushi\UI\Frame">
       <UniqueIdentifier>{eb8e79b9-da0b-4e10-a0ad-08b9ff5cd0ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Tanning">
+      <UniqueIdentifier>{677e8561-3ccc-4f79-94a4-ce84be69e49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Open">
+      <UniqueIdentifier>{318ee7c5-a6a4-4dbf-8f34-a8107f3c3928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_ItemBox">
+      <UniqueIdentifier>{c782fb06-9918-4f36-820c-105380482e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item">
+      <UniqueIdentifier>{5cc8d97b-bbcb-4780-a112-91c76618d097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_O2Capsule">
+      <UniqueIdentifier>{690660f6-3366-476b-8131-9c48434900c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\PickUp">
+      <UniqueIdentifier>{cf5d5b1b-8f2b-45df-83ec-5f9091f2578b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -408,6 +426,24 @@
     <ClInclude Include="..\Header\CTestFish.h">
       <Filter>02. GameObject\DiveDave\TestFish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveTanning.h">
+      <Filter>02. GameObject\DiveDave\State\Tanning</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveOpen.h">
+      <Filter>02. GameObject\DiveDave\State\Open</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveItemBox.h">
+      <Filter>02. GameObject\Dive_ItemBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveItem.h">
+      <Filter>02. GameObject\Dive_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CO2Capsule.h">
+      <Filter>02. GameObject\Dive_Item\Item_O2Capsule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDavePickUp.h">
+      <Filter>02. GameObject\DiveDave\State\PickUp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -631,6 +667,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestFish.cpp">
       <Filter>02. GameObject\DiveDave\TestFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveTanning.cpp">
+      <Filter>02. GameObject\DiveDave\State\Tanning</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveOpen.cpp">
+      <Filter>02. GameObject\DiveDave\State\Open</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItemBox.cpp">
+      <Filter>02. GameObject\Dive_ItemBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItem.cpp">
+      <Filter>02. GameObject\Dive_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2Capsule.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_O2Capsule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDavePickUp.cpp">
+      <Filter>02. GameObject\DiveDave\State\PickUp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
