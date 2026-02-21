@@ -1,26 +1,26 @@
 #include "pch.h"
-#include "CConfirm.h"
+#include "CYellowbackR.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
-CConfirm::CConfirm()
+CYellowbackR::CYellowbackR()
     : CGameObject()
 {
 }
 
-CConfirm::CConfirm(const CGameObject& rhs)
+CYellowbackR::CYellowbackR(const CGameObject& rhs)
     : CGameObject(rhs)
 {
 }
 
-CConfirm::~CConfirm()
+CYellowbackR::~CYellowbackR()
 {
 }
 
-HRESULT CConfirm::Ready_GameObject()
+HRESULT CYellowbackR::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -30,7 +30,7 @@ HRESULT CConfirm::Ready_GameObject()
     return S_OK;
 }
 
-_int CConfirm::Update_GameObject(const _float& fTimeDelta)
+_int CYellowbackR::Update_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -41,7 +41,7 @@ _int CConfirm::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void CConfirm::LateUpdate_GameObject(const _float& fTimeDelta)
+void CYellowbackR::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -51,10 +51,10 @@ void CConfirm::LateUpdate_GameObject(const _float& fTimeDelta)
 
         Compute_ViewZ(&vPos);
     }
-   
+
 }
 
-void CConfirm::Render_GameObject()
+void CYellowbackR::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -62,55 +62,61 @@ void CConfirm::Render_GameObject()
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
+        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+        pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-        m_pConfirmTextureCom->Set_Texture(0);
+        m_pSushiTextureCom->Set_Texture(0);
         m_pBufferCom->Render_Buffer();
 
         D3DXMATRIX matTmp;
         D3DXMatrixIdentity(&matTmp);
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
+        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
     }
-   
+
 }
 
-HRESULT CConfirm::Ready_Component()
+HRESULT CYellowbackR::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     // 텍스쳐
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_AddButtonTex", L"Com_Texture", &m_pConfirmTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_YellowBackTex", L"Com_Texture", &m_pSushiTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
 
-    m_pTransformCom->m_vScale = { 0.6f, 0.2f, 1.f };
+    //m_pTransformCom->m_vScale = { 0.6f, 0.2f, 1.f };
     return S_OK;
 }
 
 
-CConfirm* CConfirm::Create()
+CYellowbackR* CYellowbackR::Create()
 {
-    CConfirm* pBackGround = new CConfirm;
+    CYellowbackR* yellowBack = new CYellowbackR;
 
-    if (FAILED(pBackGround->Ready_GameObject()))
+    if (FAILED(yellowBack->Ready_GameObject()))
     {
-        Safe_Release(pBackGround);
-        MSG_BOX("AddButton Create Failed");
+        Safe_Release(yellowBack);
+        MSG_BOX("YellowBack Create Failed");
         return nullptr;
     }
 
-    return pBackGround;
+    return yellowBack;
 }
 
-void CConfirm::Free()
+void CYellowbackR::Free()
 {
     CGameObject::Free();
 }

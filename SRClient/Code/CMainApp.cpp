@@ -41,8 +41,8 @@ HRESULT CMainApp::Ready_MainApp()
 	//	return E_FAIL;
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
-	//if (FAILED(CGameMemMgr::GetInstance()->Ready()))
-	//	return E_FAIL;
+	if (FAILED(CGameMemMgr::GetInstance()->Ready()))
+		return E_FAIL;
 	if (FAILED(Load_PermanentAsset()))
 		return E_FAIL;
 	if (FAILED(Ready_Scene(m_pGraphicDev)))

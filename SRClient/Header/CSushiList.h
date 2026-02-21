@@ -27,10 +27,17 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pListextureCom;
 	Engine::CTransform* m_pTransformCom;
-
+	wstring m_sFishName;
+	wstring m_sSushiName;
+	wstring m_sFishInfo;
+	wstring m_sLevel;
+	wstring m_sCost;
+	wstring m_sQuality;
+	wstring m_sPlate;
+	wstring m_sQuanity;
+	_vec3 screen;
 public:
 	static CSushiList* Create();
-	bool render;
 
 private:
 	virtual void Free();
