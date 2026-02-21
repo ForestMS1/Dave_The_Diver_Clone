@@ -18,8 +18,8 @@ enum class DiveState
 
 enum class EQUIPPED
 {
-	MELEE, // 근접무기
-	HARPOON, // 작살
+	//MELEE, // 근접무기 -> 기본 장착
+	HARPOON = 0, // 작살
 	GUN,	// 총
 	EQUIPPED_END
 };
@@ -102,7 +102,7 @@ private:
 	unordered_map<DiveState, CPlayerState*> m_mapState;
 
 private:
-	EQUIPPED m_eCurEquipped = EQUIPPED::MELEE;
+	EQUIPPED m_eCurEquipped = EQUIPPED::HARPOON;
 
 private:
 	_float m_fSpeed = 5.f;

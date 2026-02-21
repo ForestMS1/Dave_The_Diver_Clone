@@ -16,7 +16,7 @@
 #include "CDiveItemBox.h"
 
 string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "DIE" };
-string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = { "MELEE", "HARPOON", "GUN" };
+string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
 	: m_pBufferCom(nullptr)
@@ -209,23 +209,9 @@ void CDiveDave::Mouse_Input()
 		return;
 
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
-	{
-		switch (m_eCurEquipped)
-		{
-		case EQUIPPED::MELEE:
-			Set_State(DiveState::MELEEATTACK);
-			break;
-		case EQUIPPED::HARPOON:
-			Set_State(DiveState::ATTACK);
-			break;
-		case EQUIPPED::GUN:
-			Set_State(DiveState::ATTACK);
-			break;
-		default:
-			break;
-		}
-	}
-
+		Set_State(DiveState::MELEEATTACK);
+	else if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB))
+		Set_State(DiveState::ATTACK);
 }
 
 
