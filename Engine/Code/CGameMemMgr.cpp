@@ -11,7 +11,7 @@ CGameMemMgr::~CGameMemMgr()
     Free();
 }
 
-void CGameMemMgr::levelUp(string name)
+void CGameMemMgr::levelUp(wstring name)
 {
 	//물고기 레벨업
 	for (auto& fish : fishes) {
@@ -30,11 +30,15 @@ void CGameMemMgr::Free()
 }
 HRESULT CGameMemMgr::Ready()
 {
-	addFish("블루", 4);
+	addFish(L"블루종", 4);
+	addFish(L"노랑탕", 5);
+	addFish(L"참치속살", 7);
+	addFish(L"노랑백", 2);
+	addFish(L"흰동가리", 5);
     return S_OK;
 }
 
-void CGameMemMgr::addFish(string name, int quantity)
+void CGameMemMgr::addFish(wstring name, int quantity)
 {
 	bool found = false;
 	//물고기가 이미 등록 되있으면
@@ -47,7 +51,7 @@ void CGameMemMgr::addFish(string name, int quantity)
 	// 새로운 물고기면
 	if (found == false) {
 		FISH* newfish = new FISH;
-		newfish->name == name;
+		newfish->name = name;
 		newfish->quantity = quantity;
 		newfish->level = 1;
 		newfish->cost = 11;

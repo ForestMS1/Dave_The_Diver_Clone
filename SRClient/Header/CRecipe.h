@@ -30,7 +30,6 @@ private:
 
 public:
 	static CRecipe* Create();
-	bool render;
 
 private:
 	virtual void Free();

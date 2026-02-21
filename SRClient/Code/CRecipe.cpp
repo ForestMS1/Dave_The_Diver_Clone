@@ -6,10 +6,16 @@
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
+#include "CSushiFrame.h"
+#include "CColliderMgr.h"
+#include "CBluejongR.h"
+
+
+
 CRecipe::CRecipe()
     : CGameObject()
 {
-    render = false;
+
 }
 
 CRecipe::CRecipe(const CGameObject& rhs)
@@ -26,15 +32,56 @@ HRESULT CRecipe::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
+    int col = 0;
+    int row = 0;
+    CGameObject* pGameObject = nullptr;
+    for (int i = 0; i < 5; i++) {
+        //pGameObject = CSushiFrame::Create(L"ºí·ç");
+        switch (i) {
+        case 0:
+            pGameObject = CSushiFrame::Create(L"ºí·çÁ¾");
+            break;
+        case 1:
+            pGameObject = CSushiFrame::Create(L"³ë¶û¹é");
+            break;
 
+        case 2:
+            pGameObject = CSushiFrame::Create(L"ÂüÄ¡¼Ó»ì");
+            break;
+        case 3:
+            pGameObject = CSushiFrame::Create(L"Èòµ¿°¡¸®");
+            break;
+        case 4:
+            pGameObject = CSushiFrame::Create(L"³ë¶ûÅÁ");
+            break;
+        }
+      
+
+        if (nullptr == pGameObject)
+            return E_FAIL;
+
+        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"SushiFrame", pGameObject)))
+            return E_FAIL;
+
+        CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+        pTransform->m_vScale = { 0.3f, 0.3f, 0.1f };
+        if (i % 4 == 0) {
+            row ++;
+            col = 0;
+        }
+        pTransform->m_vInfo[INFO_POS] = { -0.98f + (0.65f*col),(2.8f - 0.8f* row),-5.0f};
+        col++;
+    }
+   
 
     return S_OK;
 }
 
 _int CRecipe::Update_GameObject(const _float& fTimeDelta)
 {
-    if (render) {
-        CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+    if (m_bRender) {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+        
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -44,7 +91,7 @@ _int CRecipe::Update_GameObject(const _float& fTimeDelta)
 
 void CRecipe::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    if (render) {
+    if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
 
         _vec3		vPos;
@@ -57,7 +104,20 @@ void CRecipe::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CRecipe::Render_GameObject()
 {
-    if (render) {
+    if (m_bRender) {
+
+        list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
+        list<CGameObject*>::iterator iter = frame->begin();
+        for (iter; iter != frame->end(); iter++) {
+            (*iter)->Set_Render(true);
+        }
+
+        list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"sushi");
+        list<CGameObject*>::iterator iter1 = sushi->begin();
+        for (iter1; iter1 != sushi->end(); iter1++) {
+            (*iter1)->Set_Render(true);
+        }
+  
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -75,6 +135,19 @@ void CRecipe::Render_GameObject()
 
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    }
+    else {
+        list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
+        list<CGameObject*>::iterator iter = frame->begin();
+        for (iter; iter != frame->end(); iter++) {
+            (*iter)->Set_Render(false);
+        }
+
+    /*    list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"Bluejong");
+        list<CGameObject*>::iterator iter1 = sushi->begin();
+        for (iter1; iter1 != sushi->end(); iter1++) {
+            static_cast<CBluejongR*>((*iter1))->render = false;
+        }*/
     }
 
 }
@@ -100,16 +173,16 @@ HRESULT CRecipe::Ready_Component()
 
 CRecipe* CRecipe::Create()
 {
-    CRecipe* pBackGround = new CRecipe;
+    CRecipe* recipe = new CRecipe;
 
-    if (FAILED(pBackGround->Ready_GameObject()))
+    if (FAILED(recipe->Ready_GameObject()))
     {
-        Safe_Release(pBackGround);
-        MSG_BOX("AddButton Create Failed");
+        Safe_Release(recipe);
+        MSG_BOX("recipe Create Failed");
         return nullptr;
     }
 
-    return pBackGround;
+    return recipe;
 }
 
 void CRecipe::Free()

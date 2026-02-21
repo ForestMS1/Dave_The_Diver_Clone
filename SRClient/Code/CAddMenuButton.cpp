@@ -10,7 +10,7 @@ CAddMenuButton::CAddMenuButton()
     : CGameObject()
 {
     m_bSelected = false;
-    render = false;
+
 }
 
 CAddMenuButton::CAddMenuButton(const CGameObject& rhs)
@@ -36,8 +36,8 @@ _int CAddMenuButton::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    if (render) {
-        CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+    if (m_bRender) {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
     }
 
 
@@ -47,7 +47,7 @@ _int CAddMenuButton::Update_GameObject(const _float& fTimeDelta)
 
 void CAddMenuButton::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    if (render) {
+    if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
 
         _vec3		vPos;
@@ -60,7 +60,7 @@ void CAddMenuButton::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CAddMenuButton::Render_GameObject()
 {
-    if (render) {
+    if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
