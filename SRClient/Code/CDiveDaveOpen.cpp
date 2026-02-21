@@ -4,6 +4,7 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CDiveItemBox.h"
 CDiveDaveOpen::CDiveDaveOpen(CGameObject* pOwner)
 	:CPlayerState(pOwner)
 {
@@ -43,6 +44,7 @@ _int CDiveDaveOpen::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	if (m_fOpenTime > 5.f)
 	{
+		static_cast<CDiveItemBox*>(static_cast<CDiveDave*>(m_pPlayer)->m_pCurOnItemBox)->Set_Open();
 		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
 	}
 

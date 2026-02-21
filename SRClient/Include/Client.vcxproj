@@ -178,6 +178,7 @@
     <ClInclude Include="..\Header\CDiveDaveMeeleAttack.h" />
     <ClInclude Include="..\Header\CDiveDaveOpen.h" />
     <ClInclude Include="..\Header\CDiveDaveTanning.h" />
+    <ClInclude Include="..\Header\CDiveItemBox.h" />
     <ClInclude Include="..\Header\CFence.h" />
     <ClInclude Include="..\Header\CFishTank.h" />
     <ClInclude Include="..\Header\CDiveDaveGun.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="..\Code\CDiveDaveGun.cpp" />
     <ClCompile Include="..\Code\CDiveDaveOpen.cpp" />
     <ClCompile Include="..\Code\CDiveDaveTanning.cpp" />
+    <ClCompile Include="..\Code\CDiveItemBox.cpp" />
     <ClCompile Include="..\Code\CHarpoon.cpp" />
     <ClCompile Include="..\Code\CHarpoonProjectile.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />

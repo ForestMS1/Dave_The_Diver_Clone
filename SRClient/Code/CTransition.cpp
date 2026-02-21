@@ -169,6 +169,12 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
 
+	// DiveItemBox
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_A", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_A.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Aopen", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Aopen.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Weapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Weapon.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_WeaponOpen", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_WeaponOpen.png"));
+
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveUp"))))

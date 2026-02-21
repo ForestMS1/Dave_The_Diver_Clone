@@ -19,7 +19,7 @@
 #include "CTestGlb.h"
 #include "CSkyBox.h"
 #include "CTestFish.h"
-
+#include "CDiveItemBox.h"
 
 CDive::CDive()
 	: CScene()
@@ -190,6 +190,12 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"TestFish", pGameObject)))
 		return E_FAIL;
 
+
+	pGameObject = CDiveItemBox::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+		return E_FAIL;
 	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });

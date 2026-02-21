@@ -1,0 +1,51 @@
+#pragma once
+#include "CGameObject.h"
+#include "CAABB.h"
+
+enum class ITEMBOXTEX
+{
+	CHEST_A = 0,
+	CHEST_A_OPEN,
+	CHEST_WEAPON,
+	CHEST_WEAPON_OPEN,
+	CHEST_END
+};
+//닫힘 다음 Open으로 순서 지킬 것.
+
+class CDiveItemBox : public CGameObject
+{
+private:
+	explicit CDiveItemBox();
+	explicit CDiveItemBox(const CDiveItemBox& rhs);
+	virtual ~CDiveItemBox();
+
+
+public:
+	HRESULT		Ready_GameObject() override;
+	_int		Update_GameObject(const _float& fTimeDelta) override;
+	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
+	void		Render_GameObject() override;
+
+public:
+	void		Set_Open() { m_bIsOpen = true; m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1); }
+	_bool		Is_Open() const { return m_bIsOpen; }
+
+private:
+	HRESULT Ready_Component();
+
+private:
+	Engine::CRcTex* m_pBufferCom;
+	Engine::CTransform* m_pTransformCom;
+	CAABB* m_pAABB;
+
+private:
+	ITEMBOXTEX m_eCurBoxTex = ITEMBOXTEX::CHEST_A;
+	_bool m_bIsOpen = false;
+
+public:
+	static CDiveItemBox* Create();
+
+private:
+	virtual void Free() override;
+};
+

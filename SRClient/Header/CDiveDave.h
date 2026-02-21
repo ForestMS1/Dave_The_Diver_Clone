@@ -2,6 +2,8 @@
 #include "CGameObject.h"
 #include "CPlayerState.h"
 #include "CAABB.h"
+#include "CDiveDaveIdle.h"
+#include "CDiveDaveOpen.h"
 enum class DiveState
 {
 	IDLE = 0,
@@ -24,6 +26,9 @@ enum class EQUIPPED
 
 class CDiveDave : public CGameObject
 {
+	friend class CDiveDaveIdle;
+	friend class CDiveDaveOpen;
+
 private:
 	explicit CDiveDave();
 	explicit CDiveDave(const CDiveDave& rhs);
@@ -79,6 +84,7 @@ private:
 private:
 	void	Key_Input();
 	void	Mouse_Input();
+	void	Collision_With_ItemBox();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -101,6 +107,11 @@ private:
 
 	_bool  m_bCanKeyInput = true;
 	_bool  m_bCanMouseInput = true;
+
+	_bool m_bIsOnItemBox = false;
+
+private:
+	CGameObject* m_pCurOnItemBox = nullptr;
 
 public:
 	static CDiveDave* Create();
