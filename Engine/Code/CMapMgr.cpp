@@ -30,41 +30,44 @@ void CMapMgr::Load() {
 
 				if ((&(*m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName)))) != nullptr) {
 					list<CGameObject*> CGameObjectLayer = *m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName));
-					auto it = CGameObjectLayer.begin();
-					for (auto& k : j["GameObjectLayer"]) {
-						int ObjCnt = k["ObjCnt"];
+					if ((GameObjectLayerName) != "DiveDave") {
+						auto it = CGameObjectLayer.begin();
+						for (auto& k : j["GameObjectLayer"]) {
+							int ObjCnt = k["ObjCnt"];
 
-						for (auto& elem : k["Transform"]) {
-							std::string type = elem[0];
+							for (auto& elem : k["Transform"]) {
+								std::string type = elem[0];
 
-							if (type == "pos")
-							{
+								if (type == "pos")
+								{
 
-								float x = elem[1];
-								float y = elem[2];
-								float z = elem[3];
-								dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(x, y, z);
+									float x = elem[1];
+									float y = elem[2];
+									float z = elem[3];
+									dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Pos(x, y, z);
 
+								}
+								else if (type == "rot")
+								{
+									float rx = elem[1];
+									float ry = elem[2];
+									float rz = elem[3];
+									_vec3 rotation{ rx, ry, rz };
+									dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Rotation(&rotation);
+								}
+								else if (type == "scale")
+								{
+									float sx = elem[1];
+									float sy = elem[2];
+									float sz = elem[3];
+									_vec3 scale{ sx, sy, sz };
+									dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Scale(&scale);
+								}
 							}
-							else if (type == "rot")
-							{
-								float rx = elem[1];
-								float ry = elem[2];
-								float rz = elem[3];
-								_vec3 rotation{ rx, ry, rz };
-								dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Rotation(&rotation);
-							}
-							else if (type == "scale")
-							{
-								float sx = elem[1];
-								float sy = elem[2];
-								float sz = elem[3];
-								_vec3 scale{ sx, sy, sz };
-								dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Scale(&scale);
-							}
+							++it;
 						}
-						++it;
 					}
+		
 				}
 			
 
