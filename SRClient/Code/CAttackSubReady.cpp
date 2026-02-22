@@ -34,7 +34,7 @@ void CAttackSubReady::Input(const _float& fTimeDelta)
 	if (pCam == nullptr)
 		return;
 
-	if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+	if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_RB))
 	{
 		if (D3DXToDegree(pCam->GetFov()) > 55.f)
 			pCam->ZoomIn(fTimeDelta * 10.f);

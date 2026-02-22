@@ -9,9 +9,14 @@
 #include "CDiveDaveAttack.h"
 #include "CDiveDaveMeeleAttack.h"
 #include "CAttackReadyArm.h"
-
-string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "DIE" };
-string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = { "MELEE", "HARPOON", "GUN" };
+#include "CDiveDaveTanning.h"
+#include "CDiveDaveOpen.h"
+#include "CCollisionMgr.h"
+#include "CColliderMgr.h"
+#include "CDiveItemBox.h"
+#include "CDiveDavePickUp.h"
+string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "DIE" };
+string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
 	: m_pBufferCom(nullptr)
@@ -41,12 +46,29 @@ HRESULT CDiveDave::Ready_GameObject()
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	Set_State(DiveState::IDLE);
+
+
+	//-------------AABB Collider With ItemBox----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+	_vec3 vPos = { 00.0f, 0.0f, 0.0f };
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_DiveDaveWithItemBox", this);
+	m_pAABBItem = CAABB::Create(&vPos, &vExtents, L"AABB_DiveDaveWithItem", this);
+
+	//CColliderMgr::GetInstance()->Set_Render(true);
+
 	return S_OK;
 }
 
 _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 {
+	// 충돌체 그룹에 넣어줘야한다.
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_ItemBox", m_pAABB);
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Item", m_pAABBItem);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	m_pAABB->Transform(m_pTransformCom->Get_World());
+	m_pAABBItem->Transform(m_pTransformCom->Get_World());
+
+
 	Key_Input();
 	Mouse_Input();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -142,6 +164,8 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMoveDownTexture", L"Com_MoveDownTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerTanningTexture", L"Com_TanningTexture", &m_pTextureCom))))
+		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackReadyTexture", L"Com_AttackReadyTexture", &m_pTextureCom))))
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFireTexture", L"Com_AttackFireTexture", &m_pTextureCom))))
@@ -151,6 +175,10 @@ HRESULT CDiveDave::Ready_Component()
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerAttackFightTexture", L"Com_AttackFightTexture", &m_pTextureCom))))
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerMeleeDaggerAttack", L"Com_MeleeDaggerAttackTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerOpenTexture", L"Com_OpenTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerPickUpTexture", L"Com_PickUpTexture", &m_pTextureCom))))
 		return E_FAIL;
 
 	// 트랜스폼
@@ -164,6 +192,9 @@ HRESULT	CDiveDave::Add_State()
 	m_mapState.insert({ DiveState::MOVE, CDiveDaveMove::Create(this) });
 	m_mapState.insert({ DiveState::ATTACK, CDiveDaveAttack::Create(this) });
 	m_mapState.insert({ DiveState::MELEEATTACK, CDiveDaveMeeleAttack::Create(this) });
+	m_mapState.insert({ DiveState::TANNING, CDiveDaveTanning::Create(this) });
+	m_mapState.insert({ DiveState::OPEN, CDiveDaveOpen::Create(this) });
+	m_mapState.insert({ DiveState::PICKUP, CDiveDavePickUp::Create(this) });
 	//m_mapState.insert({ DiveState::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
@@ -171,31 +202,23 @@ HRESULT	CDiveDave::Add_State()
 
 void CDiveDave::Key_Input()
 {
-	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
-		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
+	if (!m_bCanKeyInput)
+		return;
 
+
+	if (m_eCurState == DiveState::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 }
 
 void CDiveDave::Mouse_Input()
 {
-	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
-	{
-		switch (m_eCurEquipped)
-		{
-		case EQUIPPED::MELEE:
-			Set_State(DiveState::MELEEATTACK);
-			break;
-		case EQUIPPED::HARPOON:
-			Set_State(DiveState::ATTACK);
-			break;
-		case EQUIPPED::GUN:
-			Set_State(DiveState::ATTACK);
-			break;
-		default:
-			break;
-		}
-	}
+	if (!m_bCanMouseInput)
+		return;
 
+	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
+		Set_State(DiveState::MELEEATTACK);
+	else if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB))
+		Set_State(DiveState::ATTACK);
 }
 
 
@@ -213,6 +236,8 @@ CDiveDave* CDiveDave::Create()
 
 void CDiveDave::Free()
 {
+	Safe_Release(m_pAABB);
+	Safe_Release(m_pAABBItem);
 	for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
 	m_mapState.clear();
 	CGameObject::Free();

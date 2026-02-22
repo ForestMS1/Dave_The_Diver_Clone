@@ -15,17 +15,17 @@ private:
 	virtual ~CGameMemMgr();
 public:
 	typedef struct tagFish {
-		string name;
+		wstring name;
 		int quantity;
 		int level;
 		int cost;
 	}FISH;
 public:
 	HRESULT Ready();
-	void addFish(string name, int quantity);
+	void addFish(wstring name, int quantity);
 	vector<FISH*>& getFishes() { return fishes; }
 
-	void levelUp(string name);
+	void levelUp(wstring name);
 private:
 	virtual void		Free();
 	vector<FISH*> fishes;

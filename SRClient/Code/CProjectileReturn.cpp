@@ -1,6 +1,7 @@
 #include "CProjectileReturn.h"
 #include "CHarpoonProjectile.h"
-#include <CDiveDave.h>
+#include "CDiveDave.h"
+#include "CTestFish.h"
 
 CProjectileReturn::CProjectileReturn(CGameObject* pOwner)
     : CPlayerState(pOwner)
@@ -13,6 +14,9 @@ CProjectileReturn::~CProjectileReturn()
 
 void CProjectileReturn::Enter()
 {
+	// 잠시 키 DiveDave 키입력 막음
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanKeyInput(false);
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanMouseInput(false);
 }
 
 void CProjectileReturn::Input(const _float& fTimeDelta)
@@ -35,10 +39,17 @@ void CProjectileReturn::Render_State()
 
 void CProjectileReturn::Exit()
 {
+	Clear();
 }
 
 void CProjectileReturn::Clear()
 {
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	pProjectile->m_pCaughtFish = nullptr;
+
+	// 키 입력 잠금 해제
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanKeyInput(true);
+	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanMouseInput(true);
 }
 
 CProjectileReturn* CProjectileReturn::Create(CGameObject* pOwner)
@@ -62,11 +73,24 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 	D3DXVec3Length(&vDiff);
 
 	if (D3DXVec3Length(&vDiff) > 1.f)
+	{
 		pProjectile->m_pTransformCom->Move_Pos(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+
+		// 플레이어가 물고기 잡기에 성공했다면 물고기 끌어당김
+		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
+			static_cast<CTestFish*>(pProjectile->m_pCaughtFish)->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+	}
 	else
 	{
+		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
+		{
+			pProjectile->m_pCaughtFish->Set_Dead();
+			pProjectile->m_pCaughtFish = nullptr;
+			static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_FishCaught(false);
+		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
+		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DiveState::IDLE);
 	}
 }
 

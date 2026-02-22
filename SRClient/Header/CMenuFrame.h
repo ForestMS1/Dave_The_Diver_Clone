@@ -33,7 +33,6 @@ private:
 
 public:
 	static CMenuFrame* Create();
-	bool render;
 
 private:
 	virtual void Free();
