@@ -607,8 +607,8 @@ HRESULT CTransition::Common_SHIP_Load()
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeBtn");
 
 	//UpgrddeBtnAlpha.png
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgrddeBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtnAlpha.png"));
-	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgrddeBtnAlpha");
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtnAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
 
 	return S_OK;
 }

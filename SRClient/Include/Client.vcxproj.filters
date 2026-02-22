@@ -411,9 +411,6 @@
     <ClInclude Include="..\Header\CShipTransformCam.h">
       <Filter>02. GameObject\00. Ship\08. ShipTransformCam</Filter>
     </ClInclude>
-    <ClInclude Include="CShipPhoneIDiverItem.h">
-      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\10. ShipPhoneIDiverItemImg</Filter>
     </ClInclude>
@@ -464,6 +461,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeBtn.h">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IDiverInfo.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneIDiverItem.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -671,9 +674,6 @@
     <ClCompile Include="..\Code\CShipTransformCam.cpp">
       <Filter>02. GameObject\00. Ship\08. ShipTransformCam</Filter>
     </ClCompile>
-    <ClCompile Include="CShipPhoneIDiverItem.cpp">
-      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\10. ShipPhoneIDiverItemImg</Filter>
     </ClCompile>
@@ -724,6 +724,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeBtn.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgrade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IDiverInfo.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneIDiverItem.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

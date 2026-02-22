@@ -24,16 +24,16 @@ HRESULT		CShipPhoneIDiverItemImg::Ready_GameObject()
         return E_FAIL;
 
 
-    _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sAssetName))
-    {
-        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-        {
-            float fWidth = pTexture->Get_ImgInfo()->Width / 284.f;
-            float fHeight = pTexture->Get_ImgInfo()->Height / 260.f;
-            vScale = { fWidth, fHeight, 1.f };
-        }
-    }
+    _vec3 vScale = { 0.f , 0.f, 0.f };
+    //if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sAssetName))
+    //{
+    //    if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+    //    {
+    //        float fWidth = pTexture->Get_ImgInfo()->Width / 284.f;
+    //        float fHeight = pTexture->Get_ImgInfo()->Height / 260.f;
+    //        vScale = { fWidth, fHeight, 1.f };
+    //    }
+    //}
 
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);

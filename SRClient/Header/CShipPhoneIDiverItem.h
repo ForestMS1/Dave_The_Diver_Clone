@@ -9,6 +9,8 @@ private:
 
 public:
 	_uint	Get_Idx() const { return m_iIdx; }
+	void	Set_AssetName(std::wstring_view svS) { m_sAssetName = svS; }
+	std::wstring_view Get_AssetName() const { return m_sAssetName; }
 
 	void	Set_Title(std::wstring_view svS) { m_sTitle = svS; }
 	void	Set_LeftTop(std::wstring_view svS) { m_sLeftTop = svS; }
@@ -17,7 +19,7 @@ public:
 	void	Set_RightTop(std::wstring_view svS) { m_sRightTop = svS; }
 	void	Set_RightMiddle(std::wstring_view svS) { m_sRightMiddle = svS; }
 	void	Set_RightBottom(std::wstring_view svS) { m_sRightBottom = svS; }
-	void	Set_AssetName(std::wstring_view svS) { m_sAssetName = svS; }
+	
 	void	Set_Money(std::wstring_view svS) { m_sMoney = svS; }
 	void	Set_MoneyLack(bool bLack) { m_bMoneyLack = bLack; }
 

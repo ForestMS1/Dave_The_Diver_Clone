@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\CShipDiverBoxInventoryItemImg.h" />
     <ClInclude Include="..\Header\CShipFakeBG.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverBG.h" />
+    <ClInclude Include="..\Header\CShipPhoneIDiverItem.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverItemImg.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverSelectEdge.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgrade.h" />
@@ -240,9 +241,9 @@
     <ClInclude Include="..\Header\CTriggerAABB.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
+    <ClInclude Include="..\Header\IDiverInfo.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CShipDiverBoxInventory.h" />
-    <ClInclude Include="CShipPhoneIDiverItem.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -286,6 +287,7 @@
     <ClCompile Include="..\Code\CShipDiverBoxInventoryItemImg.cpp" />
     <ClCompile Include="..\Code\CShipFakeBG.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverBG.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneIDiverItem.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverItemImg.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverSelectEdge.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgrade.cpp" />
@@ -331,9 +333,9 @@
     <ClCompile Include="..\Code\CTriggerAABB.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
+    <ClCompile Include="..\Code\IDiverInfo.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CShipDiverBoxInventory.cpp" />
-    <ClCompile Include="CShipPhoneIDiverItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

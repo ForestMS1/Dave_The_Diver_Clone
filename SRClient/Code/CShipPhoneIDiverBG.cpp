@@ -11,6 +11,7 @@
 #include "CDInputMgr.h"
 #include "CShipPhoneIDiverUpgrade.h"
 #include "CShipPhone.h"
+#include "CGameMemMgr.h"
 
 CShipPhoneIDiverBG::CShipPhoneIDiverBG()
 	: CGameObject()
@@ -29,20 +30,6 @@ HRESULT		CShipPhoneIDiverBG::Ready_GameObject()
 
     m_iSelectIdx = 0;
 
-    //{
-    //    pItemImg->Set_AssetName(m_sAssetName);//L"Tex_Ship_IDiver_Item_Sanso"
-    //}
-    //else if (m_iIdx == 1)
-    //{
-    //    pItemImg->Set_AssetName(m_sAssetName);//L"Tex_Ship_IDiver_Item_Clothes"
-    //}
-    //else if (m_iIdx == 2)
-    //{
-    //    pItemImg->Set_AssetName(m_sAssetName);//L"Tex_Ship_IDiver_Item_Cage"
-    //}
-    //else if (m_iIdx == 3)
-    //{
-    //    pItemImg->Set_AssetName(m_sAssetName);//L"Tex_Ship_IDiver_Item_Jaksal"
     _vec3 vScale = { 1.f , 1.f, 1.f };
     if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_PhoneIDiverBG"))
     {
@@ -54,19 +41,21 @@ HRESULT		CShipPhoneIDiverBG::Ready_GameObject()
         }
     }
 
+    ;
     {
+        
         CShipPhoneIDiverItem* pShipItem = CShipPhoneIDiverItem::Create(0, 0.f, 2.f);
         pShipItem->Set_AssetName(L"Tex_Ship_IDiver_Item_Sanso");
         pShipItem->Set_Parent(this);
-        pShipItem->Set_Title(L"공기통");
-        pShipItem->Set_LeftTop(L"Lv.1");
-        pShipItem->Set_LeftMiddle(L"공기량");
-        pShipItem->Set_LeftBottom(L"90 bar");
-        pShipItem->Set_RightTop(L"Lv.2");
-        pShipItem->Set_RightMiddle(L"공기량");
-        pShipItem->Set_RightBottom(L"115 bar");
-        pShipItem->Set_Money(L"123");
-        pShipItem->Set_MoneyLack(false);
+        //pShipItem->Set_Title(L"공기통");
+        //pShipItem->Set_LeftTop(L"Lv.1");
+        //pShipItem->Set_LeftMiddle(L"공기량");
+        //pShipItem->Set_LeftBottom(L"90 bar");
+        //pShipItem->Set_RightTop(L"Lv.2");
+        //pShipItem->Set_RightMiddle(L"공기량");
+        //pShipItem->Set_RightBottom(L"115 bar");
+        //pShipItem->Set_Money(L"123");
+        //pShipItem->Set_MoneyLack(false);
 
         pShipItem->Ready_AfterCreate();
         CManagement::GetInstance()
@@ -246,6 +235,36 @@ void		CShipPhoneIDiverBG::LateUpdate_GameObject(const _float& fTimeDelta)
                             {
                                 CShipPhoneIDiverUpgrade* pUp = CShipPhoneIDiverUpgrade::Create(0.f, 0.f);
                                 pUp->Set_Parent(this);
+                                pUp->Set_Title(L"공기통");
+                                pUp->Set_LeftTop(L"Lv1");
+                                pUp->Set_LeftMiddle(L"허용무게");
+                                pUp->Set_LeftBottom(L"9 kg");
+                                pUp->Set_RightTop(L"Lv2");
+                                pUp->Set_RightMiddle(L"허용무게");
+                                pUp->Set_RightBottom(L"13kg");
+                                pUp->Set_Desc(L"DESSCSC");
+                                pUp->Set_Money(L"12");
+                                pUp->Set_MoneyLack(true);
+
+                                if (idx == 0)
+                                {
+                                    pUp->Set_AssetName(L"Tex_Ship_IDiver_Item_Sanso");
+                                }
+                                else if (idx == 1)
+                                {
+                                    pUp->Set_AssetName(L"Tex_Ship_IDiver_Item_Clothes");
+                                }
+                                else if (idx == 2)
+                                {
+                                    pUp->Set_AssetName(L"Tex_Ship_IDiver_Item_Cage");
+                                }
+                                else if (idx == 3)
+                                {
+                                    pUp->Set_AssetName(L"Tex_Ship_IDiver_Item_Jaksal");
+                                }
+                               
+                                pUp->Ready_AfterCreate();
+
                                 CManagement::GetInstance()
                                     ->Get_Scene()
                                     ->Get_Layer(L"0_GameLogic_Layer")

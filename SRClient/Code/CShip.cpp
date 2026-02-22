@@ -31,6 +31,8 @@
 #include "CShipUIMoney.h"
 #include "CShipDiverBoxInventoryEdge.h"
 
+#include "IDiverInfo.h"
+
 CShip::CShip()
 	: CScene()
 {
@@ -53,7 +55,9 @@ HRESULT CShip::Ready_Scene()
 
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
 	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
 	
+	IDiver::InitIDiverInfo();
 
 	return S_OK;
 }

@@ -8,6 +8,8 @@
 #include "CShipPhoneIDiverItemImg.h"
 #include "CAssetDefaultFont.h"
 #include "CColliderMgr.h"
+#include "CGameMemMgr.h"
+#include "IDiverInfo.h"
 
 CShipPhoneIDiverItem::CShipPhoneIDiverItem(_int iIdx, float fPosX, float fPosY)
     : CGameObject()
@@ -105,6 +107,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
+    _uint iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
 
     // Title
     {
@@ -121,7 +124,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sTitle, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
         }
     }
 
@@ -141,7 +144,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(m_sLeftTop, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 
@@ -160,7 +163,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(m_sLeftMiddle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUnitName, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 
@@ -180,7 +183,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(m_sLeftBottom, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUnit, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 
@@ -200,7 +203,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(m_sRightTop, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sLevel, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
         }
     }
 
@@ -219,7 +222,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(m_sRightMiddle, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel+1).sUnitName, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
         }
     }
 
@@ -239,7 +242,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(m_sRightBottom, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel+1).sUnit, &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
         }
     }
 
@@ -261,13 +264,13 @@ void		CShipPhoneIDiverItem::Render_GameObject()
             D3DXCOLOR col;
             if (m_bMoneyLack)
             {
-                col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+                col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
             }
             else
             {
-                col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+                col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
             }
-            pDefFont->Render_Font(m_sMoney, &vPos, col);
+            pDefFont->Render_Font(to_wstring(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost), &vPos, col);
         }
     }
 
