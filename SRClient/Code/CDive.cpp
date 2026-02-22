@@ -34,6 +34,7 @@ HRESULT CDive::Ready_Scene()
 {
 	CMapMgr::GetInstance()->SetScene(this);
 
+
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
 
@@ -63,7 +64,7 @@ HRESULT CDive::Ready_Scene()
 
 
 
-	
+	CMapMgr::GetInstance()->Load();
 	return S_OK;
 }
 
@@ -180,11 +181,19 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	pGameObject->Set_Parent(pDiveDave);
 
 	//테스트용
-	pGameObject = CTestGlb::Create();
+	pGameObject = CTestGlb::Create(L"GLB_File");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
 		return E_FAIL;
+
+	//테스트용
+	pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"BackGroundGlb", pGameObject)))
+		return E_FAIL;
+
 
 	//테스트용
 	pGameObject = CTestFish::Create();

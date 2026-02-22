@@ -56,13 +56,22 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian.glb"));
 	CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
 
+	CAssetMgr::GetInstance()->AddAsset(L"BackGround_GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/BackGround.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"BackGround_GLB_File");
+
 	
 
-	CProtoMgr::GetInstance()->Ready_Prototype(L"Test_GLB",CGlbTex::Create(
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_File",CGlbTex::Create(
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_VtxCnt(),
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_TriCnt(),
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vertices(),
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"BackGround_GLB_File", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_Index()));
 
 
 	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));

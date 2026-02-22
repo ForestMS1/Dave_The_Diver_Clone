@@ -11,6 +11,10 @@ CTestGlb::CTestGlb()
 {
 }
 
+CTestGlb::CTestGlb(const wstring_view tex) : CGameObject(), m_wsName(tex)
+{
+}
+
 CTestGlb::CTestGlb(const CTestGlb& rhs)
     : CGameObject(rhs)
 {
@@ -60,11 +64,11 @@ void CTestGlb::Render_GameObject()
   //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-    for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_MeshCnt(); ++i) {
-        pGraphicDev->SetTexture(0, (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Texture())[i]);
-
-        _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vecTexVtxTriCnt())[i].first;
-        _uint second = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vecTexVtxTriCnt())[i].second;
+    for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_MeshCnt(); ++i) {
+        pGraphicDev->SetTexture(0, (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_Texture())[i]);
+        
+        _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].first;
+        _uint second = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].second;
         m_pBufferCom->Render_Buffer(first, second);
 
     }
@@ -79,7 +83,7 @@ void CTestGlb::Render_GameObject()
 HRESULT CTestGlb::Ready_Component()
 {
     // 버퍼
-    if (FAILED((AddComponent<Engine::CGlbTex, ID_STATIC>(L"Test_GLB", L"Com_Buffer", &m_pBufferCom))))
+    if (FAILED((AddComponent<Engine::CGlbTex, ID_STATIC>(m_wsName, L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     // 텍스쳐
@@ -96,6 +100,20 @@ HRESULT CTestGlb::Ready_Component()
 CTestGlb* CTestGlb::Create()
 {
     CTestGlb* pTestGlb = new CTestGlb;
+
+    if (FAILED(pTestGlb->Ready_GameObject()))
+    {
+        Safe_Release(pTestGlb);
+        MSG_BOX("CTestGlb Create Failed");
+        return nullptr;
+    }
+
+    return pTestGlb;
+}
+
+CTestGlb* CTestGlb::Create(const wstring_view tex)
+{
+    CTestGlb* pTestGlb = new CTestGlb(tex);
 
     if (FAILED(pTestGlb->Ready_GameObject()))
     {
