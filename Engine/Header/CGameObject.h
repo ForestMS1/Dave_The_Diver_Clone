@@ -1,7 +1,7 @@
 #pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
-
+#include "CHelper.h"
 
 namespace Engine
 {
@@ -32,16 +32,20 @@ public:
 
 public:
 	void			Compute_ViewZ(const _vec3* pPos);
+	void			Set_DeadCascade() { CHelper::TreeLevelTraversal(this, [](CGameObject* pObj) { pObj->Set_Dead(); }); }
 	void			Set_Dead() { m_bDead = true; }
 	bool			Get_Dead() const { return m_bDead; }
 	void			Set_Tag(std::wstring_view svTag) { m_sTag; }
-	wstring_view	Get_Tag() { return m_sTag; }
+	wstring_view	Get_Tag() const { return m_sTag; }
+	void			Set_Render(bool flag) { m_bRender = flag; }
+	bool			Get_Render()const  { return m_bRender; }
 	
 protected:
 	map<const std::wstring, CComponent*>	m_mapComponent[ID_END];
 
 	_float									m_fViewZ;
 	bool									m_bDead;
+	bool									m_bRender;
 	std::wstring							m_sTag;
 
 // °èÃþ °ü·Ã

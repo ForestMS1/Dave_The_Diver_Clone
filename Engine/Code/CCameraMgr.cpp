@@ -73,6 +73,15 @@ void CCameraMgr::Change_CurCamera(wstring_view svCameraTag)
 	m_pCurCamera->Set_Acitve(true);
 }
 
+CCamera* CCameraMgr::Find_Camera(wstring_view svCameraTag)
+{
+	auto iter = find_if(m_mapCamera.begin(), m_mapCamera.end(), CTag_FinderSV(svCameraTag));
+	if (iter == m_mapCamera.end())
+		return nullptr;
+
+	return iter->second;
+}
+
 void CCameraMgr::Update_Gizmo()
 {
 #ifdef _DEBUG

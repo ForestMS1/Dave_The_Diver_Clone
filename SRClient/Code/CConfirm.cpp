@@ -9,7 +9,6 @@
 CConfirm::CConfirm()
     : CGameObject()
 {
-    render = false;
 }
 
 CConfirm::CConfirm(const CGameObject& rhs)
@@ -33,8 +32,8 @@ HRESULT CConfirm::Ready_GameObject()
 
 _int CConfirm::Update_GameObject(const _float& fTimeDelta)
 {
-    if (render) {
-        CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+    if (m_bRender) {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -44,7 +43,7 @@ _int CConfirm::Update_GameObject(const _float& fTimeDelta)
 
 void CConfirm::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    if (render) {
+    if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
 
         _vec3		vPos;
@@ -57,7 +56,7 @@ void CConfirm::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CConfirm::Render_GameObject()
 {
-    if (render) {
+    if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);

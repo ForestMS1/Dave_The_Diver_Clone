@@ -27,7 +27,10 @@ public:
 	void	Change_CurCamera(wstring_view svCameraTag);
 
 	CCamera* Get_CurCamera() { return m_pCurCamera; }
+	CCamera* Get_Camera(wstring_view svCameraTag) { return Find_Camera(svCameraTag); };
 
+private:
+	CCamera*	Find_Camera(wstring_view svCameraTag);
 private:
 	void Update_Gizmo();
 

@@ -63,6 +63,7 @@ public:
 
 		ScreenToClient(CInfoMgr::GetInstance()->Get_HWND(), &ptMouse);
 
+
 		_vec3		vMousePos;
 
 		_D3DVIEWPORT9 ViewPort;
@@ -92,7 +93,31 @@ public:
 		D3DXVec3TransformCoord(pRayPos, &vRayPos, &matView);
 		D3DXVec3TransformNormal(pRayDir, &vRayDir, &matView);
 	}
+	static void GetScreenPointFromWorld(_vec3* pOutScreenPos, const _vec3* pWorldPos)
+	{
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
+		// 1. 현재 장치의 View, Projection 행렬과 Viewport 정보 가져오기
+		_matrix matView, matProj;
+		_D3DVIEWPORT9 ViewPort;
+
+		pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+		pGraphicDev->GetViewport(&ViewPort);
+
+		// 2. 월드 좌표를 투영 공간(Projection Space)까지 변환
+		// World -> View -> Projection 과정을 한 번에 수행
+		_vec3 vScreenPos;
+		_matrix matWorldViewProj = matView * matProj;
+		D3DXVec3TransformCoord(&vScreenPos, pWorldPos, &matWorldViewProj);
+
+		// 3. NDC 좌표(-1 ~ 1)를 스크린 픽셀 좌표로 변환
+		// x: [-1, 1] -> [0, ViewPort.Width]
+		// y: [1, -1] -> [0, ViewPort.Height] (Y축은 아래로 갈수록 커지므로 반전)
+		pOutScreenPos->x = (vScreenPos.x + 1.f) * (ViewPort.Width * 0.5f) + ViewPort.X;
+		pOutScreenPos->y = (1.f - vScreenPos.y) * (ViewPort.Height * 0.5f) + ViewPort.Y;
+		pOutScreenPos->z = vScreenPos.z; // 깊이 값 (보통 0~1 사이)
+	}
 	static void GetMousePointInWorld(_vec3* pOut)
 	{
 		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();

@@ -8,6 +8,7 @@ CGameObject::CGameObject()
     : m_fViewZ(1.f)
     , m_pParentGameObject(nullptr)
     , m_bDead(false)
+    , m_bRender(false)
 {
 }
 
@@ -15,8 +16,9 @@ CGameObject::CGameObject(const CGameObject& rhs)
     : m_fViewZ(1.f)
     , m_pParentGameObject(nullptr) // 복사생성시 계층구조는 가져오지 않는다.
     , m_bDead(false)
-    
+    , m_bRender(false)
 {
+    
 }
 
 CGameObject::~CGameObject()

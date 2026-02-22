@@ -30,7 +30,6 @@ private:
 
 public:
 	static CConfirm* Create();
-	bool render;
 
 private:
 	virtual void Free();
