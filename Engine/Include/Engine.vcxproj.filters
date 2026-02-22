@@ -253,6 +253,9 @@
     <Filter Include="02. Component\00. VIBuffer\LineBuffer">
       <UniqueIdentifier>{edb1e637-d53e-48f3-ad2e-bddeb7ef40ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\TextureFrame">
+      <UniqueIdentifier>{c0c991c0-3989-4881-be7f-c1920033020f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -714,6 +717,9 @@
     <ClCompile Include="..\Code\CLineBuffer.cpp">
       <Filter>02. Component\00. VIBuffer\LineBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CTextureFrame.cpp">
+      <Filter>02. Component\TextureFrame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -976,6 +982,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLineBuffer.h">
       <Filter>02. Component\00. VIBuffer\LineBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTextureFrame.h">
+      <Filter>02. Component\TextureFrame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

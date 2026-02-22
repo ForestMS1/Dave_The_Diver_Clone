@@ -11,6 +11,7 @@
 #include "CTexture.h"
 #include "CCalculator.h"
 #include "CDynamicBuffer.h"
+#include "CTextureFrame.h"
 
 BEGIN(Engine)
 

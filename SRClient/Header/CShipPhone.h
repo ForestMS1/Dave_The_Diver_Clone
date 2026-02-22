@@ -10,7 +10,9 @@ private:
 public:
 	bool Get_OpenTween() const { return m_bOpenTween; }
 	bool Get_CloseTween() const { return m_bCloseTween; }
-	void Set_CloseTween(bool bCloseTween) { m_bCloseTween = bCloseTween; }
+	void Set_CloseTween(bool bCloseTween) {
+		m_bCloseTween = bCloseTween; OnUnFocus_App();
+	}
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -20,10 +22,17 @@ public:
 
 public:
 	void Focus_App(wstring_view svFocusAppName);
-	void UnFocus_App(wstring_view svFocusAppName);
+	void UnFocus_App();
+
+private:
+	void OnFocus_App();
+	void OnFocusing_App();
+	void OnUnFocus_App();
+	void OnUnFocusing_App();
 
 private:
 	HRESULT			Ready_Component();
+
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -42,8 +51,13 @@ private:
 
 	// PosX, PosY, RotX, RotY
 	tweeny::tween<float, float, float, float> m_tweenUnFocus;
-	bool m_bUnFocus;
+	//bool m_bUnFocus;
 	bool m_bUnFocusing;
+
+	bool m_bOnFocus;
+	bool m_bOnUnFocus;
+	std::wstring m_sFocusedAppName;
+
 
 public:
 	static CShipPhone* Create();
