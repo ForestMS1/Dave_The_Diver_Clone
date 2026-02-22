@@ -48,12 +48,16 @@ void CMapMgr::Load() {
 						float rx = elem[1];
 						float ry = elem[2];
 						float rz = elem[3];
+						_vec3 rotation{ rx, ry, rz };
+						dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Rotation(&rotation);
 					}
 					else if (type == "scale")
 					{
 						float sx = elem[1];
 						float sy = elem[2];
 						float sz = elem[3];
+						_vec3 scale{ sx, sy, sz };
+						dynamic_cast<CTransform*>((*it)->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Set_Scale(&scale);
 					}
 				}
 				++it;

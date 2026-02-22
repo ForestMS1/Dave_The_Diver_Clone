@@ -18,7 +18,7 @@
 #include "CMapMgr.h"
 #include "CTestGlb.h"
 #include "CSkyBox.h"
-
+#include "CBackGroundSea.h"
 
 
 CDive::CDive()
@@ -31,8 +31,8 @@ CDive::~CDive()
 
 HRESULT CDive::Ready_Scene()
 {
-	//if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
-	//	return E_FAIL;
+	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+		return E_FAIL;
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
@@ -59,6 +59,8 @@ HRESULT CDive::Ready_Scene()
 	CCameraMgr::GetInstance()->Set_Camera(L"FreeCam", pCamera);
 
 	CMapMgr::GetInstance()->SetScene(this);
+
+	CMapMgr::GetInstance()->Load();
 	return S_OK;
 }
 
@@ -105,13 +107,11 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 
 
-	// SkyBox
-	pGameObject = CSkyBox::Create();
 
-	if (nullptr == pGameObject)
+	CGameObject* pBackGroundSea = CBackGroundSea::Create();
+	if (nullptr == pBackGroundSea)
 		return E_FAIL;
-
-	if (FAILED(pLayer->Add_GameObject(L"SkyBox", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"CBackGroundSea", pBackGroundSea)))
 		return E_FAIL;
 
 

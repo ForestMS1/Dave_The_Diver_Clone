@@ -64,12 +64,11 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
 
 
-	CAssetMgr::GetInstance()->AddAsset(L"CubeTex", CAssetCubeTexture::Create(L"../Bin/Resource/Texture/Map/SkyBox.dds"));
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create())))
-		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"));
 	
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(L"CubeTex"))))
-		return E_FAIL;
+
 
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG

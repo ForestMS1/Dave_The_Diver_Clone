@@ -86,7 +86,7 @@ private:
 	EQUIPPED m_eCurEquipped = EQUIPPED::MELEE;
 
 private:
-	_float m_fSpeed = 5.f;
+	_float m_fSpeed = 15.f;
 	_float m_fFrame = 0.f;
 	_bool  m_bFishCaught = false;
 
