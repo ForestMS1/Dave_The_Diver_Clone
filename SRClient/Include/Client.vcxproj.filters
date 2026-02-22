@@ -232,6 +232,9 @@
     <Filter Include="02. GameObject\00. Ship\Phone\App\Weapon">
       <UniqueIdentifier>{544f77ad-2d43-42ac-ac86-504eb21fcca9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Logo">
+      <UniqueIdentifier>{bc798582-013e-46a8-b415-3950663d1fc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -558,6 +561,15 @@
     <ClInclude Include="..\Header\CShipPhoneWeaponCreateSuccess.h">
       <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CLogoBG.h">
+      <Filter>02. GameObject\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLogoTitle.h">
+      <Filter>02. GameObject\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLogoBtnArea.h">
+      <Filter>02. GameObject\Logo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -874,6 +886,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneWeaponCreateSuccess.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLogoBG.cpp">
+      <Filter>02. GameObject\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLogoTitle.cpp">
+      <Filter>02. GameObject\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLogoBtnArea.cpp">
+      <Filter>02. GameObject\Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

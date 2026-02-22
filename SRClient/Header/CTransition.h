@@ -46,6 +46,9 @@ private:
 	HRESULT Common_SHIP_Load();
 	HRESULT Common_SHIP_Unload();
 
+	HRESULT Common_Logo_Env_Load();
+	HRESULT Common_Logo_Env_Unload();
+
 
 public:
 	HRESULT		Ready_Scene() override;

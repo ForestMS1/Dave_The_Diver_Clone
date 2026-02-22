@@ -72,6 +72,10 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(L"CubeTex"))))
 		return E_FAIL;
 
+	// Write By SY
+	{
+		Common_Logo_Env_Load();
+	}
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG
 	//Sleep(500);
@@ -718,6 +722,26 @@ HRESULT CTransition::Common_SHIP_Load()
 
 HRESULT CTransition::Common_SHIP_Unload()
 {
+	return S_OK;
+}
+
+HRESULT CTransition::Common_Logo_Env_Load()
+{
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Logo_BG", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/DR_Illust.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Logo_BG");
+	
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Logo_Title", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/DaveTheDiver_TitleLogo.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Logo_Title");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Logo_Black1pxAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/Black1pxAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Logo_Black1pxAlpha");
+	return S_OK;
+}
+
+HRESULT CTransition::Common_Logo_Env_Unload()
+{
+
+
 	return S_OK;
 }
 
