@@ -610,6 +610,38 @@ HRESULT CTransition::Common_SHIP_Load()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtnAlpha.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
 
+	// 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_BG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/PhoneBg_Duff.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_BG");
+
+	//UI_WeaponCraft_Logo.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_Logo", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/UI_WeaponCraft_Logo.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_Logo");
+
+	//Close.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_Close", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/Close.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_Close");
+
+	//UI_Area.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_Area", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/UI_Area.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_Area");
+
+	//UI_CreateBtn.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_CreateBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/UI_CreateBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_CreateBtn");
+
+	//Edge.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_Edge", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/Edge.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_Edge");
+
+	//GusikRifle.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_GukikRifle", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/GusikRifle.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_GukikRifle");
+
+	//NewWeapon.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_NewWeapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/NewWeapon.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_NewWeapon");
+
 	return S_OK;
 }
 

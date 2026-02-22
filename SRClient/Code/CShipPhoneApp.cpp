@@ -121,7 +121,14 @@ void		CShipPhoneApp::LateUpdate_GameObject(const _float& fTimeDelta)
                 {
                     if (auto pPhone = dynamic_cast<CShipPhone*>(m_pParentGameObject))
                     {
-                        pPhone->Focus_App(L"1");
+                        if (m_iAppIdx == 7)
+                        {
+                            pPhone->Focus_App(L"Weapon");
+                        }
+                        else if (m_iAppIdx == 11)
+                        {
+                            pPhone->Focus_App(L"IDiver");
+                        }
                     }
                 }
                 else

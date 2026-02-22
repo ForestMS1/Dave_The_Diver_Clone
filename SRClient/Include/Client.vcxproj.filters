@@ -196,6 +196,9 @@
     <Filter Include="02. GameObject\00. Ship\Phone\App\IDiver\ShipPhoneIDiverUpgradeSuccess">
       <UniqueIdentifier>{b770bb5e-d2f0-44e3-b1f7-be45eebe07f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\Weapon">
+      <UniqueIdentifier>{544f77ad-2d43-42ac-ac86-504eb21fcca9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -468,6 +471,18 @@
     <ClInclude Include="..\Header\CShipDiverBoxInventory.h">
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneWeaponBG.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneWeaponImg.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneWeaponArea.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipPhoneWeaponCreateSuccess.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -730,6 +745,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBoxInventory.cpp">
       <Filter>02. GameObject\00. Ship\01. Boat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneWeaponBG.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneWeaponImg.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneWeaponArea.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipPhoneWeaponCreateSuccess.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

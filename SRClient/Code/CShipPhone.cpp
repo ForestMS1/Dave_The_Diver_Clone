@@ -10,6 +10,7 @@
 #include "CHelper.h"
 #include "CLog.h"
 #include "CShipPhoneIDiverBG.h"
+#include "CShipPhoneWeaponBG.h"
 
 CShipPhone::CShipPhone()
     : CGameObject()
@@ -273,9 +274,19 @@ HRESULT			CShipPhone::Ready_Component()
 }
 void CShipPhone::OnFocus_App()
 {
-    auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
-    CShipPhoneIDiverBG* pShipPhoneIDiverBG = CShipPhoneIDiverBG::Create();
-    pLayer->Add_GameObject(L"ShipPhoneIDiverBG", pShipPhoneIDiverBG);
+    if (m_sFocusedAppName == L"IDiver")
+    {
+        auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
+        CShipPhoneIDiverBG* pShipPhoneIDiverBG = CShipPhoneIDiverBG::Create();
+        pLayer->Add_GameObject(L"ShipPhoneIDiverBG", pShipPhoneIDiverBG);
+    }
+    else if (m_sFocusedAppName == L"Weapon")
+    {
+        auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
+        CShipPhoneWeaponBG* pWeapon = CShipPhoneWeaponBG::Create();
+        pLayer->Add_GameObject(L"ShipPhoneWeaponBG", pWeapon);
+    }
+
 }
 void CShipPhone::OnFocusing_App()
 {
@@ -290,6 +301,13 @@ void CShipPhone::OnUnFocus_App()
         ->Get_Scene()
         ->Get_Layer(L"0_GameLogic_Layer")
         ->Get_GameObjectFirst(L"ShipPhoneIDiverBG"))
+    {
+        pGameObj->Set_DeadCascade();
+    }
+    else if (auto pGameObj = CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")
+        ->Get_GameObjectFirst(L"ShipPhoneWeaponBG"))
     {
         pGameObj->Set_DeadCascade();
     }

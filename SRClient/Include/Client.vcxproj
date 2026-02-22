@@ -197,6 +197,10 @@
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgrade.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeBtn.h" />
     <ClInclude Include="..\Header\CShipPhoneIDiverUpgradeSuccess.h" />
+    <ClInclude Include="..\Header\CShipPhoneWeaponArea.h" />
+    <ClInclude Include="..\Header\CShipPhoneWeaponBG.h" />
+    <ClInclude Include="..\Header\CShipPhoneWeaponCreateSuccess.h" />
+    <ClInclude Include="..\Header\CShipPhoneWeaponImg.h" />
     <ClInclude Include="..\Header\CShipTransformCam.h" />
     <ClInclude Include="..\Header\CShipUIDiveBtn.h" />
     <ClInclude Include="..\Header\CShipUIGoBtn.h" />
@@ -294,6 +298,10 @@
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgrade.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeBtn.cpp" />
     <ClCompile Include="..\Code\CShipPhoneIDiverUpgradeSuccess.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneWeaponArea.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneWeaponBG.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneWeaponCreateSuccess.cpp" />
+    <ClCompile Include="..\Code\CShipPhoneWeaponImg.cpp" />
     <ClCompile Include="..\Code\CShipTransformCam.cpp" />
     <ClCompile Include="..\Code\CShipUIDiveBtn.cpp" />
     <ClCompile Include="..\Code\CShipUIGoBtn.cpp" />
