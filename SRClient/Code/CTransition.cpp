@@ -550,20 +550,168 @@ HRESULT CTransition::Common_SHIP_Load()
 
 	for (int i = 1; i <= 22; ++i)
 	{
-		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp/SmartPhoneApp" + ::to_wstring(i) + L".png";
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp_2/SmartPhoneApp" + ::to_wstring(i) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneApp", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneApp");
 
 	for (int i = 1; i <= 22; ++i)
 	{
-		wstring s = L"../Bin/Resource/Texture/Ship/PhoneAppAlpha/SmartPhoneAppAlpha" + ::to_wstring(i) + L".png";
+		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp_2Alpha/SmartPhoneApp" + ::to_wstring(i) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneAppAlpha");
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DiverBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/UI_PotionCraft_DiverBox/UI_PotionCraft_DiverBox.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiverBox");
+
+	//Tex_PhoneIDiverBG
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneIDiverBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/iDiverBG.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneIDiverBG");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_IDiverItem", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UI_IDiverItem.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_IDiverItem");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_IDiverUpgrade", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/IDiverUpgradeUI.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_IDiverUpgrade");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_BG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/Tmp2.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_BG");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_FakeBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/Tmp3.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_FakeBG");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_DiveBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiveBtn/DiveBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_DiveBtn");
+
+	for (int i = 1; i <= 38; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Ship/DiveBtn/Sheet/BtnMake-Sheet_" + to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_DiveSpriteBtn", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_DiveSpriteBtn");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_GoBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoBoatBtn/UI_LobbyExit_Normal.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_GoBtn");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_GoBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoBoatBtn/UI_LobbyExit_NormalAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_GoBtnAlpha");
+
+	//Space_Key_Dark_Symbol
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_SpaceKey", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Space_Key_Dark_Symbol.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_SpaceKey");
+
+	//MoneyUI
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_Money", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/MoneyUI/MoneyUI.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_Money");
+
+	// DiverBoxDave
+	for (int i = 1; i <= 8; ++i)
+	{
+		//02_Dave_01
+		wstring s = L"../Bin/Resource/Texture/Ship/DiverBoxDave/02_Dave_0" + to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_DiverBoxDave", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_DiverBoxDave");
+
+
+	//InventoryBoxEdge
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryBoxEdge", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/InventoryBoxEdge2.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryBoxEdge");
+
+
+	//Jaksal
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Jaksal", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Jaksal.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Jaksal");
+
+	//Gun
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Gun", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Gun.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Gun");
+
+	//Knief
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Knief", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Knief.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Knief");
+
+	//Jusin
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_Jusin", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/upperItem/Jusin.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_Jusin");
+
+
+	//ItemDescUI.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Inventory_ItemDescUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/ItemDescUI.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Inventory_ItemDescUI");
+
+	//WoodPanel.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiverBoxInventory/lowerItem/WoodPanel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel");
+
+
+	// Item_Sanso.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Sanso", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Sanso.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Sanso");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Clothes", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Clothes.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Clothes");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Cage", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Cage.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Cage");
+
+	// Item_Jaksal.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Item_Jaksal", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Item_Jaksal.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Item_Jaksal");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_Edge", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/Edge.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_Edge");
+
+	//UpgradeSuccess.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeSuccess", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgradeSuccess.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeSuccess");
+
+	//UpgrddeBtn.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeBtn");
+
+	//UpgrddeBtnAlpha.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/iDiver/UpgrddeBtnAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
+
+	// 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_BG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/PhoneBg_Duff.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_BG");
+
+	//UI_WeaponCraft_Logo.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_Logo", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/UI_WeaponCraft_Logo.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_Logo");
+
+	//Close.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_Close", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/Close.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_Close");
+
+	//UI_Area.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_Area", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/UI_Area.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_Area");
+
+	//UI_CreateBtn.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_CreateBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/UI_CreateBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_CreateBtn");
+
+	//Edge.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_Edge", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/Edge.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_Edge");
+
+	//GusikRifle.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_GukikRifle", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/GusikRifle.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_GukikRifle");
+
+	//NewWeapon.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_NewWeapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/NewWeapon.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_NewWeapon");
+
 	return S_OK;
 }
 

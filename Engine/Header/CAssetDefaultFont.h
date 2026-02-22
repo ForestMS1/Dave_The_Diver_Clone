@@ -26,6 +26,7 @@ public:
 
 public:
 	void Render_Font(std::wstring_view svString, const _vec2* pPos, D3DXCOLOR Color);
+	void Render_Font(std::wstring_view svString, const _vec2* pPos, D3DXCOLOR Color, DWORD dwOption);
 
 public:
 	static CAssetDefaultFont* Create(std::wstring_view svFontType,

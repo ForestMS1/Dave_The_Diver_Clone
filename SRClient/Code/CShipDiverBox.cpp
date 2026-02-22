@@ -55,15 +55,15 @@ _int		CShipDiverBox::Update_GameObject(const _float& fTimeDelta)
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 
-    if (ImGui::Button("open diver box inventory"))
-    {
-        auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
-        CShipDiverBoxInventory* pShipDiverBoxInventory = CShipDiverBoxInventory::Create();
-        if (nullptr == pShipDiverBoxInventory)
-	        return E_FAIL;
-        if (FAILED(pLayer->Add_GameObject(L"ShipDiverBoxInventory", pShipDiverBoxInventory)))
-	        return E_FAIL;
-    }
+    //if (ImGui::Button("open diver box inventory"))
+    //{
+    //    auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
+    //    CShipDiverBoxInventory* pShipDiverBoxInventory = CShipDiverBoxInventory::Create();
+    //    if (nullptr == pShipDiverBoxInventory)
+	   //     return E_FAIL;
+    //    if (FAILED(pLayer->Add_GameObject(L"ShipDiverBoxInventory", pShipDiverBoxInventory)))
+	   //     return E_FAIL;
+    //}
     
 
         //

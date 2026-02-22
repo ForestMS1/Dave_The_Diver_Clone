@@ -14,6 +14,9 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
 
+public:
+	void DoDiveReady() { m_bDiveReady = true; };
+
 private:
 	HRESULT			Ready_Component();
 	void			Key_Input(const _float& fTimeDelta);
@@ -28,6 +31,9 @@ private:
 	_uint			m_iFrame;
 	_float m_fAccFrameDelta;
 	bool m_bSeeRight;
+
+
+	bool m_bDiveReady;
 
 public:
 	static CShipDave* Create();
