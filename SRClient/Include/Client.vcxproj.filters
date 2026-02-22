@@ -288,9 +288,6 @@
     <ClInclude Include="..\Header\CShipBoat.h">
       <Filter>02. GameObject\00. Ship\01. Boat</Filter>
     </ClInclude>
-    <ClInclude Include="CShipDiverBoxInventory.h">
-      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CShipPhone.h">
       <Filter>02. GameObject\00. Ship\Phone\03. ShipPhone</Filter>
     </ClInclude>
@@ -468,6 +465,9 @@
     <ClInclude Include="..\Header\CShipPhoneIDiverItem.h">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipDiverBoxInventory.h">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -550,9 +550,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipBoat.cpp">
       <Filter>02. GameObject\00. Ship\01. Boat</Filter>
-    </ClCompile>
-    <ClCompile Include="CShipDiverBoxInventory.cpp">
-      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhone.cpp">
       <Filter>02. GameObject\00. Ship\Phone\03. ShipPhone</Filter>
@@ -730,6 +727,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneIDiverItem.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxInventory.cpp">
+      <Filter>02. GameObject\00. Ship\01. Boat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

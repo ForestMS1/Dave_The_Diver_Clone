@@ -184,6 +184,7 @@
     <ClInclude Include="..\Header\CKitchen.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
     <ClInclude Include="..\Header\CShipDiverBoxDave.h" />
+    <ClInclude Include="..\Header\CShipDiverBoxInventory.h" />
     <ClInclude Include="..\Header\CShipDiverBoxinventoryDesc.h" />
     <ClInclude Include="..\Header\CShipDiverBoxInventoryEdge.h" />
     <ClInclude Include="..\Header\CShipDiverBoxInventoryItemArea.h" />
@@ -243,7 +244,6 @@
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="..\Header\IDiverInfo.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="CShipDiverBoxInventory.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -281,6 +281,7 @@
     <ClCompile Include="..\Code\CKitchen.cpp" />
     <ClCompile Include="..\Code\CShipBG.cpp" />
     <ClCompile Include="..\Code\CShipDiverBoxDave.cpp" />
+    <ClCompile Include="..\Code\CShipDiverBoxInventory.cpp" />
     <ClCompile Include="..\Code\CShipDiverBoxinventoryDesc.cpp" />
     <ClCompile Include="..\Code\CShipDiverBoxInventoryEdge.cpp" />
     <ClCompile Include="..\Code\CShipDiverBoxInventoryItemArea.cpp" />
@@ -335,7 +336,6 @@
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="..\Code\IDiverInfo.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="CShipDiverBoxInventory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
