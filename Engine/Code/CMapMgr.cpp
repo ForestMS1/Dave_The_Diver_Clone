@@ -26,6 +26,8 @@ void CMapMgr::Load() {
 		CLayer* m_Layer = m_Scene->Get_Layer(StringToWString(layerName));
 		for (auto& j : i["Layer"]) {
 			std::string GameObjectLayerName = j["GameObjectLayerName"].get<std::string>();
+			auto objList = (*m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName)));
+	
 			list<CGameObject*> CGameObjectLayer = *m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName));
 			auto it = CGameObjectLayer.begin();
 			for (auto& k : j["GameObjectLayer"]) {
@@ -62,7 +64,7 @@ void CMapMgr::Load() {
 				}
 				++it;
 			}
-
+			
 
 		}
 	}

@@ -32,6 +32,8 @@ CDive::~CDive()
 
 HRESULT CDive::Ready_Scene()
 {
+	CMapMgr::GetInstance()->SetScene(this);
+
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
 
@@ -59,9 +61,9 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 	CCameraMgr::GetInstance()->Set_Camera(L"FreeCam", pCamera);
 
-	CMapMgr::GetInstance()->SetScene(this);
 
-	CMapMgr::GetInstance()->Load();
+
+	
 	return S_OK;
 }
 
