@@ -31,6 +31,9 @@ void CDiveDaveHit::Input(const _float& fTimeDelta)
 _int CDiveDaveHit::Update_State(const _float& fTimeDelta)
 {
 	Input(fTimeDelta);
+	m_pOwner->Acc_HitTime(fTimeDelta);
+	if (m_pOwner->Get_HitTime() > 0.5f)
+		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 2);
 	return 0;
 }
@@ -64,6 +67,7 @@ void CDiveDaveHit::Exit()
 void CDiveDaveHit::Clear()
 {
 	m_pOwner->Hit_Free();
+	m_pOwner->Reset_HitTime();
 }
 
 

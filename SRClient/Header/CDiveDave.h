@@ -73,6 +73,9 @@ public:
 
 	void				On_Hit(const _float& fDamage) 
 	{ 
+		if (m_fIvncTime > 0.f)
+			return;
+
 		m_bIsHit = true;
 		m_fHp -= fDamage;
 		if (m_fHp <= 0.f)
@@ -85,6 +88,9 @@ public:
 	void				On_Dead() 															{ m_bIsDie = true; }
 	// Hit 상태 탈출시 호출
 	void				Hit_Free()															{ m_bIsHit = false; }
+	_float				Get_HitTime()														{ return m_fIvncTime; }
+	void				Acc_HitTime(const _float& fTimeDelta)								{ m_fIvncTime += fTimeDelta; }
+	void				Reset_HitTime()														{ m_fIvncTime = 0.f; }
 	// 전역 상태 바로 진입
 	_bool				Check_GlobalState();
 
@@ -130,7 +136,7 @@ private:
 	_bool m_bIsOnItem = false;
 
 	_float m_fHp = 100.f;
-	_float m_fIvncTime = 1.f; // 피격 당한 후 무적시간
+	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
 	_bool  m_bIsHit = false;
 	_bool  m_bIsDie = false; // CGameObject의 m_bDead와 다른 용도!
 
