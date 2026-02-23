@@ -32,11 +32,11 @@ HRESULT		CTransitionFade::Ready_GameObject()
     
     if (m_eFade == FADE_IN)
     {
-        m_tween = m_tween.from(1.f).to(0.f).during(1000).via(tweeny::easing::linear);
+        m_tween = m_tween.from(1.f).to(0.f).during(300).via(tweeny::easing::linear);
     }
     else
     {
-        m_tween = m_tween.from(0.f).to(1.f).during(1000).via(tweeny::easing::linear);
+        m_tween = m_tween.from(0.f).to(1.f).during(300).via(tweeny::easing::linear);
     }
 
     m_fViewZ = -9999.f;

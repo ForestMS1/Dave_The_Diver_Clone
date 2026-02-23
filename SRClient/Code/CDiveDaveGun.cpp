@@ -37,7 +37,7 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 
 _int CDiveDaveGun::Update_GameObject(const _float& fTimeDelta)
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return 0;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return 0;
@@ -51,7 +51,7 @@ _int CDiveDaveGun::Update_GameObject(const _float& fTimeDelta)
 
 void CDiveDaveGun::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return;
@@ -64,7 +64,7 @@ void CDiveDaveGun::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CDiveDaveGun::Render_GameObject()
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)
 		return;
@@ -164,7 +164,7 @@ void CDiveDaveGun::Fire()
 	m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
 	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->
 		Add_GameObject(L"DiveDaveBullet", CDiveDaveBullet::Create(vOrigin, vDir, m_pTransformCom->m_vAngle.z));
-	static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DiveState::IDLE);
+	static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
 }
 
 CDiveDaveGun* CDiveDaveGun::Create()

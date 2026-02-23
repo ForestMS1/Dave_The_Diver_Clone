@@ -1,8 +1,8 @@
 #include "CProjectileHit.h"
-#include "CHarpoonProjectile.h"
 #include "CDiveDave.h"
-CProjectileHit::CProjectileHit(CGameObject* pOwner)
-    : CPlayerState(pOwner)
+#include "CHarpoonProjectile.h"
+CProjectileHit::CProjectileHit(CHarpoonProjectile* pOwner)
+    : CBaseState<CHarpoonProjectile>(pOwner)
 {
 }
 
@@ -20,8 +20,8 @@ void CProjectileHit::Input(const _float& fTimeDelta)
 
 _int CProjectileHit::Update_State(const _float& fTimeDelta)
 {
-    CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
-    if (static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+    CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
+    if (static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
     {
         pProjectile->Set_State(PROJECTILESTATE::RETURN);
     }
@@ -44,7 +44,7 @@ void CProjectileHit::Clear()
 {
 }
 
-CProjectileHit* CProjectileHit::Create(CGameObject* pOwner)
+CProjectileHit* CProjectileHit::Create(CHarpoonProjectile* pOwner)
 {
     CProjectileHit* pState = new CProjectileHit(pOwner);
 

@@ -1,10 +1,13 @@
 #pragma once
-#include "CPlayerState.h"
-class CProjectileFire :
-    public CPlayerState
+#include "CBaseState.h"
+
+class CHarpoonProjectile;
+
+
+class CProjectileFire : public CBaseState<CHarpoonProjectile>
 {
 private:
-    explicit CProjectileFire(CGameObject* pOwner);
+    explicit CProjectileFire(CHarpoonProjectile* pOwner);
     ~CProjectileFire();
 
 public:
@@ -23,7 +26,7 @@ private:
     _bool m_bIsHitFish = false;
 
 public:
-    static CProjectileFire* Create(CGameObject* pOwner);
+    static CProjectileFire* Create(CHarpoonProjectile* pOwner);
 private:
     virtual void Free() override;
 };

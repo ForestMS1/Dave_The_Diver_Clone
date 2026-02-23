@@ -72,7 +72,8 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 	ImGui::Begin("Curr Scene: CSushi");
 	if (ImGui::Button("Go Ship Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP));
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP));
+		CTransition::FadedTransition(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
 	Key_Input();

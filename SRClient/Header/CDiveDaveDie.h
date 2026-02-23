@@ -3,11 +3,12 @@
 
 class CDiveDave;
 
-class CDiveDaveOpen : public CBaseState<CDiveDave>
+class CDiveDaveDie :
+    public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDaveOpen(CDiveDave* pOwner);
-	~CDiveDaveOpen();
+	explicit CDiveDaveDie(CDiveDave* pOwner);
+	~CDiveDaveDie();
 
 public:
 	void Enter() override;
@@ -18,12 +19,8 @@ public:
 	void Exit() override;
 	void Clear() override;
 
-
-private:
-	_float m_fOpenTime = 0.f;
-
 public:
-	static CDiveDaveOpen* Create(CDiveDave* pOwner);
+	static CDiveDaveDie* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };

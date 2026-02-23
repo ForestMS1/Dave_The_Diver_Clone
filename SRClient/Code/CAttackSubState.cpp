@@ -1,9 +1,9 @@
 #include "CAttackSubState.h"
-
-CAttackSubState::CAttackSubState(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
-	: m_pPlayer(pPlayer)
-	, m_pParentState(pParentState)
+#include "CDiveDaveAttack.h"
+CAttackSubState::CAttackSubState(CDiveDaveAttack* pParentState)
+	: CBaseState<CDiveDaveAttack>(pParentState)
 {
+	m_pDiveDave = m_pOwner->Get_OwnerDave();
 }
 
 CAttackSubState::~CAttackSubState()

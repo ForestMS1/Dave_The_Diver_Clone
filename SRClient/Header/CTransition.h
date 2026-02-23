@@ -30,6 +30,8 @@ public:
 
 	CRITICAL_SECTION* Get_Crt() { return &m_Crt; }
 
+	void Set_Finish() { m_bFinish = true; }
+
 public:
 	// init으로 올일이 없으니 이 전환 과정에서
 	// 로드되는 에셋 프로토타입들은 계속 사용되는 애들이다.
@@ -83,8 +85,15 @@ private:
 
 public:
 	static void FadedTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene);
+	static bool s_LogoAssetLoaded;
+	static bool s_ShipAssetLoaded;
+	static bool s_DiveAssetLoaded;
+	static bool s_SushiAssetLoaded;
 
 private:
 	void AddFadeIn(CScene* pScene, function<void()> funcOnEnd = nullptr);
 	void AddFadeOut(CScene* pScene, function<void()> funcOnEnd = nullptr);
+
+private:
+	void Update_Camera();
 };

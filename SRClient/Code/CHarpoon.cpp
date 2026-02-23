@@ -38,7 +38,7 @@ HRESULT CHarpoon::Ready_GameObject()
 
 _int CHarpoon::Update_GameObject(const _float& fTimeDelta)
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return 0;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return 0;
@@ -52,7 +52,7 @@ _int CHarpoon::Update_GameObject(const _float& fTimeDelta)
 
 void CHarpoon::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return;
@@ -66,7 +66,7 @@ void CHarpoon::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CHarpoon::Render_GameObject()
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return;

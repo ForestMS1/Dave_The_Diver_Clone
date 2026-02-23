@@ -1,14 +1,14 @@
 #pragma once
-#include "CBase.h"
-#include "CGameObject.h"
+#include "CBaseState.h"
 
 class CDiveDaveAttack;
+class CDiveDave;
 
 class CAttackSubState :
-    public CBase
+    public CBaseState<CDiveDaveAttack>
 {
 public:
-	explicit CAttackSubState(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+	explicit CAttackSubState(CDiveDaveAttack* pParentState);
 	virtual ~CAttackSubState();
 
 public:
@@ -23,8 +23,7 @@ protected:
 	virtual void Clear() = 0; // 상태마다의 값, 플래그 초기화 (Enter에서 호출)
 
 protected:
-	CGameObject* m_pPlayer;
-	CDiveDaveAttack* m_pParentState;
+	CDiveDave* m_pDiveDave = nullptr;
 
 protected:
 	virtual void Free() override;

@@ -1,10 +1,12 @@
 #pragma once
+
 #include "CAttackSubState.h"
+
 class CAttackSubReady :
     public CAttackSubState
 {
 private:
-    explicit CAttackSubReady(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    explicit CAttackSubReady(CDiveDaveAttack* pParentState);
     virtual ~CAttackSubReady();
 
 public:
@@ -19,7 +21,7 @@ public:
 private:
     void Mouse_Check();
 public:
-    static CAttackSubReady* Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    static CAttackSubReady* Create(CDiveDaveAttack* pParentState);
 
 private:
     virtual void Free() override;

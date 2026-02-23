@@ -1,10 +1,13 @@
 #pragma once
-#include "CPlayerState.h"
+#include "CBaseState.h"
+
+class CHarpoonProjectile;
+
 class CProjectileReturn :
-    public CPlayerState
+    public CBaseState<CHarpoonProjectile>
 {
 private:
-    explicit CProjectileReturn(CGameObject* pOwner);
+    explicit CProjectileReturn(CHarpoonProjectile* pOwner);
     ~CProjectileReturn();
 
 public:
@@ -20,7 +23,7 @@ private:
     void Set_ParentTransform();
     void Return_Act(const _float& fTimeDelta);
 public:
-    static CProjectileReturn* Create(CGameObject* pOwner);
+    static CProjectileReturn* Create(CHarpoonProjectile* pOwner);
 private:
     virtual void Free() override;
 };
