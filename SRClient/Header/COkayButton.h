@@ -33,7 +33,7 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pOkayTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	CAABB* m_pAABB;
+	CAABB* m_pAABB; 
 	wstring whichOkay;
 
 public:

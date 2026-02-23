@@ -185,21 +185,13 @@ void CSushiList::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-
-
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
         m_pListextureCom->Set_Texture(0);
         m_pBufferCom->Render_Buffer();
-
         D3DXMATRIX matTmp;
         D3DXMatrixIdentity(&matTmp);
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-
-        //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
         // 스시 설명란
@@ -270,6 +262,23 @@ void CSushiList::Render_GameObject()
 
         _vec2 vPos5 = { screen.x + 16 * screen.x / 24,screen.y / 3 - 5 * screen.y / 57 };
         plevelFont->Render_Font(m_sLevel, &vPos5, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    }
+    else {
+        list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
+        list<CGameObject*>::iterator iter = frame->begin();
+        CGameObject* upgradeButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Upgrade");
+        CGameObject* okayButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Okay");
+        for (iter; iter != frame->end(); iter++) {
+            if (static_cast<CSushiFrame*>(*iter)->m_bSelected == true) {
+                upgradeButton->Set_Render(false);
+                okayButton->Set_Render(false);
+                vector<CGameObject*>::iterator iter3 = pictures.begin();
+                for (iter3; iter3 != pictures.end(); iter3++) {
+                    (*iter3)->Set_Render(false);
+                }
+              
+            }
+        }
     }
  
 }
