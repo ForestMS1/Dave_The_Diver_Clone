@@ -128,6 +128,9 @@ void CMenuFrame::Render_GameObject()
 
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+
+
     }
    
 }
@@ -291,7 +294,7 @@ CMenuFrame* CMenuFrame::Create()
     if (FAILED(pBackGround->Ready_GameObject()))
     {
         Safe_Release(pBackGround);
-        MSG_BOX("Open Create Failed");
+        MSG_BOX("menu Create Failed");
         return nullptr;
     }
 
@@ -303,6 +306,5 @@ void CMenuFrame::Free()
     CGameObject::Free();
     for_each(addButtons.begin(), addButtons.end(), Safe_Release<CGameObject*>);
     addButtons.clear();
-    Safe_Release(m_pMenuTextureCom);
     
 }

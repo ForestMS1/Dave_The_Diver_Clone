@@ -33,10 +33,11 @@ private:
 public:
 
 	static CAddMenuButton* Create();
+	bool m_bSelected;
 
 private:
 	virtual void Free();
-	bool m_bSelected;
+
 
 };
 

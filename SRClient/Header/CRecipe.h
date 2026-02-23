@@ -27,6 +27,10 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pRecipeTextureCom;
 	Engine::CTransform* m_pTransformCom;
+	wstring m_sQuanity;
+	wstring m_sLevel;
+	_vec3 screen;
+
 
 public:
 	static CRecipe* Create();

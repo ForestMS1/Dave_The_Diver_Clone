@@ -32,9 +32,9 @@ HRESULT CGameMemMgr::Ready()
 {
 	addFish(L"블루종", 4);
 	addFish(L"노랑탕", 5);
-	addFish(L"참치속살", 7);
-	addFish(L"노랑백", 2);
-	addFish(L"흰동가리", 5);
+	addFish(L"코반아지", 6);
+	addFish(L"노랑백", 7);
+	addFish(L"흰동가리", 8);
     return S_OK;
 }
 
