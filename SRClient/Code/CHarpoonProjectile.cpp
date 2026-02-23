@@ -51,10 +51,18 @@ HRESULT CHarpoonProjectile::Ready_GameObject()
 
 
 	//-------------State Create----------------
-	m_mapState.insert({ PROJECTILESTATE::READY, CProjectileReady::Create(this) });
-	m_mapState.insert({ PROJECTILESTATE::FIRE, CProjectileFire::Create(this) });
-	m_mapState.insert({ PROJECTILESTATE::HIT, CProjectileHit::Create(this) });
-	m_mapState.insert({ PROJECTILESTATE::RETURN, CProjectileReturn::Create(this) });
+	m_pFSM = CFSM<CHarpoonProjectile, PROJECTILESTATE>::Create(this);
+	if (m_pFSM == nullptr)
+		return E_FAIL;
+
+	m_pFSM->Add_State<CProjectileReady>(PROJECTILESTATE::READY);
+	m_pFSM->Add_State<CProjectileFire>(PROJECTILESTATE::FIRE);
+	m_pFSM->Add_State<CProjectileHit>(PROJECTILESTATE::HIT);
+	m_pFSM->Add_State<CProjectileReturn>(PROJECTILESTATE::RETURN);
+	//m_mapState.insert({ PROJECTILESTATE::READY, CProjectileReady::Create(this) });
+	//m_mapState.insert({ PROJECTILESTATE::FIRE, CProjectileFire::Create(this) });
+	//m_mapState.insert({ PROJECTILESTATE::HIT, CProjectileHit::Create(this) });
+	//m_mapState.insert({ PROJECTILESTATE::RETURN, CProjectileReturn::Create(this) });
 
 	Set_State(PROJECTILESTATE::READY);
 	return S_OK;
@@ -71,7 +79,7 @@ _int CHarpoonProjectile::Update_GameObject(const _float& fTimeDelta)
 	m_pAABB->Transform(m_pTransformCom->Get_World());
 	
 
-	m_pState->Update_State(fTimeDelta);
+	m_pFSM->Update_State(fTimeDelta);
 
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -83,7 +91,7 @@ void CHarpoonProjectile::LateUpdate_GameObject(const _float& fTimeDelta)
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
 		return;
 
-	m_pState->LateUpdate_State(fTimeDelta);
+	m_pFSM->LateUpdate_State(fTimeDelta);
 
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
@@ -96,9 +104,9 @@ void CHarpoonProjectile::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CHarpoonProjectile::Render_GameObject()
 {
-	if (m_eState != PROJECTILESTATE::RETURN)
+	if (m_pFSM->Get_State() != PROJECTILESTATE::RETURN)
 	{
-		if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+		if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 			return;
 	}
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)
@@ -160,25 +168,9 @@ CHarpoonProjectile* CHarpoonProjectile::Create()
 
 void CHarpoonProjectile::Free()
 {
-	for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
-	m_mapState.clear();
-
-	CGameObject::Free();
+	Safe_Release(m_pFSM);
 	Safe_Release(m_pAABB);
-}
-
-void CHarpoonProjectile::Set_State(PROJECTILESTATE state)
-{
-	if (m_mapState[state] == m_pState)
-		return;
-
-	if (m_pState != nullptr)
-		m_pState->Exit();
-
-	m_pState = m_mapState[state];
-	m_eState = state;
-
-	m_pState->Enter();
+	CGameObject::Free();
 }
 
 

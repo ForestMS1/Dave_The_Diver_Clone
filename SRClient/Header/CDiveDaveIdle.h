@@ -1,10 +1,12 @@
 #pragma once
-#include "CPlayerState.h"
+#include "CBaseState.h"
 
-class CDiveDaveIdle : public CPlayerState
+class CDiveDave;
+
+class CDiveDaveIdle : public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDaveIdle(CGameObject* pOwner);
+	explicit CDiveDaveIdle(CDiveDave* pOwner);
 	~CDiveDaveIdle();
 
 public:
@@ -19,7 +21,7 @@ public:
 private:
 	void Restore_Fov(const _float& fTimeDelta);
 public:
-	static CDiveDaveIdle* Create(CGameObject* pOwner);
+	static CDiveDaveIdle* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };

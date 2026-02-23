@@ -1,9 +1,10 @@
 #pragma once
 #include "CAttackSubState.h"
+
 class CAttackSubFire : public CAttackSubState
 {
 private:
-    explicit CAttackSubFire(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    explicit CAttackSubFire(CDiveDaveAttack* pParentState);
     virtual ~CAttackSubFire();
 
 public:
@@ -16,7 +17,7 @@ public:
     void Clear() override;
 
 public:
-    static CAttackSubFire* Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    static CAttackSubFire* Create(CDiveDaveAttack* pParentState);
 
 private:
     virtual void Free() override;

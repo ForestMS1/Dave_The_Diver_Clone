@@ -1,10 +1,10 @@
 #pragma once
 #include "CAttackSubState.h"
-class CAttackSubFail :
-    public CAttackSubState
+
+class CAttackSubFail : public CAttackSubState
 {
 private:
-    explicit CAttackSubFail(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    explicit CAttackSubFail(CDiveDaveAttack* pParentState);
     virtual ~CAttackSubFail();
 
 public:
@@ -17,11 +17,10 @@ public:
     void Clear() override;
 
 public:
-    static CAttackSubFail* Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    static CAttackSubFail* Create(CDiveDaveAttack* pParentState);
 
 private:
     _float m_fFailDelay = 0.f;
-
 private:
     virtual void Free() override;
 };

@@ -216,6 +216,20 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		wstring s = L"../Bin/Resource/Texture/Dive_Player/Open/Open0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerOpen", CAssetTexture::Create(s.c_str()));
 	}
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Dive_Player/Hit/Hit0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerHit", CAssetTexture::Create(s.c_str()));
+	}
+	for (int i = 0; i < 23; ++i)
+	{
+		wstring s;
+		if (i + 1 < 10)
+			s = L"../Bin/Resource/Texture/Dive_Player/Die/Die0" + ::to_wstring(i + 1) + L".png";
+		else
+			s = L"../Bin/Resource/Texture/Dive_Player/Die/Die" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerDie", CAssetTexture::Create(s.c_str()));
+	}
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_AttackReadyArm", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack/AttackReadyArms.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_TargetCurveStart", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack_Effect/Target_CurveStart.png"));
@@ -256,6 +270,10 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerOpenTexture", Engine::CTexture::Create(L"Tex_DivePlayerOpen"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerPickUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerPickUp"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerHitTexture", Engine::CTexture::Create(L"Tex_DivePlayerHit"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerDieTexture", Engine::CTexture::Create(L"Tex_DivePlayerDie"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackReadyTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackReady"))))
 		return E_FAIL;

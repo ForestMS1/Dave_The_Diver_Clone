@@ -1,10 +1,10 @@
 #pragma once
 #include "CAttackSubState.h"
-class CAttackSubFight :
-    public CAttackSubState
+
+class CAttackSubFight : public CAttackSubState
 {
 private:
-    explicit CAttackSubFight(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    explicit CAttackSubFight(CDiveDaveAttack* pParentState);
     virtual ~CAttackSubFight();
 
 public:
@@ -17,7 +17,7 @@ public:
     void Clear() override;
 
 public:
-    static CAttackSubFight* Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState);
+    static CAttackSubFight* Create(CDiveDaveAttack* pParentState);
 
 private:
     _float m_fAttackGauge = 2.f;

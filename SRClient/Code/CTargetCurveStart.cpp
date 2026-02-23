@@ -37,7 +37,7 @@ HRESULT CTargetCurveStart::Ready_GameObject()
 
 _int CTargetCurveStart::Update_GameObject(const _float& fTimeDelta)
 {
-    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
         return 0;
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -49,7 +49,7 @@ _int CTargetCurveStart::Update_GameObject(const _float& fTimeDelta)
 
 void CTargetCurveStart::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
         return;
 
     CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -61,7 +61,7 @@ void CTargetCurveStart::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CTargetCurveStart::Render_GameObject()
 {
-    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+    if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
         return;
 
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
