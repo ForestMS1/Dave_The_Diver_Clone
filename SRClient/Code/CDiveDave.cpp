@@ -15,6 +15,8 @@
 #include "CColliderMgr.h"
 #include "CDiveItemBox.h"
 #include "CDiveDavePickUp.h"
+#include "CDiveDaveHit.h"
+#include "CDiveDaveDie.h"
 string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
@@ -68,9 +70,12 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	m_pAABB->Transform(m_pTransformCom->Get_World());
 	m_pAABBItem->Transform(m_pTransformCom->Get_World());
 
-
-	Key_Input();
-	Mouse_Input();
+	_bool isGlobalState = Check_GlobalState();
+	if (!isGlobalState)
+	{
+		Key_Input();
+		Mouse_Input();
+	}
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 	m_pFSM->Update_State(fTimeDelta);
 
@@ -83,6 +88,10 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
+	if (ImGui::Button("OnHit"))
+		m_bIsHit = true;
+	if (ImGui::Button("OnDead"))
+		m_bIsDie = true;
 	ImGui::End();
 #endif
 	return iExit;
@@ -131,6 +140,23 @@ void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint s
 		m_fFrame = 0.f;
 }
 
+_bool CDiveDave::Check_GlobalState()
+{
+	if (m_bIsDie)
+	{
+		m_pFSM->Set_State(DIVEDAVESTATE::DIE);
+		return true;
+	}
+
+	if (m_bIsHit)
+	{
+		m_pFSM->Set_State(DIVEDAVESTATE::HIT);
+		return true;
+	}
+
+	return false;
+}
+
 HRESULT CDiveDave::Ready_Component()
 {
 	// 버퍼
@@ -166,6 +192,10 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerPickUpTexture", L"Com_PickUpTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerHitTexture", L"Com_HitTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerDieTexture", L"Com_DieTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// 트랜스폼
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -186,8 +216,8 @@ HRESULT	CDiveDave::Add_State()
 	m_pFSM->Add_State<CDiveDaveTanning>(DIVEDAVESTATE::TANNING);
 	m_pFSM->Add_State<CDiveDaveOpen>(DIVEDAVESTATE::OPEN);
 	m_pFSM->Add_State<CDiveDavePickUp>(DIVEDAVESTATE::PICKUP);
-	//m_pFSM->Add_State<CDiveDaveHit>(DIVEDAVESTATE::HIT);
-	//m_pFSM->Add_State<CDiveDaveDie>(DIVEDAVESTATE::DIE);
+	m_pFSM->Add_State<CDiveDaveHit>(DIVEDAVESTATE::HIT);
+	m_pFSM->Add_State<CDiveDaveDie>(DIVEDAVESTATE::DIE);
 
 	//m_mapState.insert({ DIVEDAVESTATE::IDLE, CDiveDaveIdle::Create(this) });
 	//m_mapState.insert({ DIVEDAVESTATE::MOVE, CDiveDaveMove::Create(this) });

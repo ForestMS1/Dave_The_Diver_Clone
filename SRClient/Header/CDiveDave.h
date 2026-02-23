@@ -71,6 +71,23 @@ public:
 	void				Set_IsOnItem(_bool isOn)											{ m_bIsOnItem = isOn; }
 	void				Set_CurOnItem(CGameObject* pItem)									{ m_pCurOnItem = pItem; }
 
+	void				On_Hit(const _float& fDamage) 
+	{ 
+		m_bIsHit = true;
+		m_fHp -= fDamage;
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+		}
+	}
+	// Die 상태로 전이하기위한 함수
+	void				On_Dead() 															{ m_bIsDie = true; }
+	// Hit 상태 탈출시 호출
+	void				Hit_Free()															{ m_bIsHit = false; }
+	// 전역 상태 바로 진입
+	_bool				Check_GlobalState();
+
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
 	void				Set_CanMouseInput(_bool canMouse)									{ m_bCanMouseInput = canMouse; }
@@ -115,6 +132,7 @@ private:
 	_float m_fHp = 100.f;
 	_float m_fIvncTime = 1.f; // 피격 당한 후 무적시간
 	_bool  m_bIsHit = false;
+	_bool  m_bIsDie = false; // CGameObject의 m_bDead와 다른 용도!
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;

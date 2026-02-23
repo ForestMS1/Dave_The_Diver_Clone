@@ -33,6 +33,10 @@ public:
 	CBaseState<T>*				Get_pState()				{ return m_pState; }
 	E							Get_State()					{ return m_eCurState; }
 	void						Set_State(E state){
+		auto iter = m_mapState.find(state);
+		if (iter == m_mapState.end())
+			return;
+
 		if (m_mapState[state] == m_pState)
 			return;
 

@@ -663,6 +663,12 @@
     <ClInclude Include="..\Header\CFSM.h">
       <Filter>02. GameObject\DiveDave</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveHit.h">
+      <Filter>02. GameObject\DiveDave\State\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveDie.h">
+      <Filter>02. GameObject\DiveDave\State\Die</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1060,6 +1066,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFSM.cpp">
       <Filter>02. GameObject\DiveDave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveHit.cpp">
+      <Filter>02. GameObject\DiveDave\State\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveDie.cpp">
+      <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
