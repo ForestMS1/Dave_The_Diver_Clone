@@ -53,7 +53,7 @@ void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstr
 HRESULT CTransition::Transition_INIT_TO_LOGO()
 {
 	
-	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Data/Map1.json"));
+	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Resource/Data/Map1.json"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Json_Map");
 
 
@@ -61,21 +61,55 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian.glb"));
 	CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
 
+	CAssetMgr::GetInstance()->AddAsset(L"BackGround_GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/BackGround.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"BackGround_GLB_File");
+
 	
 
-	CProtoMgr::GetInstance()->Ready_Prototype(L"Test_GLB",CGlbTex::Create(
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_File",CGlbTex::Create(
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_VtxCnt(),
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_TriCnt(),
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vertices(),
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
 
+	CProtoMgr::GetInstance()->Ready_Prototype(L"BackGround_GLB_File", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_Index()));
 
-	CAssetMgr::GetInstance()->AddAsset(L"CubeTex", CAssetCubeTexture::Create(L"../Bin/Resource/Texture/Map/SkyBox.dds"));
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create())))
-		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral1", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral2", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral3", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral4", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral5", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral6", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+
 	
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(L"CubeTex"))))
+	
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"))))
 		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral1", CTexture::Create(L"Coral1"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral2", CTexture::Create(L"Coral2"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral3", CTexture::Create(L"Coral3"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral4", CTexture::Create(L"Coral4"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral5", CTexture::Create(L"Coral5"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral6", CTexture::Create(L"Coral6"))))
+		return E_FAIL;
+
+
+
+
+
 
 	// Write By SY
 	{

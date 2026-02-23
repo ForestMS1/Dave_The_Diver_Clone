@@ -232,11 +232,17 @@
     <Filter Include="02. GameObject\00. Ship\Phone\App\Weapon">
       <UniqueIdentifier>{544f77ad-2d43-42ac-ac86-504eb21fcca9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\BackGround">
+      <UniqueIdentifier>{c0414596-a722-4382-a96d-f87e8df2a1c4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Logo">
       <UniqueIdentifier>{bc798582-013e-46a8-b415-3950663d1fc9}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Transition">
       <UniqueIdentifier>{b4e71ad0-7285-4e3b-a6a3-ce9505b1a17a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Coral">
+      <UniqueIdentifier>{f1cd9ea5-4563-4e69-a8c8-182197905295}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -564,6 +570,9 @@
     <ClInclude Include="..\Header\CShipPhoneWeaponCreateSuccess.h">
       <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBackGroundSea.h">
+      <Filter>02. GameObject\BackGround</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CLogoBG.h">
       <Filter>02. GameObject\Logo</Filter>
     </ClInclude>
@@ -587,6 +596,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CTransitionFace.h">
       <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCoral.h">
+      <Filter>02. GameObject\Coral</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -905,6 +917,9 @@
     <ClCompile Include="..\Code\CShipPhoneWeaponCreateSuccess.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CBackGroundSea.cpp">
+      <Filter>02. GameObject\BackGround</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CLogoBG.cpp">
       <Filter>02. GameObject\Logo</Filter>
     </ClCompile>
@@ -928,6 +943,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTransitionFace.cpp">
       <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCoral.cpp">
+      <Filter>02. GameObject\Coral</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
