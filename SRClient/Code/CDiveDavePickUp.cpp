@@ -35,7 +35,7 @@ void CDiveDavePickUp::Input(const _float& fTimeDelta)
 _int CDiveDavePickUp::Update_State(const _float& fTimeDelta)
 {
 	Input(fTimeDelta);
-	static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 2);
+	static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 5.f, 2);
 	if (static_cast<CDiveDave*>(m_pPlayer)->Get_Frame() > 1.f)
 		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
 	return 0;
