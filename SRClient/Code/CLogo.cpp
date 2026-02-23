@@ -11,7 +11,13 @@
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
 #include "CTransition.h"
+#include "CLogoBG.h"
+#include "CLogoTitle.h"
+#include "CLogoBtnArea.h"
+#include "CColliderMgr.h"
+#include "CGraphicDev.h"
 
+#include "CTransitionFade.h"
 
 CLogo::CLogo()
 	: CScene()
@@ -24,7 +30,20 @@ CLogo::~CLogo()
 
 HRESULT CLogo::Ready_Scene()
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	D3DXMATRIX matView, matProj;
+	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);    
+	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);     
+	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);   
+	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4.0f, (float)WINCX / (float)WINCY , 0.1f, 1000.0f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
+
+	CColliderMgr::GetInstance()->Set_Render(false);
+	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+		return E_FAIL;
 	return S_OK;
 }
 
@@ -38,6 +57,50 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
 	}
 	ImGui::End();
+
+	// Black To Screen
+	if (ImGui::Button("FadeIn"))
+	{
+		//CTransitionFade
+
+		//CTransitionFade
+		auto p = CManagement::GetInstance()->Get_Scene()->Get_Layer();
+		if (auto pLayers = CManagement::GetInstance()->Get_Scene()->Get_Layer())
+		{
+			if (!pLayers->empty())
+			{
+				CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_IN);
+			
+				for (auto& p : *pLayers)
+				{
+					p.second->Add_GameObject(L"99_FADE", pFade);
+					break;
+				}
+			}
+		}
+	}
+
+	// Screen To Black
+	if (ImGui::Button("FadeOut"))
+	{
+		//CTransitionFade
+		auto p = CManagement::GetInstance()->Get_Scene()->Get_Layer();
+		if (auto pLayers = CManagement::GetInstance()->Get_Scene()->Get_Layer())
+		{
+			if (!pLayers->empty())
+			{
+				CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_OUT);
+				pFade->Set_OnEnd([]() {
+					//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
+					});
+				for (auto& p : *pLayers)
+				{
+					p.second->Add_GameObject(L"99_FADE", pFade);
+					break;
+				}
+			}
+		}
+	}
 
 	return iExit;
 }
@@ -58,6 +121,26 @@ HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
+		return E_FAIL;
+
+
+	CLogoBG* pLogoBG = CLogoBG::Create(0.f, 0.f);
+	if (nullptr == pLogoBG)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CLogoBG", pLogoBG)))
+		return E_FAIL;
+
+	CLogoTitle* pLogoTitle = CLogoTitle::Create(0.f, 0.3f);
+	if (nullptr == pLogoTitle)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CLogoTitle", pLogoTitle)))
+		return E_FAIL;
+
+	
+	CLogoBtnArea* pLogoBtnArea = CLogoBtnArea::Create(0.f, -0.4f);
+	if (nullptr == pLogoBtnArea)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"pLogoBtnArea", pLogoBtnArea)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
@@ -82,4 +165,5 @@ CLogo* CLogo::Create()
 void CLogo::Free()
 {
 	CScene::Free();
+	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 }
