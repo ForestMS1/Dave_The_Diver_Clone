@@ -68,10 +68,7 @@ void CAttackSubFire::LateUpdate_State(const _float& fTimeDelta)
 
     if (static_cast<CDiveDave*>(m_pPlayer)->Get_CurEquipped() == EQUIPPED::HARPOON)
     {
-        CHarpoonProjectile* pHarpoonProjectile = dynamic_cast<CHarpoonProjectile*>
-            (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
-
-        if (pHarpoonProjectile->GetProjectilState() == PROJECTILESTATE::HIT)
+        if(static_cast<CDiveDave*>(m_pPlayer)->Is_FishCaught())
             m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FIGHT);
     }
 }
