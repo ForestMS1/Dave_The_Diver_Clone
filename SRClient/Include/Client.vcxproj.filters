@@ -241,6 +241,9 @@
     <Filter Include="02. GameObject\Transition">
       <UniqueIdentifier>{b4e71ad0-7285-4e3b-a6a3-ce9505b1a17a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Coral">
+      <UniqueIdentifier>{f1cd9ea5-4563-4e69-a8c8-182197905295}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -594,6 +597,9 @@
     <ClInclude Include="..\Header\CTransitionFace.h">
       <Filter>02. GameObject\Transition</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCoral.h">
+      <Filter>02. GameObject\Coral</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -937,6 +943,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTransitionFace.cpp">
       <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCoral.cpp">
+      <Filter>02. GameObject\Coral</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

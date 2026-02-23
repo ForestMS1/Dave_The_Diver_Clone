@@ -53,7 +53,7 @@ void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstr
 HRESULT CTransition::Transition_INIT_TO_LOGO()
 {
 	
-	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Data/Map1.json"));
+	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Resource/Data/Map1.json"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Json_Map");
 
 
@@ -80,9 +80,35 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 
 	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral1", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral2", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral3", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral4", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral5", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Coral6", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
 
-	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"));
 	
+	
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"))))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral1", CTexture::Create(L"Coral1"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral2", CTexture::Create(L"Coral2"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral3", CTexture::Create(L"Coral3"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral4", CTexture::Create(L"Coral4"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral5", CTexture::Create(L"Coral5"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral6", CTexture::Create(L"Coral6"))))
+		return E_FAIL;
+
+
+
+
 
 
 	// Write By SY
