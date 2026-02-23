@@ -26,6 +26,9 @@ private:
 	HRESULT			Ready_Component();
 	void			Key_Input();
 	void			Move_Frame();
+public:
+
+	void			Reset_Frame();
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pMenuTextureCom;
@@ -33,13 +36,14 @@ private:
 
 public:
 	static CMenuFrame* Create();
+	vector<CGameObject*> &Get_Buttons() { return addButtons; }
+	int curButton;
+	bool frameMoved;
 
 private:
 	virtual void Free();
 	bool buttonCreated;
 	vector<CGameObject*> addButtons;
-	int curButton;
-	bool frameMoved;
 
 };
 

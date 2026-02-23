@@ -15,7 +15,7 @@
 #include "CGameMemMgr.h"
 #include "CYellowbackR.h"
 #include "CYellowTangR.h"
-#include "CDartR.h"
+#include "CMenuFrame.h"
 #include "CClownFishR.h"
 #include "CFishConfirmFrame.h"
 #include "CSushiFrame.h"
@@ -160,8 +160,22 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         list<CGameObject*>::iterator iter2 = frame->begin();
                         for (iter2; iter2 != frame->end(); iter2++) {
                             static_cast<CSushiFrame*>(*iter2)->ConfirmOpened = false;
-                          
                         }
+                        CGameObject* menuFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
+                        vector<CGameObject*>& addButtons = static_cast<CMenuFrame*>(menuFrame)->Get_Buttons();
+                        vector<CGameObject*>::iterator iter3 = addButtons.begin();
+                        for (iter3; iter3 != addButtons.end();) {
+                            if (static_cast<CAddMenuButton*>(*iter3)->m_bSelected == true) {
+                                iter3 = addButtons.erase(iter3);
+                                static_cast<CMenuFrame*>(menuFrame)->curButton = 0;
+                                static_cast<CMenuFrame*>(menuFrame)->Reset_Frame();
+                            }
+                            else {
+                                iter3++;
+                            }
+                        }
+                        static_cast<CAddMenuButton*>(addButtons[0])->Set_Selected(true);
+                        
                     }
                     else if (whichOkay == L"Upgrade") {
 
@@ -170,6 +184,7 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                 }
             }
         }
+
     }
 
 }

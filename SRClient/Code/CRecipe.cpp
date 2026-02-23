@@ -147,6 +147,13 @@ void CRecipe::Render_GameObject()
         for (iter; iter != frame->end(); iter++) {
             (*iter)->Set_Render(false);
         }
+        list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"sushi");
+        list<CGameObject*>::iterator iter1 = sushi->begin();
+        for (iter1; iter1 != sushi->end(); iter1++) {
+            (*iter1)->Set_Render(false);
+        }
+        CGameObject* fishframe = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"FishCell");
+        fishframe->Set_Render(false);
     }
 
 }
