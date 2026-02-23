@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAABB.h"
+#include "CTransition.h"
 class CShipDave : public CGameObject
 {
 private:
@@ -15,7 +16,11 @@ public:
 	virtual			void		Render_GameObject();
 
 public:
-	void DoDiveReady() { m_bDiveReady = true; };
+	void DoDiveReady()
+	{
+		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
+		m_bDiveReady = true;
+	};
 
 private:
 	HRESULT			Ready_Component();

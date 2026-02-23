@@ -6,6 +6,8 @@
 #include "CRenderer.h"
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
+#include "CDInputMgr.h"
+#include "CTransition.h"
 
 CShipUIGoBtn::CShipUIGoBtn(float fPosX, float fPosY)
     : CGameObject()
@@ -59,6 +61,11 @@ _int		CShipUIGoBtn::Update_GameObject(const _float& fTimeDelta)
         m_sImgName = L"Tex_Ship_UI_GoBtn";
         _vec3 vScale = { m_fActiveScaleX , m_fActiveScaleY, 1.f };
         m_pTransformCom->Set_Scale(&vScale);
+
+        if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+        {
+            CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+        }
         
     }
     else
