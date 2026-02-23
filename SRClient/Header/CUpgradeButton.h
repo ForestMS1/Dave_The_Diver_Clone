@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAABB.h"
 
 namespace Engine
 {
@@ -8,12 +9,13 @@ namespace Engine
 	class CTransform;
 }
 
-class CTunaAkamiR : public CGameObject
+class CUpgradeButton : public CGameObject
 {
 private:
-	explicit CTunaAkamiR();
-	explicit CTunaAkamiR(const CGameObject& rhs);
-	virtual ~CTunaAkamiR();
+	explicit CUpgradeButton();
+	explicit CUpgradeButton(const CGameObject& rhs);
+	virtual ~CUpgradeButton();
+
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -25,12 +27,12 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pSushiTextureCom;
+	Engine::CTexture* m_pUpgradeTextureCom;
 	Engine::CTransform* m_pTransformCom;
+	CAABB* m_pAABB;
 
 public:
-	static CTunaAkamiR* Create();
-
+	static CUpgradeButton* Create();
 private:
 	virtual void Free();
 

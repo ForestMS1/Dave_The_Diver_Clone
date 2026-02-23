@@ -8,39 +8,28 @@ namespace Engine
 	class CTransform;
 }
 
-class CSushiList : public CGameObject
+class CDartP : public CGameObject
 {
 private:
-	explicit CSushiList();
-	explicit CSushiList(const CGameObject& rhs);
-	virtual ~CSushiList();
+	explicit CDartP();
+	explicit CDartP(const CGameObject& rhs);
+	virtual ~CDartP();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-	static			CSushiList* Create();
-
 private:
 	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pListextureCom;
+	Engine::CTexture* m_pFishTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
-	_vec3 screen;
-	vector<CGameObject*> pictures;
 public:
-	wstring m_sFishName;
-	wstring m_sSushiName;
-	wstring m_sFishInfo;
-	wstring m_sLevel;
-	wstring m_sCost;
-	wstring m_sQuality;
-	wstring m_sPlate;
-	wstring m_sQuanity;
+	static CDartP* Create();
 
 private:
 	virtual void Free();

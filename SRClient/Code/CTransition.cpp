@@ -528,8 +528,8 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_ClownFish", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_ClownFish.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClownFishTex", Engine::CTexture::Create(L"Tex_ClownFish"))))
 		return E_FAIL;
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_TunaAkami", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowFin_Tuna_Akami.png"));
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TunaAkamiTex", Engine::CTexture::Create(L"Tex_TunaAkami"))))
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Dart", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_SmallspottedDart.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DartTex", Engine::CTexture::Create(L"Tex_Dart"))))
 		return E_FAIL;
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowTang", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowTang.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowTangTex", Engine::CTexture::Create(L"Tex_YellowTang"))))
@@ -537,6 +537,59 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBack", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowbackFusilier.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackTex", Engine::CTexture::Create(L"Tex_YellowBack"))))
 		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Fishcell", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Fishcell.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Fishcell", Engine::CTexture::Create(L"Tex_Fishcell"))))
+		return E_FAIL;
+
+	//물고기 사진
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_BluejongP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Bluetang.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BluejongP", Engine::CTexture::Create(L"Tex_BluejongP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_ClownFishP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Clownfish.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClownFishP", Engine::CTexture::Create(L"Tex_ClownFishP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DartP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Smallspotted_dart.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DartP", Engine::CTexture::Create(L"Tex_DartP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowTangP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Yellow_Tang.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowTangP", Engine::CTexture::Create(L"Tex_YellowTangP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBackP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Yellowback_Fusilier.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackP", Engine::CTexture::Create(L"Tex_YellowBackP"))))
+		return E_FAIL;
+	//깊이 사진
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DepthP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/depth.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DepthTex", Engine::CTexture::Create(L"Tex_DepthP"))))
+		return E_FAIL;
+	//강화 , 확인
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Upgrade", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgrade.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UpgradeTex", Engine::CTexture::Create(L"Tex_Upgrade"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Okay", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/okay.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OkayTex", Engine::CTexture::Create(L"Tex_Okay"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_fishConfirm", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/fishConfirm.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_fishConfirmTex", Engine::CTexture::Create(L"Tex_fishConfirm"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_arrowRight", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/arrowRight.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_arrowRightTex", Engine::CTexture::Create(L"Tex_arrowRight"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_arrowLeft", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/arrowLeft.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_arrowLeftTex", Engine::CTexture::Create(L"Tex_arrowLeft"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_close", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CloseButton.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CloseButtonTex", Engine::CTexture::Create(L"Tex_close"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_max", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/maxButton.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_maxButtonTex", Engine::CTexture::Create(L"Tex_max"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_overlay", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/overlay.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OverlayTex", Engine::CTexture::Create(L"Tex_overlay"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SelectFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SelectedMenu.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SelectFrameTex", Engine::CTexture::Create(L"Tex_SelectFrame"))))
+		return E_FAIL;
+	//
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);

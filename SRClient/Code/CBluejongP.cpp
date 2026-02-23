@@ -1,37 +1,36 @@
 #include "pch.h"
-#include "CTunaAkamiR.h"
+#include "CBluejongP.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
-CTunaAkamiR::CTunaAkamiR()
+CBluejongP::CBluejongP()
     : CGameObject()
 {
-    m_bRender = false;
 }
 
-CTunaAkamiR::CTunaAkamiR(const CGameObject& rhs)
+CBluejongP::CBluejongP(const CGameObject& rhs)
     : CGameObject(rhs)
 {
 }
 
-CTunaAkamiR::~CTunaAkamiR()
+CBluejongP::~CBluejongP()
 {
 }
 
-HRESULT CTunaAkamiR::Ready_GameObject()
+HRESULT CBluejongP::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
-
+    m_pTransformCom->m_vScale = { 0.25f, 0.15f, 1.f };
 
     return S_OK;
 }
 
-_int CTunaAkamiR::Update_GameObject(const _float& fTimeDelta)
+_int CBluejongP::Update_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -42,7 +41,7 @@ _int CTunaAkamiR::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void CTunaAkamiR::LateUpdate_GameObject(const _float& fTimeDelta)
+void CBluejongP::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -55,7 +54,7 @@ void CTunaAkamiR::LateUpdate_GameObject(const _float& fTimeDelta)
 
 }
 
-void CTunaAkamiR::Render_GameObject()
+void CBluejongP::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -69,7 +68,7 @@ void CTunaAkamiR::Render_GameObject()
 
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-        m_pSushiTextureCom->Set_Texture(0);
+        m_pFishTextureCom->Set_Texture(0);
         m_pBufferCom->Render_Buffer();
 
         D3DXMATRIX matTmp;
@@ -85,14 +84,14 @@ void CTunaAkamiR::Render_GameObject()
 
 }
 
-HRESULT CTunaAkamiR::Ready_Component()
+HRESULT CBluejongP::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     // 텍스쳐
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_TunaAkamiTex", L"Com_Texture", &m_pSushiTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BluejongP", L"Com_Texture", &m_pFishTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -103,21 +102,21 @@ HRESULT CTunaAkamiR::Ready_Component()
 }
 
 
-CTunaAkamiR* CTunaAkamiR::Create()
+CBluejongP* CBluejongP::Create()
 {
-    CTunaAkamiR* bluejong = new CTunaAkamiR;
+    CBluejongP* bluejong = new CBluejongP;
 
     if (FAILED(bluejong->Ready_GameObject()))
     {
         Safe_Release(bluejong);
-        MSG_BOX("Tuna Create Failed");
+        MSG_BOX("Bluejong Create Failed");
         return nullptr;
     }
 
     return bluejong;
 }
 
-void CTunaAkamiR::Free()
+void CBluejongP::Free()
 {
     CGameObject::Free();
 }

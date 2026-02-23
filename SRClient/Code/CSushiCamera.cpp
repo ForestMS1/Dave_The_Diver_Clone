@@ -63,7 +63,6 @@ CSushiCamera* CSushiCamera::Create(const _vec3* pEye, const _vec3* pAt, const _v
         MSG_BOX("DynamicCamera Create Failed");
         return nullptr;
     }
-    CParticleMgr::GetInstance()->Set_Camera(pCamera);
 
     return pCamera;
 }
