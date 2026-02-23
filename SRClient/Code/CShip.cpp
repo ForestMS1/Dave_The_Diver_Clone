@@ -320,7 +320,8 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	}
 	if (ImGui::Button("Go Logo Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
+		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO);
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
 	}
 	ImGui::End();
 

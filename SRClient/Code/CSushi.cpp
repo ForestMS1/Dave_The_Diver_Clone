@@ -27,6 +27,8 @@
 #include "CColliderMgr.h"
 #include "CMenuFrame.h"
 #include "CDInputMgr.h"
+#include "CFishConfirmFrame.h"
+#include "COverlay.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -55,10 +57,10 @@ HRESULT CSushi::Ready_Scene()
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);      
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);       
 	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   
-	CColliderMgr::GetInstance()->Set_Render(false);
+	CColliderMgr::GetInstance()->Set_Render(true);
 
-	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_SEMIBOLD));
-	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 15, FW_SEMIBOLD));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_BOLD));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 16, FW_BOLD));
 	return S_OK;
 
 }
@@ -332,6 +334,15 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"Speaker", pGameObject)))
 			return E_FAIL;
 	}
+
+	pGameObject = COverlay::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Overlay", pGameObject)))
+		return E_FAIL;
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
@@ -397,7 +408,6 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"MenuFrame", pGameObject)))
 		return E_FAIL;
 
-
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
@@ -412,14 +422,14 @@ void CSushi::Key_Input()
 			static_cast<CMenuFrame*>(*iter)->Show();
 		}
 	}
-	if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
+	/*if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
 	{
 		list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"MenuFrame");
 		list<CGameObject*>::iterator iter = button->begin();
 		for (iter; iter != button->end(); iter++) {
 			static_cast<CMenuFrame*>(*iter)->Hide();
 		}
-	}
+	}*/
 }
 
 void CSushi::Free()
