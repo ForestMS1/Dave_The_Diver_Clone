@@ -35,6 +35,8 @@ public:
 
 	static CSelectedFrame* Create();
 	bool created;
+	CGameObject* pSushiGameObject;
+
 private:
 	virtual void Free();
 	wstring m_sFishName;
@@ -43,7 +45,6 @@ private:
 	wstring m_sCost;
 	wstring m_sPlate;
 	wstring m_sQuality;
-	CGameObject* pSushiGameObject;
 	_vec3 screen1, screen2, screen3, screen4;
 
 };

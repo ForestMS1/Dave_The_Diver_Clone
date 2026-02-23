@@ -88,9 +88,10 @@ _int CMenuFrame::Update_GameObject(const _float& fTimeDelta)
             return E_FAIL;
     }
     if (m_bRender) {
-
-        static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
-        Key_Input();
+        if (addButtons.size() != 0) {
+            static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
+            Key_Input();
+        }
     }
     return iExit;
 }
@@ -278,12 +279,76 @@ void CMenuFrame::Move_Frame()
         (*iter3)->Set_Render(true);
     }
 
+    list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
+    if (selectedFrame  != nullptr) {
+        list<CGameObject*>::iterator iter5 = selectedFrame->begin();
+        for (iter5; iter5 != selectedFrame->end(); iter5++) {
+            CTransform* pTransform = static_cast<CTransform*>((*iter5)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+            _vec3 curPos;
+            curPos = pTransform->m_vInfo[INFO_POS];
+            curPos.x = curPos.x - 3.2f;
+            pTransform->m_vInfo[INFO_POS] = curPos;
+        }
+    }
+  
   /*  list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"Bluejong");
     list<CGameObject*>::iterator iter1 = sushi->begin();
     for (iter1; iter1 != sushi->end(); iter1++) {
         static_cast<CBluejongR*>((*iter1))->render = false;
     }*/
     frameMoved = true;
+}
+
+void CMenuFrame::Reset_Frame()
+{
+    list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"ConfirmButton");
+    list<CGameObject*>::iterator iter = button->begin();
+    for (iter; iter != button->end(); iter++) {
+        (*iter)->Set_Render(true);
+    }
+
+    _vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
+    pos.x = pos.x + 3.5f;
+    m_pTransformCom->m_vInfo[INFO_POS] = pos;
+
+    list<CGameObject*>* AddButtons = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"AddButton");
+    list<CGameObject*>::iterator iter1 = AddButtons->begin();
+    for (iter1; iter1 != AddButtons->end(); iter1++) {
+        CTransform* pTransform = static_cast<CTransform*>((*iter1)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+        _vec3 curPos;
+        curPos = pTransform->m_vInfo[INFO_POS];
+        curPos.x = curPos.x + 3.2f;
+        pTransform->m_vInfo[INFO_POS] = curPos;
+    }
+    list<CGameObject*>* recipe = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"Recipe");
+    list<CGameObject*>::iterator iter2 = recipe->begin();
+    for (iter2; iter2 != recipe->end(); iter2++) {
+        (*iter2)->Set_Render(false);
+    }
+
+    list<CGameObject*>* List = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"List");
+    list<CGameObject*>::iterator iter3 = List->begin();
+    for (iter3; iter3 != List->end(); iter3++) {
+        (*iter3)->Set_Render(false);
+    }
+    list<CGameObject*>* sushiFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
+    list<CGameObject*>::iterator iter4 = sushiFrame->begin();
+    for (iter4; iter4 != sushiFrame->end(); iter4++) {
+        (*iter4)->Set_Render(false);
+    }
+
+    list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
+    list<CGameObject*>::iterator iter5 = selectedFrame->begin();
+    for (iter5; iter5 != selectedFrame->end(); iter5++) {
+        CTransform* pTransform = static_cast<CTransform*>((*iter5)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+        _vec3 curPos;
+        curPos = pTransform->m_vInfo[INFO_POS];
+        curPos.x = curPos.x + 3.2f;
+        pTransform->m_vInfo[INFO_POS] = curPos;
+    }
+
+    frameMoved = false;
+
 }
 
 

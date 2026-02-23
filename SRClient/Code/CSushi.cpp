@@ -389,17 +389,32 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	_vec3 vEye{ 0.f, 0.f, -10.f };   
-	_vec3 vAt{ 0.f, 0.f, 0.f };      
-	_vec3 vUp{ 0.f, 1.f, 0.f };      
+	_vec3 m_vEye{ 0.f, 0.f, -10.f };   
+	_vec3 m_vAt{ 0.f, 0.f, 0.f };      
+	_vec3 m_vUp{ 0.f, 1.f, 0.f };      
 
-	pGameObject = CSushiCamera::Create(&vEye, &vAt, &vUp);
+	pGameObject = CSushiCamera::Create(&m_vEye, &m_vAt, &m_vUp);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Camera", pGameObject)))
 		return E_FAIL;
+	//_matrix m_matView, m_matProj;
+	//_float m_fFov = D3DXToRadian(60.f);
+	//	_float m_fAspect = (_float)WINCX / WINCY;
+	//	_float m_fNear = 0.1f;
+	//_float m_fFar = 1000.f;
+	//D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+	////D3DXMatrixOrthoLH(&m_matProj, (_float)WINCX, (_float)WINCY, m_fNear, m_fFar);
+	//D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+
+	// CPipeline::MakeViewMatrix(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+	// CPipeline::MakeProjMatrix(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	//pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+	//pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	pGameObject = CMenuFrame::Create();
 
