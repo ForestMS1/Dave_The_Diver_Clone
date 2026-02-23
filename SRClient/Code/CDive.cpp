@@ -77,7 +77,8 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 	if (ImGui::Button("Go Ship Scene"))
 	{
 		CMapMgr::GetInstance()->SetScene(nullptr);
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP));
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP));
+		CTransition::FadedTransition(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
 	return iExit;
@@ -244,4 +245,5 @@ void CDive::Free()
 {
 	CScene::Free();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
+	CCameraMgr::GetInstance()->DestroyInstance();
 }
