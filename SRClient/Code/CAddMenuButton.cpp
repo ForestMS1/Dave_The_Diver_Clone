@@ -100,7 +100,7 @@ HRESULT CAddMenuButton::Ready_Component()
     // 텍스쳐
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_AddMenuTex", L"Com_Texture", &m_pAddTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_SelectTex", L"Com_Texture", &m_pSelectTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_SelectTex", L"Com_Texture1", &m_pSelectTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -128,6 +128,5 @@ CAddMenuButton* CAddMenuButton::Create()
 void CAddMenuButton::Free()
 {
     CGameObject::Free();
-    Safe_Release(m_pAddTextureCom);
-    Safe_Release(m_pSelectTextureCom);
+
 }

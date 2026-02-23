@@ -188,15 +188,15 @@ HRESULT CCustomer1::Ready_Component()
 
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1MenuTex", L"Com_Texture", &m_pMenuTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1MenuTex", L"Com_Texture1", &m_pMenuTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WaitTexture", L"Com_Texture", &m_pWaitTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WaitTexture", L"Com_Texture2", &m_pWaitTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1EatTexture", L"Com_Texture", &m_pEatTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1EatTexture", L"Com_Texture3", &m_pEatTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1HappyTexture", L"Com_Texture", &m_pHappyTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1HappyTexture", L"Com_Texture4", &m_pHappyTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1AngerTexture", L"Com_Texture", &m_pAngerTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1AngerTexture", L"Com_Texture5", &m_pAngerTextureCom))))
         return E_FAIL;
     
     // Æ®·£½ºÆû
@@ -225,10 +225,5 @@ CCustomer1* CCustomer1::Create()
 void CCustomer1::Free()
 {
     CGameObject::Free();
-    Safe_Release(m_pWalkTextureCom);
-    Safe_Release(m_pMenuTextureCom);
-    Safe_Release(m_pWaitTextureCom);
-    Safe_Release(m_pEatTextureCom);
-    Safe_Release(m_pHappyTextureCom);
-    Safe_Release(m_pAngerTextureCom);
+ 
 }

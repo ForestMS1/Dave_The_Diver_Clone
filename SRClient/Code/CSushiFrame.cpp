@@ -262,7 +262,7 @@ HRESULT CSushiFrame::Ready_Component()
     // ÅØ½ºÃÄ
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_SushiFrameTex", L"Com_Texture", &m_pFrameTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_SushiSelectedTex", L"Com_Texture", &m_pSelectedTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_SushiSelectedTex", L"Com_Texture1", &m_pSelectedTextureCom))))
         return E_FAIL;
 
       /*  if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BluejongTex", L"Com_Texture", &m_pFishTextureCom))))
