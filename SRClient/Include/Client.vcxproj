@@ -165,12 +165,14 @@
     <ClInclude Include="..\Header\CAttackSubReady.h" />
     <ClInclude Include="..\Header\CAttackSubState.h" />
     <ClInclude Include="..\Header\CBackground.h" />
+    <ClInclude Include="..\Header\CBackGroundSea.h" />
     <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
     <ClInclude Include="..\Header\CClownFishR.h" />
     <ClInclude Include="..\Header\CConfirm.h" />
+    <ClInclude Include="..\Header\CCoral.h" />
     <ClInclude Include="..\Header\CCustomer1.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
     <ClInclude Include="..\Header\CDiveDaveBullet.h" />
@@ -278,9 +280,11 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CAddMenuButton.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
+    <ClCompile Include="..\Code\CBackGroundSea.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
     <ClCompile Include="..\Code\CClownFishR.cpp" />
     <ClCompile Include="..\Code\CConfirm.cpp" />
+    <ClCompile Include="..\Code\CCoral.cpp" />
     <ClCompile Include="..\Code\CCustomer1.cpp" />
     <ClCompile Include="..\Code\CAttackSubFail.cpp" />
     <ClCompile Include="..\Code\CAttackSubFight.cpp" />

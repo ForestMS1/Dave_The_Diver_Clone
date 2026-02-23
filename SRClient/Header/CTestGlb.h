@@ -8,6 +8,7 @@ class CTestGlb : public CGameObject
 {
 private:
 	explicit CTestGlb();
+	explicit CTestGlb(const wstring_view tex);
 	explicit CTestGlb(const CTestGlb& rhs);
 	virtual ~CTestGlb();
 
@@ -23,10 +24,12 @@ private:
 private:
 	Engine::CGlbTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
+	const wstring_view m_wsName;
 	CAABB* m_pAABB;
 
 public:
 	static CTestGlb* Create();
+	static CTestGlb* Create(const wstring_view tex);
 
 private:
 	virtual void Free();
