@@ -17,6 +17,8 @@
 #include "CColliderMgr.h"
 #include "CGraphicDev.h"
 
+#include "CTransitionFade.h"
+
 CLogo::CLogo()
 	: CScene()
 {
@@ -55,6 +57,50 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
 	}
 	ImGui::End();
+
+	// Black To Screen
+	if (ImGui::Button("FadeIn"))
+	{
+		//CTransitionFade
+
+		//CTransitionFade
+		auto p = CManagement::GetInstance()->Get_Scene()->Get_Layer();
+		if (auto pLayers = CManagement::GetInstance()->Get_Scene()->Get_Layer())
+		{
+			if (!pLayers->empty())
+			{
+				CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_IN);
+			
+				for (auto& p : *pLayers)
+				{
+					p.second->Add_GameObject(L"99_FADE", pFade);
+					break;
+				}
+			}
+		}
+	}
+
+	// Screen To Black
+	if (ImGui::Button("FadeOut"))
+	{
+		//CTransitionFade
+		auto p = CManagement::GetInstance()->Get_Scene()->Get_Layer();
+		if (auto pLayers = CManagement::GetInstance()->Get_Scene()->Get_Layer())
+		{
+			if (!pLayers->empty())
+			{
+				CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_OUT);
+				pFade->Set_OnEnd([]() {
+					//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
+					});
+				for (auto& p : *pLayers)
+				{
+					p.second->Add_GameObject(L"99_FADE", pFade);
+					break;
+				}
+			}
+		}
+	}
 
 	return iExit;
 }

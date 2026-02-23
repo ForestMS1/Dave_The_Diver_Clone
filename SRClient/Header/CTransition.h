@@ -51,6 +51,9 @@ private:
 
 
 public:
+	HRESULT			Ready_Environment_Layer(std::wstring_view svLayerTag);
+
+public:
 	HRESULT		Ready_Scene() override;
 	_int		Update_Scene(const _float& fTimeDelta) override;
 	void		LateUpdate_Scene(const _float& fTimeDelta) override;
@@ -72,7 +75,14 @@ private:
 
 	wstring m_sComment;
 
+	bool m_bFadeEnd;
 private:
 	virtual void	Free();
-};
 
+public:
+	static void FadedTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene);
+
+private:
+	void AddFadeIn(CScene* pScene, function<void()> funcOnEnd = nullptr);
+	void AddFadeOut(CScene* pScene, function<void()> funcOnEnd = nullptr);
+};

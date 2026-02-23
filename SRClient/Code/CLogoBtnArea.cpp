@@ -106,7 +106,8 @@ void		CLogoBtnArea::LateUpdate_GameObject(const _float& fTimeDelta)
 
                 if (iBeforeIdx == m_iSelected)
                 {
-                    CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
+                    CTransition::FadedTransition(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP);
+                    //CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
                 }
             }
         }

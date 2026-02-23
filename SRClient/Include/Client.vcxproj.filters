@@ -235,6 +235,9 @@
     <Filter Include="02. GameObject\Logo">
       <UniqueIdentifier>{bc798582-013e-46a8-b415-3950663d1fc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Transition">
+      <UniqueIdentifier>{b4e71ad0-7285-4e3b-a6a3-ce9505b1a17a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -570,6 +573,21 @@
     <ClInclude Include="..\Header\CLogoBtnArea.h">
       <Filter>02. GameObject\Logo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTransitionBG.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTransitionFade.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTransitionImg.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTransitionTxt.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTransitionFace.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -895,6 +913,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLogoBtnArea.cpp">
       <Filter>02. GameObject\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransitionBG.cpp">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransitionFade.cpp">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransitionImg.cpp">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransitionTxt.cpp">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransitionFace.cpp">
+      <Filter>02. GameObject\Transition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

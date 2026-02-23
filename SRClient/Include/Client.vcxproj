@@ -257,6 +257,11 @@
     <ClInclude Include="..\Header\CTestFish.h" />
     <ClInclude Include="..\Header\CTestGlb.h" />
     <ClInclude Include="..\Header\CTransition.h" />
+    <ClInclude Include="..\Header\CTransitionBG.h" />
+    <ClInclude Include="..\Header\CTransitionFade.h" />
+    <ClInclude Include="..\Header\CTransitionImg.h" />
+    <ClInclude Include="..\Header\CTransitionTxt.h" />
+    <ClInclude Include="..\Header\CTransitionFace.h" />
     <ClInclude Include="..\Header\CTriggerAABB.h" />
     <ClInclude Include="..\Header\CTunaAkamiR.h" />
     <ClInclude Include="..\Header\CWood.h" />
@@ -370,6 +375,11 @@
     <ClCompile Include="..\Code\CTestFish.cpp" />
     <ClCompile Include="..\Code\CTestGlb.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
+    <ClCompile Include="..\Code\CTransitionBG.cpp" />
+    <ClCompile Include="..\Code\CTransitionFade.cpp" />
+    <ClCompile Include="..\Code\CTransitionImg.cpp" />
+    <ClCompile Include="..\Code\CTransitionTxt.cpp" />
+    <ClCompile Include="..\Code\CTransitionFace.cpp" />
     <ClCompile Include="..\Code\CTriggerAABB.cpp" />
     <ClCompile Include="..\Code\CTunaAkamiR.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
