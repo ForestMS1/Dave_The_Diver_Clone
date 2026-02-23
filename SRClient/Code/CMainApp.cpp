@@ -91,6 +91,13 @@ void CMainApp::Render_MainApp()
 
 	// 프레임의 맨마지막에 호출하고싶은데 여기가 적당한듯
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
+
+
+	// 프레임의 맨마지막에서 씬을 바꿔준다.
+	if (m_pManagement->Is_ScheneChanged())
+	{
+		m_pManagement->LastFrame_Set_Scene();
+	}
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -139,6 +146,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 		MSG_BOX("SetScene Failed");
 		return E_FAIL;
 	}
+	m_pManagement->LastFrame_Set_Scene();
 
 	return S_OK;
 }

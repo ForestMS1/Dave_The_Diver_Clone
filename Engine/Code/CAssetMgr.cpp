@@ -55,11 +55,12 @@ void CAssetMgr::DelAsset(std::wstring_view svLayerTag)
 {
 	if (auto pAssetLayer = Find_AssetLayer(svLayerTag))
 	{
-		for (auto iter = pAssetLayer->begin(); iter != pAssetLayer->end();)
+		for (auto iter = pAssetLayer->begin(); iter != pAssetLayer->end();++iter)
 		{
 			Safe_Release(*iter);
-			iter = pAssetLayer->erase(iter);
+			//iter = pAssetLayer->erase(iter);
 		}
+		m_AssetMap.erase(std::wstring(svLayerTag));
 	}
 }
 
