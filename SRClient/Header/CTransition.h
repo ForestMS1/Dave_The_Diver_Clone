@@ -46,6 +46,12 @@ private:
 	HRESULT Common_SHIP_Load();
 	HRESULT Common_SHIP_Unload();
 
+	HRESULT Common_Logo_Env_Load();
+	HRESULT Common_Logo_Env_Unload();
+
+
+public:
+	HRESULT			Ready_Environment_Layer(std::wstring_view svLayerTag);
 
 public:
 	HRESULT		Ready_Scene() override;
@@ -69,7 +75,14 @@ private:
 
 	wstring m_sComment;
 
+	bool m_bFadeEnd;
 private:
 	virtual void	Free();
-};
 
+public:
+	static void FadedTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene);
+
+private:
+	void AddFadeIn(CScene* pScene, function<void()> funcOnEnd = nullptr);
+	void AddFadeOut(CScene* pScene, function<void()> funcOnEnd = nullptr);
+};

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CTransition.h"
 #include "CAssetDefaultFont.h"
 #include "CAssetMgr.h"
@@ -18,6 +18,11 @@
 #include "CTargetArrowTex.h"
 #include "CAssetCubeTexture.h"
 #include "CLineBuffer.h"
+#include "CTransitionImg.h"
+#include "CTransitionBG.h"
+#include "CTransitionFade.h"
+#include "CTransitionTxt.h"
+#include "CTransitionFace.h"
 
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
@@ -80,6 +85,10 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	
 
 
+	// Write By SY
+	{
+		Common_Logo_Env_Load();
+	}
 	m_sComment = L"Transition_INIT_TO_LOGO COMPLETE";
 #ifdef _DEBUG
 	//Sleep(500);
@@ -729,8 +738,39 @@ HRESULT CTransition::Common_SHIP_Unload()
 	return S_OK;
 }
 
+HRESULT CTransition::Common_Logo_Env_Load()
+{
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Logo_BG", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/DR_Illust.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Logo_BG");
+	
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Logo_Title", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/DaveTheDiver_TitleLogo.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Logo_Title");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Logo_Black1pxAlpha", CAssetTexture::Create(L"../Bin/Resource/Texture/Logo/Black1pxAlpha.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Logo_Black1pxAlpha");
+	return S_OK;
+}
+
+HRESULT CTransition::Common_Logo_Env_Unload()
+{
+
+
+	return S_OK;
+}
+
 HRESULT CTransition::Ready_Scene()
 {
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	D3DXMATRIX matView, matProj;
+	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);
+	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, (float)WINCX / (float)WINCY, 0.1f, 1000.0f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
+
 	InitializeCriticalSection(&m_Crt);
 	m_hThread = (HANDLE)_beginthreadex(NULL, // 보안 속성(핸들의 상속 여부, NULL인 경우 상속에서 제외)
 		0,  // 디폴트 스탯 사이즈(1 바이트)
@@ -738,35 +778,159 @@ HRESULT CTransition::Ready_Scene()
 		this,          // 3번 매개 변수 함수를 통해 가공할 데이터 주소
 		0,             // 쓰레드 생성 및 실행을 조정하기 위한 옵션
 		NULL);         // 쓰레드 ID
+
+
+	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+		return E_FAIL;
+
+
+	m_bFadeEnd = false;
+	if (m_eSrcScene == SCENE_INIT)
+	{
+		this->m_bFadeEnd = true;
+	}
+	else
+	{
+		AddFadeIn(this, [=]() {
+			this->m_bFadeEnd = true;
+			});
+	}
+	
+
+	
 	return S_OK;
 }
 
 _int CTransition::Update_Scene(const _float& fTimeDelta)
 {
-	if (!m_bFinish) return 0;
+	CScene::Update_Scene(fTimeDelta);
+
+	if (m_bFadeEnd && m_bFinish)
+	{
+		m_bFadeEnd = false;
+		if (m_eDstScene == SCENE_LOGO)
+		{
+			CManagement::GetInstance()->Set_Scene(CLogo::Create());
+		}
+		else if (m_eDstScene == SCENE_SHIP)
+		{
+			AddFadeOut(this, [=]() { 
+				auto pScene = CShip::Create();
+				AddFadeIn(pScene);
+				CManagement::GetInstance()->Set_Scene(pScene);
+				});
+		}
+		else if (m_eDstScene == SCENE_SUSHI)
+		{
+			CManagement::GetInstance()->Set_Scene(CSushi::Create());
+		}
+		else if (m_eDstScene == SCENE_DIVE)
+		{
+			CManagement::GetInstance()->Set_Scene(CDive::Create());
+		}
+	}
 	
-	if (m_eDstScene == SCENE_LOGO)
-	{
-		CManagement::GetInstance()->Set_Scene(CLogo::Create());
-	}
-	else if (m_eDstScene == SCENE_SHIP)
-	{
-		CManagement::GetInstance()->Set_Scene(CShip::Create());
-	}
-	else if (m_eDstScene == SCENE_SUSHI)
-	{
-		CManagement::GetInstance()->Set_Scene(CSushi::Create());
-	}
-	else if (m_eDstScene == SCENE_DIVE)
-	{
-		CManagement::GetInstance()->Set_Scene(CDive::Create());
-	}
+
+
+	
 
 	return 0;
 }
 
 void CTransition::LateUpdate_Scene(const _float& fTimeDelta)
 {
+	CScene::LateUpdate_Scene(fTimeDelta);
+}
+
+HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CTransitionBG* pTransitionBG = CTransitionBG::Create(0.f, 0.f);
+	if (nullptr == pTransitionBG)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TransitionBG", pTransitionBG)))
+		return E_FAIL;
+
+	if (m_eDstScene == SCENE_SHIP)
+	{
+		CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+		pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
+
+		pTransitionImg->Set_CustomScaleX(0.1f);
+		pTransitionImg->Set_CustomScaleY(0.1f);
+
+		pTransitionImg->Ready_AfterCreate();
+
+
+		if (nullptr == pTransitionImg)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+			return E_FAIL;
+		
+	}
+
+	{
+		CTransitionFace* pFace = CTransitionFace::Create(-0.1f, -0.5f);
+		pFace->Set_Delay(0.1f);
+		if (nullptr == pFace)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionFace", pFace)))
+			return E_FAIL;
+	}
+	{
+		CTransitionFace* pFace = CTransitionFace::Create(0.f, -0.5f);
+		pFace->Set_Delay(0.2f);
+		if (nullptr == pFace)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionFace", pFace)))
+			return E_FAIL;
+	}
+	{
+		CTransitionFace* pFace = CTransitionFace::Create(0.1f, -0.5f);
+		pFace->Set_Delay(0.3f);
+		if (nullptr == pFace)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionFace", pFace)))
+			return E_FAIL;
+	} 
+
+	{
+		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+		pTxt->Set_Txt(L"이것은 제목이여");
+		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+		if (nullptr == pTxt)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+			return E_FAIL;
+	}
+
+
+
+	{
+		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f);
+		pTxt->Set_Txt(L"ASDfASDFASDFASDFASDFASDFASDFASDFASDFASDFASDFF");
+		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+		if (nullptr == pTxt)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+			return E_FAIL;
+
+		CTransitionImg* pTransitionTip = CTransitionImg::Create(-0.6f, -0.6f);
+		pTransitionTip->Set_AssetName(L"Tex_Transition_Tip");
+		pTransitionTip->Set_CustomScaleX(0.2f);
+		pTransitionTip->Set_CustomScaleY(0.2f);
+		pTransitionTip->Ready_AfterCreate();
+		if (nullptr == pTransitionTip)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"TransitionTip", pTransitionTip)))
+			return E_FAIL;
+	}
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+	return S_OK;
 }
 
 void CTransition::Render_Scene()
@@ -793,11 +957,68 @@ CTransition* CTransition::Create(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 
 void CTransition::Free()
 {
+	CScene::Free();
+
 	WaitForSingleObject(m_hThread, INFINITE);
 
 	CloseHandle(m_hThread);
 
 	DeleteCriticalSection(&m_Crt);
+
+}
+
+void CTransition::FadedTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
+{
+	auto p = CManagement::GetInstance()->Get_Scene()->Get_Layer();
+	if (auto pLayers = CManagement::GetInstance()->Get_Scene()->Get_Layer())
+	{
+		if (!pLayers->empty())
+		{
+			CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_OUT);
+			pFade->Set_OnEnd([=]() {
+				CManagement::GetInstance()->Set_Scene(CTransition::Create(eSrcScene, eDstScene));
+				});
+			for (auto& p : *pLayers)
+			{
+				p.second->Add_GameObject(L"99_FADE", pFade);
+				break;
+			}
+		}
+	}
+}
+
+void CTransition::AddFadeIn(CScene* pScene, function<void()> funcOnEnd )
+{
+	if (auto pLayers = pScene->Get_Layer())
+	{
+		if (!pLayers->empty())
+		{
+			CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_IN);
+			pFade->Set_OnEnd(funcOnEnd);
+			for (auto& p : *pLayers)
+			{
+				p.second->Add_GameObject(L"99_FADE", pFade);
+				break;
+			}
+		}
+	}
+}
+
+void CTransition::AddFadeOut(CScene* pScene, function<void()> funcOnEnd)
+{
+	if (auto pLayers = pScene->Get_Layer())
+	{
+		if (!pLayers->empty())
+		{
+			CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_OUT);
+			pFade->Set_OnEnd(funcOnEnd);
+			for (auto& p : *pLayers)
+			{
+				p.second->Add_GameObject(L"99_FADE", pFade);
+				break;
+			}
+		}
+	}
 }
 
 unsigned int CTransition::Thread_Main(void* pArg)

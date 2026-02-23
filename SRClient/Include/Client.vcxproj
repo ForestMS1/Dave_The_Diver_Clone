@@ -191,6 +191,9 @@
     <ClInclude Include="..\Header\CHarpoonProjectile.h" />
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
+    <ClInclude Include="..\Header\CLogoBG.h" />
+    <ClInclude Include="..\Header\CLogoBtnArea.h" />
+    <ClInclude Include="..\Header\CLogoTitle.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
     <ClInclude Include="..\Header\CShipDiverBoxDave.h" />
     <ClInclude Include="..\Header\CShipDiverBoxInventory.h" />
@@ -255,6 +258,11 @@
     <ClInclude Include="..\Header\CTestFish.h" />
     <ClInclude Include="..\Header\CTestGlb.h" />
     <ClInclude Include="..\Header\CTransition.h" />
+    <ClInclude Include="..\Header\CTransitionBG.h" />
+    <ClInclude Include="..\Header\CTransitionFade.h" />
+    <ClInclude Include="..\Header\CTransitionImg.h" />
+    <ClInclude Include="..\Header\CTransitionTxt.h" />
+    <ClInclude Include="..\Header\CTransitionFace.h" />
     <ClInclude Include="..\Header\CTriggerAABB.h" />
     <ClInclude Include="..\Header\CTunaAkamiR.h" />
     <ClInclude Include="..\Header\CWood.h" />
@@ -298,6 +306,9 @@
     <ClCompile Include="..\Code\CHarpoon.cpp" />
     <ClCompile Include="..\Code\CHarpoonProjectile.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />
+    <ClCompile Include="..\Code\CLogoBG.cpp" />
+    <ClCompile Include="..\Code\CLogoBtnArea.cpp" />
+    <ClCompile Include="..\Code\CLogoTitle.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CO2Capsule.cpp" />
     <ClCompile Include="..\Code\CPlayerState.cpp" />
@@ -366,6 +377,11 @@
     <ClCompile Include="..\Code\CTestFish.cpp" />
     <ClCompile Include="..\Code\CTestGlb.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
+    <ClCompile Include="..\Code\CTransitionBG.cpp" />
+    <ClCompile Include="..\Code\CTransitionFade.cpp" />
+    <ClCompile Include="..\Code\CTransitionImg.cpp" />
+    <ClCompile Include="..\Code\CTransitionTxt.cpp" />
+    <ClCompile Include="..\Code\CTransitionFace.cpp" />
     <ClCompile Include="..\Code\CTriggerAABB.cpp" />
     <ClCompile Include="..\Code\CTunaAkamiR.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />

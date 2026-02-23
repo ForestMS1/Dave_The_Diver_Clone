@@ -158,6 +158,47 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Lobby", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_Lobby.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Lobby");
+
+	//Black1pxFade.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Fade_Black", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/Black1pxFade.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Fade_Black");
+
+	// LoadingFace01.png
+	for (int i = 1; i <= 9; ++i)
+	{
+		std::wstring s = L"../Bin/Resource/Texture/Transition/LoadingFace/LoadingFace0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_LoadingFace", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_LoadingFace");
+
+	// 01_Leahs_Body_01.png
+	for (int i = 1; i <= 8; ++i)
+	{
+		std::wstring s = L"../Bin/Resource/Texture/Transition/leah/01_Leahs_Body_0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Leah", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Leah");
+
+	// 06_Body_0
+	for (int i = 8; i <= 10; ++i)
+	{
+		std::wstring cnt{};
+		if (i < 10)
+		{
+			cnt += L"0";
+		}
+		cnt += ::to_wstring(i);
+		std::wstring s = L"../Bin/Resource/Texture/Transition/leah2/06_Body_" + cnt + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Leah2", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Leah2");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Tip", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/tip.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Tip");
+
+
 	//CAssetMgr::GetInstance()->AddAsset(L"Test_Spine", CAssetSpine::Create(L"../Bin/Resource/Texture/Ship/SpineTest/AmericanLobster/American_Lobster"));
 	//CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
 
