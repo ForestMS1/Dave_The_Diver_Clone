@@ -3,8 +3,8 @@
 #include "CDiveDave.h"
 #include "CTestFish.h"
 
-CProjectileReturn::CProjectileReturn(CGameObject* pOwner)
-    : CPlayerState(pOwner)
+CProjectileReturn::CProjectileReturn(CHarpoonProjectile* pOwner)
+    : CBaseState<CHarpoonProjectile>(pOwner)
 {
 }
 
@@ -15,8 +15,8 @@ CProjectileReturn::~CProjectileReturn()
 void CProjectileReturn::Enter()
 {
 	// 잠시 키 DiveDave 키입력 막음
-	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanKeyInput(false);
-	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanMouseInput(false);
+	static_cast<CDiveDave*>(m_pOwner->Get_Parent())->Set_CanKeyInput(false);
+	static_cast<CDiveDave*>(m_pOwner->Get_Parent())->Set_CanMouseInput(false);
 }
 
 void CProjectileReturn::Input(const _float& fTimeDelta)
@@ -44,15 +44,15 @@ void CProjectileReturn::Exit()
 
 void CProjectileReturn::Clear()
 {
-	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
 	pProjectile->m_pCaughtFish = nullptr;
 
 	// 키 입력 잠금 해제
-	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanKeyInput(true);
-	static_cast<CDiveDave*>(m_pPlayer->Get_Parent())->Set_CanMouseInput(true);
+	static_cast<CDiveDave*>(m_pOwner->Get_Parent())->Set_CanKeyInput(true);
+	static_cast<CDiveDave*>(m_pOwner->Get_Parent())->Set_CanMouseInput(true);
 }
 
-CProjectileReturn* CProjectileReturn::Create(CGameObject* pOwner)
+CProjectileReturn* CProjectileReturn::Create(CHarpoonProjectile* pOwner)
 {
     CProjectileReturn* pState = new CProjectileReturn(pOwner);
 
@@ -64,7 +64,7 @@ void CProjectileReturn::Free()
 
 void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 {
-	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
 
 	_vec3 vCurPos, vPlayerPos;
 	pProjectile->m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
@@ -90,16 +90,16 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
-		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DiveState::IDLE);
+		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
 	}
 }
 
 void CProjectileReturn::Set_ParentTransform()
 {
 	_vec3 vParentPos;
-	m_pPlayer->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+	m_pOwner->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
 	_vec3 vOffSet = { 0.f, 0.5f, 0.f };
-	vOffSet.y *= m_pPlayer->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
+	vOffSet.y *= m_pOwner->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
 	vParentPos += vOffSet;
-	m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
 }

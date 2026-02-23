@@ -1,9 +1,12 @@
 #pragma once
-#include "CPlayerState.h"
-class CDiveDaveOpen : public CPlayerState
+#include "CBaseState.h"
+
+class CDiveDave;
+
+class CDiveDaveOpen : public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDaveOpen(CGameObject* pOwner);
+	explicit CDiveDaveOpen(CDiveDave* pOwner);
 	~CDiveDaveOpen();
 
 public:
@@ -20,7 +23,7 @@ private:
 	_float m_fOpenTime = 0.f;
 
 public:
-	static CDiveDaveOpen* Create(CGameObject* pOwner);
+	static CDiveDaveOpen* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };

@@ -1,10 +1,13 @@
 #pragma once
-#include "CPlayerState.h"
+#include "CBaseState.h"
+
+class CHarpoonProjectile;
+
 class CProjectileReady :
-    public CPlayerState
+    public CBaseState<CHarpoonProjectile>
 {
 private:
-    explicit CProjectileReady(CGameObject* pOwner);
+    explicit CProjectileReady(CHarpoonProjectile* pOwner);
     ~CProjectileReady();
 
 public:
@@ -21,7 +24,7 @@ private:
     void	Rotate_ToMouse();
     void	Shot_ToMouse();
 public:
-    static CProjectileReady* Create(CGameObject* pOwner);
+    static CProjectileReady* Create(CHarpoonProjectile* pOwner);
 private:
     virtual void Free() override;
 };

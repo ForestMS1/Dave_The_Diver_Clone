@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
     <ClInclude Include="..\Header\CDiveDaveBullet.h" />
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
+    <ClInclude Include="..\Header\CFSM.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
     <ClInclude Include="..\Header\CDiveDaveMeeleAttack.h" />
@@ -236,7 +237,7 @@
     <ClInclude Include="..\Header\CRecipe.h" />
     <ClInclude Include="..\Header\CRoof.h" />
     <ClInclude Include="..\Header\CSakura.h" />
-    <ClInclude Include="..\Header\CPlayerState.h" />
+    <ClInclude Include="..\Header\CBaseState.h" />
     <ClInclude Include="..\Header\CShip.h" />
     <ClInclude Include="..\Header\CShipDiverBox.h" />
     <ClInclude Include="..\Header\CShipPhone.h" />
@@ -294,6 +295,7 @@
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveBullet.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
+    <ClCompile Include="..\Code\CFSM.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />
     <ClCompile Include="..\Code\CDiveDave.cpp" />
@@ -313,7 +315,7 @@
     <ClCompile Include="..\Code\CLogoTitle.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CO2Capsule.cpp" />
-    <ClCompile Include="..\Code\CPlayerState.cpp" />
+    <ClCompile Include="..\Code\CBaseState.cpp" />
     <ClCompile Include="..\Code\CBackground.cpp" />
     <ClCompile Include="..\Code\CBancho.cpp" />
     <ClCompile Include="..\Code\CChair.cpp" />

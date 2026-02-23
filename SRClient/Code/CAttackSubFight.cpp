@@ -4,9 +4,10 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CDiveDaveAttack.h"
-CAttackSubFight::CAttackSubFight(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
-    : CAttackSubState(pPlayer, pParentState)
+CAttackSubFight::CAttackSubFight(CDiveDaveAttack* pParentState)
+    : CAttackSubState(pParentState)
 {
+    m_pDiveDave = m_pOwner->Get_OwnerDave();
 }
 
 CAttackSubFight::~CAttackSubFight()
@@ -15,18 +16,18 @@ CAttackSubFight::~CAttackSubFight()
 
 void CAttackSubFight::Enter()
 {
-    static_cast<CDiveDave*>(m_pPlayer)->Init_Frame();
+    m_pDiveDave->Init_Frame();
     _float fWidth = 47.f;
     _float fHeight = 54.f;
     _float fAspect = fWidth + fHeight;
     fAspect /= 2.f;
 
     _vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-    static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
-    static_cast<CDiveDave*>(m_pPlayer)->Set_TextureCom(L"Com_AttackFightTexture");
+    m_pDiveDave->Multiply_Scale(&vScale);
+    m_pDiveDave->Set_TextureCom(L"Com_AttackFightTexture");
 
 
-    static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(false);
+    m_pDiveDave->Set_FishCaught(false);
 
     // 카메라 쉐이킹 시작
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingStart(m_fAttackTime);
@@ -39,8 +40,8 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
         m_fAttackGauge += 1.f;
         if (m_fAttackGauge > 10.f)
         {
-            static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
-            static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(true);
+            m_pDiveDave->Set_State(DIVEDAVESTATE::IDLE);
+            m_pDiveDave->Set_FishCaught(true);
         }
     }
 
@@ -54,8 +55,8 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
 
         if (m_fAttackGauge < 0.f || m_fAttackTime < 0.f)
         {
-            static_cast<CDiveDave*>(m_pPlayer)->Set_FishCaught(false);
-            m_pParentState->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
+            m_pDiveDave->Set_FishCaught(false);
+            m_pOwner->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
         }
     }
 
@@ -66,11 +67,11 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
 
 _int CAttackSubFight::Update_State(const _float& fTimeDelta)
 {
-    if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
+    if (m_pDiveDave->Get_State() != DIVEDAVESTATE::ATTACK)
         return 0;
 
     Input(fTimeDelta);
-    static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 8);
+    m_pDiveDave->AddFrame(fTimeDelta, 10.f, 8);
     //Mouse_Check();
 
     return 0;
@@ -78,18 +79,18 @@ _int CAttackSubFight::Update_State(const _float& fTimeDelta)
 
 void CAttackSubFight::LateUpdate_State(const _float& fTimeDelta)
 {
-    if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
+    if (m_pDiveDave->Get_State() != DIVEDAVESTATE::ATTACK)
         return;
 }
 
 void CAttackSubFight::Render_State()
 {
-    if (static_cast<CDiveDave*>(m_pPlayer)->Get_State() != DiveState::ATTACK)
+    if (m_pDiveDave->Get_State() != DIVEDAVESTATE::ATTACK)
         return;
 
-    CTexture* pPlayerTextureCom = static_cast<CDiveDave*>(m_pPlayer)->Get_TextureCom();
+    CTexture* pPlayerTextureCom = m_pDiveDave->Get_TextureCom();
 
-    _float fFrame = static_cast<CDiveDave*>(m_pPlayer)->Get_Frame();
+    _float fFrame = m_pDiveDave->Get_Frame();
 
     pPlayerTextureCom->Set_Texture((_uint)fFrame);
 }
@@ -102,7 +103,7 @@ void CAttackSubFight::Exit()
     fAspect /= 2.f;
 
     _vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
-    static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
+    m_pDiveDave->Multiply_Scale(&vScale);
 
     Clear();
 }
@@ -117,9 +118,9 @@ void CAttackSubFight::Clear()
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingEnd();
 }
 
-CAttackSubFight* CAttackSubFight::Create(CGameObject* pPlayer, CDiveDaveAttack* pParentState)
+CAttackSubFight* CAttackSubFight::Create(CDiveDaveAttack* pParentState)
 {
-    CAttackSubFight* pSubState = new CAttackSubFight(pPlayer, pParentState);
+    CAttackSubFight* pSubState = new CAttackSubFight(pParentState);
 
     return pSubState;
 }

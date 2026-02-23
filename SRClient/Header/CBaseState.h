@@ -2,6 +2,29 @@
 #include "CBase.h"
 #include "CGameObject.h"
 
+enum class DIVEDAVESTATE
+{
+	IDLE = 0,
+	MOVE,
+	ATTACK,			// 작살, 총 공격
+	MELEEATTACK,	// 근접 공격
+	TANNING,
+	OPEN,
+	PICKUP,
+	HIT,
+	DIE,
+	DAVE_STATE_END
+};
+
+enum class PROJECTILESTATE 
+{ 
+	READY, 
+	FIRE, 
+	HIT, 
+	RETURN, 
+	STATE_END 
+};
+
 enum class ATTACKSUBSTATE
 {
 	ATTACK_READY,
@@ -11,11 +34,13 @@ enum class ATTACKSUBSTATE
 	SUB_END
 };
 
-class CPlayerState : public CBase
+// T는 상태를 소유하는 객체 클래스
+template<typename T>
+class CBaseState : public CBase
 {
 public:
-	explicit CPlayerState(CGameObject* pPlayer);
-	virtual ~CPlayerState();
+	explicit CBaseState(T* pOwner) : m_pOwner(pOwner) {}
+	virtual ~CBaseState() {}
 
 public:
 	virtual void Enter() = 0; // 상태 진입 시 한번만 실행
@@ -29,9 +54,9 @@ protected:
 	virtual void Clear() = 0; // 상태마다의 값, 플래그 초기화 (Enter에서 호출)
 
 protected:
-	CGameObject* m_pPlayer;
+	T* m_pOwner = nullptr;
 
 protected:
-	virtual void Free() override;
+	virtual void Free() {};
 };
 

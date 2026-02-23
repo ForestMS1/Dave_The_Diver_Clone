@@ -3,8 +3,8 @@
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
 #include "CDiveDave.h"
-CProjectileFire::CProjectileFire(CGameObject* pOwner)
-    : CPlayerState(pOwner)
+CProjectileFire::CProjectileFire(CHarpoonProjectile* pOwner)
+    : CBaseState<CHarpoonProjectile>(pOwner)
 {
 }
 
@@ -28,7 +28,7 @@ _int CProjectileFire::Update_State(const _float& fTimeDelta)
 
 void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 {
-	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
 
 	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
 	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Ship"))
@@ -106,12 +106,12 @@ void CProjectileFire::Exit()
 
 void CProjectileFire::Clear()
 {
-	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
 	pProjectile->m_fAccRange = 0.f;
 	m_bIsHitFish = false;
 }
 
-CProjectileFire* CProjectileFire::Create(CGameObject* pOwner)
+CProjectileFire* CProjectileFire::Create(CHarpoonProjectile* pOwner)
 {
     CProjectileFire* pState = new CProjectileFire(pOwner);
 
@@ -125,7 +125,7 @@ void CProjectileFire::Free()
 
 void CProjectileFire::Go_ToDir(const _float& fTimeDelta)
 {
-	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pPlayer);
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
 	if (pProjectile->m_fAccRange < pProjectile->m_fRange)
 	{
 		pProjectile->m_pTransformCom->Move_Pos(&pProjectile->m_vDir, pProjectile->m_fSpeed, fTimeDelta);

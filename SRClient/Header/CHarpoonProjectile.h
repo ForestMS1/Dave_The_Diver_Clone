@@ -2,10 +2,9 @@
 #include "CGameObject.h"
 #include "CAttackReadyArmTex.h"
 #include "CAABB.h"
-#include "CPlayerState.h"
+#include "CBaseState.h"
 #include "CLineBuffer.h"
-
-enum class PROJECTILESTATE { READY, FIRE, HIT, RETURN, STATE_END };
+#include "CFSM.h"
 
 class CHarpoonProjectile : public CGameObject
 {
@@ -27,9 +26,9 @@ public:
 	void		Render_GameObject() override;
 
 	void		TriggerOn() { Set_State(PROJECTILESTATE::FIRE); }
-	_bool		IsTriggerOn() { return m_eState != PROJECTILESTATE::READY; }
+	_bool		IsTriggerOn() { return m_pFSM->Get_State() != PROJECTILESTATE::READY; }
 	_vec3*		Get_Dir()	{ return &m_vDir; }
-	void		Set_State(PROJECTILESTATE state);
+	void		Set_State(PROJECTILESTATE state) { m_pFSM->Set_State(state); };
 
 private:
 	HRESULT Ready_Component();
@@ -37,12 +36,13 @@ private:
 	void	Update_Points();
 
 public:
-	PROJECTILESTATE GetProjectilState() { return m_eState; }
+	PROJECTILESTATE GetProjectilState() { return m_pFSM->Get_State(); }
 
 private:
-	CPlayerState*			m_pState = nullptr;
-	PROJECTILESTATE			m_eState = PROJECTILESTATE::READY;
-	unordered_map<PROJECTILESTATE, CPlayerState*> m_mapState;
+	CFSM<CHarpoonProjectile, PROJECTILESTATE>* m_pFSM = nullptr;
+	//CBaseState*				m_pState = nullptr;
+	//PROJECTILESTATE			m_eState = PROJECTILESTATE::READY;
+	//unordered_map<PROJECTILESTATE, CBaseState*> m_mapState;
 	_float					m_fSpeed = 20.f;
 	_float					m_fRange = 8.f;
 	_float					m_fAccRange = 0.f;

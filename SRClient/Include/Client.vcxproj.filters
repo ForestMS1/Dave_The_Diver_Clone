@@ -61,9 +61,6 @@
     <Filter Include="02. GameObject\DiveDave">
       <UniqueIdentifier>{bc70a9e5-82f4-41b7-bcfe-eb6010122648}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayerState">
-      <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\DiveDave\State">
       <UniqueIdentifier>{d5f6e064-9cc8-4bf9-b2c6-1885c523f131}</UniqueIdentifier>
     </Filter>
@@ -244,6 +241,15 @@
     <Filter Include="02. GameObject\Coral">
       <UniqueIdentifier>{f1cd9ea5-4563-4e69-a8c8-182197905295}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Die">
+      <UniqueIdentifier>{f85876f8-022d-4aa1-9e01-4e74a514f907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Hit">
+      <UniqueIdentifier>{702d08b8-0f0f-4262-ab68-929b01fd1df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BaseState">
+      <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,8 +363,8 @@
     <ClInclude Include="..\Header\CDiveDaveIdle.h">
       <Filter>02. GameObject\DiveDave\State\Idle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CPlayerState.h">
-      <Filter>PlayerState</Filter>
+    <ClInclude Include="..\Header\CBaseState.h">
+      <Filter>BaseState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDiveDaveMove.h">
       <Filter>02. GameObject\DiveDave\State\Move</Filter>
@@ -600,6 +606,9 @@
     <ClInclude Include="..\Header\CCoral.h">
       <Filter>02. GameObject\Coral</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFSM.h">
+      <Filter>02. GameObject\DiveDave</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -704,8 +713,8 @@
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp">
       <Filter>02. GameObject\DiveDave\State\Idle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CPlayerState.cpp">
-      <Filter>PlayerState</Filter>
+    <ClCompile Include="..\Code\CBaseState.cpp">
+      <Filter>BaseState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveMove.cpp">
       <Filter>02. GameObject\DiveDave\State\Move</Filter>
@@ -946,6 +955,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCoral.cpp">
       <Filter>02. GameObject\Coral</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFSM.cpp">
+      <Filter>02. GameObject\DiveDave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

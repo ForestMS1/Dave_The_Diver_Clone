@@ -38,7 +38,7 @@ HRESULT CAttackReadyArm::Ready_GameObject()
 _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 {
 	Set_ParentTransform();
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -49,7 +49,7 @@ _int CAttackReadyArm::Update_GameObject(const _float& fTimeDelta)
 
 void CAttackReadyArm::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return;
 
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -61,7 +61,7 @@ void CAttackReadyArm::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CAttackReadyArm::Render_GameObject()
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DiveState::ATTACK)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();

@@ -1,6 +1,10 @@
 #pragma once
-#include "CPlayerState.h"
+#include "CBaseState.h"
 #include "CAttackSubState.h"
+#include "CFSM.h"
+
+class CDiveDave;
+
 
 //enum class ATTACKSUBSTATE
 //{
@@ -11,10 +15,10 @@
 //	SUB_END
 //};
 
-class CDiveDaveAttack : public CPlayerState
+class CDiveDaveAttack : public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDaveAttack(CGameObject* pOwner);
+	explicit CDiveDaveAttack(CDiveDave* pOwner);
 	~CDiveDaveAttack();
 
 public:
@@ -27,19 +31,21 @@ public:
 	void Clear() override;
 
 public:
-	ATTACKSUBSTATE		Get_State() const { return m_eCurSubState; }
-	void			Set_State(ATTACKSUBSTATE state);
+	ATTACKSUBSTATE		Get_State() const				{ return m_eCurSubState; }
+	void				Set_State(ATTACKSUBSTATE state);
+	CDiveDave*			Get_OwnerDave()					{ return m_pOwner; } //DiveDave
 
 private:
-	void Add_SubState();
+	HRESULT				Add_SubState();
 
 private:
+	//CFSM<CDiveDaveAttack, ATTACKSUBSTATE>* m_pFSM = nullptr;
 	CAttackSubState* m_pSubState = nullptr;
 	ATTACKSUBSTATE m_eCurSubState;
 	unordered_map<ATTACKSUBSTATE, CAttackSubState*> m_mapSubState;
 
 public:
-	static CDiveDaveAttack* Create(CGameObject* pOwner);
+	static CDiveDaveAttack* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };
