@@ -126,6 +126,7 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 HRESULT CTransition::Transition_LOGO_TO_SHIP()
 {
+	Common_Logo_Env_Unload();
 
 	if (FAILED(Common_SHIP_Load()))
 	{
@@ -144,6 +145,11 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 HRESULT CTransition::Transition_SHIP_TO_LOGO()
 {
+	Common_SHIP_Unload();
+
+	Common_Logo_Env_Load();
+
+
 	m_sComment = L"Transition_SHIP_TO_LOGO COMPLETE";
 //#ifdef _DEBUG
 //	Sleep(500);
@@ -761,6 +767,127 @@ HRESULT CTransition::Common_SHIP_Load()
 
 HRESULT CTransition::Common_SHIP_Unload()
 {
+	
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_ShipDave_Idle");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_ShipDave_Walk");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_ShipDave_DiveReady");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_DiverBoxInvenTmp");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneIcon");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneBG");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneApp");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneAppAlpha");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_DiverBox");
+
+	//Tex_PhoneIDiverBG
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneIDiverBG");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_UI_IDiverItem");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_UI_IDiverUpgrade");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_BG");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_FakeBG");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_DiveBtn");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_DiveSpriteBtn");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_GoBtn");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_GoBtnAlpha");
+
+	//Space_Key_Dark_Symbol
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_SpaceKey");
+
+	//MoneyUI
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_Money");
+
+	// DiverBoxDave
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_DiverBoxDave");
+
+
+	//InventoryBoxEdge
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryBoxEdge");
+
+
+	//Jaksal
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Jaksal");
+
+	//Gun
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Gun");
+
+	//Knief
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Knief");
+
+	//Jusin
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Jusin");
+
+
+	//ItemDescUI.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Inventory_ItemDescUI");
+
+	//WoodPanel.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel");
+
+
+	// Item_Sanso.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Sanso");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Clothes");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Cage");
+
+	// Item_Jaksal.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Jaksal");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Edge");
+
+	//UpgradeSuccess.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_UpgradeSuccess");
+
+	//UpgrddeBtn.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_UpgradeBtn");
+
+	//UpgrddeBtnAlpha.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
+
+	// 
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_BG");
+
+	//UI_WeaponCraft_Logo.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_Logo");
+
+	//Close.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_Close");
+
+	//UI_Area.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_Area");
+
+	//UI_CreateBtn.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_CreateBtn");
+
+	//Edge.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_Edge");
+
+	//GusikRifle.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_GukikRifle");
+
+	//NewWeapon.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_NewWeapon");
 	return S_OK;
 }
 
@@ -779,8 +906,9 @@ HRESULT CTransition::Common_Logo_Env_Load()
 
 HRESULT CTransition::Common_Logo_Env_Unload()
 {
-
-
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Logo_BG");
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Logo_Title");
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Logo_Black1pxAlpha");
 	return S_OK;
 }
 
@@ -836,7 +964,11 @@ _int CTransition::Update_Scene(const _float& fTimeDelta)
 		m_bFadeEnd = false;
 		if (m_eDstScene == SCENE_LOGO)
 		{
-			CManagement::GetInstance()->Set_Scene(CLogo::Create());
+			AddFadeOut(this, [=]() {
+				auto pLogo = CLogo::Create();
+				AddFadeIn(pLogo);
+				CManagement::GetInstance()->Set_Scene(pLogo);
+				});
 		}
 		else if (m_eDstScene == SCENE_SHIP)
 		{
