@@ -90,6 +90,7 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
+		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DiveState::IDLE);
 	}
 }
 

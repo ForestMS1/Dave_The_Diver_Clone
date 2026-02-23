@@ -27,27 +27,37 @@ HRESULT CShipDave::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
-    _vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+    _vec3 vExtents = { 0.3f, 0.7f, 0.3f };
 
     _vec3 vPos = { 00.0f, 0.0f, 0.0f };
 
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Dave", this);
+
+    m_pTransformCom->Set_Pos(-5.f, -2.6f, 0.f);
   
     m_iFrame = 0;
     m_fAccFrameDelta = 0.f;
     m_sCurrentMotion = L"Tex_ShipDave_Idle";
     m_bSeeRight = true;
 
+    m_bDiveReady = false;
+
     return S_OK;
 }
 
 _int CShipDave::Update_GameObject(const _float& fTimeDelta)
 {
-    Key_Input(fTimeDelta);
     
+    if (m_bDiveReady)
+    {
+        Motion_Change(L"Tex_ShipDave_DiveReady");
+    }
+    else
+    {
+        Key_Input(fTimeDelta);
+    }
+   
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
-
-    //m_fFrame += 2.f * fTimeDelta;
 
     m_fAccFrameDelta += fTimeDelta;
 
@@ -59,16 +69,19 @@ _int CShipDave::Update_GameObject(const _float& fTimeDelta)
    
    auto zz = CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size();
     if (CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size() <= m_iFrame)
-        m_iFrame = 0;
+    {
+        if (L"Tex_ShipDave_DiveReady" == m_sCurrentMotion)
+        {
+            m_bDiveReady = false;
+            m_iFrame = CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size() - 1;
+        }
+        else
+        {
+            m_iFrame = 0;
+        }
+        
+    }
 
-    if (ImGui::Button("Tex_ShipDave_DiveReady"))
-    {
-        Motion_Change(L"Tex_ShipDave_DiveReady");
-    }
-    if (ImGui::Button("Tex_ShipDave_Walk"))
-    {
-        Motion_Change(L"Tex_ShipDave_Walk");
-    }
     
 
     string s = "Frame" + ::to_string(m_iFrame);
@@ -76,7 +89,7 @@ _int CShipDave::Update_GameObject(const _float& fTimeDelta)
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
     // 충돌체 그룹에 넣어줘야한다.
-    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Ship", m_pAABB);
+    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_ShipDave", m_pAABB);
     m_pAABB->Transform(m_pTransformCom->Get_World());
 
     return iExit;
@@ -87,7 +100,7 @@ void CShipDave::LateUpdate_GameObject(const _float& fTimeDelta)
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 
     // Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
-    if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Ship"))
+    if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_ShipDave"))
     {
         // 충돌체 순회
         for (auto& pCollider : *pColliders)
@@ -182,44 +195,56 @@ HRESULT CShipDave::Ready_Component()
 
 void CShipDave::Key_Input(const _float& fTimeDelta)
 {
-
     _vec3 vDirUp = {0.f, 1.f, 0.f};
     _vec3 vDirRight = {1.f, 0.f, 0.f };
     m_pTransformCom->Get_Info(INFO_UP, &vDirUp);
     m_pTransformCom->Get_Info(INFO_RIGHT, &vDirRight);
+    _vec3 vPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
     bool m_bKeyInput = false;;
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_W))
     {
-        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), 3.f, fTimeDelta);
+        //m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), 3.f, fTimeDelta);
     }
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_S))
     {
-        m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), -3.f, fTimeDelta);
+        //m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vDirUp, &vDirUp), -3.f, fTimeDelta);
     }
-
+    // -6.9, -2.4
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
     {
         m_bKeyInput = true;
         Motion_Change(L"Tex_ShipDave_Walk");
-        m_pTransformCom->Move_Pos(&vDirRight, 3.f, fTimeDelta);
-        if (m_bSeeRight)
+
+        if (vPos.x > -6.9f)
         {
-            m_bSeeRight = false;
-            m_pTransformCom->Rotation(ROT_Y, 180.f);
+            m_pTransformCom->Move_Pos(&vDirRight, 3.f, fTimeDelta);
+            if (m_bSeeRight)
+            {
+                m_bSeeRight = false;
+                m_pTransformCom->Rotation(ROT_Y, 180.f);
+            }
         }
+        
     }
 
     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
     {
         m_bKeyInput = true;
         Motion_Change(L"Tex_ShipDave_Walk");
-        m_pTransformCom->Move_Pos(&vDirRight, 3.f, fTimeDelta);
-        if (!m_bSeeRight)
+
+        if (vPos.x < -2.4f)
         {
-            m_bSeeRight = true;
-            m_pTransformCom->Rotation(ROT_Y, 180.f);
+            m_pTransformCom->Move_Pos(&vDirRight, 3.f, fTimeDelta);
+            if (!m_bSeeRight)
+            {
+                m_bSeeRight = true;
+                m_pTransformCom->Rotation(ROT_Y, 180.f);
+            }
         }
+        
     }
 
     if (!m_bKeyInput)

@@ -3,6 +3,8 @@
 #include "CGraphicDev.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CCameraMgr.h"
+#include "CCamera.h"
 CHarpoon::CHarpoon()
 {
 }
@@ -123,7 +125,7 @@ void CHarpoon::Set_ParentTransform()
 
 void CHarpoon::Rotate_ToMouse()
 {
-	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() == ATTACKSUBSTATE::ATTACK_FIGHT)
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_AttackSubState() != ATTACKSUBSTATE::ATTACK_READY)
 		return;
 
 	_vec3 vMousePos, vPlayerPos;

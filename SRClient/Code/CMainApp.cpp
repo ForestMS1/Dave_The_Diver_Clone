@@ -91,6 +91,13 @@ void CMainApp::Render_MainApp()
 
 	// 프레임의 맨마지막에 호출하고싶은데 여기가 적당한듯
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
+
+
+	// 프레임의 맨마지막에서 씬을 바꿔준다.
+	if (m_pManagement->Is_ScheneChanged())
+	{
+		m_pManagement->LastFrame_Set_Scene();
+	}
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -139,6 +146,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 		MSG_BOX("SetScene Failed");
 		return E_FAIL;
 	}
+	m_pManagement->LastFrame_Set_Scene();
 
 	return S_OK;
 }
@@ -158,6 +166,47 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Lobby", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_Lobby.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Lobby");
+
+	//Black1pxFade.png
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Fade_Black", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/Black1pxFade.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Fade_Black");
+
+	// LoadingFace01.png
+	for (int i = 1; i <= 9; ++i)
+	{
+		std::wstring s = L"../Bin/Resource/Texture/Transition/LoadingFace/LoadingFace0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_LoadingFace", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_LoadingFace");
+
+	// 01_Leahs_Body_01.png
+	for (int i = 1; i <= 8; ++i)
+	{
+		std::wstring s = L"../Bin/Resource/Texture/Transition/leah/01_Leahs_Body_0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Leah", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Leah");
+
+	// 06_Body_0
+	for (int i = 8; i <= 10; ++i)
+	{
+		std::wstring cnt{};
+		if (i < 10)
+		{
+			cnt += L"0";
+		}
+		cnt += ::to_wstring(i);
+		std::wstring s = L"../Bin/Resource/Texture/Transition/leah2/06_Body_" + cnt + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Leah2", CAssetTexture::Create(s));
+	}
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Leah2");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Tip", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/tip.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Tip");
+
+
 	//CAssetMgr::GetInstance()->AddAsset(L"Test_Spine", CAssetSpine::Create(L"../Bin/Resource/Texture/Ship/SpineTest/AmericanLobster/American_Lobster"));
 	//CAssetMgr::GetInstance()->LoadAsset(L"Test_Spine");
 
@@ -189,6 +238,12 @@ HRESULT CMainApp::Load_PermanentAsset()
 
 
 	// 초기 로드용 폰트 추가
+	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 맨발의청춘 L", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL_Size15", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 맨발의청춘 L", 0, 15, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL_Size15");
+
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"바탕", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 
@@ -206,6 +261,9 @@ HRESULT CMainApp::Load_PermanentAsset()
 		return E_FAIL;
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcCol", Engine::CRcCol::Create())))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TextureFrame", Engine::CTextureFrame::Create())))
 		return E_FAIL;
 
 	return S_OK;

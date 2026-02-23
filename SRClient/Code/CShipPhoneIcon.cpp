@@ -46,7 +46,7 @@ HRESULT		CShipPhoneIcon::Ready_GameObject()
 
     _vec3 vPos = { 0.0f, 0.0f, 0.0f };
     m_pTransformCom->Set_Scale(&vScale);
-    m_pTransformCom->Set_Pos(-6.f, -4.f, 0.f);
+    m_pTransformCom->Set_Pos(-8.5f, -4.f, 0.f);
     m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_PhoneIcon", this);
 
     m_bPhoneOpen = false;

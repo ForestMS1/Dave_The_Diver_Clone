@@ -16,6 +16,22 @@
 #include "CTestAmericanLobster.h"
 #include "CTestDancing.h"
 #include "CShipDiverBox.h"
+#include "CShipPhoneIDiverBG.h"
+#include "CShipTransformCam.h"
+#include "CShipPhoneIDiverItem.h"
+#include "CShipPhoneIDiverUpgrade.h"
+#include "CShipBG.h"
+#include "CShipFakeBG.h"
+#include "CShipUIDiveBtn.h"
+#include "CTriggerAABB.h"
+#include "CShipUIGoBtn.h"
+#include "CLog.h"
+#include "CShipUISpaceKey.h"
+#include "CDInputMgr.h"
+#include "CShipUIMoney.h"
+#include "CShipDiverBoxInventoryEdge.h"
+
+#include "IDiverInfo.h"
 
 CShip::CShip()
 	: CScene()
@@ -27,29 +43,21 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
-	//CColliderMgr::GetInstance()->Set_Render(true);
+	CColliderMgr::GetInstance()->Set_Render(false);
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	//// 임시 카메라
-	_vec3	vEye{ 0.f, 0.f, -10.f };
-	_vec3	vAt{ 0.f, 0.f, 0.f };
-	_vec3	vUp{ 0.f, 1.f, 0.f };
+
 	_matrix	matView, matProj;
 
-	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
-	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
 	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
 	
-	//// TestCam1
-	//CCamera* pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
-	//if (nullptr == pCamera)
-	//	return E_FAIL;
-	//CCameraMgr::GetInstance()->Set_Camera(L"TestCam1", pCamera);
+	IDiver::InitIDiverInfo();
 
 	return S_OK;
 }
@@ -60,17 +68,24 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
-	CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
-	if (nullptr == pTest)
+	//CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
+	//if (nullptr == pTest)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+	//	return E_FAIL;
+
+	//CTestDancing* pDancing = CTestDancing::Create();
+	//if (nullptr == pDancing)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipestDancing", pDancing)))
+	//	return E_FAIL;
+
+	CShipTransformCam* pCam = CShipTransformCam::Create();
+	if (nullptr == pCam)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipTestLobster", pTest)))
+	if (FAILED(pLayer->Add_GameObject(L"ShipCam", pCam)))
 		return E_FAIL;
 
-	CTestDancing* pDancing = CTestDancing::Create();
-	if (nullptr == pDancing)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipestDancing", pDancing)))
-		return E_FAIL;
 
 	CShipDave* pShipDave = CShipDave::Create();
 	if (nullptr == pShipDave)
@@ -81,17 +96,19 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 
 
 
-	CShipBoat* pShipBoat = CShipBoat::Create();
-	if (nullptr == pShipBoat)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pShipBoat)))
-		return E_FAIL;
 
-	CShipDiverBox* pShipDiverBox = CShipDiverBox::Create();
-	if (nullptr == pShipDiverBox)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"ShipDiverBox", pShipDiverBox)))
-		return E_FAIL;
+
+	//CShipBoat* pShipBoat = CShipBoat::Create();
+	//if (nullptr == pShipBoat)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipBoat", pShipBoat)))
+	//	return E_FAIL;
+
+	//CShipDiverBox* pShipDiverBox = CShipDiverBox::Create();
+	//if (nullptr == pShipDiverBox)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipDiverBox", pShipDiverBox)))
+	//	return E_FAIL;
 
 
 	CShipPhoneIcon* pShipPhoneIcon = CShipPhoneIcon::Create();
@@ -100,7 +117,187 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"ShipPhoneIcon", pShipPhoneIcon)))
 		return E_FAIL;
 
-	
+	//CShipPhoneIDiverItem
+	//CShipPhoneIDiverItem* pShipItem = CShipPhoneIDiverItem::Create();
+	//if (nullptr == pShipItem)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipPhoneIDIverItem", pShipItem)))
+	//	return E_FAIL;
+
+	// CShipPhoneIDiverUpgrade
+
+	//CShipPhoneIDiverUpgrade* pShipIDiverUpgrade = CShipPhoneIDiverUpgrade::Create(0.f, 0.f);
+	//if (nullptr == pShipIDiverUpgrade)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipPhoneUpgrade", pShipIDiverUpgrade)))
+	//	return E_FAIL;
+
+	//CShipBG
+	CShipBG* pShipBG = CShipBG::Create(0.f, 0.f);
+	if (nullptr == pShipBG)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipBG", pShipBG)))
+		return E_FAIL;
+
+	CShipFakeBG* pShipFakeBG = CShipFakeBG::Create(0.f, 0.f);
+	if (nullptr == pShipFakeBG)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipFakeBG", pShipFakeBG)))
+		return E_FAIL;
+
+	//CShipUIMoney
+	CShipUIMoney* pShipUIMoney = CShipUIMoney::Create(-7.5f, 4.5f);
+	if (nullptr == pShipUIMoney)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipUIMoney", pShipUIMoney)))
+		return E_FAIL;
+
+	//CShipUIDiveBtn
+	CShipUIDiveBtn* pShipDiveBtn = CShipUIDiveBtn::Create(-2.f, -2.f);
+	if (nullptr == pShipDiveBtn)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipDiveBtn", pShipDiveBtn)))
+		return E_FAIL;
+
+
+	//CShipUIGoBtn
+	CShipUIGoBtn* pShipGoBoatBtn = CShipUIGoBtn::Create(-6.f, -1.3f);
+	if (nullptr == pShipGoBoatBtn)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipGoBtn", pShipGoBoatBtn)))
+		return E_FAIL;
+
+
+	// CShipUISpaceKey
+	CShipUISpaceKey* pShipSpace = CShipUISpaceKey::Create(-3.5f, -2.5f);
+	if (nullptr == pShipSpace)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipDiverBoxSpace", pShipSpace)))
+		return E_FAIL;
+
+	CTriggerAABB* pTriggerDive = CTriggerAABB::Create(L"Coll_DiveTrigger", L"Coll_ShipDave");
+	if (nullptr == pTriggerDive)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipDiveTrigger", pTriggerDive)))
+		return E_FAIL;
+	{
+		pTriggerDive->Get_Transform()->Set_Pos(-1.5f, -2.5f, 0.f);
+		pTriggerDive->Set_OnTriggerEnter([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (auto pBtn = CManagement::GetInstance()
+					->Get_Scene()
+					->Get_Layer(L"0_GameLogic_Layer")
+					->Get_GameObjectFirst<CShipUIDiveBtn>(L"ShipDiveBtn"))
+				{
+					pBtn->AddRender(true);
+				}
+			}
+			});
+		pTriggerDive->Set_OnTriggerExit([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (auto pBtn = CManagement::GetInstance()
+					->Get_Scene()
+					->Get_Layer(L"0_GameLogic_Layer")
+					->Get_GameObjectFirst<CShipUIDiveBtn>(L"ShipDiveBtn"))
+				{
+					pBtn->AddRender(false);
+				}
+			}
+			});
+	}
+
+	CTriggerAABB* pTriggerDiverBox = CTriggerAABB::Create(L"Coll_DiverBoxTrigger", L"Coll_ShipDave");
+	if (nullptr == pTriggerDiverBox)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipDiverBoxTrigger", pTriggerDiverBox)))
+		return E_FAIL;
+	{
+		pTriggerDiverBox->Get_Transform()->Set_Pos(-3.5f, -2.5f, 0.f);
+		_vec3 vScale = { 0.1, 1.f, 1.f };
+		pTriggerDiverBox->Get_Transform()->Set_Scale(&vScale);
+		pTriggerDiverBox->Set_OnTriggerEnter([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (auto pBtn = CManagement::GetInstance()
+					->Get_Scene()
+					->Get_Layer(L"0_GameLogic_Layer")
+					->Get_GameObjectFirst<CShipUISpaceKey>(L"ShipDiverBoxSpace"))
+				{
+					pBtn->AddRender(true);
+				}
+			}
+			});
+		pTriggerDiverBox->Set_OnTriggerStay([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+				{
+					auto pExists = CManagement::GetInstance()
+						->Get_Scene()
+						->Get_Layer(L"0_GameLogic_Layer")
+						->Get_GameObjectFirst(L"ShipDiverBoxInventory");
+					if (!pExists)
+					{
+						CManagement::GetInstance()
+							->Get_Scene()
+							->Get_Layer(L"0_GameLogic_Layer")
+							->Add_GameObject(L"ShipDiverBoxInventory", CShipDiverBoxInventory::Create());
+					}
+				}
+			}
+			});
+		pTriggerDiverBox->Set_OnTriggerExit([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (auto pBtn = CManagement::GetInstance()
+					->Get_Scene()
+					->Get_Layer(L"0_GameLogic_Layer")
+					->Get_GameObjectFirst<CShipUISpaceKey>(L"ShipDiverBoxSpace"))
+				{
+					pBtn->AddRender(false);
+				}
+			}
+			});
+	}
+
+	CTriggerAABB* pTriggerGoBoat = CTriggerAABB::Create(L"Coll_GoBoatTrigger", L"Coll_ShipDave");
+	if (nullptr == pTriggerGoBoat)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"ShipGoBoatTrigger", pTriggerGoBoat)))
+		return E_FAIL;
+	{
+		pTriggerGoBoat->Get_Transform()->Set_Pos(-6.5f, -2.5f, 0.f);
+		_vec3 vScale = { 0.3, 1.f, 1.f };
+		pTriggerGoBoat->Get_Transform()->Set_Scale(&vScale);
+		pTriggerGoBoat->Set_OnTriggerEnter([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (auto pBtn = CManagement::GetInstance()
+					->Get_Scene()
+					->Get_Layer(L"0_GameLogic_Layer")
+					->Get_GameObjectFirst<CShipUIGoBtn>(L"ShipGoBtn"))
+				{
+					pBtn->SetActive(true);
+				}
+			}
+			});
+		pTriggerGoBoat->Set_OnTriggerExit([](CCollider* pCollider) {
+			if (pCollider->Get_Tag() == L"AABB_Dave")
+			{
+				if (auto pBtn = CManagement::GetInstance()
+					->Get_Scene()
+					->Get_Layer(L"0_GameLogic_Layer")
+					->Get_GameObjectFirst<CShipUIGoBtn>(L"ShipGoBtn"))
+				{
+					pBtn->SetActive(false);
+				}
+			}
+			});
+	}
+
+
 
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
@@ -123,9 +320,16 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	}
 	if (ImGui::Button("Go Logo Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
+		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO);
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
 	}
 	ImGui::End();
+
+	if (ImGui::Button("Collider Render"))
+	{
+		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
+	}
+	
 	return iExit;
 }
 

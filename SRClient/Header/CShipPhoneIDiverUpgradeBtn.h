@@ -1,12 +1,13 @@
 #pragma once
 #include "CGameObject.h"
-#include "CAABB.h"
-class CShipDiverBoxInventory : public CGameObject
+class CShipPhoneIDiverUpgradeBtn : public CGameObject
 {
 private:
-	explicit CShipDiverBoxInventory();
-	explicit CShipDiverBoxInventory(const CShipDiverBoxInventory& rhs);
-	virtual ~CShipDiverBoxInventory();
+	explicit CShipPhoneIDiverUpgradeBtn(float fPosX, float fPosY);
+	virtual ~CShipPhoneIDiverUpgradeBtn();
+
+public:
+	void Set_AssetName(std::wstring_view sAssetName) { m_sAssetName = sAssetName; }
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -18,12 +19,17 @@ private:
 	HRESULT			Ready_Component();
 
 private:
+	const float m_fPosX;
+	const float m_fPosY;
+
+private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
-	CAABB* m_pAABB;
+
+	std::wstring m_sAssetName;
 
 public:
-	static CShipDiverBoxInventory* Create();
+	static CShipPhoneIDiverUpgradeBtn* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();

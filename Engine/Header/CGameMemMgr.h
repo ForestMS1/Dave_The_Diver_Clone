@@ -29,6 +29,20 @@ public:
 private:
 	virtual void		Free();
 	vector<FISH*> fishes;
+
+
+	// µ·
+public:
+	_uint Get_Money() const { return m_iMoney; }
+	void Set_Money(_uint iMoney) { m_iMoney = iMoney; }
+private:
+	_uint m_iMoney;
+
+	// IDiverCurrent
+public:
+	unordered_map<std::wstring, _uint>* Get_IDiverCurrentLevel() { return &m_mapIDiverCurrentLevel; };
+private:
+	unordered_map<std::wstring, _uint> m_mapIDiverCurrentLevel;
 };
 
 END

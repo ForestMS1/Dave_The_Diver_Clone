@@ -19,7 +19,8 @@
 #include "CTestGlb.h"
 #include "CSkyBox.h"
 #include "CTestFish.h"
-
+#include "CDiveItemBox.h"
+#include "CBackGroundSea.h"
 
 CDive::CDive()
 	: CScene()
@@ -31,8 +32,11 @@ CDive::~CDive()
 
 HRESULT CDive::Ready_Scene()
 {
-	//if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
-	//	return E_FAIL;
+	CMapMgr::GetInstance()->SetScene(this);
+
+
+	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+		return E_FAIL;
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
@@ -58,7 +62,9 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 	CCameraMgr::GetInstance()->Set_Camera(L"FreeCam", pCamera);
 
-	CMapMgr::GetInstance()->SetScene(this);
+
+
+	CMapMgr::GetInstance()->Load();
 	return S_OK;
 }
 
@@ -105,13 +111,11 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 
 
-	// SkyBox
-	pGameObject = CSkyBox::Create();
 
-	if (nullptr == pGameObject)
+	CGameObject* pBackGroundSea = CBackGroundSea::Create();
+	if (nullptr == pBackGroundSea)
 		return E_FAIL;
-
-	if (FAILED(pLayer->Add_GameObject(L"SkyBox", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"CBackGroundSea", pBackGroundSea)))
 		return E_FAIL;
 
 
@@ -177,11 +181,19 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	pGameObject->Set_Parent(pDiveDave);
 
 	//테스트용
-	pGameObject = CTestGlb::Create();
+	pGameObject = CTestGlb::Create(L"GLB_File");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
 		return E_FAIL;
+
+	//테스트용
+	pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"BackGroundGlb", pGameObject)))
+		return E_FAIL;
+
 
 	//테스트용
 	pGameObject = CTestFish::Create();
@@ -190,6 +202,24 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"TestFish", pGameObject)))
 		return E_FAIL;
 
+
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+		return E_FAIL;
 	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });

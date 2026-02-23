@@ -3,6 +3,7 @@
 #include "CAttackReadyArmTex.h"
 #include "CAABB.h"
 #include "CPlayerState.h"
+#include "CLineBuffer.h"
 
 enum class PROJECTILESTATE { READY, FIRE, HIT, RETURN, STATE_END };
 
@@ -33,6 +34,7 @@ public:
 private:
 	HRESULT Ready_Component();
 	void	Go_ToDir(const _float& fTimeDelta);
+	void	Update_Points();
 
 public:
 	PROJECTILESTATE GetProjectilState() { return m_eState; }
@@ -51,7 +53,10 @@ private:
 	Engine::CAttackReadyArmTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
+	Engine::CLineBuffer* m_pLineBuffer;
 	CAABB* m_pAABB;
+
+	vector<_vec3> m_vecHarpoonToProjectilePoints;
 
 public:
 	static CHarpoonProjectile* Create();

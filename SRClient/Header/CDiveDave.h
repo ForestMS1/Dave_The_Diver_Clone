@@ -1,27 +1,37 @@
 #pragma once
 #include "CGameObject.h"
 #include "CPlayerState.h"
-
+#include "CAABB.h"
+#include "CDiveDaveIdle.h"
+#include "CDiveDaveOpen.h"
+#include "CDiveDavePickUp.h"
 enum class DiveState
 {
 	IDLE = 0,
 	MOVE,
 	ATTACK,			// 작살, 총 공격
 	MELEEATTACK,	// 근접 공격
+	TANNING,
+	OPEN,
+	PICKUP,
 	DIE,
 	DAVE_STATE_END
 };
 
 enum class EQUIPPED
 {
-	MELEE, // 근접무기
-	HARPOON, // 작살
+	//MELEE, // 근접무기 -> 기본 장착
+	HARPOON = 0, // 작살
 	GUN,	// 총
 	EQUIPPED_END
 };
 
 class CDiveDave : public CGameObject
 {
+	friend class CDiveDaveIdle;
+	friend class CDiveDaveOpen;
+	friend class CDiveDavePickUp;
+
 private:
 	explicit CDiveDave();
 	explicit CDiveDave(const CDiveDave& rhs);
@@ -64,6 +74,14 @@ public:
 	void		Set_FishCaught(_bool bFishCaught) { m_bFishCaught = bFishCaught; }
 	_bool		Is_FishCaught()					  { return m_bFishCaught; }
 
+
+	// With DiveItemBox
+	void		Set_IsOnItemBox(_bool isOn) { m_bIsOnItemBox = isOn; }
+	void		Set_CurOnItemBox(CGameObject* pItemBox) { m_pCurOnItemBox = pItemBox; }
+	// With DiveItem
+	void		Set_IsOnItem(_bool isOn) { m_bIsOnItem = isOn; }
+	void		Set_CurOnItem(CGameObject* pItem) { m_pCurOnItem = pItem; }
+
 public:
 	void Set_CanKeyInput(_bool canKey) { m_bCanKeyInput = canKey; }
 	void Set_CanMouseInput(_bool canMouse) { m_bCanMouseInput = canMouse; }
@@ -82,6 +100,8 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
+	CAABB* m_pAABB; // 아이템 상자랑 충돌 용
+	CAABB* m_pAABBItem; // 아이템이랑 충돌 용
 
 private:
 	CPlayerState* m_pState = nullptr;
@@ -89,15 +109,23 @@ private:
 	unordered_map<DiveState, CPlayerState*> m_mapState;
 
 private:
-	EQUIPPED m_eCurEquipped = EQUIPPED::MELEE;
+	EQUIPPED m_eCurEquipped = EQUIPPED::HARPOON;
 
 private:
-	_float m_fSpeed = 5.f;
+	_float m_fSpeed = 10.f;
 	_float m_fFrame = 0.f;
 	_bool  m_bFishCaught = false;
 
 	_bool  m_bCanKeyInput = true;
 	_bool  m_bCanMouseInput = true;
+
+	_bool m_bIsOnItemBox = false;
+
+	_bool m_bIsOnItem = false;
+
+private:
+	CGameObject* m_pCurOnItemBox = nullptr;
+	CGameObject* m_pCurOnItem = nullptr;
 
 public:
 	static CDiveDave* Create();
