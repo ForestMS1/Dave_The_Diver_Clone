@@ -31,6 +31,7 @@ CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	, m_Crt({})
 	, m_hThread(nullptr)
 	, m_reserveTransfer({})
+	, m_bLoadingStart(false)
 {
 }
 
@@ -978,13 +979,7 @@ HRESULT CTransition::Ready_Scene()
 	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
 
-	InitializeCriticalSection(&m_Crt);
-	m_hThread = (HANDLE)_beginthreadex(NULL, // 보안 속성(핸들의 상속 여부, NULL인 경우 상속에서 제외)
-		0,  // 디폴트 스탯 사이즈(1 바이트)
-		Thread_Main, // 구동할 쓰레드 함수
-		this,          // 3번 매개 변수 함수를 통해 가공할 데이터 주소
-		0,             // 쓰레드 생성 및 실행을 조정하기 위한 옵션
-		NULL);         // 쓰레드 ID
+
 
 
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
@@ -1010,6 +1005,19 @@ HRESULT CTransition::Ready_Scene()
 
 _int CTransition::Update_Scene(const _float& fTimeDelta)
 {
+	if (!m_bLoadingStart)
+	{
+		m_bLoadingStart = true;
+
+		InitializeCriticalSection(&m_Crt);
+		m_hThread = (HANDLE)_beginthreadex(NULL, // 보안 속성(핸들의 상속 여부, NULL인 경우 상속에서 제외)
+			0,  // 디폴트 스탯 사이즈(1 바이트)
+			Thread_Main, // 구동할 쓰레드 함수
+			this,          // 3번 매개 변수 함수를 통해 가공할 데이터 주소
+			0,             // 쓰레드 생성 및 실행을 조정하기 위한 옵션
+			NULL);         // 쓰레드 ID
+	}
+
 	CScene::Update_Scene(fTimeDelta);
 
 	if (m_bFadeEnd && m_bFinish)

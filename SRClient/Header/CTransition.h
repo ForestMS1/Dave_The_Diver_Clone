@@ -76,6 +76,8 @@ private:
 	wstring m_sComment;
 
 	bool m_bFadeEnd;
+
+	bool m_bLoadingStart;
 private:
 	virtual void	Free();
 
