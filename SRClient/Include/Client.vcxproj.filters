@@ -256,6 +256,12 @@
     <Filter Include="BaseState">
       <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Fish">
+      <UniqueIdentifier>{7515aa6a-c399-4bac-89c8-5ee89c6c7527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\BlueTang">
+      <UniqueIdentifier>{3e7b4ac2-b05a-4e69-8e8d-3c0bf8fd6586}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -669,6 +675,12 @@
     <ClInclude Include="..\Header\CDiveDaveDie.h">
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFishGameObject.h">
+      <Filter>02. GameObject\Fish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishBlueTang.h">
+      <Filter>02. GameObject\Fish\BlueTang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1072,6 +1084,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveDie.cpp">
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishGameObject.cpp">
+      <Filter>02. GameObject\Fish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishBlueTang.cpp">
+      <Filter>02. GameObject\Fish\BlueTang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

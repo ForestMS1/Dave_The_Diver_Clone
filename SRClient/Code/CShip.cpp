@@ -33,6 +33,8 @@
 
 #include "IDiverInfo.h"
 
+#include "CFishBlueTang.h"
+
 CShip::CShip()
 	: CScene()
 {
@@ -67,6 +69,26 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
 		return E_FAIL;
+
+	//{
+	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(1.f, 1.f);
+	//	pLayer->Add_GameObject(L"BlueTang", pBlueTang);
+	//}
+
+	//{
+	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(-1.f, -1.f);
+	//	pLayer->Add_GameObject(L"BlueTang", pBlueTang);
+	//}
+
+	//{
+	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(-1.f, -1.f);
+	//	pLayer->Add_GameObject(L"BlueTang", pBlueTang);
+	//}
+
+	//{
+	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(-1.f, 0.f);
+	//	pLayer->Add_GameObject(L"BlueTang", pBlueTang);
+	//}
 
 	//CTestAmericanLobster* pTest = CTestAmericanLobster::Create();
 	//if (nullptr == pTest)

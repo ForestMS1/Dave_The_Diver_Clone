@@ -184,6 +184,8 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveDie.h" />
     <ClInclude Include="..\Header\CDiveDaveHit.h" />
+    <ClInclude Include="..\Header\CFishBlueTang.h" />
+    <ClInclude Include="..\Header\CFishGameObject.h" />
     <ClInclude Include="..\Header\CFSM.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
@@ -320,6 +322,8 @@
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveDie.cpp" />
     <ClCompile Include="..\Code\CDiveDaveHit.cpp" />
+    <ClCompile Include="..\Code\CFishBlueTang.cpp" />
+    <ClCompile Include="..\Code\CFishGameObject.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />

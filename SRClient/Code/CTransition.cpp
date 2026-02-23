@@ -23,6 +23,7 @@
 #include "CTransitionFade.h"
 #include "CTransitionTxt.h"
 #include "CTransitionFace.h"
+#include "CAssetSpine.h"
 
  bool CTransition::s_LogoAssetLoaded = false;
  bool CTransition::s_ShipAssetLoaded = false;
@@ -139,6 +140,8 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_Fish_BlueTang", CAssetSpine::Create(L"../Bin/Resource/Spine/BlueTang/BlueTang"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_Fish_BlueTang");
 
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
 //#ifdef _DEBUG
