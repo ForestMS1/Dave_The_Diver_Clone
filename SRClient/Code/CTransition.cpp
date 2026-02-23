@@ -1102,20 +1102,88 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	if (m_eDstScene == SCENE_SHIP)
 	{
-		CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
-		pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
 
-		pTransitionImg->Set_CustomScaleX(0.1f);
-		pTransitionImg->Set_CustomScaleY(0.1f);
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
 
-		pTransitionImg->Ready_AfterCreate();
+			pTransitionImg->Ready_AfterCreate();
 
 
-		if (nullptr == pTransitionImg)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
-			return E_FAIL;
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"로비로비로");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
 		
+	}
+	else if (m_eDstScene == SCENE_DIVE)
+	{
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Dive");
+
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
+
+			pTransitionImg->Ready_AfterCreate();
+
+
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"두다이브");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
+	}
+	else if (m_eDstScene == SCENE_SUSHI)
+	{
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Sushi");
+
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
+
+			pTransitionImg->Ready_AfterCreate();
+
+
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"회식은갓파스시?");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
 	}
 
 	{
@@ -1143,21 +1211,18 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 	} 
 
-	{
-		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
-		pTxt->Set_Txt(L"이것은 제목이여");
-		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
-		if (nullptr == pTxt)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
-			return E_FAIL;
-	}
+	
 
 
 
 	{
+		wstring tipTxt[3];
+		tipTxt[0] = L"그거 아시나요? 거북이는 엉덩이로 숨을 쉴 수 있어서 물속에서 오래 버텨요.";
+		tipTxt[1] = L"그거 아시나요? 굴은 살면서 필요에 따라 암수 성별을 자유자재로 바꿀 수 있답니다.";
+		tipTxt[2] = L"그거 아시나요? 흰수염고래의 혀 무게만 해도 코끼리 한 마리랑 맞먹을 정도로 커요.";
+
 		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f);
-		pTxt->Set_Txt(L"ASDfASDFASDFASDFASDFASDFASDFASDFASDFASDFASDFF");
+		pTxt->Set_Txt(tipTxt[rand() % 3]);
 		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 		if (nullptr == pTxt)
 			return E_FAIL;
