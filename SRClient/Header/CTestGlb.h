@@ -1,8 +1,11 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAABB.h"
+
 namespace Engine {
 	class CGlbTex;
+
+	
 }
 class CTestGlb : public CGameObject
 {
@@ -20,12 +23,12 @@ public:
 
 private:
 	HRESULT			Ready_Component();
-
+	HRESULT			Ready_Material();
 private:
 	Engine::CGlbTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 	const wstring_view m_wsName;
-	CAABB* m_pAABB;
+	vector<CAABB*> m_pAABB;
 
 public:
 	static CTestGlb* Create();

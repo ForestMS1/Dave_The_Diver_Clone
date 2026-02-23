@@ -180,19 +180,32 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
+	////테스트용
+	//pGameObject = CTestGlb::Create(L"GLB_File");
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
+	//	return E_FAIL;
 	//테스트용
-	pGameObject = CTestGlb::Create(L"GLB_File");
+	pGameObject = CTestGlb::Create(L"GLB_File1");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"TestGlb1", pGameObject)))
 		return E_FAIL;
 
-	//테스트용
-	pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"BackGroundGlb", pGameObject)))
-		return E_FAIL;
+	//pGameObject = CTestGlb::Create(L"Terrian1_Collision");
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"Terrian1_Collision", pGameObject)))
+	//	return E_FAIL;
+
+	////테스트용
+	//pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"BackGroundGlb", pGameObject)))
+	//	return E_FAIL;
+
 
 
 	//테스트용
