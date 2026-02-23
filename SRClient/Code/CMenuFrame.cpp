@@ -88,9 +88,10 @@ _int CMenuFrame::Update_GameObject(const _float& fTimeDelta)
             return E_FAIL;
     }
     if (m_bRender) {
-
-        static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
-        Key_Input();
+        if (addButtons.size() != 0) {
+            static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
+            Key_Input();
+        }
     }
     return iExit;
 }

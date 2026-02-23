@@ -52,51 +52,7 @@ HRESULT CSelectedFrame::Ready_GameObject()
     m_sCost = static_cast<CSushiList*>(sushilist)->m_sCost;
     m_sQuality = static_cast<CSushiList*>(sushilist)->m_sQuality;
 
-    if (m_sFishName == L"ºí·çÁ¾") {
-        pSushiGameObject = CBluejongR::Create();
-
-        if (nullptr == pSushiGameObject)
-            return E_FAIL;
-
-        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
-            return E_FAIL;
-    }
-    else if (m_sFishName == L"³ë¶û¹é") {
-        pSushiGameObject = CYellowbackR::Create();
-
-        if (nullptr == pSushiGameObject)
-            return E_FAIL;
-
-        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
-            return E_FAIL;
-    }
-    else if (m_sFishName == L"ÄÚ¹Ý¾ÆÁö") {
-        pSushiGameObject = CDartR::Create();
-
-        if (nullptr == pSushiGameObject)
-            return E_FAIL;
-
-        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
-            return E_FAIL;
-    }
-    else if (m_sFishName == L"Èòµ¿°¡¸®") {
-        pSushiGameObject = CClownFishR::Create();
-
-        if (nullptr == pSushiGameObject)
-            return E_FAIL;
-
-        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
-            return E_FAIL;
-    }
-    else if (m_sFishName == L"³ë¶ûÅÁ") {
-        pSushiGameObject = CYellowTangR::Create();
-
-        if (nullptr == pSushiGameObject)
-            return E_FAIL;
-
-        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
-            return E_FAIL;
-    }
+ 
 
 
 
@@ -111,6 +67,51 @@ _int CSelectedFrame::Update_GameObject(const _float& fTimeDelta)
         
         m_sSushiName = m_sFishName + L" ÃÊ¹ä";
         m_sPlate = m_sPlate + L" / " + m_sPlate;
+        if (m_sFishName == L"ºí·çÁ¾") {
+            pSushiGameObject = CBluejongR::Create();
+
+            if (nullptr == pSushiGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
+                return E_FAIL;
+        }
+        else if (m_sFishName == L"³ë¶û¹é") {
+            pSushiGameObject = CYellowbackR::Create();
+
+            if (nullptr == pSushiGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
+                return E_FAIL;
+        }
+        else if (m_sFishName == L"ÄÚ¹Ý¾ÆÁö") {
+            pSushiGameObject = CDartR::Create();
+
+            if (nullptr == pSushiGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
+                return E_FAIL;
+        }
+        else if (m_sFishName == L"Èòµ¿°¡¸®") {
+            pSushiGameObject = CClownFishR::Create();
+
+            if (nullptr == pSushiGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
+                return E_FAIL;
+        }
+        else if (m_sFishName == L"³ë¶ûÅÁ") {
+            pSushiGameObject = CYellowTangR::Create();
+
+            if (nullptr == pSushiGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
+                return E_FAIL;
+        }
         created = false;
     }
     if (m_bRender) {
@@ -145,15 +146,15 @@ _int CSelectedFrame::Update_GameObject(const _float& fTimeDelta)
             CTransform* pTransform = static_cast<CTransform*>(pSushiGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
             pTransform->m_vScale = { 0.2f, 0.12f, 1.f };
             pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
-            pTransform->m_vInfo[INFO_POS].z -= 0.5f;
-            pTransform->m_vInfo[INFO_POS].y -= 0.1f;
+            //pTransform->m_vInfo[INFO_POS].z -= 0.1f;
+            pTransform->m_vInfo[INFO_POS].y -=  0.1f; 
             CGameObject* menu = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
             if (static_cast<CMenuFrame*>(menu)->frameMoved == true) {
-                pTransform->m_vInfo[INFO_POS].x -= 0.69f;
+                pTransform->m_vInfo[INFO_POS].x -= 0.58f;
 
             }
             else {
-                pTransform->m_vInfo[INFO_POS].x -= 0.89f;
+                pTransform->m_vInfo[INFO_POS].x -= 1.2f;
 
             }
 

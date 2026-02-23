@@ -139,6 +139,7 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         frameTransform->m_vInfo[INFO_POS] = pos;
                         frameTransform->m_vScale = scale;
                         pGameObject->Set_Render(true);
+                        //static_cast<CSelectedFrame*>(pGameObject)->pSushiGameObject->Set_Render(true);
                         static_cast<CSelectedFrame*>(pGameObject)->created = true;
                         vector<CGameObject*> confirmObjects = static_cast<CFishConfirmFrame*>(frameObject)->Get_CurObjects();
                         static_cast<CFishConfirmFrame*>(frameObject)->Set_Render(false);
@@ -174,7 +175,9 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                                 iter3++;
                             }
                         }
-                        static_cast<CAddMenuButton*>(addButtons[0])->Set_Selected(true);
+                        if (addButtons.size() != 0) {
+                            static_cast<CAddMenuButton*>(addButtons[0])->Set_Selected(true);
+                        }
                         
                     }
                     else if (whichOkay == L"Upgrade") {
