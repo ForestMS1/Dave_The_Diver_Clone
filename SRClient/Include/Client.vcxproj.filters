@@ -708,6 +708,9 @@
     <ClInclude Include="..\Header\FishInclude.h">
       <Filter>02. GameObject\Fish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFishHitCollider.h">
+      <Filter>02. GameObject\Fish</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1129,6 +1132,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp">
       <Filter>02. GameObject\Fish\YellowbackFusilier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishHitCollider.cpp">
+      <Filter>02. GameObject\Fish</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

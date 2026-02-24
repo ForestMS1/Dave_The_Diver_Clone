@@ -187,6 +187,7 @@
     <ClInclude Include="..\Header\CBlueTang.h" />
     <ClInclude Include="..\Header\CClownfish.h" />
     <ClInclude Include="..\Header\CFishGameObject.h" />
+    <ClInclude Include="..\Header\CFishHitCollider.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="..\Code\CBlueTang.cpp" />
     <ClCompile Include="..\Code\CClownfish.cpp" />
     <ClCompile Include="..\Code\CFishGameObject.cpp" />
+    <ClCompile Include="..\Code\CFishHitCollider.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
