@@ -9,6 +9,7 @@
 #include "CSushiFrame.h"
 #include "CColliderMgr.h"
 #include "CBluejongR.h"
+#include "CCloseButton.h"
 
 
 
@@ -62,6 +63,7 @@ HRESULT CRecipe::Ready_GameObject()
 
         if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"SushiFrame", pGameObject)))
             return E_FAIL;
+        objects.push_back(pGameObject);
 
         CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
         pTransform->m_vScale = { 0.3f, 0.3f, 0.1f };
@@ -73,6 +75,21 @@ HRESULT CRecipe::Ready_GameObject()
         col++;
     }
    
+
+    pGameObject = CCloseButton::Create();
+
+    if (nullptr == pGameObject)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"Close_2", pGameObject)))
+        return E_FAIL;
+    static_cast<CCloseButton*>(pGameObject)->Set_Frame(L"RecipeFrame");
+    {
+        CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+        pTransform->m_vInfo[INFO_POS] = { 0.f,-2.35f,-5.f };
+        pTransform->m_vScale = { 0.55f,0.15f,0.01f };
+    }
+    objects.push_back(pGameObject);
 
     return S_OK;
 }

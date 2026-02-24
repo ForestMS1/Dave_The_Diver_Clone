@@ -206,6 +206,7 @@
     <ClInclude Include="..\Header\CLogoBG.h" />
     <ClInclude Include="..\Header\CLogoBtnArea.h" />
     <ClInclude Include="..\Header\CLogoTitle.h" />
+    <ClInclude Include="..\Header\COpenShop.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
     <ClInclude Include="..\Header\CShipDiverBoxDave.h" />
     <ClInclude Include="..\Header\CShipDiverBoxInventory.h" />
@@ -283,6 +284,8 @@
     <ClInclude Include="..\Header\CTriggerAABB.h" />
     <ClInclude Include="..\Header\CDartR.h" />
     <ClInclude Include="..\Header\CUpgradeButton.h" />
+    <ClInclude Include="..\Header\CUpgradeConfirmButton.h" />
+    <ClInclude Include="..\Header\CUpgradeFrame.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="..\Header\IDiverInfo.h" />
@@ -346,6 +349,7 @@
     <ClCompile Include="..\Code\CO2Capsule.cpp" />
     <ClCompile Include="..\Code\CMaxButton.cpp" />
     <ClCompile Include="..\Code\COkayButton.cpp" />
+    <ClCompile Include="..\Code\COpenShop.cpp" />
     <ClCompile Include="..\Code\COverlay.cpp" />
     <ClCompile Include="..\Code\CBaseState.cpp" />
     <ClCompile Include="..\Code\CBackground.cpp" />
@@ -422,6 +426,8 @@
     <ClCompile Include="..\Code\CTriggerAABB.cpp" />
     <ClCompile Include="..\Code\CDartR.cpp" />
     <ClCompile Include="..\Code\CUpgradeButton.cpp" />
+    <ClCompile Include="..\Code\CUpgradeConfirmButton.cpp" />
+    <ClCompile Include="..\Code\CUpgradeFrame.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="..\Code\IDiverInfo.cpp" />

@@ -29,6 +29,7 @@
 #include "CDInputMgr.h"
 #include "CFishConfirmFrame.h"
 #include "COverlay.h"
+#include "COpenShop.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -344,6 +345,14 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Overlay", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = COpenShop::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"OpenShop", pGameObject)))
+		return E_FAIL;
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
@@ -437,6 +446,8 @@ void CSushi::Key_Input()
 		for (iter; iter != button->end(); iter++) {
 			static_cast<CMenuFrame*>(*iter)->Show();
 		}
+		CGameObject* button2 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
+		button2->Set_Render(true);
 	}
 	/*if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
 	{

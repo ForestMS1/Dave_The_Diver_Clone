@@ -47,6 +47,7 @@ public:
 	wstring m_sLevel;
 	float m_fOffsetX = 0.f;
 	float m_fOffsetY = 0.f;
+	
 private:
 	virtual void Free();
 	

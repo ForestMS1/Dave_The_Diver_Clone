@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CUpgradeButton.h"
+#include "CUpgradeConfirmButton.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
@@ -9,34 +9,29 @@
 #include "CColliderMgr.h"
 #include "CHelper.h"
 #include "CDInputMgr.h"
-#include "CBluejongR.h"
 #include "CAssetDefaultFont.h"
 #include "CAssetMgr.h"
 #include "CGameMemMgr.h"
-#include "CYellowbackR.h"
-#include "CYellowTangR.h"
-#include "CDartR.h"
-#include "CClownFishR.h"
-#include "CUpgradeFrame.h"
 #include "CSushiFrame.h"
-#include "CUpgradeConfirmButton.h"
-CUpgradeButton::CUpgradeButton()
+#include "CUpgradeFrame.h"
+CUpgradeConfirmButton::CUpgradeConfirmButton()
     : CGameObject()
 {
+    whichFish = L"";
 }
 
-CUpgradeButton::CUpgradeButton(const CGameObject& rhs)
+CUpgradeConfirmButton::CUpgradeConfirmButton(const CGameObject& rhs)
     : CGameObject(rhs)
 {
 }
 
-CUpgradeButton::~CUpgradeButton()
+CUpgradeConfirmButton::~CUpgradeConfirmButton()
 {
 }
 
 
 
-HRESULT CUpgradeButton::Ready_GameObject()
+HRESULT CUpgradeConfirmButton::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -46,13 +41,15 @@ HRESULT CUpgradeButton::Ready_GameObject()
     _vec3 vExtents = { 1.0f, 1.0f, 1.0f };
     _vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
 
-    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Upgrade", this);
+    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_UpgradeConfirm", this);
     return S_OK;
 }
 
-_int CUpgradeButton::Update_GameObject(const _float& fTimeDelta)
+_int CUpgradeConfirmButton::Update_GameObject(const _float& fTimeDelta)
 {
-    if (m_bRender) {
+    CGameObject* upgradeFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"UpgradeFrame");
+
+    if (m_bRender && static_cast<CUpgradeFrame*>(upgradeFrame)->quantityRequired) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
         CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Frame", m_pAABB);
     }
@@ -72,37 +69,55 @@ _int CUpgradeButton::Update_GameObject(const _float& fTimeDelta)
         if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
         {
             // 만약 충돌한다면 태그비교후 보이드포인터 들고와서 캐스팅한다음 조작한다.
-            if (m_pAABB->Get_Tag() == L"AABB_Upgrade")
+            if (m_pAABB->Get_Tag() == L"AABB_UpgradeConfirm")
             {
-                CGameObject* upgradeFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"UpgradeFrame");
-                upgradeFrame->Set_Render(true);
-                CGameObject* overlay = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"Overlay");
-                CTransform* pTransform = static_cast<CTransform*>(overlay->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-                CTransform* confirmTransform = static_cast<CTransform*>(upgradeFrame->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-                pTransform->m_vInfo[INFO_POS] = confirmTransform->m_vInfo[INFO_POS];
-                pTransform->m_vInfo[INFO_POS].z += 0.05f;
-                overlay->Set_Render(true);
-                vector<CGameObject*> frameObjects = static_cast<CUpgradeFrame*>(upgradeFrame)->Get_CurObjects();
-                for (auto objects : frameObjects) {
-                    objects->Set_Render(true);
+
+               // vector<CGameMemMgr::FISH*>& fishes = CGameMemMgr::GetInstance()->getFishes();
+                for (auto &fish : CGameMemMgr::GetInstance()->getFishes()) {
+                    if (fish->name == whichFish) {
+                        fish->level += 1;
+                        fish->quantity -= 3;
+                        fish->cost += 3;
+                        fish->quality += 14;
+                    }
                 }
 
+
+                CGameObject* upgradeFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"UpgradeFrame");
+                upgradeFrame->Set_Render(false);
+                vector<CGameObject*> frameObjects = static_cast<CUpgradeFrame*>(upgradeFrame)->Get_CurObjects();
+                for (auto objects : frameObjects) {
+                    objects->Set_Render(false);
+                }
+                CGameObject* overlay = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"Overlay");
+                overlay->Set_Render(false);
 
                 list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
                 list<CGameObject*>::iterator iter = frame->begin();
                 for (iter; iter != frame->end(); iter++) {
-                    static_cast<CSushiFrame*>(*iter)->ConfirmOpened = true;
-                
+                    static_cast<CSushiFrame*>(*iter)->ConfirmOpened = false;
                 }
                 CGameObject* button1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_2");
-                button1->Set_Render(false);
+                button1->Set_Render(true);
+            /*    if (whichFish == L"블루종") {
+
+                }
+                else if (whichFish == L"노랑백") {
+                }
+                else if (whichFish == L"코반아지") {
+                }
+                else if (whichFish == L"흰동가리") {
+                }
+                else if (whichFish == L"노랑탕") {
+                }*/
+
             }
         }
     }
     return iExit;
 }
 
-void CUpgradeButton::LateUpdate_GameObject(const _float& fTimeDelta)
+void CUpgradeConfirmButton::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -115,7 +130,7 @@ void CUpgradeButton::LateUpdate_GameObject(const _float& fTimeDelta)
 
 }
 
-void CUpgradeButton::Render_GameObject()
+void CUpgradeConfirmButton::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -145,14 +160,14 @@ void CUpgradeButton::Render_GameObject()
     //float scalex = CInfoMgr::GetInstance()->Get_ScaleFactor();
 }
 
-HRESULT CUpgradeButton::Ready_Component()
+HRESULT CUpgradeConfirmButton::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     // 텍스쳐
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_UpgradeTex", L"Com_Texture", &m_pUpgradeTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_upgradeConfirmTex", L"Com_Texture", &m_pUpgradeTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -163,20 +178,20 @@ HRESULT CUpgradeButton::Ready_Component()
 }
 
 
-CUpgradeButton* CUpgradeButton::Create()
+CUpgradeConfirmButton* CUpgradeConfirmButton::Create()
 {
-    CUpgradeButton* upgrade = new CUpgradeButton;
+    CUpgradeConfirmButton* upgrade = new CUpgradeConfirmButton;
     if (FAILED(upgrade->Ready_GameObject()))
     {
         Safe_Release(upgrade);
-        MSG_BOX("Upgrade Create Failed");
+        MSG_BOX("UpgradeConfirm Create Failed");
         return nullptr;
     }
 
     return upgrade;
 }
 
-void CUpgradeButton::Free()
+void CUpgradeConfirmButton::Free()
 {
     Safe_Release(m_pAABB);
     CGameObject::Free();

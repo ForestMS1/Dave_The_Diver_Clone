@@ -39,7 +39,7 @@ HRESULT CCustomer1::Ready_GameObject()
     m_fFrame = 0.f;
 
     m_pTransformCom->m_vScale = { 0.4f,0.9f,1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { -5.f ,-1.9f,-2.8f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { -5.f ,-1.84f,-2.999f };
     return S_OK;
 }
 
