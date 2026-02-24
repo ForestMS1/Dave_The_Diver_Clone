@@ -25,6 +25,10 @@ protected:
 	void StartDrop(const _float& fTimeDelta);
 	void	Collision_With_DiveDave();
 
+	// Ãæµ¹
+	void	OnCollisionEnter(CCollider*);
+	void	OnCollisionStay(CCollider*);
+	void	OnCollisionExit(CCollider*);
 
 protected:
 	Engine::CRcTex* m_pBufferCom;
