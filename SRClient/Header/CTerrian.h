@@ -34,7 +34,7 @@ private:
 	Engine::CTransform* m_pTransformCom;
 	const wstring_view m_wsName;
 	vector<CAABB*> m_pAABB;
-
+	CAABB* m_pfrustomAABB;
 private:
 	wstring m_CollisionName;
 public:

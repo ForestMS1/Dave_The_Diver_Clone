@@ -181,29 +181,6 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
-	////테스트용
-	//pGameObject = CTestGlb::Create(L"GLB_File");
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
-	//	return E_FAIL;
-	//테스트용
-	pGameObject = CTerrian::Create(L"GLB_File1", L"Terrian1_Collision");
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"TestGlb1", pGameObject)))
-		return E_FAIL;
-
-
-
-
-	////테스트용
-	//pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pLayer->Add_GameObject(L"BackGroundGlb", pGameObject)))
-	//	return E_FAIL;
-
 
 
 	//테스트용
@@ -232,6 +209,61 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
 		return E_FAIL;
 	
+	// 맵 
+	pGameObject = CTerrian::Create(L"BackGround_GLB_File");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"BackGround_GLB_File", pGameObject)))
+		return E_FAIL;
+
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian1", L"Terrian1_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian1", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian2", L"Terrian2_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian2", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian3", L"Terrian3_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian3", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian4", L"Terrian4_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian4", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian5", L"Terrian5_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian5", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian6", L"Terrian6_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian6", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian6_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian7", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian6_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
+		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

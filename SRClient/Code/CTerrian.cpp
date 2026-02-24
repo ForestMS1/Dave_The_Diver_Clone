@@ -36,8 +36,8 @@ HRESULT CTerrian::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
-
     //-------------AABB Collider With AABB_Terrian----------------
+    m_pfrustomAABB = nullptr;
 
   
     if (m_CollisionName != L"") {
@@ -47,13 +47,18 @@ HRESULT CTerrian::Ready_GameObject()
         meshBound = (CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_CollisionName)->Get_vec_meshBounds());
 
         if (meshBound != nullptr) {
-            for (int i = 0; i < meshBound->size(); ++i) {
+            for (int i = 0; i < meshBound->size() - 1; ++i) {
 
                 _vec3 scale = (*meshBound)[i].scale;
                 _vec3 vExtents = { 1.f * scale.x,1.f * scale.y,0.f };
                 _vec3 vPos = { (*meshBound)[i].center };
                 m_pAABB.emplace_back(CAABB::Create(&vPos, &vExtents, m_CollisionName, this));
             }
+
+            _vec3 scale = (*meshBound)[meshBound->size()-1].scale;
+            _vec3 vExtents = { 1.f * scale.x,1.f * scale.z,0.f };
+            _vec3 vPos = { (*meshBound)[meshBound->size() - 1].center };
+            m_pfrustomAABB = (CAABB::Create(&vPos, &vExtents, L"Optimization", this));
         }
 
     }
@@ -75,6 +80,7 @@ _int CTerrian::Update_GameObject(const _float& fTimeDelta)
         //i->Transform(m_pTransformCom->Get_World());
     }
 
+    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Frustom", m_pfrustomAABB);
 
     return iExit;
 }
@@ -226,9 +232,12 @@ CTerrian* CTerrian::Create(const wstring_view tex, const wstring_view Name)
 void CTerrian::Free()
 {
     CGameObject::Free();
+
     // 충돌체 그룹에 넣어줘야한다.
     for (auto i : m_pAABB) {
         Safe_Release(i);
     }
-   
+
+    Safe_Release(m_pfrustomAABB);
+  
 }
