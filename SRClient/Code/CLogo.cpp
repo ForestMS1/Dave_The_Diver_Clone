@@ -30,16 +30,8 @@ CLogo::~CLogo()
 
 HRESULT CLogo::Ready_Scene()
 {
-	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	D3DXMATRIX matView, matProj;
-	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);    
-	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);     
-	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);   
-	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
-	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4.0f, (float)WINCX / (float)WINCY , 0.1f, 1000.0f);
-	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-
+	
+	Update_Camera();
 
 	CColliderMgr::GetInstance()->Set_Render(false);
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
@@ -49,12 +41,14 @@ HRESULT CLogo::Ready_Scene()
 
 _int CLogo::Update_Scene(const _float& fTimeDelta)
 {
+	Update_Camera();
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
 	ImGui::Begin("Curr Scene: CLogo");
 	if (ImGui::Button("Go Ship Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
+		CTransition::FadedTransition(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
 
@@ -107,6 +101,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 
 void CLogo::LateUpdate_Scene(const _float& fTimeDelta)
 {
+	Update_Camera();
 	CScene::LateUpdate_Scene(fTimeDelta);
 }
 
@@ -146,6 +141,19 @@ HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
+}
+
+void CLogo::Update_Camera()
+{
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	D3DXMATRIX matView, matProj;
+	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);
+	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, (float)WINCX / (float)WINCY, 0.1f, 1000.0f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
 CLogo* CLogo::Create()

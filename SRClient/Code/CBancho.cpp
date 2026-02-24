@@ -107,7 +107,7 @@ HRESULT CBancho::Ready_Component()
     // 텍스쳐
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BanchoIdleTexture", L"Com_Texture", &m_pIdleTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_CookTexture", L"Com_Texture", &m_pCookTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_CookTexture", L"Com_Texture1", &m_pCookTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -136,6 +136,5 @@ CBancho* CBancho::Create()
 void CBancho::Free()
 {
     CGameObject::Free();
-    Safe_Release(m_pIdleTextureCom);
-    Safe_Release(m_pCookTextureCom);
+
 }

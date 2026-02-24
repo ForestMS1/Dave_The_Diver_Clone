@@ -1,10 +1,13 @@
 #pragma once
-#include "CPlayerState.h"
+#include "CBaseState.h"
+
+class CDiveDave;
+
 class CDiveDaveMeeleAttack :
-    public CPlayerState
+    public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDaveMeeleAttack(CGameObject* pOwner);
+	explicit CDiveDaveMeeleAttack(CDiveDave* pOwner);
 	~CDiveDaveMeeleAttack();
 
 public:
@@ -20,7 +23,7 @@ private:
 	void Mouse_Check();
 
 public:
-	static CDiveDaveMeeleAttack* Create(CGameObject* pOwner);
+	static CDiveDaveMeeleAttack* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };

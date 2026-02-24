@@ -1,5 +1,5 @@
 #pragma once
-#include "CPlayerState.h"
+#include "CBaseState.h"
 
 enum DIR
 {
@@ -14,10 +14,12 @@ enum DIR
 	DIR_END
 };
 
-class CDiveDaveMove : public CPlayerState
+class CDiveDave;
+
+class CDiveDaveMove : public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDaveMove(CGameObject* pOwner);
+	explicit CDiveDaveMove(CDiveDave* pOwner);
 	~CDiveDaveMove();
 
 public:
@@ -36,7 +38,7 @@ private:
 	DIR m_eDir = DIR_END;
 
 public:
-	static CDiveDaveMove* Create(CGameObject* pOwner);
+	static CDiveDaveMove* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };

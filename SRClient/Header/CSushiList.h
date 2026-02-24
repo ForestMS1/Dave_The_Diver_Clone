@@ -20,6 +20,8 @@ public:
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
+	static			CSushiList* Create();
+
 private:
 	HRESULT			Ready_Component();
 
@@ -27,6 +29,10 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pListextureCom;
 	Engine::CTransform* m_pTransformCom;
+
+	_vec3 screen;
+	vector<CGameObject*> pictures;
+public:
 	wstring m_sFishName;
 	wstring m_sSushiName;
 	wstring m_sFishInfo;
@@ -35,9 +41,6 @@ private:
 	wstring m_sQuality;
 	wstring m_sPlate;
 	wstring m_sQuanity;
-	_vec3 screen;
-public:
-	static CSushiList* Create();
 
 private:
 	virtual void Free();

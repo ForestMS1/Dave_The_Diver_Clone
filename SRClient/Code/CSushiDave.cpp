@@ -142,21 +142,21 @@ HRESULT CSushiDave::Ready_Component()
     // 스시 없을때
     if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveIdleTexture", L"Com_Texture", &m_pIdleTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveWalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveWalkTexture", L"Com_Texture1", &m_pWalkTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveRunTexture", L"Com_Texture", &m_pRunTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveRunTexture", L"Com_Texture2", &m_pRunTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveTiredTexture", L"Com_Texture", &m_pTiredTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveTiredTexture", L"Com_Texture3", &m_pTiredTextureCom))))
         return E_FAIL;
 
     //스시 들고 있을때
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiIdleTex", L"Com_Texture", &m_pSushiIdleTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiIdleTex", L"Com_Texture4", &m_pSushiIdleTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiWalkTexture", L"Com_Texture", &m_pSushiWalkTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiWalkTexture", L"Com_Texture5", &m_pSushiWalkTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiRunTexture", L"Com_Texture", &m_pSushiRunTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiRunTexture", L"Com_Texture6", &m_pSushiRunTextureCom))))
         return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiTiredTexture", L"Com_Texture", &m_pSushiTiredTextureCom))))
+    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DaveSushiTiredTexture", L"Com_Texture7", &m_pSushiTiredTextureCom))))
         return E_FAIL;
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -267,12 +267,5 @@ CSushiDave* CSushiDave::Create()
 void CSushiDave::Free()
 {
     CGameObject::Free();
-    Safe_Release(m_pIdleTextureCom);
-    Safe_Release(m_pWalkTextureCom);
-    Safe_Release(m_pRunTextureCom);
-    Safe_Release(m_pTiredTextureCom);
-    Safe_Release(m_pSushiIdleTextureCom);
-    Safe_Release(m_pSushiRunTextureCom);
-    Safe_Release(m_pSushiTiredTextureCom);
-    Safe_Release(m_pSushiWalkTextureCom);
+
 }

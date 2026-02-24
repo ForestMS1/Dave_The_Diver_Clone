@@ -69,6 +69,7 @@ void CGameObject::Update_ImGui()
 
         ImGui::TreePop();
     }
+    ImGui::DragFloat("m_viewz", &m_fViewZ, 0.01);
 }
 
 CComponent* CGameObject::Get_Component(COMPONENTID eID, std::wstring_view svComponentTag)
@@ -112,9 +113,12 @@ void CGameObject::Compute_ViewZ(const _vec3* pPos)
     memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
 
     _vec3   vDir = vCamPos - *pPos;
+    m_fViewZ = pPos->z-  vCamPos.z ;
 
-    m_fViewZ = D3DXVec3Length(&vDir);
+    //m_fViewZ = D3DXVec3Length(&vDir);
 }
+
+
 
 CComponent* CGameObject::Find_Component(COMPONENTID eID, std::wstring_view svComponentTag)
 {

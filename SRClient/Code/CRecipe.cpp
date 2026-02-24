@@ -46,7 +46,7 @@ HRESULT CRecipe::Ready_GameObject()
             break;
 
         case 2:
-            pGameObject = CSushiFrame::Create(L"참치속살");
+            pGameObject = CSushiFrame::Create(L"코반아지");
             break;
         case 3:
             pGameObject = CSushiFrame::Create(L"흰동가리");
@@ -110,6 +110,7 @@ void CRecipe::Render_GameObject()
         list<CGameObject*>::iterator iter = frame->begin();
         for (iter; iter != frame->end(); iter++) {
             (*iter)->Set_Render(true);
+
         }
 
         list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"sushi");
@@ -117,6 +118,8 @@ void CRecipe::Render_GameObject()
         for (iter1; iter1 != sushi->end(); iter1++) {
             (*iter1)->Set_Render(true);
         }
+        CGameObject* fishframe = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"FishCell");
+        fishframe->Set_Render(true);
   
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -135,6 +138,8 @@ void CRecipe::Render_GameObject()
 
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+
     }
     else {
         list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
@@ -142,12 +147,13 @@ void CRecipe::Render_GameObject()
         for (iter; iter != frame->end(); iter++) {
             (*iter)->Set_Render(false);
         }
-
-    /*    list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"Bluejong");
+        list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"sushi");
         list<CGameObject*>::iterator iter1 = sushi->begin();
         for (iter1; iter1 != sushi->end(); iter1++) {
-            static_cast<CBluejongR*>((*iter1))->render = false;
-        }*/
+            (*iter1)->Set_Render(false);
+        }
+        CGameObject* fishframe = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"FishCell");
+        fishframe->Set_Render(false);
     }
 
 }

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CDiveDaveAttack.h"
 #include "CDInputMgr.h"
-#include "CDiveDave.h"
 #include "CHelper.h"
+#include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CAttackSubReady.h"
@@ -13,9 +13,8 @@
 string debugSubState[(_uint)ATTACKSUBSTATE::SUB_END] = { "ATTACK_READY", "ATTACK_FIRE", "ATTACK_FIGHT", "ATTACK_FAIL" };
 
 
-CDiveDaveAttack::CDiveDaveAttack(CGameObject* pOwner)
-	:CPlayerState(pOwner)
-	,m_eCurSubState(ATTACKSUBSTATE::SUB_END)
+CDiveDaveAttack::CDiveDaveAttack(CDiveDave* pOwner)
+	:CBaseState<CDiveDave>(pOwner)
 {
 }
 
@@ -25,6 +24,10 @@ CDiveDaveAttack::~CDiveDaveAttack()
 
 void CDiveDaveAttack::Enter()
 {
+	//m_pFSM->Get_State() = ATTACKSUBSTATE::ATTACK_READY;
+	//m_pSubState->Set_State(ATTACKSUBSTATE::ATTACK_READY);
+	//m_pFSM->Get_pState()->Enter();
+
 	m_eCurSubState = ATTACKSUBSTATE::ATTACK_READY;
 	m_pSubState = m_mapSubState[m_eCurSubState];
 	m_pSubState->Enter();
@@ -80,19 +83,35 @@ void CDiveDaveAttack::Set_State(ATTACKSUBSTATE state)
 }
 
 
-void CDiveDaveAttack::Add_SubState()
+HRESULT CDiveDaveAttack::Add_SubState()
 {
-	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_READY, CAttackSubReady::Create(m_pPlayer, this) });
-	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIRE, CAttackSubFire::Create(m_pPlayer, this) });
-	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIGHT,  CAttackSubFight::Create(m_pPlayer, this) });
-	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FAIL, CAttackSubFail::Create(m_pPlayer, this) });
+	//m_pFSM = CFSM<CDiveDaveAttack, ATTACKSUBSTATE>::Create(this);
+	//if (m_pFSM == nullptr)
+	//	return E_FAIL;
+	//
+	//m_pFSM->Add_State<CAttackSubReady>(ATTACKSUBSTATE::ATTACK_READY);
+	//m_pFSM->Add_State<CAttackSubFire>(ATTACKSUBSTATE::ATTACK_FIRE);
+	//m_pFSM->Add_State<CAttackSubFight>(ATTACKSUBSTATE::ATTACK_FIGHT);
+	//m_pFSM->Add_State<CAttackSubFail>(ATTACKSUBSTATE::ATTACK_FAIL);
+
+	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_READY, CAttackSubReady::Create(this) });
+	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIRE, CAttackSubFire::Create(this) });
+	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FIGHT,  CAttackSubFight::Create(this) });
+	m_mapSubState.insert({ ATTACKSUBSTATE::ATTACK_FAIL, CAttackSubFail::Create(this) });
+
+	return S_OK;
 }
 
-CDiveDaveAttack* CDiveDaveAttack::Create(CGameObject* pOwner)
+CDiveDaveAttack* CDiveDaveAttack::Create(CDiveDave* pOwner)
 {
 	CDiveDaveAttack* pState = new CDiveDaveAttack(pOwner);
 
-	pState->Add_SubState();
+	if (FAILED(pState->Add_SubState()))
+	{
+		Safe_Release(pState);
+		MSG_BOX("CDiveDaveAttack Create Failed");
+		return nullptr;
+	}
 
 	return pState;
 }
@@ -101,4 +120,5 @@ void CDiveDaveAttack::Free()
 {
 	for_each(m_mapSubState.begin(), m_mapSubState.end(), CDeleteMap());
 	m_mapSubState.clear();
+	//Safe_Release(m_pFSM);
 }

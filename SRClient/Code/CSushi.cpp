@@ -27,6 +27,8 @@
 #include "CColliderMgr.h"
 #include "CMenuFrame.h"
 #include "CDInputMgr.h"
+#include "CFishConfirmFrame.h"
+#include "COverlay.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -55,10 +57,10 @@ HRESULT CSushi::Ready_Scene()
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);      
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);       
 	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   
-	CColliderMgr::GetInstance()->Set_Render(false);
+	CColliderMgr::GetInstance()->Set_Render(true);
 
-	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_SEMIBOLD));
-	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 15, FW_SEMIBOLD));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_BOLD));
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 16, FW_BOLD));
 	return S_OK;
 
 }
@@ -70,7 +72,8 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 	ImGui::Begin("Curr Scene: CSushi");
 	if (ImGui::Button("Go Ship Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP));
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP));
+		CTransition::FadedTransition(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
 	Key_Input();
@@ -332,6 +335,15 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"Speaker", pGameObject)))
 			return E_FAIL;
 	}
+
+	pGameObject = COverlay::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Overlay", pGameObject)))
+		return E_FAIL;
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
@@ -377,17 +389,32 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	_vec3 vEye{ 0.f, 0.f, -10.f };   
-	_vec3 vAt{ 0.f, 0.f, 0.f };      
-	_vec3 vUp{ 0.f, 1.f, 0.f };      
+	_vec3 m_vEye{ 0.f, 0.f, -10.f };   
+	_vec3 m_vAt{ 0.f, 0.f, 0.f };      
+	_vec3 m_vUp{ 0.f, 1.f, 0.f };      
 
-	pGameObject = CSushiCamera::Create(&vEye, &vAt, &vUp);
+	pGameObject = CSushiCamera::Create(&m_vEye, &m_vAt, &m_vUp);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Camera", pGameObject)))
 		return E_FAIL;
+	//_matrix m_matView, m_matProj;
+	//_float m_fFov = D3DXToRadian(60.f);
+	//	_float m_fAspect = (_float)WINCX / WINCY;
+	//	_float m_fNear = 0.1f;
+	//_float m_fFar = 1000.f;
+	//D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+	////D3DXMatrixOrthoLH(&m_matProj, (_float)WINCX, (_float)WINCY, m_fNear, m_fFar);
+	//D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+
+	// CPipeline::MakeViewMatrix(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+	// CPipeline::MakeProjMatrix(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	//pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+	//pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	pGameObject = CMenuFrame::Create();
 
@@ -396,7 +423,6 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"MenuFrame", pGameObject)))
 		return E_FAIL;
-
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
@@ -412,14 +438,14 @@ void CSushi::Key_Input()
 			static_cast<CMenuFrame*>(*iter)->Show();
 		}
 	}
-	if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
+	/*if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
 	{
 		list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"MenuFrame");
 		list<CGameObject*>::iterator iter = button->begin();
 		for (iter; iter != button->end(); iter++) {
 			static_cast<CMenuFrame*>(*iter)->Hide();
 		}
-	}
+	}*/
 }
 
 void CSushi::Free()

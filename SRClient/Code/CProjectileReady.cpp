@@ -1,8 +1,8 @@
 #include "CProjectileReady.h"
 #include "CHelper.h"
 #include "CHarpoonProjectile.h"
-CProjectileReady::CProjectileReady(CGameObject* pOwner)
-    : CPlayerState(pOwner)
+CProjectileReady::CProjectileReady(CHarpoonProjectile* pOwner)
+    : CBaseState<CHarpoonProjectile>(pOwner)
 {
 }
 
@@ -43,7 +43,7 @@ void CProjectileReady::Clear()
 {
 }
 
-CProjectileReady* CProjectileReady::Create(CGameObject* pOwner)
+CProjectileReady* CProjectileReady::Create(CHarpoonProjectile* pOwner)
 {
     CProjectileReady* pState = new CProjectileReady(pOwner);
     
@@ -58,11 +58,11 @@ void CProjectileReady::Free()
 void CProjectileReady::Set_ParentTransform()
 {
 	_vec3 vParentPos;
-	m_pPlayer->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+	m_pOwner->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
 	_vec3 vOffSet = { 0.f, 0.5f, 0.f };
-	vOffSet.y *= m_pPlayer->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
+	vOffSet.y *= m_pOwner->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vScale.y;
 	vParentPos += vOffSet;
-	m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
 }
 
 void CProjectileReady::Rotate_ToMouse()
@@ -70,7 +70,7 @@ void CProjectileReady::Rotate_ToMouse()
 	_vec3 vMousePos, vPlayerPos;
 
 	CHelper::GetMousePointInWorld(&vMousePos);
-	m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPlayerPos);
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPlayerPos);
 
 	_vec3 vDir = vMousePos - vPlayerPos;
 
@@ -83,11 +83,11 @@ void CProjectileReady::Rotate_ToMouse()
 	float fDegree = D3DXToDegree(atan2f(vDir.y, vDir.x));
 
 	if (vDir.x < 0.f)
-		m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vAngle.x = 180.f;
+		m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vAngle.x = 180.f;
 	else
-		m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vAngle.x = 0.f;
+		m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vAngle.x = 0.f;
 
-	m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vAngle.z = fDegree;
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->m_vAngle.z = fDegree;
 }
 
 void CProjectileReady::Shot_ToMouse()
@@ -95,8 +95,8 @@ void CProjectileReady::Shot_ToMouse()
 	_vec3 vMousePos, vProjectilePos;
 
 	CHelper::GetMousePointInWorld(&vMousePos);
-	m_pPlayer->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vProjectilePos);
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vProjectilePos);
 
-	*static_cast<CHarpoonProjectile*>(m_pPlayer)->Get_Dir() = vMousePos - vProjectilePos;
-	D3DXVec3Normalize(static_cast<CHarpoonProjectile*>(m_pPlayer)->Get_Dir(), static_cast<CHarpoonProjectile*>(m_pPlayer)->Get_Dir());
+	*static_cast<CHarpoonProjectile*>(m_pOwner)->Get_Dir() = vMousePos - vProjectilePos;
+	D3DXVec3Normalize(static_cast<CHarpoonProjectile*>(m_pOwner)->Get_Dir(), static_cast<CHarpoonProjectile*>(m_pOwner)->Get_Dir());
 }

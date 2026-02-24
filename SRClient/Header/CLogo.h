@@ -18,6 +18,9 @@ private:
 	HRESULT			Ready_GameLogic_Layer(std::wstring_view svLayerTag) { return S_OK; }
 	HRESULT			Ready_UI_Layer(std::wstring_view svLayerTag)			{ return S_OK; }
 
+private:
+	void Update_Camera();
+
 public:
 	static CLogo* Create();
 

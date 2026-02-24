@@ -3,8 +3,8 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
-CDiveDaveMove::CDiveDaveMove(CGameObject* pOwner)
-	:CPlayerState(pOwner)
+CDiveDaveMove::CDiveDaveMove(CDiveDave* pOwner)
+	:CBaseState<CDiveDave>(pOwner)
 {
 }
 
@@ -14,14 +14,14 @@ CDiveDaveMove::~CDiveDaveMove()
 
 void CDiveDaveMove::Enter()
 {
-	static_cast<CDiveDave*>(m_pPlayer)->Init_Frame();
+	static_cast<CDiveDave*>(m_pOwner)->Init_Frame();
 	_float fWidth = 63.f;
 	_float fHeight = 39.f;
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-	static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
+	static_cast<CDiveDave*>(m_pOwner)->Multiply_Scale(&vScale);
 }
 
 void CDiveDaveMove::Input(const _float& fTimeDelta)
@@ -67,7 +67,7 @@ void CDiveDaveMove::Input(const _float& fTimeDelta)
 
 	else
 	{
-		static_cast<CDiveDave*>(m_pPlayer)->Set_State(DiveState::IDLE);
+		static_cast<CDiveDave*>(m_pOwner)->Set_State(DIVEDAVESTATE::IDLE);
 		m_eDir = DIR_END;
 	}
 
@@ -78,7 +78,7 @@ _int CDiveDaveMove::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);
 	Go_Dir(fTimeDelta);
-	static_cast<CDiveDave*>(m_pPlayer)->AddFrame(fTimeDelta, 10.f, 8);
+	static_cast<CDiveDave*>(m_pOwner)->AddFrame(fTimeDelta, 10.f, 8);
 
 	return 0;
 }
@@ -89,9 +89,9 @@ void CDiveDaveMove::LateUpdate_State(const _float& fTimeDelta)
 
 void CDiveDaveMove::Render_State()
 {
-	CTexture* pPlayerTextureCom = static_cast<CDiveDave*>(m_pPlayer)->Get_TextureCom();
+	CTexture* pPlayerTextureCom = static_cast<CDiveDave*>(m_pOwner)->Get_TextureCom();
 
-	_float fFrame = static_cast<CDiveDave*>(m_pPlayer)->Get_Frame();
+	_float fFrame = static_cast<CDiveDave*>(m_pOwner)->Get_Frame();
 
 	pPlayerTextureCom->Set_Texture((_uint)fFrame);
 }
@@ -104,10 +104,10 @@ void CDiveDaveMove::Exit()
 	fAspect /= 2.f;
 
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
-	static_cast<CDiveDave*>(m_pPlayer)->Multiply_Scale(&vScale);
+	static_cast<CDiveDave*>(m_pOwner)->Multiply_Scale(&vScale);
 
 	_vec3 vRotateDir = { 0.f, 0.f, 0.f };
-	static_cast<CDiveDave*>(m_pPlayer)->Set_RotateDir(&vRotateDir);
+	static_cast<CDiveDave*>(m_pOwner)->Set_RotateDir(&vRotateDir);
 }
 
 void CDiveDaveMove::Clear()
@@ -116,7 +116,7 @@ void CDiveDaveMove::Clear()
 
 void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 {
-	CDiveDave* pPlayer = static_cast<CDiveDave*>(m_pPlayer);
+	CDiveDave* pPlayer = static_cast<CDiveDave*>(m_pOwner);
 	_vec3 vDir;
 	_vec3 vRotateDir;
 
@@ -198,7 +198,7 @@ void CDiveDaveMove::Restore_Fov(const _float& fTimeDelta)
 		pCam->ZoomOut(fTimeDelta * 10.f);
 }
 
-CDiveDaveMove* CDiveDaveMove::Create(CGameObject* pOwner)
+CDiveDaveMove* CDiveDaveMove::Create(CDiveDave* pOwner)
 {
 	CDiveDaveMove* pState = new CDiveDaveMove(pOwner);
 

@@ -24,6 +24,11 @@
 #include "CTransitionTxt.h"
 #include "CTransitionFace.h"
 
+ bool CTransition::s_LogoAssetLoaded = false;
+ bool CTransition::s_ShipAssetLoaded = false;
+ bool CTransition::s_DiveAssetLoaded = false;
+ bool CTransition::s_SushiAssetLoaded = false;
+
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
 	, m_eDstScene(eDstScene)
@@ -31,6 +36,7 @@ CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	, m_Crt({})
 	, m_hThread(nullptr)
 	, m_reserveTransfer({})
+	, m_bLoadingStart(false)
 {
 }
 
@@ -149,6 +155,7 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 
 HRESULT CTransition::Transition_LOGO_TO_SHIP()
 {
+	//Common_Logo_Env_Unload();
 
 	if (FAILED(Common_SHIP_Load()))
 	{
@@ -167,6 +174,11 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 HRESULT CTransition::Transition_SHIP_TO_LOGO()
 {
+	//Common_SHIP_Unload();
+
+	Common_Logo_Env_Load();
+
+
 	m_sComment = L"Transition_SHIP_TO_LOGO COMPLETE";
 //#ifdef _DEBUG
 //	Sleep(500);
@@ -227,6 +239,20 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		wstring s = L"../Bin/Resource/Texture/Dive_Player/Open/Open0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerOpen", CAssetTexture::Create(s.c_str()));
 	}
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Dive_Player/Hit/Hit0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerHit", CAssetTexture::Create(s.c_str()));
+	}
+	for (int i = 0; i < 23; ++i)
+	{
+		wstring s;
+		if (i + 1 < 10)
+			s = L"../Bin/Resource/Texture/Dive_Player/Die/Die0" + ::to_wstring(i + 1) + L".png";
+		else
+			s = L"../Bin/Resource/Texture/Dive_Player/Die/Die" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerDie", CAssetTexture::Create(s.c_str()));
+	}
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_AttackReadyArm", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack/AttackReadyArms.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_TargetCurveStart", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/Attack_Effect/Target_CurveStart.png"));
@@ -268,6 +294,10 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerPickUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerPickUp"))))
 		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerHitTexture", Engine::CTexture::Create(L"Tex_DivePlayerHit"))))
+		return E_FAIL;
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerDieTexture", Engine::CTexture::Create(L"Tex_DivePlayerDie"))))
+		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackReadyTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackReady"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerAttackFireTexture", Engine::CTexture::Create(L"Tex_DivePlayerAttackFire"))))
@@ -304,7 +334,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 
 	//테스트용
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_TestFish", CAssetTexture::Create(L"../Bin/Resource/Texture/Player1.jpg"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TestFish", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_O2Capsule.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))
 		return E_FAIL;
 
@@ -545,8 +575,8 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_ClownFish", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_ClownFish.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClownFishTex", Engine::CTexture::Create(L"Tex_ClownFish"))))
 		return E_FAIL;
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_TunaAkami", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowFin_Tuna_Akami.png"));
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TunaAkamiTex", Engine::CTexture::Create(L"Tex_TunaAkami"))))
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Dart", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_SmallspottedDart.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DartTex", Engine::CTexture::Create(L"Tex_Dart"))))
 		return E_FAIL;
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowTang", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowTang.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowTangTex", Engine::CTexture::Create(L"Tex_YellowTang"))))
@@ -554,6 +584,59 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBack", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowbackFusilier.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackTex", Engine::CTexture::Create(L"Tex_YellowBack"))))
 		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Fishcell", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Fishcell.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Fishcell", Engine::CTexture::Create(L"Tex_Fishcell"))))
+		return E_FAIL;
+
+	//물고기 사진
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_BluejongP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Bluetang.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BluejongP", Engine::CTexture::Create(L"Tex_BluejongP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_ClownFishP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Clownfish.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClownFishP", Engine::CTexture::Create(L"Tex_ClownFishP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DartP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Smallspotted_dart.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DartP", Engine::CTexture::Create(L"Tex_DartP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowTangP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Yellow_Tang.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowTangP", Engine::CTexture::Create(L"Tex_YellowTangP"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBackP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Yellowback_Fusilier.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackP", Engine::CTexture::Create(L"Tex_YellowBackP"))))
+		return E_FAIL;
+	//깊이 사진
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DepthP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/depth.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DepthTex", Engine::CTexture::Create(L"Tex_DepthP"))))
+		return E_FAIL;
+	//강화 , 확인
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Upgrade", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgrade.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UpgradeTex", Engine::CTexture::Create(L"Tex_Upgrade"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Okay", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/okay.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OkayTex", Engine::CTexture::Create(L"Tex_Okay"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_fishConfirm", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/fishConfirm.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_fishConfirmTex", Engine::CTexture::Create(L"Tex_fishConfirm"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_arrowRight", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/arrowRight.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_arrowRightTex", Engine::CTexture::Create(L"Tex_arrowRight"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_arrowLeft", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/arrowLeft.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_arrowLeftTex", Engine::CTexture::Create(L"Tex_arrowLeft"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_close", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CloseButton.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CloseButtonTex", Engine::CTexture::Create(L"Tex_close"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_max", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/maxButton.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_maxButtonTex", Engine::CTexture::Create(L"Tex_max"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_overlay", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/overlay.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OverlayTex", Engine::CTexture::Create(L"Tex_overlay"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SelectFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SelectedMenu.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SelectFrameTex", Engine::CTexture::Create(L"Tex_SelectFrame"))))
+		return E_FAIL;
+	//
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);
@@ -784,6 +867,127 @@ HRESULT CTransition::Common_SHIP_Load()
 
 HRESULT CTransition::Common_SHIP_Unload()
 {
+	
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_ShipDave_Idle");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_ShipDave_Walk");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_ShipDave_DiveReady");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_DiverBoxInvenTmp");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneIcon");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneBG");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneApp");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneAppAlpha");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_DiverBox");
+
+	//Tex_PhoneIDiverBG
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_PhoneIDiverBG");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_UI_IDiverItem");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_UI_IDiverUpgrade");
+
+	//UI_IDiverItem.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_BG");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_FakeBG");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_DiveBtn");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_DiveSpriteBtn");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_GoBtn");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_GoBtnAlpha");
+
+	//Space_Key_Dark_Symbol
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_SpaceKey");
+
+	//MoneyUI
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_UI_Money");
+
+	// DiverBoxDave
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_DiverBoxDave");
+
+
+	//InventoryBoxEdge
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryBoxEdge");
+
+
+	//Jaksal
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Jaksal");
+
+	//Gun
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Gun");
+
+	//Knief
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Knief");
+
+	//Jusin
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_Jusin");
+
+
+	//ItemDescUI.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Inventory_ItemDescUI");
+
+	//WoodPanel.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_InventoryUpperItem_WoodPanel");
+
+
+	// Item_Sanso.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Sanso");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Clothes");
+
+	// Item_Clothes.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Cage");
+
+	// Item_Jaksal.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Item_Jaksal");
+
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_Edge");
+
+	//UpgradeSuccess.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_UpgradeSuccess");
+
+	//UpgrddeBtn.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_UpgradeBtn");
+
+	//UpgrddeBtnAlpha.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
+
+	// 
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_BG");
+
+	//UI_WeaponCraft_Logo.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_Logo");
+
+	//Close.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_Close");
+
+	//UI_Area.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_Area");
+
+	//UI_CreateBtn.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_CreateBtn");
+
+	//Edge.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_Edge");
+
+	//GusikRifle.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_GukikRifle");
+
+	//NewWeapon.png
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Ship_Weapon_UI_NewWeapon");
 	return S_OK;
 }
 
@@ -802,31 +1006,20 @@ HRESULT CTransition::Common_Logo_Env_Load()
 
 HRESULT CTransition::Common_Logo_Env_Unload()
 {
-
-
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Logo_BG");
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Logo_Title");
+	CAssetMgr::GetInstance()->DelAsset(L"Tex_Logo_Black1pxAlpha");
 	return S_OK;
 }
 
 HRESULT CTransition::Ready_Scene()
 {
-	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-	D3DXMATRIX matView, matProj;
-	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);
-	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);
-	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
-	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
-	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, (float)WINCX / (float)WINCY, 0.1f, 1000.0f);
-	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
 
-	InitializeCriticalSection(&m_Crt);
-	m_hThread = (HANDLE)_beginthreadex(NULL, // 보안 속성(핸들의 상속 여부, NULL인 경우 상속에서 제외)
-		0,  // 디폴트 스탯 사이즈(1 바이트)
-		Thread_Main, // 구동할 쓰레드 함수
-		this,          // 3번 매개 변수 함수를 통해 가공할 데이터 주소
-		0,             // 쓰레드 생성 및 실행을 조정하기 위한 옵션
-		NULL);         // 쓰레드 ID
+	Update_Camera();
+
+
+
 
 
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
@@ -852,6 +1045,20 @@ HRESULT CTransition::Ready_Scene()
 
 _int CTransition::Update_Scene(const _float& fTimeDelta)
 {
+	Update_Camera();
+	if (!m_bLoadingStart)
+	{
+		m_bLoadingStart = true;
+
+		InitializeCriticalSection(&m_Crt);
+		m_hThread = (HANDLE)_beginthreadex(NULL, // 보안 속성(핸들의 상속 여부, NULL인 경우 상속에서 제외)
+			0,  // 디폴트 스탯 사이즈(1 바이트)
+			Thread_Main, // 구동할 쓰레드 함수
+			this,          // 3번 매개 변수 함수를 통해 가공할 데이터 주소
+			0,             // 쓰레드 생성 및 실행을 조정하기 위한 옵션
+			NULL);         // 쓰레드 ID
+	}
+
 	CScene::Update_Scene(fTimeDelta);
 
 	if (m_bFadeEnd && m_bFinish)
@@ -859,7 +1066,11 @@ _int CTransition::Update_Scene(const _float& fTimeDelta)
 		m_bFadeEnd = false;
 		if (m_eDstScene == SCENE_LOGO)
 		{
-			CManagement::GetInstance()->Set_Scene(CLogo::Create());
+			AddFadeOut(this, [=]() {
+				auto pLogo = CLogo::Create();
+				AddFadeIn(pLogo);
+				CManagement::GetInstance()->Set_Scene(pLogo);
+				});
 		}
 		else if (m_eDstScene == SCENE_SHIP)
 		{
@@ -871,11 +1082,19 @@ _int CTransition::Update_Scene(const _float& fTimeDelta)
 		}
 		else if (m_eDstScene == SCENE_SUSHI)
 		{
-			CManagement::GetInstance()->Set_Scene(CSushi::Create());
+			AddFadeOut(this, [=]() {
+				auto pLogo = CSushi::Create();
+				AddFadeIn(pLogo);
+				CManagement::GetInstance()->Set_Scene(pLogo);
+				});
 		}
 		else if (m_eDstScene == SCENE_DIVE)
 		{
-			CManagement::GetInstance()->Set_Scene(CDive::Create());
+			AddFadeOut(this, [=]() {
+				auto pLogo = CDive::Create();
+				AddFadeIn(pLogo);
+				CManagement::GetInstance()->Set_Scene(pLogo);
+				});
 		}
 	}
 	
@@ -888,6 +1107,7 @@ _int CTransition::Update_Scene(const _float& fTimeDelta)
 
 void CTransition::LateUpdate_Scene(const _float& fTimeDelta)
 {
+	Update_Camera();
 	CScene::LateUpdate_Scene(fTimeDelta);
 }
 
@@ -905,20 +1125,88 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	if (m_eDstScene == SCENE_SHIP)
 	{
-		CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
-		pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
 
-		pTransitionImg->Set_CustomScaleX(0.1f);
-		pTransitionImg->Set_CustomScaleY(0.1f);
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
 
-		pTransitionImg->Ready_AfterCreate();
+			pTransitionImg->Ready_AfterCreate();
 
 
-		if (nullptr == pTransitionImg)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
-			return E_FAIL;
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"로비로비로");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
 		
+	}
+	else if (m_eDstScene == SCENE_DIVE)
+	{
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Dive");
+
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
+
+			pTransitionImg->Ready_AfterCreate();
+
+
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"두다이브");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
+	}
+	else if (m_eDstScene == SCENE_SUSHI)
+	{
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Sushi");
+
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
+
+			pTransitionImg->Ready_AfterCreate();
+
+
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"회식은갓파스시?");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
 	}
 
 	{
@@ -946,21 +1234,18 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 	} 
 
-	{
-		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
-		pTxt->Set_Txt(L"이것은 제목이여");
-		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
-		if (nullptr == pTxt)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
-			return E_FAIL;
-	}
+	
 
 
 
 	{
+		wstring tipTxt[3];
+		tipTxt[0] = L"그거 아시나요? 거북이는 엉덩이로 숨을 쉴 수 있어서 물속에서 오래 버텨요.";
+		tipTxt[1] = L"그거 아시나요? 굴은 살면서 필요에 따라 암수 성별을 자유자재로 바꿀 수 있답니다.";
+		tipTxt[2] = L"그거 아시나요? 흰수염고래의 혀 무게만 해도 코끼리 한 마리랑 맞먹을 정도로 커요.";
+
 		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f);
-		pTxt->Set_Txt(L"ASDfASDFASDFASDFASDFASDFASDFASDFASDFASDFASDFF");
+		pTxt->Set_Txt(tipTxt[rand() % 3]);
 		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 		if (nullptr == pTxt)
 			return E_FAIL;
@@ -1085,43 +1370,100 @@ unsigned int CTransition::Thread_Main(void* pArg)
 	{
 		if (eDst == SCENE_LOGO)
 		{
-			pTransition->Transition_INIT_TO_LOGO();
+			if (!CTransition::s_LogoAssetLoaded)
+			{
+				CTransition::s_LogoAssetLoaded = true;
+				pTransition->Transition_INIT_TO_LOGO();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
 		}
 	}
 	else if (eSrc == SCENE_LOGO)
 	{
 		if (eDst == SCENE_SHIP)
 		{
-			pTransition->Transition_LOGO_TO_SHIP();
+			if (!CTransition::s_ShipAssetLoaded)
+			{
+				CTransition::s_ShipAssetLoaded = true;
+				pTransition->Transition_LOGO_TO_SHIP();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
 		}
 	}
 	else if (eSrc == SCENE_SHIP)
 	{
 		if (eDst == SCENE_DIVE)
 		{
-			pTransition->Transition_SHIP_TO_DIVE();
+			if (!CTransition::s_DiveAssetLoaded)
+			{
+				CTransition::s_DiveAssetLoaded = true;
+				pTransition->Transition_SHIP_TO_DIVE();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
 		}
 		else if (eDst == SCENE_SUSHI)
 		{
-			pTransition->Transition_SHIP_TO_SUSHI();
+			if (!CTransition::s_SushiAssetLoaded)
+			{
+				CTransition::s_SushiAssetLoaded = true;
+				pTransition->Transition_SHIP_TO_SUSHI();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
+			
 		}
 		else if (eDst == SCENE_LOGO)
 		{
-			pTransition->Transition_SHIP_TO_LOGO();
+			if (!CTransition::s_LogoAssetLoaded)
+			{
+				CTransition::s_LogoAssetLoaded = true;
+				pTransition->Transition_SHIP_TO_LOGO();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
 		}
 	}
 	else if (eSrc == SCENE_DIVE)
 	{
 		if (eDst == SCENE_SHIP)
 		{
-			pTransition->Transition_DIVE_TO_SHIP();
+			if (!CTransition::s_ShipAssetLoaded)
+			{
+				CTransition::s_ShipAssetLoaded = true;
+				pTransition->Transition_DIVE_TO_SHIP();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
 		}
 	}
 	else if (eSrc == SCENE_SUSHI)
 	{
 		if (eDst == SCENE_SHIP)
 		{
-			pTransition->Transition_SUSHI_TO_SHIP();
+			if (!CTransition::s_ShipAssetLoaded)
+			{
+				CTransition::s_ShipAssetLoaded = true;
+				pTransition->Transition_SUSHI_TO_SHIP();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
 		}
 	}
 
@@ -1131,4 +1473,17 @@ unsigned int CTransition::Thread_Main(void* pArg)
 	//_endthreadex(0);
 
 	return iFlag;       // 0 리턴 시, _endthreadex가 자동 호출
+}
+
+void CTransition::Update_Camera()
+{
+	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	D3DXMATRIX matView, matProj;
+	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);
+	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, (float)WINCX / (float)WINCY, 0.1f, 1000.0f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }

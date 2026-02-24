@@ -1,9 +1,12 @@
 #pragma once
-#include "CPlayerState.h"
-class CDiveDavePickUp : public CPlayerState
+#include "CBaseState.h"
+
+class CDiveDave;
+
+class CDiveDavePickUp : public CBaseState<CDiveDave>
 {
 private:
-	explicit CDiveDavePickUp(CGameObject* pOwner);
+	explicit CDiveDavePickUp(CDiveDave* pOwner);
 	~CDiveDavePickUp();
 
 public:
@@ -17,7 +20,7 @@ public:
 
 
 public:
-	static CDiveDavePickUp* Create(CGameObject* pOwner);
+	static CDiveDavePickUp* Create(CDiveDave* pOwner);
 private:
 	virtual void Free() override;
 };

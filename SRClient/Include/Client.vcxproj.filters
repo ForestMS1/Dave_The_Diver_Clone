@@ -61,9 +61,6 @@
     <Filter Include="02. GameObject\DiveDave">
       <UniqueIdentifier>{bc70a9e5-82f4-41b7-bcfe-eb6010122648}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayerState">
-      <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\DiveDave\State">
       <UniqueIdentifier>{d5f6e064-9cc8-4bf9-b2c6-1885c523f131}</UniqueIdentifier>
     </Filter>
@@ -244,6 +241,21 @@
     <Filter Include="02. GameObject\Coral">
       <UniqueIdentifier>{f1cd9ea5-4563-4e69-a8c8-182197905295}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\UI\SushiIcon\FishPicture">
+      <UniqueIdentifier>{f87ddbbf-de3a-41cc-8245-90510675cdb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\UI\Button">
+      <UniqueIdentifier>{8aa49e37-a291-4b30-821f-19fc289c8e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Die">
+      <UniqueIdentifier>{f85876f8-022d-4aa1-9e01-4e74a514f907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\Hit">
+      <UniqueIdentifier>{702d08b8-0f0f-4262-ab68-929b01fd1df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BaseState">
+      <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,8 +369,8 @@
     <ClInclude Include="..\Header\CDiveDaveIdle.h">
       <Filter>02. GameObject\DiveDave\State\Idle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CPlayerState.h">
-      <Filter>PlayerState</Filter>
+    <ClInclude Include="..\Header\CBaseState.h">
+      <Filter>BaseState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDiveDaveMove.h">
       <Filter>02. GameObject\DiveDave\State\Move</Filter>
@@ -414,9 +426,6 @@
     <ClInclude Include="..\Header\CCustomer1.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CAddMenuButton.h">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CConfirm.h">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClInclude>
@@ -450,7 +459,7 @@
     <ClInclude Include="..\Header\CYellowTangR.h">
       <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTunaAkamiR.h">
+    <ClInclude Include="..\Header\CDartR.h">
       <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMenuFrame.h">
@@ -600,6 +609,66 @@
     <ClInclude Include="..\Header\CCoral.h">
       <Filter>02. GameObject\Coral</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFishFrame.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CYellowTangP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CYellowbackP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDartP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CClownFishP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBluejongP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDepthP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAddMenuButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUpgradeButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COkayButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishConfirmFrame.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CIncreaseButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLessButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCloseButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMaxButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COverlay.h">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSelectedFrame.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFSM.h">
+      <Filter>02. GameObject\DiveDave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveHit.h">
+      <Filter>02. GameObject\DiveDave\State\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveDie.h">
+      <Filter>02. GameObject\DiveDave\State\Die</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -704,8 +773,8 @@
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp">
       <Filter>02. GameObject\DiveDave\State\Idle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CPlayerState.cpp">
-      <Filter>PlayerState</Filter>
+    <ClCompile Include="..\Code\CBaseState.cpp">
+      <Filter>BaseState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveMove.cpp">
       <Filter>02. GameObject\DiveDave\State\Move</Filter>
@@ -761,9 +830,6 @@
     <ClCompile Include="..\Code\CCustomer1.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CAddMenuButton.cpp">
-      <Filter>01. Scene\03. Sushi\UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CConfirm.cpp">
       <Filter>01. Scene\03. Sushi\UI</Filter>
     </ClCompile>
@@ -797,7 +863,7 @@
     <ClCompile Include="..\Code\CYellowTangR.cpp">
       <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTunaAkamiR.cpp">
+    <ClCompile Include="..\Code\CDartR.cpp">
       <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSushiFrame.cpp">
@@ -946,6 +1012,66 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCoral.cpp">
       <Filter>02. GameObject\Coral</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CYellowTangP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CYellowbackP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CClownFishP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDartP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBluejongP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDepthP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAddMenuButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUpgradeButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COkayButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishConfirmFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CIncreaseButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLessButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCloseButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMaxButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COverlay.cpp">
+      <Filter>01. Scene\03. Sushi\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSelectedFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFSM.cpp">
+      <Filter>02. GameObject\DiveDave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveHit.cpp">
+      <Filter>02. GameObject\DiveDave\State\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveDie.cpp">
+      <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

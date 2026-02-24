@@ -28,11 +28,21 @@ public:
 	void			LateUpdate_Scene(const _float& fTimeDelta);
 	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
 
+	bool			Is_ScheneChanged()
+	{
+		return !!m_pTmpChangeScene;
+	}
+
+	HRESULT			LastFrame_Set_Scene();
+private:
+
 public:
 	void			Update_ImGui();
 
 private:
 	CScene*					m_pScene;
+
+	CScene* m_pTmpChangeScene;
 
 public:
 	virtual void			Free();

@@ -312,15 +312,18 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	ImGui::Begin("Curr Scene: CShip");
 	if (ImGui::Button("Go Dive Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE));
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE));
+		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
 	}
 	if (ImGui::Button("Go Sushi Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI));
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI));
+		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
 	}
 	if (ImGui::Button("Go Logo Scene"))
 	{
-		CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
+		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO);
+		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
 	}
 	ImGui::End();
 

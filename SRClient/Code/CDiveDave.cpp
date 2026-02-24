@@ -15,7 +15,9 @@
 #include "CColliderMgr.h"
 #include "CDiveItemBox.h"
 #include "CDiveDavePickUp.h"
-string debugState[(_uint)DiveState::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "DIE" };
+#include "CDiveDaveHit.h"
+#include "CDiveDaveDie.h"
+string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
@@ -45,7 +47,7 @@ HRESULT CDiveDave::Ready_GameObject()
 	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	Set_State(DiveState::IDLE);
+	Set_State(DIVEDAVESTATE::IDLE);
 
 
 	//-------------AABB Collider With ItemBox----------------
@@ -68,21 +70,28 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	m_pAABB->Transform(m_pTransformCom->Get_World());
 	m_pAABBItem->Transform(m_pTransformCom->Get_World());
 
-
-	Key_Input();
-	Mouse_Input();
+	_bool isGlobalState = Check_GlobalState();
+	if (!isGlobalState)
+	{
+		Key_Input();
+		Mouse_Input();
+	}
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
-	m_pState->Update_State(fTimeDelta);
+	m_pFSM->Update_State(fTimeDelta);
 
 #ifdef _DEBUG
 	ImGui::Begin("DiveDave Info");
-	string state = "State : " + debugState[(_uint)m_eCurState];
+	string state = "State : " + debugState[(_uint)CDiveDave::Get_State()];
 	ImGui::Text(state.c_str());
 	string Equipped = "Equipped : " + debugEquipped[(_uint)m_eCurEquipped];
 	ImGui::Text(Equipped.c_str());
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
+	if (ImGui::Button("OnHit"))
+		m_bIsHit = true;
+	if (ImGui::Button("OnDead"))
+		m_bIsDie = true;
 	ImGui::End();
 #endif
 	return iExit;
@@ -91,7 +100,7 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-	m_pState->LateUpdate_State(fTimeDelta);
+	m_pFSM->LateUpdate_State(fTimeDelta);
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -106,7 +115,7 @@ void CDiveDave::Render_GameObject()
 
 	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	m_pState->Render_State();
+	m_pFSM->Render_State();
 
 	m_pBufferCom->Render_Buffer();
 
@@ -115,22 +124,8 @@ void CDiveDave::Render_GameObject()
 
 ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
 {
-	if (m_eCurState == DiveState::ATTACK) 
-		return static_cast<CDiveDaveAttack*>(m_pState)->Get_State();
-}
-
-void CDiveDave::Set_State(DiveState state)
-{
-	if (m_mapState[state] == m_pState)
-		return;
-
-	if(m_pState != nullptr)
-		m_pState->Exit();
-
-	m_pState = m_mapState[state];
-	m_eCurState = state;
-
-	m_pState->Enter();
+	if (CDiveDave::Get_State() == DIVEDAVESTATE::ATTACK)
+		return dynamic_cast<CDiveDaveAttack*>(m_pFSM->Get_pState())->Get_State();
 }
 
 void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
@@ -143,6 +138,23 @@ void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint s
 	m_fFrame += fSpeed * fTimeDelta;
 	if (m_fFrame > size)
 		m_fFrame = 0.f;
+}
+
+_bool CDiveDave::Check_GlobalState()
+{
+	if (m_bIsDie)
+	{
+		m_pFSM->Set_State(DIVEDAVESTATE::DIE);
+		return true;
+	}
+
+	if (m_bIsHit)
+	{
+		m_pFSM->Set_State(DIVEDAVESTATE::HIT);
+		return true;
+	}
+
+	return false;
 }
 
 HRESULT CDiveDave::Ready_Component()
@@ -180,6 +192,10 @@ HRESULT CDiveDave::Ready_Component()
 		return E_FAIL;
 	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerPickUpTexture", L"Com_PickUpTexture", &m_pTextureCom))))
 		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerHitTexture", L"Com_HitTexture", &m_pTextureCom))))
+		return E_FAIL;
+	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_DivePlayerDieTexture", L"Com_DieTexture", &m_pTextureCom))))
+		return E_FAIL;
 
 	// Æ®·£½ºÆû
 	if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -188,14 +204,30 @@ HRESULT CDiveDave::Ready_Component()
 }
 HRESULT	CDiveDave::Add_State()
 {
-	m_mapState.insert({ DiveState::IDLE, CDiveDaveIdle::Create(this) });
-	m_mapState.insert({ DiveState::MOVE, CDiveDaveMove::Create(this) });
-	m_mapState.insert({ DiveState::ATTACK, CDiveDaveAttack::Create(this) });
-	m_mapState.insert({ DiveState::MELEEATTACK, CDiveDaveMeeleAttack::Create(this) });
-	m_mapState.insert({ DiveState::TANNING, CDiveDaveTanning::Create(this) });
-	m_mapState.insert({ DiveState::OPEN, CDiveDaveOpen::Create(this) });
-	m_mapState.insert({ DiveState::PICKUP, CDiveDavePickUp::Create(this) });
-	//m_mapState.insert({ DiveState::DIE, CDiveDaveDie::Create(this) });
+	m_pFSM = CFSM<CDiveDave, DIVEDAVESTATE>::Create(this);
+	if (m_pFSM == nullptr)
+		return E_FAIL;
+
+
+	m_pFSM->Add_State<CDiveDaveIdle>(DIVEDAVESTATE::IDLE);
+	m_pFSM->Add_State<CDiveDaveMove>(DIVEDAVESTATE::MOVE);
+	m_pFSM->Add_State<CDiveDaveAttack>(DIVEDAVESTATE::ATTACK);
+	m_pFSM->Add_State<CDiveDaveMeeleAttack>(DIVEDAVESTATE::MELEEATTACK);
+	m_pFSM->Add_State<CDiveDaveTanning>(DIVEDAVESTATE::TANNING);
+	m_pFSM->Add_State<CDiveDaveOpen>(DIVEDAVESTATE::OPEN);
+	m_pFSM->Add_State<CDiveDavePickUp>(DIVEDAVESTATE::PICKUP);
+	m_pFSM->Add_State<CDiveDaveHit>(DIVEDAVESTATE::HIT);
+	m_pFSM->Add_State<CDiveDaveDie>(DIVEDAVESTATE::DIE);
+
+	//m_mapState.insert({ DIVEDAVESTATE::IDLE, CDiveDaveIdle::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::MOVE, CDiveDaveMove::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::ATTACK, CDiveDaveAttack::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::MELEEATTACK, CDiveDaveMeeleAttack::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::TANNING, CDiveDaveTanning::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::OPEN, CDiveDaveOpen::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::PICKUP, CDiveDavePickUp::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::HIT, CDiveDaveHit::Create(this) });
+	//m_mapState.insert({ DIVEDAVESTATE::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
 }
@@ -206,7 +238,7 @@ void CDiveDave::Key_Input()
 		return;
 
 
-	if (m_eCurState == DiveState::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+	if (CDiveDave::Get_State() == DIVEDAVESTATE::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
 		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 }
 
@@ -216,9 +248,9 @@ void CDiveDave::Mouse_Input()
 		return;
 
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
-		Set_State(DiveState::MELEEATTACK);
+		Set_State(DIVEDAVESTATE::MELEEATTACK);
 	else if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB))
-		Set_State(DiveState::ATTACK);
+		Set_State(DIVEDAVESTATE::ATTACK);
 }
 
 
@@ -238,7 +270,8 @@ void CDiveDave::Free()
 {
 	Safe_Release(m_pAABB);
 	Safe_Release(m_pAABBItem);
-	for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
-	m_mapState.clear();
+	Safe_Release(m_pFSM);
+	//for_each(m_mapState.begin(), m_mapState.end(), CDeleteMap());
+	//m_mapState.clear();
 	CGameObject::Free();
 }
