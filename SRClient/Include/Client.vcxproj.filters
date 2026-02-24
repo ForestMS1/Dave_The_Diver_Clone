@@ -259,20 +259,41 @@
     <Filter Include="02. GameObject\Fish">
       <UniqueIdentifier>{7515aa6a-c399-4bac-89c8-5ee89c6c7527}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Fish\BlueTang">
+    <Filter Include="02. GameObject\Fish\State">
+      <UniqueIdentifier>{24c5eb58-c185-474b-8391-e07319b284ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\State\Stop">
+      <UniqueIdentifier>{e9333732-28d5-45ed-9430-c59c7a06811f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\State\Swim">
+      <UniqueIdentifier>{a2c86cd3-6cdd-45ed-9ebd-f0deb61fdd78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species">
+      <UniqueIdentifier>{0a898c72-c1ee-4d82-8e3a-d7ffa5e0e0ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\BlueTang">
       <UniqueIdentifier>{3e7b4ac2-b05a-4e69-8e8d-3c0bf8fd6586}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Fish\Clownfish">
+    <Filter Include="02. GameObject\Fish\Species\Clownfish">
       <UniqueIdentifier>{52c5707d-d0ed-4bde-b5dd-2619e31a34b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Fish\YellowbackFusilier">
-      <UniqueIdentifier>{54384599-a612-4bcd-909a-3503775496db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Fish\SmallspottedDart">
+    <Filter Include="02. GameObject\Fish\Species\SmallspottedDart">
       <UniqueIdentifier>{cd7072aa-c721-4603-87fe-42586de625c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Fish\YellowTang">
+    <Filter Include="02. GameObject\Fish\Species\YellowbackFusilier">
+      <UniqueIdentifier>{54384599-a612-4bcd-909a-3503775496db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\YellowTang">
       <UniqueIdentifier>{096dc95e-5801-4f94-a0be-d528fee3d73d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\HQ">
+      <UniqueIdentifier>{6cc4b156-d3f5-4c07-9a12-6bcdbb5d8ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Object">
+      <UniqueIdentifier>{5e52b883-7137-40ac-ba60-8203a6591214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Cluster">
+      <UniqueIdentifier>{e3f194ba-1ac6-41ab-9200-c43f6d85e607}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -688,28 +709,46 @@
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBlueTang.h">
-      <Filter>02. GameObject\Fish\BlueTang</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CFishGameObject.h">
-      <Filter>02. GameObject\Fish</Filter>
+      <Filter>02. GameObject\Fish\Species\BlueTang</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CClownfish.h">
-      <Filter>02. GameObject\Fish\Clownfish</Filter>
+      <Filter>02. GameObject\Fish\Species\Clownfish</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CYellowTang.h">
-      <Filter>02. GameObject\Fish\YellowTang</Filter>
+      <Filter>02. GameObject\Fish\Species\YellowTang</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSmallspottedDart.h">
-      <Filter>02. GameObject\Fish\SmallspottedDart</Filter>
+      <Filter>02. GameObject\Fish\Species\SmallspottedDart</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CYellowbackFusilier.h">
-      <Filter>02. GameObject\Fish\YellowbackFusilier</Filter>
+      <Filter>02. GameObject\Fish\Species\YellowbackFusilier</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FishInclude.h">
       <Filter>02. GameObject\Fish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFishState.h">
+      <Filter>02. GameObject\Fish\State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishStateMachine.h">
+      <Filter>02. GameObject\Fish\State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishStopState.h">
+      <Filter>02. GameObject\Fish\State\Stop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishSwimState.h">
+      <Filter>02. GameObject\Fish\State\Swim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishHQ.h">
+      <Filter>02. GameObject\Fish\HQ</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishGameObject.h">
+      <Filter>02. GameObject\Fish\Object</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CFishHitCollider.h">
-      <Filter>02. GameObject\Fish</Filter>
+      <Filter>02. GameObject\Fish\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFishCluster.h">
+      <Filter>02. GameObject\Fish\Cluster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1116,25 +1155,46 @@
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBlueTang.cpp">
-      <Filter>02. GameObject\Fish\BlueTang</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CFishGameObject.cpp">
-      <Filter>02. GameObject\Fish</Filter>
+      <Filter>02. GameObject\Fish\Species\BlueTang</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CClownfish.cpp">
-      <Filter>02. GameObject\Fish\Clownfish</Filter>
+      <Filter>02. GameObject\Fish\Species\Clownfish</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CYellowTang.cpp">
-      <Filter>02. GameObject\Fish\YellowTang</Filter>
+      <Filter>02. GameObject\Fish\Species\YellowTang</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSmallspottedDart.cpp">
-      <Filter>02. GameObject\Fish\SmallspottedDart</Filter>
+      <Filter>02. GameObject\Fish\Species\SmallspottedDart</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp">
-      <Filter>02. GameObject\Fish\YellowbackFusilier</Filter>
+      <Filter>02. GameObject\Fish\Species\YellowbackFusilier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FishInclude.cpp">
+      <Filter>02. GameObject\Fish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishState.cpp">
+      <Filter>02. GameObject\Fish\State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishStateMachine.cpp">
+      <Filter>02. GameObject\Fish\State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishStopState.cpp">
+      <Filter>02. GameObject\Fish\State\Stop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishSwimState.cpp">
+      <Filter>02. GameObject\Fish\State\Swim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishHQ.cpp">
+      <Filter>02. GameObject\Fish\HQ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishGameObject.cpp">
+      <Filter>02. GameObject\Fish\Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFishHitCollider.cpp">
-      <Filter>02. GameObject\Fish</Filter>
+      <Filter>02. GameObject\Fish\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishCluster.cpp">
+      <Filter>02. GameObject\Fish\Cluster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

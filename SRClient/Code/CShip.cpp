@@ -71,40 +71,40 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
-	{
-		float scale = 2.f;
-		Fish::CBlueTang* pFish = Fish::CBlueTang::Create(2.f, 2.f, 0.05f * scale);
-		pLayer->Add_GameObject(L"Fishes", pFish);
+	//{
+	//	float scale = 2.f;
+	//	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(2.f, 2.f, 0.05f * scale);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
 
-		_vec3 vPos = { 0.0f, 0.f, 0.f };
-		_vec3 vExt = { 1.1f, 0.6f, 0.01f };
-		vExt *= scale;
+	//	_vec3 vPos = { 0.0f, 0.f, 0.f };
+	//	_vec3 vExt = { 1.1f, 0.6f, 0.01f };
+	//	vExt *= scale;
 
-		CFishHitCollider* pCollider = CFishHitCollider::Create(&vPos, &vExt);
-		pCollider->Set_Parent(pFish);
-		if (FAILED(pLayer->Add_GameObject(L"FishColl", pCollider)))
-			return E_FAIL;
-	}
+	//	CFishHitCollider* pCollider = CFishHitCollider::Create(&vPos, &vExt);
+	//	pCollider->Set_Parent(pFish);
+	//	if (FAILED(pLayer->Add_GameObject(L"FishColl", pCollider)))
+	//		return E_FAIL;
+	//}
 
-	{
-		Fish::CYellowTang* pFish = Fish::CYellowTang::Create(-2.f, -2.f);
-		pLayer->Add_GameObject(L"Fishes", pFish);
-	}
+	//{
+	//	Fish::CYellowTang* pFish = Fish::CYellowTang::Create(-2.f, -2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
 
-	{
-		Fish::CSmallspottedDart* pFish = Fish::CSmallspottedDart::Create(0.f, 0.f);
-		pLayer->Add_GameObject(L"Fishes", pFish);
-	}
+	//{
+	//	Fish::CSmallspottedDart* pFish = Fish::CSmallspottedDart::Create(0.f, 0.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
 
-	{
-		Fish::CClownfish* pFish = Fish::CClownfish::Create(2.f, -2.f);
-		pLayer->Add_GameObject(L"Fishes", pFish);
-	}
+	//{
+	//	Fish::CClownfish* pFish = Fish::CClownfish::Create(2.f, -2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
 
-	{
-		Fish::CYellowbackFusilier* pFish = Fish::CYellowbackFusilier::Create(-2.f, 2.f);
-		pLayer->Add_GameObject(L"Fishes", pFish);
-	}
+	//{
+	//	Fish::CYellowbackFusilier* pFish = Fish::CYellowbackFusilier::Create(-2.f, 2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
 
 	//{
 	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(-1.f, -1.f);

@@ -39,18 +39,16 @@ HRESULT CBlueTang::Ready_GameObject()
 
     m_fViewZ = 0.5f;
 
+    m_fSpeed = 1.f;
+
+    m_pSpineCom->Set_AniState(L"swim");
+
     return S_OK;
 }
 
 _int CBlueTang::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CFishGameObject::Update_GameObject(fTimeDelta);
-
-    _vec3 vRight;
-    m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
-    D3DXVec3Normalize(&vRight, &vRight);
-
-    m_pTransformCom->Move_Pos(&vRight, 0.1f, fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -69,7 +67,7 @@ void CBlueTang::Render_GameObject()
 
 HRESULT CBlueTang::Ready_Component()
 {
-    CFishGameObject::Ready_Component(L"Spine_Fish_BlueTang");
+    CFishGameObject::Ready(L"Spine_Fish_BlueTang");
     return S_OK;
 }
 

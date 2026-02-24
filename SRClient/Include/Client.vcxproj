@@ -186,8 +186,14 @@
     <ClInclude Include="..\Header\CDiveDaveHit.h" />
     <ClInclude Include="..\Header\CBlueTang.h" />
     <ClInclude Include="..\Header\CClownfish.h" />
+    <ClInclude Include="..\Header\CFishCluster.h" />
     <ClInclude Include="..\Header\CFishGameObject.h" />
     <ClInclude Include="..\Header\CFishHitCollider.h" />
+    <ClInclude Include="..\Header\CFishHQ.h" />
+    <ClInclude Include="..\Header\CFishState.h" />
+    <ClInclude Include="..\Header\CFishStateMachine.h" />
+    <ClInclude Include="..\Header\CFishStopState.h" />
+    <ClInclude Include="..\Header\CFishSwimState.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
@@ -330,8 +336,14 @@
     <ClCompile Include="..\Code\CDiveDaveHit.cpp" />
     <ClCompile Include="..\Code\CBlueTang.cpp" />
     <ClCompile Include="..\Code\CClownfish.cpp" />
+    <ClCompile Include="..\Code\CFishCluster.cpp" />
     <ClCompile Include="..\Code\CFishGameObject.cpp" />
     <ClCompile Include="..\Code\CFishHitCollider.cpp" />
+    <ClCompile Include="..\Code\CFishHQ.cpp" />
+    <ClCompile Include="..\Code\CFishState.cpp" />
+    <ClCompile Include="..\Code\CFishStateMachine.cpp" />
+    <ClCompile Include="..\Code\CFishStopState.cpp" />
+    <ClCompile Include="..\Code\CFishSwimState.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
@@ -439,6 +451,7 @@
     <ClCompile Include="..\Code\CUpgradeButton.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
+    <ClCompile Include="..\Code\FishInclude.cpp" />
     <ClCompile Include="..\Code\IDiverInfo.cpp" />
     <ClCompile Include="..\Code\CYellowbackP.cpp" />
     <ClCompile Include="..\Code\CYellowbackR.cpp" />

@@ -2,15 +2,45 @@
 
 #include "CAssetMgr.h"
 #include "CAssetSpine.h"
-
+#include "CFishStopState.h"
+#include "CFishSwimState.h"
+#include "CHelper.h"
 
 CFishGameObject::CFishGameObject()
+    : m_sFishName({})
+    , m_fSpeed(0.f)
+    , m_fsm(Fish::FS_STOP)
 {
+
 }
 
 void CFishGameObject::Update_ImGui()
 {
     CGameObject::Update_ImGui();
+   
+    ImGui::Text("CurrState: %s", CHelper::WStringToString(m_fsm.Get_CurrentStateStr()).c_str());
+
+    if (ImGui::Button("SWIM"))
+    {
+        m_fsm.RequestChangeState(Fish::FS_SWIM);
+    }
+}
+
+_int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
+{
+    _uint iExit = CGameObject::Update_GameObject(fTimeDelta);
+    if (m_fsm.IsRequestedChange())
+    {
+        m_fsm.ChangeState();
+    }
+    m_fsm.Get_CurrentState()->Update(fTimeDelta);
+    return iExit;
+}
+
+void CFishGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
+{
+    CGameObject::LateUpdate_GameObject(fTimeDelta);
+    m_fsm.Get_CurrentState()->LateUpdate(fTimeDelta);
 }
 
 void CFishGameObject::Render(function<void()> beforeDrawLambda)
@@ -34,7 +64,7 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CFishGameObject::Ready_Component(std::wstring_view svSpineName)
+HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
 {
     // Æ®·£½ºÆû
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -57,6 +87,13 @@ HRESULT CFishGameObject::Ready_Component(std::wstring_view svSpineName)
         m_pSpineCom->Ready_AfterCreate(pAssSpine->Get_SkeletonData(), pAssSpine->Get_AnimationStateData(), svSpineName);
         m_pSpineCom->Index_Buffer_Lock(m_pDynamicBuffer->Get_IndexBuffer());
     };
+
+
+    m_fsm.AddState(Fish::FS_STOP, make_unique<Fish::CFishStopState>(this));
+    m_fsm.AddState(Fish::FS_SWIM, make_unique<Fish::CFishSwimState>(this));
+
+
+    m_fsm.Get_CurrentState()->Enter();
 	return S_OK;
 }
 

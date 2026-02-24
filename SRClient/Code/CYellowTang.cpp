@@ -59,7 +59,7 @@ void CYellowTang::Render_GameObject()
 
 HRESULT CYellowTang::Ready_Component()
 {
-    CFishGameObject::Ready_Component(L"Spine_YellowTang");
+    CFishGameObject::Ready(L"Spine_YellowTang");
     return S_OK;
 }
 

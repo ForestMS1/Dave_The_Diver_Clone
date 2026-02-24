@@ -59,7 +59,7 @@ void CClownfish::Render_GameObject()
 
 HRESULT CClownfish::Ready_Component()
 {
-    CFishGameObject::Ready_Component(L"Spine_Clownfish");
+    CFishGameObject::Ready(L"Spine_Clownfish");
     return S_OK;
 }
 

@@ -6,3 +6,13 @@
 #include "CYellowbackFusilier.h"
 #include "CYellowTang.h"
 #include "CFishHitCollider.h"
+
+namespace Engine
+{
+	class CLayer;
+}
+
+namespace Fish
+{
+	HRESULT AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+}

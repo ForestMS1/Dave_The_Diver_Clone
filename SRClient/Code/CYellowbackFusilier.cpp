@@ -59,7 +59,7 @@ void CYellowbackFusilier::Render_GameObject()
 
 HRESULT CYellowbackFusilier::Ready_Component()
 {
-    CFishGameObject::Ready_Component(L"Spine_YellowbackFusilier");
+    CFishGameObject::Ready(L"Spine_YellowbackFusilier");
     return S_OK;
 }
 

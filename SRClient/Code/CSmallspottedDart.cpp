@@ -59,7 +59,7 @@ void CSmallspottedDart::Render_GameObject()
 
 HRESULT CSmallspottedDart::Ready_Component()
 {
-    CFishGameObject::Ready_Component(L"Spine_SmallspottedDart");
+    CFishGameObject::Ready(L"Spine_SmallspottedDart");
     return S_OK;
 }
 
