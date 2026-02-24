@@ -64,8 +64,8 @@ HRESULT CDiveDave::Ready_GameObject()
 _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 {
 	// 충돌체 그룹에 넣어줘야한다.
-	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_ItemBox", m_pAABB);
-	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Item", m_pAABBItem);
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_DiveDaveWithItemBox", m_pAABB);
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_DiveDaveWithItem", m_pAABBItem);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	m_pAABB->Transform(m_pTransformCom->Get_World());
 	m_pAABBItem->Transform(m_pTransformCom->Get_World());
