@@ -21,7 +21,17 @@
 #include "CTestFish.h"
 #include "CDiveItemBox.h"
 #include "CBackGroundSea.h"
-
+#include "CDiveDaveUI.h"
+#include "CGaugeBarUI.h"
+#include "CDaggerBoxUI.h"
+#include "CDaggerThumbnailUI.h"
+#include "CDaggerBoxMouseLKeyUI.h"
+#include "CItemBoxUI.h"
+#include "CChangeTab.h"
+#include "CRKeyUI.h"
+#include "CCKeyUI.h"
+#include "CWPBoxUI.h"
+#include "CTabKeyUI.h"
 CDive::CDive()
 	: CScene()
 {
@@ -34,7 +44,8 @@ HRESULT CDive::Ready_Scene()
 {
 	CMapMgr::GetInstance()->SetScene(this);
 
-
+	if (FAILED(Ready_UI_Layer(L"0_UI_Layer")))
+		return E_FAIL;
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
 
@@ -225,6 +236,100 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
+	return S_OK;
+}
+
+HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+	// DaggerBox
+	pGameObject = CGaugeBarUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGaugeBarUI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CDaggerBoxUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveDaggerBoxUI", pGameObject)))
+		return E_FAIL;
+
+
+	pGameObject = CDaggerThumbnailUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveDaggerThumbnailUI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CDaggerBoxMouseLKeyUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveDaggerBoxMouseLKeyUI", pGameObject)))
+		return E_FAIL;
+
+	// ItemBox
+	pGameObject = CItemBoxUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveItemBoxUI_1", pGameObject)))
+		return E_FAIL;
+	pGameObject = CItemBoxUI::Create(true);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveItemBoxUI_2", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CChangeTab::Create(385.f, -330.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveChangeTab1", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CRKeyUI::Create(405.f, -330.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"RKeyUI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCKeyUI::Create(350.f, -255.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CKeyUI", pGameObject)))
+		return E_FAIL;
+
+	// WPBox
+	pGameObject = CWPBoxUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CWPBoxUI::Create(true);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI2", pGameObject)))
+		return E_FAIL;
+
+
+	pGameObject = CChangeTab::Create(530.f, -328.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveChangeTab2", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTabKeyUI::Create(550, -328.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TabKeyUI", pGameObject)))
+		return E_FAIL;
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
 
