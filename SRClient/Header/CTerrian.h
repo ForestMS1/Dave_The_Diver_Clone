@@ -7,13 +7,14 @@ namespace Engine {
 
 	
 }
-class CTestGlb : public CGameObject
+class CTerrian : public CGameObject
 {
 private:
-	explicit CTestGlb();
-	explicit CTestGlb(const wstring_view tex);
-	explicit CTestGlb(const CTestGlb& rhs);
-	virtual ~CTestGlb();
+	explicit CTerrian();
+	explicit CTerrian(const wstring_view tex);
+	explicit CTerrian(const wstring_view tex, const wstring_view Name);
+	explicit CTerrian(const CTerrian& rhs);
+	virtual ~CTerrian();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -21,18 +22,25 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
 
+	void						Set_CollisionName(wstring _CollsionName) { m_CollisionName = _CollsionName; }
+
 private:
 	HRESULT			Ready_Component();
 	HRESULT			Ready_Material();
+
+
 private:
 	Engine::CGlbTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 	const wstring_view m_wsName;
 	vector<CAABB*> m_pAABB;
 
+private:
+	wstring m_CollisionName;
 public:
-	static CTestGlb* Create();
-	static CTestGlb* Create(const wstring_view tex);
+	static CTerrian* Create();
+	static CTerrian* Create(const wstring_view tex);
+	static CTerrian* Create(const wstring_view tex, const wstring_view Name);
 
 private:
 	virtual void Free();

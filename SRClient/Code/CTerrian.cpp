@@ -1,4 +1,4 @@
-#include "CTestGlb.h"
+#include "CTerrian.h"
 #include "CGlbTex.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
@@ -6,27 +6,32 @@
 #include "CAssetMgr.h"
 #include "CAssetGlb.h"
 #include "CManagement.h"
+#include "CDiveDave.h"
 
 
-CTestGlb::CTestGlb()
+CTerrian::CTerrian()
     : CGameObject()
 {
 }
 
-CTestGlb::CTestGlb(const wstring_view tex) : CGameObject(), m_wsName(tex)
+CTerrian::CTerrian(const wstring_view tex) : CGameObject(), m_wsName(tex), m_CollisionName(L"")
 {
 }
 
-CTestGlb::CTestGlb(const CTestGlb& rhs)
+CTerrian::CTerrian(const wstring_view tex, const wstring_view Name) : CGameObject(), m_wsName(tex), m_CollisionName(Name)
+{
+}
+
+CTerrian::CTerrian(const CTerrian& rhs)
     : CGameObject(rhs)
 {
 }
 
-CTestGlb::~CTestGlb()
+CTerrian::~CTerrian()
 {
 }
 
-HRESULT CTestGlb::Ready_GameObject()
+HRESULT CTerrian::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -34,25 +39,31 @@ HRESULT CTestGlb::Ready_GameObject()
 
     //-------------AABB Collider With AABB_Terrian----------------
 
-    vector<MeshBound>* meshBound;
-    meshBound = (CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian1_Collision")->Get_vec_meshBounds());
-   
-    for (int i = 0; i < meshBound->size(); ++i) {
-        float aspect = (*meshBound)[i].size.x / (*meshBound)[i].size.y;
-        float scale = 3.5f;
-        _vec3 vExtents = { aspect* scale,1.f* scale,0.f };
-        _vec3 vPos = { (*meshBound)[i].center};
-        m_pAABB.emplace_back(CAABB::Create(&vPos, &vExtents, L"AABB_Terrian1", this));
+  
+    if (m_CollisionName != L"") {
+        vector<MeshBound>* meshBound;
+        meshBound = nullptr;
+        //meshBound = (CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian1_Collision")->Get_vec_meshBounds());
+        meshBound = (CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_CollisionName)->Get_vec_meshBounds());
+
+        if (meshBound != nullptr) {
+            for (int i = 0; i < meshBound->size(); ++i) {
+
+                _vec3 scale = (*meshBound)[i].scale;
+                _vec3 vExtents = { 1.f * scale.x,1.f * scale.y,0.f };
+                _vec3 vPos = { (*meshBound)[i].center };
+                m_pAABB.emplace_back(CAABB::Create(&vPos, &vExtents, m_CollisionName, this));
+            }
+        }
+
     }
-    
-
-
-
+   
+   
 
     return S_OK;
 }
 
-_int CTestGlb::Update_GameObject(const _float& fTimeDelta)
+_int CTerrian::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -60,7 +71,7 @@ _int CTestGlb::Update_GameObject(const _float& fTimeDelta)
 
     // 충돌체 그룹에 넣어줘야한다.
     for (auto i : m_pAABB) {
-        CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_GLB", i);
+        CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Terrian", i);
         //i->Transform(m_pTransformCom->Get_World());
     }
 
@@ -68,12 +79,12 @@ _int CTestGlb::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void CTestGlb::LateUpdate_GameObject(const _float& fTimeDelta)
+void CTerrian::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void CTestGlb::Render_GameObject()
+void CTerrian::Render_GameObject()
 {
     CColliderMgr::GetInstance()->Set_Render(true);
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -110,7 +121,7 @@ void CTestGlb::Render_GameObject()
    
 }
 
-HRESULT CTestGlb::Ready_Material()
+HRESULT CTerrian::Ready_Material()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -151,7 +162,7 @@ HRESULT CTestGlb::Ready_Material()
     return S_OK;
 }
 
-HRESULT CTestGlb::Ready_Component()
+HRESULT CTerrian::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CGlbTex, ID_STATIC>(m_wsName, L"Com_Buffer", &m_pBufferCom))))
@@ -168,35 +179,51 @@ HRESULT CTestGlb::Ready_Component()
     return S_OK;
 }
 
-CTestGlb* CTestGlb::Create()
-{
-    CTestGlb* pTestGlb = new CTestGlb;
 
-    if (FAILED(pTestGlb->Ready_GameObject()))
+
+CTerrian* CTerrian::Create()
+{
+    CTerrian* pTerrian = new CTerrian;
+
+    if (FAILED(pTerrian->Ready_GameObject()))
     {
-        Safe_Release(pTestGlb);
+        Safe_Release(pTerrian);
+        MSG_BOX("pTerrian Create Failed");
+        return nullptr;
+    }
+
+    return pTerrian;
+}
+
+CTerrian* CTerrian::Create(const wstring_view tex)
+{
+    CTerrian* pTerrian = new CTerrian(tex);
+
+    if (FAILED(pTerrian->Ready_GameObject()))
+    {
+        Safe_Release(pTerrian);
+        MSG_BOX("pTerrian Create Failed");
+        return nullptr;
+    }
+
+    return pTerrian;
+}
+
+CTerrian* CTerrian::Create(const wstring_view tex, const wstring_view Name)
+{
+    CTerrian* pTerrian = new CTerrian(tex, Name);
+
+    if (FAILED(pTerrian->Ready_GameObject()))
+    {
+        Safe_Release(pTerrian);
         MSG_BOX("CTestGlb Create Failed");
         return nullptr;
     }
 
-    return pTestGlb;
+    return pTerrian;
 }
 
-CTestGlb* CTestGlb::Create(const wstring_view tex)
-{
-    CTestGlb* pTestGlb = new CTestGlb(tex);
-
-    if (FAILED(pTestGlb->Ready_GameObject()))
-    {
-        Safe_Release(pTestGlb);
-        MSG_BOX("CTestGlb Create Failed");
-        return nullptr;
-    }
-
-    return pTestGlb;
-}
-
-void CTestGlb::Free()
+void CTerrian::Free()
 {
     CGameObject::Free();
     // 충돌체 그룹에 넣어줘야한다.

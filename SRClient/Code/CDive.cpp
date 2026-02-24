@@ -16,7 +16,7 @@
 #include "CHarpoonProjectile.h"
 #include "CDiveDaveGun.h"
 #include "CMapMgr.h"
-#include "CTestGlb.h"
+#include "CTerrian.h"
 #include "CSkyBox.h"
 #include "CTestFish.h"
 #include "CDiveItemBox.h"
@@ -188,17 +188,14 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	//if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
 	//	return E_FAIL;
 	//테스트용
-	pGameObject = CTestGlb::Create(L"GLB_File1");
+	pGameObject = CTerrian::Create(L"GLB_File1", L"Terrian1_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TestGlb1", pGameObject)))
 		return E_FAIL;
 
-	//pGameObject = CTestGlb::Create(L"Terrian1_Collision");
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pLayer->Add_GameObject(L"Terrian1_Collision", pGameObject)))
-	//	return E_FAIL;
+
+
 
 	////테스트용
 	//pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
