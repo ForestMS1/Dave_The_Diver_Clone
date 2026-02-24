@@ -52,10 +52,6 @@ private:
 	_bool m_bIsOpen = false;
 	_bool m_bIsCollWithMe = false;
 
-	_bool		m_bOnCollisionEnter = false;
-	_bool		m_bOnCollisionStay = false;
-	_bool		m_bOnCollisionExit = false;
-
 public:
 	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0);
 

@@ -44,7 +44,7 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
-	vScale = { fWidth / fAspect, fHeight / fAspect, 0.f };
+	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	m_pTransformCom->Set_Pos(m_vInitPos.x, m_vInitPos.y, m_vInitPos.z);
