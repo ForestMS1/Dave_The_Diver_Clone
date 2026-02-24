@@ -54,6 +54,7 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
 	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_ItemBox", this);
 
+	CColliderMgr::GetInstance()->Set_Render(true); 
     return S_OK;
 }
 
@@ -100,15 +101,24 @@ void CDiveItemBox::Render_GameObject()
 
 void CDiveItemBox::Set_Open()
 {
-	m_bIsOpen = true; 
-	m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1);
-
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CO2Capsule* pItem = CO2Capsule::Create(vPos);
-	if (pItem != nullptr)
+	if (m_bIsCollWithMe && !m_bIsOpen)
 	{
-		CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"Item", pItem);
+		m_bIsOpen = true;
+		m_bIsCollWithMe = false;
+		m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1);
+
+		CDiveDave* pDiveDave = static_cast<CDiveDave*>
+			(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"));
+		pDiveDave->Set_IsOnItemBox(false);
+		pDiveDave->Set_CurOnItemBox(nullptr);
+
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		CO2Capsule* pItem = CO2Capsule::Create(vPos);
+		if (pItem != nullptr)
+		{
+			CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"Item", pItem);
+		}
 	}
 }
 
@@ -128,6 +138,8 @@ HRESULT CDiveItemBox::Ready_Component()
 
 void CDiveItemBox::Collision_With_DiveDave()
 {
+	if (m_bIsOpen)
+		return;
 	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
 	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_DiveDaveWithItemBox"))
 	{
