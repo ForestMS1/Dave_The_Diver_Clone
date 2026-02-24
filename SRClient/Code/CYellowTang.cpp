@@ -80,5 +80,5 @@ CYellowTang* CYellowTang::Create(float fPosX, float fPosY)
 
 void CYellowTang::Free()
 {
-    CGameObject::Free();
+    CFishGameObject::Free();
 }

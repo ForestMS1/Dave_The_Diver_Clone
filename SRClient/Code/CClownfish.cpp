@@ -80,5 +80,5 @@ CClownfish* CClownfish::Create(float fPosX, float fPosY)
 
 void CClownfish::Free()
 {
-    CGameObject::Free();
+    CFishGameObject::Free();
 }

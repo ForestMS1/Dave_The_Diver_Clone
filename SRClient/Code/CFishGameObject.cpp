@@ -4,6 +4,10 @@
 #include "CAssetSpine.h"
 
 
+CFishGameObject::CFishGameObject()
+{
+}
+
 void CFishGameObject::Update_ImGui()
 {
     CGameObject::Update_ImGui();
@@ -54,4 +58,9 @@ HRESULT CFishGameObject::Ready_Component(std::wstring_view svSpineName)
         m_pSpineCom->Index_Buffer_Lock(m_pDynamicBuffer->Get_IndexBuffer());
     };
 	return S_OK;
+}
+
+void CFishGameObject::Free()
+{
+    CGameObject::Free();
 }

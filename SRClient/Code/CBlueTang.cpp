@@ -80,5 +80,5 @@ CBlueTang* CBlueTang::Create(float fPosX, float fPosY)
 
 void CBlueTang::Free()
 {
-    CGameObject::Free();
+    CFishGameObject::Free();
 }

@@ -9,11 +9,14 @@
 class CFishGameObject : public CGameObject
 {
 public:
-	//explicit CFishGameObject();
+	explicit CFishGameObject();
 	//virtual ~CFishGameObject();
 
 public:
 	void Update_ImGui() override;
+
+public:
+	std::wstring_view Get_FishName() const { return m_sFishName; }
 
 public:
 	void Render(function<void()> beforeDrawLambda = nullptr);
@@ -23,5 +26,10 @@ protected:
 	Engine::CDynamicBuffer* m_pDynamicBuffer;
 	Engine::CTransform* m_pTransformCom;
 	Engine::CSpine* m_pSpineCom;
+
+	std::wstring m_sFishName;
+
+public:
+	void Free() override;
 };
 

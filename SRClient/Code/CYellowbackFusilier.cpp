@@ -80,5 +80,5 @@ CYellowbackFusilier* CYellowbackFusilier::Create(float fPosX, float fPosY)
 
 void CYellowbackFusilier::Free()
 {
-    CGameObject::Free();
+    CFishGameObject::Free();
 }

@@ -80,5 +80,5 @@ CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY)
 
 void CSmallspottedDart::Free()
 {
-    CGameObject::Free();
+    CFishGameObject::Free();
 }
