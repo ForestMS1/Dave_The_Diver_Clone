@@ -6,6 +6,7 @@
 #include "CDiveDaveIdle.h"
 #include "CDiveDaveOpen.h"
 #include "CDiveDavePickUp.h"
+#include "CSubject.h"
 
 enum class EQUIPPED
 {
@@ -135,6 +136,7 @@ private:
 	_bool m_bIsOnItemBox = false;
 	_bool m_bIsOnItem = false;
 
+	_float m_fMaxHp = 200.f;
 	_float m_fHp = 100.f;
 	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
 	_bool  m_bIsHit = false;
@@ -143,6 +145,9 @@ private:
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;
 	CGameObject* m_pCurOnItem = nullptr;
+
+	unordered_map<std::wstring_view, CGameObject*> m_mapCanUseItemSlot = { {L"ItemSlot1", nullptr}, {L"ItemSlot2", nullptr} };
+
 
 public:
 	static CDiveDave* Create();

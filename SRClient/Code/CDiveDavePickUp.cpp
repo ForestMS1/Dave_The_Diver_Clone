@@ -70,8 +70,21 @@ void CDiveDavePickUp::Exit()
 
 void CDiveDavePickUp::Clear()
 {
-	if(static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem) != nullptr)
-		static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+	if (m_pOwner->m_pCurOnItem != nullptr)
+	{
+		if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] == nullptr)
+		{
+			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_pCurOnItem;
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+		}
+		else if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] == nullptr)
+		{
+			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = m_pOwner->m_pCurOnItem;
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+		}
+		else
+			return;
+	}
 
 	m_pOwner->Set_IsOnItem(false);
 	m_pOwner->m_pCurOnItem = nullptr;
