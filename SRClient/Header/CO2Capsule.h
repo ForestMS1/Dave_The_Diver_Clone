@@ -16,7 +16,7 @@ public:
 	void		Render_GameObject() override;
 
 	// CDiveItem을(를) 통해 상속됨
-	void UseItem() override;
+	void UseItem(CGameObject*) override;
 
 private:
 	HRESULT Ready_Component();

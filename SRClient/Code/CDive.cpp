@@ -44,12 +44,12 @@ HRESULT CDive::Ready_Scene()
 {
 	CMapMgr::GetInstance()->SetScene(this);
 
-	if (FAILED(Ready_UI_Layer(L"0_UI_Layer")))
-		return E_FAIL;
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
+		return E_FAIL;
+	if (FAILED(Ready_UI_Layer(L"0_UI_Layer")))
 		return E_FAIL;
 
 	//카메라
@@ -149,6 +149,7 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDave", pDiveDave)))
 		return E_FAIL;
+	m_pDive = pDiveDave;
 
 	pGameObject = CAttackReadyArm::Create();
 	if (nullptr == pGameObject)
@@ -279,11 +280,14 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDaveItemBoxUI_1", pGameObject)))
 		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
 	pGameObject = CItemBoxUI::Create(true);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDaveItemBoxUI_2", pGameObject)))
 		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
 	pGameObject = CChangeTab::Create(385.f, -330.f, 0.f);
 	if (nullptr == pGameObject)
@@ -330,6 +334,9 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+
+	m_pDive = nullptr;
+
 	return S_OK;
 }
 

@@ -1,7 +1,8 @@
 #pragma once
-#include "CGameObject.h"
+#include "IObserver.h"
+
 class CItemBoxUI :
-    public CGameObject
+    public IObserver
 {
 private:
 	explicit CItemBoxUI(_bool isSub = false);
@@ -16,7 +17,11 @@ public:
 	void		Render_GameObject() override;
 
 private:
+	void		Move_Slot(const _float& fTimeDelta);
+
+private:
 	HRESULT Ready_Component();
+	void	Draw_Item(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -24,11 +29,16 @@ private:
 
 private:
 	_bool m_bIsSub = false;
+	_bool m_bIsChanging = false;
+	std::wstring_view m_wsTargetItemTexName;
 
 public:
 	static CItemBoxUI* Create(_bool isSub = false);
 
 private:
 	virtual void Free() override;
+
+	// IObserver을(를) 통해 상속됨
+	void OnNotify(const Event& e) override;
 };
 

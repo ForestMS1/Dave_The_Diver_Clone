@@ -4,6 +4,7 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CDiveItem.h"
 CDiveDaveIdle::CDiveDaveIdle(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -35,6 +36,32 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 	// Item 충돌상태에서 SPACE 누르면 아이템 줍기
 	if(m_pOwner->m_bIsOnItem && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
 		m_pOwner->Set_State(DIVEDAVESTATE::PICKUP);
+
+	// Item 사용 (Item사용은 무조건 ItemSlot1에서만)
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+	{
+		CDiveItem* pItem = static_cast<CDiveItem*>(m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"]);
+		if (pItem != nullptr)
+		{
+			pItem->UseItem(m_pOwner);
+			Event e;
+			e.type = EVENTTYPE::USE_ITEM;
+			m_pOwner->Notify(e);
+			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = nullptr;
+		}
+	}
+
+	// Item 슬롯 체인지
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_R))
+	{
+		CGameObject* pItem = m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"];
+		m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"];
+		m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = pItem;
+		Event e;
+		e.type = EVENTTYPE::ITEMSLOT_CHANGE;
+		m_pOwner->Notify(e);
+	}
+		
 
 
 	if (!m_pOwner->Get_CanMouseInput())

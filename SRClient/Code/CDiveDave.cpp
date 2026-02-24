@@ -28,7 +28,7 @@ CDiveDave::CDiveDave()
 }
 
 CDiveDave::CDiveDave(const CDiveDave& rhs)
-	: CGameObject(rhs)
+	: CSubject(rhs)
 {
 }
 
@@ -92,6 +92,13 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		m_bIsHit = true;
 	if (ImGui::Button("OnDead"))
 		m_bIsDie = true;
+
+	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
+	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);
+	string Hp = "Hp : " + to_string((_int)m_fHp);
+	ImGui::Text(ItemSlot1.c_str());
+	ImGui::Text(ItemSlot2.c_str());
+	ImGui::Text(Hp.c_str());
 	ImGui::End();
 #endif
 	return iExit;

@@ -4,6 +4,7 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CColliderMgr.h"
+#include "CDiveDave.h"
 CO2Capsule::CO2Capsule(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -28,6 +29,7 @@ HRESULT CO2Capsule::Ready_GameObject()
 
 	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"Tex_O2Capsule")->at(0))->Get_ImgInfo();
 	imgInfo.Width;
+	m_wsTexName = L"Tex_O2Capsule";
 
 	_float fWidth = imgInfo.Width;;
 	_float fHeight = imgInfo.Height;
@@ -119,7 +121,9 @@ void CO2Capsule::Free()
 	CGameObject::Free();
 }
 
-void CO2Capsule::UseItem()
+void CO2Capsule::UseItem(CGameObject* pUser)
 {
-	
+	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pUser);
+
+	pDiveDave->Restore_Hp(50.f);
 }

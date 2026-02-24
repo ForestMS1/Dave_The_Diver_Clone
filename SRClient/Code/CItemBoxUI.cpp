@@ -9,7 +9,7 @@ CItemBoxUI::CItemBoxUI(_bool isSub)
 }
 
 CItemBoxUI::CItemBoxUI(const CItemBoxUI& rhs)
-    :CGameObject(rhs)
+    :IObserver(rhs)
 {
 }
 
@@ -50,6 +50,8 @@ _int CItemBoxUI::Update_GameObject(const _float& fTimeDelta)
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     CGameObject::Update_GameObject(fTimeDelta);
 
+    CItemBoxUI::Move_Slot(fTimeDelta);
+
     _vec3 vPos;
     m_pTransformCom->Get_Info(INFO_POS, &vPos);
     Compute_ViewZ(&vPos);
@@ -85,6 +87,31 @@ void CItemBoxUI::Render_GameObject()
         }
     }
     m_pBufferCom->Render_Buffer();
+
+    CItemBoxUI::Draw_Item(pGraphicDev);
+}
+
+void CItemBoxUI::Move_Slot(const _float& fTimeDelta)
+{
+    if (!m_bIsChanging)
+        return;
+
+    _vec3 vTargetPos;
+    if (m_bIsSub)
+        vTargetPos = { 375.f, -280.f, 10.f };
+    else
+        vTargetPos = { 410.f, -295.f, 20.f };
+
+    _vec3 vCurPos, vDir;
+    m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+    vDir = vTargetPos - vCurPos;
+    if (D3DXVec3Length(&vDir) < 0.01f)
+    {
+        m_bIsChanging = false;
+        m_bIsSub = !m_bIsSub;
+        return;
+    }
+    m_pTransformCom->Move_Pos(&vDir, 10.f, fTimeDelta);
 }
 
 HRESULT CItemBoxUI::Ready_Component()
@@ -98,6 +125,54 @@ HRESULT CItemBoxUI::Ready_Component()
         return E_FAIL;
 
     return S_OK;
+}
+
+void CItemBoxUI::Draw_Item(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+    if (!m_wsTargetItemTexName.empty())
+    {
+        // ===== 아이템 전용 스케일 =====
+        D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(m_wsTargetItemTexName)->at(0))->Get_ImgInfo();
+
+        float fTargetSize = 0.5f;   // 원하는 UI 내부 아이템 크기
+        float fMax = max(imgInfo.Width, imgInfo.Height);
+
+        float fScaleX = imgInfo.Width / fMax;
+        float fScaleY = imgInfo.Height / fMax;
+
+        D3DXMATRIX matScale, matWorld;
+
+        D3DXMatrixScaling(&matScale,
+            fScaleX * fTargetSize,
+            fScaleY * fTargetSize,
+            1.f);
+
+        matWorld = matScale * (*m_pTransformCom->Get_World());
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_wsTargetItemTexName))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        m_pBufferCom->Render_Buffer();
+
+        // 원래 월드행렬 복구
+        pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
+        //if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_wsTargetItemTexName))
+        //{
+        //    if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        //    {
+        //        pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+        //    }
+        //}
+        //m_pBufferCom->Render_Buffer();
+    }
 }
 
 CItemBoxUI* CItemBoxUI::Create(_bool isSub)
@@ -116,4 +191,29 @@ CItemBoxUI* CItemBoxUI::Create(_bool isSub)
 void CItemBoxUI::Free()
 {
     CGameObject::Free();
+}
+
+void CItemBoxUI::OnNotify(const Event& e)
+{
+    switch (e.type)
+    {
+    case EVENTTYPE::GET_ITEM:
+        if(e.value == 1 && !m_bIsSub)
+            m_wsTargetItemTexName = e.ItemTextureName;
+        if(e.value == 2 && m_bIsSub)
+            m_wsTargetItemTexName = e.ItemTextureName;
+        break;
+    case EVENTTYPE::USE_ITEM:
+        if (!m_bIsSub)
+            m_wsTargetItemTexName = L"";
+        break;
+
+    case EVENTTYPE::ITEMSLOT_CHANGE:
+        m_bIsChanging = true;
+        //m_bIsSub = !m_bIsSub;
+        break;
+
+    default:
+        break;
+    }
 }

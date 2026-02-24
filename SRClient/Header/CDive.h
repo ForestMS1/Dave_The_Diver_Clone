@@ -20,6 +20,9 @@ public:
 	static CDive* Create();
 
 private:
+	CGameObject* m_pDive = nullptr; // Dive구독용 // 여기서 해제하지않는다!
+
+private:
 	void Free() override;
 };
 

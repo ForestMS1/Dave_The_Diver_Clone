@@ -1,5 +1,4 @@
 #pragma once
-#include "CGameObject.h"
 #include "CFSM.h"
 #include "CBaseState.h"
 #include "CAABB.h"
@@ -16,7 +15,7 @@ enum class EQUIPPED
 	EQUIPPED_END
 };
 
-class CDiveDave : public CGameObject
+class CDiveDave : public CSubject
 {
 	friend class CDiveDaveIdle;
 	friend class CDiveDaveOpen;
@@ -87,6 +86,14 @@ public:
 	}
 	// Die 상태로 전이하기위한 함수
 	void				On_Dead() 															{ m_bIsDie = true; }
+
+	// Hp회복
+	void				Restore_Hp(const _float& restore) 
+	{ 
+		m_fHp += restore; 
+		if (m_fHp >= m_fMaxHp)
+			m_fHp = m_fMaxHp;
+	}
 	// Hit 상태 탈출시 호출
 	void				Hit_Free()															{ m_bIsHit = false; }
 	_float				Get_HitTime()														{ return m_fIvncTime; }
