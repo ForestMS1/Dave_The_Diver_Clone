@@ -36,6 +36,11 @@ private:
 	HRESULT Ready_Component();
 	void	Collision_With_DiveDave();
 
+	// Ãæµ¹
+	void	OnCollisionEnter(CCollider*);
+	void	OnCollisionStay(CCollider*);
+	void	OnCollisionExit(CCollider*);
+
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
