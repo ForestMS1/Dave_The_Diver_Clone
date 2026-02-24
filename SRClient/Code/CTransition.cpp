@@ -143,6 +143,18 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	CAssetMgr::GetInstance()->AddAsset(L"Spine_Fish_BlueTang", CAssetSpine::Create(L"../Bin/Resource/Spine/BlueTang/BlueTang"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Spine_Fish_BlueTang");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_Clownfish", CAssetSpine::Create(L"../Bin/Resource/Spine/Clownfish/Clownfish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_Clownfish");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_SmallspottedDart", CAssetSpine::Create(L"../Bin/Resource/Spine/SmallspottedDart/Smallspotted_dart"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_SmallspottedDart");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_YellowbackFusilier", CAssetSpine::Create(L"../Bin/Resource/Spine/YellowbackFusilier/Yellowback_Fusilier"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_YellowbackFusilier");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_YellowTang", CAssetSpine::Create(L"../Bin/Resource/Spine/YellowTang/Yellow_Tang"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_YellowTang");
+
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
 //#ifdef _DEBUG
 //	Sleep(500);

@@ -184,8 +184,12 @@
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
     <ClInclude Include="..\Header\CDiveDaveDie.h" />
     <ClInclude Include="..\Header\CDiveDaveHit.h" />
-    <ClInclude Include="..\Header\CFishBlueTang.h" />
+    <ClInclude Include="..\Header\CBlueTang.h" />
+    <ClInclude Include="..\Header\CClownfish.h" />
     <ClInclude Include="..\Header\CFishGameObject.h" />
+    <ClInclude Include="..\Header\CSmallspottedDart.h" />
+    <ClInclude Include="..\Header\CYellowbackFusilier.h" />
+    <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
     <ClInclude Include="..\Header\CDiveDaveIdle.h" />
     <ClInclude Include="..\Header\CDive.h" />
@@ -287,6 +291,7 @@
     <ClInclude Include="..\Header\CUpgradeButton.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
+    <ClInclude Include="..\Header\FishInclude.h" />
     <ClInclude Include="..\Header\IDiverInfo.h" />
     <ClInclude Include="..\Header\CYellowbackP.h" />
     <ClInclude Include="..\Header\CYellowbackR.h" />
@@ -322,8 +327,12 @@
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
     <ClCompile Include="..\Code\CDiveDaveDie.cpp" />
     <ClCompile Include="..\Code\CDiveDaveHit.cpp" />
-    <ClCompile Include="..\Code\CFishBlueTang.cpp" />
+    <ClCompile Include="..\Code\CBlueTang.cpp" />
+    <ClCompile Include="..\Code\CClownfish.cpp" />
     <ClCompile Include="..\Code\CFishGameObject.cpp" />
+    <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
+    <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
+    <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />
     <ClCompile Include="..\Code\CDiveDaveIdle.cpp" />
     <ClCompile Include="..\Code\CDive.cpp" />

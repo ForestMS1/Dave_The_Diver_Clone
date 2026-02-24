@@ -33,7 +33,8 @@
 
 #include "IDiverInfo.h"
 
-#include "CFishBlueTang.h"
+#include "FishInclude.h"
+
 
 CShip::CShip()
 	: CScene()
@@ -71,13 +72,28 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 		return E_FAIL;
 
 	//{
-	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(1.f, 1.f);
-	//	pLayer->Add_GameObject(L"BlueTang", pBlueTang);
+	//	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(2.f, 2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
 	//}
 
 	//{
-	//	CFishBlueTang* pBlueTang = CFishBlueTang::Create(-1.f, -1.f);
-	//	pLayer->Add_GameObject(L"BlueTang", pBlueTang);
+	//	Fish::CYellowTang* pFish = Fish::CYellowTang::Create(-2.f, -2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
+
+	//{
+	//	Fish::CSmallspottedDart* pFish = Fish::CSmallspottedDart::Create(0.f, 0.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
+
+	//{
+	//	Fish::CClownfish* pFish = Fish::CClownfish::Create(2.f, -2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
+	//}
+
+	//{
+	//	Fish::CYellowbackFusilier* pFish = Fish::CYellowbackFusilier::Create(-2.f, 2.f);
+	//	pLayer->Add_GameObject(L"Fishes", pFish);
 	//}
 
 	//{

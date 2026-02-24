@@ -8,6 +8,8 @@ CSpine::CSpine()
     :CComponent()
     , m_pSkeleton(nullptr)
     , m_pAniState(nullptr)
+    , m_fDarkness(1.f)
+    , m_iSelectAni(0)
 {
 }
 
@@ -15,6 +17,8 @@ CSpine::CSpine(const CSpine& rhs)
     :CComponent(rhs)
     , m_pSkeleton(nullptr)
     , m_pAniState(nullptr)
+    , m_fDarkness(rhs.m_fDarkness)
+    , m_iSelectAni(rhs.m_iSelectAni)
 {
 }
 
@@ -31,9 +35,49 @@ _int CSpine::Update_Component(const _float& fTimeDelta)
     return NOEVENT;
 }
 
-void CSpine::Set_AniState(std::wstring_view svAniName)
+void CSpine::Update_ImGui()
 {
-    m_pAniState->setAnimation(0, CHelper::WStringToString(svAniName).c_str(), true);
+    ImGui::DragFloat("Darkness", &m_fDarkness, 0.1);
+
+    if (ImGui::TreeNode("Ani"))
+    {
+        auto skeletonData = m_pSkeleton->getData();
+        auto& animations = skeletonData->getAnimations();
+
+
+        // 현재 선택된 애니메이션 이름 가져오기
+        const char* currentLabel = animations[m_iSelectAni]->getName().buffer();
+
+        if (ImGui::BeginCombo("Select Animation", currentLabel)) {
+            for (int n = 0; n < (int)animations.size(); n++) {
+                bool isSelected = (m_iSelectAni == n);
+                if (ImGui::Selectable(animations[n]->getName().buffer(), isSelected)) {
+                    m_iSelectAni = n;
+
+                    // 선택 시 즉시 재생 (0번 트랙, 루프 재생)
+                    m_pAniState->setAnimation(0, animations[n], true);
+                }
+                if (isSelected) ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+
+        // 현재 재생 중인 애니메이션 정보 표시
+        auto currentEntry = m_pAniState->getCurrent(0);
+        if (currentEntry) {
+            //ImGui::Separator();
+            ImGui::Text("Playing: %s", currentEntry->getAnimation()->getName().buffer());
+            ImGui::Text("Duration: %.2fs", currentEntry->getAnimationEnd());
+        }
+
+        ImGui::TreePop();
+    }
+    
+}
+
+void CSpine::Set_AniState(std::wstring_view svAniName, bool loop)
+{
+    m_pAniState->setAnimation(0, CHelper::WStringToString(svAniName).c_str(), loop);
 }
 
 void CSpine::Vertex_Buffer_Lock(LPDIRECT3DVERTEXBUFFER9 pVB)
@@ -49,6 +93,12 @@ void CSpine::Vertex_Buffer_Lock(LPDIRECT3DVERTEXBUFFER9 pVB)
 
     // 미리 할당된 버퍼를 사용하여 vector 생성 비용 절감
     static std::vector<float> worldVertices;
+
+    // 루프 밖에서 미리 계산
+    float globalR = skeleton->getColor().r * m_fDarkness * 255.0f;
+    float globalG = skeleton->getColor().g * m_fDarkness * 255.0f;
+    float globalB = skeleton->getColor().b * m_fDarkness * 255.0f;
+    float globalA = skeleton->getColor().a * 255.0f;
 
     for (size_t i = 0; i < drawOrder.size(); ++i)
     {
@@ -66,12 +116,20 @@ void CSpine::Vertex_Buffer_Lock(LPDIRECT3DVERTEXBUFFER9 pVB)
         int numVertices = numFloats / 2;
         auto& uvs = mesh->getUVs();
 
-        // 컬러 계산 (루프 밖으로 뺄 수 있는 부분 최적화)
+        //// 컬러 계산 (루프 밖으로 뺄 수 있는 부분 최적화)
+        //D3DCOLOR finalColor = D3DCOLOR_ARGB(
+        //    (BYTE)(skeleton->getColor().a * slot->getColor().a * mesh->getColor().a * 255),
+        //    (BYTE)(skeleton->getColor().r * slot->getColor().r * mesh->getColor().r * 255),
+        //    (BYTE)(skeleton->getColor().g * slot->getColor().g * mesh->getColor().g * 255),
+        //    (BYTE)(skeleton->getColor().b * slot->getColor().b * mesh->getColor().b * 255)
+        //);
+
+        // 루프 안쪽 슬롯별 계산
         D3DCOLOR finalColor = D3DCOLOR_ARGB(
-            (BYTE)(skeleton->getColor().a * slot->getColor().a * mesh->getColor().a * 255),
-            (BYTE)(skeleton->getColor().r * slot->getColor().r * mesh->getColor().r * 255),
-            (BYTE)(skeleton->getColor().g * slot->getColor().g * mesh->getColor().g * 255),
-            (BYTE)(skeleton->getColor().b * slot->getColor().b * mesh->getColor().b * 255)
+            (BYTE)(globalA * slot->getColor().a * mesh->getColor().a),
+            (BYTE)(globalR * slot->getColor().r * mesh->getColor().r),
+            (BYTE)(globalG * slot->getColor().g * mesh->getColor().g),
+            (BYTE)(globalB * slot->getColor().b * mesh->getColor().b)
         );
 
         for (int v = 0; v < numVertices; ++v)
@@ -141,6 +199,25 @@ void CSpine::Render(CDynamicBuffer* pDynamicBuffer)
         pGraphicDev->SetTexture(0, CAssetMgr::GetInstance()->Get_AssetFirst<CAssetTexture>(pAssSpine->Get_TextureName())->Get_Texture());
         Vertex_Buffer_Lock(pDynamicBuffer->Get_VertexBuffer());
         pDynamicBuffer->Render_Buffer();
+    }
+}
+
+ 
+bool CSpine::Get_AniStateProgress(float& fProgress)
+{
+    spine::TrackEntry* entry = m_pAniState->getCurrent(0);
+
+    if (entry != nullptr) {
+       
+        float progress = entry->getTrackTime() / entry->getAnimationEnd();
+
+        float loopProgress = fmod(entry->getTrackTime(), entry->getAnimationEnd()) / entry->getAnimationEnd();
+        fProgress = loopProgress;
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 

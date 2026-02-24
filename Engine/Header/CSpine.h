@@ -24,6 +24,9 @@ public:
 	_int Update_Component(const _float& fTimeDelta) override;
 
 public:
+	void Update_ImGui() override;
+
+public:
 	void Vertex_Buffer_Lock(LPDIRECT3DVERTEXBUFFER9 pVB);
 	void Index_Buffer_Lock(LPDIRECT3DINDEXBUFFER9 pIB);
 
@@ -34,9 +37,9 @@ public:
 		spine::AnimationStateData * pAnimationStateData,
 		std::wstring_view svSpineAssetName
 	);
-	void Set_AniState(std::wstring_view svAniName);
+	void Set_AniState(std::wstring_view svAniName, bool loop = true);
 	void Render(CDynamicBuffer* pDynamicBuffer);
-
+	bool Get_AniStateProgress(float& fProgress);
 public:
 	static CSpine* Create();
 	virtual CComponent* Clone();
@@ -47,6 +50,11 @@ private:
 	_ulong m_iNumVertex;
 	_ulong m_iNumTri;
 	std::wstring m_sSpineAssetName;
+
+	std::wstring m_sAniName;
+	float m_fAniProgress;
+	float m_fDarkness;
+	int m_iSelectAni;
 public:
 	virtual		void	Free();
 };
