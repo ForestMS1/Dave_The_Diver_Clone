@@ -243,10 +243,6 @@ void CDiveDave::Key_Input()
 {
 	if (!m_bCanKeyInput)
 		return;
-
-
-	if (CDiveDave::Get_State() == DIVEDAVESTATE::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
-		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 }
 
 void CDiveDave::Mouse_Input()

@@ -9,7 +9,7 @@ CWPBoxUI::CWPBoxUI(_bool isSub)
 }
 
 CWPBoxUI::CWPBoxUI(const CWPBoxUI& rhs)
-    :CGameObject(rhs)
+    :IObserver(rhs)
 {
 }
 
@@ -49,6 +49,8 @@ _int CWPBoxUI::Update_GameObject(const _float& fTimeDelta)
 {
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     CGameObject::Update_GameObject(fTimeDelta);
+
+    Move_Slot(fTimeDelta);
 
     _vec3 vPos;
     m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -116,4 +118,41 @@ CWPBoxUI* CWPBoxUI::Create(_bool isSub)
 void CWPBoxUI::Free()
 {
     CGameObject::Free();
+}
+
+void CWPBoxUI::Move_Slot(const _float& fTimeDelta)
+{
+    if (!m_bIsChanging)
+        return;
+
+    _vec3 vTargetPos;
+    if (m_bIsSub)
+        vTargetPos = { 510.f, -280.f, 10.f };
+    else
+        vTargetPos = { 530.f, -295.f, 20.f };
+
+    _vec3 vCurPos, vDir;
+    m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+    vDir = vTargetPos - vCurPos;
+    if (D3DXVec3Length(&vDir) < 0.01f)
+    {
+        m_bIsChanging = false;
+        m_bIsSub = !m_bIsSub;
+        return;
+    }
+    m_pTransformCom->Move_Pos(&vDir, 10.f, fTimeDelta);
+}
+
+void CWPBoxUI::OnNotify(const Event& e)
+{
+    switch (e.type)
+    {
+    case EVENTTYPE::WEAPON_CHANGE:
+        m_bIsChanging = true;
+        //m_bIsSub = !m_bIsSub;
+        break;
+
+    default:
+        break;
+    }
 }

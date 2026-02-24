@@ -61,6 +61,15 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 		e.type = EVENTTYPE::ITEMSLOT_CHANGE;
 		m_pOwner->Notify(e);
 	}
+
+	// Weapon ½½·Ô Ã¼ÀÎÁö
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+	{
+		m_pOwner->m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_pOwner->m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
+		Event e;
+		e.type = EVENTTYPE::WEAPON_CHANGE;
+		m_pOwner->Notify(e);
+	}
 		
 
 
