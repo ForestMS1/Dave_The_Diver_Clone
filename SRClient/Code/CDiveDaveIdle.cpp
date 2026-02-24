@@ -52,8 +52,9 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 	}
 
 	// Item 슬롯 체인지
-	if (CDInputMgr::GetInstance()->Key_Down(DIK_R))
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_R) && !m_bItemSlotDefense)
 	{
+		m_bItemSlotDefense = true;
 		CGameObject* pItem = m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"];
 		m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"];
 		m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = pItem;
@@ -63,11 +64,12 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 	}
 
 	// Weapon 슬롯 체인지
-	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB) && !m_bWeaponSlotDefense)
 	{
+		m_bWeaponSlotDefense = true;
 		m_pOwner->m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_pOwner->m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 		Event e;
-		e.type = EVENTTYPE::WEAPON_CHANGE;
+		e.type = EVENTTYPE::WEAPONSLOT_CHANGE;
 		m_pOwner->Notify(e);
 	}
 		
@@ -87,6 +89,27 @@ _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);
+
+
+	if (m_bItemSlotDefense)
+	{
+		m_fItemSlotChangeDelay -= fTimeDelta;
+		if (m_fItemSlotChangeDelay <= 0.f)
+		{
+			m_bItemSlotDefense = false;
+			m_fItemSlotChangeDelay = 1.f;
+		}
+	}
+
+	if (m_bWeaponSlotDefense)
+	{
+		m_fWeaponSlotChangeDelay -= fTimeDelta;
+		if (m_fWeaponSlotChangeDelay <= 0.f)
+		{
+			m_bWeaponSlotDefense = false;
+			m_fWeaponSlotChangeDelay = 1.f;
+		}
+	}
 	return 0;
 }
 
@@ -112,10 +135,19 @@ void CDiveDaveIdle::Exit()
 
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	Clear();
 }
 
 void CDiveDaveIdle::Clear()
 {
+	// 아이템 슬롯 체인지 딜레이
+	m_bItemSlotDefense = false;
+	m_fItemSlotChangeDelay = 1.f;
+
+	// 무기 슬롯 체인지 딜레이
+	m_bWeaponSlotDefense = false;
+	m_fWeaponSlotChangeDelay = 1.f;
 }
 
 void CDiveDaveIdle::Restore_Fov(const _float& fTimeDelta)

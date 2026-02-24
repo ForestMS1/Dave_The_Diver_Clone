@@ -87,6 +87,8 @@ void CWPBoxUI::Render_GameObject()
         }
     }
     m_pBufferCom->Render_Buffer();
+
+    Draw_Item(pGraphicDev);
 }
 
 HRESULT CWPBoxUI::Ready_Component()
@@ -142,12 +144,56 @@ void CWPBoxUI::Move_Slot(const _float& fTimeDelta)
     }
     m_pTransformCom->Move_Pos(&vDir, 10.f, fTimeDelta);
 }
+void CWPBoxUI::Draw_Item(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+    if (!m_wsTargetItemTexName.empty())
+    {
+        // ===== 아이템 전용 스케일 =====
+        D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(m_wsTargetItemTexName)->at(0))->Get_ImgInfo();
+
+        float fTargetSize = 1.f;   // 원하는 UI 내부 아이템 크기
+        float fMax = max(imgInfo.Width, imgInfo.Height);
+
+        float fScaleX = imgInfo.Width / fMax;
+        float fScaleY = imgInfo.Height / fMax;
+
+        D3DXMATRIX matScale, matWorld;
+
+        D3DXMatrixScaling(&matScale,
+            fScaleX * fTargetSize,
+            fScaleY * fTargetSize,
+            1.f);
+
+        matWorld = matScale * (*m_pTransformCom->Get_World());
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_wsTargetItemTexName))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        m_pBufferCom->Render_Buffer();
+
+        // 원래 월드행렬 복구
+        pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+    }
+}
 
 void CWPBoxUI::OnNotify(const Event& e)
 {
     switch (e.type)
     {
-    case EVENTTYPE::WEAPON_CHANGE:
+    case EVENTTYPE::GET_WEAPON:
+        if(e.value == 1 && !m_bIsSub)
+            m_wsTargetItemTexName = e.ItemTextureName;
+        if (e.value == 2 && m_bIsSub)
+            m_wsTargetItemTexName = e.ItemTextureName;
+        break;
+    case EVENTTYPE::WEAPONSLOT_CHANGE:
         m_bIsChanging = true;
         //m_bIsSub = !m_bIsSub;
         break;

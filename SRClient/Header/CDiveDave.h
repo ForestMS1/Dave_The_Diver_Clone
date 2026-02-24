@@ -71,6 +71,20 @@ public:
 	void				Set_IsOnItem(_bool isOn)											{ m_bIsOnItem = isOn; }
 	void				Set_CurOnItem(CGameObject* pItem)									{ m_pCurOnItem = pItem; }
 
+	// 무기 등록
+	void				Set_WeaponSlot(CGameObject* pWeapon, EQUIPPED equipped)
+	{
+		if (equipped == EQUIPPED::EQUIPPED_END)
+			return;
+		
+		m_vecWeaponSlot[(_uint)equipped] = pWeapon;
+		Event e;
+		e.type = EVENTTYPE::GET_WEAPON;
+		e.ItemTextureName = pWeapon->Get_TexName();
+		e.value = (_uint)equipped + 1;
+		CDiveDave::Notify(e);
+	}
+
 	void				On_Hit(const _float& fDamage) 
 	{ 
 		if (m_fIvncTime > 0.f)
@@ -154,7 +168,7 @@ private:
 	CGameObject* m_pCurOnItem = nullptr;
 
 	unordered_map<std::wstring_view, CGameObject*> m_mapCanUseItemSlot = { {L"ItemSlot1", nullptr}, {L"ItemSlot2", nullptr} };
-
+	CGameObject* m_vecWeaponSlot[(_uint)EQUIPPED::EQUIPPED_END] = {nullptr, nullptr};
 
 public:
 	static CDiveDave* Create();
