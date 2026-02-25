@@ -94,12 +94,24 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 			{
 				if (pCollider->Get_Tag() == L"AABB_FishHitbox")
 				{
-					m_bIsHitFish = true;
 					auto pFish = static_cast<CFishGameObject*>(pCollider->Get_VoidPtr()); // 충돌한 물고기의 포인터 들고 옴
+					if (pFish->Get_FishState() == Fish::FS_DIE)
+					{
+						continue;
+					}
+
+					m_bIsHitFish = true;
 					pProjectile->m_pCaughtFish = pFish;
 					pProjectile->m_pTransformCom->Update_Component(fTimeDelta);
 					pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
-					pFish->Stop();
+					//pFish->Stop();
+
+					_vec3 vDavePos;
+					pProjectile->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vDavePos);
+					_vec3 vJaksalPos;
+					pProjectile->m_pTransformCom->Get_Info(INFO_POS, &vJaksalPos);
+					//_vec3 vRes = vJaksalPos - vDavePos;
+					pFish->QTE(&vJaksalPos, &vDavePos);
 					break;
 				}
 			}

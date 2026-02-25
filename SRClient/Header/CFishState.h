@@ -18,6 +18,8 @@ namespace Fish
 		FS_MANUAL,
 		FS_STOP,
 		FS_SWIM,
+		FS_RUNFROM,
+		FS_ATTACKTO,
 		FS_SPRINT,
 		FS_DIE,
 		FS_QTE,
@@ -34,6 +36,8 @@ namespace Fish
 		case Fish::FS_DIE:return L"FS_DIE";
 		case Fish::FS_QTE:return L"FS_QTE";
 		case Fish::FS_END:return L"FS_END";
+		case Fish::FS_ATTACKTO: return L"FS_ATTACKTO";
+		case Fish::FS_RUNFROM: return L"FS_RUNFROM";
 		default: return L"FS_NOTFOUND_DEFAULT";
 		}
 	}

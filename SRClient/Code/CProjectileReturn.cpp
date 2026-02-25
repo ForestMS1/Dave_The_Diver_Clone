@@ -90,15 +90,6 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 			}
 		}
 
-		// [LSY] 여기가 물고기 실패했을때인가??
-		if (pProjectile->m_pCaughtFish != nullptr && !static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
-		{
-			if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
-			{
-				pFish->Swim();
-			}
-		}
-			
 	}
 	else
 	{
@@ -111,6 +102,18 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
 		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
+
+	}
+
+
+
+	// [LSY] 여기가 물고기 실패했을때인가??
+	if (pProjectile->m_pCaughtFish != nullptr && !static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
+	{
+		if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
+		{
+			pFish->QTERelease();
+		}
 	}
 }
 

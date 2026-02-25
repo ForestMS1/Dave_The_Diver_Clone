@@ -155,6 +155,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	CAssetMgr::GetInstance()->AddAsset(L"Spine_YellowTang", CAssetSpine::Create(L"../Bin/Resource/Spine/YellowTang/Yellow_Tang"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Spine_YellowTang");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_TitanTriggerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/TitanTriggerfish/Titan_Triggerfish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_TitanTriggerfish");
+
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
 //#ifdef _DEBUG
 //	Sleep(500);

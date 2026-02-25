@@ -9,6 +9,7 @@
 #include "CAssetTexture.h"
 #include "CManagement.h"
 #include "FishInclude.h"
+#include "CDiveDave.h"
 
 CFishHQ::CFishHQ()
     : CGameObject()
@@ -36,14 +37,26 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 
     if (m_fTimer > 0.1f)
     {
-        if (m_iCnt < 30)
+        if (m_iCnt < 10)
         {
-            float randX = rand() % 10;
-            float randY = rand() % 5;
-            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
             {
-                Fish::AddLayer_BlueTang(pLayer, randX, randY, 0.3f, this);
-                ++m_iCnt;
+                float randX = rand() % 10;
+                float randY = rand() % 5;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_BlueTang(pLayer, randX, randY, 0.3f, this);
+                    ++m_iCnt;
+                }
+            }
+
+            {
+                float randX = rand() % 10;
+                float randY = rand() % 5;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_TitanTriggerfish(pLayer, randX, randY, 0.3f, this);
+                    ++m_iCnt;
+                }
             }
         }
         
@@ -75,7 +88,23 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                         {
                             if (pDaveCollider->Intersect(pFishDetectBoxCollider))
                             {
-
+                                CDiveDave* pDave = reinterpret_cast<CDiveDave*>(pDaveCollider->Get_VoidPtr());
+                                CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pFishDetectBoxCollider->Get_VoidPtr());
+                                Fish::FISH_TYPE eFishType = pFish->Get_FishType();
+                                if (eFishType == Fish::FT_NORMAL)
+                                {
+                                    CTransform* pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+                                    _vec3 vDavePos;
+                                    pDaveTransform->Get_Info(INFO_POS, &vDavePos);
+                                    pFish->RunFrom(&vDavePos);
+                                }
+                                else if (eFishType == Fish::FT_AGRESSIVE)
+                                {
+                                    CTransform* pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+                                    _vec3 vDavePos;
+                                    pDaveTransform->Get_Info(INFO_POS, &vDavePos);
+                                    pFish->AttackTo(&vDavePos);
+                                }
                             }
                         }
                     }
@@ -91,10 +120,21 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                         {
                             if (pDaveCollider->Intersect(pFishHitBoxCollider))
                             {
+                                CDiveDave* pDave = reinterpret_cast<CDiveDave*>(pDaveCollider->Get_VoidPtr());
+                                CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pFishHitBoxCollider->Get_VoidPtr());
                                 if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
                                 {
-                                    reinterpret_cast<CFishGameObject*>(pFishHitBoxCollider->Get_VoidPtr())->Damaged(1);
+                                    pFish->Damaged(1);
                                     break;
+                                }
+
+                                if (pFish->Get_FishType() == Fish::FT_AGRESSIVE)
+                                {
+                                    if (pFish->Get_FishState() == Fish::FS_ATTACKTO)
+                                    {
+                                        // TODO: 데이브쪽에서 무적시간 존재해야함
+                                        //pDave->On_Hit(1);
+                                    }
                                 }
                             }
                         }

@@ -196,6 +196,7 @@
     <ClInclude Include="..\Header\CFishStopState.h" />
     <ClInclude Include="..\Header\CFishSwimState.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
+    <ClInclude Include="..\Header\CTitanTriggerfish.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
@@ -347,6 +348,7 @@
     <ClCompile Include="..\Code\CFishStopState.cpp" />
     <ClCompile Include="..\Code\CFishSwimState.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
+    <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />

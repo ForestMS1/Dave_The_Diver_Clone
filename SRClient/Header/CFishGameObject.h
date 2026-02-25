@@ -37,7 +37,8 @@ public:
 	void Damaged(int iDamage);
 	void Die();
 	void RunFrom(_vec3 const* pPos);
-	void QTE();
+	void QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos);
+	void QTERelease();
 	void AttackTo(_vec3 const* pPos);
 	void Stop();
 	void Swim();
@@ -50,6 +51,9 @@ public:
 	int Get_HP() const { return m_iHP; }
 	void Set_HP(int iHP) { m_iHP = iHP; }
 
+	Fish::FISH_TYPE Get_FishType() const { return m_eFishType; }
+	Fish::FISH_STATE Get_FishState() const { return m_eFishState; }
+
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
 	void LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -58,6 +62,11 @@ public:
 
 protected:
 	HRESULT			Ready(std::wstring_view svSpineName);
+	void MoveTo(_vec3* vToPos, const float& fTimeDelta);
+
+protected:
+
+
 protected:
 	Engine::CDynamicBuffer* m_pDynamicBuffer;
 	Engine::CTransform* m_pTransformCom;
@@ -65,18 +74,28 @@ protected:
 
 protected:
 	std::wstring m_sFishName;
+	float m_fCurrSpeed;
 	float m_fSpeed;
+	float m_fSprintSpeed;
+	float m_fCurrRotateSpeed;
 	float m_fRotateSpeed;
+	float m_fSprintRotateSpeed;
 	float m_fRotateAngleLimit;
 	int m_iHP;
-	_vec3 m_vChaseTarget;
+	_vec3 m_vMoveTarget;
 
-	float m_fChaseTargetReLocateTimer;
+	float m_fMoveTargetReLocateTimer;
 
 	bool m_bDamaged;
 	float m_fDamagedTimer;
 
 	float m_fDieTimer;
+
+	float m_fRunFromTimer;
+	std::wstring m_sRunFromSpineAniName;
+
+	float m_fAttackToTimer;
+	std::wstring m_sAttackSpineAniName;
 
 	
 protected:
