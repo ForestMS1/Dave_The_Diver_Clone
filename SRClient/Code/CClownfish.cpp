@@ -11,10 +11,11 @@
 
 using namespace Fish;
 
-CClownfish::CClownfish(float fPosX, float fPosY)
+CClownfish::CClownfish(float fPosX, float fPosY, float fScale)
     : CFishGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
+    , m_fScale(fScale)
 {
 }
 
@@ -27,13 +28,18 @@ HRESULT CClownfish::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
-    _vec3 vScale = { 0.1, 0.1f, 0.1f };
+    _vec3 vScale = { m_fScale, m_fScale, m_fScale };
 
     m_pTransformCom->Set_Scale(&vScale);
 
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
 
     m_fViewZ = 0.5f;
+
+    m_fSpeed = 1.f;
+
+    m_pSpineCom->Set_AniState(L"swim");
+
 
     return S_OK;
 }
@@ -64,9 +70,9 @@ HRESULT CClownfish::Ready_Component()
 }
 
 
-CClownfish* CClownfish::Create(float fPosX, float fPosY)
+CClownfish* CClownfish::Create(float fPosX, float fPosY, float fScale)
 {
-    CClownfish* pFish = new CClownfish{ fPosX, fPosY };
+    CClownfish* pFish = new CClownfish{ fPosX, fPosY, fScale };
 
     if (FAILED(pFish->Ready_GameObject()))
     {

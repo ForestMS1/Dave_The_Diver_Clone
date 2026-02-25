@@ -6,7 +6,7 @@ namespace Fish
 	class CSmallspottedDart : public CFishGameObject
 	{
 	private:
-		explicit CSmallspottedDart(float fPosX, float fPosY);
+		explicit CSmallspottedDart(float fPosX, float fPosY, float fScale);
 		explicit CSmallspottedDart(const CSmallspottedDart& rhs) = delete;
 		virtual ~CSmallspottedDart();
 
@@ -22,9 +22,10 @@ namespace Fish
 	private:
 		const float m_fPosX;
 		const float m_fPosY;
+		const float m_fScale;
 
 	public:
-		static CSmallspottedDart* Create(float fPosX, float fPosY);
+		static CSmallspottedDart* Create(float fPosX, float fPosY, float fScale);
 
 	private:
 		virtual void Free();

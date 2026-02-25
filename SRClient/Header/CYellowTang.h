@@ -6,7 +6,7 @@ namespace Fish
 	class CYellowTang : public CFishGameObject
 	{
 	private:
-		explicit CYellowTang(float fPosX, float fPosY);
+		explicit CYellowTang(float fPosX, float fPosY, float fScale);
 		explicit CYellowTang(const CYellowTang& rhs) = delete;
 		virtual ~CYellowTang();
 
@@ -22,9 +22,10 @@ namespace Fish
 	private:
 		const float m_fPosX;
 		const float m_fPosY;
+		const float m_fScale;
 
 	public:
-		static CYellowTang* Create(float fPosX, float fPosY);
+		static CYellowTang* Create(float fPosX, float fPosY, float fScale);
 
 	private:
 		virtual void Free();

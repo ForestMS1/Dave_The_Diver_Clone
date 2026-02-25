@@ -6,7 +6,7 @@ namespace Fish
 	class CClownfish : public CFishGameObject
 	{
 	private:
-		explicit CClownfish(float fPosX, float fPosY);
+		explicit CClownfish(float fPosX, float fPosY, float fScale);
 		explicit CClownfish(const CClownfish& rhs) = delete;
 		virtual ~CClownfish();
 
@@ -22,9 +22,10 @@ namespace Fish
 	private:
 		const float m_fPosX;
 		const float m_fPosY;
+		const float m_fScale;
 
 	public:
-		static CClownfish* Create(float fPosX, float fPosY);
+		static CClownfish* Create(float fPosX, float fPosY, float fScale);
 
 	private:
 		virtual void Free();

@@ -11,10 +11,11 @@
 
 using namespace Fish;
 
-CYellowbackFusilier::CYellowbackFusilier(float fPosX, float fPosY)
+CYellowbackFusilier::CYellowbackFusilier(float fPosX, float fPosY, float fScale)
     : CFishGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
+    , m_fScale(fScale)
 {
 }
 
@@ -27,13 +28,17 @@ HRESULT CYellowbackFusilier::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
-    _vec3 vScale = { 0.1, 0.1f, 0.1f };
+    _vec3 vScale = { m_fScale, m_fScale, m_fScale };
 
     m_pTransformCom->Set_Scale(&vScale);
 
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
 
     m_fViewZ = 0.5f;
+
+    m_fSpeed = 1.f;
+
+    m_pSpineCom->Set_AniState(L"swim");
 
     return S_OK;
 }
@@ -64,9 +69,9 @@ HRESULT CYellowbackFusilier::Ready_Component()
 }
 
 
-CYellowbackFusilier* CYellowbackFusilier::Create(float fPosX, float fPosY)
+CYellowbackFusilier* CYellowbackFusilier::Create(float fPosX, float fPosY, float fScale)
 {
-    CYellowbackFusilier* pFish = new CYellowbackFusilier{ fPosX, fPosY };
+    CYellowbackFusilier* pFish = new CYellowbackFusilier{ fPosX, fPosY, fScale };
 
     if (FAILED(pFish->Ready_GameObject()))
     {
