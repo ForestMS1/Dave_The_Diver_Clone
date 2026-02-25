@@ -71,6 +71,11 @@ void CBancho::LateUpdate_GameObject(const _float& fTimeDelta)
     m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
     Compute_ViewZ(&vPos);
+
+
+    if (curState == COOK) {
+        m_fGauge += fTimeDelta;
+    }
 }
 
 void CBancho::Render_GameObject()
@@ -95,9 +100,6 @@ void CBancho::Render_GameObject()
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-    if (curState == COOK) {
-
-    }
 }
 
 HRESULT CBancho::Ready_Component()
