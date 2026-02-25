@@ -8,12 +8,13 @@ namespace Engine
 	class CTransform;
 }
 
-class CRecipe : public CGameObject
+class CMenuBubble : public CGameObject
 {
 private:
-	explicit CRecipe();
-	explicit CRecipe(const CGameObject& rhs);
-	virtual ~CRecipe();
+	explicit CMenuBubble();
+	explicit CMenuBubble(const CGameObject& rhs);
+	virtual ~CMenuBubble();
+	void	Update_ImGui() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -25,20 +26,21 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pRecipeTextureCom;
+	Engine::CTexture* m_pMenuBubbleTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	wstring m_sQuanity;
-	wstring m_sLevel;
-	_vec3 screen;
-
-	vector<CGameObject*> objects;
 
 public:
-	static CRecipe* Create();
-	vector<CGameObject*>& Get_Obj() { return objects; }
+	static CMenuBubble* Create();
 
 private:
 	virtual void Free();
 
+public:
+	wstring m_sFishName;
+	wstring m_sTexName;
+private:
+	float tempY = -1.f;
+	float deltaTime = 0;
+	
 };
 

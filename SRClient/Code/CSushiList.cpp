@@ -21,6 +21,7 @@
 #include "CUpgradeButton.h"
 #include "COkayButton.h"
 #include "CFishConfirmFrame.h"
+#include "CUpgradeFrame.h"
 CSushiList::CSushiList()
     : CGameObject()
 {
@@ -143,7 +144,13 @@ HRESULT CSushiList::Ready_GameObject()
 
     if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"FishConfirmFrame", pGameObject)))
         return E_FAIL;
+    pGameObject = CUpgradeFrame::Create();
 
+    if (nullptr == pGameObject)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"UpgradeFrame", pGameObject)))
+        return E_FAIL;
         list<CGameObject*>* picture = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"sushiPic");
         list<CGameObject*>::iterator iter2 = picture->begin();
         for (iter2; iter2 != picture->end(); iter2++) {
@@ -161,6 +168,12 @@ _int CSushiList::Update_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    }
+    else {
+        CGameObject* upgradeButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Upgrade");
+        upgradeButton->Set_Render(false);
+        CGameObject* okayButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Okay");
+        okayButton->Set_Render(false);
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -233,7 +246,7 @@ void CSushiList::Render_GameObject()
             if ((*iter1)->name == m_sFishName) {
                 m_sLevel = L"Lv." + std::to_wstring((*iter1)->level);
                 m_sQuanity = std::to_wstring((*iter1)->quantity);
-                m_sQuality = L"30";
+                m_sQuality = std::to_wstring((*iter1)->quality);
                 m_sCost = std::to_wstring((*iter1)->cost);
                 m_sPlate = L"1";
             }

@@ -144,21 +144,25 @@ _int CSelectedFrame::Update_GameObject(const _float& fTimeDelta)
         if (pSushiGameObject != nullptr) {
             pSushiGameObject->Set_Render(true);
             CTransform* pTransform = static_cast<CTransform*>(pSushiGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-            pTransform->m_vScale = { 0.2f, 0.12f, 1.f };
+            pTransform->m_vScale = { 0.25f, 0.15f, 1.f };
             pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
             //pTransform->m_vInfo[INFO_POS].z -= 0.1f;
-            pTransform->m_vInfo[INFO_POS].y -=  0.1f; 
+            pTransform->m_vInfo[INFO_POS].y -=  0.05f; 
             CGameObject* menu = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
             if (static_cast<CMenuFrame*>(menu)->frameMoved == true) {
-                pTransform->m_vInfo[INFO_POS].x -= 0.58f;
+                pTransform->m_vInfo[INFO_POS].x -= 1.15f;
 
             }
             else {
-                pTransform->m_vInfo[INFO_POS].x -= 1.2f;
+                pTransform->m_vInfo[INFO_POS].x -= 1.12f;
 
             }
 
         }
+    }
+    else {
+        if(pSushiGameObject != nullptr)
+            pSushiGameObject->Set_Render(false);
     }
   
    

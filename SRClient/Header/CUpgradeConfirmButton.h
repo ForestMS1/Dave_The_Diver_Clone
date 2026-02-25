@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAABB.h"
 
 namespace Engine
 {
@@ -8,35 +9,32 @@ namespace Engine
 	class CTransform;
 }
 
-class CRecipe : public CGameObject
+class CUpgradeConfirmButton : public CGameObject
 {
 private:
-	explicit CRecipe();
-	explicit CRecipe(const CGameObject& rhs);
-	virtual ~CRecipe();
+	explicit CUpgradeConfirmButton();
+	explicit CUpgradeConfirmButton(const CGameObject& rhs);
+	virtual ~CUpgradeConfirmButton();
+
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
+	void			Set_WhichFish(wstring fish) { whichFish = fish; }
 private:
 	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pRecipeTextureCom;
+	Engine::CTexture* m_pUpgradeTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	wstring m_sQuanity;
-	wstring m_sLevel;
-	_vec3 screen;
-
-	vector<CGameObject*> objects;
+	CAABB* m_pAABB;
+	wstring whichFish;
 
 public:
-	static CRecipe* Create();
-	vector<CGameObject*>& Get_Obj() { return objects; }
-
+	static CUpgradeConfirmButton* Create();
 private:
 	virtual void Free();
 

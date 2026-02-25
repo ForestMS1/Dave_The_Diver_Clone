@@ -24,6 +24,7 @@ CSushiFrame::CSushiFrame()
     m_bImageCreated = false;
     ConfirmOpened = false;
     fishName = L"";
+    m_sQuanity = L"1";
 }
 
 CSushiFrame::CSushiFrame(const CGameObject& rhs)
@@ -64,9 +65,14 @@ HRESULT CSushiFrame::Ready_GameObject()
 
 _int CSushiFrame::Update_GameObject(const _float& fTimeDelta)
 {
-    if (m_bRender && !ConfirmOpened) {
-        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    if (m_bRender && !ConfirmOpened && stoi(m_sQuanity) > 0) {
         CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Frame", m_pAABB);
+    }
+    else if (stoi(m_sQuanity) <= 0) {
+        m_bSelected = false;
+    }
+    if (m_bRender) {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
     }
     m_pAABB->Transform(m_pTransformCom->Get_World());
 
@@ -136,7 +142,7 @@ _int CSushiFrame::Update_GameObject(const _float& fTimeDelta)
             CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
             pTransform->m_vScale = { 0.2f, 0.12f, 1.f };
             pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
-            pTransform->m_vInfo[INFO_POS].z -= 0.1f;
+            pTransform->m_vInfo[INFO_POS].z -= 0.001f;
             pTransform->m_vInfo[INFO_POS].x -= 0.01f;
             pTransform->m_vInfo[INFO_POS].y -= 0.05f;
 
@@ -236,7 +242,7 @@ void CSushiFrame::Render_GameObject()
             }
         }
         _vec2 vPos = { screen2.x , screen2.y  };
-        if (stoi(m_sQuanity) == 0) {
+        if (stoi(m_sQuanity) <= 0) {
             pDefFont->Render_Font(m_sQuanity, &vPos, D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
         }
         else {

@@ -131,6 +131,8 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         wstring cost, quantity, fishName;
                         quantity = static_cast<CFishConfirmFrame*>(frameObject)->m_sQuantitySelected;
                         fishName = static_cast<CFishConfirmFrame*>(frameObject)->m_sFishName;
+
+                        CGameMemMgr::GetInstance()->addMenu(fishName,stoi(quantity));
                         CGameObject* pGameObject = CSelectedFrame::Create();
                         static_cast<CSelectedFrame*>(pGameObject)->Set_Quantity(quantity);
                         static_cast<CSelectedFrame*>(pGameObject)->Set_Plate(quantity);
@@ -178,6 +180,8 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         if (addButtons.size() != 0) {
                             static_cast<CAddMenuButton*>(addButtons[0])->Set_Selected(true);
                         }
+
+
                         
                     }
                     else if (whichOkay == L"Upgrade") {

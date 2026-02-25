@@ -735,7 +735,28 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_SelectFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SelectedMenu.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SelectFrameTex", Engine::CTexture::Create(L"Tex_SelectFrame"))))
 		return E_FAIL;
-	//
+	//요리 강화 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeFrame.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeFrameTex", Engine::CTexture::Create(L"Tex_upgradeFrame"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeConfirm", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeConfirm.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeConfirmTex", Engine::CTexture::Create(L"Tex_upgradeConfirm"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeMark", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_RecipeUpMark_Big.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeMarkTex", Engine::CTexture::Create(L"Tex_upgradeMark"))))
+		return E_FAIL;
+
+	//영업 시작
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_OpenShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/openShop.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OpenShopTex", Engine::CTexture::Create(L"Tex_OpenShop"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_menuBubble", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/menuBubble.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MenuBubbleTex", Engine::CTexture::Create(L"Tex_menuBubble"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Red", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/red.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RedTex", Engine::CTexture::Create(L"Tex_Red"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);
