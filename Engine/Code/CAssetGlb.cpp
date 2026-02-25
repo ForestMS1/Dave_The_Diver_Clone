@@ -51,7 +51,7 @@ HRESULT CAssetGlb::Load()
 	if (!m_pImpl->scene || m_pImpl->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_pImpl->scene->mRootNode)
 	{
 		m_eAssetState = LOADFAIL;
-		MSG_BOX("Assimp error: %s\n", m_pImpl->importer.GetErrorString());
+	
 
 	}
 	m_dwMeshCnt = m_pImpl->scene->mNumMeshes;
@@ -73,16 +73,39 @@ HRESULT CAssetGlb::Load()
 
 	size_t vBase = 0;
 	size_t fBase = 0;
+
 	tex.resize(m_pImpl->scene->mNumMeshes);
+	vec_meshBounds.resize(m_pImpl->scene->mNumMeshes);
 	for (unsigned i = 0; i < m_pImpl->scene->mNumMeshes; ++i) {
 		aiMesh* mesh = m_pImpl->scene->mMeshes[i];
-
+		aiString name = mesh->mName;
+		aiNode* node = m_pImpl->scene->mRootNode->FindNode(name);
+		aiVector3D scale, t;
+		aiQuaternion r;
+		if (node != nullptr && name.C_Str()[name.length] != '#') {
+			node->mTransformation.Decompose(scale, r, t);
+		}
+		else {
+			scale.x = 0.f;
+			scale.y = 10.f;
+			scale.z = 10.f;
+		}
+	
+		
+		_vec3 bmin = { FLT_MAX,  FLT_MAX,  FLT_MAX };
+		_vec3 bmax = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 		for (unsigned j = 0; j < mesh->mNumVertices; ++j) {
-			auto& v = vertices[vBase + j];   
+			auto& v = vertices[vBase + j];
 			auto p = mesh->mVertices[j];
 
 			v.vPosition = { p.x, p.y, p.z };
+			bmin.x = min(bmin.x, p.x);
+			bmin.y = min(bmin.y, p.y);
+			bmin.z = min(bmin.z, p.z);
+			bmax.x = max(bmax.x, p.x);
+			bmax.y = max(bmax.y, p.y);
+			bmax.z = max(bmax.z, p.z);
 
 			if (mesh->HasNormals()) {
 				auto n = mesh->mNormals[j];
@@ -93,21 +116,23 @@ HRESULT CAssetGlb::Load()
 				auto uv = mesh->mTextureCoords[0][j];
 				v.vTexUV = { uv.x, uv.y };
 			}
+
+
 		}
-		
-		
+
+
 		for (unsigned j = 0; j < mesh->mNumFaces; ++j) {
 			const aiFace& face = mesh->mFaces[j];
-			pIndex[fBase + j]._0 = (UINT)(vBase + face.mIndices[0]); 
+			pIndex[fBase + j]._0 = (UINT)(vBase + face.mIndices[0]);
 			pIndex[fBase + j]._1 = (UINT)(vBase + face.mIndices[1]);
 			pIndex[fBase + j]._2 = (UINT)(vBase + face.mIndices[2]);
 		}
-		
+
 		vBase += mesh->mNumVertices;
 		fBase += mesh->mNumFaces;
 
-		
-		vecTexVtxTriCnt[i] = { (fBase - mesh->mNumFaces)*3,mesh->mNumFaces };
+
+		vecTexVtxTriCnt[i] = { (fBase - mesh->mNumFaces) * 3,mesh->mNumFaces };
 
 		aiMaterial* mat = m_pImpl->scene->mMaterials[mesh->mMaterialIndex];
 		aiString texPath;
@@ -121,11 +146,11 @@ HRESULT CAssetGlb::Load()
 			int idx = std::atoi(path.c_str() + 1);   // 0
 			aiTexture* atex = m_pImpl->scene->mTextures[idx];
 
-	
+
 			HRESULT hr = D3DXCreateTextureFromFileInMemory(
 				CGraphicDev::GetInstance()->Get_GraphicDev(),
 				atex->pcData,
-				(UINT)atex->mWidth,   
+				(UINT)atex->mWidth,
 				&tex[i]
 			);
 
@@ -134,7 +159,34 @@ HRESULT CAssetGlb::Load()
 				MSG_BOX("Texture error: %s\n", m_pImpl->importer.GetErrorString());
 			}
 		}
+
+
+		
+		MeshBound mb;
+		mb.min = bmin;
+		mb.max = bmax;
+		mb.center = { (bmin.x + bmax.x) * 0.5f, (bmin.y + bmax.y) * 0.5f, (bmin.z + bmax.z) * 0.5f };
+		mb.scale = { scale.x,  scale.z , scale.y};
+
+		vec_meshBounds[i] = mb;
+
+
 	}
+
+	vec_meshBounds.erase(
+		remove_if(vec_meshBounds.begin(),
+				  vec_meshBounds.end(),
+			[](const MeshBound& mb) { 
+				if (mb.scale.x == 0.f) 
+				{
+					return true;
+				} 
+				else {
+					return false;
+				}
+			}),
+	vec_meshBounds.end());
+
 
 	
 	m_eAssetState = LOADED;
@@ -153,6 +205,7 @@ void CAssetGlb::Free()
 	vertices.clear();
 	tex.clear();
 	vecTexVtxTriCnt.clear();
+	vec_meshBounds.clear();
 	
 }
 
