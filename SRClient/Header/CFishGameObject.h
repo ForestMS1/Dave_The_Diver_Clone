@@ -13,19 +13,19 @@
 //Smallspotted_dart : die swim sprint
 //YellowTang : die swim sprint
 
-namespace Fish
-{
-	class CFishState;
-	class CFishSwimState;
-	class CFishStopState;
-}
+//namespace Fish
+//{
+//	class CFishState;
+//	class CFishSwimState;
+//	class CFishStopState;
+//}
 
 class CFishGameObject : public CGameObject
 {
-public:
-	friend class Fish::CFishState;
-	friend class Fish::CFishStopState;
-	friend class Fish::CFishSwimState;
+//public:
+//	friend class Fish::CFishState;
+//	friend class Fish::CFishStopState;
+//	friend class Fish::CFishSwimState;
 public:
 	explicit CFishGameObject();
 	//virtual ~CFishGameObject();
@@ -42,7 +42,7 @@ public:
 
 public:
 	std::wstring_view Get_FishName() const { return m_sFishName; }
-	Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
+	//Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
 	int Get_HP() const { return m_iHP; }
 	void Set_HP(int iHP) { m_iHP = iHP; }
 
@@ -81,7 +81,7 @@ protected:
 protected:
 	Fish::FISH_TYPE m_eFishType;
 	Fish::FISH_STATE m_eFishState;
-	Fish::CFishStateMachine m_fsm;
+	//Fish::CFishStateMachine m_fsm;
 public:
 	void Free() override;
 };

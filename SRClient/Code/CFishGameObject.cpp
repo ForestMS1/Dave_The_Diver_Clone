@@ -13,7 +13,7 @@ CFishGameObject::CFishGameObject()
     , m_fSpeed(0.f)
     , m_fRotateSpeed(D3DXToRadian(180.f))
     , m_fRotateAngleLimit(45.f)
-    , m_fsm(Fish::FS_STOP)
+    //, m_fsm(Fish::FS_STOP)
     , m_bManual(true)
     , m_eFishState(Fish::FS_SWIM)
     , m_eFishType(Fish::FT_NORMAL)
@@ -305,12 +305,12 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
     };
 
 
-    m_fsm.AddState(Fish::FS_STOP, make_unique<Fish::CFishStopState>(this));
-    m_fsm.AddState(Fish::FS_SWIM, make_unique<Fish::CFishSwimState>(this));
-    m_fsm.AddState(Fish::FS_MANUAL, make_unique<Fish::CFishManualState>(this));
+    //m_fsm.AddState(Fish::FS_STOP, make_unique<Fish::CFishStopState>(this));
+    //m_fsm.AddState(Fish::FS_SWIM, make_unique<Fish::CFishSwimState>(this));
+    //m_fsm.AddState(Fish::FS_MANUAL, make_unique<Fish::CFishManualState>(this));
 
 
-    m_fsm.Get_CurrentState()->Enter();
+    //m_fsm.Get_CurrentState()->Enter();
 	return S_OK;
 }
 
