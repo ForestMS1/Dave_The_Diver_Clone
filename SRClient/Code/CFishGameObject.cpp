@@ -40,6 +40,11 @@ void CFishGameObject::Update_ImGui()
     {
         m_bManual = !m_bManual;
     }
+
+    if (ImGui::Button("ColorWhite"))
+    {
+        m_pSpineCom->Set_ColorWhite(!m_pSpineCom->Get_ColorWhite());
+    }
 }
 
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
@@ -187,11 +192,25 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
+    
+
     if (beforeDrawLambda)
     {
         beforeDrawLambda();
     }
-    m_pSpineCom->Render(m_pDynamicBuffer);
+
+    if (m_pSpineCom->Get_ColorWhite())
+    {
+        pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
+        pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+    }
+
+    m_pSpineCom->Render_Spine(m_pDynamicBuffer);
+
+    if (m_pSpineCom->Get_ColorWhite())
+    {
+        pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    }
 
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);

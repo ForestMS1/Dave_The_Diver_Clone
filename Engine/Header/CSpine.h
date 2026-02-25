@@ -38,8 +38,10 @@ public:
 		std::wstring_view svSpineAssetName
 	);
 	void Set_AniState(std::wstring_view svAniName, bool loop = true);
-	void Render(CDynamicBuffer* pDynamicBuffer);
+	void Render_Spine(CDynamicBuffer* pDynamicBuffer);
 	bool Get_AniStateProgress(float& fProgress);
+	void Set_ColorWhite(bool b) { m_bColorWhite = b; }
+	bool Get_ColorWhite() const { return m_bColorWhite; }
 public:
 	static CSpine* Create();
 	virtual CComponent* Clone();
@@ -55,6 +57,7 @@ private:
 	float m_fAniProgress;
 	float m_fDarkness;
 	int m_iSelectAni;
+	bool m_bColorWhite;
 public:
 	virtual		void	Free();
 };

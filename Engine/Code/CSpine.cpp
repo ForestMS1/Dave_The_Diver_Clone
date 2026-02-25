@@ -19,6 +19,7 @@ CSpine::CSpine(const CSpine& rhs)
     , m_pAniState(nullptr)
     , m_fDarkness(rhs.m_fDarkness)
     , m_iSelectAni(rhs.m_iSelectAni)
+    , m_bColorWhite(false)
 {
 }
 
@@ -125,12 +126,25 @@ void CSpine::Vertex_Buffer_Lock(LPDIRECT3DVERTEXBUFFER9 pVB)
         //);
 
         // 루프 안쪽 슬롯별 계산
-        D3DCOLOR finalColor = D3DCOLOR_ARGB(
-            (BYTE)(globalA * slot->getColor().a * mesh->getColor().a),
-            (BYTE)(globalR * slot->getColor().r * mesh->getColor().r),
-            (BYTE)(globalG * slot->getColor().g * mesh->getColor().g),
-            (BYTE)(globalB * slot->getColor().b * mesh->getColor().b)
-        );
+        D3DCOLOR finalColor;
+        if (m_bColorWhite)
+        {
+            finalColor = D3DCOLOR_ARGB(
+                (BYTE)(globalA * slot->getColor().a * mesh->getColor().a),
+                (BYTE)(255),
+                (BYTE)(255),
+                (BYTE)(255)
+            );
+        }
+        else
+        {
+            finalColor = D3DCOLOR_ARGB(
+                (BYTE)(globalA * slot->getColor().a * mesh->getColor().a),
+                (BYTE)(globalR * slot->getColor().r * mesh->getColor().r),
+                (BYTE)(globalG * slot->getColor().g * mesh->getColor().g),
+                (BYTE)(globalB * slot->getColor().b * mesh->getColor().b)
+            );
+        }
 
         for (int v = 0; v < numVertices; ++v)
         {
@@ -191,7 +205,7 @@ HRESULT CSpine::Ready_Spine()
     return S_OK;
 }
 
-void CSpine::Render(CDynamicBuffer* pDynamicBuffer)
+void CSpine::Render_Spine(CDynamicBuffer* pDynamicBuffer)
 {
     if (auto pAssSpine = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(m_sSpineAssetName))
     {
