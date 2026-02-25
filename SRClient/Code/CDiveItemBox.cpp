@@ -44,7 +44,7 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
-	vScale = { fWidth / fAspect, fHeight / fAspect, 0.f };
+	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	m_pTransformCom->Set_Pos(m_vInitPos.x, m_vInitPos.y, m_vInitPos.z);
@@ -54,6 +54,7 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
 	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_ItemBox", this);
 
+	CColliderMgr::GetInstance()->Set_Render(true); 
     return S_OK;
 }
 
@@ -100,15 +101,24 @@ void CDiveItemBox::Render_GameObject()
 
 void CDiveItemBox::Set_Open()
 {
-	m_bIsOpen = true; 
-	m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1);
-
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CO2Capsule* pItem = CO2Capsule::Create(vPos);
-	if (pItem != nullptr)
+	if (m_bIsCollWithMe && !m_bIsOpen)
 	{
-		CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"Item", pItem);
+		m_bIsOpen = true;
+		m_bIsCollWithMe = false;
+		m_eCurBoxTex = ITEMBOXTEX((_uint)m_eCurBoxTex + 1);
+
+		CDiveDave* pDiveDave = static_cast<CDiveDave*>
+			(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"));
+		pDiveDave->Set_IsOnItemBox(false);
+		pDiveDave->Set_CurOnItemBox(nullptr);
+
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		CO2Capsule* pItem = CO2Capsule::Create(vPos);
+		if (pItem != nullptr)
+		{
+			CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"Item", pItem);
+		}
 	}
 }
 
@@ -128,8 +138,10 @@ HRESULT CDiveItemBox::Ready_Component()
 
 void CDiveItemBox::Collision_With_DiveDave()
 {
+	if (m_bIsOpen)
+		return;
 	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
-	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_ItemBox"))
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_DiveDaveWithItemBox"))
 	{
 		// 충돌체 순회
 		for (auto& pCollider : *pColliders)
@@ -142,26 +154,48 @@ void CDiveItemBox::Collision_With_DiveDave()
 				{
 					if (pCollider->Get_Tag() == L"AABB_DiveDaveWithItemBox")
 					{
-						m_bIsCollWithMe = true; // 나랑 플레이어랑 충돌중임
-						CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
-						pDiveDave->Set_CurOnItemBox(this);
-						if (!m_bIsOpen)
-							pDiveDave->Set_IsOnItemBox(true);
+						if (!m_bIsCollWithMe)
+							OnCollisionEnter(pCollider);
 						else
-							pDiveDave->Set_IsOnItemBox(false);
+							OnCollisionStay(pCollider);
+
 					}
 				}
-				else if(m_bIsCollWithMe) //나랑 플레이어랑 충돌중이었다가 벗어났을 때
-				{
-					CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
-					m_bIsCollWithMe = false;
-					pDiveDave->Set_IsOnItemBox(false);
-					pDiveDave->Set_CurOnItemBox(nullptr);
-				}
+				else if(m_bIsCollWithMe)
+					OnCollisionExit(pCollider);
 			}
 		}
 	}
 
+}
+
+void CDiveItemBox::OnCollisionEnter(CCollider* pCollider)
+{
+	m_bIsCollWithMe = true; // 나랑 플레이어랑 충돌중임
+	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+	if (!m_bIsOpen)
+	{
+		pDiveDave->Set_CurOnItemBox(this);
+		pDiveDave->Set_IsOnItemBox(true);
+	}
+}
+
+void CDiveItemBox::OnCollisionStay(CCollider* pCollider)
+{
+	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+	if (m_bIsOpen)
+	{
+		pDiveDave->Set_CurOnItemBox(nullptr);
+		pDiveDave->Set_IsOnItemBox(false);
+	}
+}
+
+void CDiveItemBox::OnCollisionExit(CCollider* pCollider)
+{
+	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
+	m_bIsCollWithMe = false;
+	pDiveDave->Set_IsOnItemBox(false);
+	pDiveDave->Set_CurOnItemBox(nullptr);
 }
 
 CDiveItemBox* CDiveItemBox::Create(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z)
