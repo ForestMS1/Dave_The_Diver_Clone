@@ -77,6 +77,7 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
+	//CColliderMgr::GetInstance()->Set_Render(false);
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
 

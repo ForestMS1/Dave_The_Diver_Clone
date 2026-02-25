@@ -3,6 +3,7 @@
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
 #include "CDiveDave.h"
+#include "CFishGameObject.h"
 CProjectileFire::CProjectileFire(CHarpoonProjectile* pOwner)
     : CBaseState<CHarpoonProjectile>(pOwner)
 {
@@ -79,6 +80,27 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 							pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
 						}
 					}
+				}
+			}
+		}
+	}
+
+	// [LSY] 작살하고 물고기
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_FishesHitbox"))
+	{
+		for (auto& pCollider : *pColliders)
+		{
+			if (pProjectile->m_pAABB->Intersect(pCollider))
+			{
+				if (pCollider->Get_Tag() == L"AABB_FishHitbox")
+				{
+					m_bIsHitFish = true;
+					auto pFish = static_cast<CFishGameObject*>(pCollider->Get_VoidPtr()); // 충돌한 물고기의 포인터 들고 옴
+					pProjectile->m_pCaughtFish = pFish;
+					pProjectile->m_pTransformCom->Update_Component(fTimeDelta);
+					pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
+					pFish->Stop();
+					break;
 				}
 			}
 		}

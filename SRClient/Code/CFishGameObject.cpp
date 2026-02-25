@@ -22,6 +22,7 @@ CFishGameObject::CFishGameObject()
     , m_bDamaged(false)
     , m_fDamagedTimer(0.f)
     , m_fDieTimer(0.f)
+    , m_iHP(3)
 {
 
 }
@@ -59,6 +60,11 @@ void CFishGameObject::Damaged(int iDamage)
 {
     m_bDamaged = true;
     m_pSpineCom->Set_ColorWhite(true);
+    m_iHP -= iDamage;
+    if (m_iHP <= 0)
+    {
+        Die();
+    }
 }
 
 void CFishGameObject::Die()
@@ -77,6 +83,16 @@ void CFishGameObject::QTE()
 
 void CFishGameObject::AttackTo(_vec3 const* pPos)
 {
+}
+
+void CFishGameObject::Stop()
+{
+    m_eFishState = Fish::FS_STOP;
+}
+
+void CFishGameObject::Swim()
+{
+    m_eFishState = Fish::FS_SWIM;
 }
 
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)

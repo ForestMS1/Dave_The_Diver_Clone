@@ -39,6 +39,10 @@ public:
 	void RunFrom(_vec3 const* pPos);
 	void QTE();
 	void AttackTo(_vec3 const* pPos);
+	void Stop();
+	void Swim();
+
+	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
 public:
 	std::wstring_view Get_FishName() const { return m_sFishName; }

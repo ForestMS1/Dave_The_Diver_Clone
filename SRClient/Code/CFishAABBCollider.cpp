@@ -48,7 +48,7 @@ _int		CFishAABBCollider::Update_GameObject(const _float& fTimeDelta)
     //m_pTransformCom->Set_Scale(&vParentScale);
 
 
-    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_FISH_HIT", m_pAABB);
+    CColliderMgr::GetInstance()->AddColliderGroup(m_sCollGroup, m_pAABB);
     m_pAABB->Transform(m_pTransformCom->Get_World());
     return iExit;
 }
