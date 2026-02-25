@@ -1,7 +1,7 @@
 #pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
-
+#include <queue>
 BEGIN(Engine)
 
 
@@ -24,12 +24,21 @@ public:
 public:
 	HRESULT Ready();
 	void addFish(wstring name, int quantity, int cost, int quality);
+	void addMenu(wstring name, int quantity);
+	void reduceMenu(wstring name);
+	void addCookingMenu(wstring name);
+	void deleteCookingMenu();
+
 	vector<FISH*>& getFishes() { return fishes; }
+	vector<FISH*>& getMenu() { return SelectedMenu;}
+	queue<FISH*>& getCookingMenu() { return CookingMenu;}
 
 	void levelUp(wstring name);
 private:
 	virtual void		Free();
 	vector<FISH*> fishes;
+	vector<FISH*> SelectedMenu;
+	queue<FISH*> CookingMenu;
 
 
 	// µ·
@@ -47,3 +56,4 @@ private:
 };
 
 END
+

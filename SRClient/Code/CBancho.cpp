@@ -6,6 +6,7 @@
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
+#include "CGameMemMgr.h"
 CBancho::CBancho()
     : CGameObject() 
 {
@@ -42,18 +43,23 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
     {
     case IDLE:
         m_fFrame += 5.f * fTimeDelta;
-
-        if (5.f < m_fFrame)
-            m_fFrame = 0.f;
         break;
     case COOK:
-        m_fFrame += 3.f * fTimeDelta;
-        if (3.f < m_fFrame)
-            m_fFrame = 0.f;
+        m_fFrame += 5.f * fTimeDelta;
         break;
     }
+    if (CGameMemMgr::GetInstance()->getCookingMenu().size() != 0) {
+        // 요리중으로 변경되면 현재 상태를 COOK 전 상태를 
+        curState = COOK;
+        if (3.f < m_fFrame)
+            m_fFrame = 0.f;
+    }
+    else {
+        curState = IDLE;
+        if (5.f < m_fFrame)
+            m_fFrame = 0.f;
+    }
 
-   
     return iExit;
 }
 
@@ -72,12 +78,7 @@ void CBancho::Render_GameObject()
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-
-
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
     switch (curState)
     {
     case IDLE:
@@ -87,15 +88,16 @@ void CBancho::Render_GameObject()
         m_pCookTextureCom->Set_Texture((_uint)m_fFrame);
         break;
     }
-
     m_pBufferCom->Render_Buffer();
 
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+    if (curState == COOK) {
+
+    }
 }
 
 HRESULT CBancho::Ready_Component()
@@ -114,7 +116,7 @@ HRESULT CBancho::Ready_Component()
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 1.f, 1.5f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 8.8f, -2.0f, 1.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 8.8f, -1.9f, 1.f };
     return S_OK;
 }
 

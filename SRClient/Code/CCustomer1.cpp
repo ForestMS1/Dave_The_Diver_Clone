@@ -7,7 +7,7 @@
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
 #include "CDInputMgr.h"
-#include "CManagement.h"
+#include "CMenuBubble.h"
 #include "CChair.h"
 
 
@@ -17,9 +17,11 @@ CCustomer1::CCustomer1()
     curState = WALK;
     curDir = RIGHT;
     prevDir = RIGHT;
+    ChairFound = false;
     Sitted = false;
     ChoosingMenu = false;
     Waiting = false;
+    deltaTime = 0.f;
 }
 
 CCustomer1::CCustomer1(const CGameObject& rhs)
@@ -39,7 +41,9 @@ HRESULT CCustomer1::Ready_GameObject()
     m_fFrame = 0.f;
 
     m_pTransformCom->m_vScale = { 0.4f,0.9f,1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { -5.f ,-1.84f,-2.999f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { -7.f ,-1.84f,-2.999f };
+  
+   
     return S_OK;
 }
 
@@ -86,6 +90,7 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
 
 
 
+
     return iExit;
 }
 
@@ -97,18 +102,32 @@ void CCustomer1::LateUpdate_GameObject(const _float& fTimeDelta)
     m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
     Compute_ViewZ(&vPos);
-    if (!Sitted) {
+    if (!ChairFound) {
         Find_Chair();
     }
 
-    if (Sitted && !ChoosingMenu) {
+    if (!Sitted) {
         _vec3 right = { 1,0,0 };
         m_pTransformCom->Move_Pos(&right, 0.9f, fTimeDelta);
         if (fabsf(vPos.x - targetPos.x) < 0.1f) {
             curState = MENU;
+            Sitted = true;
             ChoosingMenu = true;
         }
     }
+    if (ChoosingMenu) {
+        deltaTime += fTimeDelta;
+        if (deltaTime >= 1.5f) {
+            MenuBubble = CMenuBubble::Create();
+            CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"MenuBubble", MenuBubble);
+            CTransform* pTransform = static_cast<CTransform*> (MenuBubble->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+            pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
+            pTransform->m_vInfo[INFO_POS].z -= 0.01f;
+            pTransform->m_vInfo[INFO_POS].y += 1.5f;
+            ChoosingMenu = false;
+        }
+    }
+  
   /*  if (curDir != prevDir) {
         m_pTransformCom->Rotation(ROT_Y, 180.f);
     }
@@ -170,7 +189,7 @@ void CCustomer1::Find_Chair()
             CTransform* pTransform = static_cast<CTransform*>((*iter)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
             targetPos = pTransform->m_vInfo[INFO_POS];
             static_cast<CChair*>(*iter)->Set_Emtpy(false);
-            Sitted = true;
+            ChairFound = true;
             return ;
         }
     }
@@ -215,7 +234,7 @@ CCustomer1* CCustomer1::Create()
     if (FAILED(pBackGround->Ready_GameObject()))
     {
         Safe_Release(pBackGround);
-        MSG_BOX("Dave Create Failed");
+        MSG_BOX("Customer1 Create Failed");
         return nullptr;
     }
 

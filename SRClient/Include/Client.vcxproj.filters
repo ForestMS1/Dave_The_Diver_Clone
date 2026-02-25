@@ -678,6 +678,9 @@
     <ClInclude Include="..\Header\COpenShop.h">
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMenuBubble.h">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1090,6 +1093,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\COpenShop.cpp">
       <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenuBubble.cpp">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

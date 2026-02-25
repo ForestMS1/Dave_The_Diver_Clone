@@ -629,6 +629,12 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_OpenShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/openShop.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OpenShopTex", Engine::CTexture::Create(L"Tex_OpenShop"))))
 		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_menuBubble", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/menuBubble.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MenuBubbleTex", Engine::CTexture::Create(L"Tex_menuBubble"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Red", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/red.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RedTex", Engine::CTexture::Create(L"Tex_Red"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);

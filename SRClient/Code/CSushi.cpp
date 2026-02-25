@@ -375,14 +375,7 @@ HRESULT CSushi::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"Dave", pGameObject)))
 		return E_FAIL;
 
-	for (int i = 0; i < 5; i++) {
-		pGameObject = CCustomer1::Create();
-		if (nullptr == pGameObject)
-			return E_FAIL;
 
-		if (FAILED(pLayer->Add_GameObject(L"Customer", pGameObject)))
-			return E_FAIL;
-	}
 	
 
 
@@ -448,6 +441,7 @@ void CSushi::Key_Input()
 		}
 		CGameObject* button2 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
 		button2->Set_Render(true);
+	
 	}
 	/*if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
 	{

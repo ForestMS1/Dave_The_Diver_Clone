@@ -32,6 +32,8 @@ void CGameMemMgr::Free()
 {
 	for_each(fishes.begin(), fishes.end(), Safe_Delete<FISH*>);
 	fishes.clear();
+	for_each(SelectedMenu.begin(), SelectedMenu.end(), Safe_Delete<FISH*>);
+	SelectedMenu.clear();
 }
 HRESULT CGameMemMgr::Ready()
 {
@@ -65,4 +67,43 @@ void CGameMemMgr::addFish(wstring name, int quantity, int cost, int quality)
 		newfish->level = 1;
 		fishes.push_back(newfish);
 	}
+}
+
+void CGameMemMgr::addMenu(wstring name, int quantity)
+{
+	FISH* newfish = new FISH;
+	newfish->name = name;
+	newfish->quantity = quantity;
+	SelectedMenu.push_back(newfish);
+}
+
+void CGameMemMgr::reduceMenu(wstring name)
+{
+	vector<FISH*>::iterator iter = SelectedMenu.begin();
+	for (auto& menu : SelectedMenu) {
+		if (menu->name == name) {
+			menu->quantity -= 1;
+		}
+	}
+	for (iter; iter != SelectedMenu.end();) {
+		if ((*iter)->quantity <= 0) {
+			iter = SelectedMenu.erase(iter);
+		}
+		else {
+			iter++;
+		}
+	}
+}
+
+void CGameMemMgr::addCookingMenu(wstring name)
+{
+	FISH* newfish = new FISH;
+	newfish->name = name;
+	CookingMenu.push(newfish);
+}
+
+void CGameMemMgr::deleteCookingMenu()
+{
+	delete CookingMenu.front();
+	CookingMenu.pop();
 }
