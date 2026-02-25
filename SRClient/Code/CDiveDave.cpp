@@ -36,6 +36,19 @@ CDiveDave::~CDiveDave()
 {
 }
 
+void CDiveDave::Start()
+{
+	if (m_bInitComplete)
+		return;
+
+	m_bInitComplete = true;
+	Event e;
+	e.type = EVENTTYPE::CHANGE_HP;
+	e.value = (_uint)m_fHp;
+	e.fValue = m_fHp / m_fMaxHp;
+	CDiveDave::Notify(e);
+}
+
 HRESULT CDiveDave::Ready_GameObject()
 {
 	if (FAILED(Ready_Component()))
@@ -63,6 +76,7 @@ HRESULT CDiveDave::Ready_GameObject()
 
 _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 {
+	CDiveDave::Start();
 	// 충돌체 그룹에 넣어줘야한다.
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_DiveDaveWithItemBox", m_pAABB);
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_DiveDaveWithItem", m_pAABBItem);
@@ -89,7 +103,7 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
 	if (ImGui::Button("OnHit"))
-		m_bIsHit = true;
+		On_Hit(10.f);//m_bIsHit = true;
 	if (ImGui::Button("OnDead"))
 		m_bIsDie = true;
 

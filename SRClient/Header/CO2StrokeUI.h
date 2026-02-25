@@ -1,8 +1,8 @@
 #pragma once
-#include "CGameObject.h"
+#include "IObserver.h"
 #include "CRcDynamicTex.h"
 class CO2StrokeUI :
-    public CGameObject
+    public IObserver
 {
 private:
 	explicit CO2StrokeUI();
@@ -25,11 +25,17 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 private:
-	_float m_fRatio = 0.f;
+	_float m_fRatio = 1.f;			// 게이지 비율
+	_float m_fPlayerHpRatio = 0.f; // 실제 플레이어의 체력 비율 ( curHp / MaxHp )
+
+	_bool  m_IsRestore = false; // false면 깎이는 중, true면 회복 중
 public:
 	static CO2StrokeUI* Create();
 
 private:
 	virtual void Free() override;
+
+	// IObserver을(를) 통해 상속됨
+	void OnNotify(const Event& e) override;
 };
 

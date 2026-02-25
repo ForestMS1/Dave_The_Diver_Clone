@@ -28,6 +28,7 @@ private:
 
 
 public:
+	void				Start(); // 유니티 Start함수 처럼 써보기
 	HRESULT				Ready_GameObject() override;
 	_int				Update_GameObject(const _float& fTimeDelta) override;
 	void				LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -97,6 +98,12 @@ public:
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
+		Event e;
+		e.type = EVENTTYPE::CHANGE_HP;
+		e.value = (_uint)m_fHp;
+		e.fValue = m_fHp / m_fMaxHp;
+		CDiveDave::Notify(e);
+
 		if (m_fHp <= 0.f)
 		{
 			m_fHp = 0.f;
@@ -112,6 +119,12 @@ public:
 		m_fHp += restore; 
 		if (m_fHp >= m_fMaxHp)
 			m_fHp = m_fMaxHp;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_HP;
+		e.value = (_uint)m_fHp;
+		e.fValue = m_fHp / m_fMaxHp;
+		CDiveDave::Notify(e);
 	}
 	// Hit 상태 탈출시 호출
 	void				Hit_Free()															{ m_bIsHit = false; }
@@ -162,13 +175,15 @@ private:
 	_bool m_bIsOnItemBox = false;
 	_bool m_bIsOnItem = false;
 
-	_float m_fMaxHp = 200.f;
-	_float m_fHp = 100.f;
+	_float m_fMaxHp = 100.f;
+	_float m_fHp = 50.f;
 	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
 	_bool  m_bIsHit = false;
 	_bool  m_bIsDie = false; // CGameObject의 m_bDead와 다른 용도!
 	
 	_bool	m_bFlip = false; // false면 오른쪽 보는거, true면 왼쪽 보는거
+
+	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;

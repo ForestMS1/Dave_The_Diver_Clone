@@ -8,7 +8,7 @@ CO2StrokeUI::CO2StrokeUI()
 }
 
 CO2StrokeUI::CO2StrokeUI(const CO2StrokeUI& rhs)
-    :CGameObject(rhs)
+    :IObserver(rhs)
 {
 }
 
@@ -31,7 +31,11 @@ HRESULT CO2StrokeUI::Ready_GameObject()
 
 _int CO2StrokeUI::Update_GameObject(const _float& fTimeDelta)
 {
-    m_pDynamicBufferCom->Update_Gauge(1.f);
+    if (m_fPlayerHpRatio - m_fRatio > 0.1f)
+        m_fRatio += fTimeDelta * 5.f;
+    else if (m_fRatio - m_fPlayerHpRatio > 0.1f)
+        m_fRatio -= fTimeDelta * 5.f;
+    m_pDynamicBufferCom->Update_Gauge(m_fRatio);
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     CGameObject::Update_GameObject(fTimeDelta);
 
@@ -116,4 +120,20 @@ CO2StrokeUI* CO2StrokeUI::Create()
 void CO2StrokeUI::Free()
 {
     CGameObject::Free();
+}
+
+void CO2StrokeUI::OnNotify(const Event& e)
+{
+    switch (e.type)
+    {
+    case EVENTTYPE::CHANGE_HP:
+        m_fPlayerHpRatio = e.fValue;
+        if (m_fPlayerHpRatio > m_fRatio)
+            m_IsRestore = true;
+        else
+            m_IsRestore = false;
+        break;
+    default:
+        break;
+    }
 }

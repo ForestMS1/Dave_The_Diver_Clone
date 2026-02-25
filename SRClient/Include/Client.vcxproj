@@ -184,6 +184,7 @@
     <ClInclude Include="..\Header\CDaggerThumbnailUI.h" />
     <ClInclude Include="..\Header\CDartP.h" />
     <ClInclude Include="..\Header\CDepthP.h" />
+    <ClInclude Include="..\Header\CDepthText.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
     <ClInclude Include="..\Header\CDiveDaveBullet.h" />
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="..\Header\CLogoBtnArea.h" />
     <ClInclude Include="..\Header\CLogoTitle.h" />
     <ClInclude Include="..\Header\CO2StrokeUI.h" />
+    <ClInclude Include="..\Header\CO2Text.h" />
     <ClInclude Include="..\Header\CO2UI.h" />
     <ClInclude Include="..\Header\IObserver.h" />
     <ClInclude Include="..\Header\CRKeyUI.h" />
@@ -334,6 +336,7 @@
     <ClCompile Include="..\Code\CDaggerThumbnailUI.cpp" />
     <ClCompile Include="..\Code\CDartP.cpp" />
     <ClCompile Include="..\Code\CDepthP.cpp" />
+    <ClCompile Include="..\Code\CDepthText.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveBullet.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
@@ -367,6 +370,7 @@
     <ClCompile Include="..\Code\CO2Capsule.cpp" />
     <ClCompile Include="..\Code\CMaxButton.cpp" />
     <ClCompile Include="..\Code\CO2StrokeUI.cpp" />
+    <ClCompile Include="..\Code\CO2Text.cpp" />
     <ClCompile Include="..\Code\CO2UI.cpp" />
     <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\COkayButton.cpp" />

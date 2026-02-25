@@ -732,6 +732,12 @@
     <ClInclude Include="..\Header\CGaugeBarUI.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CO2Text.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDepthText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1177,6 +1183,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CGaugeBarUI.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2Text.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDepthText.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

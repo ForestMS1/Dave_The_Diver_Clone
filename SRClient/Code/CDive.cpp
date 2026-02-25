@@ -34,6 +34,7 @@
 #include "CTabKeyUI.h"
 #include "CO2UI.h"
 #include "CO2StrokeUI.h"
+#include "CO2Text.h"
 CDive::CDive()
 	: CScene()
 {
@@ -344,6 +345,16 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"O2StrokeUI", pGameObject)))
 		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	CO2Text* pO2Text = CO2Text::Create(0.f, 0.f);
+	if (nullptr == pO2Text)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CurO2Text", pO2Text)))
+		return E_FAIL;
+	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pO2Text)); // 플레이어 관찰
+
 
 	// GaugeBar UI
 	pGameObject = CGaugeBarUI::Create();
