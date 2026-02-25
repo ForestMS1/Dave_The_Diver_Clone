@@ -41,16 +41,7 @@ namespace Fish
 		FISH_STATE Get_CurrentStateId() { return m_eCurrState; };
 		std::wstring Get_CurrentStateStr()
 		{
-			switch (m_eCurrState)
-			{
-			case Fish::FS_STOP: return L"FS_STOP";
-			case Fish::FS_SWIM:return L"FS_SWIM";
-			case Fish::FS_SPRINT:return L"FS_SPRINT";
-			case Fish::FS_DIE:return L"FS_DIE";
-			case Fish::FS_QTE:return L"FS_QTE";
-			case Fish::FS_END:return L"FS_END";
-			default: return L"FS_NOTFOUND_DEFAULT";
-			}
+			return Get_FishStateStr(m_eCurrState);
 		}
 
 	private:

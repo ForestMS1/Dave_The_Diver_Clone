@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\CFishGameObject.h" />
     <ClInclude Include="..\Header\CFishHitCollider.h" />
     <ClInclude Include="..\Header\CFishHQ.h" />
+    <ClInclude Include="..\Header\CFishManualState.h" />
     <ClInclude Include="..\Header\CFishState.h" />
     <ClInclude Include="..\Header\CFishStateMachine.h" />
     <ClInclude Include="..\Header\CFishStopState.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="..\Code\CFishGameObject.cpp" />
     <ClCompile Include="..\Code\CFishHitCollider.cpp" />
     <ClCompile Include="..\Code\CFishHQ.cpp" />
+    <ClCompile Include="..\Code\CFishManualState.cpp" />
     <ClCompile Include="..\Code\CFishState.cpp" />
     <ClCompile Include="..\Code\CFishStateMachine.cpp" />
     <ClCompile Include="..\Code\CFishStopState.cpp" />

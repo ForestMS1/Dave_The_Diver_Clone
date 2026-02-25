@@ -295,6 +295,9 @@
     <Filter Include="02. GameObject\Fish\Cluster">
       <UniqueIdentifier>{e3f194ba-1ac6-41ab-9200-c43f6d85e607}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Fish\State\Manual">
+      <UniqueIdentifier>{ec31166e-924f-4f41-ba03-8e7022d10719}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -750,6 +753,9 @@
     <ClInclude Include="..\Header\CFishCluster.h">
       <Filter>02. GameObject\Fish\Cluster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFishManualState.h">
+      <Filter>02. GameObject\Fish\State\Manual</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1195,6 +1201,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFishCluster.cpp">
       <Filter>02. GameObject\Fish\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishManualState.cpp">
+      <Filter>02. GameObject\Fish\State\Manual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,8 +6,16 @@ class CFishGameObject;
 
 namespace Fish
 {
+	enum FISH_TYPE
+	{
+		FT_NORMAL,
+		FT_AGRESSIVE,
+		FT_END
+	};
+
 	enum FISH_STATE
 	{
+		FS_MANUAL,
 		FS_STOP,
 		FS_SWIM,
 		FS_SPRINT,
@@ -15,6 +23,20 @@ namespace Fish
 		FS_QTE,
 		FS_END
 	};
+
+	static std::wstring Get_FishStateStr(FISH_STATE eFishState)
+	{
+		switch (eFishState)
+		{
+		case Fish::FS_STOP: return L"FS_STOP";
+		case Fish::FS_SWIM:return L"FS_SWIM";
+		case Fish::FS_SPRINT:return L"FS_SPRINT";
+		case Fish::FS_DIE:return L"FS_DIE";
+		case Fish::FS_QTE:return L"FS_QTE";
+		case Fish::FS_END:return L"FS_END";
+		default: return L"FS_NOTFOUND_DEFAULT";
+		}
+	}
 
 	class CFishState
 	{

@@ -53,9 +53,19 @@ protected:
 protected:
 	std::wstring m_sFishName;
 	float m_fSpeed;
+	float m_fRotateSpeed;
+	float m_fRotateAngleLimit;
 	int m_iHP;
+	_vec3 m_vChaseTarget;
+
+	float m_fChaseTargetReLocateTimer;
 
 protected:
+	bool m_bManual;
+
+protected:
+	Fish::FISH_TYPE m_eFishType;
+	Fish::FISH_STATE m_eFishState;
 	Fish::CFishStateMachine m_fsm;
 public:
 	void Free() override;
