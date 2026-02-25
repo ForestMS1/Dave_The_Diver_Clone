@@ -19,6 +19,9 @@ CFishGameObject::CFishGameObject()
     , m_eFishType(Fish::FT_NORMAL)
     , m_vChaseTarget({0.f, 0.f, 0.f})
     , m_fChaseTargetReLocateTimer(0.f)
+    , m_bDamaged(false)
+    , m_fDamagedTimer(0.f)
+    , m_fDieTimer(0.f)
 {
 
 }
@@ -41,10 +44,27 @@ void CFishGameObject::Update_ImGui()
         m_bManual = !m_bManual;
     }
 
-    if (ImGui::Button("ColorWhite"))
+    if (ImGui::Button("Damaged"))
     {
-        m_pSpineCom->Set_ColorWhite(!m_pSpineCom->Get_ColorWhite());
+        Damaged(1);
     }
+
+    if (ImGui::Button("Die"))
+    {
+        Die();
+    }
+}
+
+void CFishGameObject::Damaged(int iDamage)
+{
+    m_bDamaged = true;
+    m_pSpineCom->Set_ColorWhite(true);
+}
+
+void CFishGameObject::Die()
+{
+    m_eFishState = Fish::FS_DIE;
+    m_pSpineCom->Set_AniState(L"die", false);
 }
 
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
@@ -60,7 +80,6 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
     }
 
     m_fChaseTargetReLocateTimer += fTimeDelta;
-
     if (m_fChaseTargetReLocateTimer > 2.f)
     {
         //m_vMoveTarget();
@@ -74,6 +93,19 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
 
         m_fChaseTargetReLocateTimer = 0.f;
     }
+
+    if (m_bDamaged)
+    {
+        m_fDamagedTimer += fTimeDelta;
+
+        if (m_fDamagedTimer > 0.1f)
+        {
+            m_pSpineCom->Set_ColorWhite(false);
+            m_fDamagedTimer = 0.f;
+            m_bDamaged = false;
+        }
+    }
+
 
 
     if (m_eFishState == Fish::FS_STOP)
@@ -169,6 +201,22 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
             }
         }
     }
+    else if (m_eFishState == Fish::FS_DIE)
+    {
+        m_fDieTimer += fTimeDelta;
+
+        float fDarkNess = m_pSpineCom->Get_ColorDarkness();
+        if (fDarkNess > 0.6f)
+        {
+            m_pSpineCom->Set_ColorDarkness(fDarkNess - (1.f * fTimeDelta));
+        }
+
+        if (m_fDieTimer > 3.f)
+        {
+            Set_DeadCascade();
+            return OBJ_DEAD;
+        }
+    }
 
     //if (m_fsm.IsRequestedChange())
     //{
@@ -199,7 +247,8 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
         beforeDrawLambda();
     }
 
-    if (m_pSpineCom->Get_ColorWhite())
+    bool bColorWhite = m_pSpineCom->Get_ColorWhite();
+    if (bColorWhite)
     {
         pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
         pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
@@ -207,7 +256,7 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
 
     m_pSpineCom->Render_Spine(m_pDynamicBuffer);
 
-    if (m_pSpineCom->Get_ColorWhite())
+    if (bColorWhite)
     {
         pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
     }

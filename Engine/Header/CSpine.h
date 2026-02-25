@@ -42,6 +42,9 @@ public:
 	bool Get_AniStateProgress(float& fProgress);
 	void Set_ColorWhite(bool b) { m_bColorWhite = b; }
 	bool Get_ColorWhite() const { return m_bColorWhite; }
+	void Set_ColorDarkness(float fDarkness) { m_fDarkness = fDarkness ; }
+	float Get_ColorDarkness() const { return m_fDarkness; }
+
 public:
 	static CSpine* Create();
 	virtual CComponent* Clone();

@@ -34,8 +34,14 @@ public:
 	void Update_ImGui() override;
 
 public:
+	void Damaged(int iDamage);
+	void Die();
+
+public:
 	std::wstring_view Get_FishName() const { return m_sFishName; }
 	Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
+	int Get_HP() const { return m_iHP; }
+	void Set_HP(int iHP) { m_iHP = iHP; }
 
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
@@ -60,6 +66,12 @@ protected:
 
 	float m_fChaseTargetReLocateTimer;
 
+	bool m_bDamaged;
+	float m_fDamagedTimer;
+
+	float m_fDieTimer;
+
+	
 protected:
 	bool m_bManual;
 
