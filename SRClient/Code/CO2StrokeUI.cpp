@@ -31,6 +31,7 @@ HRESULT CO2StrokeUI::Ready_GameObject()
 
 _int CO2StrokeUI::Update_GameObject(const _float& fTimeDelta)
 {
+    m_pDynamicBufferCom->Update_Gauge(1.f);
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     CGameObject::Update_GameObject(fTimeDelta);
 
@@ -61,101 +62,36 @@ void CO2StrokeUI::Render_GameObject()
 
     m_pBufferCom->Render_Buffer();
     //--------------------------------------------------------------------------------------------------------
+    _matrix matWorld;
+    matWorld = *m_pTransformCom->Get_World();
+    matWorld._43 += 1.f;
+    pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+    pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+    pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+    pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+    //-------------------------------------------------------------------------------------
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_O2StrokeFull"))
+    {
+        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        {
+            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+        }
+    }
+
+    m_pDynamicBufferCom->Render_Buffer();
+    pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+    pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+    pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 }
-
-
-//void      CLogoBG::Render_GameObject()
-//{
-//    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-//
-//    //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-//
-//
-//
-//    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Logo_BG"))
-//    {
-//        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-//        {
-//            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-//        }
-//    }
-//    m_pBufferCom->Render_Buffer();
-//
-//
-//    pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-//    pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
-//    pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
-//    pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
-//
-//    pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-//    pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0x01); // 알파가 1 이상인 것만 통과
-//    pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-//
-//    // 2. 색상과 깊이 기록은 끔 (틀만 잡기 위함)
-//    pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
-//    pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-//
-//    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Bubble"))
-//    {
-//        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-//        {
-//            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-//        }
-//    }
-//    _matrix mat;
-//    D3DXMatrixIdentity(&mat);
-//    pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
-//    m_pBufferCom->Render_Buffer();
-//
-//    pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
-//
-//    // 2. 스텐실 판정: 기록된 '1' 영역에만 그리기
-//    pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-//    pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
-//
-//    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Logo_BG"))
-//    {
-//        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-//        {
-//            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-//        }
-//    }
-//
-//
-//
-//    m_pBufferCom->Render_Buffer();
-//
-//    D3DXMATRIX matTmp;
-//    D3DXMatrixIdentity(&matTmp);
-//    pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-//
-//    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-//    //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-//
-//
-//
-//
-//    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_test"))
-//    {
-//        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-//        {
-//            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-//        }
-//    }
-//
-//    pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-//    m_pBufferCom->Render_Buffer();
-//
-//
-//    pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-//    pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-//}
 
 HRESULT CO2StrokeUI::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
+
+    m_pDynamicBufferCom = Engine::CRcDynamicTex::Create();
+    m_mapComponent[ID_STATIC].insert({ L"Com_DynamicBuffer", m_pDynamicBufferCom });
 
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))

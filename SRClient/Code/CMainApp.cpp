@@ -18,7 +18,6 @@
 #include "CCollisionMgr.h"
 #include "CAssetSpine.h"
 #include "CMapMgr.h"
-#include "CRcDynamicTex.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -255,9 +254,6 @@ HRESULT CMainApp::Load_PermanentAsset()
 
 	
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create())))
-		return E_FAIL;
-
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcDynamicTex", Engine::CRcDynamicTex::Create())))
 		return E_FAIL;
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create())))

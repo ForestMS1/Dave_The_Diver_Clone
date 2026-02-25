@@ -45,6 +45,8 @@ HRESULT CGaugeBarUI::Ready_GameObject()
 
 _int CGaugeBarUI::Update_GameObject(const _float& fTimeDelta)
 {
+    if (!m_bRender)
+        return 0;
     m_pDynamicBufferCom->Update_Gauge(m_fRatio);
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     CGameObject::Update_GameObject(fTimeDelta);
@@ -124,8 +126,9 @@ HRESULT CGaugeBarUI::Ready_Component()
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
-    if (FAILED((AddComponent<Engine::CRcDynamicTex, ID_STATIC>(L"Proto_RcDynamicTex", L"Com_DynamicBuffer", &m_pDynamicBufferCom))))
-        return E_FAIL;
+    m_pDynamicBufferCom = Engine::CRcDynamicTex::Create();
+    m_mapComponent[ID_STATIC].insert({ L"Com_DynamicBuffer", m_pDynamicBufferCom});
+
     // Æ®·£½ºÆû
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
