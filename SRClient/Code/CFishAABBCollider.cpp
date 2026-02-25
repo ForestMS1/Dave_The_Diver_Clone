@@ -1,19 +1,20 @@
-#include "CFishHitCollider.h"
+#include "CFishAABBCollider.h"
 #include "CColliderMgr.h"
 
-CFishHitCollider::CFishHitCollider(_vec3* vPos, _vec3* vScale)
+CFishAABBCollider::CFishAABBCollider(CAABB* pAABB, std::wstring_view svCollGroup)
     : CGameObject()
-    , m_vPos(*vPos)
-    , m_vScale(*vScale)
-    , m_pAABB(nullptr)
+    , m_pAABB(pAABB)
+    , m_sCollGroup(svCollGroup)
+    , m_bApplyParentAngle(true)
+    , m_vPosOffset({ 0.f, 0.f, 0.f })
 {
 }
 
-CFishHitCollider::~CFishHitCollider()
+CFishAABBCollider::~CFishAABBCollider()
 {
 }
 
-_int		CFishHitCollider::Update_GameObject(const _float& fTimeDelta)
+_int		CFishAABBCollider::Update_GameObject(const _float& fTimeDelta)
 {
     _uint iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -23,19 +24,21 @@ _int		CFishHitCollider::Update_GameObject(const _float& fTimeDelta)
     _vec3 vParentPos;
     m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
 
-    _vec3 vParentAngle;
-    m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Rotation(&vParentAngle);
+    if (m_bApplyParentAngle)
+    {
+        _vec3 vParentAngle;
+        m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Rotation(&vParentAngle);
+        m_pTransformCom->Set_Rotation(&vParentAngle);
+    }
 
     _vec3 vParentScale;
     m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Scale(&vParentScale);
 
-
-    m_pTransformCom->Set_Rotation(&vParentAngle);
-
-    float fOffsetX = m_vPos.x;
-    float fOffsetY = m_vPos.y;
-    vParentPos.x += fOffsetX;
-    vParentPos.y += fOffsetY;
+    //float fOffsetX = m_vPos.x;
+    //float fOffsetY = m_vPos.y;
+    //vParentPos.x += fOffsetX;
+    //vParentPos.y += fOffsetY;
+    vParentPos += m_vPosOffset;
 
     m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
     //_vec3 vScale = { m_fFirstScaleX * m_fCustomScaleX, m_fFirstScaleY * m_fCustomScaleY, 0.f };
@@ -50,14 +53,14 @@ _int		CFishHitCollider::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void		CFishHitCollider::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CFishAABBCollider::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-CFishHitCollider* CFishHitCollider::Create(_vec3* vPos, _vec3* vScale)
+CFishAABBCollider* CFishAABBCollider::Create(CAABB* pAABB, std::wstring_view svCollGroup)
 {
-    CFishHitCollider* pBlueTang = new CFishHitCollider{ vPos, vScale };
+    CFishAABBCollider* pBlueTang = new CFishAABBCollider{ pAABB, svCollGroup };
 
     if (FAILED(pBlueTang->Ready_GameObject()))
     {
@@ -69,26 +72,23 @@ CFishHitCollider* CFishHitCollider::Create(_vec3* vPos, _vec3* vScale)
     return pBlueTang;
 }
 
-void CFishHitCollider::Free()
+void CFishAABBCollider::Free()
 {
 	CGameObject::Free();
 	Safe_Release(m_pAABB);
 }
 
-HRESULT CFishHitCollider::Ready_Component()
+HRESULT CFishAABBCollider::Ready_Component()
 {    // Æ®·£½ºÆû
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
     return S_OK;
 }
 
-HRESULT CFishHitCollider::Ready_GameObject()
+HRESULT CFishAABBCollider::Ready_GameObject()
 {
     if(FAILED(Ready_Component()))
         return E_FAIL;
-
-    m_pAABB = CAABB::Create(&m_vPos, &m_vScale, L"ASDf", this);
-
 
     return S_OK;
 }

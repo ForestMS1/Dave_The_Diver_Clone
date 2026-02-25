@@ -36,6 +36,9 @@ public:
 public:
 	void Damaged(int iDamage);
 	void Die();
+	void RunFrom(_vec3 const* pPos);
+	void QTE();
+	void AttackTo(_vec3 const* pPos);
 
 public:
 	std::wstring_view Get_FishName() const { return m_sFishName; }

@@ -188,7 +188,7 @@
     <ClInclude Include="..\Header\CClownfish.h" />
     <ClInclude Include="..\Header\CFishCluster.h" />
     <ClInclude Include="..\Header\CFishGameObject.h" />
-    <ClInclude Include="..\Header\CFishHitCollider.h" />
+    <ClInclude Include="..\Header\CFishAABBCollider.h" />
     <ClInclude Include="..\Header\CFishHQ.h" />
     <ClInclude Include="..\Header\CFishManualState.h" />
     <ClInclude Include="..\Header\CFishState.h" />
@@ -339,7 +339,7 @@
     <ClCompile Include="..\Code\CClownfish.cpp" />
     <ClCompile Include="..\Code\CFishCluster.cpp" />
     <ClCompile Include="..\Code\CFishGameObject.cpp" />
-    <ClCompile Include="..\Code\CFishHitCollider.cpp" />
+    <ClCompile Include="..\Code\CFishAABBCollider.cpp" />
     <ClCompile Include="..\Code\CFishHQ.cpp" />
     <ClCompile Include="..\Code\CFishManualState.cpp" />
     <ClCompile Include="..\Code\CFishState.cpp" />

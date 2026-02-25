@@ -36,7 +36,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 
     if (m_fTimer > 1.f)
     {
-        if (m_iCnt < 5)
+        if (m_iCnt < 2)
         {
             float randX = rand() % 10;
             float randY = rand() % 5;

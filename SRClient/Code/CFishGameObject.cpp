@@ -67,6 +67,18 @@ void CFishGameObject::Die()
     m_pSpineCom->Set_AniState(L"die", false);
 }
 
+void CFishGameObject::RunFrom(_vec3 const* pPos)
+{
+}
+
+void CFishGameObject::QTE()
+{
+}
+
+void CFishGameObject::AttackTo(_vec3 const* pPos)
+{
+}
+
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
 {
     _uint iExit = CGameObject::Update_GameObject(fTimeDelta);

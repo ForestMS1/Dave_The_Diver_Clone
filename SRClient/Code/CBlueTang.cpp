@@ -8,7 +8,7 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CAssetSpine.h"
-#include "CFishHitCollider.h"
+#include "CFishAABBCollider.h"
 #include "CManagement.h"
 
 
