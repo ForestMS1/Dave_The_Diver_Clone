@@ -63,20 +63,28 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	CAssetMgr::GetInstance()->LoadAsset(L"Json_Map");
 
 
-	//CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/PolybrushMesh-3786884.glb"));
-	CAssetMgr::GetInstance()->AddAsset(L"GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian.glb"));
-	CAssetMgr::GetInstance()->LoadAsset(L"GLB_File");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian1_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian1_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian1_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian1_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian1_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian1_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian1_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian1_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian1", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian1.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian1");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian1", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian1")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian1")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian1")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian1")->Get_Index()));
+
 
 	CAssetMgr::GetInstance()->AddAsset(L"BackGround_GLB_File", CAssetGlb::Create(L"../Bin/Resource/Glb/BackGround.glb"));
 	CAssetMgr::GetInstance()->LoadAsset(L"BackGround_GLB_File");
-
-	
-
-	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_File",CGlbTex::Create(
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_VtxCnt(),
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_TriCnt(),
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_vertices(),
-		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_File")->Get_Index()));
 
 	CProtoMgr::GetInstance()->Ready_Prototype(L"BackGround_GLB_File", CGlbTex::Create(
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_VtxCnt(),
@@ -85,35 +93,149 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"BackGround_GLB_File")->Get_Index()));
 
 
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian2_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian2_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian2_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian2_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian2_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian2_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian2_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian2_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian2", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian2.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian2");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian2", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian2")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian2")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian2")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian2")->Get_Index()));	
+	
+	
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian3_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian3_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian3_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian3_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian3_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian3_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian3_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian3_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian3", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian3.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian3");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian3", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian3")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian3")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian3")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian3")->Get_Index()));
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian4_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian4_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian4_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian4_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian4_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian4_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian4_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian4_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian4", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian4.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian4");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian4", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian4")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian4")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian4")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian4")->Get_Index()));
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian5_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian5_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian5_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian5_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian5_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian5_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian5_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian5_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian5", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian5.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian5");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian5", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian5")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian5")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian5")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian5")->Get_Index()));
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian6_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian6_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian6_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian6_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian6_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian6_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian6_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian6_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian6", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian6.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian6");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian6", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian6")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian6")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian6")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian6")->Get_Index()));
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian7_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian7_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian7_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian7_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian7_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian7_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian7_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian7_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian7", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian7.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian7");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian7", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian7")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian7")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian7")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian7")->Get_Index()));
+
+	// ---------------------------------------------------------------------------------------------------------------------------------
+	CAssetMgr::GetInstance()->AddAsset(L"Terrian8_Collision", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian8_Collision.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Terrian8_Collision");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Terrian8_Collision", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian8_Collision")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian8_Collision")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian8_Collision")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"Terrian8_Collision")->Get_Index()));
+
+	CAssetMgr::GetInstance()->AddAsset(L"GLB_Terrian8", CAssetGlb::Create(L"../Bin/Resource/Glb/Terrian8.glb"));
+	CAssetMgr::GetInstance()->LoadAsset(L"GLB_Terrian8");
+
+	CProtoMgr::GetInstance()->Ready_Prototype(L"GLB_Terrian8", CGlbTex::Create(
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian8")->Get_VtxCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian8")->Get_TriCnt(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian8")->Get_vertices(),
+		CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(L"GLB_Terrian8")->Get_Index()));
+
+
 	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Coral1", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Coral2", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Coral3", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Coral4", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Coral5", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Coral6", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
+
 
 	
 	
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"))))
 		return E_FAIL;
-
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral1", CTexture::Create(L"Coral1"))))
-		return E_FAIL;
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral2", CTexture::Create(L"Coral2"))))
-		return E_FAIL;
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral3", CTexture::Create(L"Coral3"))))
-		return E_FAIL;
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral4", CTexture::Create(L"Coral4"))))
-		return E_FAIL;
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral5", CTexture::Create(L"Coral5"))))
-		return E_FAIL;
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Coral6", CTexture::Create(L"Coral6"))))
-		return E_FAIL;
-
-
-
 
 
 
@@ -1123,20 +1245,88 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	if (m_eDstScene == SCENE_SHIP)
 	{
-		CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
-		pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Lobby");
 
-		pTransitionImg->Set_CustomScaleX(0.1f);
-		pTransitionImg->Set_CustomScaleY(0.1f);
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
 
-		pTransitionImg->Ready_AfterCreate();
+			pTransitionImg->Ready_AfterCreate();
 
 
-		if (nullptr == pTransitionImg)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
-			return E_FAIL;
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"로비로비로");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
 		
+	}
+	else if (m_eDstScene == SCENE_DIVE)
+	{
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Dive");
+
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
+
+			pTransitionImg->Ready_AfterCreate();
+
+
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"두다이브");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
+	}
+	else if (m_eDstScene == SCENE_SUSHI)
+	{
+		{
+			CTransitionImg* pTransitionImg = CTransitionImg::Create(0.f, 0.1f);
+			pTransitionImg->Set_AssetName(L"Tex_Transition_BG_Sushi");
+
+			pTransitionImg->Set_CustomScaleX(0.1f);
+			pTransitionImg->Set_CustomScaleY(0.1f);
+
+			pTransitionImg->Ready_AfterCreate();
+
+
+			if (nullptr == pTransitionImg)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionImg", pTransitionImg)))
+				return E_FAIL;
+		}
+
+		{
+			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
+			pTxt->Set_Txt(L"회식은갓파스시?");
+			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+			if (nullptr == pTxt)
+				return E_FAIL;
+			if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
+				return E_FAIL;
+		}
 	}
 
 	{
@@ -1164,21 +1354,18 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 	} 
 
-	{
-		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
-		pTxt->Set_Txt(L"이것은 제목이여");
-		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
-		if (nullptr == pTxt)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
-			return E_FAIL;
-	}
+	
 
 
 
 	{
+		wstring tipTxt[3];
+		tipTxt[0] = L"그거 아시나요? 거북이는 엉덩이로 숨을 쉴 수 있어서 물속에서 오래 버텨요.";
+		tipTxt[1] = L"그거 아시나요? 굴은 살면서 필요에 따라 암수 성별을 자유자재로 바꿀 수 있답니다.";
+		tipTxt[2] = L"그거 아시나요? 흰수염고래의 혀 무게만 해도 코끼리 한 마리랑 맞먹을 정도로 커요.";
+
 		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f);
-		pTxt->Set_Txt(L"ASDfASDFASDFASDFASDFASDFASDFASDFASDFASDFASDFF");
+		pTxt->Set_Txt(tipTxt[rand() % 3]);
 		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 		if (nullptr == pTxt)
 			return E_FAIL;

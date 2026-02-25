@@ -12,7 +12,7 @@ CDiveDaveDie::~CDiveDaveDie()
 
 void CDiveDaveDie::Enter()
 {
-	static_cast<CDiveDave*>(m_pOwner)->Init_Frame();
+	m_pOwner->Init_Frame();
 	_float fWidth = 45.f;
 	_float fHeight = 57.f;
 	_float fAspect = fWidth + fHeight;

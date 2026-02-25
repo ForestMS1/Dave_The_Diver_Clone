@@ -28,6 +28,7 @@ public:
 	INDEX32*	Get_Index() { return pIndex; }
 	vector<LPDIRECT3DTEXTURE9>* Get_Texture() { return &tex; }
 	vector<pair<_uint, _uint>>* Get_vecTexVtxTriCnt() { return &vecTexVtxTriCnt; }
+	vector<MeshBound>* Get_vec_meshBounds() { return &vec_meshBounds; }
 private:
 	_ulong m_dwVtxCnt;
 	_ulong m_dwTriCnt;
@@ -36,7 +37,7 @@ private:
 	INDEX32* pIndex;
 	vector<LPDIRECT3DTEXTURE9> tex;
 	vector<pair<_uint,_uint>> vecTexVtxTriCnt;
-	
+	vector<MeshBound> vec_meshBounds;
 public:
 
 	HRESULT Load() override;

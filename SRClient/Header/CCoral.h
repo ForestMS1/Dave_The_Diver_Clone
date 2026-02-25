@@ -28,7 +28,6 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
 	const wstring_view m_TextureName;

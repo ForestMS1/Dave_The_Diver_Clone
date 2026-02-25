@@ -169,6 +169,12 @@ HRESULT CMainApp::Load_PermanentAsset()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Lobby", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_Lobby.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Lobby");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Dive", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_MermanVillage.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Dive");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Sushi", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_Sushi_Night.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Sushi");
+
 	//Black1pxFade.png
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Fade_Black", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/Black1pxFade.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Fade_Black");
