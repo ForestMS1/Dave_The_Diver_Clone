@@ -63,6 +63,11 @@ public:
 	void				Set_FishCaught(_bool bFishCaught)									{ m_bFishCaught = bFishCaught; }
 	_bool				Is_FishCaught()														{ return m_bFishCaught; }
 
+	// 다른 상태 객체에서도 Notify할 수 있게
+	void				State_Notify(Event& e)												{ CDiveDave::Notify(e); };
+	// 어느쪽 보고있는지
+	_bool				Is_Flip()															const { return m_bFlip; }
+	void				Set_Flip(_bool isFlip)												{ m_bFlip = isFlip; }
 
 	// With DiveItemBox
 	void				Set_IsOnItemBox(_bool isOn)											{ m_bIsOnItemBox = isOn; }
@@ -162,6 +167,8 @@ private:
 	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
 	_bool  m_bIsHit = false;
 	_bool  m_bIsDie = false; // CGameObject의 m_bDead와 다른 용도!
+	
+	_bool	m_bFlip = false; // false면 오른쪽 보는거, true면 왼쪽 보는거
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;

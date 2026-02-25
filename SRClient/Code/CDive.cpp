@@ -32,6 +32,8 @@
 #include "CCKeyUI.h"
 #include "CWPBoxUI.h"
 #include "CTabKeyUI.h"
+#include "CO2UI.h"
+#include "CO2StrokeUI.h"
 CDive::CDive()
 	: CScene()
 {
@@ -249,12 +251,6 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	CGameObject* pGameObject = nullptr;
 
 	// DaggerBox
-	pGameObject = CGaugeBarUI::Create();
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGaugeBarUI", pGameObject)))
-		return E_FAIL;
-
 	pGameObject = CDaggerBoxUI::Create();
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -334,6 +330,28 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TabKeyUI", pGameObject)))
 		return E_FAIL;
+
+
+	// O2 UI
+	pGameObject = CO2UI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"O2UI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CO2StrokeUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"O2StrokeUI", pGameObject)))
+		return E_FAIL;
+
+	// GaugeBar UI
+	pGameObject = CGaugeBarUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GaugeBarUI", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

@@ -48,7 +48,10 @@ HRESULT CDiveDaveBullet::Ready_GameObject()
 _int CDiveDaveBullet::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_fLifeTime > 3.f)
+	{
 		m_bDead = true;
+		return 0;
+	}
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	// 충돌체 그룹에 넣어줘야한다.
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Ship", m_pAABB);

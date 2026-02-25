@@ -1,7 +1,8 @@
 #pragma once
-#include "CGameObject.h"
+#include "IObserver.h"
+#include "CRcDynamicTex.h"
 class CGaugeBarUI :
-    public CGameObject
+    public IObserver
 {
 private:
 	explicit CGaugeBarUI();
@@ -21,9 +22,11 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
+	Engine::CRcDynamicTex* m_pDynamicBufferCom;
 	Engine::CTransform* m_pTransformCom;
 
 private:
+	_float m_fRatio = 0.f;
 	_bool m_bRender = false;
 	_bool m_bFlip = false;
 
@@ -32,5 +35,8 @@ public:
 
 private:
 	virtual void Free() override;
+
+	// IObserver을(를) 통해 상속됨
+	void OnNotify(const Event& e) override;
 };
 

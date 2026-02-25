@@ -102,11 +102,13 @@ void CAttackSubReady::Mouse_Check()
 	{
 		_vec3 vRotateDir = { 0.f, -180.f, 0.f };
 		m_pDiveDave->Set_RotateDir(&vRotateDir);
+		m_pDiveDave->Set_Flip(true);
 	}
 	else
 	{
 		_vec3 vRotateDir = { 0.f, 0.f, 0.f };
 		m_pDiveDave->Set_RotateDir(&vRotateDir);
+		m_pDiveDave->Set_Flip(false);
 	}
 }
 

@@ -253,8 +253,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Capsule", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_O2Capsule.png"));
 
 	// UI
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeBar", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Bar_Tap.png"));
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeColor", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Color.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeBar", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Bar_Normal.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeColor", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Bar_Full.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Dagger_Box.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Dagger_Stroke.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerThumbnail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/BasicDagger_Thumbnail.png"));
@@ -269,6 +269,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainSubBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Sub_Box.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainSubBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Sub_Stroke.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_TabKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Tab_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2FrameUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Frame_New.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Stroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Stroke_re.png"));
 
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))

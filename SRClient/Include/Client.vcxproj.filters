@@ -271,6 +271,12 @@
     <Filter Include="02. GameObject\DiveDave\ObserverPattern">
       <UniqueIdentifier>{01965077-0806-46a1-8c6d-bf8980e94dbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\DiveDaveUI\O2UI">
+      <UniqueIdentifier>{4eaaeb4a-5003-482b-9ad1-790ac712391e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\DiveDaveUI\GaugeBar">
+      <UniqueIdentifier>{becdca0b-267f-4f49-a4b0-94ffa08190ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -684,9 +690,6 @@
     <ClInclude Include="..\Header\CDiveDaveDie.h">
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CGaugeBarUI.h">
-      <Filter>02. GameObject\DiveDave\DiveDaveUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CDaggerBoxUI.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\DaggerBox</Filter>
     </ClInclude>
@@ -719,6 +722,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\IObserver.h">
       <Filter>02. GameObject\DiveDave\ObserverPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CO2UI.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CO2StrokeUI.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGaugeBarUI.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1124,9 +1136,6 @@
     <ClCompile Include="..\Code\CDiveDaveDie.cpp">
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CGaugeBarUI.cpp">
-      <Filter>02. GameObject\DiveDave\DiveDaveUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CDaggerBoxUI.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\DaggerBox</Filter>
     </ClCompile>
@@ -1159,6 +1168,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\IObserver.cpp">
       <Filter>02. GameObject\DiveDave\ObserverPattern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2UI.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2StrokeUI.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGaugeBarUI.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

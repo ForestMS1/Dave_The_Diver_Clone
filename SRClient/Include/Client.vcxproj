@@ -213,6 +213,8 @@
     <ClInclude Include="..\Header\CLogoBG.h" />
     <ClInclude Include="..\Header\CLogoBtnArea.h" />
     <ClInclude Include="..\Header\CLogoTitle.h" />
+    <ClInclude Include="..\Header\CO2StrokeUI.h" />
+    <ClInclude Include="..\Header\CO2UI.h" />
     <ClInclude Include="..\Header\IObserver.h" />
     <ClInclude Include="..\Header\CRKeyUI.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
@@ -364,6 +366,8 @@
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CO2Capsule.cpp" />
     <ClCompile Include="..\Code\CMaxButton.cpp" />
+    <ClCompile Include="..\Code\CO2StrokeUI.cpp" />
+    <ClCompile Include="..\Code\CO2UI.cpp" />
     <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\COkayButton.cpp" />
     <ClCompile Include="..\Code\COverlay.cpp" />

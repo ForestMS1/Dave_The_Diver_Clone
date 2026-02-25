@@ -256,6 +256,9 @@
     <Filter Include="02. Component\TextureFrame">
       <UniqueIdentifier>{c0c991c0-3989-4881-be7f-c1920033020f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\00. VIBuffer\RcDynamicTex">
+      <UniqueIdentifier>{e852f827-7988-4fcf-9ef6-c1cd3eab3013}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -720,6 +723,9 @@
     <ClCompile Include="..\Code\CTextureFrame.cpp">
       <Filter>02. Component\TextureFrame</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CRcDynamicTex.cpp">
+      <Filter>02. Component\00. VIBuffer\RcDynamicTex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -985,6 +991,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CTextureFrame.h">
       <Filter>02. Component\TextureFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRcDynamicTex.h">
+      <Filter>02. Component\00. VIBuffer\RcDynamicTex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
