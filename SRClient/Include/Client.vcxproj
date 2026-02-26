@@ -169,6 +169,7 @@
     <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
+    <ClInclude Include="..\Header\CJohn.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
     <ClInclude Include="..\Header\CChangeTab.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CIncreaseButton.h" />
     <ClInclude Include="..\Header\CItemBoxUI.h" />
+    <ClInclude Include="..\Header\CJohnIdle.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
     <ClInclude Include="..\Header\CLogoBG.h" />
     <ClInclude Include="..\Header\CLogoBtnArea.h" />
@@ -322,6 +324,7 @@
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CJohn.cpp" />
     <ClCompile Include="..\Code\CChangeTab.cpp" />
     <ClCompile Include="..\Code\CCKeyUI.cpp" />
     <ClCompile Include="..\Code\CCloseButton.cpp" />
@@ -365,6 +368,7 @@
     <ClCompile Include="..\Code\CHarpoonProjectile.cpp" />
     <ClCompile Include="..\Code\CIncreaseButton.cpp" />
     <ClCompile Include="..\Code\CItemBoxUI.cpp" />
+    <ClCompile Include="..\Code\CJohnIdle.cpp" />
     <ClCompile Include="..\Code\CLessButton.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />
     <ClCompile Include="..\Code\CLogoBG.cpp" />

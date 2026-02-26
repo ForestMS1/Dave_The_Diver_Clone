@@ -35,6 +35,7 @@
 #include "CO2UI.h"
 #include "CO2StrokeUI.h"
 #include "CO2Text.h"
+#include "CJohn.h"
 CDive::CDive()
 	: CScene()
 {
@@ -278,6 +279,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
+		return E_FAIL;
+
+	// º¸½º
+	pGameObject = CJohn::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });

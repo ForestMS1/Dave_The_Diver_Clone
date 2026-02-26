@@ -449,6 +449,14 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 
 
+	// 보스
+	for (int i = 0; i < 8; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/Idle/Idle0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnIdle", CAssetTexture::Create(s.c_str()));
+	}
+
+
 	// 작살 줄
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))
 		return E_FAIL;

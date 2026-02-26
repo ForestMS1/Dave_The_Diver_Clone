@@ -277,6 +277,12 @@
     <Filter Include="02. GameObject\DiveDave\DiveDaveUI\GaugeBar">
       <UniqueIdentifier>{becdca0b-267f-4f49-a4b0-94ffa08190ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John">
+      <UniqueIdentifier>{6bff9050-cf85-4606-9024-6c37d88ff643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\Idle">
+      <UniqueIdentifier>{23a261d7-1f68-4dab-8cc6-213c29aa623c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -750,6 +756,12 @@
     <ClInclude Include="..\Header\CDepthText.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohn.h">
+      <Filter>02. GameObject\John</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnIdle.h">
+      <Filter>02. GameObject\John\Idle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1213,6 +1225,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDepthText.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn.cpp">
+      <Filter>02. GameObject\John</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnIdle.cpp">
+      <Filter>02. GameObject\John\Idle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
