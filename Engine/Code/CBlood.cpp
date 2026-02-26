@@ -43,24 +43,33 @@ void CBlood::resetParticle(Attribute* attribute, D3DXCOLOR color)
 
 	_size.x = 0.5f;
 
+	float Random = GetRandomFloat(-1.f, 1.f);
 	attribute->_position = _hitPosition;
 	attribute->_position.z = -1.f;
 	attribute->_isAlive = true;
 
-	_vec3 min = { -0.2f, 0.f,0.f };
-	_vec3 max = { 0.2f, 0.3f,0.f };
+	if (Random >= 0) {
+		attribute->_type = 0;
+	}
+	if (Random < 0) {
+		attribute->_type = 1;
+	}
+
+	_vec3 min = { -0.05f, 0.f,0.f };
+	_vec3 max = { 0.05f, 0.f,0.f };
 
 	GetRandomVector(&attribute->velocity, &min, &max);
 
+	attribute->velocity.y = 0.2f;
 	attribute->velocity *= 0.3f;
-	attribute->_color = {1.f, 1.f, 1.f, 1.f};
+	attribute->_color = { 1.f, 1.f, 1.f, 1.f };
 	attribute->_age = 0.f;
-	attribute->_lifeTime = GetRandomFloat(1.f, 4.f);
+	attribute->_lifeTime = 5.f;
 }
 
 void CBlood::render()
 {
-	Set_Texture(L"Tex_Blood", 0);
+	Set_Texture(L"Tex_Blood", 1);
 	preRender();
 
 	__super::render();
@@ -74,12 +83,14 @@ void CBlood::preRender()
 	_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	_device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
 }
 
 void CBlood::postRender()
 {
 	__super::postRender();
 	_device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
 }
 
 void CBlood::update(float fTimeDelta)
