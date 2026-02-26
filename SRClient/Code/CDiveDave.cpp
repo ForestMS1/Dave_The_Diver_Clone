@@ -90,7 +90,14 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
 	if (ImGui::Button("OnHit"))
+	{
 		m_bIsHit = true;
+		//Å×½ºÆ®
+		_vec3 Pos{};
+		m_pTransformCom->Get_Info(INFO_POS, &Pos);
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
+	}
+
 	if (ImGui::Button("OnDead"))
 		m_bIsDie = true;
 	ImGui::End();
@@ -136,6 +143,7 @@ void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
 	_vec3 Pos{};
 	m_pTransformCom->Get_Info(INFO_POS, &Pos);
 	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
+	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
 }
 
 void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)
@@ -156,6 +164,7 @@ _bool CDiveDave::Check_GlobalState()
 	if (m_bIsHit)
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::HIT);
+	
 		return true;
 	}
 

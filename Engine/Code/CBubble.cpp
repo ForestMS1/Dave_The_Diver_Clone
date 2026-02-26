@@ -59,9 +59,9 @@ void CBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 
 	GetRandomVector(&attribute->velocity, &min, &max);
 	attribute->velocity *= 1.f;
-	attribute->_color = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	attribute->_color = D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.f);
 	attribute->_age = 0.f;
-	attribute->_lifeTime = GetRandomFloat(0.f, 1.f);;
+	attribute->_lifeTime = GetRandomFloat(0.f, 2.f);;
 }
 
 void CBubble::render()
@@ -92,8 +92,11 @@ void CBubble::update(float fTimeDelta)
 		i->_position += i->velocity * fTimeDelta;
 		i->_age += fTimeDelta;
 		//_origin = i->_position;
-
 	
+		if (i->_age  > (i->_lifeTime)/5) {
+			i->_color -= D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.f);
+		}
+		
 		if (i->_age > (i->_lifeTime)) {
 			i->_isAlive = false;
 		}

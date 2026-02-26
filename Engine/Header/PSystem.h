@@ -55,6 +55,7 @@ public:
 	int									_matParticles;
 	int									numOfParticles;
 	bool								empty;
+	_vec3								_hitPosition;
 };
 
 END
