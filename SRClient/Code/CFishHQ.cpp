@@ -41,8 +41,8 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
         {
             ++m_iCnt;
             {
-                float randX = rand() % 10;
-                float randY = rand() % 5;
+                float randX = rand() % 30;
+                float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
                     Fish::AddLayer_BlueTang(pLayer, randX, randY, 0.3f, this);
@@ -51,8 +51,8 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             }
 
             {
-                float randX = rand() % 10;
-                float randY = rand() % 5;
+                float randX = rand() % 30;
+                float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
                     Fish::AddLayer_TitanTriggerfish(pLayer, randX, randY, 0.3f, this);
@@ -61,8 +61,8 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             }
 
             {
-                float randX = rand() % 10;
-                float randY = rand() % 5;
+                float randX = rand() % 30;
+                float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
                     Fish::AddLayer_YellowTang(pLayer, randX, randY, 0.3f, this);
@@ -71,8 +71,8 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             }
 
             {
-                float randX = rand() % 10;
-                float randY = rand() % 5;
+                float randX = rand() % 30;
+                float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
                     Fish::AddLayer_Clownfish(pLayer, randX, randY, 0.3f, this);
@@ -81,8 +81,8 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             }
 
             {
-                float randX = rand() % 10;
-                float randY = rand() % 5;
+                float randX = rand() % 30;
+                float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
                     Fish::AddLayer_SmallspottedDart(pLayer, randX, randY, 0.3f, this);
@@ -91,12 +91,104 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             }
 
             {
-                float randX = rand() % 10;
-                float randY = rand() % 5;
+                float randX = rand() % 30;
+                float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
                     Fish::AddLayer_YellowbackFusilier(pLayer, randX, randY, 0.3f, this);
                    
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Blobfish(pLayer, randX, randY, 0.3f, this);
+
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    //Fish::AddLayer_Fish<Fish::CGreatSpiderCrab>(L"GreatSpiderCrab", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CRedLionfish>(L"RedLionfish", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CGreenHumpheadParrotfish>(L"GreenHumpheadParrotfish", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CGiantTrevally>(L"GiantTrevally", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CJuvenileCircularBatFish>(L"JuvenileCircularBatFish", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CDevilScorpionFish>(L"DevilScorpionFish", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"AsianSheepshead", pLayer, randX, randY, 0.3f, this);
+                }
+            }
+            
+
+            {
+                float randX = rand() % 30;
+                float randY = rand() % 15;
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+                {
+                    Fish::AddLayer_Fish<Fish::CGreyTriggerfish>(L"GreyTriggerfish", pLayer, randX, randY, 0.3f, this);
                 }
             }
         }
@@ -165,8 +257,11 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                 CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pFishHitBoxCollider->Get_VoidPtr());
                                 if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
                                 {
-                                    pFish->Damaged(1);
-                                    break;
+                                    if (pFish->Get_FishState() != Fish::FS_DIE)
+                                    {
+                                        pFish->Damaged(1);
+                                        break;
+                                    }
                                 }
 
                                 if (pFish->Get_FishType() == Fish::FT_AGRESSIVE)

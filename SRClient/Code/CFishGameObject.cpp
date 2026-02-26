@@ -206,8 +206,8 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
         {
             //m_vMoveTarget();
 
-            float randX = rand() % 100;
-            float randY = rand() % 100;
+            float randX = rand() % 300;
+            float randY = rand() % 300;
             randX /= 10;
             randY /= 10;
             _vec3 vNewMoveTarget = { randX , randY , 0.f };

@@ -225,3 +225,40 @@ HRESULT Fish::AddLayer_YellowTang(Engine::CLayer* pLayer, float fPosX, float fPo
 	}
 	return S_OK;
 }
+
+HRESULT Fish::AddLayer_Blobfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
+{
+	Fish::CBlobfish* pFish = Fish::CBlobfish::Create(fPosX, fPosX, 0.05f * fScale);
+	if (pParent)
+	{
+		pFish->Set_Parent(pParent);
+	}
+	pLayer->Add_GameObject(L"Blobfish", pFish);
+
+	{
+		_vec3 vPos = { 0.0f, 0.f, 0.f };
+		_vec3 vExt = { 1.1f, 0.6f, 0.01f };
+		vExt *= fScale;
+
+		CFishAABBCollider* pCollider = CFishAABBCollider::Create(
+			CAABB::Create(&vPos, &vExt, L"AABB_FishHitbox", pFish),
+			L"Coll_FishesHitbox");
+		pCollider->Set_Parent(pFish);
+		pLayer->Add_GameObject(L"FishHitboxCollider", pCollider);
+	}
+
+	{
+		_vec3 vPos = { 0.0f, 0.f, 0.f };
+		_vec3 vExt = { 2.f, 2.f, 0.01f };
+		//vExt *= fScale;
+
+		CFishAABBCollider* pCollider = CFishAABBCollider::Create(
+			CAABB::Create(&vPos, &vExt, L"AABB_FishDetectbox", pFish),
+			L"Coll_FishesDetectBox");
+		pCollider->Set_Parent(pFish);
+		pCollider->Set_ApplyParentAngle(false);
+		pLayer->Add_GameObject(L"FishDetetCollider", pCollider);
+
+	}
+	return S_OK;
+}

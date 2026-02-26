@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CAddMenuButton.h" />
+    <ClInclude Include="..\Header\CAsianSheepshead.h" />
     <ClInclude Include="..\Header\CAttackSubFail.h" />
     <ClInclude Include="..\Header\CAttackSubFight.h" />
     <ClInclude Include="..\Header\CAttackSubFire.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="..\Header\CBackground.h" />
     <ClInclude Include="..\Header\CBackGroundSea.h" />
     <ClInclude Include="..\Header\CBancho.h" />
+    <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
     <ClInclude Include="..\Header\CChair.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="..\Header\CCustomer1.h" />
     <ClInclude Include="..\Header\CDartP.h" />
     <ClInclude Include="..\Header\CDepthP.h" />
+    <ClInclude Include="..\Header\CDevilScorpionFish.h" />
     <ClInclude Include="..\Header\CDiveDaveAttack.h" />
     <ClInclude Include="..\Header\CDiveDaveBullet.h" />
     <ClInclude Include="..\Header\CDiveDaveCam.h" />
@@ -195,6 +198,13 @@
     <ClInclude Include="..\Header\CFishStateMachine.h" />
     <ClInclude Include="..\Header\CFishStopState.h" />
     <ClInclude Include="..\Header\CFishSwimState.h" />
+    <ClInclude Include="..\Header\CGiantTrevally.h" />
+    <ClInclude Include="..\Header\CGreatSpiderCrab.h" />
+    <ClInclude Include="..\Header\CGreenHumpheadParrotfish.h" />
+    <ClInclude Include="..\Header\CGreyTriggerfish.h" />
+    <ClInclude Include="..\Header\CHumboldtSquid.h" />
+    <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
+    <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
@@ -314,8 +324,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAddMenuButton.cpp" />
+    <ClCompile Include="..\Code\CAsianSheepshead.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />
+    <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
     <ClCompile Include="..\Code\CCloseButton.cpp" />
@@ -331,6 +343,7 @@
     <ClCompile Include="..\Code\CAttackSubState.cpp" />
     <ClCompile Include="..\Code\CDartP.cpp" />
     <ClCompile Include="..\Code\CDepthP.cpp" />
+    <ClCompile Include="..\Code\CDevilScorpionFish.cpp" />
     <ClCompile Include="..\Code\CDiveDaveAttack.cpp" />
     <ClCompile Include="..\Code\CDiveDaveBullet.cpp" />
     <ClCompile Include="..\Code\CDiveDaveCam.cpp" />
@@ -347,6 +360,13 @@
     <ClCompile Include="..\Code\CFishStateMachine.cpp" />
     <ClCompile Include="..\Code\CFishStopState.cpp" />
     <ClCompile Include="..\Code\CFishSwimState.cpp" />
+    <ClCompile Include="..\Code\CGiantTrevally.cpp" />
+    <ClCompile Include="..\Code\CGreatSpiderCrab.cpp" />
+    <ClCompile Include="..\Code\CGreenHumpheadParrotfish.cpp" />
+    <ClCompile Include="..\Code\CGreyTriggerfish.cpp" />
+    <ClCompile Include="..\Code\CHumboldtSquid.cpp" />
+    <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
+    <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />

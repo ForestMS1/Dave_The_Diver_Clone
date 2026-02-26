@@ -301,6 +301,36 @@
     <Filter Include="02. GameObject\Fish\Species\TitanTriggerfish">
       <UniqueIdentifier>{b4035583-da2e-4d8a-8691-4c9af27b70d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Fish\Species\Blobfish">
+      <UniqueIdentifier>{b2669895-3e33-4705-8427-25a2af60203b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\HumboldSquid">
+      <UniqueIdentifier>{6953014d-8351-4e53-a54a-72b494b660c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\GreatSpiderCrab">
+      <UniqueIdentifier>{2fa4f67a-0efc-4824-9fba-3df804b8beab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\RedLionfish">
+      <UniqueIdentifier>{fb80868c-b158-4451-a4db-3dee9c09210d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\GreenHumpheadParrotfish">
+      <UniqueIdentifier>{8275e96d-3658-47af-a839-d69030626e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\GiantTrevally">
+      <UniqueIdentifier>{0f3376fd-6064-494d-8e40-2481255e2fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\JuvenileCircularBatFish">
+      <UniqueIdentifier>{9a3d781a-ec0b-4377-bb51-c472c248425b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\DevilScorpionFish">
+      <UniqueIdentifier>{3dcc9dc7-021c-4cb4-ab19-9a2e1fba3bcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\AsianSheepshead">
+      <UniqueIdentifier>{ddc60780-717d-45fe-9042-9fd0b13ce63d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\GreyTiggerfish">
+      <UniqueIdentifier>{87f2c34c-00a9-4488-8f98-8f6d6efe0846}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -762,6 +792,36 @@
     <ClInclude Include="..\Header\CTitanTriggerfish.h">
       <Filter>02. GameObject\Fish\Species\TitanTriggerfish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBlobfish.h">
+      <Filter>02. GameObject\Fish\Species\Blobfish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGreatSpiderCrab.h">
+      <Filter>02. GameObject\Fish\Species\GreatSpiderCrab</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHumboldtSquid.h">
+      <Filter>02. GameObject\Fish\Species\HumboldSquid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRedLionfish.h">
+      <Filter>02. GameObject\Fish\Species\RedLionfish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGreenHumpheadParrotfish.h">
+      <Filter>02. GameObject\Fish\Species\GreenHumpheadParrotfish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGiantTrevally.h">
+      <Filter>02. GameObject\Fish\Species\GiantTrevally</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJuvenileCircularBatFish.h">
+      <Filter>02. GameObject\Fish\Species\JuvenileCircularBatFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDevilScorpionFish.h">
+      <Filter>02. GameObject\Fish\Species\DevilScorpionFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAsianSheepshead.h">
+      <Filter>02. GameObject\Fish\Species\AsianSheepshead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGreyTriggerfish.h">
+      <Filter>02. GameObject\Fish\Species\GreyTiggerfish</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1213,6 +1273,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp">
       <Filter>02. GameObject\Fish\Species\TitanTriggerfish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBlobfish.cpp">
+      <Filter>02. GameObject\Fish\Species\Blobfish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGreatSpiderCrab.cpp">
+      <Filter>02. GameObject\Fish\Species\GreatSpiderCrab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHumboldtSquid.cpp">
+      <Filter>02. GameObject\Fish\Species\HumboldSquid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRedLionfish.cpp">
+      <Filter>02. GameObject\Fish\Species\RedLionfish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGreenHumpheadParrotfish.cpp">
+      <Filter>02. GameObject\Fish\Species\GreenHumpheadParrotfish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGiantTrevally.cpp">
+      <Filter>02. GameObject\Fish\Species\GiantTrevally</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp">
+      <Filter>02. GameObject\Fish\Species\JuvenileCircularBatFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDevilScorpionFish.cpp">
+      <Filter>02. GameObject\Fish\Species\DevilScorpionFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAsianSheepshead.cpp">
+      <Filter>02. GameObject\Fish\Species\AsianSheepshead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGreyTriggerfish.cpp">
+      <Filter>02. GameObject\Fish\Species\GreyTiggerfish</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

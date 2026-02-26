@@ -158,6 +158,46 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	CAssetMgr::GetInstance()->AddAsset(L"Spine_TitanTriggerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/TitanTriggerfish/Titan_Triggerfish"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Spine_TitanTriggerfish");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_Blobfish", CAssetSpine::Create(L"../Bin/Resource/Spine/Blobfish/Blobfish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_Blobfish");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_HumboldtSquid", CAssetSpine::Create(L"../Bin/Resource/Spine/HumboldtSquid/Humboldt_Squid"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_HumboldtSquid");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_GreatSpiderCrab", CAssetSpine::Create(L"../Bin/Resource/Spine/GreatSpiderCrab/Great_Spider_Crab"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_GreatSpiderCrab");
+
+	// 오류남
+	//CAssetMgr::GetInstance()->AddAsset(L"Spine_DuskyGrouper", CAssetSpine::Create(L"../Bin/Resource/Spine/DuskyGrouper/Dusky_Grouper"));
+	//CAssetMgr::GetInstance()->LoadAsset(L"Spine_DuskyGrouper");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_AsianSheepshead", CAssetSpine::Create(L"../Bin/Resource/Spine/AsianSheepshead/Asian_Sheepshead"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_AsianSheepshead");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_GiantTrevally", CAssetSpine::Create(L"../Bin/Resource/Spine/GiantTrevally/Giant_Trevally"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_GiantTrevally");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_RedLionfish", CAssetSpine::Create(L"../Bin/Resource/Spine/RedLionfish/Red_Lionfish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_RedLionfish");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_SpearSquid", CAssetSpine::Create(L"../Bin/Resource/Spine/SpearSquid/SpearSquid"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_SpearSquid");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_JuvenileCircularBatFish", CAssetSpine::Create(L"../Bin/Resource/Spine/JuvenileCircularBatFish/Juvenile_Circular_BatFish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_JuvenileCircularBatFish");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_LeafySeadragonIngame", CAssetSpine::Create(L"../Bin/Resource/Spine/LeafySeadragonIngame/Leafy_Seadragon_Ingame"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_LeafySeadragonIngame");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_GreenHumpheadParrotfish", CAssetSpine::Create(L"../Bin/Resource/Spine/GreenHumpheadParrotfish/Green_Humphead_Parrotfish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_GreenHumpheadParrotfish");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_DevilScorpionFish", CAssetSpine::Create(L"../Bin/Resource/Spine/DevilScorpionFish/Devil_ScorpionFish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_DevilScorpionFish");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Spine_GreyTriggerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/GreyTriggerfish/Grey_Triggerfish"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Spine_GreyTriggerfish");
+
 	m_sComment = L"Transition_LOGO_TO_SHIP COMPLETE";
 //#ifdef _DEBUG
 //	Sleep(500);
