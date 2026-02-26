@@ -331,6 +331,15 @@
     <Filter Include="02. GameObject\Fish\Species\GreyTiggerfish">
       <UniqueIdentifier>{87f2c34c-00a9-4488-8f98-8f6d6efe0846}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Fish\UI">
+      <UniqueIdentifier>{825b5648-278d-48f9-b180-fc2d23a9d241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\UI\GetItem">
+      <UniqueIdentifier>{84cad384-84d6-4847-8080-f700fd978975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\UI\HoldFish">
+      <UniqueIdentifier>{f1756187-72fa-4b25-9ddd-da71f198f849}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -822,6 +831,36 @@
     <ClInclude Include="..\Header\CGreyTriggerfish.h">
       <Filter>02. GameObject\Fish\Species\GreyTiggerfish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGetItemUI.h">
+      <Filter>02. GameObject\Fish\UI\GetItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGetItemUIImg.h">
+      <Filter>02. GameObject\Fish\UI\GetItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGetItemUIStar.h">
+      <Filter>02. GameObject\Fish\UI\GetItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUI.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUIItemArea.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUIItemAreaEdge.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUIImg.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUIDropPanel.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUIItemGroup.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHoldFishUIDave.h">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1303,6 +1342,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\CGreyTriggerfish.cpp">
       <Filter>02. GameObject\Fish\Species\GreyTiggerfish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGetItemUI.cpp">
+      <Filter>02. GameObject\Fish\UI\GetItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGetItemUIImg.cpp">
+      <Filter>02. GameObject\Fish\UI\GetItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGetItemUIStar.cpp">
+      <Filter>02. GameObject\Fish\UI\GetItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUI.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUIItemArea.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUIItemAreaEdge.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUIImg.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUIDropPanel.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUIItemGroup.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHoldFishUIDave.cpp">
+      <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

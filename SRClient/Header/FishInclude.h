@@ -66,7 +66,7 @@ namespace Fish
 		{
 			_vec3 vPos = { 0.0f, 0.f, 0.f };
 			_vec3 vExt = *pDetecboxExtents;
-			vExt *= fScale;
+			//vExt *= fScale;
 
 			CFishAABBCollider* pCollider = CFishAABBCollider::Create(
 				CAABB::Create(&vPos, &vExt, L"AABB_FishDetectbox", pFish),
