@@ -10,7 +10,7 @@
 #include "CLightMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetDefaultFont.h"
-//#include "CParticleMgr.h"
+#include "CParticleMgr.h"
 #include "CColliderMgr.h"
 #include "CCameraMgr.h"
 #include "CTransition.h"
@@ -18,6 +18,7 @@
 #include "CCollisionMgr.h"
 #include "CAssetSpine.h"
 #include "CMapMgr.h"
+
 
 
 CMainApp::CMainApp()
@@ -37,8 +38,7 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(CSoundMgr::GetInstance()->Ready_SoundMgr()))
 		return E_FAIL;
-	//if (FAILED(CParticleMgr::GetInstance()->Ready_Particle(g_hWnd)))
-	//	return E_FAIL;
+
 	if (FAILED(CImguiMgr::GetInstance()->Ready_Imgui(g_hWnd, m_pGraphicDev)))
 		return E_FAIL;
 	if (FAILED(CGameMemMgr::GetInstance()->Ready()))
@@ -289,7 +289,7 @@ void CMainApp::Free()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
-	//CParticleMgr::GetInstance()->DestroyInstance();
+	CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();

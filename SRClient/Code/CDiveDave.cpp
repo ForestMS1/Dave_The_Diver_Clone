@@ -17,6 +17,7 @@
 #include "CDiveDavePickUp.h"
 #include "CDiveDaveHit.h"
 #include "CDiveDaveDie.h"
+#include "CParticleMgr.h"
 string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
@@ -131,6 +132,10 @@ ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
 void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
 {
 	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+	// Å×½ºÆ®
+	_vec3 Pos{};
+	m_pTransformCom->Get_Info(INFO_POS, &Pos);
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
 }
 
 void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)

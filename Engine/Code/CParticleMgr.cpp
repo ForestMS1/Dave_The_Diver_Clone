@@ -3,16 +3,18 @@
 #include "CBulletSpark.h"
 #include "CBullet.h"
 #include "CWeather.h"
+#include "CBubble.h"
 #include "CFlameShot.h"
 #include "CAssetMgr.h"
+#include "CManagement.h"
 
 
 IMPLEMENT_SINGLETON(CParticleMgr)
 
-CParticleMgr::CParticleMgr(): m_pCamera(nullptr)
+CParticleMgr::CParticleMgr(): m_pCamera(nullptr), m_pPlayer(nullptr)
 {
 	cameraOn = false;
-	particles.resize(0);
+	particles.resize(PARTICLE_END);
 }
 
 CParticleMgr::~CParticleMgr()
@@ -22,19 +24,24 @@ CParticleMgr::~CParticleMgr()
 
 HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 {
-	Firework* firework = Firework::Create();
-	particles.push_back(firework);
-	CBulletSpark* spark = CBulletSpark::Create();
-	particles.push_back(spark);
-	CWeather* weather = CWeather::Create(500);
-	particles.push_back(weather);
+	//Firework* firework = Firework::Create();
+	//particles.push_back(firework);
+	//CBulletSpark* spark = CBulletSpark::Create();
+	//particles.push_back(spark);
+	//CWeather* weather = CWeather::Create(500);
+	//particles.push_back(weather);	
+	//
+
+
+	CBubble* bubble = CBubble::Create(m_pPlayer);
+	particles[PARTICLE_BUBBLE]=(bubble);
 	//CAssetMgr::GetInstance()->LoadAsset();
 	return S_OK;
 }
 
 void CParticleMgr::Update_Particle(float fTimeDelta)
 {
-	if (!cameraOn) {
+	/*if (!cameraOn) {
 		if (m_pCamera != nullptr) {
 			CBullet* bullet = CBullet::Create(m_pCamera);
 			particles.push_back(bullet);
@@ -42,13 +49,15 @@ void CParticleMgr::Update_Particle(float fTimeDelta)
 			particles.push_back(flame);
 			cameraOn = true;
 		}
-	}
+	}*/
 	
 	if (!particles.empty()) {
 
 		for (auto particle : particles) {
+			if (particle) {
+				particle->update(fTimeDelta);
+			}
 			
-			particle->update(fTimeDelta);
 			
 		}
 	}
@@ -58,42 +67,53 @@ void CParticleMgr::Update_Particle(float fTimeDelta)
 void CParticleMgr::Render_Particle()
 {
 	for (auto particle : particles) {
-		particle->render();
+		if (particle) {
+
+			particle->render();
+		}
 	}
 }
 
 void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles)
 {
 	switch(type) {
-	case FIREWORK: 
-	{
-		for (int i = 0; i < numofPariticles; i++) {
-			particles[FIREWORK]->addParticle(origin, {1,1,1,1});
-		}
+	//case FIREWORK: 
+	//{
+	//	for (int i = 0; i < numofPariticles; i++) {
+	//		particles[FIREWORK]->addParticle(origin, {1,1,1,1});
+	//	}
 
-	}
+	//}
+	//	break;
+	//case GUNSHOT:
+	//{
+	//	for (int i = 0; i < numofPariticles; i++) {
+	//		particles[GUNSHOT]->addParticle(origin, {1,1,1,1});
+	//	}
+
+	//}
+	//break;
+
+	//case BULLET:
+	//{
+	//	for (int i = 0; i < numofPariticles; i++) {
+	//		particles[BULLET]->addParticle(origin,{1,1,1,1});
+	//	}
+
+	//}
+	//case FLAMESHOT:
+	//	for (int i = 0; i < numofPariticles; i++) {
+	//		particles[FLAMESHOT]->addParticle(origin, { 1,1,1,1 });
+	//	}
+	//	break;	
+	//
+	case PARTICLE_BUBBLE:
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[PARTICLE_BUBBLE]->addParticle(origin, { 1,1,1,1 });
+		}
 		break;
-	case GUNSHOT:
-	{
-		for (int i = 0; i < numofPariticles; i++) {
-			particles[GUNSHOT]->addParticle(origin, {1,1,1,1});
-		}
 
-	}
-	break;
-
-	case BULLET:
-	{
-		for (int i = 0; i < numofPariticles; i++) {
-			particles[BULLET]->addParticle(origin,{1,1,1,1});
-		}
-
-	}
-	case FLAMESHOT:
-		for (int i = 0; i < numofPariticles; i++) {
-			particles[FLAMESHOT]->addParticle(origin, { 1,1,1,1 });
-		}
-		break;
+	
 	break;
 	}
 }
@@ -123,7 +143,10 @@ void CParticleMgr::Free()
 {
 
 	for (auto particle : particles) {
-		particle->Free();
-		Safe_Release(particle);
+		if (particle) {
+			particle->Free();
+			Safe_Release(particle);
+		}
+	
 	}
 }

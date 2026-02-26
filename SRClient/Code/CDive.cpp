@@ -21,7 +21,7 @@
 #include "CTestFish.h"
 #include "CDiveItemBox.h"
 #include "CBackGroundSea.h"
-
+#include "CParticleMgr.h"
 CDive::CDive()
 	: CScene()
 {
@@ -65,6 +65,9 @@ HRESULT CDive::Ready_Scene()
 
 
 	CMapMgr::GetInstance()->Load();
+
+	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
+	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 	return S_OK;
 }
 
@@ -72,7 +75,7 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
-
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	ImGui::Begin("Curr Scene: CDive");
 	if (ImGui::Button("Go Ship Scene"))
 	{
@@ -100,6 +103,10 @@ void CDive::Render_Scene()
 	CCameraMgr::GetInstance()->Render_Camera();
 	CMapMgr::GetInstance()->Render_Map();
 
+
+
+	CParticleMgr::GetInstance()->Render_Particle();
+	
 }
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)

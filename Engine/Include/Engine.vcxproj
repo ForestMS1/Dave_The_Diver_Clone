@@ -177,6 +177,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAttackReadyArmTex.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
+    <ClInclude Include="..\Header\CBubble.h" />
     <ClInclude Include="..\Header\CBullet.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCamera.h" />
@@ -266,6 +267,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />
+    <ClCompile Include="..\Code\CBubble.cpp" />
     <ClCompile Include="..\Code\CBullet.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCamera.cpp" />
