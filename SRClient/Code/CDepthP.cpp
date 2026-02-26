@@ -26,7 +26,7 @@ HRESULT CDepthP::Ready_GameObject()
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 0.25f, 0.1f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 2.57f,-0.44f,-4.6f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 2.57f,-0.44f,-4.601f };
     return S_OK;
 }
 

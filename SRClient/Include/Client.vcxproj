@@ -214,6 +214,8 @@
     <ClInclude Include="..\Header\CLogoBG.h" />
     <ClInclude Include="..\Header\CLogoBtnArea.h" />
     <ClInclude Include="..\Header\CLogoTitle.h" />
+    <ClInclude Include="..\Header\CMenuBubble.h" />
+    <ClInclude Include="..\Header\COpenShop.h" />
     <ClInclude Include="..\Header\CO2StrokeUI.h" />
     <ClInclude Include="..\Header\CO2Text.h" />
     <ClInclude Include="..\Header\CO2UI.h" />
@@ -288,7 +290,7 @@
     <ClInclude Include="..\Header\CTargetArrow.h" />
     <ClInclude Include="..\Header\CTargetCurveStart.h" />
     <ClInclude Include="..\Header\CTestFish.h" />
-    <ClInclude Include="..\Header\CTestGlb.h" />
+    <ClInclude Include="..\Header\CTerrian.h" />
     <ClInclude Include="..\Header\CTransition.h" />
     <ClInclude Include="..\Header\CTransitionBG.h" />
     <ClInclude Include="..\Header\CTransitionFade.h" />
@@ -298,6 +300,8 @@
     <ClInclude Include="..\Header\CTriggerAABB.h" />
     <ClInclude Include="..\Header\CDartR.h" />
     <ClInclude Include="..\Header\CUpgradeButton.h" />
+    <ClInclude Include="..\Header\CUpgradeConfirmButton.h" />
+    <ClInclude Include="..\Header\CUpgradeFrame.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="..\Header\CWPBoxUI.h" />
@@ -367,6 +371,7 @@
     <ClCompile Include="..\Code\CLogoBtnArea.cpp" />
     <ClCompile Include="..\Code\CLogoTitle.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
+    <ClCompile Include="..\Code\CMenuBubble.cpp" />
     <ClCompile Include="..\Code\CO2Capsule.cpp" />
     <ClCompile Include="..\Code\CMaxButton.cpp" />
     <ClCompile Include="..\Code\CO2StrokeUI.cpp" />
@@ -374,6 +379,7 @@
     <ClCompile Include="..\Code\CO2UI.cpp" />
     <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\COkayButton.cpp" />
+    <ClCompile Include="..\Code\COpenShop.cpp" />
     <ClCompile Include="..\Code\COverlay.cpp" />
     <ClCompile Include="..\Code\CBaseState.cpp" />
     <ClCompile Include="..\Code\CBackground.cpp" />
@@ -443,7 +449,7 @@
     <ClCompile Include="..\Code\CTargetArrow.cpp" />
     <ClCompile Include="..\Code\CTargetCurveStart.cpp" />
     <ClCompile Include="..\Code\CTestFish.cpp" />
-    <ClCompile Include="..\Code\CTestGlb.cpp" />
+    <ClCompile Include="..\Code\CTerrian.cpp" />
     <ClCompile Include="..\Code\CTransition.cpp" />
     <ClCompile Include="..\Code\CTransitionBG.cpp" />
     <ClCompile Include="..\Code\CTransitionFade.cpp" />
@@ -453,6 +459,8 @@
     <ClCompile Include="..\Code\CTriggerAABB.cpp" />
     <ClCompile Include="..\Code\CDartR.cpp" />
     <ClCompile Include="..\Code\CUpgradeButton.cpp" />
+    <ClCompile Include="..\Code\CUpgradeConfirmButton.cpp" />
+    <ClCompile Include="..\Code\CUpgradeFrame.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="..\Code\CWPBoxUI.cpp" />

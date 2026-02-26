@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAABB.h"
 
 namespace Engine
 {
@@ -8,36 +9,34 @@ namespace Engine
 	class CTransform;
 }
 
-
-class CCoral : public CGameObject
+class CUpgradeConfirmButton : public CGameObject
 {
 private:
-	explicit CCoral();
-	explicit CCoral(const wstring_view _TextureName);
-	explicit CCoral(const CGameObject& rhs);
-	virtual ~CCoral();
+	explicit CUpgradeConfirmButton();
+	explicit CUpgradeConfirmButton(const CGameObject& rhs);
+	virtual ~CUpgradeConfirmButton();
+
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-
+	void			Set_WhichFish(wstring fish) { whichFish = fish; }
 private:
-	HRESULT			Add_Component();
+	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
+	Engine::CTexture* m_pUpgradeTextureCom;
 	Engine::CTransform* m_pTransformCom;
-
-	const wstring_view m_TextureName;
+	CAABB* m_pAABB;
+	wstring whichFish;
 
 public:
-	static CCoral* Create(const wstring_view _TextureName);
-
+	static CUpgradeConfirmButton* Create();
 private:
 	virtual void Free();
 
 };
-
 

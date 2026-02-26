@@ -33,7 +33,7 @@ HRESULT CFishFrame::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
-    CAssetMgr::GetInstance()->AddAsset(L"Font_FishName", CAssetDefaultFont::Create(L"¸»±º °íµñ", 0, 23, FW_BOLD));
+    CAssetMgr::GetInstance()->AddAsset(L"Font_FishName", CAssetDefaultFont::Create(L"¸»±º °íµñ", 0, 25, FW_BOLD));
     CAssetMgr::GetInstance()->AddAsset(L"Font_FishQuantity", CAssetDefaultFont::Create(L"¿µÇâ", 0, 26, FW_BOLD));
     CAssetMgr::GetInstance()->LoadAsset(L"Font_FishName");
     CAssetMgr::GetInstance()->LoadAsset(L"Font_FishQuantity");
@@ -114,6 +114,13 @@ _int CFishFrame::Update_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    }
+    else {
+        for (auto picture : pictures) {
+            picture->Set_Render(false);
+            CGameObject* depth = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Depth");
+            depth->Set_Render(false);
+        }
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 

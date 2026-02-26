@@ -1,16 +1,21 @@
+
+
 #pragma once
 #include "CGameObject.h"
-#include "CAABB.h"
-namespace Engine {
-	class CGlbTex;
+
+namespace Engine
+{
+	class CRcTex;
+	class CTexture;
+	class CTransform;
 }
-class CTestGlb : public CGameObject
+
+class COpenShop : public CGameObject
 {
 private:
-	explicit CTestGlb();
-	explicit CTestGlb(const wstring_view tex);
-	explicit CTestGlb(const CTestGlb& rhs);
-	virtual ~CTestGlb();
+	explicit COpenShop();
+	explicit COpenShop(const CGameObject& rhs);
+	virtual ~COpenShop();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -22,16 +27,15 @@ private:
 	HRESULT			Ready_Component();
 
 private:
-	Engine::CGlbTex* m_pBufferCom;
+	Engine::CRcTex* m_pBufferCom;
+	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	const wstring_view m_wsName;
-	CAABB* m_pAABB;
 
 public:
-	static CTestGlb* Create();
-	static CTestGlb* Create(const wstring_view tex);
+	static COpenShop* Create();
 
 private:
 	virtual void Free();
+
 };
 

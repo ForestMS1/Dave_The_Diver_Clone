@@ -8,36 +8,39 @@ namespace Engine
 	class CTransform;
 }
 
-
-class CCoral : public CGameObject
+class CMenuBubble : public CGameObject
 {
 private:
-	explicit CCoral();
-	explicit CCoral(const wstring_view _TextureName);
-	explicit CCoral(const CGameObject& rhs);
-	virtual ~CCoral();
+	explicit CMenuBubble();
+	explicit CMenuBubble(const CGameObject& rhs);
+	virtual ~CMenuBubble();
+	void	Update_ImGui() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
-
 private:
-	HRESULT			Add_Component();
+	HRESULT			Ready_Component();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
+	Engine::CTexture* m_pMenuBubbleTextureCom;
 	Engine::CTransform* m_pTransformCom;
 
-	const wstring_view m_TextureName;
-
 public:
-	static CCoral* Create(const wstring_view _TextureName);
+	static CMenuBubble* Create();
 
 private:
 	virtual void Free();
 
+public:
+	wstring m_sFishName;
+	wstring m_sTexName;
+private:
+	float tempY = -1.f;
+	float deltaTime = 0;
+	
 };
-
 

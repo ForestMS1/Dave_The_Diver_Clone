@@ -139,9 +139,6 @@
     <Filter Include="02. GameObject\DiveDave\Gun">
       <UniqueIdentifier>{afc3ee72-12a1-4f2f-9f71-693413ada00e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. TestGlb">
-      <UniqueIdentifier>{a783af74-29a5-4b5b-b7f5-ddbe8df41409}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\03. SkyBox">
       <UniqueIdentifier>{9a009614-2047-446b-ac77-1c7582a4022c}</UniqueIdentifier>
     </Filter>
@@ -255,6 +252,9 @@
     </Filter>
     <Filter Include="BaseState">
       <UniqueIdentifier>{0267fd7f-631a-41fb-bdcd-0fdd9c3ba53e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Terrian">
+      <UniqueIdentifier>{a783af74-29a5-4b5b-b7f5-ddbe8df41409}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\DiveDave\DiveDaveUI">
       <UniqueIdentifier>{e0029985-1828-48d3-be5c-be7f5d6fa980}</UniqueIdentifier>
@@ -462,8 +462,8 @@
     <ClInclude Include="..\Header\CDiveDaveMeeleAttack.h">
       <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTestGlb.h">
-      <Filter>02. GameObject\02. TestGlb</Filter>
+    <ClInclude Include="..\Header\CTerrian.h">
+      <Filter>02. GameObject\02. Terrian</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\03. SkyBox</Filter>
@@ -690,6 +690,18 @@
     <ClInclude Include="..\Header\CDiveDaveDie.h">
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUpgradeFrame.h">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUpgradeConfirmButton.h">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COpenShop.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenuBubble.h">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CDaggerBoxUI.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\DaggerBox</Filter>
     </ClInclude>
@@ -914,8 +926,8 @@
     <ClCompile Include="..\Code\CDiveDaveMeeleAttack.cpp">
       <Filter>02. GameObject\DiveDave\State\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTestGlb.cpp">
-      <Filter>02. GameObject\02. TestGlb</Filter>
+    <ClCompile Include="..\Code\CTerrian.cpp">
+      <Filter>02. GameObject\02. Terrian</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>02. GameObject\03. SkyBox</Filter>
@@ -1141,6 +1153,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveDaveDie.cpp">
       <Filter>02. GameObject\DiveDave\State\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUpgradeFrame.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUpgradeConfirmButton.cpp">
+      <Filter>01. Scene\03. Sushi\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COpenShop.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenuBubble.cpp">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDaggerBoxUI.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\DaggerBox</Filter>

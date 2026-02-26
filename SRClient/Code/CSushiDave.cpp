@@ -170,8 +170,9 @@ HRESULT CSushiDave::Ready_Component()
 void CSushiDave::Key_Input(const _float& fTimeDelta)
 {
     bool bMove = false;
+  
     if (!holdingSushi) {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
+        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -6.7f)
         {
             _vec3 left = { -1,0,0 };
             curState = WALK;
@@ -180,7 +181,7 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
             bMove = true;
         }
 
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
+        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 9.3f)
         {
             _vec3 right = { 1,0,0 };
             curState = WALK;
@@ -191,14 +192,14 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
         if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
         {
             curState = RUN;
-            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -6.7f)
             {
                 _vec3 left = { -1,0,0 };
                 curDir = LEFT;
                 m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
                 bMove = true;
             }
-            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 9.3f)
             {
                 _vec3 right = { 1,0,0 };
                 curDir = RIGHT;
@@ -208,7 +209,7 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
         }
     }
     else {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
+        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -6.7f)
         {
             _vec3 left = { -1,0,0 };
             curState = SUSHI_WALK;
@@ -217,7 +218,7 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
             bMove = true;
         }
 
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
+        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 9.3f)
         {
             _vec3 right = { 1,0,0 };
             curState = SUSHI_WALK;
@@ -228,14 +229,14 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
         if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
         {
             curState = SUSHI_RUN;
-            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A))
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -6.7f)
             {
                 _vec3 left = { -1,0,0 };
                 curDir = LEFT;
                 m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
                 bMove = true;
             }
-            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D))
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 9.3f)
             {
                 _vec3 right = { 1,0,0 };
                 curDir = RIGHT;

@@ -35,19 +35,22 @@ private:
 	Engine::CTexture* m_pHappyTextureCom;
 	Engine::CTexture* m_pAngerTextureCom;
 	Engine::CTransform* m_pTransformCom;
-
 public:
 	static CCustomer1* Create();
 
 private:
+	CGameObject*	MenuBubble;
 	State			curState;
 	_float			m_fFrame;
 	Facing			curDir;
 	Facing			prevDir;
 	_vec3			targetPos;
+	bool			ChairFound;
 	bool			Sitted;
 	bool			ChoosingMenu;
 	bool			Waiting;
+	float			deltaTime;
+	
 	virtual void Free();
 
 };
