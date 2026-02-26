@@ -33,11 +33,23 @@ HRESULT CHarpoon::Ready_GameObject()
 
 	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
+
 	return S_OK;
 }
 
+void CHarpoon::Init()
+{
+	if (m_bInitComplete)
+		return;
+
+	m_sTexName = L"Tex_HarpoonGun";
+	static_cast<CDiveDave*>(m_pParentGameObject)->Set_WeaponSlot(this, EQUIPPED::HARPOON);
+	m_bInitComplete = true;
+}
 _int CHarpoon::Update_GameObject(const _float& fTimeDelta)
 {
+	CHarpoon::Init();
+
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return 0;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::HARPOON)

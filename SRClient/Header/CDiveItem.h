@@ -18,7 +18,8 @@ protected:
 
 public:
 	void GetItem() { if(m_eCurState == ITEMSTATE::DROPPED) m_eCurState = ITEMSTATE::ACQUIRED; } // 플레이어쪽에서 호출 할 함수
-	virtual void UseItem() = 0;
+	virtual void UseItem(CGameObject*) = 0;
+	std::wstring_view Get_TexName() { return m_wsTexName; }
 
 protected:
 	void FSM(const _float& fTimeDelta);
@@ -40,6 +41,7 @@ protected:
 	_vec3 m_vOriginPos; // 드랍 시작 위치, 드랍 멈출 위치
 	_float m_fAccTime = 0.f;
 	_bool m_bIsCollWithMe = false;
+	wstring m_wsTexName;
 
 protected:
 	virtual void Free() override;

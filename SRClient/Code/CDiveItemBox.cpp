@@ -54,7 +54,7 @@ HRESULT CDiveItemBox::Ready_GameObject()
 	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
 	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_ItemBox", this);
 
-	CColliderMgr::GetInstance()->Set_Render(true); 
+
     return S_OK;
 }
 
@@ -68,6 +68,9 @@ _int CDiveItemBox::Update_GameObject(const _float& fTimeDelta)
 
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
     return 0;
 }
 
@@ -76,10 +79,6 @@ void CDiveItemBox::LateUpdate_GameObject(const _float& fTimeDelta)
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
 	Collision_With_DiveDave();
-
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	Compute_ViewZ(&vPos);
 }
 
 void CDiveItemBox::Render_GameObject()

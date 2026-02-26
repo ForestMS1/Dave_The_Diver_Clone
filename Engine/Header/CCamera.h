@@ -1,6 +1,5 @@
 #pragma once
 #include "CGameObject.h"
-#
 
 BEGIN(Engine)
 
@@ -29,8 +28,10 @@ public:
 
 public:
 	void	Update_MatView()					{ D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp); }
+	void	Set_Ortho();
+	void	Set_Perspective();
 protected:
-	_matrix		m_matView, m_matProj;
+	_matrix		m_matView, m_matProj, m_matOrthoProj;
 
 	_vec3		m_vEye, m_vAt, m_vUp;
 	_float		m_fFov, m_fAspect, m_fNear, m_fFar;
