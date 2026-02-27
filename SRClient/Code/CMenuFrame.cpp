@@ -11,6 +11,7 @@
 #include "CConfirm.h"
 #include "CRecipe.h"
 #include "CSushiList.h"
+#include "CCloseButton.h"
 CMenuFrame::CMenuFrame()
     : CGameObject()
 {
@@ -33,7 +34,8 @@ HRESULT CMenuFrame::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
-    
+
+   
 
 
     return S_OK;
@@ -86,11 +88,41 @@ _int CMenuFrame::Update_GameObject(const _float& fTimeDelta)
 
         if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"List", pGameObject)))
             return E_FAIL;
+         pGameObject = CCloseButton::Create();
+
+        if (nullptr == pGameObject)
+            return E_FAIL;
+        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"Close_3", pGameObject)))
+            return E_FAIL;
+        static_cast<CCloseButton*>(pGameObject)->Set_Frame(L"MenuFrame");
+        {
+            CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+            pTransform->m_vInfo[INFO_POS] = { 0.f,-2.35f,-5.f };
+            pTransform->m_vScale = { 0.55f,0.15f,0.01f };
+        }
     }
     if (m_bRender) {
         if (addButtons.size() != 0) {
             static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
+            _vec3 curPos;
+            list<CGameObject*>* AddButtons = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"AddButton");
+            list<CGameObject*>::iterator iter1 = AddButtons->begin();
+            for (iter1; iter1 != AddButtons->end(); iter1++) {
+                if (static_cast<CAddMenuButton*>(*iter1)->m_bSelected == true) {
+                    CTransform* pTransform = static_cast<CTransform*>((*iter1)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                    curPos = pTransform->m_vInfo[INFO_POS];
+                    curPos.x = curPos.x + 2.2f;
+                }
+                
+            }
+            CGameObject* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"ConfirmButton");
+            CTransform* pTransformB = static_cast<CTransform*>(button->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+            pTransformB->m_vInfo[INFO_POS] = curPos;
             Key_Input();
+        }
+        else {
+            CGameObject* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"ConfirmButton");
+            button->Set_Render(false);
         }
     }
     return iExit;
@@ -147,10 +179,23 @@ void CMenuFrame::Hide()
         }
 
         list<CGameObject*>* AddButtons = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"AddButton");
-        list<CGameObject*>::iterator iter1 = AddButtons->begin();
-        for (iter1; iter1 != AddButtons->end(); iter1++) {
-            (*iter)->Set_Render(false);
-        } 
+        if (AddButtons != nullptr) {
+            list<CGameObject*>::iterator iter1 = AddButtons->begin();
+            for (iter1; iter1 != AddButtons->end(); iter1++) {
+                (*iter1)->Set_Render(false);
+            }
+        }
+        list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
+        if (selectedFrame != nullptr) {
+            list<CGameObject*>::iterator iter5 = selectedFrame->begin();
+            for (iter5; iter5 != selectedFrame->end(); iter5++) {
+                (*iter5)->Set_Render(false);
+            }
+        }
+        CGameObject* closeButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
+        closeButton->Set_Render(false);
+        CGameObject* confirmButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"ConfirmButton");
+        confirmButton->Set_Render(false);
 }
 
 void CMenuFrame::Show()
@@ -164,10 +209,24 @@ void CMenuFrame::Show()
     }
 
     list<CGameObject*>* AddButtons = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"AddButton");
-    list<CGameObject*>::iterator iter1 = AddButtons->begin();
-    for (iter1; iter1 != AddButtons->end(); iter1++) {
-        (*iter1)->Set_Render(true);
+    if (AddButtons != nullptr) {
+        list<CGameObject*>::iterator iter1 = AddButtons->begin();
+        for (iter1; iter1 != AddButtons->end(); iter1++) {
+            (*iter1)->Set_Render(true);
+        }
     }
+    list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
+    if (selectedFrame != nullptr) {
+        list<CGameObject*>::iterator iter5 = selectedFrame->begin();
+        for (iter5; iter5 != selectedFrame->end(); iter5++) {
+            (*iter5)->Set_Render(true);
+        }
+    }
+    CGameObject* closeButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
+    closeButton->Set_Render(true);
+    CGameObject* confirmButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"ConfirmButton");
+    confirmButton->Set_Render(true);
+    
 }
 
 HRESULT CMenuFrame::Ready_Component()
@@ -198,16 +257,6 @@ void CMenuFrame::Key_Input()
             }
             static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(false);
             curButton--;
-            list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"ConfirmButton");
-            list<CGameObject*>::iterator iter = button->begin();
-            for (iter; iter != button->end(); iter++) {
-                CTransform* pTransform = static_cast<CTransform*>((*iter)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-                _vec3 curPos;
-                curPos = pTransform->m_vInfo[INFO_POS];
-                curPos.y = curPos.y + 0.8f;
-                pTransform->m_vInfo[INFO_POS] = curPos;
-                return;
-            }
         }
        
        // static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
@@ -221,16 +270,7 @@ void CMenuFrame::Key_Input()
             else {
                 static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(false);
                 curButton++;
-                list<CGameObject*>* button = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"ConfirmButton");
-                list<CGameObject*>::iterator iter = button->begin();
-                for (iter; iter != button->end(); iter++) {
-                    CTransform* pTransform = static_cast<CTransform*>((*iter)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-                    _vec3 curPos;
-                    curPos = pTransform->m_vInfo[INFO_POS];
-                    curPos.y = curPos.y - 0.8f;
-                    pTransform->m_vInfo[INFO_POS] = curPos;
-                    return;
-                }
+            
         }
        
            // static_cast<CAddMenuButton*>(addButtons[curButton])->Set_Selected(true);
@@ -241,6 +281,7 @@ void CMenuFrame::Key_Input()
     {
         if(!frameMoved)
             Move_Frame();
+
     }
 }
 
@@ -290,7 +331,10 @@ void CMenuFrame::Move_Frame()
             pTransform->m_vInfo[INFO_POS] = curPos;
         }
     }
-  
+    CGameObject* button1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_2");
+    button1->Set_Render(true);
+    CGameObject* button2 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
+    button2->Set_Render(false);
   /*  list<CGameObject*>* sushi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"Bluejong");
     list<CGameObject*>::iterator iter1 = sushi->begin();
     for (iter1; iter1 != sushi->end(); iter1++) {
@@ -338,18 +382,25 @@ void CMenuFrame::Reset_Frame()
     }
 
     list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
-    list<CGameObject*>::iterator iter5 = selectedFrame->begin();
-    for (iter5; iter5 != selectedFrame->end(); iter5++) {
-        CTransform* pTransform = static_cast<CTransform*>((*iter5)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-        _vec3 curPos;
-        curPos = pTransform->m_vInfo[INFO_POS];
-        curPos.x = curPos.x + 3.2f;
-        pTransform->m_vInfo[INFO_POS] = curPos;
+    if (selectedFrame != nullptr) {
+        list<CGameObject*>::iterator iter5 = selectedFrame->begin();
+        for (iter5; iter5 != selectedFrame->end(); iter5++) {
+            CTransform* pTransform = static_cast<CTransform*>((*iter5)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+            _vec3 curPos;
+            curPos = pTransform->m_vInfo[INFO_POS];
+            curPos.x = curPos.x + 3.2f;
+            pTransform->m_vInfo[INFO_POS] = curPos;
+        }
     }
+ 
+    CGameObject* button1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_2");
+    button1->Set_Render(false);
 
+    CGameObject* button2 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
+    button2->Set_Render(true);
     frameMoved = false;
-
 }
+
 
 
 CMenuFrame* CMenuFrame::Create()

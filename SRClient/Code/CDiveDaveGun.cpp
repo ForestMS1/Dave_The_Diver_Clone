@@ -35,8 +35,19 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 	return S_OK;
 }
 
+void CDiveDaveGun::Init()
+{
+	if (m_bInitComplete)
+		return;
+
+	m_sTexName = L"Tex_BasicRifle";
+	static_cast<CDiveDave*>(m_pParentGameObject)->Set_WeaponSlot(this, EQUIPPED::GUN);
+	m_bInitComplete = true;
+}
+
 _int CDiveDaveGun::Update_GameObject(const _float& fTimeDelta)
 {
+	CDiveDaveGun::Init();
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() != DIVEDAVESTATE::ATTACK)
 		return 0;
 	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_CurEquipped() != EQUIPPED::GUN)

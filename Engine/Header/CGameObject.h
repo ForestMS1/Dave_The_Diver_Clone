@@ -39,6 +39,7 @@ public:
 	wstring_view	Get_Tag() const { return m_sTag; }
 	void			Set_Render(bool flag) { m_bRender = flag; }
 	bool			Get_Render()const  { return m_bRender; }
+	wstring_view	Get_TexName() const { return m_sTexName; }
 	
 protected:
 	map<const std::wstring, CComponent*>	m_mapComponent[ID_END];
@@ -47,6 +48,7 @@ protected:
 	bool									m_bDead;
 	bool									m_bRender;
 	std::wstring							m_sTag;
+	std::wstring							m_sTexName;
 
 // °èÃþ °ü·Ã
 public:

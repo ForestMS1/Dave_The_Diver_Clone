@@ -93,6 +93,16 @@ namespace Engine
 		bool _isAlive;
 	};
 
+	typedef struct MeshBound
+	{
+		_vec3 min;
+		_vec3 max;
+		_vec3 center;
+		_vec3 scale;      
+		_vec3 half;    
+	};
+
+
 }
 
 

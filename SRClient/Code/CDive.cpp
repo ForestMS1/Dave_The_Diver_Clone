@@ -16,11 +16,26 @@
 #include "CHarpoonProjectile.h"
 #include "CDiveDaveGun.h"
 #include "CMapMgr.h"
-#include "CTestGlb.h"
+#include "CTerrian.h"
 #include "CSkyBox.h"
 #include "CTestFish.h"
 #include "CDiveItemBox.h"
 #include "CBackGroundSea.h"
+#include "CDiveDaveUI.h"
+#include "CGaugeBarUI.h"
+#include "CDaggerBoxUI.h"
+#include "CDaggerThumbnailUI.h"
+#include "CDaggerBoxMouseLKeyUI.h"
+#include "CItemBoxUI.h"
+#include "CChangeTab.h"
+#include "CRKeyUI.h"
+#include "CCKeyUI.h"
+#include "CWPBoxUI.h"
+#include "CTabKeyUI.h"
+#include "CO2UI.h"
+#include "CO2StrokeUI.h"
+#include "CO2Text.h"
+#include "CJohn.h"
 
 #include "CFishHQ.h"
 
@@ -38,11 +53,12 @@ HRESULT CDive::Ready_Scene()
 {
 	CMapMgr::GetInstance()->SetScene(this);
 
-
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
+		return E_FAIL;
+	if (FAILED(Ready_UI_Layer(L"0_UI_Layer")))
 		return E_FAIL;
 
 	if (FAILED(Ready_Fish_Layer(L"2_Fish_Layer")))
@@ -200,6 +216,7 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDave", pDiveDave)))
 		return E_FAIL;
+	m_pDive = pDiveDave;
 
 	pGameObject = CAttackReadyArm::Create();
 	if (nullptr == pGameObject)
@@ -243,19 +260,6 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
-	//테스트용
-	pGameObject = CTestGlb::Create(L"GLB_File");
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"TestGlb", pGameObject)))
-		return E_FAIL;
-
-	//테스트용
-	pGameObject = CTestGlb::Create(L"BackGround_GLB_File");
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"BackGroundGlb", pGameObject)))
-		return E_FAIL;
 
 
 	//테스트용
@@ -284,8 +288,198 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
 		return E_FAIL;
 	
+	// 맵 
+	pGameObject = CTerrian::Create(L"BackGround_GLB_File");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"BackGround_GLB_File", pGameObject)))
+		return E_FAIL;
+
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian1", L"Terrian1_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian1", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian2", L"Terrian2_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian2", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian3", L"Terrian3_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian3", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian4", L"Terrian4_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian4", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian5", L"Terrian5_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian5", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian6", L"Terrian6_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian6", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian6_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian7", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian6_Collision");
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
+		return E_FAIL;
+
+	// 보스
+	pGameObject = CJohn::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
+		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+
+	return S_OK;
+}
+
+HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+	if (nullptr == pLayer)
+		return E_FAIL;
+
+	CGameObject* pGameObject = nullptr;
+
+	// DaggerBox
+	pGameObject = CDaggerBoxUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveDaggerBoxUI", pGameObject)))
+		return E_FAIL;
+
+
+	pGameObject = CDaggerThumbnailUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveDaggerThumbnailUI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CDaggerBoxMouseLKeyUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveDaggerBoxMouseLKeyUI", pGameObject)))
+		return E_FAIL;
+
+	// ItemBox
+	pGameObject = CItemBoxUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveItemBoxUI_1", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	pGameObject = CItemBoxUI::Create(true);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveItemBoxUI_2", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	pGameObject = CChangeTab::Create(385.f, -330.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveChangeTab1", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CRKeyUI::Create(405.f, -330.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"RKeyUI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCKeyUI::Create(350.f, -255.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CKeyUI", pGameObject)))
+		return E_FAIL;
+
+	// WPBox
+	pGameObject = CWPBoxUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	pGameObject = CWPBoxUI::Create(true);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI2", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+
+	pGameObject = CChangeTab::Create(530.f, -328.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveDaveChangeTab2", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CTabKeyUI::Create(550, -328.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"TabKeyUI", pGameObject)))
+		return E_FAIL;
+
+
+	// O2 UI
+	pGameObject = CO2UI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"O2UI", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CO2StrokeUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"O2StrokeUI", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	CO2Text* pO2Text = CO2Text::Create(0.f, 0.f);
+	if (nullptr == pO2Text)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CurO2Text", pO2Text)))
+		return E_FAIL;
+	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pO2Text)); // 플레이어 관찰
+
+
+	// GaugeBar UI
+	pGameObject = CGaugeBarUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"GaugeBarUI", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
+
+	m_pDive = nullptr;
 
 	return S_OK;
 }

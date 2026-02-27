@@ -29,6 +29,11 @@ void CAttackSubFight::Enter()
 
     m_pDiveDave->Set_FishCaught(false);
 
+    Event e;
+    e.type = EVENTTYPE::ATTACK_START;
+    e.value = m_pOwner->Get_OwnerDave()->Is_Flip();
+    m_pOwner->Get_OwnerDave()->State_Notify(e);
+
     // 카메라 쉐이킹 시작
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingStart(m_fAttackTime);
 }
@@ -69,6 +74,11 @@ _int CAttackSubFight::Update_State(const _float& fTimeDelta)
 {
     if (m_pDiveDave->Get_State() != DIVEDAVESTATE::ATTACK)
         return 0;
+
+    Event e;
+    e.type = EVENTTYPE::ATTACK_GAUGE_CHANGE;
+    e.fValue = m_fAttackGauge / 10.f;
+    m_pOwner->Get_OwnerDave()->State_Notify(e);
 
     Input(fTimeDelta);
     m_pDiveDave->AddFrame(fTimeDelta, 10.f, 8);
@@ -113,6 +123,10 @@ void CAttackSubFight::Clear()
     m_fAttackGauge = 2.f;
     m_fDecreaseDelay = 0.f;
     m_fAttackTime = 5.f;
+
+    Event e;
+    e.type = EVENTTYPE::ATTACK_END;
+    m_pOwner->Get_OwnerDave()->State_Notify(e);
 
     // 카메라 쉐이킹 강종
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingEnd();

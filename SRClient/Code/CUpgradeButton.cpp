@@ -17,6 +17,9 @@
 #include "CYellowTangR.h"
 #include "CDartR.h"
 #include "CClownFishR.h"
+#include "CUpgradeFrame.h"
+#include "CSushiFrame.h"
+#include "CUpgradeConfirmButton.h"
 CUpgradeButton::CUpgradeButton()
     : CGameObject()
 {
@@ -71,9 +74,28 @@ _int CUpgradeButton::Update_GameObject(const _float& fTimeDelta)
             // 만약 충돌한다면 태그비교후 보이드포인터 들고와서 캐스팅한다음 조작한다.
             if (m_pAABB->Get_Tag() == L"AABB_Upgrade")
             {
-           
+                CGameObject* upgradeFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"UpgradeFrame");
+                upgradeFrame->Set_Render(true);
+                CGameObject* overlay = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"Overlay");
+                CTransform* pTransform = static_cast<CTransform*>(overlay->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                CTransform* confirmTransform = static_cast<CTransform*>(upgradeFrame->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                pTransform->m_vInfo[INFO_POS] = confirmTransform->m_vInfo[INFO_POS];
+                pTransform->m_vInfo[INFO_POS].z += 0.05f;
+                overlay->Set_Render(true);
+                vector<CGameObject*> frameObjects = static_cast<CUpgradeFrame*>(upgradeFrame)->Get_CurObjects();
+                for (auto objects : frameObjects) {
+                    objects->Set_Render(true);
+                }
 
 
+                list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
+                list<CGameObject*>::iterator iter = frame->begin();
+                for (iter; iter != frame->end(); iter++) {
+                    static_cast<CSushiFrame*>(*iter)->ConfirmOpened = true;
+                
+                }
+                CGameObject* button1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_2");
+                button1->Set_Render(false);
             }
         }
     }
