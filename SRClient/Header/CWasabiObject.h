@@ -36,6 +36,7 @@ public:
 	static CWasabiObject* Create();
 	bool  created;
 	float gauge = 0.03f;
+	float percent;
 private:
 	virtual void Free();
 	CAABB* m_pAABB;
