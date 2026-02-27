@@ -18,11 +18,8 @@
 #include "CGreyTriggerfish.h"
 
 #include "CFishAABBCollider.h"
+#include "CLayer.h"
 
-namespace Engine
-{
-	class CLayer;
-}
 
 namespace Fish
 {

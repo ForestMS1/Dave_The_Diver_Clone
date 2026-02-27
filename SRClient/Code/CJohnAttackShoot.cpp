@@ -38,7 +38,10 @@ _int CJohnAttackShoot::Update_State(const _float& fTimeDelta)
 	m_pOwner->Update_ToTargetDir();
 
 	if (m_pOwner->Get_Frame() >= 1.8f)
+	{
+		m_pOwner->Shot_Bullet();
 		m_pOwner->Set_State(JOHNSTATE::IDLE);
+	}
 
 	return 0;
 }

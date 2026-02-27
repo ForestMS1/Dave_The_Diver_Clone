@@ -3,12 +3,12 @@
 
 class CJohn;
 
-class CJohnIdle :
+class CJohnMeleeAttack :
     public CBaseState<CJohn>
 {
 private:
-    explicit CJohnIdle(CJohn* pOwner);
-    virtual ~CJohnIdle();
+    explicit CJohnMeleeAttack(CJohn* pOwner);
+    virtual ~CJohnMeleeAttack();
 
 public:
     void Enter() override;
@@ -19,14 +19,18 @@ public:
     void Exit() override;
     void Clear() override;
 
+    void Reset_Size();
+    void Set_Size();
+
 public:
-    static CJohnIdle* Create(CJohn* pOwner);
+    static CJohnMeleeAttack* Create(CJohn* pOwner);
 
 private:
-    _float m_fBreakTime = 0.f;
-    _uint  m_iRand = 0;
+    wstring_view m_wsTexName;
+    _bool   m_bGoComplete = false;
+
+    _bool   m_bCompleteFramSizeCalc = false; //го..
 private:
     virtual void Free() override;
-
 };
 

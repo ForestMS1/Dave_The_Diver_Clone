@@ -2,13 +2,12 @@
 #include "CBaseState.h"
 
 class CJohn;
-
-class CJohnIdle :
+class CJohnMeleeAttackReady :
     public CBaseState<CJohn>
 {
 private:
-    explicit CJohnIdle(CJohn* pOwner);
-    virtual ~CJohnIdle();
+    explicit CJohnMeleeAttackReady(CJohn* pOwner);
+    virtual ~CJohnMeleeAttackReady();
 
 public:
     void Enter() override;
@@ -20,11 +19,10 @@ public:
     void Clear() override;
 
 public:
-    static CJohnIdle* Create(CJohn* pOwner);
+    static CJohnMeleeAttackReady* Create(CJohn* pOwner);
 
 private:
-    _float m_fBreakTime = 0.f;
-    _uint  m_iRand = 0;
+    _float m_fReadyTime = 0.f;
 private:
     virtual void Free() override;
 

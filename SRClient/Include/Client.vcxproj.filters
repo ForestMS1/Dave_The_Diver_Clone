@@ -382,6 +382,12 @@
     <Filter Include="01. Scene\03. Sushi\Wasabi">
       <UniqueIdentifier>{fd042b25-98c8-40a3-a4bd-f60dbcbe7d43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John\MeleeAttackReady">
+      <UniqueIdentifier>{c5758d6d-757a-4714-8fe3-cd21815f2728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\MeleeAttack">
+      <UniqueIdentifier>{4de75e6c-fc0e-4b85-bfbe-7136a0474a7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -996,6 +1002,12 @@
     <ClInclude Include="..\Header\CWasabiObject.h">
       <Filter>01. Scene\03. Sushi\Wasabi</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohnMeleeAttackReady.h">
+      <Filter>02. GameObject\John\MeleeAttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnMeleeAttack.h">
+      <Filter>02. GameObject\John\MeleeAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1588,6 +1600,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CWasabiObject.cpp">
       <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnMeleeAttackReady.cpp">
+      <Filter>02. GameObject\John\MeleeAttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnMeleeAttack.cpp">
+      <Filter>02. GameObject\John\MeleeAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

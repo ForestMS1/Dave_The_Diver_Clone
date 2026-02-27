@@ -12,6 +12,9 @@
 #include "CJohnChase.h"
 #include "CJohnAttackReady.h"
 #include "CJohnAttackShoot.h"
+#include "CDiveDaveBullet.h"
+#include "CJohnMeleeAttackReady.h"
+#include "CJohnMeleeAttack.h"
 CJohn::CJohn()
 {
 }
@@ -110,15 +113,26 @@ HRESULT	CJohn::Add_State()
 	m_pFSM->Add_State<CJohnChase>(JOHNSTATE::CHASE);
 	m_pFSM->Add_State<CJohnAttackReady>(JOHNSTATE::ATTACK_READY);
 	m_pFSM->Add_State<CJohnAttackShoot>(JOHNSTATE::SHOT);
+	m_pFSM->Add_State<CJohnMeleeAttackReady>(JOHNSTATE::MELEEATTACK_READY);
+	m_pFSM->Add_State<CJohnMeleeAttack>(JOHNSTATE::MELEEATTACK);
+
 
 	return S_OK;
 }
 
-void CJohn::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)
+void CJohn::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop)
 {
 	m_fFrame += fSpeed * fTimeDelta;
-	if (m_fFrame > size)
-		m_fFrame = 0.f;
+	if (loop)
+	{
+		if (m_fFrame > size)
+			m_fFrame = 0.f;
+	}
+	else
+	{
+		if (m_fFrame > size)
+			m_fFrame = size - 1;
+	}
 }
 
 CJohn* CJohn::Create()
@@ -169,4 +183,36 @@ void CJohn::Update_ToTargetDir()
 	m_pTargetTransform->Get_Info(INFO_POS, &vTargetPos);
 
 	m_vDirToTarget = vTargetPos - vCurPos;
+}
+
+void CJohn::Shot_Bullet()
+{
+	_vec3 vCurPos, vNorToTarget;
+	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+	D3DXVec3Normalize(&vNorToTarget, &m_vDirToTarget);
+
+	_vec3 vAxisX = { 1.f, 0.f, 0.f };
+	
+	_float dot = vAxisX.x * vNorToTarget.x + vAxisX.y * vNorToTarget.y;
+	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
+	_float fAngle = D3DXToDegree(atan2(cross, dot));
+
+	CDiveDaveBullet* pBullet = CDiveDaveBullet::Create(vCurPos, vNorToTarget, fAngle);
+	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
+}
+
+_bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
+{
+	_vec3 vDir;
+	D3DXVec3Normalize(&vDir, &m_vDirToTarget);
+
+	m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
+	m_fAccRushDist += fTimeDelta * 5.f;
+
+	if (m_fAccRushDist > 7.f)
+	{
+		m_fAccRushDist = 0.f;
+		return true;
+	}
+	return false;
 }

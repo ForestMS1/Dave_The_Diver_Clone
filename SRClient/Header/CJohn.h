@@ -36,7 +36,7 @@ public:
 
 	_float				Get_Frame()									{ return m_fFrame; };
 	void				Init_Frame()								{ m_fFrame = 0.f; }
-	void				AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size);
+	void				AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop = true);
 
 	// 어느쪽 보고있는지
 	_bool				Is_Flip()															const	{ return m_bFlip; }
@@ -49,6 +49,8 @@ public:
 	_bool				Check_TargetInRange();
 	void				Update_ToTargetDir();
 	_vec3				Get_ToTargetDir() const { return m_vDirToTarget; }
+	void				Shot_Bullet();
+	_bool				Rush_ToTarget(const _float& fTimeDelta);
 
 
 private:
@@ -65,8 +67,9 @@ private:
 	_bool	m_bFlip = false;
 	_bool   m_bStartCombat = false; // 플레이어가 처음 보스 마주치면 보스전 시작
 	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
-
 	_vec3   m_vDirToTarget;
+
+	_float	m_fAccRushDist = 0.f;
 
 private:
 	CFSM<CJohn, JOHNSTATE>* m_pFSM = nullptr;

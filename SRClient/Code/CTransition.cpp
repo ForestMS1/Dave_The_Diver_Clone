@@ -562,6 +562,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 		s = L"../Bin/Resource/Texture/JohnWatson/Move/MoveUp0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnMoveUp", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/JohnWatson/MeleeSkill01_Ready/MeleeSkill01_Ready0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnMeleeSkill01_Ready", CAssetTexture::Create(s.c_str()));
 	}
 
 	for (int i = 0; i < 2; ++i)
@@ -571,6 +574,18 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 		s = L"../Bin/Resource/Texture/JohnWatson/TL_Shoot/TL_Shoot0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnTL_Shoot", CAssetTexture::Create(s.c_str()));
+	}
+
+
+	for (int i = 0; i < 5; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/MeleeSkill01_Attack/MeleeSkill01_Attack_01_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"MeleeSkill01_Attack_01", CAssetTexture::Create(s.c_str()));
+	}
+	for (int i = 0; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/MeleeSkill01_Attack/MeleeSkill01_Attack_02_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"MeleeSkill01_Attack_02", CAssetTexture::Create(s.c_str()));
 	}
 
 
