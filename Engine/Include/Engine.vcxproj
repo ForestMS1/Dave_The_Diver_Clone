@@ -175,8 +175,10 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAssetTextureFromCreate.h" />
     <ClInclude Include="..\Header\CAssetTextureFromInMem.h" />
     <ClInclude Include="..\Header\CAttackReadyArmTex.h" />
+    <ClInclude Include="..\Header\CBlood.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
+    <ClInclude Include="..\Header\CBubble.h" />
     <ClInclude Include="..\Header\CBullet.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCamera.h" />
@@ -228,6 +230,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CRcTex.h" />
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
+    <ClInclude Include="..\Header\CSeaBubble.h" />
     <ClInclude Include="..\Header\CSoundMgr.h" />
     <ClInclude Include="..\Header\CSpine.h" />
     <ClInclude Include="..\Header\CTargetArrowTex.h" />
@@ -266,8 +269,10 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAssetTextureFromCreate.cpp" />
     <ClCompile Include="..\Code\CAssetTextureFromInMem.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp" />
+    <ClCompile Include="..\Code\CBlood.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />
+    <ClCompile Include="..\Code\CBubble.cpp" />
     <ClCompile Include="..\Code\CBullet.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCamera.cpp" />
@@ -319,6 +324,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CRcTex.cpp" />
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
+    <ClCompile Include="..\Code\CSeaBubble.cpp" />
     <ClCompile Include="..\Code\CSoundMgr.cpp" />
     <ClCompile Include="..\Code\CSpine.cpp" />
     <ClCompile Include="..\Code\CTargetArrowTex.cpp" />

@@ -138,7 +138,7 @@ HRESULT CTerrian::Ready_Material()
     tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 
-    tMtrl.Emissive = D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.f);
+    tMtrl.Emissive = D3DXCOLOR(1.f, 1.f, 1.f, 0.f);
     tMtrl.Power = 0.f;
 
     pGraphicDev->SetMaterial(&tMtrl);

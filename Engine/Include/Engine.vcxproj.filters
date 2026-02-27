@@ -262,6 +262,15 @@
     <Filter Include="02. Component\Spine">
       <UniqueIdentifier>{1e6ef38f-6061-45d9-a713-9907f291d5cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\13. ParticleMgr\03. Particles\05. Bubble">
+      <UniqueIdentifier>{f79996a6-838e-47bb-b496-0460859674ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\13. ParticleMgr\03. Particles\06. SeaBubble">
+      <UniqueIdentifier>{f38e35a5-c5ba-4bd2-83e7-91b8303f6b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\13. ParticleMgr\03. Particles\07. Blood">
+      <UniqueIdentifier>{7cbcb0e2-a8fe-42f7-b343-5cf432e9c309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -732,6 +741,15 @@
     <ClCompile Include="..\Code\CSpine.cpp">
       <Filter>02. Component\Spine</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CBubble.cpp">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\05. Bubble</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSeaBubble.cpp">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\06. SeaBubble</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBlood.cpp">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\07. Blood</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -1003,6 +1021,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CSpine.h">
       <Filter>02. Component\Spine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBubble.h">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\05. Bubble</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSeaBubble.h">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\06. SeaBubble</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBlood.h">
+      <Filter>00. Manager\13. ParticleMgr\03. Particles\07. Blood</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

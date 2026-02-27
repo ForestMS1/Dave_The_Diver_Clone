@@ -10,8 +10,8 @@ namespace spine
 	class AnimationState;
 }
 
-
 BEGIN(Engine)
+
 class CDynamicBuffer;
 class ENGINE_DLL CSpine : public CComponent
 {
