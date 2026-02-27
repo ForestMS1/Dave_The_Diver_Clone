@@ -3,6 +3,7 @@
 #include "CBaseState.h"
 #include "CAABB.h"
 #include "CFSM.h"
+
 class CJohn : public CGameObject
 {
 private:
@@ -11,6 +12,7 @@ private:
 	virtual				~CJohn();
 
 public:
+	void				Start(); // 유니티 Start함수 처럼 써보기
 	HRESULT				Ready_GameObject() override;
 	_int				Update_GameObject(const _float& fTimeDelta) override;
 	void				LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -30,6 +32,7 @@ public:
 	}
 
 	void				Get_Pos(_vec3* vPos)						{ return m_pTransformCom->Get_Info(INFO_POS, vPos); }
+	void				Get_TargetPos(_vec3* vTargetPos)			{ if (m_pTargetTransform == nullptr) return; m_pTargetTransform->Get_Info(INFO_POS, vTargetPos); }
 
 	_float				Get_Frame()									{ return m_fFrame; };
 	void				Init_Frame()								{ m_fFrame = 0.f; }
@@ -42,6 +45,11 @@ public:
 	// 전역 상태 바로 진입
 	_bool				Check_GlobalState();
 
+	// 타겟 추적
+	_bool				Check_TargetInRange();
+	_vec3				Get_ToTargetDir() const { return m_vDirToTarget; }
+
+
 private:
 	HRESULT				Ready_Component();
 	HRESULT				Add_State();
@@ -51,14 +59,17 @@ private:
 	Engine::CTransform* m_pTransformCom;
 	CAABB* m_pAABB; // 아이템 상자랑 충돌 용
 
-
 private:
 	_float	m_fFrame = 0.f;
 	_bool	m_bFlip = false;
+	_bool   m_bStartCombat = false; // 플레이어가 처음 보스 마주치면 보스전 시작
+	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
 
+	_vec3   m_vDirToTarget;
 
 private:
 	CFSM<CJohn, JOHNSTATE>* m_pFSM = nullptr;
+	CTransform* m_pTargetTransform = nullptr;
 
 public:
 	static CJohn* Create();

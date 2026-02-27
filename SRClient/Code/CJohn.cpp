@@ -4,6 +4,14 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CJohnIdle.h"
+#include "CSelector.h"
+#include "CSequence.h"
+#include "CActionNode.h"
+#include "CManagement.h"
+#include "CTimerMgr.h"
+#include "CJohnChase.h"
+#include "CJohnAttackReady.h"
+#include "CJohnAttackShoot.h"
 CJohn::CJohn()
 {
 }
@@ -24,6 +32,9 @@ HRESULT CJohn::Ready_GameObject()
 	if (FAILED(Add_State()))
 		return E_FAIL;
 
+	_vec3 vScale = { 0.5f, 0.5f, 1.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
+
 	Set_State(JOHNSTATE::IDLE);
 
 	return S_OK;
@@ -31,6 +42,8 @@ HRESULT CJohn::Ready_GameObject()
 
 _int CJohn::Update_GameObject(const _float& fTimeDelta)
 {
+	CJohn::Start();
+
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 
@@ -88,6 +101,9 @@ HRESULT	CJohn::Add_State()
 		return E_FAIL;
 
 	m_pFSM->Add_State<CJohnIdle>(JOHNSTATE::IDLE);
+	m_pFSM->Add_State<CJohnChase>(JOHNSTATE::CHASE);
+	m_pFSM->Add_State<CJohnAttackReady>(JOHNSTATE::ATTACK_READY);
+	m_pFSM->Add_State<CJohnAttackShoot>(JOHNSTATE::SHOT);
 
 	return S_OK;
 }
@@ -117,4 +133,29 @@ void CJohn::Free()
 	//Safe_Release(m_pAABB);
 	Safe_Release(m_pFSM);
 	CGameObject::Free();
+}
+
+void CJohn::Start()
+{
+	if (m_bInitComplete)
+		return;
+
+	m_bInitComplete = true;
+	m_pTargetTransform = static_cast<CTransform*>
+		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"DiveDave", L"Com_Transform"));
+}
+
+_bool CJohn::Check_TargetInRange()
+{
+	_vec3 vCurPos, vTargetPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+	m_pTargetTransform->Get_Info(INFO_POS, &vTargetPos);
+
+	m_vDirToTarget = vTargetPos - vCurPos;
+
+	// 범위 내에 들어왔음
+	if (D3DXVec3Length(&m_vDirToTarget) < 4.f)
+		return true;
+
+	return false;
 }

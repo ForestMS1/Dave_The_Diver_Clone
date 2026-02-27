@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CActionNode.h" />
     <ClInclude Include="..\Header\CAddMenuButton.h" />
     <ClInclude Include="..\Header\CAttackSubFail.h" />
     <ClInclude Include="..\Header\CAttackSubFight.h" />
@@ -211,16 +212,22 @@
     <ClInclude Include="..\Header\CHood.h" />
     <ClInclude Include="..\Header\CIncreaseButton.h" />
     <ClInclude Include="..\Header\CItemBoxUI.h" />
+    <ClInclude Include="..\Header\CJohnAttackReady.h" />
+    <ClInclude Include="..\Header\CJohnAttackShoot.h" />
+    <ClInclude Include="..\Header\CJohnChase.h" />
     <ClInclude Include="..\Header\CJohnIdle.h" />
     <ClInclude Include="..\Header\CKitchen.h" />
     <ClInclude Include="..\Header\CLogoBG.h" />
     <ClInclude Include="..\Header\CLogoBtnArea.h" />
     <ClInclude Include="..\Header\CLogoTitle.h" />
     <ClInclude Include="..\Header\CMenuBubble.h" />
+    <ClInclude Include="..\Header\CNode.h" />
     <ClInclude Include="..\Header\COpenShop.h" />
     <ClInclude Include="..\Header\CO2StrokeUI.h" />
     <ClInclude Include="..\Header\CO2Text.h" />
     <ClInclude Include="..\Header\CO2UI.h" />
+    <ClInclude Include="..\Header\CSelector.h" />
+    <ClInclude Include="..\Header\CSequence.h" />
     <ClInclude Include="..\Header\IObserver.h" />
     <ClInclude Include="..\Header\CRKeyUI.h" />
     <ClInclude Include="..\Header\CShipBG.h" />
@@ -368,6 +375,9 @@
     <ClCompile Include="..\Code\CHarpoonProjectile.cpp" />
     <ClCompile Include="..\Code\CIncreaseButton.cpp" />
     <ClCompile Include="..\Code\CItemBoxUI.cpp" />
+    <ClCompile Include="..\Code\CJohnAttackReady.cpp" />
+    <ClCompile Include="..\Code\CJohnAttackShoot.cpp" />
+    <ClCompile Include="..\Code\CJohnChase.cpp" />
     <ClCompile Include="..\Code\CJohnIdle.cpp" />
     <ClCompile Include="..\Code\CLessButton.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />

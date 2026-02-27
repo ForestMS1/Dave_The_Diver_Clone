@@ -283,6 +283,18 @@
     <Filter Include="02. GameObject\John\Idle">
       <UniqueIdentifier>{23a261d7-1f68-4dab-8cc6-213c29aa623c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John\BT">
+      <UniqueIdentifier>{9e53a23b-8aa8-4693-a0ba-14dde72e6c69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\Chase">
+      <UniqueIdentifier>{3f9d88f1-54e0-45c6-ae90-7ec0c886d8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\AttackReady">
+      <UniqueIdentifier>{0c18f5e8-cdd1-44a6-b5ca-18765241f489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\AttackShoot">
+      <UniqueIdentifier>{58f7737d-00cc-4ec6-a754-2f4958c2ff0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -762,6 +774,27 @@
     <ClInclude Include="..\Header\CJohnIdle.h">
       <Filter>02. GameObject\John\Idle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CNode.h">
+      <Filter>02. GameObject\John\BT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSelector.h">
+      <Filter>02. GameObject\John\BT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CActionNode.h">
+      <Filter>02. GameObject\John\BT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSequence.h">
+      <Filter>02. GameObject\John\BT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnChase.h">
+      <Filter>02. GameObject\John\Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnAttackReady.h">
+      <Filter>02. GameObject\John\AttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnAttackShoot.h">
+      <Filter>02. GameObject\John\AttackShoot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1231,6 +1264,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnIdle.cpp">
       <Filter>02. GameObject\John\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnChase.cpp">
+      <Filter>02. GameObject\John\Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnAttackReady.cpp">
+      <Filter>02. GameObject\John\AttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnAttackShoot.cpp">
+      <Filter>02. GameObject\John\AttackShoot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

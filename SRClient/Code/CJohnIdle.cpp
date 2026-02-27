@@ -14,6 +14,18 @@ CJohnIdle::~CJohnIdle()
 
 void CJohnIdle::Enter()
 {
+	m_pOwner->Init_Frame();
+
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnIdle")->at(0))->Get_ImgInfo();
+	imgInfo.Width;
+
+	_float fWidth = imgInfo.Width;;
+	_float fHeight = imgInfo.Height;
+	_float fAspect = fWidth + fHeight;
+	fAspect /= 2.f;
+
+	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
+	m_pOwner->Multiply_Scale(&vScale);
 }
 
 void CJohnIdle::Input(const _float& fTimeDelta)
@@ -24,6 +36,15 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 {
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);
 
+
+	if (!m_pOwner->Check_TargetInRange())
+	{
+		m_pOwner->Set_State(JOHNSTATE::CHASE);
+	}
+	else
+	{
+		m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
+	}
     return 0;
 }
 
@@ -52,6 +73,16 @@ void CJohnIdle::Exit()
 
 void CJohnIdle::Clear()
 {
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnIdle")->at(0))->Get_ImgInfo();
+	imgInfo.Width;
+
+	_float fWidth = imgInfo.Width;;
+	_float fHeight = imgInfo.Height;
+	_float fAspect = fWidth + fHeight;
+	fAspect /= 2.f;
+
+	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
+	m_pOwner->Multiply_Scale(&vScale);
 }
 
 CJohnIdle* CJohnIdle::Create(CJohn* pOwner)
