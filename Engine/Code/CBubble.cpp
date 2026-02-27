@@ -46,10 +46,10 @@ void CBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 		dynamic_cast<CTransform*>(m_pPlayer->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Info(INFO_POS,&playerPos);
 	}
 
-	
+	_size.x = 0.2f;
 	playerPos.x += GetRandomFloat(-0.2f, 0.2f);
 	playerPos.y += GetRandomFloat(-0.2f, 0.2f);
-	playerPos.z = 1.f;
+	//playerPos.z = 0.f;
 
 	attribute->_position = playerPos;
 	attribute->_isAlive = true;
@@ -75,6 +75,8 @@ void CBubble::preRender()
 {
 	__super::preRender();
 	_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	//_device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }

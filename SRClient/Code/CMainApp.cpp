@@ -54,12 +54,13 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	
 	CImguiMgr::GetInstance()->Update_Imgui();
 
-	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
+
 	
 	CMapMgr::GetInstance()->Update_Map(fTimeDelta);
 
 	m_pManagement->Update_Scene(fTimeDelta);
 
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	m_pManagement->Update_ImGui();
 	CAssetMgr::GetInstance()->Update_ImGui();
 
@@ -76,11 +77,11 @@ void CMainApp::LateUpdate_MainApp(const float& fTimeDelta)
 void CMainApp::Render_MainApp()
 {
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
-
+	
 	m_pManagement->Render_Scene(m_pGraphicDev);
 
 	CImguiMgr::GetInstance()->Render_Imgui(m_pGraphicDev);
-	CParticleMgr::GetInstance()->Render_Particle();
+
 
 	CColliderMgr::GetInstance()->Render();
 
