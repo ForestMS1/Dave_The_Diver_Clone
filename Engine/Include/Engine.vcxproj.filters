@@ -259,6 +259,9 @@
     <Filter Include="02. Component\00. VIBuffer\RcDynamicTex">
       <UniqueIdentifier>{e852f827-7988-4fcf-9ef6-c1cd3eab3013}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\Spine">
+      <UniqueIdentifier>{1e6ef38f-6061-45d9-a713-9907f291d5cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -726,6 +729,9 @@
     <ClCompile Include="..\Code\CRcDynamicTex.cpp">
       <Filter>02. Component\00. VIBuffer\RcDynamicTex</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CSpine.cpp">
+      <Filter>02. Component\Spine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -994,6 +1000,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CRcDynamicTex.h">
       <Filter>02. Component\00. VIBuffer\RcDynamicTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpine.h">
+      <Filter>02. Component\Spine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
