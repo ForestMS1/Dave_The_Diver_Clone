@@ -47,6 +47,7 @@ public:
 
 	// Å¸°Ù ÃßÀû
 	_bool				Check_TargetInRange();
+	void				Update_ToTargetDir();
 	_vec3				Get_ToTargetDir() const { return m_vDirToTarget; }
 
 

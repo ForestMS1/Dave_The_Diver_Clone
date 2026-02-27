@@ -37,6 +37,12 @@ HRESULT CJohn::Ready_GameObject()
 
 	Set_State(JOHNSTATE::IDLE);
 
+	//std::function<NodeStatus(CJohn&)> f1 = &CJohn::Func;
+	//CSelector* pRoot = new CSelector;
+
+	//CActionNode* pFuncNode = new CActionNode(f1);
+	//pRoot->Add_Child(pFuncNode);
+
 	return S_OK;
 }
 
@@ -147,15 +153,20 @@ void CJohn::Start()
 
 _bool CJohn::Check_TargetInRange()
 {
-	_vec3 vCurPos, vTargetPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
-	m_pTargetTransform->Get_Info(INFO_POS, &vTargetPos);
-
-	m_vDirToTarget = vTargetPos - vCurPos;
-
 	// 범위 내에 들어왔음
 	if (D3DXVec3Length(&m_vDirToTarget) < 4.f)
 		return true;
 
 	return false;
+}
+
+void CJohn::Update_ToTargetDir()
+{
+	if (m_pTargetTransform == nullptr)
+		return;
+	_vec3 vCurPos, vTargetPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+	m_pTargetTransform->Get_Info(INFO_POS, &vTargetPos);
+
+	m_vDirToTarget = vTargetPos - vCurPos;
 }

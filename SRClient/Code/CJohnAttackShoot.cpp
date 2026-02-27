@@ -35,6 +35,7 @@ void CJohnAttackShoot::Input(const _float& fTimeDelta)
 _int CJohnAttackShoot::Update_State(const _float& fTimeDelta)
 {
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 2);
+	m_pOwner->Update_ToTargetDir();
 
 	if (m_pOwner->Get_Frame() >= 1.8f)
 		m_pOwner->Set_State(JOHNSTATE::IDLE);
