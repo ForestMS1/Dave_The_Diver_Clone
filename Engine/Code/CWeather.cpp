@@ -106,7 +106,7 @@ void CWeather::update(float fTimeDelta)
 		for (i = _particles.begin(); i != _particles.end(); i++) {
 			//max와 min 은 
 			//max 와 min 을 정하고  파티클의 포지션이 범위를 벗어나면 리셋
-			i->_position += i->velocity * fTimeDelta;
+			i->_position += i->velocity * fTimeDelta; 
 			//FXMVECTOR curpos = { i->_position.x, i->_position.y, i->_position.z };
 			if (!Intersect_AABB(m_vMin,m_vMax,i->_position)) {
 				resetParticle(&(*i),i->_color);

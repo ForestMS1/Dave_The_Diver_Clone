@@ -1,4 +1,6 @@
 #include "CRenderer.h"
+#include "CCameraMgr.h"
+#include "CParticleMgr.h"
 
 IMPLEMENT_SINGLETON(CRenderer)
 
@@ -25,7 +27,9 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
+	CParticleMgr::GetInstance()->Render_Particle();
 	Render_UI(pGraphicDev);
+	Render_Ortho(pGraphicDev);
 
 	Clear_RenderGroup();
 }
@@ -83,6 +87,31 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();
+}
+void CRenderer::Render_Ortho(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_RenderGroup[RENDER_ORTHO_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+
+	CCameraMgr::GetInstance()->Set_Ortho();
+
+	for (auto& pObj : m_RenderGroup[RENDER_ORTHO_UI])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+	CCameraMgr::GetInstance()->Set_Perspective();
 }
 void CRenderer::Free()
 {

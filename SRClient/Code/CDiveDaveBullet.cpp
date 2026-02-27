@@ -3,6 +3,7 @@
 #include "CRenderer.h"
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
+#include "CFishGameObject.h"
 CDiveDaveBullet::CDiveDaveBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
     : m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -48,7 +49,10 @@ HRESULT CDiveDaveBullet::Ready_GameObject()
 _int CDiveDaveBullet::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_fLifeTime > 3.f)
+	{
 		m_bDead = true;
+		return 0;
+	}
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	// 충돌체 그룹에 넣어줘야한다.
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Ship", m_pAABB);
@@ -116,6 +120,22 @@ void CDiveDaveBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 					}
 				}
 			}
+		}
+	}
+
+
+	// [LSY] 총알이랑 물고기
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_FishesHitbox"))
+	{
+		for (auto& pCollider : *pColliders)
+		{
+				if (m_pAABB->Intersect(pCollider))
+				{
+					if (pCollider->Get_Tag() == L"AABB_FishHitbox")
+					{
+						reinterpret_cast<CFishGameObject*>(pCollider->Get_VoidPtr())->Damaged(1);
+					}
+				}
 		}
 	}
 }

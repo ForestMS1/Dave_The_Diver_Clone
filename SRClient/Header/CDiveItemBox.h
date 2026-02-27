@@ -53,7 +53,7 @@ private:
 	_bool m_bIsCollWithMe = false;
 
 public:
-	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0);
+	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0.1f);
 
 private:
 	virtual void Free() override;

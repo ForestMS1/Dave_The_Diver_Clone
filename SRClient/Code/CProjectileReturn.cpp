@@ -2,6 +2,7 @@
 #include "CHarpoonProjectile.h"
 #include "CDiveDave.h"
 #include "CTestFish.h"
+#include "CFishGameObject.h"
 
 CProjectileReturn::CProjectileReturn(CHarpoonProjectile* pOwner)
     : CBaseState<CHarpoonProjectile>(pOwner)
@@ -78,19 +79,41 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 
 		// 플레이어가 물고기 잡기에 성공했다면 물고기 끌어당김
 		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
-			static_cast<CTestFish*>(pProjectile->m_pCaughtFish)->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+		{
+			if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
+			{
+				pFish->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+			}
+			else
+			{
+				static_cast<CTestFish*>(pProjectile->m_pCaughtFish)->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
+			}
+		}
+
 	}
 	else
 	{
 		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
 		{
-			pProjectile->m_pCaughtFish->Set_Dead();
+			pProjectile->m_pCaughtFish->Set_DeadCascade();
 			pProjectile->m_pCaughtFish = nullptr;
 			static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_FishCaught(false);
 		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);
 		static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
+
+	}
+
+
+
+	// [LSY] 여기가 물고기 실패했을때인가??
+	if (pProjectile->m_pCaughtFish != nullptr && !static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
+	{
+		if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
+		{
+			pFish->QTERelease();
+		}
 	}
 }
 

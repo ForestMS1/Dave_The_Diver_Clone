@@ -17,6 +17,7 @@
 #include "CDiveDavePickUp.h"
 #include "CDiveDaveHit.h"
 #include "CDiveDaveDie.h"
+#include "CParticleMgr.h"
 string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
@@ -28,12 +29,25 @@ CDiveDave::CDiveDave()
 }
 
 CDiveDave::CDiveDave(const CDiveDave& rhs)
-	: CGameObject(rhs)
+	: CSubject(rhs)
 {
 }
 
 CDiveDave::~CDiveDave()
 {
+}
+
+void CDiveDave::Start()
+{
+	if (m_bInitComplete)
+		return;
+
+	m_bInitComplete = true;
+	Event e;
+	e.type = EVENTTYPE::CHANGE_HP;
+	e.value = (_uint)m_fHp;
+	e.fValue = m_fHp / m_fMaxHp;
+	CDiveDave::Notify(e);
 }
 
 HRESULT CDiveDave::Ready_GameObject()
@@ -63,6 +77,7 @@ HRESULT CDiveDave::Ready_GameObject()
 
 _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 {
+	CDiveDave::Start();
 	// 충돌체 그룹에 넣어줘야한다.
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_DiveDaveWithItemBox", m_pAABB);
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_DiveDaveWithItem", m_pAABBItem);
@@ -89,9 +104,24 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	ImGui::SliderFloat3("Transform", vPos, 0.f, 0.f);
 	if (ImGui::Button("OnHit"))
-		m_bIsHit = true;
+	{
+		On_Hit(10.f);//m_bIsHit = true;
+		//테스트
+		_vec3 Pos{};
+		m_pTransformCom->Get_Info(INFO_POS, &Pos);
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
+	}
+
+	
 	if (ImGui::Button("OnDead"))
 		m_bIsDie = true;
+
+	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
+	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);
+	string Hp = "Hp : " + to_string((_int)m_fHp);
+	ImGui::Text(ItemSlot1.c_str());
+	ImGui::Text(ItemSlot2.c_str());
+	ImGui::Text(Hp.c_str());
 	ImGui::End();
 #endif
 	return iExit;
@@ -131,6 +161,11 @@ ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
 void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
 {
 	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+	// 테스트
+	_vec3 Pos{};
+	m_pTransformCom->Get_Info(INFO_POS, &Pos);
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
+	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
 }
 
 void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)
@@ -151,6 +186,7 @@ _bool CDiveDave::Check_GlobalState()
 	if (m_bIsHit)
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::HIT);
+	
 		return true;
 	}
 
@@ -236,10 +272,6 @@ void CDiveDave::Key_Input()
 {
 	if (!m_bCanKeyInput)
 		return;
-
-
-	if (CDiveDave::Get_State() == DIVEDAVESTATE::IDLE && CDInputMgr::GetInstance()->Key_Down(DIK_TAB))
-		m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
 }
 
 void CDiveDave::Mouse_Input()

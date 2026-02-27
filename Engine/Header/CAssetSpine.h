@@ -24,6 +24,18 @@ public:
 	HRESULT Unload() override;
 
 public:
+	spine::SkeletonData* Get_SkeletonData()
+	{
+		return m_pSkeletonData.get();
+	}
+	spine::AnimationStateData* Get_AnimationStateData()
+	{
+		return m_pAniStateData.get();
+	}
+	std::wstring_view Get_TextureString();
+	
+
+public:
 	void TempUpdate(const float& fTimeDelta);
 	void TempRender();
 	HRESULT LoadFromFile(std::wstring_view atlasPath, std::wstring_view skeletonPath);

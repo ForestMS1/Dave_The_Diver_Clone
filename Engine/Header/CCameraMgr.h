@@ -29,6 +29,9 @@ public:
 	CCamera* Get_CurCamera() { return m_pCurCamera; }
 	CCamera* Get_Camera(wstring_view svCameraTag) { return Find_Camera(svCameraTag); };
 
+	void	Set_Ortho();
+	void	Set_Perspective();
+
 private:
 	CCamera*	Find_Camera(wstring_view svCameraTag);
 private:

@@ -101,7 +101,7 @@ void CTerrian::Render_GameObject()
     if (FAILED(Ready_Material()))
         return;
 
-
+    Set_Fog();
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
   //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
@@ -119,7 +119,7 @@ void CTerrian::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
    // pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
+    pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
     pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
@@ -138,7 +138,7 @@ HRESULT CTerrian::Ready_Material()
     tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 
-    tMtrl.Emissive = D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.f);
+    tMtrl.Emissive = D3DXCOLOR(1.f, 1.f, 1.f, 0.f);
     tMtrl.Power = 0.f;
 
     pGraphicDev->SetMaterial(&tMtrl);
@@ -240,4 +240,20 @@ void CTerrian::Free()
 
     Safe_Release(m_pfrustomAABB);
   
+}
+
+void CTerrian::Set_Fog() {
+    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+    float Start = -50.f;
+    float End   = 400.f;
+
+    pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+    pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(28, 186, 247));
+    //pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(11, 73, 97));
+    //pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_XRGB(4, 27, 36));
+
+    pGraphicDev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
+    pGraphicDev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)&Start));
+    pGraphicDev->SetRenderState(D3DRS_FOGEND, *((DWORD*)&End));
+
 }

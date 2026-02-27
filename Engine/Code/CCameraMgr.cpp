@@ -174,3 +174,16 @@ void CCameraMgr::Free()
 	for_each(m_mapCamera.begin(), m_mapCamera.end(), CDeleteMap());
 	m_mapCamera.clear();
 }
+
+void CCameraMgr::Set_Ortho()
+{
+	if (m_pCurCamera == nullptr)
+		return;
+	m_pCurCamera->Set_Ortho();
+}
+void CCameraMgr::Set_Perspective()
+{
+	if (m_pCurCamera == nullptr)
+		return;
+	m_pCurCamera->Set_Perspective();
+}

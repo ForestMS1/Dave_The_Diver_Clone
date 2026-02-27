@@ -11,6 +11,7 @@ private:
 
 
 public:
+	void		Init();
 	HRESULT		Ready_GameObject() override;
 	_int		Update_GameObject(const _float& fTimeDelta) override;
 	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -30,6 +31,7 @@ private:
 
 private:
 	_bool m_bIsFlip = false;
+	_bool m_bInitComplete = false;
 
 public:
 	static CDiveDaveGun* Create();
