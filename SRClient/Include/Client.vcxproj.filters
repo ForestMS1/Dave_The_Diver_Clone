@@ -256,6 +256,9 @@
     <Filter Include="02. GameObject\02. Terrian">
       <UniqueIdentifier>{a783af74-29a5-4b5b-b7f5-ddbe8df41409}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Wasabi">
+      <UniqueIdentifier>{fd042b25-98c8-40a3-a4bd-f60dbcbe7d43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -681,6 +684,12 @@
     <ClInclude Include="..\Header\CMenuBubble.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWasabi.h">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWasabiObject.h">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1096,6 +1105,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMenuBubble.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWasabi.cpp">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWasabiObject.cpp">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

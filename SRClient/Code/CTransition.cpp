@@ -630,6 +630,88 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer1MenuTex", Engine::CTexture::Create(L"Tex_Customer1Menu"))))
 		return E_FAIL;
 
+	/////////////손님 2
+
+	for (int i = 0; i < 8; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer2/black_walk" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer2Walk", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer2WalkTexture", Engine::CTexture::Create(L"Tex_Customer2Walk"))))
+		return E_FAIL;
+	for (int i = 0; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer2/black_wait" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer2Wait", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer2WaitTexture", Engine::CTexture::Create(L"Tex_Customer2Wait"))))
+		return E_FAIL;
+	for (int i = 0; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer2/black_eat" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer2Eat", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer2EatTexture", Engine::CTexture::Create(L"Tex_Customer2Eat"))))
+		return E_FAIL;
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer2/black_happy" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer2Happy", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer2HappyTexture", Engine::CTexture::Create(L"Tex_Customer2Happy"))))
+		return E_FAIL;
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer2/black_anger" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer2Anger", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer2AngerTexture", Engine::CTexture::Create(L"Tex_Customer2Anger"))))
+		return E_FAIL;
+	///////
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer2Menu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Customer/Customer2/black_menu0.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer2MenuTex", Engine::CTexture::Create(L"Tex_Customer2Menu"))))
+		return E_FAIL;
+	//손님 3
+	for (int i = 1; i < 9; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer3/Walk0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer3Walk", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer3WalkTexture", Engine::CTexture::Create(L"Tex_Customer3Walk"))))
+		return E_FAIL;
+	for (int i = 1; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer3/Wait0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer3Wait", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer3WaitTexture", Engine::CTexture::Create(L"Tex_Customer3Wait"))))
+		return E_FAIL;
+	for (int i = 1; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer3/Eat0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer3Eat", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer3EatTexture", Engine::CTexture::Create(L"Tex_Customer3Eat"))))
+		return E_FAIL;
+	for (int i = 1; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer3/Happy0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer3Happy", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer3HappyTexture", Engine::CTexture::Create(L"Tex_Customer3Happy"))))
+		return E_FAIL;
+	for (int i = 1; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/Customer/Customer3/Anger0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer3Anger", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer3AngerTexture", Engine::CTexture::Create(L"Tex_Customer3Anger"))))
+		return E_FAIL;
+	///////
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Customer3Menu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Customer/Customer3/Menu.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Customer3MenuTex", Engine::CTexture::Create(L"Tex_Customer3Menu"))))
+		return E_FAIL;
+	//여기까지
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_AddMenu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/AddMenuButton.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_AddMenuTex", Engine::CTexture::Create(L"Tex_AddMenu"))))
 		return E_FAIL;
@@ -756,6 +838,37 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 		return E_FAIL;
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Red", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/red.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RedTex", Engine::CTexture::Create(L"Tex_Red"))))
+		return E_FAIL;
+	//Wasabi_01
+
+	for (int i = 1; i < 9; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/SushiBar/UI/Wasabi_0" + ::to_wstring(i) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiAnim", CAssetTexture::Create(s.c_str()));
+	}
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WasabiAnim", Engine::CTexture::Create(L"Tex_WasabiAnim"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingBox", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Box2.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingComplete", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Box_Complete1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Icon.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Yellow", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Yellow.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingGauge", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Gauge1.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_MenuChoosing", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Menu_Choosing.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiBox2", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SushiBox2.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Happy", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Happy.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Angry", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Angry.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_FKey", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/F_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_KKey", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/K_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_QTE_WasabiBG.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiGaugeBar", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiGaugeBar.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiGaugeStancil", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiGaugeStancil.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiIcon.png"));
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Wasabi", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/wasabi.png"));
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiObject", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/wasabiObject.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WasabiObjectTex", Engine::CTexture::Create(L"Tex_WasabiObject"))))
 		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG

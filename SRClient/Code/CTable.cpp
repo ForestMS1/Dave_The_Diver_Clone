@@ -85,8 +85,8 @@ HRESULT CTable::Ready_Component()
     // Æ®·£½ºÆû
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
-    m_pTransformCom->m_vScale = { 8.f, 1.f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 1.3f, -2.5f, -1.f };
+    m_pTransformCom->m_vScale = { 8.f, 0.72f, 1.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 2.94f, -2.04f, -2.9f };
 
     return S_OK;
 }

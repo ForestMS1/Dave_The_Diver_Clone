@@ -36,6 +36,7 @@ public:
 
 private:
 	virtual void Free();
+	void	Key_Input();
 
 };
 

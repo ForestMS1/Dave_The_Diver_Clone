@@ -287,6 +287,8 @@
     <ClInclude Include="..\Header\CUpgradeButton.h" />
     <ClInclude Include="..\Header\CUpgradeConfirmButton.h" />
     <ClInclude Include="..\Header\CUpgradeFrame.h" />
+    <ClInclude Include="..\Header\CWasabi.h" />
+    <ClInclude Include="..\Header\CWasabiObject.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="..\Header\IDiverInfo.h" />
@@ -430,6 +432,8 @@
     <ClCompile Include="..\Code\CUpgradeButton.cpp" />
     <ClCompile Include="..\Code\CUpgradeConfirmButton.cpp" />
     <ClCompile Include="..\Code\CUpgradeFrame.cpp" />
+    <ClCompile Include="..\Code\CWasabi.cpp" />
+    <ClCompile Include="..\Code\CWasabiObject.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="..\Code\IDiverInfo.cpp" />

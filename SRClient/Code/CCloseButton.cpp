@@ -96,11 +96,7 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         if (addButton->size() == 0) {
                             CGameObject* openShop = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"OpenShop");
                             openShop->Set_Render(true);
-                            for (int i = 0; i < 5; i++) {
-                                CGameObject* pGameObject = CCustomer1::Create();
-                                CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"Customer", pGameObject);
-
-                            }
+                          
                         }
 
                     }

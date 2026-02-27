@@ -87,7 +87,7 @@ HRESULT CKitchen::Ready_Component()
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 2.f, 0.3f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 7.5f, -2.f, 0.5f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 6.8f, -2.f, 0.5f };
     return S_OK;
 }
 

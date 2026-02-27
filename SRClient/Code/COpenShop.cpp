@@ -6,6 +6,8 @@
 #include "CParticleMgr.h"
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
+#include "CSushi.h"
+#include "CDInputMgr.h"
 COpenShop::COpenShop()
     : CGameObject()
 {
@@ -35,6 +37,7 @@ _int COpenShop::Update_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+        Key_Input();
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -131,4 +134,14 @@ COpenShop* COpenShop::Create()
 void COpenShop::Free()
 {
     CGameObject::Free();
+}
+
+void COpenShop::Key_Input()
+{
+    if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_E))
+    {
+        CScene* scene = CManagement::GetInstance()->Get_Scene();
+        static_cast<CSushi*>(scene)->Set_Open(true);
+        m_bDead = true;
+    }
 }

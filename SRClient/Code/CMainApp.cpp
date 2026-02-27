@@ -291,8 +291,8 @@ void CMainApp::Free()
 	CImguiMgr::GetInstance()->DestroyInstance();
 	//CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
-	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
+	CGameMemMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 	CColliderMgr::GetInstance()->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();

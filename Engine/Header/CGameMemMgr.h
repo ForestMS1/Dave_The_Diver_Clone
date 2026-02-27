@@ -28,10 +28,10 @@ public:
 	void reduceMenu(wstring name);
 	void addCookingMenu(wstring name);
 	void deleteCookingMenu();
-
+	void ClearCookingMenu();
 	vector<FISH*>& getFishes() { return fishes; }
-	vector<FISH*>& getMenu() { return SelectedMenu;}
-	queue<FISH*>& getCookingMenu() { return CookingMenu;}
+	vector<FISH*>& getMenu() { return SelectedMenu; }
+	queue<FISH*>& getCookingMenu() { return CookingMenu; }
 
 	void levelUp(wstring name);
 private:
