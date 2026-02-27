@@ -1,19 +1,6 @@
 #pragma once
 #include "CBaseState.h"
 
-enum JOHNDIR
-{
-    UP = 0,
-    UP_RIGHT,
-    UP_LEFT,
-    RIGHT,
-    LEFT,
-    DOWN,
-    DOWN_RIGHT,
-    DOWN_LEFT,
-    DIR_END = 8
-};
-
 
 class CJohn;
 
@@ -46,6 +33,18 @@ private:
     CTransform* m_pOwnerTransform = nullptr;
 
 private:
+    enum JOHNDIR
+    {
+        UP = 0,
+        UP_RIGHT,
+        UP_LEFT,
+        RIGHT,
+        LEFT,
+        DOWN,
+        DOWN_RIGHT,
+        DOWN_LEFT,
+        DIR_END = 8
+    };
     JOHNDIR m_eDir = DIR_END;
 
 private:
