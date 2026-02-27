@@ -15,7 +15,7 @@ IMPLEMENT_SINGLETON(CParticleMgr)
 CParticleMgr::CParticleMgr(): m_pCamera(nullptr), m_pPlayer(nullptr)
 {
 	cameraOn = false;
-	particles.resize(PARTICLE_END);
+
 }
 
 CParticleMgr::~CParticleMgr()
@@ -25,6 +25,8 @@ CParticleMgr::~CParticleMgr()
 
 HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 {
+	particles.resize(PARTICLE_END);
+
 	CBubble* bubble = CBubble::Create(m_pPlayer);
 	particles[PARTICLE_BUBBLE]=(bubble);
 
@@ -103,6 +105,16 @@ void CParticleMgr::spwan_Weather(WEATHERTYPE type, _vec3 origin, int numofPariti
 		particles[WEATHER]->reset(origin,  tempCenter, extents,{ 1.f,0.67f,0.25f,1 });
 		break;
 	}
+}
+
+void CParticleMgr::Clear_Particle()
+{
+	for (auto particle : particles) {
+		if (particle) {
+			Safe_Delete(particle);
+		}
+	}
+	particles.clear();
 }
 
 void CParticleMgr::Free()

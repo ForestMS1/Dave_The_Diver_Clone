@@ -124,6 +124,8 @@ void CDive::Render_Scene()
 	
 }
 
+
+
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
@@ -437,6 +439,7 @@ CDive* CDive::Create()
 void CDive::Free()
 {
 	CScene::Free();
+	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
 }
