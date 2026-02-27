@@ -70,8 +70,29 @@ void CDiveDavePickUp::Exit()
 
 void CDiveDavePickUp::Clear()
 {
-	if(static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem) != nullptr)
-		static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+	if (m_pOwner->m_pCurOnItem != nullptr)
+	{
+		Event e;
+		e.type = EVENTTYPE::GET_ITEM;
+		e.ItemTextureName = static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->Get_TexName();
+
+		if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] == nullptr)
+		{
+			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_pCurOnItem;
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+			e.value = 1;
+			m_pOwner->Notify(e);
+		}
+		else if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] == nullptr)
+		{
+			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = m_pOwner->m_pCurOnItem;
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+			e.value = 2;
+			m_pOwner->Notify(e);
+		}
+		else
+			return;
+	}
 
 	m_pOwner->Set_IsOnItem(false);
 	m_pOwner->m_pCurOnItem = nullptr;

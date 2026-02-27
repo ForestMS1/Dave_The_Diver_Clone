@@ -4,6 +4,7 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CDiveItem.h"
 CDiveDaveIdle::CDiveDaveIdle(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -36,6 +37,43 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 	if(m_pOwner->m_bIsOnItem && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
 		m_pOwner->Set_State(DIVEDAVESTATE::PICKUP);
 
+	// Item 사용 (Item사용은 무조건 ItemSlot1에서만)
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+	{
+		CDiveItem* pItem = static_cast<CDiveItem*>(m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"]);
+		if (pItem != nullptr)
+		{
+			pItem->UseItem(m_pOwner);
+			Event e;
+			e.type = EVENTTYPE::USE_ITEM;
+			m_pOwner->Notify(e);
+			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = nullptr;
+		}
+	}
+
+	// Item 슬롯 체인지
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_R) && !m_bItemSlotDefense)
+	{
+		m_bItemSlotDefense = true;
+		CGameObject* pItem = m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"];
+		m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"];
+		m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = pItem;
+		Event e;
+		e.type = EVENTTYPE::ITEMSLOT_CHANGE;
+		m_pOwner->Notify(e);
+	}
+
+	// Weapon 슬롯 체인지
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_TAB) && !m_bWeaponSlotDefense)
+	{
+		m_bWeaponSlotDefense = true;
+		m_pOwner->m_eCurEquipped = static_cast<EQUIPPED>((((_uint)m_pOwner->m_eCurEquipped) + 1) % (_uint)EQUIPPED::EQUIPPED_END);
+		Event e;
+		e.type = EVENTTYPE::WEAPONSLOT_CHANGE;
+		m_pOwner->Notify(e);
+	}
+		
+
 
 	if (!m_pOwner->Get_CanMouseInput())
 		return;
@@ -51,6 +89,27 @@ _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);
+
+
+	if (m_bItemSlotDefense)
+	{
+		m_fItemSlotChangeDelay -= fTimeDelta;
+		if (m_fItemSlotChangeDelay <= 0.f)
+		{
+			m_bItemSlotDefense = false;
+			m_fItemSlotChangeDelay = 1.f;
+		}
+	}
+
+	if (m_bWeaponSlotDefense)
+	{
+		m_fWeaponSlotChangeDelay -= fTimeDelta;
+		if (m_fWeaponSlotChangeDelay <= 0.f)
+		{
+			m_bWeaponSlotDefense = false;
+			m_fWeaponSlotChangeDelay = 1.f;
+		}
+	}
 	return 0;
 }
 
@@ -76,10 +135,19 @@ void CDiveDaveIdle::Exit()
 
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	Clear();
 }
 
 void CDiveDaveIdle::Clear()
 {
+	// 아이템 슬롯 체인지 딜레이
+	m_bItemSlotDefense = false;
+	m_fItemSlotChangeDelay = 1.f;
+
+	// 무기 슬롯 체인지 딜레이
+	m_bWeaponSlotDefense = false;
+	m_fWeaponSlotChangeDelay = 1.f;
 }
 
 void CDiveDaveIdle::Restore_Fov(const _float& fTimeDelta)

@@ -256,6 +256,9 @@
     <Filter Include="02. Component\TextureFrame">
       <UniqueIdentifier>{c0c991c0-3989-4881-be7f-c1920033020f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Component\00. VIBuffer\RcDynamicTex">
+      <UniqueIdentifier>{e852f827-7988-4fcf-9ef6-c1cd3eab3013}</UniqueIdentifier>
+    </Filter>
     <Filter Include="00. Manager\13. ParticleMgr\03. Particles\05. Bubble">
       <UniqueIdentifier>{f79996a6-838e-47bb-b496-0460859674ca}</UniqueIdentifier>
     </Filter>
@@ -729,6 +732,9 @@
     <ClCompile Include="..\Code\CTextureFrame.cpp">
       <Filter>02. Component\TextureFrame</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CRcDynamicTex.cpp">
+      <Filter>02. Component\00. VIBuffer\RcDynamicTex</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CBubble.cpp">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\05. Bubble</Filter>
     </ClCompile>
@@ -1003,6 +1009,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CTextureFrame.h">
       <Filter>02. Component\TextureFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRcDynamicTex.h">
+      <Filter>02. Component\00. VIBuffer\RcDynamicTex</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBubble.h">
       <Filter>00. Manager\13. ParticleMgr\03. Particles\05. Bubble</Filter>

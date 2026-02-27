@@ -37,6 +37,8 @@ public:
 private:
 	State			curState;
 	_float			m_fFrame;
+	float			m_fGauge = -1.f;
+
 	virtual void Free();
 
 };

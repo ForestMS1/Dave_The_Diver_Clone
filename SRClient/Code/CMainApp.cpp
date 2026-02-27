@@ -19,8 +19,6 @@
 #include "CAssetSpine.h"
 #include "CMapMgr.h"
 
-
-
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
 	, m_pManagement(CManagement::GetInstance())

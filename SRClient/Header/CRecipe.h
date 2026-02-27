@@ -31,9 +31,11 @@ private:
 	wstring m_sLevel;
 	_vec3 screen;
 
+	vector<CGameObject*> objects;
 
 public:
 	static CRecipe* Create();
+	vector<CGameObject*>& Get_Obj() { return objects; }
 
 private:
 	virtual void Free();

@@ -374,6 +374,27 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	// Item
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Capsule", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_O2Capsule.png"));
 
+	// UI
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeBar", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Bar_Normal.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeColor", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Bar_Full.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Dagger_Box.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Dagger_Stroke.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerThumbnail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/BasicDagger_Thumbnail.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaggerBoxMouseLKey", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Mouse_Left_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_ItemBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Item_Box.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_ItemBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Item_Stroke.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_ChangeTab", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_LB.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_RKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/R_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/C_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Main_Box.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Main_Stroke.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainSubBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Sub_Box.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainSubBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Sub_Stroke.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TabKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Tab_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2FrameUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Frame_New.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Stroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Stroke_re.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2StrokeFull", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_Watch_Time_Night_all.png"));
+
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
@@ -735,7 +756,28 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_SelectFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/SelectedMenu.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SelectFrameTex", Engine::CTexture::Create(L"Tex_SelectFrame"))))
 		return E_FAIL;
-	//
+	//요리 강화 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeFrame.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeFrameTex", Engine::CTexture::Create(L"Tex_upgradeFrame"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeConfirm", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeConfirm.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeConfirmTex", Engine::CTexture::Create(L"Tex_upgradeConfirm"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeMark", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_RecipeUpMark_Big.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeMarkTex", Engine::CTexture::Create(L"Tex_upgradeMark"))))
+		return E_FAIL;
+
+	//영업 시작
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_OpenShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/openShop.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OpenShopTex", Engine::CTexture::Create(L"Tex_OpenShop"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_menuBubble", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/menuBubble.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MenuBubbleTex", Engine::CTexture::Create(L"Tex_menuBubble"))))
+		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Red", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/red.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RedTex", Engine::CTexture::Create(L"Tex_Red"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);

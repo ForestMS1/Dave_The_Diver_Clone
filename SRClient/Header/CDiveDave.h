@@ -1,11 +1,11 @@
 #pragma once
-#include "CGameObject.h"
 #include "CFSM.h"
 #include "CBaseState.h"
 #include "CAABB.h"
 #include "CDiveDaveIdle.h"
 #include "CDiveDaveOpen.h"
 #include "CDiveDavePickUp.h"
+#include "CSubject.h"
 
 enum class EQUIPPED
 {
@@ -15,7 +15,7 @@ enum class EQUIPPED
 	EQUIPPED_END
 };
 
-class CDiveDave : public CGameObject
+class CDiveDave : public CSubject
 {
 	friend class CDiveDaveIdle;
 	friend class CDiveDaveOpen;
@@ -28,6 +28,7 @@ private:
 
 
 public:
+	void				Start(); // 유니티 Start함수 처럼 써보기
 	HRESULT				Ready_GameObject() override;
 	_int				Update_GameObject(const _float& fTimeDelta) override;
 	void				LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -63,6 +64,11 @@ public:
 	void				Set_FishCaught(_bool bFishCaught)									{ m_bFishCaught = bFishCaught; }
 	_bool				Is_FishCaught()														{ return m_bFishCaught; }
 
+	// 다른 상태 객체에서도 Notify할 수 있게
+	void				State_Notify(Event& e)												{ CDiveDave::Notify(e); };
+	// 어느쪽 보고있는지
+	_bool				Is_Flip()															const { return m_bFlip; }
+	void				Set_Flip(_bool isFlip)												{ m_bFlip = isFlip; }
 
 	// With DiveItemBox
 	void				Set_IsOnItemBox(_bool isOn)											{ m_bIsOnItemBox = isOn; }
@@ -71,6 +77,20 @@ public:
 	void				Set_IsOnItem(_bool isOn)											{ m_bIsOnItem = isOn; }
 	void				Set_CurOnItem(CGameObject* pItem)									{ m_pCurOnItem = pItem; }
 
+	// 무기 등록
+	void				Set_WeaponSlot(CGameObject* pWeapon, EQUIPPED equipped)
+	{
+		if (equipped == EQUIPPED::EQUIPPED_END)
+			return;
+		
+		m_vecWeaponSlot[(_uint)equipped] = pWeapon;
+		Event e;
+		e.type = EVENTTYPE::GET_WEAPON;
+		e.ItemTextureName = pWeapon->Get_TexName();
+		e.value = (_uint)equipped + 1;
+		CDiveDave::Notify(e);
+	}
+
 	void				On_Hit(const _float& fDamage) 
 	{ 
 		if (m_fIvncTime > 0.f)
@@ -78,6 +98,12 @@ public:
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
+		Event e;
+		e.type = EVENTTYPE::CHANGE_HP;
+		e.value = (_uint)m_fHp;
+		e.fValue = m_fHp / m_fMaxHp;
+		CDiveDave::Notify(e);
+
 		if (m_fHp <= 0.f)
 		{
 			m_fHp = 0.f;
@@ -86,6 +112,20 @@ public:
 	}
 	// Die 상태로 전이하기위한 함수
 	void				On_Dead() 															{ m_bIsDie = true; }
+
+	// Hp회복
+	void				Restore_Hp(const _float& restore) 
+	{ 
+		m_fHp += restore; 
+		if (m_fHp >= m_fMaxHp)
+			m_fHp = m_fMaxHp;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_HP;
+		e.value = (_uint)m_fHp;
+		e.fValue = m_fHp / m_fMaxHp;
+		CDiveDave::Notify(e);
+	}
 	// Hit 상태 탈출시 호출
 	void				Hit_Free()															{ m_bIsHit = false; }
 	_float				Get_HitTime()														{ return m_fIvncTime; }
@@ -135,14 +175,22 @@ private:
 	_bool m_bIsOnItemBox = false;
 	_bool m_bIsOnItem = false;
 
-	_float m_fHp = 100.f;
+	_float m_fMaxHp = 100.f;
+	_float m_fHp = 50.f;
 	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
 	_bool  m_bIsHit = false;
 	_bool  m_bIsDie = false; // CGameObject의 m_bDead와 다른 용도!
+	
+	_bool	m_bFlip = false; // false면 오른쪽 보는거, true면 왼쪽 보는거
+
+	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;
 	CGameObject* m_pCurOnItem = nullptr;
+
+	unordered_map<std::wstring_view, CGameObject*> m_mapCanUseItemSlot = { {L"ItemSlot1", nullptr}, {L"ItemSlot2", nullptr} };
+	CGameObject* m_vecWeaponSlot[(_uint)EQUIPPED::EQUIPPED_END] = {nullptr, nullptr};
 
 public:
 	static CDiveDave* Create();

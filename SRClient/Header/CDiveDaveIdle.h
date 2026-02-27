@@ -20,6 +20,15 @@ public:
 
 private:
 	void Restore_Fov(const _float& fTimeDelta);
+
+private:
+	// 아이템 슬롯 체인지 딜레이
+	_bool m_bItemSlotDefense = false;
+	_float m_fItemSlotChangeDelay = 1.f;
+
+	// 무기 슬롯 체인지 딜레이
+	_bool m_bWeaponSlotDefense = false;
+	_float m_fWeaponSlotChangeDelay = 1.f;
 public:
 	static CDiveDaveIdle* Create(CDiveDave* pOwner);
 private:
