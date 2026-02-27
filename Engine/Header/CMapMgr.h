@@ -33,6 +33,7 @@ public:
 
 	void	Show_GUI();
 	void	Object_Show();
+	void	Frame_Show();
 	void	SaveLoad_Show();
 public:
 

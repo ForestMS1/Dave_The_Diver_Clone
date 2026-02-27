@@ -131,7 +131,7 @@ void CMapMgr::Show_GUI()
 	if (m_Scene != nullptr) {
 		// Obj
 		Object_Show();
-
+		Frame_Show();
 		// Save Load
 		SaveLoad_Show();
 	}
@@ -160,6 +160,17 @@ void CMapMgr::Object_Show()
 				}
 			}
 		}
+
+	ImGui::End();
+
+
+}
+
+void CMapMgr::Frame_Show() {
+	ImGui::Begin("Frame");
+
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
 	ImGui::End();
 }
