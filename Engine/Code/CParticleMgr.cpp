@@ -119,7 +119,7 @@ void CParticleMgr::Clear_Particle()
 
 void CParticleMgr::Free()
 {
-
+	
 	for (auto particle : particles) {
 		if (particle) {
 			particle->Free();
@@ -127,4 +127,5 @@ void CParticleMgr::Free()
 		}
 	
 	}
+	particles.clear();
 }

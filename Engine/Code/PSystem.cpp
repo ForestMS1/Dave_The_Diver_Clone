@@ -10,7 +10,7 @@
 PSystem::PSystem() 
 {
 	_device = CGraphicDev::GetInstance()->Get_GraphicDev();
-	_device->AddRef();
+	
 	_origin = { 0,0,0 };
 	//_particles;
 	_vbSize = 2048;
@@ -26,6 +26,7 @@ PSystem::PSystem()
 
 PSystem::~PSystem()
 {
+	Free();
 }
 
 HRESULT	 PSystem::Ready_Buffer()

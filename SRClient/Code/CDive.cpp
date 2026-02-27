@@ -120,7 +120,7 @@ void CDive::Render_Scene()
 
 
 
-	CParticleMgr::GetInstance()->Render_Particle();
+	
 	
 }
 

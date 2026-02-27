@@ -288,10 +288,10 @@ void CMainApp::Free()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
-	CParticleMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
+	CParticleMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 	CColliderMgr::GetInstance()->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();
