@@ -3,6 +3,7 @@
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
 #include "CDiveDave.h"
+#include "CFishGameObject.h"
 CProjectileFire::CProjectileFire(CHarpoonProjectile* pOwner)
     : CBaseState<CHarpoonProjectile>(pOwner)
 {
@@ -79,6 +80,39 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 							pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
 						}
 					}
+				}
+			}
+		}
+	}
+
+	// [LSY] 작살하고 물고기
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_FishesHitbox"))
+	{
+		for (auto& pCollider : *pColliders)
+		{
+			if (pProjectile->m_pAABB->Intersect(pCollider))
+			{
+				if (pCollider->Get_Tag() == L"AABB_FishHitbox")
+				{
+					auto pFish = static_cast<CFishGameObject*>(pCollider->Get_VoidPtr()); // 충돌한 물고기의 포인터 들고 옴
+					if (pFish->Get_FishState() == Fish::FS_DIE)
+					{
+						continue;
+					}
+
+					m_bIsHitFish = true;
+					pProjectile->m_pCaughtFish = pFish;
+					pProjectile->m_pTransformCom->Update_Component(fTimeDelta);
+					pProjectile->m_pAABB->Transform(pProjectile->m_pTransformCom->Get_World());
+					//pFish->Stop();
+
+					_vec3 vDavePos;
+					pProjectile->Get_Parent()->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vDavePos);
+					_vec3 vJaksalPos;
+					pProjectile->m_pTransformCom->Get_Info(INFO_POS, &vJaksalPos);
+					//_vec3 vRes = vJaksalPos - vDavePos;
+					pFish->QTE(&vJaksalPos, &vDavePos);
+					break;
 				}
 			}
 		}

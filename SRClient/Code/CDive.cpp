@@ -35,6 +35,12 @@
 #include "CO2UI.h"
 #include "CO2StrokeUI.h"
 #include "CO2Text.h"
+#include "CJohn.h"
+
+#include "CFishHQ.h"
+
+#include "FishInclude.h"
+
 #include "CParticleMgr.h"
 CDive::CDive()
 	: CScene()
@@ -54,6 +60,9 @@ HRESULT CDive::Ready_Scene()
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
 	if (FAILED(Ready_UI_Layer(L"0_UI_Layer")))
+		return E_FAIL;
+
+	if (FAILED(Ready_Fish_Layer(L"2_Fish_Layer")))
 		return E_FAIL;
 
 	//카메라
@@ -88,6 +97,7 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
+	CColliderMgr::GetInstance()->Set_Render(false);
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
@@ -146,6 +156,60 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
+	return S_OK;
+}
+
+HRESULT CDive::Ready_Fish_Layer(std::wstring_view svLayerTag)
+{
+	CLayer* pLayer = CLayer::Create();
+
+	CFishHQ* pFishHQ = CFishHQ::Create();
+	pLayer->Add_GameObject(L"FishHQ", pFishHQ);
+
+	//{
+	//	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(0.f, 0.f, 0.05f * 0.3f);
+	//	pFish->Set_Parent(pFishHQ);
+	//	pLayer->Add_GameObject(L"FishBlueTang", pFish);
+
+	//	_vec3 vPos = { 0.0f, 0.f, 0.f };
+	//	_vec3 vExt = { 1.1f, 0.6f, 0.01f };
+	//	vExt *= 0.3f;
+
+	//	CFishHitCollider* pCollider = CFishHitCollider::Create(&vPos, &vExt);
+	//	pCollider->Set_Parent(pFish);
+	//	pLayer->Add_GameObject(L"FishColl", pCollider);
+	//}
+
+
+	//{
+	//	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(1.f, 1.f, 0.05f * 0.3f);
+	//	pFish->Set_Parent(pFishHQ);
+	//	pLayer->Add_GameObject(L"FishBlueTang", pFish);
+
+	//	_vec3 vPos = { 0.0f, 0.f, 0.f };
+	//	_vec3 vExt = { 1.1f, 0.6f, 0.01f };
+	//	vExt *= 0.3f;
+
+	//	CFishHitCollider* pCollider = CFishHitCollider::Create(&vPos, &vExt);
+	//	pCollider->Set_Parent(pFish);
+	//	pLayer->Add_GameObject(L"FishColl", pCollider);
+	//}
+	//if (FAILED(Fish::AddLayer_BlueTang(pLayer, 0.f, 0.f, 0.3f)))
+	//{
+	//	return E_FAIL;
+	//}
+
+	//if (FAILED(Fish::AddLayer_BlueTang(pLayer, 1.f, 1.f, 0.3f)))
+	//{
+	//	return E_FAIL;
+	//}
+
+	//if (FAILED(Fish::AddLayer_BlueTang(pLayer, 2.f, 2.f, 0.3f)))
+	//{
+	//	return E_FAIL;
+	//}
+
+	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 	return S_OK;
 }
 
@@ -288,6 +352,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
+		return E_FAIL;
+
+	// 보스
+	pGameObject = CJohn::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });

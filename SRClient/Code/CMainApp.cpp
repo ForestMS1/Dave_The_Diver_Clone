@@ -241,6 +241,8 @@ HRESULT CMainApp::Load_PermanentAsset()
 	));
 
 
+	CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Spine", Engine::CSpine::Create());
+
 
 	// 초기 로드용 폰트 추가
 	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 맨발의청춘 L", 0, 20, FW_HEAVY));
