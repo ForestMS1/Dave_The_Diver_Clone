@@ -29,6 +29,8 @@ HRESULT		CHoldFishUIImg::Ready_GameObject()
     m_fDbgY = 0.f;
     m_fDbgScale = 1.f;
     m_fScale = 1.f;
+
+    m_bRender = true;
     return S_OK;
 }
 
@@ -74,7 +76,11 @@ _int		CHoldFishUIImg::Update_GameObject(const _float& fTimeDelta)
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    if (m_bRender)
+    {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    }
+   
 
     return iExit;
 }

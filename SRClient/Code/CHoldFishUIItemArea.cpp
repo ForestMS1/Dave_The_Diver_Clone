@@ -75,6 +75,42 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
         }
     }
 
+    // ½ºÅ¸ Tex_GetItemUIStar
+    {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+        {
+            {
+                auto pStar = CHoldFishUIImg::Create(-0.57f, -0.03f);
+                pStar->Set_Scale(0.0175f);
+                pStar->Set_ViewZ(0.49f);
+                pStar->Set_AssetName(L"Tex_GetItemUIStar");
+                pStar->Set_Parent(this);
+                pStar->Ready_After_Create();
+                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            }
+
+            {
+                auto pStar = CHoldFishUIImg::Create(-0.52f, -0.03f);
+                pStar->Set_Scale(0.0175f);
+                pStar->Set_ViewZ(0.49f);
+                pStar->Set_AssetName(L"Tex_GetItemUIStar");
+                pStar->Set_Parent(this);
+                pStar->Ready_After_Create();
+                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            }
+
+            {
+                auto pStar = CHoldFishUIImg::Create(-0.47f, -0.03f);
+                pStar->Set_Scale(0.0175f);
+                pStar->Set_ViewZ(0.49f);
+                pStar->Set_AssetName(L"Tex_GetItemUIStar");
+                pStar->Set_Parent(this);
+                pStar->Ready_After_Create();
+                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            }
+        }
+    }
+
     // ¿§Áö
     {
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))

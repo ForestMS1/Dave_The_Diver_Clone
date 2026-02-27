@@ -78,15 +78,17 @@ HRESULT		CHoldFishUI::Ready_GameObject()
         //}
 
 
-        //{
-        //    auto pMask = CHoldFishUIImg::Create(0.925f, -0.17f);
-        //    pMask->Set_Scale(0.745f);
-        //    pMask->Set_ViewZ(0.49f);
-        //    pMask->Set_AssetName(L"Tex_HoldFishUIMask");
-        //    pMask->Set_Parent(this);
-        //    pMask->Ready_After_Create();
-        //    pLayer->Add_GameObject(L"HoldFishUIMask", pMask);
-        //}
+        {
+            auto pMask = CHoldFishUIImg::Create(0.925f, -0.17f);
+            pMask->Set_Render(false);
+            pMask->Set_Scale(0.745f);
+            pMask->Set_ViewZ(0.49f);
+            pMask->Set_AssetName(L"Tex_HoldFishUIMask");
+            pMask->Set_Parent(this);
+            pMask->Ready_After_Create();
+            pLayer->Add_GameObject(L"HoldFishUIMask", pMask);
+        }
+
         {
             //CHoldFishUIItemGroup
             auto pGroup = CHoldFishUIItemGroup::Create(0.925f, 0.f);
