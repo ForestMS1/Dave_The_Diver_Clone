@@ -7,7 +7,8 @@
 #include "CFishManualState.h"
 #include "CHelper.h"
 #include "CDInputMgr.h"
-
+#include "CManagement.h"
+#include "CGetItemUI.h"
 CFishGameObject::CFishGameObject()
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -31,6 +32,10 @@ CFishGameObject::CFishGameObject()
     , m_sAttackSpineAniName(L"swim")
     , m_fRunFromTimer(0.f)
     , m_sRunFromSpineAniName(L"swim")
+    , m_bIntersectHitboxDave(false)
+    , m_bIntersectDetetboxDave(false)
+    , m_bDieAndAcquire(false)
+    , m_bMoveToRotateEnable(true)
 {
 
 }
@@ -56,6 +61,19 @@ void CFishGameObject::Update_ImGui()
     {
         Die();
     }
+
+    ImGui::Text("m_bIntersectHitboxDave: %s\n", m_bIntersectHitboxDave ? "true" : "false");
+    ImGui::Text("m_bIntersectDetetboxDave: %s\n", m_bIntersectDetetboxDave ? "true" : "false");
+
+    if (m_eFishType == Fish::FT_NORMAL)
+    {
+        ImGui::Text("m_eFishType: %s\n","FT_NORMAL");
+    }
+    else if(m_eFishType == Fish::FT_AGRESSIVE)
+    {
+        ImGui::Text("m_eFishType: %s\n", "FT_AGRESSIVE");
+    }
+    
 }
 
 void CFishGameObject::Damaged(int iDamage)
@@ -81,28 +99,31 @@ void CFishGameObject::RunFrom(_vec3 const* pDavePos)
 {
     if (m_eFishState == Fish::FS_DIE) return;
 
-    if (D3DXVec3Length(pDavePos) > 0.f)
+    if (m_eFishState != Fish::FS_RUNFROM)
     {
-        // State Enter
-        if (m_eFishState != Fish::FS_RUNFROM)
-        {
-            m_pSpineCom->Set_AniState(m_sRunFromSpineAniName);
-        }
+        m_pSpineCom->Set_AniState(m_sRunFromSpineAniName);
         m_eFishState = Fish::FS_RUNFROM;
-
-        //m_fRunFromTimer = 0.f;
-        m_fCurrSpeed = m_fSprintSpeed;
-        m_fCurrRotateSpeed = m_fSprintRotateSpeed;
-        
-        _vec3 vMyPos;
-        m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
-
-        _vec3 newDir = vMyPos - *pDavePos;
-
-        D3DXVec3Normalize(&newDir, &newDir);
-
-        m_vMoveTarget = newDir * 10.f;
     }
+
+    m_fCurrSpeed = m_fSprintSpeed;
+    m_fCurrRotateSpeed = m_fSprintRotateSpeed;
+
+    _vec3 vMyPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+
+    _vec3 vDir = vMyPos - *pDavePos; 
+    float fDist = D3DXVec3Length(&vDir);
+
+    if (fDist > 0.0f) 
+    {
+        D3DXVec3Normalize(&vDir, &vDir);
+    }
+    else 
+    {
+        vDir = _vec3(1.f, 0.f, 0.f);
+    }
+
+    m_vMoveTarget = vMyPos + (vDir * 10.f);
 }
 
 void CFishGameObject::QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos)
@@ -168,6 +189,38 @@ void CFishGameObject::Swim()
     m_fCurrRotateSpeed = m_fRotateSpeed;
 }
 
+void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
+{
+    //m_eFishState = Fish::FS_ATTACKTO;
+    _vec3 vMyPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+    _vec3 vMag = vMyPos - *pDavePos;
+
+    m_bMoveToRotateEnable = false;
+
+    m_fCurrSpeed = 5.f;
+
+    float fLen = D3DXVec3Length(&vMag);
+    if (fLen < 0.1f)
+    {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+        {
+            auto pGetItemUI = CGetItemUI::Create(-7.f, 4.f);
+            pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+
+        }
+        Set_DeadCascade();
+        return;
+    }
+
+    //m_fAttackToTimer = 0.f;
+    //m_fCurrSpeed = m_fSprintSpeed;
+    //m_fCurrRotateSpeed = m_fSprintRotateSpeed;
+
+    m_bDieAndAcquire = true;
+    m_vMoveTarget = *pDavePos;
+}
+
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
 {
     _uint iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -228,10 +281,15 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
             m_pSpineCom->Set_ColorDarkness(fDarkNess - (1.f * fTimeDelta));
         }
 
-        if (m_fDieTimer > 3.f)
+        if (m_fDieTimer > 6.f)
         {
             Set_DeadCascade();
             return OBJ_DEAD;
+        }
+
+        if (m_bDieAndAcquire)
+        {
+            MoveTo(&m_vMoveTarget, fTimeDelta);
         }
     }
     else if (m_eFishState == Fish::FS_RUNFROM)
@@ -241,8 +299,13 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
         m_fRunFromTimer += fTimeDelta;
         if (m_fRunFromTimer > 1.f)
         {
-            Swim();
+            //Swim();
             m_fRunFromTimer = 0.f;
+        }
+
+        if (!m_bIntersectDetetboxDave)
+        {
+            Swim();
         }
     }
     else if (m_eFishState == Fish::FS_ATTACKTO)
@@ -252,13 +315,28 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
         m_fAttackToTimer += fTimeDelta;
         if (m_fAttackToTimer > 0.2f)
         {
-            Swim();
+            //Swim();
             //m_fMoveTargetReLocateTimer = 99.f;
             m_fAttackToTimer = 0.f;
+        }
+
+        if (!m_bIntersectDetetboxDave)
+        {
+            Swim();
         }
     }
     else if (m_eFishState == Fish::FS_QTE)
     {
+        MoveTo(&m_vMoveTarget, fTimeDelta);
+    }
+    else if (m_eFishState == Fish::FS_ACQUIRETO)
+    {
+        float fDarkNess = m_pSpineCom->Get_ColorDarkness();
+        if (fDarkNess > 0.6f)
+        {
+            m_pSpineCom->Set_ColorDarkness(fDarkNess - (1.f * fTimeDelta));
+        }
+
         MoveTo(&m_vMoveTarget, fTimeDelta);
     }
 
@@ -277,8 +355,6 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
-    
 
     if (beforeDrawLambda)
     {
@@ -299,6 +375,71 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
         pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
     }
 
+    
+
+
+
+    if (m_eFishState == Fish::FS_ATTACKTO)
+    {
+        
+        {
+            if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_AggresiveFishPoint"))
+            {
+                if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                {
+                    pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                }
+            }
+            _matrix matTrs;
+            D3DXMatrixTranslation(&matTrs, 0.0f, 5.5f, 0.f);
+
+            _matrix matWorld = *m_pTransformCom->Get_World();
+            for (int i = 0; i < 3; ++i) {
+                _vec3 vAxis = *(_vec3*)&matWorld.m[i][0]; // 행렬의 각 축(Right, Up, Look) 추출
+                D3DXVec3Normalize(&vAxis, &vAxis);        // 방향만 남기고 정규화
+                vAxis *= 0.1f;                            // 원하는 스케일(0.1) 곱하기
+                memcpy(&matWorld.m[i][0], &vAxis, sizeof(_vec3)); // 다시 행렬에 삽입
+            }
+
+            _matrix res = matTrs * matWorld;
+
+            pGraphicDev->SetTransform(D3DTS_WORLD, &res);
+            m_pBufferCom->Render_Buffer();
+        }
+
+
+
+        {
+            if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_AgressiveMark"))
+            {
+                if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                {
+                    pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                }
+            }
+
+            _matrix matTrs;
+            D3DXMatrixTranslation(&matTrs, 5.5f, 5.5f, 0.f);
+
+            _matrix matWorld = *m_pTransformCom->Get_World();
+
+            for (int i = 0; i < 3; ++i) {
+                _vec3 vAxis = *(_vec3*)&matWorld.m[i][0]; // 행렬의 각 축(Right, Up, Look) 추출
+                D3DXVec3Normalize(&vAxis, &vAxis);        // 방향만 남기고 정규화
+                vAxis *= 0.1f;                            // 원하는 스케일(0.1) 곱하기
+                memcpy(&matWorld.m[i][0], &vAxis, sizeof(_vec3)); // 다시 행렬에 삽입
+            }
+
+            _matrix res = matTrs * matWorld;
+
+            pGraphicDev->SetTransform(D3DTS_WORLD, &res);
+            m_pBufferCom->Render_Buffer();
+        }
+    }
+
+
+
+
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
@@ -312,8 +453,11 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
 
-    // 버퍼
+    // 다이나믹 버퍼
     if (FAILED((AddComponent<Engine::CDynamicBuffer, ID_STATIC>(L"Proto_DynamicBuffer_Spine", L"Com_DynamicBuffer", &m_pDynamicBuffer))))
+        return E_FAIL;
+    // 버퍼
+    if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
     // 스파인
@@ -338,7 +482,7 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
 
     //m_fsm.Get_CurrentState()->Enter();
 
-    Swim();
+    //Swim();
 	return S_OK;
 }
 
@@ -362,21 +506,6 @@ void CFishGameObject::MoveTo(_vec3* vToPos, const float& fTimeDelta)
     // 쫒을거리가 0.01 이상이어야 쫒느다.
     if (vChaseLength > 0.001f)
     {
-        // 물고기 대가리가 쫒는방향과 다르다면 이미지 Y 뒤집기
-        // 뒤집으면서 Z각도도 반전시켜주기
-        if (vRight.x * vChaseDir.x < 0)
-        {
-            _vec3 vScale;
-            m_pTransformCom->Get_Scale(&vScale);
-            vScale.x *= -1.f;
-            m_pTransformCom->Set_Scale(&vScale);
-
-            _vec3 vAngle;
-            m_pTransformCom->Get_Rotation(&vAngle);
-            vAngle.z *= -1.f;
-            m_pTransformCom->Set_Rotation(&vAngle);
-        }
-
         // 물고기 움직이는 로직 근데 체이스타겟보다 멀리가면 안되니까 분기처리
         float fMoveDistance = m_fCurrSpeed * fTimeDelta;  // 이번에 갈거리 
         if (vChaseLength <= fMoveDistance)
@@ -388,46 +517,88 @@ void CFishGameObject::MoveTo(_vec3* vToPos, const float& fTimeDelta)
             m_pTransformCom->Move_Pos(&vChaseDir, m_fCurrSpeed, fTimeDelta);
         }
 
-        // 물고기 대가리 돌리는로직
-        // fAngleLimit 각도 이상 안돌아가게 처리
-        _vec3 vCurrAngle;
-        m_pTransformCom->Get_Rotation(&vCurrAngle);
-        if (fabsf(vCurrAngle.z) < m_fRotateAngleLimit)
+        if (m_bMoveToRotateEnable)
         {
-            float fRadian = acosf(D3DXVec3Dot(&vRight, &vChaseDir));
-
-            // 돌아야하는 라디안이 0.01이상만 돌린다.
-            if (fRadian > 0.01f)
+            // 물고기 대가리가 쫒는방향과 다르다면 이미지 Y 뒤집기
+            // 뒤집으면서 Z각도도 반전시켜주기
+            if (vRight.x * vChaseDir.x < 0)
             {
-                float fRotationAmount = m_fCurrRotateSpeed * fTimeDelta; // 이번에 돌릴 각도
+                _vec3 vScale;
+                m_pTransformCom->Get_Scale(&vScale);
+                vScale.x *= -1.f;
+                m_pTransformCom->Set_Scale(&vScale);
 
-                // 만약 fRotationAmount가 돌아야될 각도를 넘겨버리면 세팅
-                if (fRotationAmount > fRadian)
+                _vec3 vAngle;
+                m_pTransformCom->Get_Rotation(&vAngle);
+                vAngle.z *= -1.f;
+                m_pTransformCom->Set_Rotation(&vAngle);
+            }
+
+
+            // 물고기 대가리 돌리는로직
+            // fAngleLimit 각도 이상 안돌아가게 처리
+            _vec3 vCurrAngle;
+            m_pTransformCom->Get_Rotation(&vCurrAngle);
+            if (fabsf(vCurrAngle.z) < m_fRotateAngleLimit)
+            {
+                float fRadian = acosf(D3DXVec3Dot(&vRight, &vChaseDir));
+
+                // 돌아야하는 라디안이 0.01이상만 돌린다.
+                if (fRadian > 0.01f)
                 {
-                    fRotationAmount = fRadian;
-                }
+                    float fRotationAmount = m_fCurrRotateSpeed * fTimeDelta; // 이번에 돌릴 각도
 
-                // 대가리 돌릴 방향 정하는 외적
-                _vec3 vAxis;
-                D3DXVec3Cross(&vAxis, &vRight, &vChaseDir);
-                float fDirSign = (vAxis.z >= 0.f) ? 1.f : -1.f;
-                m_pTransformCom->Rotation(ROT_Z, D3DXToDegree(fRotationAmount * fDirSign));
+                    // 만약 fRotationAmount가 돌아야될 각도를 넘겨버리면 세팅
+                    if (fRotationAmount > fRadian)
+                    {
+                        fRotationAmount = fRadian;
+                    }
+
+                    // 대가리 돌릴 방향 정하는 외적
+                    _vec3 vAxis;
+                    D3DXVec3Cross(&vAxis, &vRight, &vChaseDir);
+                    float fDirSign = (vAxis.z >= 0.f) ? 1.f : -1.f;
+                    m_pTransformCom->Rotation(ROT_Z, D3DXToDegree(fRotationAmount * fDirSign));
+
+
+
+                    _vec3 vCurrAngle2;
+                    m_pTransformCom->Get_Rotation(&vCurrAngle2);
+                    if (fabsf(vCurrAngle2.z) > m_fRotateAngleLimit)
+                    {
+                        if (vCurrAngle2.z < 0)
+                        {
+                            vCurrAngle2.z = -(m_fRotateAngleLimit - 0.1f);
+                            //vCurrAngle.z += fTimeDelta * 10.f;
+                        }
+                        else if (vCurrAngle2.z > 0)
+                        {
+                            vCurrAngle2.z = (m_fRotateAngleLimit - 0.1f);
+                            //vCurrAngle.z -= fTimeDelta * 10.f;
+                        }
+                        m_pTransformCom->Set_Rotation(&vCurrAngle2);
+                    }
+
+                }
             }
-        }
-        // 원래 위에 if를 타야하는데
-        // 못타는경우임, 그경우엔 다시 if탈수있도록 세팅
-        else
-        {
-            if (vCurrAngle.z < 0)
-            {
-                vCurrAngle.z = -(m_fRotateAngleLimit - 0.2f);
-            }
+            // 원래 위에 if를 타야하는데
+            // 못타는경우임, 그경우엔 다시 if탈수있도록 세팅
             else
             {
-                vCurrAngle.z = (m_fRotateAngleLimit - 0.2f);
+                if (vCurrAngle.z < 0)
+                {
+                    vCurrAngle.z = -(m_fRotateAngleLimit - 0.00001f);
+                    //vCurrAngle.z += fTimeDelta * 10.f;
+                }
+                else if (vCurrAngle.z > 0)
+                {
+                    vCurrAngle.z = (m_fRotateAngleLimit - 0.00001f);
+                    //vCurrAngle.z -= fTimeDelta * 10.f;
+                }
+                m_pTransformCom->Set_Rotation(&vCurrAngle);
             }
-            m_pTransformCom->Set_Rotation(&vCurrAngle);
         }
+        
     }
 }
 

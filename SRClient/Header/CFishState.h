@@ -20,6 +20,7 @@ namespace Fish
 		FS_SWIM,
 		FS_RUNFROM,
 		FS_ATTACKTO,
+		FS_ACQUIRETO,
 		FS_SPRINT,
 		FS_DIE,
 		FS_QTE,

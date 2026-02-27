@@ -7,6 +7,8 @@
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
 #include "CManagement.h"
+#include "CGetItemUIStar.h"
+#include "CGetItemUIImg.h"
 
 CGetItemUI::CGetItemUI(float fPosX, float fPosY)
     : CGameObject()
@@ -44,6 +46,32 @@ HRESULT		CGetItemUI::Ready_GameObject()
     m_pTransformCom->Set_Scale(&vScale);
 
     m_tween = m_tween.from(-13.f).to(m_fPosX).during(500).to(m_fPosX).during(500).to(-13.f).during(500);
+
+
+
+    if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+    {
+        //Stars
+        {
+            auto pGetItemUIStart = CGetItemUIStar::Create(0.5f, -0.2f);
+            pGetItemUIStart->Set_Parent(this);
+            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+        }
+        {
+            auto pGetItemUIStart = CGetItemUIStar::Create(1.f, -0.2f);
+            pGetItemUIStart->Set_Parent(this);
+            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+        }
+
+        {
+            auto pGetItemImg = CGetItemUIImg::Create(-1.6f, -0.5f);
+            pGetItemImg->Set_AssetName(L"Tex_PhoneBG");
+            pGetItemImg->Ready_After_Create();
+            pGetItemImg->Set_Parent(this);
+            pLayer->Add_GameObject(L"GetItemUIImg", pGetItemImg);
+        }
+    }
+    
     return S_OK;
 }
 

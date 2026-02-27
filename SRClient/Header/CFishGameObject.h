@@ -42,6 +42,7 @@ public:
 	void AttackTo(_vec3 const* pPos);
 	void Stop();
 	void Swim();
+	void AcquireTo(_vec3 const* pPos);
 
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
@@ -53,6 +54,11 @@ public:
 
 	Fish::FISH_TYPE Get_FishType() const { return m_eFishType; }
 	Fish::FISH_STATE Get_FishState() const { return m_eFishState; }
+
+	void Set_IntersectHitboxDave(bool b) { m_bIntersectHitboxDave = b; }
+	void Set_IntersectDetectboxDave(bool b) { m_bIntersectDetetboxDave = b; }
+
+	float Get_DieTimer() const { return m_fDieTimer; }
 
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
@@ -71,6 +77,7 @@ protected:
 	Engine::CDynamicBuffer* m_pDynamicBuffer;
 	Engine::CTransform* m_pTransformCom;
 	Engine::CSpine* m_pSpineCom;
+	Engine::CRcTex* m_pBufferCom;
 
 protected:
 	std::wstring m_sFishName;
@@ -96,6 +103,14 @@ protected:
 
 	float m_fAttackToTimer;
 	std::wstring m_sAttackSpineAniName;
+
+	bool m_bIntersectHitboxDave;
+	bool m_bIntersectDetetboxDave;
+
+	bool m_bDieAndAcquire;
+
+
+	bool m_bMoveToRotateEnable;
 
 	
 protected:
