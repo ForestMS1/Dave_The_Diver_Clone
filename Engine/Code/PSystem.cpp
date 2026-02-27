@@ -10,7 +10,7 @@
 PSystem::PSystem() 
 {
 	_device = CGraphicDev::GetInstance()->Get_GraphicDev();
-	_device->AddRef();
+	
 	_origin = { 0,0,0 };
 	//_particles;
 	_vbSize = 2048;
@@ -26,6 +26,7 @@ PSystem::PSystem()
 
 PSystem::~PSystem()
 {
+	Free();
 }
 
 HRESULT	 PSystem::Ready_Buffer()
@@ -52,8 +53,10 @@ void PSystem::reset(_vec3 position, _vec3 center, _vec3 extents, D3DXCOLOR color
 void PSystem::addParticle(_vec3 position, D3DXCOLOR color)
 {
 	Attribute attribute;
+	_hitPosition = position;
 	resetParticle(&attribute, color);
 	_particles.push_back(attribute);
+	
 }
 
 void PSystem::preRender()

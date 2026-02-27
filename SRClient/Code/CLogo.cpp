@@ -16,7 +16,7 @@
 #include "CLogoBtnArea.h"
 #include "CColliderMgr.h"
 #include "CGraphicDev.h"
-
+#include "CParticleMgr.h"
 #include "CTransitionFade.h"
 
 CLogo::CLogo()
@@ -32,7 +32,6 @@ HRESULT CLogo::Ready_Scene()
 {
 	
 	Update_Camera();
-
 	CColliderMgr::GetInstance()->Set_Render(false);
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
@@ -94,6 +93,11 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 				}
 			}
 		}
+	}
+
+	if (ImGui::Button("Temp")) {
+	
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, {0,0,0}, 4);
 	}
 
 	return iExit;

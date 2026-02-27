@@ -55,15 +55,15 @@ HRESULT CAssetSpine::LoadFromFile(std::wstring_view atlasPath, std::wstring_view
     m_pSkeletonData.reset(binary.readSkeletonDataFile(std::string(skeletonPath.begin(), skeletonPath.end()).c_str()));
     m_pAniStateData = make_unique<spine::AnimationStateData>(m_pSkeletonData.get());
 
-    //for (size_t i = 0; i < skeletonData->getAnimations().size(); ++i) {
-    //    spine::Animation* anim = skeletonData->getAnimations()[i];
+    //for (size_t i = 0; i < m_pSkeletonData->getAnimations().size(); ++i) {
+    //    spine::Animation* anim = m_pSkeletonData->getAnimations()[i];
     //    anim->getName().buffer();
     //    auto a = anim->getName();
     //    CLog::Debug(L"Animation %zu: %s\n", i, anim->getName().buffer());
     //    //printf("Animation %zu: %s\n", i, anim->getName().buffer());
     //}
     // Set the default mix time between any pair of animations in seconds
-    m_pAniStateData->setDefaultMix(0.1f);
+    //m_pAniStateData->setDefaultMix(0.1f);
 
     m_pSkeleton = make_unique<spine::Skeleton>(m_pSkeletonData.get());
     m_pAniState = make_unique<spine::AnimationState>(m_pAniStateData.get());
@@ -153,6 +153,11 @@ HRESULT CAssetSpine::Unload()
    
     m_eAssetState = UNLOAD;
 	return S_OK;
+}
+
+std::wstring_view CAssetSpine::Get_TextureString()
+{
+    return m_pTexLoader.get()->m_sSpineTexName;
 }
 
 void CAssetSpine::TempUpdate(const float& fTimeDelta)

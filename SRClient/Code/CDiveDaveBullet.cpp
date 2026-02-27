@@ -3,6 +3,7 @@
 #include "CRenderer.h"
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
+#include "CFishGameObject.h"
 CDiveDaveBullet::CDiveDaveBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
     : m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -119,6 +120,22 @@ void CDiveDaveBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 					}
 				}
 			}
+		}
+	}
+
+
+	// [LSY] ÃÑ¾ËÀÌ¶û ¹°°í±â
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_FishesHitbox"))
+	{
+		for (auto& pCollider : *pColliders)
+		{
+				if (m_pAABB->Intersect(pCollider))
+				{
+					if (pCollider->Get_Tag() == L"AABB_FishHitbox")
+					{
+						reinterpret_cast<CFishGameObject*>(pCollider->Get_VoidPtr())->Damaged(1);
+					}
+				}
 		}
 	}
 }

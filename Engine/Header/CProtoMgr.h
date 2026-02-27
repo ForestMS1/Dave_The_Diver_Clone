@@ -12,6 +12,7 @@
 #include "CCalculator.h"
 #include "CDynamicBuffer.h"
 #include "CTextureFrame.h"
+#include "CSpine.h"
 
 BEGIN(Engine)
 
