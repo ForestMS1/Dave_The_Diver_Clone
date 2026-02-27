@@ -48,6 +48,9 @@ private:
 	bool			holdingSushi;
 	Facing			curDir;
 	Facing			prevDir;
+	CAABB*			m_pAABB;
+	wstring			m_sSushiName;
+	wstring			m_sTexName;
 	virtual void Free();
 
 };

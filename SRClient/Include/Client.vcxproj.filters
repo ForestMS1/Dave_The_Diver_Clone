@@ -379,6 +379,9 @@
     <Filter Include="02. GameObject\Fish\UI\HoldFish">
       <UniqueIdentifier>{f1756187-72fa-4b25-9ddd-da71f198f849}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Wasabi">
+      <UniqueIdentifier>{fd042b25-98c8-40a3-a4bd-f60dbcbe7d43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -987,6 +990,12 @@
     <ClInclude Include="..\Header\CHoldFishUIDave.h">
       <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWasabi.h">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWasabiObject.h">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1573,6 +1582,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHoldFishUIDave.cpp">
       <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWasabi.cpp">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWasabiObject.cpp">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
