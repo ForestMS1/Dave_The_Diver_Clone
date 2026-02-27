@@ -1,7 +1,7 @@
 #pragma once
 #include "CBaseState.h"
 
-enum DIR
+enum JOHNDIR
 {
     UP = 0,
     UP_RIGHT,
@@ -46,7 +46,7 @@ private:
     CTransform* m_pOwnerTransform = nullptr;
 
 private:
-    DIR m_eDir = DIR_END;
+    JOHNDIR m_eDir = DIR_END;
 
 private:
     virtual void Free() override;
