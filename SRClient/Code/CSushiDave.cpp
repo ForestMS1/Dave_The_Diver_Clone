@@ -142,10 +142,16 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
     }
     if (m_pAABB->Intersect(wasabi->front()))
     {
-        if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE)) {
+        CGameObject* wasabiObject = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
+        float percent = static_cast<CWasabiObject*>(wasabiObject)->percent;
+        if (static_cast<CWasabiObject*>(wasabiObject)->percent < 99.7f) {
             CGameObject* wasabi1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Wasabi");
-            static_cast<CWasabi*>(wasabi1)->Set_Render(true);
+            if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE)) {
+                static_cast<CWasabi*>(wasabi1)->Set_Render(true);
+                makingWasabi = true;
+            }
         }
+     
 
     }
     if (coliders != nullptr) {
@@ -281,93 +287,95 @@ HRESULT CSushiDave::Ready_Component()
 void CSushiDave::Key_Input(const _float& fTimeDelta)
 {
     bool bMove = false;
-  
-    if (!holdingSushi) {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
-        {
-            _vec3 left = { -1,0,0 };
-            curState = WALK;
-            curDir = LEFT;
-            m_pTransformCom->Move_Pos(&left, 2.f, fTimeDelta);
-            bMove = true;
-        }
-
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
-        {
-            _vec3 right = { 1,0,0 };
-            curState = WALK;
-            curDir = RIGHT;
-            m_pTransformCom->Move_Pos(&right, 2.f, fTimeDelta);
-            bMove = true;
-        }
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-        {
-            curState = RUN;
+    if (!makingWasabi) {
+        if (!holdingSushi) {
             if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
             {
                 _vec3 left = { -1,0,0 };
+                curState = WALK;
                 curDir = LEFT;
-                m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
+                m_pTransformCom->Move_Pos(&left, 2.f, fTimeDelta);
                 bMove = true;
             }
+
             if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
             {
                 _vec3 right = { 1,0,0 };
+                curState = WALK;
                 curDir = RIGHT;
-                m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
+                m_pTransformCom->Move_Pos(&right, 2.f, fTimeDelta);
                 bMove = true;
             }
-        }
-    }
-    else {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
-        {
-            _vec3 left = { -1,0,0 };
-            curState = SUSHI_WALK;
-            curDir = LEFT;
-            m_pTransformCom->Move_Pos(&left, 2.f, fTimeDelta);
-            bMove = true;
-        }
-
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
-        {
-            _vec3 right = { 1,0,0 };
-            curState = SUSHI_WALK;
-            curDir = RIGHT;
-            m_pTransformCom->Move_Pos(&right, 2.f, fTimeDelta);
-            bMove = true;
-        }
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-        {
-            curState = SUSHI_RUN;
-            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
             {
-                _vec3 left = { -1,0,0 };
-                curDir = LEFT;
-                m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
-                bMove = true;
+                curState = RUN;
+                if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
+                {
+                    _vec3 left = { -1,0,0 };
+                    curDir = LEFT;
+                    m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
+                    bMove = true;
+                }
+                if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
+                {
+                    _vec3 right = { 1,0,0 };
+                    curDir = RIGHT;
+                    m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
+                    bMove = true;
+                }
             }
-            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
-            {
-                _vec3 right = { 1,0,0 };
-                curDir = RIGHT;
-                m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
-                bMove = true;
-            }
-        }
-    }
-   
-    if (!bMove) {
-        if (holdingSushi) {
-            curState = SUSHI_IDLE;
-
         }
         else {
-            curState = IDLE;
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
+            {
+                _vec3 left = { -1,0,0 };
+                curState = SUSHI_WALK;
+                curDir = LEFT;
+                m_pTransformCom->Move_Pos(&left, 2.f, fTimeDelta);
+                bMove = true;
+            }
 
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
+            {
+                _vec3 right = { 1,0,0 };
+                curState = SUSHI_WALK;
+                curDir = RIGHT;
+                m_pTransformCom->Move_Pos(&right, 2.f, fTimeDelta);
+                bMove = true;
+            }
+            if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+            {
+                curState = SUSHI_RUN;
+                if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
+                {
+                    _vec3 left = { -1,0,0 };
+                    curDir = LEFT;
+                    m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
+                    bMove = true;
+                }
+                if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
+                {
+                    _vec3 right = { 1,0,0 };
+                    curDir = RIGHT;
+                    m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
+                    bMove = true;
+                }
+            }
         }
-        m_fFrame = 0;
+
+        if (!bMove) {
+            if (holdingSushi) {
+                curState = SUSHI_IDLE;
+
+            }
+            else {
+                curState = IDLE;
+
+            }
+            m_fFrame = 0;
+        }
     }
+    
 }
 CSushiDave* CSushiDave::Create()
 {

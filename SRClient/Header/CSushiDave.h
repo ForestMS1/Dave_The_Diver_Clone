@@ -25,6 +25,7 @@ public:
 
 private:
 	HRESULT			Ready_Component();
+	virtual void Free();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -51,7 +52,8 @@ private:
 	CAABB*			m_pAABB;
 	wstring			m_sSushiName;
 	wstring			m_sTexName;
-	virtual void Free();
+public:
+	bool			makingWasabi = false;
 
 };
 

@@ -1012,6 +1012,9 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiIcon.png"));
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Wasabi", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/wasabi.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Good", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/good.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Orange", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Orange.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_BrownFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/brownFrame.png"));
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiObject", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/wasabiObject.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WasabiObjectTex", Engine::CTexture::Create(L"Tex_WasabiObject"))))

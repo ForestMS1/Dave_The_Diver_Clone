@@ -14,6 +14,7 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CWasabiObject.h"
+#include "CSushiDave.h"
 
 
 
@@ -34,6 +35,11 @@ CWasabi::~CWasabi()
 {
 }
 
+void CWasabi::Update_ImGui()
+{
+    CGameObject::Update_ImGui();
+    ImGui::DragFloat("tempY", &gauge, 0.01f);
+}
 HRESULT CWasabi::Ready_GameObject()
 {
   
@@ -58,9 +64,17 @@ _int CWasabi::Update_GameObject(const _float& fTimeDelta)
                 frameMove = false;
             }
         }
+        CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
+        gauge = -4.04 + static_cast<CWasabiObject*>(wasabi)->percent * 0.01f * 3.74f;
 
+        if (gauge >= -0.3f) {
+            gauge = -0.3f;
+            good += fTimeDelta;
+        }
     }
 
+ 
+    
 
     return iExit;
 }
@@ -82,9 +96,7 @@ void CWasabi::Render_GameObject()
 
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-        // 와사비 프레임
-        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_WasabiFrame"))
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_BrownFrame"))
         {
             if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
             {
@@ -96,11 +108,27 @@ void CWasabi::Render_GameObject()
         D3DXMatrixIdentity(&matTmp);
         matTmp.m[0][0] = 5.f;
         matTmp.m[1][1] = 4.f;
-        matTmp.m[2][2] = 1.f;
+        //matTmp.m[3][0] -= 1.f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+        // 와사비 프레임
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_WasabiFrame"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        D3DXMatrixIdentity(&matTmp);
+        matTmp.m[0][0] = 5.f;
+        matTmp.m[1][1] = 3.9f;
+        matTmp.m[3][1] += 0.1f;
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
         m_pBufferCom->Render_Buffer();
 
         if (wasabiCreated) {
+
             if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Wasabi"))
             {
                 if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
@@ -129,6 +157,123 @@ void CWasabi::Render_GameObject()
 
         m_pBufferCom->Render_Buffer();
 
+
+        ////////////////////////////와사비 게이지 
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_WasabiGaugeBar"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+        matTmp = *m_pTransformCom->Get_World();
+        matTmp.m[3][1] += 0.3f;
+        matTmp.m[0][0] = 0.4f;
+        matTmp.m[1][1] = 2.0f;
+        matTmp.m[3][0] += 3.7f;
+
+
+        //matTmp.m[1][1] = 0.1f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+
+
+     
+
+
+
+
+
+        pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+        pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
+        pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
+
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 1); // 알파가 1 이상인 것만 통과
+        pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+        // 2. 색상과 깊이 기록은 끔 (틀만 잡기 위함)
+        pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
+        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_WasabiGaugeStancil"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+
+        pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
+
+        // 2. 스텐실 판정: 기록된 '1' 영역에만 그리기
+        pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+        pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Orange"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+      /*  _matrix newMat = *m_pTransformCom->Get_World();
+        newMat.m[0][0] += 2.f;*/
+        matTmp.m[3][1] = gauge;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+
+
+        pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+
+      
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_WasabiIcon"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        matTmp = *m_pTransformCom->Get_World();
+        matTmp.m[3][1] += 2.3f;
+        matTmp.m[0][0] = 0.5f;
+        matTmp.m[1][1] = 0.5f;
+        matTmp.m[3][0] += 3.7f;
+
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+
+        if (gauge >= -0.30001f) {
+            //gauge = -0.3f;
+            if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Good"))
+            {
+                if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                {
+                    pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                }
+            }
+
+            matTmp = *m_pTransformCom->Get_World();
+            matTmp.m[0][0] = 2.f + good * 0.1f;
+            matTmp.m[1][1] = 2.f + good * 0.1f;
+            matTmp.m[3][1] += 1.f;
+            pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+            m_pBufferCom->Render_Buffer();
+            if (good > 3.f) {
+                CGameObject* dave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"GameLogic_Layer")->Get_GameObjectFirst(L"Dave");
+                static_cast<CSushiDave*>(dave)->makingWasabi = false;
+                m_bRender = false;
+                good = 0.f;
+            }
+        }
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     }

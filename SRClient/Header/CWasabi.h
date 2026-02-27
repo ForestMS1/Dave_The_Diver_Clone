@@ -15,6 +15,8 @@ private:
 	explicit CWasabi();
 	explicit CWasabi(const CGameObject& rhs);
 	virtual ~CWasabi();
+	void	Update_ImGui() override;
+
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -41,6 +43,7 @@ private:
 	bool	frameMove;
 	bool	wasabiCreated;
 	float	m_fScale;
-	float   gauge = -1.f;
+	float   gauge = -4.04f;
+	float   good = 0.f;
 };
 
