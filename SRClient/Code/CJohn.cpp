@@ -15,7 +15,9 @@
 #include "CDiveDaveBullet.h"
 #include "CJohnMeleeAttackReady.h"
 #include "CJohnMeleeAttack.h"
-CJohn::CJohn()
+#include "CJohnIntro.h"
+CJohn::CJohn(_float x, _float y, _float z)
+	: m_vCreatePos({x,y,z})
 {
 }
 
@@ -39,6 +41,8 @@ HRESULT CJohn::Ready_GameObject()
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	Set_State(JOHNSTATE::IDLE);
+
+	m_pTransformCom->Set_Pos(m_vCreatePos.x, m_vCreatePos.y, m_vCreatePos.z);
 
 	//std::function<NodeStatus(CJohn&)> f1 = &CJohn::Func;
 	//CSelector* pRoot = new CSelector;
@@ -135,9 +139,9 @@ void CJohn::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size,
 	}
 }
 
-CJohn* CJohn::Create()
+CJohn* CJohn::Create(_float x, _float y, _float z)
 {
-	CJohn* pBoss = new CJohn;
+	CJohn* pBoss = new CJohn(x,y,z);
 	if (FAILED(pBoss->Ready_GameObject()))
 	{
 		Safe_Release(pBoss);
@@ -165,10 +169,10 @@ void CJohn::Start()
 		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"DiveDave", L"Com_Transform"));
 }
 
-_bool CJohn::Check_TargetInRange()
+_bool CJohn::Check_TargetInRange(_float fRange)
 {
 	// 범위 내에 들어왔음
-	if (D3DXVec3Length(&m_vDirToTarget) < 4.f)
+	if (D3DXVec3Length(&m_vDirToTarget) < fRange)
 		return true;
 
 	return false;
@@ -215,4 +219,14 @@ _bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
 		return true;
 	}
 	return false;
+}
+
+void CJohn::EncounterTarget()
+{
+	if (m_bStartCombat)
+		return;
+	m_bStartCombat = true;
+
+	CJohnIntro* pIntro = CJohnIntro::Create();
+	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Add_GameObject(L"JW_Intro", pIntro);
 }

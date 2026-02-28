@@ -355,7 +355,7 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// º¸½º
-	pGameObject = CJohn::Create();
+	pGameObject = CJohn::Create(10.f, 10.f, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))

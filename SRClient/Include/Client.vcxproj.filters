@@ -388,6 +388,9 @@
     <Filter Include="02. GameObject\John\MeleeAttack">
       <UniqueIdentifier>{4de75e6c-fc0e-4b85-bfbe-7136a0474a7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John\Intro">
+      <UniqueIdentifier>{92f78695-0ad1-4be6-b322-6bd30345c6d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1008,6 +1011,9 @@
     <ClInclude Include="..\Header\CJohnMeleeAttack.h">
       <Filter>02. GameObject\John\MeleeAttack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohnIntro.h">
+      <Filter>02. GameObject\John\Intro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1606,6 +1612,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnMeleeAttack.cpp">
       <Filter>02. GameObject\John\MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnIntro.cpp">
+      <Filter>02. GameObject\John\Intro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

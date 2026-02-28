@@ -588,6 +588,12 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"MeleeSkill01_Attack_02", CAssetTexture::Create(s.c_str()));
 	}
 
+	// 보스 인트로
+	for (int i = 0; i < 138; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/Intro/" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Boss_JW_Intro", CAssetTexture::Create(s.c_str()));
+	}
 
 	// 작살 줄
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))

@@ -7,7 +7,7 @@
 class CJohn : public CGameObject
 {
 private:
-	explicit			CJohn();
+	explicit			CJohn(_float x, _float y, _float z);
 	explicit			CJohn(const CJohn& rhs);
 	virtual				~CJohn();
 
@@ -46,11 +46,14 @@ public:
 	_bool				Check_GlobalState();
 
 	// 타겟 추적
-	_bool				Check_TargetInRange();
+	_bool				Check_TargetInRange(_float fRange = 10.f);
 	void				Update_ToTargetDir();
 	_vec3				Get_ToTargetDir() const { return m_vDirToTarget; }
 	void				Shot_Bullet();
 	_bool				Rush_ToTarget(const _float& fTimeDelta);
+
+	//플레이어랑 처음 마주쳐서 인트로
+	void				EncounterTarget();
 
 
 private:
@@ -61,6 +64,7 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 	CAABB* m_pAABB; // 아이템 상자랑 충돌 용
+	_vec3 m_vCreatePos; //보스 생성 위치
 
 private:
 	_float	m_fFrame = 0.f;
@@ -76,7 +80,7 @@ private:
 	CTransform* m_pTargetTransform = nullptr;
 
 public:
-	static CJohn* Create();
+	static CJohn* Create(_float x = 0, _float y = 0, _float z = 0);
 
 private:
 	virtual void Free() override;
