@@ -17,12 +17,15 @@
 #include "CAssetDefaultFont.h"
 #include "CAssetMgr.h"
 #include "CGameMemMgr.h"
+#include "CAssetTexture.h"
+#include "CUpgradeImage.h"
 CSushiFrame::CSushiFrame()
     : CGameObject()
 {
     m_bSelected = false;
     m_bImageCreated = false;
     ConfirmOpened = false;
+    m_bUpgradeImageCreated = false;
     fishName = L"";
     m_sQuanity = L"1";
 }
@@ -148,10 +151,25 @@ _int CSushiFrame::Update_GameObject(const _float& fTimeDelta)
 
             m_bImageCreated = true;
         }
-          
+
+        upgrade = CUpgradeImage::Create();
+
+        if (nullptr == upgrade)
+            return E_FAIL;
+
+        if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"UpgradeImage", upgrade)))
+            return E_FAIL;
+        {
+            CTransform* pTransform = static_cast<CTransform*>(upgrade->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+            pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
+            pTransform->m_vInfo[INFO_POS].x += 0.2f;
+            pTransform->m_vInfo[INFO_POS].y += 0.15f;
+            pTransform->m_vScale = { 0.08f, 0.1f, 1.f };
+
+        }
     }
 
-
+    
 
 
 
@@ -185,9 +203,6 @@ void CSushiFrame::LateUpdate_GameObject(const _float& fTimeDelta)
                         static_cast<CSushiFrame*>((*iter))->m_bSelected = false;
                     }
                     m_bSelected = true;
-
-
-                    // ½º½Ã info ·»´õ
                 }
             }
         }
@@ -211,23 +226,18 @@ void CSushiFrame::Render_GameObject()
         m_pBufferCom->Render_Buffer();
         if (m_bSelected)
         {
-            pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-            pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-            pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
             m_pSelectedTextureCom->Set_Texture(0);
             m_pBufferCom->Render_Buffer();
-            pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
         }
 
+    
 
         D3DXMATRIX matTmp;
         D3DXMatrixIdentity(&matTmp);
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+     
 
 
         CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_DefaultXX");
@@ -242,6 +252,7 @@ void CSushiFrame::Render_GameObject()
             }
         }
         _vec2 vPos = { screen2.x , screen2.y  };
+
         if (stoi(m_sQuanity) <= 0) {
             pDefFont->Render_Font(m_sQuanity, &vPos, D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
         }
@@ -252,8 +263,17 @@ void CSushiFrame::Render_GameObject()
        
         
         plevelFont->Render_Font(m_sLevel, &vPos1, D3DXCOLOR(1.f, 0.9f, 0.8f, 1.f));
+        if (stoi(m_sQuanity) >= 3) {
+            upgrade->Set_Render(true);
+        }
+        else {
+            upgrade->Set_Render(false);
+
+        }
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     }
   
+    
     
    
     //float scalex = CInfoMgr::GetInstance()->Get_ScaleFactor();

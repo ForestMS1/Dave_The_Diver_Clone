@@ -60,8 +60,9 @@ private:
 	float			ReactionTime;
 	float			EatingTime;
 	float			EmotionTime;
+	float			GoldTime;
 	CAABB*			m_pAABB;
-
+	_vec3 screen;
 	int random;
 	virtual void Free();
 

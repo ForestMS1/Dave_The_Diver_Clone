@@ -10,6 +10,7 @@
 #include "CColliderMgr.h"
 #include "CBluejongR.h"
 #include "CCloseButton.h"
+#include "CUpgradeImage.h"
 
 
 
@@ -91,6 +92,7 @@ HRESULT CRecipe::Ready_GameObject()
     }
     objects.push_back(pGameObject);
 
+ 
     return S_OK;
 }
 
