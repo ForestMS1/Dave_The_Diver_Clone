@@ -13,6 +13,7 @@
 #include"CHoldFishUIDropPanel.h"
 
 #include "CHoldFishUIImg.h"
+#include "CGameMemMgr.h"
 
 CHoldFishUIItemGroup::CHoldFishUIItemGroup(float fPosX, float fPosY)
     : CGameObject()
@@ -58,23 +59,35 @@ HRESULT		CHoldFishUIItemGroup::Ready_GameObject()
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         float refY = 0.5f;
+
+        for (auto& caughtFishe : CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes())
         {
             auto pArea = CHoldFishUIItemArea::Create(0, 0.f, refY);
             pArea->Set_Parent(this);
+            pArea->Set_Thumbnail(caughtFishe.sThumbNailAssetName);
+            pArea->Set_Title(caughtFishe.sFishName);
+            pArea->Set_Rank(L"Rank" + to_wstring(caughtFishe.iRank));
+            pArea->Ready_AfterCreate();
             pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+            refY -= 0.15f;
         }
-        refY -= 0.15f;
-        {
-            auto pArea = CHoldFishUIItemArea::Create(1, 0.f, refY);
-            pArea->Set_Parent(this);
-            pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
-        }
-        refY -= 0.15f;
-        {
-            auto pArea = CHoldFishUIItemArea::Create(2, 0.f, refY);
-            pArea->Set_Parent(this);
-            pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
-        }
+        //{
+        //    auto pArea = CHoldFishUIItemArea::Create(0, 0.f, refY);
+        //    pArea->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+        //}
+        //refY -= 0.15f;
+        //{
+        //    auto pArea = CHoldFishUIItemArea::Create(1, 0.f, refY);
+        //    pArea->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+        //}
+        //refY -= 0.15f;
+        //{
+        //    auto pArea = CHoldFishUIItemArea::Create(2, 0.f, refY);
+        //    pArea->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+        //}
     }
 
     return S_OK;

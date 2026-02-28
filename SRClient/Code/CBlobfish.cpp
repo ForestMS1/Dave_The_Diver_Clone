@@ -28,6 +28,13 @@ CBlobfish::~CBlobfish()
 
 HRESULT CBlobfish::Ready_GameObject()
 {
+    m_sFishName = L"블러브피쉬";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Blobfish";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

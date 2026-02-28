@@ -61,9 +61,9 @@ HRESULT		CToSushiUIItem::Ready_GameObject()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
             auto pImg = CDiveResultUIImg::Create(-2.49f, -0.05f);
-            pImg->Set_Scale(0.14);
+            pImg->Set_Scale(0.49f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"ToSushiFishImg", pImg);
@@ -76,9 +76,9 @@ HRESULT		CToSushiUIItem::Ready_GameObject()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
             auto pImg = CDiveResultUIImg::Create(-1.57f, -0.2f);
-            pImg->Set_Scale(0.07f);
+            pImg->Set_Scale(0.233f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"ToSushiSushiImg", pImg);

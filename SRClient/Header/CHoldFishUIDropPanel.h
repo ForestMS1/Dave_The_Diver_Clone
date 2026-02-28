@@ -37,6 +37,7 @@ public:
 private:
 	std::wstring m_sTitle;
 
+
 public:
 	static CHoldFishUIDropPanel* Create(float fPosX, float fPosY);
 

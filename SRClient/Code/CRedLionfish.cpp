@@ -28,6 +28,13 @@ CRedLionfish::~CRedLionfish()
 
 HRESULT CRedLionfish::Ready_GameObject()
 {
+    m_sFishName = L"½ò¹è°¨Æë";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Red_Lionfish";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

@@ -69,9 +69,9 @@ HRESULT		CDiveResultUI::Ready_GameObject()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
             auto pImg = CDiveResultUIImg::Create(-2.4f, 0.14f);
-            pImg->Set_Scale(0.1);
+            pImg->Set_Scale(0.33f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"BiggestFishImg", pImg);
@@ -85,9 +85,9 @@ HRESULT		CDiveResultUI::Ready_GameObject()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
             auto pImg = CDiveResultUIImg::Create(-2.55f, -1.16f);
-            pImg->Set_Scale(0.1);
+            pImg->Set_Scale(0.31f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"TestImg1", pImg);

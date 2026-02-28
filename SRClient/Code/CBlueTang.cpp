@@ -28,6 +28,13 @@ CBlueTang::~CBlueTang()
 
 HRESULT CBlueTang::Ready_GameObject()
 {
+    m_sFishName = L"∫Ì∑Á≈ ";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Bluetang";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

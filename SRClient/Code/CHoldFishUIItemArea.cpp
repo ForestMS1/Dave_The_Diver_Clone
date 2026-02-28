@@ -59,16 +59,50 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
     m_pTransformCom->Set_Pos(0.f, 0.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
+    m_fViewZ = 0.499;
+
+
+    // ¿§Áö
+    {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+        {
+            //pLayer
+            auto pEdge = CHoldFishUIImg::Create(0.f, 0.f);
+            pEdge->Set_Scale(0.071f);
+            pEdge->Set_ViewZ(999.f);
+            pEdge->Set_AssetName(L"Tex_HoldFishItemAreaEdge");
+            pEdge->Set_Parent(this);
+            pEdge->Ready_After_Create();
+            pLayer->Add_GameObject(L"HoldFishItemAreaEdge", pEdge);
+
+            m_pEdgeImg = pEdge;
+        }
+    }
+
+
+    _vec3 vPos = { 0.f, 0.f, 0.f };
+    _vec3 vExt = { 1.f, 1.f, 0.001f };
+
+    m_pAABB = CAABB::Create(&vPos, &vExt, L"AABB_HoldFishItemArea", this);
+
+    m_bEdgeVisible = false;
+
+    return S_OK;
+}
+
+HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
+{
+
     // ¿ÞÂÊ ¹°°í±â ÀÌ¹ÌÁö
     {
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
             //pLayer
 
-            auto pJacksalChock = CHoldFishUIImg::Create(-0.680f, 0.f);
-            pJacksalChock->Set_Scale(0.0175f);
-            pJacksalChock->Set_ViewZ(0.49f);
-            pJacksalChock->Set_AssetName(L"Tex_FishUIJaksalChock");
+            auto pJacksalChock = CHoldFishUIImg::Create(-0.685f, 0.f);
+            pJacksalChock->Set_Scale(.0585f);
+            pJacksalChock->Set_ViewZ(.49f);
+            pJacksalChock->Set_AssetName(m_sThumbNailAssetName);
             pJacksalChock->Set_Parent(this);
             pJacksalChock->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishItemImg", pJacksalChock);
@@ -110,32 +144,6 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
             }
         }
     }
-
-    // ¿§Áö
-    {
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            //pLayer
-            auto pEdge = CHoldFishUIImg::Create(0.f, 0.f);
-            pEdge->Set_Scale(0.071f);
-            pEdge->Set_ViewZ(999.f);
-            pEdge->Set_AssetName(L"Tex_HoldFishItemAreaEdge");
-            pEdge->Set_Parent(this);
-            pEdge->Ready_After_Create();
-            pLayer->Add_GameObject(L"HoldFishItemAreaEdge", pEdge);
-
-            m_pEdgeImg = pEdge;
-        }
-    }
-
-
-    _vec3 vPos = { 0.f, 0.f, 0.f };
-    _vec3 vExt = { 1.f, 1.f, 0.001f };
-
-    m_pAABB = CAABB::Create(&vPos, &vExt, L"AABB_HoldFishItemArea", this);
-
-    m_bEdgeVisible = false;
-
     return S_OK;
 }
 
@@ -223,7 +231,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"Title", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
         }
     }
 

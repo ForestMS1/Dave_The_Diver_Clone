@@ -17,6 +17,9 @@ public:
 	virtual			void		Render_GameObject();
 
 public:
+	HRESULT Ready_AfterCreate();
+
+public:
 	void Set_PosY(float f) { m_fPosY = f; }
 	_uint Get_Idx() const { return m_iIdx; }
 
@@ -53,12 +56,14 @@ public:
 	void Set_Title(std::wstring_view svTitle) { m_sTitle = svTitle; }
 	void Set_Rank(std::wstring_view svRank) { m_sRank = svRank; }
 	void Set_Weight(std::wstring_view svWeight) { m_sWeight = svWeight; }
+	void Set_Thumbnail(std::wstring_view svName) { m_sThumbNailAssetName = svName; }
 
 private:
 	std::wstring m_sTitle;
 	std::wstring m_sRank;
 	std::wstring m_sWeight;
 	const _uint m_iIdx = 0;
+	std::wstring m_sThumbNailAssetName;
 
 
 

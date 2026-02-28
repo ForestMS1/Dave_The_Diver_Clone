@@ -42,6 +42,8 @@
 #include "FishInclude.h"
 
 #include "CParticleMgr.h"
+
+#include "CGameMemMgr.h"
 CDive::CDive()
 	: CScene()
 {
@@ -92,6 +94,14 @@ HRESULT CDive::Ready_Scene()
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+
+
+
+
+	// [LSY] 다이브씬 시작하면 다이브 인포 기록 시작
+	CGameMemMgr::CDiveInfo info{};
+	info.DiveStart();
+	CGameMemMgr::GetInstance()->Get_DiveInfos().push_back(info);
 	return S_OK;
 }
 
@@ -529,4 +539,7 @@ void CDive::Free()
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
+
+	// [LSY] 씬이 종료될때 다이브 정보 기록
+	CGameMemMgr::GetInstance()->Get_DiveInfos().back().DiveEnd();
 }

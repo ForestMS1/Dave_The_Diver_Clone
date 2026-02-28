@@ -95,7 +95,7 @@ void CGetItemUIImg::Ready_After_Create()
 
                 vScale = { fAspect, 1.f, 1.f };
 
-                float fScale = 0.15;
+                float fScale = 0.5;
                 vScale.x *= fScale;
                 vScale.y *= fScale;
             }

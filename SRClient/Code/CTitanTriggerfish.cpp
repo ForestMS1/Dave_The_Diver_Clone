@@ -28,6 +28,13 @@ CTitanTriggerfish::~CTitanTriggerfish()
 
 HRESULT CTitanTriggerfish::Ready_GameObject()
 {
+    m_sFishName = L"≈∏¿Ã≈∫¡„ƒ°";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Titan_Triggerfish";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

@@ -47,7 +47,9 @@ HRESULT		CBackToShipUI::Ready_GameObject()
     m_fDbgX = 0.f;
     m_fDbgY = 0.f;
 
+    //m_fViewZ = -1.f;
 
+    //m_fViewZ = -999999.f;
     return S_OK;
 }
 
@@ -67,11 +69,13 @@ _int		CBackToShipUI::Update_GameObject(const _float& fTimeDelta)
     float y = matInvView.m[3][1];
 
 
-    m_pTransformCom->Set_Pos(x + m_fPosX, y + m_fPosY, -8.3f);
-
+    //m_pTransformCom->Set_Pos(x + m_fPosX, y + m_fPosY, -8.3f);
+    m_pTransformCom->Set_Pos(0, 0, -8.3f);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
+
+   
 
     return iExit;
 }

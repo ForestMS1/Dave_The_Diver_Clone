@@ -95,8 +95,8 @@ void		CGoToSushiUI::Render_GameObject()
         (BYTE)(alphaRatio * 255.f),
         255, 255, 255
     );
-    pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-    pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    //pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
     pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
     pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, tfactor);
 
@@ -135,10 +135,10 @@ void		CGoToSushiUI::Render_GameObject()
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-    pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xFFFFFFFF);
     pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-    pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+    //pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 
 

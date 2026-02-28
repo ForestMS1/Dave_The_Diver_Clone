@@ -263,6 +263,66 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	// Fish Thumbnails
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Asian_Sheepshead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Asian_Sheepshead_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Asian_Sheepshead");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Blobfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Blobfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Blobfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Bluetang", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Bluetang_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Bluetang");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_ClownFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/ClownFish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_ClownFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Devil_ScorpionFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Devil_ScorpionFish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Devil_ScorpionFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Dusky_Grouper", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Dusky_Grouper_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Dusky_Grouper");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Giant_Trevally", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Giant_Trevally_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Giant_Trevally");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Great_Spider_Crab", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Great_Spider_Crab_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Great_Spider_Crab");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Green_Humphead_Parrotfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Green_Humphead_Parrotfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Green_Humphead_Parrotfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Grey_Triggerfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Grey_Triggerfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Grey_Triggerfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Humboldt_Squid", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Humboldt_Squid_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Humboldt_Squid");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Juvenile_Circular_BatFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Juvenile_Circular_BatFish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Juvenile_Circular_BatFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Leafy_Seadragon", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Leafy_Seadragon_Ingame.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Leafy_Seadragon");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Red_Lionfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Red_Lionfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Red_Lionfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Smallspotted_dart", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Smallspotted_dart_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Smallspotted_dart");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_SpearSquid", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/SpearSquid_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_SpearSquid");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Titan_Triggerfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Titan_Triggerfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Titan_Triggerfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Yellow_Tang", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Yellow_Tang_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Yellow_Tang");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Yellowback_Fusilier", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Yellowback_Fusilier_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Yellowback_Fusilier");
+	}
+
 	// DaveConversation
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveConversation", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/DaveConversation.png"));

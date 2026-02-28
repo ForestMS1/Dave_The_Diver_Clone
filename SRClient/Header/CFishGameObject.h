@@ -47,7 +47,6 @@ public:
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
 public:
-	std::wstring_view Get_FishName() const { return m_sFishName; }
 	//Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
 	int Get_HP() const { return m_iHP; }
 	void Set_HP(int iHP) { m_iHP = iHP; }
@@ -79,8 +78,25 @@ protected:
 	Engine::CSpine* m_pSpineCom;
 	Engine::CRcTex* m_pBufferCom;
 
+
+public:
+	std::wstring_view Get_FishName() const { return m_sFishName; }
+	std::wstring_view Get_FishThumbNailAssetName() const { return m_sThumbNailAssetName ; }
+	_uint Get_Rank() const { return m_iRank; }
+	_uint Get_Star() const { return m_iStar; }
+	float Get_Weight() const { return m_fWeight; }
+	_uint Get_Price() const { return m_iPrice; }
+
 protected:
 	std::wstring m_sFishName;
+	std::wstring m_sThumbNailAssetName;
+	_uint m_iRank;
+	_uint m_iStar;
+	float m_fWeight;
+	_uint m_iPrice;
+
+
+protected:
 	float m_fCurrSpeed;
 	float m_fSpeed;
 	float m_fSprintSpeed;

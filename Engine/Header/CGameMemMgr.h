@@ -10,6 +10,105 @@ class ENGINE_DLL CGameMemMgr : public CBase
 {
 	DECLARE_SINGLETON(CGameMemMgr)
 
+public:
+	class CDaveInfo
+	{
+	public:
+		enum DAVE_JACKSALCHONG
+		{
+			JKCHONG_DEFAULT,
+			JKCHONG_END
+		};
+
+		enum DAVE_JACKSALCHOCK
+		{
+			JKCHOCK_DEFAULT,
+			JKCHOCK_END
+		};
+
+		enum DAVE_GUN
+		{
+			GUN_DEFAULT,
+			GUN_TRIPLE_ACCEL,
+			GUN_END
+		};
+
+	public:
+		_uint Get_GonggiVolume() const { return m_iGonggiVolume; }
+		_uint Get_JamsuDepth()const { return m_iJamsuDepth; }
+		_uint Get_JeokjaeWeight()const { return m_iJeokjaeWeight; }
+		_uint Get_JaksalDamage()const { return m_iJaksalDamage; }
+
+		void Set_GonggiVolume(_uint i) { m_iGonggiVolume = i; }
+		void Set_JamsuDepth(_uint i) { m_iJamsuDepth = i; }
+		void Set_JeokjaeWeight(_uint i) { m_iJeokjaeWeight = i; }
+		void Set_JaksalDamage(_uint i) { m_iJaksalDamage = i; }
+
+	private:
+		_uint m_iGonggiVolume;
+		_uint m_iJamsuDepth;
+		_uint m_iJeokjaeWeight;
+		_uint m_iJaksalDamage;
+
+	};
+
+	// 이번 다이브 시간 다이브 타임 잡은 물고기 등등
+	class CDiveInfo
+	{
+	public:
+		typedef struct tagDiveFish
+		{
+			std::wstring sFishName;
+			std::wstring sThumbNailAssetName;
+			_uint iRank;
+			_uint iStar;
+			_uint iMeatCnt;
+			float fWeight;
+		} DIVE_FISH;
+
+		typedef struct tagDiveItem
+		{
+			std::wstring sItemName;
+			std::wstring sThumbNailAssetName;
+		} DIVE_ITEM;
+
+	public:
+		void DiveStart() { m_DiveStart = clock(); }
+		void DiveEnd() { m_DiveEnd = clock(); m_bDiveEnd = true; }
+
+		float CalcDiveTime()
+		{
+			return (float)(m_DiveEnd - m_DiveStart) / CLOCKS_PER_SEC;
+		}
+
+		void Add_FishFront(DIVE_FISH& fish) { m_vecCaughtFishes.push_front(fish); ++m_iCaughtFish; }
+		std::list<DIVE_FISH>& Get_Fishes() { return m_vecCaughtFishes; }
+
+		std::list< DIVE_ITEM>& Get_Itemes() { return m_vecCaughtItems; }
+		void Add_ItemBack(DIVE_ITEM& item) { m_vecCaughtItems.push_back(item); ++m_iObtained; }
+
+		void Set_Depth(_uint i) { m_iDepth = i; }
+		_uint Get_Depth() const { return m_iDepth; }
+
+		_uint Get_CaughtFish() const { return m_iCaughtFish; }
+		_uint Get_Obtained() const { return m_iObtained; }
+
+		bool Get_DiveEnd() const { return m_bDiveEnd; }
+
+	private:
+		std::list<DIVE_FISH> m_vecCaughtFishes;
+		std::list<DIVE_ITEM> m_vecCaughtItems;
+
+		clock_t m_DiveStart;
+		clock_t m_DiveEnd;
+
+		_uint m_iCaughtFish = 0;
+		_uint m_iDepth = 0;
+		_uint m_iObtained = 0;
+
+		bool m_bDiveEnd = false;
+	};
+
 private:
 	explicit CGameMemMgr();
 	virtual ~CGameMemMgr();
@@ -59,6 +158,14 @@ public:
 	unordered_map<std::wstring, _uint>* Get_IDiverCurrentLevel() { return &m_mapIDiverCurrentLevel; };
 private:
 	unordered_map<std::wstring, _uint> m_mapIDiverCurrentLevel;
+
+public:
+	CDaveInfo& Get_DaveInfo() { return m_DaveInfo; }
+	std::vector<CDiveInfo>& Get_DiveInfos() { return m_vecDiveInfo; }
+
+private:
+	std::vector<CDiveInfo> m_vecDiveInfo;
+	CDaveInfo m_DaveInfo;
 };
 
 END

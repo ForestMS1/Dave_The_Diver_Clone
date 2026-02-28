@@ -25,6 +25,13 @@ CYellowbackFusilier::~CYellowbackFusilier()
 
 HRESULT CYellowbackFusilier::Ready_GameObject()
 {
+    m_sFishName = L"³ë¶ûµîÀÌ ³ªºñµ¼";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Yellowback_Fusilier";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

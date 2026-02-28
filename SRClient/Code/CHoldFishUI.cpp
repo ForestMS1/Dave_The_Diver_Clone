@@ -14,6 +14,7 @@
 #include "CHoldFishUIItemGroup.h"
 
 #include "CHoldFishUIImg.h"
+#include "CGameMemMgr.h"
 
 CHoldFishUI::CHoldFishUI(float fPosX, float fPosY)
     : CGameObject()
@@ -51,6 +52,8 @@ HRESULT		CHoldFishUI::Ready_GameObject()
 
     m_fDbgX = 0.f;
     m_fDbgY = 0.f;
+    
+    m_fViewZ = 0.499;
 
 
     m_pDaveTextureFrameCom->RegistTextureFrame(L"Default", L"Tex_Ship_DiverBoxDave", 0.2f);
@@ -96,7 +99,19 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             pLayer->Add_GameObject(L"HoldFishUIItemAreaGroup", pGroup);
         }
 
+
         // ÀÛ»ìÃÑ
+        {
+            auto pJacksalChock = CHoldFishUIImg::Create(-1.07f, 0.62f);
+            pJacksalChock->Set_Scale(0.040);
+            pJacksalChock->Set_ViewZ(0.49f);
+            pJacksalChock->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Jaksal");
+            pJacksalChock->Set_Parent(this);
+            pJacksalChock->Ready_After_Create();
+            pLayer->Add_GameObject(L"HoldFishUIJacksalChong", pJacksalChock);
+        }
+
+        // ÀÛ»ìÃË
         {
             auto pJacksalChong = CHoldFishUIImg::Create(-0.6f, 0.62f);
             pJacksalChong->Set_Scale(0.040);
@@ -107,23 +122,13 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             pLayer->Add_GameObject(L"HoldFishUIJacksalChong", pJacksalChong);
         }
 
-        // ÀÛ»ìÃË
-        {
-            auto pJacksalChock = CHoldFishUIImg::Create(-1.07f, 0.62f);
-            pJacksalChock->Set_Scale(0.040);
-            pJacksalChock->Set_ViewZ(0.49f);
-            pJacksalChock->Set_AssetName(L"Tex_FishUIJaksalChock");
-            pJacksalChock->Set_Parent(this);
-            pJacksalChock->Ready_After_Create();
-            pLayer->Add_GameObject(L"HoldFishUIJacksalChock", pJacksalChock);
-        }
 
         // ±ÙÁ¢¹«±â
         {
             auto pKnief = CHoldFishUIImg::Create(-0.14f, 0.62f);
             pKnief->Set_Scale(0.040);
             pKnief->Set_ViewZ(0.49f);
-            pKnief->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pKnief->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Knief");
             pKnief->Set_Parent(this);
             pKnief->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIKnief", pKnief);
@@ -134,7 +139,7 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             auto pGun = CHoldFishUIImg::Create(-1.07f, 0.43f);
             pGun->Set_Scale(0.040);
             pGun->Set_ViewZ(0.49f);
-            pGun->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pGun->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Gun");
             pGun->Set_Parent(this);
             pGun->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIGun", pGun);
@@ -145,7 +150,7 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             auto pBujeok = CHoldFishUIImg::Create(-0.72f, 0.43f);
             pBujeok->Set_Scale(0.040);
             pBujeok->Set_ViewZ(0.49f);
-            pBujeok->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pBujeok->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Jusin");
             pBujeok->Set_Parent(this);
             pBujeok->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIBujeok1", pBujeok);
@@ -156,7 +161,7 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             auto pBujeok = CHoldFishUIImg::Create(-0.5f, 0.43f);
             pBujeok->Set_Scale(0.040);
             pBujeok->Set_ViewZ(0.49f);
-            pBujeok->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pBujeok->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Jusin");
             pBujeok->Set_Parent(this);
             pBujeok->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIBujeok2", pBujeok);
@@ -176,27 +181,34 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
             if (auto pObjs = pLayer->Get_GameObjects(L"HoldFishUIItemArea"))
             {
                 bool bReSorting = false;
+                int idx = 0;
+                auto iter = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes().begin();
                 for (auto& pObj : *pObjs)
                 {
                     if (auto pArea = dynamic_cast<CHoldFishUIItemArea*>(pObj))
                     {
                         if (pArea->Get_EdgeVisible())
                         {
-                            
                             if (auto pPanel = pLayer->Get_GameObjectFirst(L"HoldFishUIDropPanel"))
                             {
                                 pArea->Set_DeadCascade();
                                 pPanel->Set_DeadCascade();
                                 bReSorting = true;
+                              
+                                iter = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes().erase(iter);
+                                break;
                             }
                             else
                             {
                                 auto pArea = CHoldFishUIDropPanel::Create(0.f, 0.f);
                                 pArea->Set_Parent(this);
+                                pArea->Set_Title(iter->sFishName);
                                 pLayer->Add_GameObject(L"HoldFishUIDropPanel", pArea);
                             }
                         }
                     }
+                    ++iter;
+                    ++idx;
                 }
 
                 if (bReSorting)

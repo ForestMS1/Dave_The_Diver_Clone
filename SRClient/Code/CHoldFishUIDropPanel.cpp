@@ -55,14 +55,13 @@ HRESULT		CHoldFishUIDropPanel::Ready_GameObject()
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(0.f, 0.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
-
+    m_fViewZ = 0.399;
 
     return S_OK;
 }
 
 _int		CHoldFishUIDropPanel::Update_GameObject(const _float& fTimeDelta)
 {
-    
     _vec3 vPos;
     m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
 
@@ -72,7 +71,6 @@ _int		CHoldFishUIDropPanel::Update_GameObject(const _float& fTimeDelta)
     vPos.y += m_fPosY;
 
     m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -84,8 +82,6 @@ _int		CHoldFishUIDropPanel::Update_GameObject(const _float& fTimeDelta)
 void		CHoldFishUIDropPanel::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
-
-
 }
 
 void		CHoldFishUIDropPanel::Render_GameObject()
@@ -125,7 +121,8 @@ void		CHoldFishUIDropPanel::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"블루탱을 버리시겠습니까?", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            
+            pDefFont->Render_Font(m_sTitle + L"을 버리시겠습니까?", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 

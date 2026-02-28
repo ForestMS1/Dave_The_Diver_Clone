@@ -12,6 +12,8 @@
 
 #include "CToSushiUIItem.h"
 
+#include "CGameMemMgr.h"
+
 
 CToSushiUI::CToSushiUI(float fPosX, float fPosY)
     : CGameObject()
@@ -65,6 +67,8 @@ HRESULT		CToSushiUI::Ready_GameObject()
         ->Get_Scene()
         ->Get_Layer(L"0_GameLogic_Layer"))
     {
+        
+
         {
             auto pToSushiItem = CToSushiUIItem::Create(-2.73f, 3.16f);
             pToSushiItem->Set_Parent(this);
@@ -78,6 +82,11 @@ HRESULT		CToSushiUI::Ready_GameObject()
         }
     }
 
+    return S_OK;
+}
+
+HRESULT CToSushiUI::Ready_AfterCreate()
+{
     return S_OK;
 }
 

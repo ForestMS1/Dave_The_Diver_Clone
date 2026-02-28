@@ -12,6 +12,9 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
 
+public:
+	HRESULT Ready_AfterCreate();
+
 private:
 	HRESULT			Ready_Component();
 
@@ -27,13 +30,16 @@ public:
 	void Set_Title(std::wstring_view svTitle) { m_sTitle = svTitle; }
 	void Set_Rank(std::wstring_view svRank) { m_sRank = svRank; }
 	void Set_Weight(std::wstring_view svWeight) { m_sWeight = svWeight; }
+	void Set_StarCnt(_uint iCnt) { m_iStartCnt = iCnt; }
+	void Set_ImgAssetName(std::wstring_view sv) { m_sImgAssetName = sv; }
 
 private:
 	tweeny::tween<float> m_tween;
 	std::wstring m_sTitle;
 	std::wstring m_sRank;
 	std::wstring m_sWeight;
-	int m_iStartCnt;
+	_uint m_iStartCnt;
+	std::wstring m_sImgAssetName;
 
 public:
 	static CGetItemUI* Create(float fPosX, float fPosY);

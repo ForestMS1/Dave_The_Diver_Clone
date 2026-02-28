@@ -9,6 +9,8 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 #include "CGetItemUI.h"
+#include "CGameMemMgr.h"
+
 CFishGameObject::CFishGameObject()
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -206,10 +208,24 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
             auto pGetItemUI = CGetItemUI::Create(-7.f, 4.f);
+            pGetItemUI->Set_Title(m_sFishName);
+            pGetItemUI->Set_Rank(L"Rank 9");
+            pGetItemUI->Set_Weight(L"1 kg");
+            pGetItemUI->Set_StarCnt(m_iStar);
+            pGetItemUI->Set_ImgAssetName(m_sThumbNailAssetName);
+            pGetItemUI->Ready_AfterCreate();
             pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
-
         }
         Set_DeadCascade();
+
+        CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
+        fish.fWeight = 1.f;
+        fish.iMeatCnt = 2;
+        fish.iRank = 1;
+        fish.iStar = 2;
+        fish.sFishName = m_sFishName;
+        fish.sThumbNailAssetName = m_sThumbNailAssetName;
+        CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
         return;
     }
 
