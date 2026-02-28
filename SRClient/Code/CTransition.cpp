@@ -262,6 +262,27 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	// BackToShip
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_BackToShipUI", CAssetTexture::Create(L"../Bin/Resource/Texture/BackToShip/BackToShip.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_BackToShipUI");
+	}
+
+	// DiveResultUI
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResultUI", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/DiveResult.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResultUI");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_ToSushiUI", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/ToSushi.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_ToSushiUI");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_ToSushiUIItem", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/ToSushiItem.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_ToSushiUIItem");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_GoToSushiUI", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/GoToSushi.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_GoToSushiUI");
+	}
+
 	// 스파인
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Spine_Fish_BlueTang", CAssetSpine::Create(L"../Bin/Resource/Spine/BlueTang/BlueTang"));
@@ -1112,6 +1133,12 @@ HRESULT CTransition::Common_SHIP_Load()
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_FakeBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/Tmp3.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_FakeBG");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_NightBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/ShipNightBG.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_NightBG");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_NightFakeBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/ShipBG/ShipNighFakeBG.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_NightFakeBG");
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_UI_DiveBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/DiveBtn/DiveBtn.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_UI_DiveBtn");

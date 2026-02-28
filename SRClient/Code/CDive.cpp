@@ -38,7 +38,7 @@
 #include "CJohn.h"
 
 #include "CFishHQ.h"
-
+#include "CBackToShipUI.h"
 #include "FishInclude.h"
 
 #include "CParticleMgr.h"
@@ -98,6 +98,22 @@ HRESULT CDive::Ready_Scene()
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
 	CColliderMgr::GetInstance()->Set_Render(false);
+
+	if (ImGui::Button("BackToShipUI"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			if (auto pUI = pLayer->Get_GameObjectFirst(L"BackToShipUI"))
+			{
+				pUI->Set_DeadCascade();
+			}
+			else
+			{
+				auto pBackToShipUI = CBackToShipUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"BackToShipUI", pBackToShipUI);
+			}
+		}
+	}
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);

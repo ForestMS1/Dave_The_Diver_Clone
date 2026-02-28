@@ -45,8 +45,14 @@ private:
 public:
 	_uint Get_Money() const { return m_iMoney; }
 	void Set_Money(_uint iMoney) { m_iMoney = iMoney; }
+
+	bool Get_ShipNight() const { return m_bShipNight; }
+	void Set_ShipNight(bool b) { m_bShipNight = b; }
+
 private:
 	_uint m_iMoney;
+
+	bool m_bShipNight;
 
 	// IDiverCurrent
 public:

@@ -172,6 +172,10 @@
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
+    <ClInclude Include="..\Header\CBackToShipUI.h" />
+    <ClInclude Include="..\Header\CDiveResultUI.h" />
+    <ClInclude Include="..\Header\CDiveResultUIImg.h" />
+    <ClInclude Include="..\Header\CGoToSushiUI.h" />
     <ClInclude Include="..\Header\CJohn.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
@@ -225,6 +229,8 @@
     <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
+    <ClInclude Include="..\Header\CToSushiUI.h" />
+    <ClInclude Include="..\Header\CToSushiUIItem.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
@@ -371,6 +377,10 @@
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CBackToShipUI.cpp" />
+    <ClCompile Include="..\Code\CDiveResultUI.cpp" />
+    <ClCompile Include="..\Code\CDiveResultUIImg.cpp" />
+    <ClCompile Include="..\Code\CGoToSushiUI.cpp" />
     <ClCompile Include="..\Code\CJohn.cpp" />
     <ClCompile Include="..\Code\CChangeTab.cpp" />
     <ClCompile Include="..\Code\CCKeyUI.cpp" />
@@ -427,6 +437,8 @@
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />
+    <ClCompile Include="..\Code\CToSushiUI.cpp" />
+    <ClCompile Include="..\Code\CToSushiUIItem.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />

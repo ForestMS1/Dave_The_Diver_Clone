@@ -35,6 +35,10 @@
 
 #include "FishInclude.h"
 
+#include "CDiveResultUI.h"
+#include "CToSushiUI.h"
+#include "CGameMemMgr.h"
+#include "CGoToSushiUI.h"
 
 CShip::CShip()
 	: CScene()
@@ -379,7 +383,59 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	{
 		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
 	}
+
+	if (ImGui::Button("DiveResult"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+		{
+			if (auto pObj =pLayer->Get_GameObjectFirst(L"DiveResultUI"))
+			{
+				pObj->Set_DeadCascade();
+			}
+			else
+			{
+				CDiveResultUI* pDiveResult = CDiveResultUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"DiveResultUI", pDiveResult);
+			}
+		}
+	}
 	
+	if (ImGui::Button("ToSushi"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+		{
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"ToSushiUI"))
+			{
+				pObj->Set_DeadCascade();
+			}
+			else
+			{
+				CToSushiUI* pToSushi = CToSushiUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"ToSushiUI", pToSushi);
+			}
+		}
+	}
+
+	if (ImGui::Button("night"))
+	{
+		CGameMemMgr::GetInstance()->Set_ShipNight(!CGameMemMgr::GetInstance()->Get_ShipNight());
+	}
+
+	if (ImGui::Button("GoToSushi"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+		{
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"GoToSushiUI"))
+			{
+				pObj->Set_DeadCascade();
+			}
+			else
+			{
+				CGoToSushiUI* pToSushi = CGoToSushiUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"GoToSushiUI", pToSushi);
+			}
+		}
+	}
 	return iExit;
 }
 
