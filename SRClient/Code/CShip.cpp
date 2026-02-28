@@ -39,6 +39,7 @@
 #include "CToSushiUI.h"
 #include "CGameMemMgr.h"
 #include "CGoToSushiUI.h"
+#include "CDaveConversation.h"
 
 CShip::CShip()
 	: CScene()
@@ -433,6 +434,22 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			{
 				CGoToSushiUI* pToSushi = CGoToSushiUI::Create(0.f, 0.f);
 				pLayer->Add_GameObject(L"GoToSushiUI", pToSushi);
+			}
+		}
+	}
+
+	if (ImGui::Button("Dave Conversation"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+		{
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+			{
+				pObj->Set_DeadCascade();
+			}
+			else
+			{
+				CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+				pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
 			}
 		}
 	}

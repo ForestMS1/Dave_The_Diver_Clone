@@ -173,6 +173,7 @@
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
     <ClInclude Include="..\Header\CBackToShipUI.h" />
+    <ClInclude Include="..\Header\CDaveConversation.h" />
     <ClInclude Include="..\Header\CDiveResultUI.h" />
     <ClInclude Include="..\Header\CDiveResultUIImg.h" />
     <ClInclude Include="..\Header\CGoToSushiUI.h" />
@@ -378,6 +379,7 @@
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
     <ClCompile Include="..\Code\CBackToShipUI.cpp" />
+    <ClCompile Include="..\Code\CDaveConversation.cpp" />
     <ClCompile Include="..\Code\CDiveResultUI.cpp" />
     <ClCompile Include="..\Code\CDiveResultUIImg.cpp" />
     <ClCompile Include="..\Code\CGoToSushiUI.cpp" />

@@ -388,6 +388,9 @@
     <Filter Include="02. GameObject\BackToShipUI">
       <UniqueIdentifier>{25d94ffb-b043-4b76-85ac-16ff310be786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Conversation">
+      <UniqueIdentifier>{61c8e9c0-35a6-4932-905e-6a89042af3ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1020,6 +1023,9 @@
     <ClInclude Include="..\Header\CBackToShipUI.h">
       <Filter>02. GameObject\BackToShipUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDaveConversation.h">
+      <Filter>02. GameObject\Conversation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1630,6 +1636,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBackToShipUI.cpp">
       <Filter>02. GameObject\BackToShipUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDaveConversation.cpp">
+      <Filter>02. GameObject\Conversation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -262,6 +262,12 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	// DaveConversation
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveConversation", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/DaveConversation.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DaveConversation");
+	}
+
 	// BackToShip
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_BackToShipUI", CAssetTexture::Create(L"../Bin/Resource/Texture/BackToShip/BackToShip.png"));
