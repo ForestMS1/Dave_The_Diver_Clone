@@ -400,6 +400,9 @@
     <Filter Include="02. GameObject\John\Hit">
       <UniqueIdentifier>{9a529591-3314-4545-98cd-8f566ff00917}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John\BattleAngry">
+      <UniqueIdentifier>{60ec1b62-71dd-4476-a750-7d91890e7df5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1032,6 +1035,12 @@
     <ClInclude Include="..\Header\CJohnHit.h">
       <Filter>02. GameObject\John\Hit</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohnBattleAngry.h">
+      <Filter>02. GameObject\John\BattleAngry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnMine.h">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1642,6 +1651,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnHit.cpp">
       <Filter>02. GameObject\John\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnBattleAngry.cpp">
+      <Filter>02. GameObject\John\BattleAngry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnMine.cpp">
+      <Filter>02. GameObject\John\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

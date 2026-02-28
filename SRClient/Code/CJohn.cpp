@@ -21,6 +21,8 @@
 #include "CJohnNoStart.h"
 #include "CJohnHit.h"
 #include "CDiveDave.h"
+#include "CJohnMine.h"
+#include "CJohnBattleAngry.h"
 CJohn::CJohn(_float x, _float y, _float z)
 	: m_vCreatePos({x,y,z})
 {
@@ -132,6 +134,7 @@ HRESULT	CJohn::Add_State()
 	m_pFSM->Add_State<CJohnMeleeAttack>(JOHNSTATE::MELEEATTACK);
 	m_pFSM->Add_State<CJohnNoStart>(JOHNSTATE::BEFORE_START);
 	m_pFSM->Add_State<CJohnHit>(JOHNSTATE::HIT);
+	m_pFSM->Add_State<CJohnBattleAngry>(JOHNSTATE::SPLASH_MINE);
 
 	return S_OK;
 }
@@ -217,6 +220,38 @@ void CJohn::Shot_Bullet()
 	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
 }
 
+void CJohn::Splash_Mine()
+{
+	//_vec3 vCurPos, vNorToTarget;
+	//m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+	//D3DXVec3Normalize(&vNorToTarget, &m_vDirToTarget);
+
+
+	//CJohnMine* pBullet = CJohnMine::Create(vCurPos, vNorToTarget);
+	//CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnMine", pBullet);
+
+	_vec3 vCurPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+
+	const int iBulletCount = 12;
+
+	for (int i = 0; i < iBulletCount; ++i)
+	{
+		float fAngle = ((float)rand() / RAND_MAX) * D3DX_PI * 2.f;
+
+		_vec3 vDir;
+		vDir.x = cosf(fAngle);
+		vDir.y = sinf(fAngle);
+		vDir.z = 0.f;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		CJohnMine* pBullet = CJohnMine::Create(vCurPos, vDir);
+		CManagement::GetInstance()->Get_Scene()
+			->Get_Layer(L"0_GameLogic_Layer")
+			->Add_GameObject(L"JohnMine", pBullet);
+	}
+}
 _bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
 {
 	_vec3 vDir;

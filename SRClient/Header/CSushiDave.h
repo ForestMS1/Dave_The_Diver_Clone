@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
+#include "CAABB.h"
 namespace Engine
 {
 	class CRcTex;

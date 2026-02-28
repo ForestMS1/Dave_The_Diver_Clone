@@ -51,23 +51,30 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 
 	if (m_fBreakTime > 3.f)
 	{
-		if (!m_pOwner->Check_TargetInRange())
+		if (!m_pOwner->Check_TargetInRange(8.f))
 		{
 			m_pOwner->Set_State(JOHNSTATE::CHASE);
 		}
 		else
 		{
+			//1페이즈
+			if (m_pOwner->Get_Hp() >= 100.f)
+				m_iRand = (m_iRand + 1) % 2;
+			else // 2페이즈 (체력 50%이하)
+				m_iRand = ((m_iRand + 1) % 3) + 1;
+
 			switch (m_iRand)
 			{
 			case 0:
-				// 총쏘기 준비
-				m_iRand = 1;
-				m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
+				// 러쉬 준비
+				m_pOwner->Set_State(JOHNSTATE::MELEEATTACK_READY);
 				break;
 			case 1:
-				// 러쉬 준비
-				m_iRand = 0;
-				m_pOwner->Set_State(JOHNSTATE::MELEEATTACK_READY);
+				// 총쏘기 준비
+				m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
+				break;
+			case 2:
+				m_pOwner->Set_State(JOHNSTATE::SPLASH_MINE);
 				break;
 			default:
 				break;

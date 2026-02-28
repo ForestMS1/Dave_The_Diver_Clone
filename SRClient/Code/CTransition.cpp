@@ -617,6 +617,18 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		wstring s = L"../Bin/Resource/Texture/JohnWatson/Bullet/explosion0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"JohnBulletExplosion", CAssetTexture::Create(s.c_str()));
 	}
+	// 보스 중간에 빡쳐서 폭탄난사
+	for (int i = 0; i < 7; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/battle_angry/battle_angry0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnBattleAngry", CAssetTexture::Create(s.c_str()));
+	}
+	// 폭탄
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/Bullet/JohnWatson2_Mine_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnMine", CAssetTexture::Create(s.c_str()));
+	}
 	wstring s = L"../Bin/Resource/Texture/JohnWatson/Hit01.png";
 	CAssetMgr::GetInstance()->AddAsset(L"JohnHit", CAssetTexture::Create(s.c_str()));
 

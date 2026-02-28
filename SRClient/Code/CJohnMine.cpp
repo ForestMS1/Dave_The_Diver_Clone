@@ -1,42 +1,39 @@
-#include "CJohnGuidedBullet.h"
+#include "CJohnMine.h"
 #include "CGraphicDev.h"
 #include "CRenderer.h"
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
 #include "CFishGameObject.h"
-#include "CJohnGuidedBulletChase.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CManagement.h"
 #include "CDiveDave.h"
 #include "CJohn.h"
-CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
+CJohnMine::CJohnMine(_vec3 vOrigin, _vec3 vDir)
 	: m_vDir(vDir)
-	, m_fZAngle(fZAngle)
 	, m_vOrigin(vOrigin)
 {
 }
 
-CJohnGuidedBullet::CJohnGuidedBullet(const CJohnGuidedBullet& rhs)
+CJohnMine::CJohnMine(const CJohnMine& rhs)
 	: CGameObject(rhs)
 {
 }
 
-CJohnGuidedBullet::~CJohnGuidedBullet()
+CJohnMine::~CJohnMine()
 {
 }
 
-HRESULT CJohnGuidedBullet::Ready_GameObject()
+HRESULT CJohnMine::Ready_GameObject()
 {
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
 
 	m_pTransformCom->Set_Pos(m_vOrigin.x, m_vOrigin.y, m_vOrigin.z);
-	m_pTransformCom->Rotation(ROT_Z, m_fZAngle);
 
-	_float fWidth = 28.f;
-	_float fHeight = 17.f;
+	_float fWidth = 13.;
+	_float fHeight = 13.f;
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
 
@@ -49,13 +46,13 @@ HRESULT CJohnGuidedBullet::Ready_GameObject()
 
 	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
 
-	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_JohnGuidedBullet", this);
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_JohnMine", this);
 
-	m_wsTexName = L"JohnBulletA";
+	m_wsTexName = L"JohnMine";
 	return S_OK;
 }
 
-_int CJohnGuidedBullet::Update_GameObject(const _float& fTimeDelta)
+_int CJohnMine::Update_GameObject(const _float& fTimeDelta)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	// 충돌체 그룹에 넣어줘야한다.
@@ -64,14 +61,13 @@ _int CJohnGuidedBullet::Update_GameObject(const _float& fTimeDelta)
 
 
 	FSM(fTimeDelta);
-	_vec3 rot = { 0.f, 0.f, m_fZAngle };
-	m_pTransformCom->Set_Rotation(&rot);
+
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	return _int();
 }
 
-void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
+void CJohnMine::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
@@ -84,10 +80,10 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 				if (pCollider->Get_Tag() == L"AABB_DiveDaveWithItemBox")
 				{
 					//reinterpret_cast<CFishGameObject*>(pCollider->Get_VoidPtr())->Damaged(1);
-					if (m_eCurState == CHASE)
+					if (m_eCurState == MOVE)
 					{
-						_float fWidth = 28.f;
-						_float fHeight = 17.f;
+						_float fWidth = 13.f;
+						_float fHeight = 13.f;
 						_float fAspect = fWidth + fHeight;
 						fAspect /= 2.f;
 
@@ -95,7 +91,7 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 						vScale *= 0.5f;
 						m_pTransformCom->Multiply_Scale(&vScale);
 						//---------------------------------------------------------------
-						m_eCurState = EXLPOSION;
+						m_eCurState = EXPLOSION;
 						//---------------------------------------------------------------
 						fWidth = 51.f;
 						fHeight = 51.f;
@@ -106,14 +102,29 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 						vScale *= 5.f;
 						m_pTransformCom->Multiply_Scale(&vScale);
 					}
-					if (m_eCurState == STOP)
+					if (m_eCurState == EXPLOSION_READY)
 					{
-						if(static_cast<CDiveDave*>(pCollider->Get_VoidPtr())->Get_State() == DIVEDAVESTATE::MELEEATTACK)
+						_float fWidth = 13.f;
+						_float fHeight = 13.f;
+						_float fAspect = fWidth + fHeight;
+						fAspect /= 2.f;
+
+						_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
+						vScale *= 0.5f;
+						m_pTransformCom->Multiply_Scale(&vScale);
 						//---------------------------------------------------------------
-						m_eCurState = RETURN;
+						m_eCurState = EXPLOSION;
 						//---------------------------------------------------------------
+						fWidth = 51.f;
+						fHeight = 51.f;
+						fAspect = fWidth + fHeight;
+						fAspect /= 2.f;
+
+						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
+						vScale *= 5.f;
+						m_pTransformCom->Multiply_Scale(&vScale);
 					}
-					if (m_eCurState == EXLPOSION)
+					if (m_eCurState == EXPLOSION)
 					{
 						static_cast<CDiveDave*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
 					}
@@ -122,48 +133,9 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 			}
 		}
 	}
-
-	if (m_eCurState == RETURN)
-	{
-		if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_JohnWithGuided"))
-		{
-			for (auto& pCollider : *pColliders)
-			{
-				if (m_pAABB->Intersect(pCollider))
-				{
-					if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
-					{
-						_float fWidth = 28.f;
-						_float fHeight = 17.f;
-						_float fAspect = fWidth + fHeight;
-						fAspect /= 2.f;
-
-						_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
-						vScale *= 0.5f;
-						m_pTransformCom->Multiply_Scale(&vScale);
-						//---------------------------------------------------------------
-						m_eCurState = EXLPOSION;
-						//---------------------------------------------------------------
-						fWidth = 51.f;
-						fHeight = 51.f;
-						fAspect = fWidth + fHeight;
-						fAspect /= 2.f;
-
-						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-						vScale *= 5.f;
-						m_pTransformCom->Multiply_Scale(&vScale);
-					}
-					if (m_eCurState == EXLPOSION)
-					{
-						static_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
-					}
-				}
-			}
-		}
-	}
 }
 
-void CJohnGuidedBullet::Render_GameObject()
+void CJohnMine::Render_GameObject()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -188,7 +160,7 @@ void CJohnGuidedBullet::Render_GameObject()
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CJohnGuidedBullet::Ready_Component()
+HRESULT CJohnMine::Ready_Component()
 {
 	// 버퍼
 	if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -201,26 +173,19 @@ HRESULT CJohnGuidedBullet::Ready_Component()
 	return S_OK;
 }
 
-void CJohnGuidedBullet::FSM(const _float& fTimeDelta)
+void CJohnMine::FSM(const _float& fTimeDelta)
 {
 	switch (m_eCurState)
 	{
-	case CHASE:
-		m_wsTexName = L"JohnBulletA";
+	case MOVE:
 		AddFrame(fTimeDelta, 5.f, 2, true);
-		Chase(fTimeDelta);
+		Move(fTimeDelta);
 		break;
-	case STOP:
-		m_wsTexName = L"JohnBulletB";
+	case EXPLOSION_READY:
 		AddFrame(fTimeDelta, 5.f, 2, true);
 		StopReady(fTimeDelta);
 		break;
-	case RETURN:
-		m_wsTexName = L"JohnBulletA";
-		AddFrame(fTimeDelta, 5.f, 2, true);
-		Return(fTimeDelta);
-		break;
-	case EXLPOSION:
+	case EXPLOSION:
 		m_wsTexName = L"JohnBulletExplosion";
 		AddFrame(fTimeDelta, 5.f, 9, false);
 		Explosion(fTimeDelta);
@@ -230,45 +195,26 @@ void CJohnGuidedBullet::FSM(const _float& fTimeDelta)
 	}
 }
 
-void CJohnGuidedBullet::Chase(const _float& fTimeDelta)
+void CJohnMine::Move(const _float& fTimeDelta)
 {
 	m_fChaseTime += fTimeDelta;
 
-	if (m_fChaseTime > 3.f)
+	_uint random = rand() % 50;
+	if (m_fChaseTime > random)
 	{
-		m_eCurState = CJohnGuidedBullet::STATE::STOP;
+		m_eCurState = EXPLOSION_READY;
 		m_fChaseTime = 0.f;
 		return;
 	}
-	m_pTargetTransform = static_cast<CTransform*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"DiveDave", L"Com_Transform"));
-	if (m_pTargetTransform == nullptr)
-		return;
-
-	_vec3 vTargetPos;
-	m_pTargetTransform->Get_Info(INFO_POS, &vTargetPos);
-	m_pTransformCom->Chase_Target(&vTargetPos, 5.f, fTimeDelta);
-
-
-	_vec3 vCurPos, vNorToTarget;
-	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
-	vNorToTarget = vTargetPos - vCurPos;
-	D3DXVec3Normalize(&vNorToTarget, &vNorToTarget);
-
-	_vec3 vAxisX = { 1.f, 0.f, 0.f };
-
-	_float dot = vAxisX.x * vNorToTarget.x + vAxisX.y * vNorToTarget.y;
-	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
-	_float fAngle = D3DXToDegree(atan2(cross, dot));
-	m_fZAngle = fAngle;
+	m_pTransformCom->Move_Pos(&m_vDir, 5.f, fTimeDelta);
 }
 
-void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
+void CJohnMine::StopReady(const _float& fTimeDelta)
 {
 	m_fExplosionReadyTime += fTimeDelta;
 	if (m_fExplosionReadyTime > 3.f)
 	{
-		//m_eCurState = CJohnGuidedBullet::STATE::RETURN;
+		//m_eCurState = CJohnMine::STATE::RETURN;
 		m_fExplosionReadyTime = 0.f;
 		_float fWidth = 28.f;
 		_float fHeight = 17.f;
@@ -279,7 +225,7 @@ void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 		vScale *= 0.5f;
 		m_pTransformCom->Multiply_Scale(&vScale);
 		//---------------------------------------------------------------
-		m_eCurState = EXLPOSION;
+		m_eCurState = EXPLOSION;
 		//---------------------------------------------------------------
 		fWidth = 51.f;
 		fHeight = 51.f;
@@ -292,37 +238,10 @@ void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 		return;
 	}
 
-
-
 }
 
-void CJohnGuidedBullet::Return(const _float& fTimeDelta)
-{
-	m_pReturnTargetTransform = static_cast<CTransform*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"John", L"Com_Transform"));
-	if (m_pReturnTargetTransform == nullptr)
-		return;
 
-
-	_vec3 vTargetPos;
-	m_pReturnTargetTransform->Get_Info(INFO_POS, &vTargetPos);
-	m_pTransformCom->Chase_Target(&vTargetPos, 5.f, fTimeDelta);
-
-
-	_vec3 vCurPos, vNorToTarget;
-	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
-	vNorToTarget = vTargetPos - vCurPos;
-	D3DXVec3Normalize(&vNorToTarget, &vNorToTarget);
-
-	_vec3 vAxisX = { 1.f, 0.f, 0.f };
-
-	_float dot = vAxisX.x * vNorToTarget.x + vAxisX.y * vNorToTarget.y;
-	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
-	_float fAngle = D3DXToDegree(atan2(cross, dot));
-	m_fZAngle = fAngle;
-}
-
-void CJohnGuidedBullet::Explosion(const _float& fTimeDelta)
+void CJohnMine::Explosion(const _float& fTimeDelta)
 {
 	m_fExplosionTime += fTimeDelta;
 	if (m_fExplosionTime > 1.f)
@@ -334,9 +253,9 @@ void CJohnGuidedBullet::Explosion(const _float& fTimeDelta)
 }
 
 
-CJohnGuidedBullet* CJohnGuidedBullet::Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
+CJohnMine* CJohnMine::Create(_vec3 vOrigin, _vec3 vDir)
 {
-	CJohnGuidedBullet* pBullet = new CJohnGuidedBullet(vOrigin, vDir, fZAngle);
+	CJohnMine* pBullet = new CJohnMine(vOrigin, vDir);
 
 	if (FAILED(pBullet->Ready_GameObject()))
 	{
@@ -347,14 +266,14 @@ CJohnGuidedBullet* CJohnGuidedBullet::Create(_vec3 vOrigin, _vec3 vDir, _float f
 	return pBullet;
 }
 
-void CJohnGuidedBullet::Free()
+void CJohnMine::Free()
 {
 	Safe_Release(m_pAABB);
 	CGameObject::Free();
 }
 
 
-void CJohnGuidedBullet::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop)
+void CJohnMine::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop)
 {
 	m_fFrame += fSpeed * fTimeDelta;
 	if (loop)

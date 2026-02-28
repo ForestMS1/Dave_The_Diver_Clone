@@ -221,11 +221,13 @@
     <ClInclude Include="..\Header\CHoldFishUIItemAreaEdge.h" />
     <ClInclude Include="..\Header\CHoldFishUIItemGroup.h" />
     <ClInclude Include="..\Header\CHumboldtSquid.h" />
+    <ClInclude Include="..\Header\CJohnBattleAngry.h" />
     <ClInclude Include="..\Header\CJohnGuidedBullet.h" />
     <ClInclude Include="..\Header\CJohnHit.h" />
     <ClInclude Include="..\Header\CJohnIntro.h" />
     <ClInclude Include="..\Header\CJohnMeleeAttack.h" />
     <ClInclude Include="..\Header\CJohnMeleeAttackReady.h" />
+    <ClInclude Include="..\Header\CJohnMine.h" />
     <ClInclude Include="..\Header\CJohnNoStart.h" />
     <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
     <ClInclude Include="..\Header\CRedLionfish.h" />
@@ -429,11 +431,13 @@
     <ClCompile Include="..\Code\CHoldFishUIItemAreaEdge.cpp" />
     <ClCompile Include="..\Code\CHoldFishUIItemGroup.cpp" />
     <ClCompile Include="..\Code\CHumboldtSquid.cpp" />
+    <ClCompile Include="..\Code\CJohnBattleAngry.cpp" />
     <ClCompile Include="..\Code\CJohnGuidedBullet.cpp" />
     <ClCompile Include="..\Code\CJohnHit.cpp" />
     <ClCompile Include="..\Code\CJohnIntro.cpp" />
     <ClCompile Include="..\Code\CJohnMeleeAttack.cpp" />
     <ClCompile Include="..\Code\CJohnMeleeAttackReady.cpp" />
+    <ClCompile Include="..\Code\CJohnMine.cpp" />
     <ClCompile Include="..\Code\CJohnNoStart.cpp" />
     <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
     <ClCompile Include="..\Code\CRedLionfish.cpp" />

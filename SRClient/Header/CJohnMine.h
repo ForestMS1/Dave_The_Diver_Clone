@@ -1,22 +1,15 @@
 #pragma once
 #include "CGameObject.h"
-#include "CFSM.h"
 #include "CAABB.h"
-enum class JOHNBULLETSTATE
-{
-	CHASE = 0,
-	STOP,
-	RETURN,
-	STATE_END
-};
+#include "CFSM.h"
 
-class CJohnGuidedBullet :
+class CJohnMine :
     public CGameObject
 {
 private:
-	explicit CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle);
-	explicit CJohnGuidedBullet(const CJohnGuidedBullet& rhs);
-	virtual ~CJohnGuidedBullet();
+	explicit CJohnMine(_vec3 vOrigin, _vec3 vDir);
+	explicit CJohnMine(const CJohnMine& rhs);
+	virtual ~CJohnMine();
 
 
 public:
@@ -29,27 +22,21 @@ public:
 
 private:
 	HRESULT Ready_Component();
-	void	FSM(const _float& fTimeDelta);
-
-	void	Chase(const _float& fTimeDelta);
-	void	StopReady(const _float& fTimeDelta);
-	void	Return(const _float& fTimeDelta);
-	void    Explosion(const _float& fTimeDelta);
-
-
-private:
-	enum STATE
-	{
-		CHASE,
-		STOP,
-		EXLPOSION,
-		RETURN,
-		STATE_END
-	};
-
+	void FSM(const _float& fTimeDelta);
+	void Move(const _float& fTimeDelta);
+	void StopReady(const _float& fTimeDelta);
+	void Explosion(const _float& fTimeDelta);
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
+	enum MINESTATE
+	{
+		MOVE = 0,
+		EXPLOSION_READY,
+		EXPLOSION,
+		STATE_END
+	};
+	MINESTATE m_eCurState = MOVE;
 
 private:
 	_vec3 m_vOrigin;
@@ -58,7 +45,7 @@ private:
 	_float m_fLifeTime = 0.f;
 	CAABB* m_pAABB;
 	wstring_view m_wsTexName;
-	CJohnGuidedBullet::STATE m_eCurState = CJohnGuidedBullet::STATE::CHASE;
+
 	_float m_fFrame = 0.f;
 
 	_float m_fChaseTime = 0.f;
@@ -71,7 +58,7 @@ private:
 
 
 public:
-	static CJohnGuidedBullet* Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle);
+	static CJohnMine* Create(_vec3 vOrigin, _vec3 vDir);
 
 private:
 	virtual void Free() override;

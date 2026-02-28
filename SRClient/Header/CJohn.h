@@ -49,7 +49,10 @@ public:
 		if (m_fIvncTime > 0.f)
 			return;
 
-		m_bIsHit = true;
+		// 데미지가 일정 수준 이상일떄만 Hit 상태로 넘어간다
+		if(fDamage > 30.f)
+			m_bIsHit = true;
+
 		m_fHp -= fDamage;
 		if (m_fHp <= 0.f)
 		{
@@ -71,6 +74,9 @@ public:
 	_vec3				Get_ToTargetDir() const { return m_vDirToTarget; }
 	void				Shot_Bullet();
 	_bool				Rush_ToTarget(const _float& fTimeDelta);
+	void				Splash_Mine();
+
+	_float				Get_Hp() const { return m_fHp; }
 
 	//플레이어랑 처음 마주쳐서 인트로
 	void				EncounterTarget();
