@@ -44,7 +44,7 @@ private:
 	// µ·
 public:
 	_uint Get_Money() const { return m_iMoney; }
-	void Set_Money(_uint iMoney) { m_iMoney = iMoney; }
+	void Set_Money(_uint iMoney) { m_iMoney += iMoney; }
 private:
 	_uint m_iMoney;
 

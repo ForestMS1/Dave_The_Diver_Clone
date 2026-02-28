@@ -65,7 +65,6 @@ _int CWasabi::Update_GameObject(const _float& fTimeDelta)
             }
         }
         CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
-        gauge = -4.04 + static_cast<CWasabiObject*>(wasabi)->percent * 0.01f * 3.74f;
 
         if (gauge >= -0.3f) {
             gauge = -0.3f;
@@ -251,7 +250,7 @@ void CWasabi::Render_GameObject()
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
         m_pBufferCom->Render_Buffer();
 
-        if (gauge >= -0.30001f) {
+        if (gauge >= -0.3f) {
             //gauge = -0.3f;
             if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Good"))
             {
@@ -326,13 +325,14 @@ void CWasabi::Key_Input()
 {
     if (!frameMove) {
         if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_K)) {
+            CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
             frameMove = true;
             wasabiCreated = true;
             m_fScale += 0.2f;
-            CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
-            static_cast<CWasabiObject*>(wasabi)->gauge += 0.93 * 0.20f;
-            if (static_cast<CWasabiObject*>(wasabi)->gauge > 0.93f) {
-                static_cast<CWasabiObject*>(wasabi)->gauge = 0.93f;
+            gauge += 3.74f * 0.2f;
+            if (gauge >= -0.3f) {
+                static_cast<CWasabiObject*>(wasabi)->gauge = 0.03f;
+                gauge = -0.3f;
             }
         }
     }

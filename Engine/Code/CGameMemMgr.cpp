@@ -3,7 +3,7 @@ IMPLEMENT_SINGLETON(CGameMemMgr)
 
 
 CGameMemMgr::CGameMemMgr()
-	: m_iMoney(0)
+	: m_iMoney(300)
 {
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] = 1;
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Clothes"] = 1;

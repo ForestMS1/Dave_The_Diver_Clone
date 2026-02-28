@@ -32,6 +32,7 @@
 #include "CWasabiObject.h"
 #include "COpenShop.h"
 #include "CGameMemMgr.h"
+#include "CShipUIMoney.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -352,6 +353,17 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"Camera", pGameObject)))
 		return E_FAIL;
+
+	//CShipUIMoney
+	//pGameObject = CShipUIMoney::Create(-7.5f, 4.5f);
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"ShipUIMoney", pGameObject)))
+	//	return E_FAIL;
+	//pGameObject->Set_ViewZ(5.8f);
+	// 
+	// 
+	// 
 	//_matrix m_matView, m_matProj;
 	//_float m_fFov = D3DXToRadian(60.f);
 	//	_float m_fAspect = (_float)WINCX / WINCY;
