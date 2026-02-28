@@ -1026,6 +1026,9 @@
     <ClInclude Include="..\Header\CDaveConversation.h">
       <Filter>02. GameObject\Conversation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CLeah.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1639,6 +1642,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDaveConversation.cpp">
       <Filter>02. GameObject\Conversation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLeah.cpp">
+      <Filter>02. GameObject\Transition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,7 @@
 #include "CTransitionTxt.h"
 #include "CTransitionFace.h"
 #include "CAssetSpine.h"
+#include "CLeah.h"
 
  bool CTransition::s_LogoAssetLoaded = false;
  bool CTransition::s_ShipAssetLoaded = false;
@@ -1535,6 +1536,13 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"TransitionBG", pTransitionBG)))
 		return E_FAIL;
 
+	// 봉인
+	//CLeah* pLeah = CLeah::Create();
+	//pLeah->Set_Parent(pTransitionBG);
+	//if (FAILED(pLayer->Add_GameObject(L"Leah", pLeah)))
+	//	return E_FAIL;
+
+		
 	if (m_eDstScene == SCENE_SHIP)
 	{
 		{

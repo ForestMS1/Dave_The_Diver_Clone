@@ -227,6 +227,7 @@
     <ClInclude Include="..\Header\CHoldFishUIItemGroup.h" />
     <ClInclude Include="..\Header\CHumboldtSquid.h" />
     <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
+    <ClInclude Include="..\Header\CLeah.h" />
     <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
@@ -436,6 +437,7 @@
     <ClCompile Include="..\Code\CHoldFishUIItemGroup.cpp" />
     <ClCompile Include="..\Code\CHumboldtSquid.cpp" />
     <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
+    <ClCompile Include="..\Code\CLeah.cpp" />
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />

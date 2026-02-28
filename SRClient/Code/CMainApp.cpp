@@ -203,7 +203,7 @@ HRESULT CMainApp::Load_PermanentAsset()
 			cnt += L"0";
 		}
 		cnt += ::to_wstring(i);
-		std::wstring s = L"../Bin/Resource/Texture/Transition/leah2/06_Body_" + cnt + L".png";
+		std::wstring s = L"../Bin/Resource/Texture/Transition/leah3/06_Body_" + cnt + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Leah2", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Leah2");
