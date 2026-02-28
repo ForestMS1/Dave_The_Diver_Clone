@@ -18,6 +18,9 @@
 #include "CJohnIntro.h"
 #include "CJohnGuidedBullet.h"
 #include "CColliderMgr.h"
+#include "CJohnNoStart.h"
+#include "CJohnHit.h"
+#include "CDiveDave.h"
 CJohn::CJohn(_float x, _float y, _float z)
 	: m_vCreatePos({x,y,z})
 {
@@ -42,7 +45,7 @@ HRESULT CJohn::Ready_GameObject()
 	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	Set_State(JOHNSTATE::IDLE);
+	Set_State(JOHNSTATE::BEFORE_START);
 
 	m_pTransformCom->Set_Pos(m_vCreatePos.x, m_vCreatePos.y, m_vCreatePos.z);
 
@@ -67,6 +70,8 @@ _int CJohn::Update_GameObject(const _float& fTimeDelta)
 	m_pAABB->Transform(m_pTransformCom->Get_World());
 
 	CGameObject::Update_GameObject(fTimeDelta);
+
+	_bool isGlobalState = Check_GlobalState();
 
 	m_pFSM->Update_State(fTimeDelta);
 
@@ -125,7 +130,8 @@ HRESULT	CJohn::Add_State()
 	m_pFSM->Add_State<CJohnAttackShoot>(JOHNSTATE::SHOT);
 	m_pFSM->Add_State<CJohnMeleeAttackReady>(JOHNSTATE::MELEEATTACK_READY);
 	m_pFSM->Add_State<CJohnMeleeAttack>(JOHNSTATE::MELEEATTACK);
-
+	m_pFSM->Add_State<CJohnNoStart>(JOHNSTATE::BEFORE_START);
+	m_pFSM->Add_State<CJohnHit>(JOHNSTATE::HIT);
 
 	return S_OK;
 }
@@ -235,4 +241,39 @@ void CJohn::EncounterTarget()
 
 	CJohnIntro* pIntro = CJohnIntro::Create();
 	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Add_GameObject(L"JW_Intro", pIntro);
+}
+
+void CJohn::CollisionWithTarget()
+{
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_DiveDaveWithItemBox"))
+	{
+		for (auto& pCollider : *pColliders)
+		{
+			if (m_pAABB->Intersect(pCollider))
+			{
+				if (pCollider->Get_Tag() == L"AABB_DiveDaveWithItemBox")
+				{
+					reinterpret_cast<CDiveDave*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
+				}
+			}
+		}
+	}
+}
+
+_bool CJohn::Check_GlobalState()
+{
+	if (m_bIsDie)
+	{
+		m_pFSM->Set_State(JOHNSTATE::DIE);
+		return true;
+	}
+
+	if (m_bIsHit)
+	{
+		m_pFSM->Set_State(JOHNSTATE::HIT);
+
+		return true;
+	}
+
+	return false;
 }

@@ -3,6 +3,7 @@
 #include "CAssetTexture.h"
 #include "CGraphicDev.h"
 #include "CJohn.h"
+#include "CColliderMgr.h"
 CJohnMeleeAttack::CJohnMeleeAttack(CJohn* pOwner)
 	: CBaseState<CJohn>(pOwner)
 {
@@ -74,6 +75,7 @@ _int CJohnMeleeAttack::Update_State(const _float& fTimeDelta)
 
 void CJohnMeleeAttack::LateUpdate_State(const _float& fTimeDelta)
 {
+	m_pOwner->CollisionWithTarget();
 }
 
 void CJohnMeleeAttack::Render_State()

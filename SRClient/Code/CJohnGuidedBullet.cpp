@@ -9,6 +9,7 @@
 #include "CAssetTexture.h"
 #include "CManagement.h"
 #include "CDiveDave.h"
+#include "CJohn.h"
 CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
 	: m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -127,7 +128,6 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 	}
 
 
-	// [LSY] ÃÑ¾ËÀÌ¶û ¹°°í±â
 	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_DiveDaveWithItemBox"))
 	{
 		for (auto& pCollider : *pColliders)
@@ -166,6 +166,10 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 						m_eCurState = RETURN;
 						//---------------------------------------------------------------
 					}
+					if (m_eCurState == EXLPOSION)
+					{
+						static_cast<CDiveDave*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
+					}
 					//m_bDead = true;
 				}
 			}
@@ -201,6 +205,10 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 						vScale *= 5.f;
 						m_pTransformCom->Multiply_Scale(&vScale);
+					}
+					if (m_eCurState == EXLPOSION)
+					{
+						static_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
 					}
 				}
 			}

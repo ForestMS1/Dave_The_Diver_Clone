@@ -565,6 +565,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 		s = L"../Bin/Resource/Texture/JohnWatson/MeleeSkill01_Ready/MeleeSkill01_Ready0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnMeleeSkill01_Ready", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/JohnWatson/Angry/Angry0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnAngry", CAssetTexture::Create(s.c_str()));
 	}
 
 	for (int i = 0; i < 2; ++i)
@@ -614,6 +617,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		wstring s = L"../Bin/Resource/Texture/JohnWatson/Bullet/explosion0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"JohnBulletExplosion", CAssetTexture::Create(s.c_str()));
 	}
+	wstring s = L"../Bin/Resource/Texture/JohnWatson/Hit01.png";
+	CAssetMgr::GetInstance()->AddAsset(L"JohnHit", CAssetTexture::Create(s.c_str()));
 
 	// 작살 줄
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))

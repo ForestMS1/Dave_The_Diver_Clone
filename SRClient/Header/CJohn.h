@@ -44,6 +44,26 @@ public:
 
 	// 전역 상태 바로 진입
 	_bool				Check_GlobalState();
+	void				On_Hit(const _float& fDamage)
+	{
+		if (m_fIvncTime > 0.f)
+			return;
+
+		m_bIsHit = true;
+		m_fHp -= fDamage;
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+		}
+	}
+	void				On_Dead() { m_bIsDie = true; }
+
+	// Hit 상태 탈출시 호출
+	void				Hit_Free() { m_bIsHit = false; }
+	_float				Get_HitTime() { return m_fIvncTime; }
+	void				Acc_HitTime(const _float& fTimeDelta) { m_fIvncTime += fTimeDelta; }
+	void				Reset_HitTime() { m_fIvncTime = 0.f; }
 
 	// 타겟 추적
 	_bool				Check_TargetInRange(_float fRange = 10.f);
@@ -54,6 +74,10 @@ public:
 
 	//플레이어랑 처음 마주쳐서 인트로
 	void				EncounterTarget();
+
+	CTransform* GetTransformCom() { return m_pTransformCom; };
+
+	void				CollisionWithTarget();
 
 
 private:
@@ -67,6 +91,12 @@ private:
 	_vec3 m_vCreatePos; //보스 생성 위치
 
 private:
+	_float m_fMaxHp = 200.f;
+	_float m_fHp = 200.f;
+	_float m_fIvncTime = 0.f;
+	_float m_bIsHit = false;
+	_bool m_bIsDie = false;
+
 	_float	m_fFrame = 0.f;
 	_bool	m_bFlip = false;
 	_bool   m_bStartCombat = false; // 플레이어가 처음 보스 마주치면 보스전 시작

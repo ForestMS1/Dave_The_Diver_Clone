@@ -37,6 +37,7 @@ enum class ATTACKSUBSTATE
 enum class JOHNSTATE
 {
 	IDLE = 0,
+	BEFORE_START,
 	CHASE,
 	ATTACK_READY,
 	SHOT,

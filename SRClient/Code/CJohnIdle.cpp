@@ -34,7 +34,7 @@ void CJohnIdle::Input(const _float& fTimeDelta)
 
 _int CJohnIdle::Update_State(const _float& fTimeDelta)
 {
-	m_pOwner->EncounterTarget();
+	//m_pOwner->EncounterTarget();
 
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);
 
