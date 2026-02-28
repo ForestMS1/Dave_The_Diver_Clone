@@ -97,6 +97,8 @@ private:
 	_float m_bIsHit = false;
 	_bool m_bIsDie = false;
 
+	_bool m_bRushStart = false;
+
 	_float	m_fFrame = 0.f;
 	_bool	m_bFlip = false;
 	_bool   m_bStartCombat = false; // 플레이어가 처음 보스 마주치면 보스전 시작

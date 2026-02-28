@@ -222,12 +222,25 @@ _bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
 	_vec3 vDir;
 	D3DXVec3Normalize(&vDir, &m_vDirToTarget);
 
+	if (!m_bRushStart)
+	{
+		_vec3 vRotDir;
+		if (Get_ToTargetDir().x > 0.f)
+			vRotDir = { 0.f, 0.f, 0.f };
+		else
+			vRotDir = { 0.f,-180.f, 0.f };
+		Set_RotateDir(&vRotDir);
+		m_bRushStart = true;
+	}
+
+
 	m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
 	m_fAccRushDist += fTimeDelta * 5.f;
 
 	if (m_fAccRushDist > 7.f)
 	{
 		m_fAccRushDist = 0.f;
+		m_bRushStart = false;
 		return true;
 	}
 	return false;
