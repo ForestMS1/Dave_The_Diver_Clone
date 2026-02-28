@@ -595,6 +595,26 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Boss_JW_Intro", CAssetTexture::Create(s.c_str()));
 	}
 
+
+	// 보스 유도탄
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/Bullet/JohnWatson2_GunSkill01_Missile_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnBulletA", CAssetTexture::Create(s.c_str()));
+	}
+	// 보스 유도탄 터지기 직전
+	for (int i = 2; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/Bullet/JohnWatson2_GunSkill01_Missile_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnBulletB", CAssetTexture::Create(s.c_str()));
+	}
+	// 보스 유도탄 터짐
+	for (int i = 0; i < 9; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson/Bullet/explosion0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnBulletExplosion", CAssetTexture::Create(s.c_str()));
+	}
+
 	// 작살 줄
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))
 		return E_FAIL;

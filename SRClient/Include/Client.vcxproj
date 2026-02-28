@@ -221,6 +221,7 @@
     <ClInclude Include="..\Header\CHoldFishUIItemAreaEdge.h" />
     <ClInclude Include="..\Header\CHoldFishUIItemGroup.h" />
     <ClInclude Include="..\Header\CHumboldtSquid.h" />
+    <ClInclude Include="..\Header\CJohnGuidedBullet.h" />
     <ClInclude Include="..\Header\CJohnIntro.h" />
     <ClInclude Include="..\Header\CJohnMeleeAttack.h" />
     <ClInclude Include="..\Header\CJohnMeleeAttackReady.h" />
@@ -426,6 +427,7 @@
     <ClCompile Include="..\Code\CHoldFishUIItemAreaEdge.cpp" />
     <ClCompile Include="..\Code\CHoldFishUIItemGroup.cpp" />
     <ClCompile Include="..\Code\CHumboldtSquid.cpp" />
+    <ClCompile Include="..\Code\CJohnGuidedBullet.cpp" />
     <ClCompile Include="..\Code\CJohnIntro.cpp" />
     <ClCompile Include="..\Code\CJohnMeleeAttack.cpp" />
     <ClCompile Include="..\Code\CJohnMeleeAttackReady.cpp" />

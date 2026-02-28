@@ -63,7 +63,7 @@ private:
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
-	CAABB* m_pAABB; // 아이템 상자랑 충돌 용
+	CAABB* m_pAABB; // 자기가 쏜 유도탄이랑 충돌 용
 	_vec3 m_vCreatePos; //보스 생성 위치
 
 private:

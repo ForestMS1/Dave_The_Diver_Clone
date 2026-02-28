@@ -391,6 +391,9 @@
     <Filter Include="02. GameObject\John\Intro">
       <UniqueIdentifier>{92f78695-0ad1-4be6-b322-6bd30345c6d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John\Bullet">
+      <UniqueIdentifier>{1b724738-92a7-4556-85f1-ae1582392f71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1014,6 +1017,9 @@
     <ClInclude Include="..\Header\CJohnIntro.h">
       <Filter>02. GameObject\John\Intro</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohnGuidedBullet.h">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1615,6 +1621,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnIntro.cpp">
       <Filter>02. GameObject\John\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnGuidedBullet.cpp">
+      <Filter>02. GameObject\John\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

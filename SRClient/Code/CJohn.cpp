@@ -16,6 +16,8 @@
 #include "CJohnMeleeAttackReady.h"
 #include "CJohnMeleeAttack.h"
 #include "CJohnIntro.h"
+#include "CJohnGuidedBullet.h"
+#include "CColliderMgr.h"
 CJohn::CJohn(_float x, _float y, _float z)
 	: m_vCreatePos({x,y,z})
 {
@@ -44,11 +46,13 @@ HRESULT CJohn::Ready_GameObject()
 
 	m_pTransformCom->Set_Pos(m_vCreatePos.x, m_vCreatePos.y, m_vCreatePos.z);
 
-	//std::function<NodeStatus(CJohn&)> f1 = &CJohn::Func;
-	//CSelector* pRoot = new CSelector;
+	
+	//-------------AABB Collider----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
 
-	//CActionNode* pFuncNode = new CActionNode(f1);
-	//pRoot->Add_Child(pFuncNode);
+	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
+
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_JohnWithGuided", this);
 
 	return S_OK;
 }
@@ -58,7 +62,9 @@ _int CJohn::Update_GameObject(const _float& fTimeDelta)
 	CJohn::Start();
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-
+	// 충돌체 그룹에 넣어줘야한다.
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_JohnWithGuided", m_pAABB);
+	m_pAABB->Transform(m_pTransformCom->Get_World());
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -154,7 +160,7 @@ CJohn* CJohn::Create(_float x, _float y, _float z)
 
 void CJohn::Free()
 {
-	//Safe_Release(m_pAABB);
+	Safe_Release(m_pAABB);
 	Safe_Release(m_pFSM);
 	CGameObject::Free();
 }
@@ -201,7 +207,7 @@ void CJohn::Shot_Bullet()
 	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
 	_float fAngle = D3DXToDegree(atan2(cross, dot));
 
-	CDiveDaveBullet* pBullet = CDiveDaveBullet::Create(vCurPos, vNorToTarget, fAngle);
+	CJohnGuidedBullet* pBullet = CJohnGuidedBullet::Create(vCurPos, vNorToTarget, fAngle);
 	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
 }
 
