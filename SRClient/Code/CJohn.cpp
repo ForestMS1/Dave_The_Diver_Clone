@@ -44,7 +44,7 @@ HRESULT CJohn::Ready_GameObject()
 	if (FAILED(Add_State()))
 		return E_FAIL;
 
-	_vec3 vScale = { 0.5f, 0.5f, 1.f };
+	_vec3 vScale = { 0.75f, 0.75f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	Set_State(JOHNSTATE::BEFORE_START);

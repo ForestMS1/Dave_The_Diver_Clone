@@ -199,7 +199,7 @@ void CJohnMine::Move(const _float& fTimeDelta)
 {
 	m_fChaseTime += fTimeDelta;
 
-	_uint random = rand() % 50;
+	_uint random = (rand() % 55) + 10;
 	if (m_fChaseTime > random)
 	{
 		m_eCurState = EXPLOSION_READY;
