@@ -149,6 +149,7 @@ void CDiveDaveBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 				if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
 				{
 					reinterpret_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
+					m_bDead = true;
 				}
 			}
 		}

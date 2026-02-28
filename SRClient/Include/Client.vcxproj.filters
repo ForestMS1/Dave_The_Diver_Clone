@@ -403,6 +403,18 @@
     <Filter Include="02. GameObject\John\BattleAngry">
       <UniqueIdentifier>{60ec1b62-71dd-4476-a750-7d91890e7df5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John2">
+      <UniqueIdentifier>{143c0185-5b83-4077-84f5-a24e1fb4f31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Idle">
+      <UniqueIdentifier>{242d7319-2911-4263-8fb2-0d0b05d774ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\NoStart">
+      <UniqueIdentifier>{e79f3f7b-3079-4e7f-ae60-2efb7544956f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Intro">
+      <UniqueIdentifier>{1e240791-666e-4777-910e-453bd6f158c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1041,6 +1053,18 @@
     <ClInclude Include="..\Header\CJohnMine.h">
       <Filter>02. GameObject\John\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohn2.h">
+      <Filter>02. GameObject\John2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Idle.h">
+      <Filter>02. GameObject\John2\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2NoStart.h">
+      <Filter>02. GameObject\John2\NoStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Intro.h">
+      <Filter>02. GameObject\John2\Intro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1657,6 +1681,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnMine.cpp">
       <Filter>02. GameObject\John\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2.cpp">
+      <Filter>02. GameObject\John2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Idle.cpp">
+      <Filter>02. GameObject\John2\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2NoStart.cpp">
+      <Filter>02. GameObject\John2\NoStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Intro.cpp">
+      <Filter>02. GameObject\John2\Intro</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

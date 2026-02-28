@@ -49,6 +49,21 @@ enum class JOHNSTATE
 	JOHN_STATE_END
 };
 
+enum class JOHN2STATE
+{
+	IDLE = 0,
+	BEFORE_START,
+	CHASE,
+	ATTACK_READY,
+	SHOT,
+	MELEEATTACK_READY,
+	MELEEATTACK,
+	SPLASH_MINE,
+	HIT,
+	DIE,
+	JOHN_STATE_END
+};
+
 // T는 상태를 소유하는 객체 클래스
 template<typename T>
 class CBaseState : public CBase
