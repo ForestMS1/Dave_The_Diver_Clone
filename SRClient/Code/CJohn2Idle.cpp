@@ -62,7 +62,6 @@ _int CJohn2Idle::Update_State(const _float& fTimeDelta)
 				m_iRand = (m_iRand + 1) % 2;
 			else // 2페이즈 (체력 50%이하)
 				m_iRand = ((m_iRand + 1) % 3) + 1;
-			
 			switch (m_iRand)
 			{
 			case 0:
@@ -74,7 +73,7 @@ _int CJohn2Idle::Update_State(const _float& fTimeDelta)
 				m_pOwner->Set_State(JOHN2STATE::ATTACK_READY);
 				break;
 			case 2:
-				m_pOwner->Set_State(JOHN2STATE::SPLASH_MINE);
+				m_pOwner->Set_State(JOHN2STATE::SPLASH_READY);
 				break;
 			default:
 				break;

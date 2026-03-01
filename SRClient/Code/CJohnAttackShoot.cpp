@@ -40,6 +40,12 @@ _int CJohnAttackShoot::Update_State(const _float& fTimeDelta)
 	if (m_pOwner->Get_Frame() >= 1.8f)
 	{
 		m_pOwner->Shot_Bullet();
+		m_iShotCnt++;
+		m_pOwner->Init_Frame();
+	}
+
+	if (m_iShotCnt > 3)
+	{
 		m_pOwner->Set_State(JOHNSTATE::IDLE);
 	}
 
@@ -81,6 +87,8 @@ void CJohnAttackShoot::Clear()
 
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	m_iShotCnt = 0;
 }
 
 CJohnAttackShoot* CJohnAttackShoot::Create(CJohn* pOwner)

@@ -427,6 +427,18 @@
     <Filter Include="02. GameObject\John2\AttackShoot">
       <UniqueIdentifier>{b148ca4c-1525-4895-b12e-a2dd5b6c7fa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John2\GunSkill02_Aim">
+      <UniqueIdentifier>{5fb8d4b9-1e9f-4584-a63d-e35dc0866408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\MeleeAttack">
+      <UniqueIdentifier>{47cd0bea-e4a6-405a-83b8-a84ebe31acc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\MeleeAttackReady">
+      <UniqueIdentifier>{37e35cf4-24fd-40c3-b665-50c46d3b19bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\MeleeAttackReturn">
+      <UniqueIdentifier>{1e2f667a-f334-48af-ae33-8c38b98eaa8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1089,6 +1101,21 @@
     <ClInclude Include="..\Header\CJohn2AttackShoot.h">
       <Filter>02. GameObject\John2\AttackShoot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGunSkill02Aim.h">
+      <Filter>02. GameObject\John2\GunSkill02_Aim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnBullet.h">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2MeleeAttackReady.h">
+      <Filter>02. GameObject\John2\MeleeAttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2MeleeAttack.h">
+      <Filter>02. GameObject\John2\MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2MeleeAttackReturn.h">
+      <Filter>02. GameObject\John2\MeleeAttackReturn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1729,6 +1756,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohn2AttackShoot.cpp">
       <Filter>02. GameObject\John2\AttackShoot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGunSkill02Aim.cpp">
+      <Filter>02. GameObject\John2\GunSkill02_Aim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnBullet.cpp">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2MeleeAttackReady.cpp">
+      <Filter>02. GameObject\John2\MeleeAttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2MeleeAttack.cpp">
+      <Filter>02. GameObject\John2\MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2MeleeAttackReturn.cpp">
+      <Filter>02. GameObject\John2\MeleeAttackReturn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

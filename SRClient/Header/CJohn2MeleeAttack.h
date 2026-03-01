@@ -1,14 +1,13 @@
 #pragma once
 #include "CBaseState.h"
+class CJohn2;
 
-class CJohn;
-
-class CJohnAttackShoot :
-    public CBaseState<CJohn>
+class CJohn2MeleeAttack :
+    public CBaseState<CJohn2>
 {
 private:
-    explicit CJohnAttackShoot(CJohn* pOwner);
-    virtual ~CJohnAttackShoot();
+    explicit CJohn2MeleeAttack(CJohn2* pOwner);
+    virtual ~CJohn2MeleeAttack();
 
 public:
     void Enter() override;
@@ -19,9 +18,16 @@ public:
     void Exit() override;
     void Clear() override;
 
-    _uint m_iShotCnt = 0;
+    void Reset_Size();
+    void Set_Size();
+
 public:
-    static CJohnAttackShoot* Create(CJohn* pOwner);
+    static CJohn2MeleeAttack* Create(CJohn2* pOwner);
+
+private:
+    wstring_view m_wsTexName;
+    _bool   m_bGoComplete = false;
+
 private:
     virtual void Free() override;
 };

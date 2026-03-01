@@ -25,6 +25,7 @@
 #include "CJohnBattleAngry.h"
 #include "CParticleMgr.h"
 #include "CJohnDie.h"
+#include "CJohnBullet.h"
 CJohn::CJohn(_float x, _float y, _float z)
 	: m_vCreatePos({x,y,z})
 {
@@ -219,7 +220,7 @@ void CJohn::Shot_Bullet()
 	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
 	_float fAngle = D3DXToDegree(atan2(cross, dot));
 
-	CJohnGuidedBullet* pBullet = CJohnGuidedBullet::Create(vCurPos, vNorToTarget, fAngle);
+	CJohnBullet* pBullet = CJohnBullet::Create(vCurPos, vNorToTarget, fAngle);
 	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
 }
 

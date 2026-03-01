@@ -60,8 +60,6 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 			//1페이즈
 			if (m_pOwner->Get_Hp() >= 100.f)
 				m_iRand = (m_iRand + 1) % 2;
-			else // 2페이즈 (체력 50%이하)
-				m_iRand = ((m_iRand + 1) % 3) + 1;
 
 			switch (m_iRand)
 			{
@@ -73,9 +71,9 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 				// 총쏘기 준비
 				m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
 				break;
-			case 2:
-				m_pOwner->Set_State(JOHNSTATE::SPLASH_MINE);
-				break;
+			//case 2:
+			//	m_pOwner->Set_State(JOHNSTATE::SPLASH_MINE);
+			//	break;
 			default:
 				break;
 			}

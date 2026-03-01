@@ -10,10 +10,11 @@
 #include "CManagement.h"
 #include "CDiveDave.h"
 #include "CJohn.h"
-CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
+CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner)
 	: m_vDir(vDir)
 	, m_fZAngle(fZAngle)
 	, m_vOrigin(vOrigin)
+	, m_pReturnTarget(pOwner)
 {
 }
 
@@ -298,8 +299,7 @@ void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 
 void CJohnGuidedBullet::Return(const _float& fTimeDelta)
 {
-	m_pReturnTargetTransform = static_cast<CTransform*>
-		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"John", L"Com_Transform"));
+	m_pReturnTargetTransform = m_pReturnTarget->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
 	if (m_pReturnTargetTransform == nullptr)
 		return;
 
@@ -334,9 +334,9 @@ void CJohnGuidedBullet::Explosion(const _float& fTimeDelta)
 }
 
 
-CJohnGuidedBullet* CJohnGuidedBullet::Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
+CJohnGuidedBullet* CJohnGuidedBullet::Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner)
 {
-	CJohnGuidedBullet* pBullet = new CJohnGuidedBullet(vOrigin, vDir, fZAngle);
+	CJohnGuidedBullet* pBullet = new CJohnGuidedBullet(vOrigin, vDir, fZAngle, pOwner);
 
 	if (FAILED(pBullet->Ready_GameObject()))
 	{

@@ -1,22 +1,14 @@
 #pragma once
 #include "CGameObject.h"
-#include "CFSM.h"
 #include "CAABB.h"
-enum class JOHNBULLETSTATE
-{
-	CHASE = 0,
-	STOP,
-	RETURN,
-	STATE_END
-};
 
-class CJohnGuidedBullet :
+class CJohnBullet :
     public CGameObject
 {
 private:
-	explicit CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner);
-	explicit CJohnGuidedBullet(const CJohnGuidedBullet& rhs);
-	virtual ~CJohnGuidedBullet();
+	explicit CJohnBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle);
+	explicit CJohnBullet(const CJohnBullet& rhs);
+	virtual ~CJohnBullet();
 
 
 public:
@@ -31,9 +23,7 @@ private:
 	HRESULT Ready_Component();
 	void	FSM(const _float& fTimeDelta);
 
-	void	Chase(const _float& fTimeDelta);
-	void	StopReady(const _float& fTimeDelta);
-	void	Return(const _float& fTimeDelta);
+	void	Fire(const _float& fTimeDelta);
 	void    Explosion(const _float& fTimeDelta);
 
 
@@ -41,9 +31,7 @@ private:
 	enum STATE
 	{
 		CHASE,
-		STOP,
 		EXLPOSION,
-		RETURN,
 		STATE_END
 	};
 
@@ -58,7 +46,8 @@ private:
 	_float m_fLifeTime = 0.f;
 	CAABB* m_pAABB;
 	wstring_view m_wsTexName;
-	CJohnGuidedBullet::STATE m_eCurState = CJohnGuidedBullet::STATE::CHASE;
+
+	STATE m_eCurState = STATE::CHASE;
 	_float m_fFrame = 0.f;
 
 	_float m_fChaseTime = 0.f;
@@ -68,11 +57,14 @@ private:
 
 	CTransform* m_pTargetTransform = nullptr;
 	CTransform* m_pReturnTargetTransform = nullptr;
-	CGameObject* m_pReturnTarget = nullptr;
+
+
+
+	_bool  m_bInitFire = false;
 
 
 public:
-	static CJohnGuidedBullet* Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner);
+	static CJohnBullet* Create(_vec3 vOrigin, _vec3 vDir, _float fZAngle);
 
 private:
 	virtual void Free() override;
