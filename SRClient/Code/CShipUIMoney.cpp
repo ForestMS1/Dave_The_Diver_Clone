@@ -6,6 +6,7 @@
 #include "CRenderer.h"
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
+#include "CGameMemMgr.h"
 
 CShipUIMoney::CShipUIMoney(float fPosX, float fPosY)
     : CGameObject()
@@ -102,8 +103,8 @@ void		CShipUIMoney::Render_GameObject()
     _vec2 vPos = { vScreenPos.x , vScreenPos.y};
     if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
     {
-        //TODO replace gamememmgr money
-        pDefFont->Render_Font(L"10000", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+        
+        pDefFont->Render_Font(CHelper::ToCommaWString(CGameMemMgr::GetInstance()->Get_Money()), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
     }
    
 

@@ -251,7 +251,7 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
         float fOffsetX = -1.5f;
-        float fOffsetY = -0.3f;
+        float fOffsetY = -0.34f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -259,18 +259,34 @@ void		CShipPhoneIDiverItem::Render_GameObject()
         CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
 
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
-        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size10"))
         {
             D3DXCOLOR col;
-            if (m_bMoneyLack)
+            //if (m_bMoneyLack)
+            //{
+            //    col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+            //}
+            //else
+            //{
+            //    col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+            //}
+            if (IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"MAX"|| IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"최종병기작살")
             {
-                col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+                pDefFont->Render_Font(L"MAX", &vPos, D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
             }
             else
             {
-                col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+                if (CGameMemMgr::GetInstance()->Get_Money() > IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost)
+                {
+                    col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+                }
+                else
+                {
+                    col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+                }
+                pDefFont->Render_Font(to_wstring(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost), &vPos, col);
             }
-            pDefFont->Render_Font(to_wstring(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost), &vPos, col);
+            
         }
     }
 

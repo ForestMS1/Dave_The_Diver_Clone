@@ -513,6 +513,11 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			}
 		}
 	}
+
+	if (ImGui::Button("Get Money"))
+	{
+		CGameMemMgr::GetInstance()->Set_Money(CGameMemMgr::GetInstance()->Get_Money() + 1000);
+	}
 	return iExit;
 }
 

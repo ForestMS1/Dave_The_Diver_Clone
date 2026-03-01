@@ -251,6 +251,9 @@ HRESULT CMainApp::Load_PermanentAsset()
 	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL_Size15", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 ¸Ç¹ßÀÇÃ»Ãá L", 0, 15, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL_Size15");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL_Size10", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 ¸Ç¹ßÀÇÃ»Ãá L", 0, 10, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL_Size10");
+
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"¹ÙÅÁ", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 

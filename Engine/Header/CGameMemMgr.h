@@ -172,7 +172,9 @@ private:
 
 	// IDiverCurrent
 public:
-	unordered_map<std::wstring, _uint>* Get_IDiverCurrentLevel() { return &m_mapIDiverCurrentLevel; };
+	unordered_map<std::wstring, _uint>* Get_IDiverCurrentLevel() { return &m_mapIDiverCurrentLevel; }
+	void Set_IDiverCurrentLevel(std::wstring& s, _uint i) { m_mapIDiverCurrentLevel[s] = i; };
+	void Set_IDiverSansoLevelUp() { m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"]+=1; }
 private:
 	unordered_map<std::wstring, _uint> m_mapIDiverCurrentLevel;
 
