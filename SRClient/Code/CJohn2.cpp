@@ -16,6 +16,10 @@
 #include "CJohn2NoStart.h"
 #include "CJohn2Intro.h"
 #include "CParticleMgr.h"
+#include "CJohn2AttackReady.h"
+#include "CJohn2Chase.h"
+#include "CJohn2AttackShoot.h"
+#include "CJohnGuidedBullet.h"
 CJohn2::CJohn2(_float x, _float y, _float z)
 	: m_vCreatePos({ x,y,z })
 {
@@ -121,9 +125,9 @@ HRESULT	CJohn2::Add_State()
 
 	m_pFSM->Add_State<CJohn2NoStart>(JOHN2STATE::BEFORE_START);
 	m_pFSM->Add_State<CJohn2Idle>(JOHN2STATE::IDLE);
-	//m_pFSM->Add_State<CJohn2Chase>(JOHNSTATE::CHASE);
-	//m_pFSM->Add_State<CJohn2AttackReady>(JOHNSTATE::ATTACK_READY);
-	//m_pFSM->Add_State<CJohn2AttackShoot>(JOHNSTATE::SHOT);
+	m_pFSM->Add_State<CJohn2Chase>(JOHN2STATE::CHASE);
+	m_pFSM->Add_State<CJohn2AttackReady>(JOHN2STATE::ATTACK_READY);
+	m_pFSM->Add_State<CJohn2AttackShoot>(JOHN2STATE::SHOT);
 	//m_pFSM->Add_State<CJohn2MeleeAttackReady>(JOHNSTATE::MELEEATTACK_READY);
 	//m_pFSM->Add_State<CJohn2MeleeAttack>(JOHNSTATE::MELEEATTACK);
 	//m_pFSM->Add_State<CJohn2Hit>(JOHNSTATE::HIT);
@@ -209,8 +213,8 @@ void CJohn2::Shot_Bullet()
 	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
 	_float fAngle = D3DXToDegree(atan2(cross, dot));
 
-	//CJohn2GuidedBullet* pBullet = CJohn2GuidedBullet::Create(vCurPos, vNorToTarget, fAngle);
-	//CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
+	CJohnGuidedBullet* pBullet = CJohnGuidedBullet::Create(vCurPos, vNorToTarget, fAngle);
+	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
 }
 
 void CJohn2::Splash_Mine()

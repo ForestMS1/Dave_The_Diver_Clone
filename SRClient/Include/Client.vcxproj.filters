@@ -418,6 +418,15 @@
     <Filter Include="02. GameObject\John\Die">
       <UniqueIdentifier>{578368ac-03b5-4407-97ae-e6ccb03c473e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John2\AttackReady">
+      <UniqueIdentifier>{e0efd47f-4094-4bca-a3aa-6a63f3919a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Chase">
+      <UniqueIdentifier>{2a59f70a-ade4-4440-9349-8b1f2694fdb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\AttackShoot">
+      <UniqueIdentifier>{b148ca4c-1525-4895-b12e-a2dd5b6c7fa1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1071,6 +1080,15 @@
     <ClInclude Include="..\Header\CJohnDie.h">
       <Filter>02. GameObject\John\Die</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohn2AttackReady.h">
+      <Filter>02. GameObject\John2\AttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Chase.h">
+      <Filter>02. GameObject\John2\Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2AttackShoot.h">
+      <Filter>02. GameObject\John2\AttackShoot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1702,6 +1720,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnDie.cpp">
       <Filter>02. GameObject\John\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2AttackReady.cpp">
+      <Filter>02. GameObject\John2\AttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Chase.cpp">
+      <Filter>02. GameObject\John2\Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2AttackShoot.cpp">
+      <Filter>02. GameObject\John2\AttackShoot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

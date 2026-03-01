@@ -19,7 +19,9 @@ void CJohn2NoStart::Enter()
 {
 	m_pOwner->Init_Frame();
 
-	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"John2Angry")->at(0))->Get_ImgInfo();
+	m_wsTexName = L"John2Move";
+
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(m_wsTexName)->at(0))->Get_ImgInfo();
 	imgInfo.Width;
 
 	_float fWidth = imgInfo.Width;;
@@ -39,14 +41,31 @@ _int CJohn2NoStart::Update_State(const _float& fTimeDelta)
 {
 	m_pOwner->Update_ToTargetDir();
 
-	if (m_pOwner->Check_TargetInRange(10.f))
+	_vec3 vRotDir;
+	if (m_pOwner->Get_ToTargetDir().x > 0.f)
+		vRotDir = { 0.f, 0.f, 0.f };
+	else
+		vRotDir = { 0.f,-180.f, 0.f };
+	m_pOwner->Set_RotateDir(&vRotDir);
+
+
+	if (m_pOwner->Check_TargetInRange(8.f))
 	{
-		_vec3 vRotDir;
-		if (m_pOwner->Get_ToTargetDir().x > 0.f)
-			vRotDir = { 0.f, 0.f, 0.f };
-		else
-			vRotDir = { 0.f,-180.f, 0.f };
-		m_pOwner->Set_RotateDir(&vRotDir);
+		if (m_bChangeMotion == false)
+		{
+			m_bChangeMotion = true;
+			m_wsTexName = L"John2Angry";
+
+			D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"John2Move")->at(0))->Get_ImgInfo();
+
+			_float fWidth = imgInfo.Width;
+			_float fHeight = imgInfo.Height;
+			_float fAspect = fWidth + fHeight;
+			fAspect /= 2.f;
+
+			_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
+			m_pOwner->Multiply_Scale(&vScale);
+		}
 
 
 		m_pOwner->AddFrame(fTimeDelta, 5.f, 8, false);
@@ -79,7 +98,7 @@ void CJohn2NoStart::Render_State()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-	if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"John2Angry"))
+	if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_wsTexName))
 	{
 		_uint iFrame = (_uint)m_pOwner->Get_Frame();
 		if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(iFrame)))

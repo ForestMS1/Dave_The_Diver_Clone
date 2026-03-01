@@ -647,7 +647,28 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	{
 		wstring s = L"../Bin/Resource/Texture/JohnWatson2/IDLE/JohnWatson2_Idle_0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"John2Idle", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/JohnWatson2/Move/JohnWatson2_Move_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"John2Move", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill01_Aim/JohnWatson2_GunSkill01_Aim_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"John2GunSkill01_Aim", CAssetTexture::Create(s.c_str()));
 	}
+	for (int i = 0; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill01_Shoot/JohnWatson2_GunSkill01_Shoot_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"John2GunSkill01_Shoot", CAssetTexture::Create(s.c_str()));
+	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill02_Aim/JohnWatson2_GunSkill02_Aim_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"John2GunSkill02_Aim", CAssetTexture::Create(s.c_str()));
+	}
+
+	s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill02_Shoot/JohnWatson2_GunSkill02_Shoot_01.png";
+	CAssetMgr::GetInstance()->AddAsset(L"John2GunSkill02_Shoot", CAssetTexture::Create(s.c_str()));
+
 	for (int i = 0; i < 12; ++i)
 	{
 		wstring s;
