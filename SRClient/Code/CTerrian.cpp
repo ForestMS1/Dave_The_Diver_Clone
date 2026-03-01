@@ -80,7 +80,7 @@ _int CTerrian::Update_GameObject(const _float& fTimeDelta)
         //i->Transform(m_pTransformCom->Get_World());
     }
 
-//    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Frustom", m_pfrustomAABB);
+    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Frustom", m_pfrustomAABB);
 
     return iExit;
 }
@@ -92,7 +92,7 @@ void CTerrian::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CTerrian::Render_GameObject()
 {
-    //CColliderMgr::GetInstance()->Set_Render(true);
+
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 
@@ -122,7 +122,6 @@ void CTerrian::Render_GameObject()
     pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
     pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
 
    
 }

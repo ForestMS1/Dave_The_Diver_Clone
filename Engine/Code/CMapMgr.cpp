@@ -1,6 +1,7 @@
 #include "CMapMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetJson.h"
+#include "CColliderMgr.h"
 #include <fstream>
 
 IMPLEMENT_SINGLETON(CMapMgr)
@@ -132,9 +133,21 @@ void CMapMgr::Show_GUI()
 		// Obj
 		Object_Show();
 		Frame_Show();
+		Collider_Show();
 		// Save Load
 		SaveLoad_Show();
 	}
+}
+void CMapMgr::Collider_Show()
+{
+	ImGui::Begin("Collider Show");
+
+	if (ImGui::Button("Collider_Render")) {
+		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
+	}
+
+	ImGui::End();
+
 }
 
 void CMapMgr::Object_Show()

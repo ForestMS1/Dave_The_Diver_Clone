@@ -101,6 +101,9 @@ void CRenderer::Render_Ortho(LPDIRECT3DDEVICE9& pGraphicDev)
 		{
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
+	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	_matrix matCurrProj;
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matCurrProj);
 
 	CCameraMgr::GetInstance()->Set_Ortho();
 
@@ -112,6 +115,7 @@ void CRenderer::Render_Ortho(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 	CCameraMgr::GetInstance()->Set_Perspective();
+	//pGraphicDev->SetTransform(D3DTS_PROJECTION, &matCurrProj);
 }
 void CRenderer::Free()
 {
