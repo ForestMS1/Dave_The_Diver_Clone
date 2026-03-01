@@ -251,10 +251,12 @@ void PSystem::Set_Texture(const _uint& iIndex)
 void PSystem::Set_Texture(std::wstring_view svLayerTag,const _uint& iIndex)
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
+	D3DSURFACE_DESC desc;
 	if (auto pAssTex = dynamic_cast<CAssetTexture*>((*CAssetMgr::GetInstance()->Get_Asset(svLayerTag))[iIndex]))
 	{
 		pGraphicDev->SetTexture(0, pAssTex->Get_Texture());
+	
+		pAssTex->Get_Texture()->GetLevelDesc(0, &desc);
 	}
 	else if (auto pAssTex = dynamic_cast<CAssetCubeTexture*>((*CAssetMgr::GetInstance()->Get_Asset(svLayerTag))[iIndex]))
 	{
