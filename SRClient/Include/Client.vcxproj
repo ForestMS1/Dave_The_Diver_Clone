@@ -226,6 +226,7 @@
     <ClInclude Include="..\Header\CJohn2Intro.h" />
     <ClInclude Include="..\Header\CJohn2NoStart.h" />
     <ClInclude Include="..\Header\CJohnBattleAngry.h" />
+    <ClInclude Include="..\Header\CJohnDie.h" />
     <ClInclude Include="..\Header\CJohnGuidedBullet.h" />
     <ClInclude Include="..\Header\CJohnHit.h" />
     <ClInclude Include="..\Header\CJohnIntro.h" />
@@ -440,6 +441,7 @@
     <ClCompile Include="..\Code\CJohn2Intro.cpp" />
     <ClCompile Include="..\Code\CJohn2NoStart.cpp" />
     <ClCompile Include="..\Code\CJohnBattleAngry.cpp" />
+    <ClCompile Include="..\Code\CJohnDie.cpp" />
     <ClCompile Include="..\Code\CJohnGuidedBullet.cpp" />
     <ClCompile Include="..\Code\CJohnHit.cpp" />
     <ClCompile Include="..\Code\CJohnIntro.cpp" />

@@ -15,7 +15,7 @@
 #include "CJohn2Idle.h"
 #include "CJohn2NoStart.h"
 #include "CJohn2Intro.h"
-
+#include "CParticleMgr.h"
 CJohn2::CJohn2(_float x, _float y, _float z)
 	: m_vCreatePos({ x,y,z })
 {
@@ -37,7 +37,7 @@ HRESULT CJohn2::Ready_GameObject()
 	if (FAILED(Add_State()))
 		return E_FAIL;
 
-	_vec3 vScale = { 0.75f, 0.75f, 1.f };
+	_vec3 vScale = { 1.25f, 1.25f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
 	Set_State(JOHN2STATE::BEFORE_START);
@@ -317,4 +317,14 @@ _bool CJohn2::Check_GlobalState()
 	}
 
 	return false;
+}
+
+void CJohn2::Move(_vec3* vDir, const _float& fTimeDelta)
+{
+	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+	// Å×½ºÆ®
+	_vec3 Pos{};
+	m_pTransformCom->Get_Info(INFO_POS, &Pos);
+	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
+	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
 }

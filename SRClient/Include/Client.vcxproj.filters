@@ -415,6 +415,9 @@
     <Filter Include="02. GameObject\John2\Intro">
       <UniqueIdentifier>{1e240791-666e-4777-910e-453bd6f158c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John\Die">
+      <UniqueIdentifier>{578368ac-03b5-4407-97ae-e6ccb03c473e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1065,6 +1068,9 @@
     <ClInclude Include="..\Header\CJohn2Intro.h">
       <Filter>02. GameObject\John2\Intro</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CJohnDie.h">
+      <Filter>02. GameObject\John\Die</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1693,6 +1699,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohn2Intro.cpp">
       <Filter>02. GameObject\John2\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnDie.cpp">
+      <Filter>02. GameObject\John\Die</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

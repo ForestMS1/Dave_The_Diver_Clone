@@ -113,6 +113,7 @@ private:
 
 	_float	m_fAccRushDist = 0.f;
 
+	_float m_fSpeed = 10.f;
 private:
 	CFSM<CJohn2, JOHN2STATE>* m_pFSM = nullptr;
 	CTransform* m_pTargetTransform = nullptr;

@@ -77,6 +77,7 @@ public:
 	void				Splash_Mine();
 
 	_float				Get_Hp() const { return m_fHp; }
+	_float				Get_Speed() const { return m_fSpeed; }
 
 	//플레이어랑 처음 마주쳐서 인트로
 	void				EncounterTarget();
@@ -112,6 +113,7 @@ private:
 	_vec3   m_vDirToTarget;
 
 	_float	m_fAccRushDist = 0.f;
+	_float m_fSpeed = 10.f;
 
 private:
 	CFSM<CJohn, JOHNSTATE>* m_pFSM = nullptr;

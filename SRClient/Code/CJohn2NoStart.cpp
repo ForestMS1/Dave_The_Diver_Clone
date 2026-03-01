@@ -55,6 +55,11 @@ _int CJohn2NoStart::Update_State(const _float& fTimeDelta)
 		m_pOwner->Get_Pos(&vCurPos);
 		pCam->Set_Target(&m_pOwner->GetTransformCom()->m_vInfo[INFO_POS]);
 	}
+	else
+	{
+		_vec3 vDir = { -1.f, 0.f, 0.f };
+		m_pOwner->CJohn2::Move(&vDir, fTimeDelta);
+	}
 
 
 	if (m_pOwner->Get_Frame() == 7)

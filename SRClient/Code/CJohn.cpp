@@ -23,6 +23,8 @@
 #include "CDiveDave.h"
 #include "CJohnMine.h"
 #include "CJohnBattleAngry.h"
+#include "CParticleMgr.h"
+#include "CJohnDie.h"
 CJohn::CJohn(_float x, _float y, _float z)
 	: m_vCreatePos({x,y,z})
 {
@@ -135,6 +137,7 @@ HRESULT	CJohn::Add_State()
 	m_pFSM->Add_State<CJohnNoStart>(JOHNSTATE::BEFORE_START);
 	m_pFSM->Add_State<CJohnHit>(JOHNSTATE::HIT);
 	m_pFSM->Add_State<CJohnBattleAngry>(JOHNSTATE::SPLASH_MINE);
+	m_pFSM->Add_State<CJohnDie>(JOHNSTATE::DIE);
 
 	return S_OK;
 }
@@ -324,4 +327,14 @@ _bool CJohn::Check_GlobalState()
 	}
 
 	return false;
+}
+
+void CJohn::Move(_vec3* vDir, const _float& fTimeDelta)
+{
+	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+	// Å×½ºÆ®
+	_vec3 Pos{};
+	m_pTransformCom->Get_Info(INFO_POS, &Pos);
+	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
+	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
 }
