@@ -92,14 +92,23 @@ HRESULT CDive::Ready_Scene()
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+
+	_matrix CameraProj = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ProjMatrix();
+	m_pFrustumCollider = CBoundingFrustum::Create(&CameraProj);
+	m_pFrustumCollider->Set_OriginalColor(D3DXCOLOR{});
 	return S_OK;
 }
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
-	//CColliderMgr::GetInstance()->Set_Render(true);
+	//CColliderMgr::GetInstance()->Set_Render(false);
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
+	
+	
+	Frustum();
+
+	
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	ImGui::Begin("Curr Scene: CDive");
 	if (ImGui::Button("Go Ship Scene"))
@@ -134,7 +143,20 @@ void CDive::Render_Scene()
 	
 }
 
-
+void CDive::Frustum() {
+	CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_TestCamera", m_pFrustumCollider);
+	static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
+	CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
+	_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
+	D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
+	_matrix MoveMatrix;
+	D3DXMatrixIdentity(&MoveMatrix);
+	memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
+	MoveMatrix.m[3][2] = CameraView.m[3][2];
+	m_pFrustumCollider->Transform(&MoveMatrix);
+}
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 {
@@ -513,4 +535,6 @@ void CDive::Free()
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
+	Safe_Release(m_pFrustumCollider);
 }
+

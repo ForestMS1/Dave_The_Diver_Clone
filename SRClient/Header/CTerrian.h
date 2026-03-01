@@ -25,6 +25,8 @@ public:
 	void						Set_CollisionName(wstring _CollsionName) { m_CollisionName = _CollsionName; }
 	void						Set_Fog();
 
+	void						ColliderFrustom();
+
 private:
 	HRESULT			Ready_Component();
 	HRESULT			Ready_Material();
@@ -36,6 +38,8 @@ private:
 	const wstring_view m_wsName;
 	vector<CAABB*> m_pAABB;
 	CAABB* m_pfrustomAABB;
+	
+	_bool  m_bFrustum;
 private:
 	wstring m_CollisionName;
 public:

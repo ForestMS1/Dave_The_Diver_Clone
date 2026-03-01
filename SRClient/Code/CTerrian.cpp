@@ -58,11 +58,11 @@ HRESULT CTerrian::Ready_GameObject()
             _vec3 scale = (*meshBound)[meshBound->size()-1].scale;
             _vec3 vExtents = { 1.f * scale.x,1.f * scale.z,0.f };
             _vec3 vPos = { (*meshBound)[meshBound->size() - 1].center };
-            m_pfrustomAABB = (CAABB::Create(&vPos, &vExtents, L"Optimization", this));
+            m_pfrustomAABB = (CAABB::Create(&vPos, &vExtents, L"Optimization_Terrian", this));
         }
 
     }
-   
+    m_bFrustum = false;
    
 
     return S_OK;
@@ -70,60 +70,68 @@ HRESULT CTerrian::Ready_GameObject()
 
 _int CTerrian::Update_GameObject(const _float& fTimeDelta)
 {
-    _int iExit = CGameObject::Update_GameObject(fTimeDelta);
-
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-
     // 충돌체 그룹에 넣어줘야한다.
     for (auto i : m_pAABB) {
         CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Terrian", i);
         //i->Transform(m_pTransformCom->Get_World());
     }
 
-    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Frustom", m_pfrustomAABB);
+    if (m_bFrustum) {
+        _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    return iExit;
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+
+
+        return iExit;
+    }
+  
 }
 
 void CTerrian::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    CGameObject::LateUpdate_GameObject(fTimeDelta);
+    ColliderFrustom();
+    if (m_bFrustum) {
+
+        CGameObject::LateUpdate_GameObject(fTimeDelta);
+    }
 }
 
 void CTerrian::Render_GameObject()
 {
-
-    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
-
+    if (m_bFrustum) {
+        LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 
-    if (FAILED(Ready_Material()))
-        return;
 
-    Set_Fog();
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-  //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-    pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-    for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_MeshCnt(); ++i) {
-        pGraphicDev->SetTexture(0, (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_Texture())[i]);
-        
-        _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].first;
-        _uint second = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].second;
-        m_pBufferCom->Render_Buffer(first, second);
+        if (FAILED(Ready_Material()))
+            return;
+
+        Set_Fog();
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+        for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_MeshCnt(); ++i) {
+            pGraphicDev->SetTexture(0, (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_Texture())[i]);
+
+            _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].first;
+            _uint second = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].second;
+            m_pBufferCom->Render_Buffer(first, second);
+
+        }
+
+        D3DXMATRIX matTmp;
+        D3DXMatrixIdentity(&matTmp);
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        // pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+        pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+        pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 
     }
-
-    D3DXMATRIX matTmp;
-    D3DXMatrixIdentity(&matTmp);
-    pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-   // pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-    pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
-    pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-   
+  
 }
 
 HRESULT CTerrian::Ready_Material()
@@ -255,4 +263,21 @@ void CTerrian::Set_Fog() {
     pGraphicDev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)&Start));
     pGraphicDev->SetRenderState(D3DRS_FOGEND, *((DWORD*)&End));
 
+}
+
+void CTerrian::ColliderFrustom() {
+    if (CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera") != nullptr) {
+        CCollider* CameraCollider = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera")->front();
+        list<CCollider*>* ColliderList = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Terrian");
+        for (auto& pCollider : *ColliderList)
+        {
+    
+           if (CameraCollider->Intersect(pCollider))
+           {
+               m_bFrustum = true;
+           }
+         
+        }
+        
+    }
 }
