@@ -23,6 +23,7 @@ public:
 	virtual			void		Render_GameObject();
 
 	void						Set_CollisionName(wstring _CollsionName) { m_CollisionName = _CollsionName; }
+	void						Set_Fog();
 
 private:
 	HRESULT			Ready_Component();
