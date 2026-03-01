@@ -86,8 +86,8 @@ HRESULT CHood::Ready_Component()
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
         return E_FAIL;
 
-    m_pTransformCom->m_vScale = { 1.f, 2.f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 6.f, 2.5f, -3.f };
+    m_pTransformCom->m_vScale = { 1.4f, 2.f, 1.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 6.1f, 2.5f, -2.7f };
     return S_OK;
 }
 

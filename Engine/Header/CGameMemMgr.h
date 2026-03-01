@@ -28,10 +28,10 @@ public:
 	void reduceMenu(wstring name);
 	void addCookingMenu(wstring name);
 	void deleteCookingMenu();
-
+	void ClearCookingMenu();
 	vector<FISH*>& getFishes() { return fishes; }
-	vector<FISH*>& getMenu() { return SelectedMenu;}
-	queue<FISH*>& getCookingMenu() { return CookingMenu;}
+	vector<FISH*>& getMenu() { return SelectedMenu; }
+	queue<FISH*>& getCookingMenu() { return CookingMenu; }
 
 	void levelUp(wstring name);
 private:
@@ -44,7 +44,7 @@ private:
 	// µ·
 public:
 	_uint Get_Money() const { return m_iMoney; }
-	void Set_Money(_uint iMoney) { m_iMoney = iMoney; }
+	void Set_Money(_uint iMoney) { m_iMoney += iMoney; }
 private:
 	_uint m_iMoney;
 

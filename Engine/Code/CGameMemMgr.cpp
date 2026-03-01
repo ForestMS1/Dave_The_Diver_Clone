@@ -3,7 +3,7 @@ IMPLEMENT_SINGLETON(CGameMemMgr)
 
 
 CGameMemMgr::CGameMemMgr()
-	: m_iMoney(0)
+	: m_iMoney(300)
 {
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] = 1;
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Clothes"] = 1;
@@ -14,6 +14,7 @@ CGameMemMgr::CGameMemMgr()
 CGameMemMgr::~CGameMemMgr()
 {
     Free();
+
 }
 
 void CGameMemMgr::levelUp(wstring name)
@@ -34,6 +35,8 @@ void CGameMemMgr::Free()
 	fishes.clear();
 	for_each(SelectedMenu.begin(), SelectedMenu.end(), Safe_Delete<FISH*>);
 	SelectedMenu.clear();
+	CGameMemMgr::GetInstance()->ClearCookingMenu();
+
 }
 HRESULT CGameMemMgr::Ready()
 {
@@ -104,6 +107,16 @@ void CGameMemMgr::addCookingMenu(wstring name)
 
 void CGameMemMgr::deleteCookingMenu()
 {
-	delete CookingMenu.front();
-	CookingMenu.pop();
+	if (!CookingMenu.empty()) {
+		delete CookingMenu.front();
+		CookingMenu.pop();
+	}
+}
+
+void CGameMemMgr::ClearCookingMenu()
+{
+	while (!CookingMenu.empty()) {
+		delete CookingMenu.front();
+		CookingMenu.pop();
+	}
 }

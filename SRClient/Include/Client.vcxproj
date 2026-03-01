@@ -225,6 +225,7 @@
     <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
+    <ClInclude Include="..\Header\CUpgradeImage.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
@@ -346,6 +347,8 @@
     <ClInclude Include="..\Header\CUpgradeButton.h" />
     <ClInclude Include="..\Header\CUpgradeConfirmButton.h" />
     <ClInclude Include="..\Header\CUpgradeFrame.h" />
+    <ClInclude Include="..\Header\CWasabi.h" />
+    <ClInclude Include="..\Header\CWasabiObject.h" />
     <ClInclude Include="..\Header\CWood.h" />
     <ClInclude Include="..\Header\CMenuFrame.h" />
     <ClInclude Include="..\Header\CWPBoxUI.h" />
@@ -425,6 +428,7 @@
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />
+    <ClCompile Include="..\Code\CUpgradeImage.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />
@@ -546,6 +550,8 @@
     <ClCompile Include="..\Code\CUpgradeButton.cpp" />
     <ClCompile Include="..\Code\CUpgradeConfirmButton.cpp" />
     <ClCompile Include="..\Code\CUpgradeFrame.cpp" />
+    <ClCompile Include="..\Code\CWasabi.cpp" />
+    <ClCompile Include="..\Code\CWasabiObject.cpp" />
     <ClCompile Include="..\Code\CWood.cpp" />
     <ClCompile Include="..\Code\CMenuFrame.cpp" />
     <ClCompile Include="..\Code\CWPBoxUI.cpp" />

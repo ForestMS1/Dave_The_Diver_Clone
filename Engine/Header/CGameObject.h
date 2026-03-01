@@ -20,6 +20,7 @@ protected:
 public:
 	CComponent* Get_Component(COMPONENTID eID, std::wstring_view svComponentTag);
 	_float		Get_ViewZ() { return m_fViewZ; }
+	void		Set_ViewZ(_float viewZ) { m_fViewZ = viewZ; }
 
 public:
 	virtual void Update_ImGui();
@@ -38,9 +39,9 @@ public:
 	void			Set_Tag(std::wstring_view svTag) { m_sTag; }
 	wstring_view	Get_Tag() const { return m_sTag; }
 	void			Set_Render(bool flag) { m_bRender = flag; }
-	bool			Get_Render()const  { return m_bRender; }
+	bool			Get_Render()const { return m_bRender; }
 	wstring_view	Get_TexName() const { return m_sTexName; }
-	
+
 protected:
 	map<const std::wstring, CComponent*>	m_mapComponent[ID_END];
 
@@ -50,10 +51,10 @@ protected:
 	std::wstring							m_sTag;
 	std::wstring							m_sTexName;
 
-// 계층 관련
+	// 계층 관련
 public:
-	CGameObject *  Get_Parent() const { return m_pParentGameObject; }
-	list<CGameObject*> * Get_Children()  { return &m_childGameObjectList; }
+	CGameObject* Get_Parent() const { return m_pParentGameObject; }
+	list<CGameObject*>* Get_Children() { return &m_childGameObjectList; }
 	void Set_Parent(CGameObject* const pNewParent);
 protected:
 	CGameObject* m_pParentGameObject;
@@ -78,7 +79,7 @@ protected:
 	// P3 T** ppComponent: 만들어진 컴포넌트 주소를 받아오고싶으면 넣으시고 필요없으면 넣지않으면됨
 	template<typename T, COMPONENTID eComID>
 	HRESULT AddComponent(std::wstring_view svProtoTag, std::wstring_view svComponentName, T** ppComponent = nullptr);
-	
+
 public:
 	template<typename T, COMPONENTID eComID>
 	T* GetComponent(std::wstring_view svComponentTag);
@@ -105,7 +106,7 @@ inline HRESULT CGameObject::AddComponent(std::wstring_view svProtoTag, std::wstr
 	{
 		*ppComponent = pComponent;
 	}
-		
+
 	pComponent->Set_GameObject(this);
 
 	m_mapComponent[eComID].insert({ std::wstring(svComponentName), pComponent });
