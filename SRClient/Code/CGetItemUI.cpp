@@ -169,7 +169,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.388f, 0.133f, 0.0f, 1.0f));
         }
     }
 
@@ -188,7 +188,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sRank, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sRank, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
         }
     }
 
@@ -207,7 +207,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sWeight, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sWeight, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
         }
     }
 

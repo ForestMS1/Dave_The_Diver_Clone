@@ -14,6 +14,9 @@
 
 #include "CGameMemMgr.h"
 
+#include "CGoToSushiUI.h"
+
+#include "CBanchoGood.h"
 
 CToSushiUI::CToSushiUI(float fPosX, float fPosY)
     : CGameObject()
@@ -67,19 +70,55 @@ HRESULT		CToSushiUI::Ready_GameObject()
         ->Get_Scene()
         ->Get_Layer(L"0_GameLogic_Layer"))
     {
-        
-
+        if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
         {
-            auto pToSushiItem = CToSushiUIItem::Create(-2.73f, 3.16f);
-            pToSushiItem->Set_Parent(this);
-            pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
-        }
+            auto originalFishes = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes();
+            map<std::wstring, CGameMemMgr::CDiveInfo::DIVE_FISH> mapFish;
 
-        {
-            auto pToSushiItem = CToSushiUIItem::Create(-2.73f, 2.f);
-            pToSushiItem->Set_Parent(this);
-            pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
+            for (auto& fish : originalFishes)
+            {
+                auto iter = mapFish.find(fish.sFishName);
+                if (iter == mapFish.end())
+                {
+                    mapFish.insert({ fish.sFishName , fish });
+                }
+                else
+                {
+                    mapFish[fish.sFishName].iMeatCnt += fish.iMeatCnt;
+                }
+            }
+
+
+            float fRefY = 3.16f;
+            for (auto& pCaughtFishes : mapFish)
+            {
+                auto pToSushiItem = CToSushiUIItem::Create(-2.73f, fRefY);
+                pToSushiItem->Set_Parent(this);
+                pToSushiItem->Set_Title(pCaughtFishes.first);
+                pToSushiItem->Set_Cnt(std::to_wstring(pCaughtFishes.second.iMeatCnt));
+                pToSushiItem->Set_Money(L"42");//TODO
+                pToSushiItem->Set_Lv(L"Lv 2");//TODO
+                pToSushiItem->Set_FishImgAssetName(pCaughtFishes.second.sThumbNailAssetName);
+                pToSushiItem->Set_SushiImgAssetName(pCaughtFishes.second.sSushiThumbNailAssetName);
+                pToSushiItem->Ready_AfterCreate();
+                pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
+
+                fRefY -= 1.16;
+            }
         }
+       
+
+        //{
+        //    auto pToSushiItem = CToSushiUIItem::Create(-2.73f, 3.16f);
+        //    pToSushiItem->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
+        //}
+
+        //{
+        //    auto pToSushiItem = CToSushiUIItem::Create(-2.73f, 2.f);
+        //    pToSushiItem->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
+        //}
     }
 
     return S_OK;
@@ -94,6 +133,19 @@ _int		CToSushiUI::Update_GameObject(const _float& fTimeDelta)
 {
     if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+        {
+            if (auto pObj = pLayer->Get_GameObjectFirst(L"BanchoGood"))
+            {
+                pObj->Set_DeadCascade();
+            }
+            else
+            {
+                CBanchoGood* pBanchoGood = CBanchoGood::Create(5.5f, -1.f);
+                pLayer->Add_GameObject(L"BanchoGood", pBanchoGood);
+            }
+        }
+
         Set_DeadCascade();
     }
 
@@ -162,7 +214,7 @@ void		CToSushiUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"획득한 식재료가 없습니다.", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(L"획득한 식재료가 없습니다.", &vPos, D3DXCOLOR(0.345f, 0.682f, 0.792f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 

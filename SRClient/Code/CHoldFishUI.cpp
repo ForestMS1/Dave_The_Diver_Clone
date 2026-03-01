@@ -318,6 +318,13 @@ void		CHoldFishUI::Render_GameObject()
 
      // Å°·Î¼ö
     {
+        float fKg = 0.f;
+        float fMaxKg = 12.5f;
+        ;
+        for (auto& pFish : CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes())
+        {
+            fKg += pFish.fWeight;
+        }
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
         float fOffsetX = 0.380f;
@@ -331,7 +338,10 @@ void		CHoldFishUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"12.3/12.2 kg", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << fKg << L"/" << fMaxKg << L"Kg";
+            std::wstring result = wss.str();
+            pDefFont->Render_Font(result, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 

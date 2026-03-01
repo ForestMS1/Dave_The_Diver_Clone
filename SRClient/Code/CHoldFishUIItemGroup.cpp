@@ -66,7 +66,10 @@ HRESULT		CHoldFishUIItemGroup::Ready_GameObject()
             pArea->Set_Parent(this);
             pArea->Set_Thumbnail(caughtFishe.sThumbNailAssetName);
             pArea->Set_Title(caughtFishe.sFishName);
-            pArea->Set_Rank(L"Rank" + to_wstring(caughtFishe.iRank));
+            pArea->Set_Star(caughtFishe.iStar);
+            pArea->Set_MeatCnt(caughtFishe.iMeatCnt);
+            pArea->Set_Weight(caughtFishe.fWeight);
+            pArea->Set_Rank(caughtFishe.iRank);
             pArea->Ready_AfterCreate();
             pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
             refY -= 0.15f;

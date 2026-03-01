@@ -13,6 +13,9 @@ public:
 	virtual			void		Render_GameObject();
 
 public:
+	HRESULT Ready_AfterCreate();
+
+public:
 	void Update_ImGui() override;
 
 private:
@@ -34,6 +37,17 @@ private:
 	bool m_bOpen;
 	tweeny::tween<float> m_tweenOpen;
 	bool m_bOpenTween;
+
+private:
+	std::wstring m_sDiveNo;
+	std::wstring m_sTemp;
+	std::wstring m_sTime;
+	std::wstring m_sDepth;
+	std::wstring m_sCaught;
+	std::wstring m_sObtained;
+	std::wstring m_sBiggestFishName;
+	std::wstring m_sBiggestFishSize;
+	std::wstring m_sBiggestFishImgAsseName;
 
 public:
 	static CDiveResultUI* Create(float fPosX, float fPosY);

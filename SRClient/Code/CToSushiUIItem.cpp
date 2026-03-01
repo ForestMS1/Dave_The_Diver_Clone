@@ -55,15 +55,21 @@ HRESULT		CToSushiUIItem::Ready_GameObject()
     m_fViewZ = 0.9f;
 
 
+    return S_OK;
+}
+
+HRESULT CToSushiUIItem::Ready_AfterCreate()
+{
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
+            // Fish
             auto pImg = CDiveResultUIImg::Create(-2.49f, -0.05f);
             pImg->Set_Scale(0.49f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
+            pImg->Set_AssetName(m_sFishImgAssetName);
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"ToSushiFishImg", pImg);
@@ -75,16 +81,16 @@ HRESULT		CToSushiUIItem::Ready_GameObject()
             ->Get_Scene()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
+            // Sushi
             auto pImg = CDiveResultUIImg::Create(-1.57f, -0.2f);
             pImg->Set_Scale(0.233f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
+            pImg->Set_AssetName(m_sSushiImgAssetName);
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"ToSushiSushiImg", pImg);
         }
     }
-
     return S_OK;
 }
 
@@ -148,7 +154,7 @@ void		CToSushiUIItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"RANK 1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(L"RANK 1", &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -168,7 +174,7 @@ void		CToSushiUIItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"Title 1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 
@@ -187,7 +193,7 @@ void		CToSushiUIItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"CNT", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sCnt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 
@@ -207,7 +213,7 @@ void		CToSushiUIItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"LV", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sLv, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 
@@ -226,7 +232,7 @@ void		CToSushiUIItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"12", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sMoney, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
         }
     }
 }

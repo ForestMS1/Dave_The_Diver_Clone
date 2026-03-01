@@ -391,6 +391,18 @@
     <Filter Include="02. GameObject\Conversation">
       <UniqueIdentifier>{61c8e9c0-35a6-4932-905e-6a89042af3ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveResult\Result">
+      <UniqueIdentifier>{a3356668-8d9d-48db-ae98-1f38d90dad4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\GoToSushi">
+      <UniqueIdentifier>{300a6f58-96f6-48a3-b9f0-d9e456a0396c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\ToSushi">
+      <UniqueIdentifier>{e6912de4-4352-4504-b1d6-327ed71ff877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\BanchoGood">
+      <UniqueIdentifier>{e058b1dc-e7b8-4a10-9fde-4af25a6d3217}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1005,21 +1017,6 @@
     <ClInclude Include="..\Header\CWasabiObject.h">
       <Filter>01. Scene\03. Sushi\Wasabi</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CDiveResultUI.h">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CDiveResultUIImg.h">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CToSushiUI.h">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CToSushiUIItem.h">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGoToSushiUI.h">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CBackToShipUI.h">
       <Filter>02. GameObject\BackToShipUI</Filter>
     </ClInclude>
@@ -1028,6 +1025,24 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLeah.h">
       <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveResultUI.h">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveResultUIImg.h">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGoToSushiUI.h">
+      <Filter>02. GameObject\DiveResult\GoToSushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToSushiUI.h">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToSushiUIItem.h">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanchoGood.h">
+      <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1619,21 +1634,6 @@
     <ClCompile Include="..\Code\CWasabiObject.cpp">
       <Filter>01. Scene\03. Sushi\Wasabi</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CDiveResultUI.cpp">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CDiveResultUIImg.cpp">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CToSushiUI.cpp">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CToSushiUIItem.cpp">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGoToSushiUI.cpp">
-      <Filter>02. GameObject\DiveResult</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CShipDiverBoxInventory.cpp">
       <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
     </ClCompile>
@@ -1645,6 +1645,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLeah.cpp">
       <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveResultUI.cpp">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveResultUIImg.cpp">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGoToSushiUI.cpp">
+      <Filter>02. GameObject\DiveResult\GoToSushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToSushiUI.cpp">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToSushiUIItem.cpp">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanchoGood.cpp">
+      <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

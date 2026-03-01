@@ -60,7 +60,9 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
     m_pTransformCom->Set_Scale(&vScale);
 
     m_fViewZ = 0.499;
-
+    m_iMeatCnt = 1;
+    m_fWeight = 1.f;
+    m_iRank = 1;
 
     // ¿§Áö
     {
@@ -113,35 +115,50 @@ HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
     {
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
+            float refX = -0.57;
+            for (int i = 0; i < m_iStar; ++i)
             {
-                auto pStar = CHoldFishUIImg::Create(-0.57f, -0.03f);
+                auto pStar = CHoldFishUIImg::Create(refX, -0.03f);
                 pStar->Set_Scale(0.0175f);
                 pStar->Set_ViewZ(0.49f);
                 pStar->Set_AssetName(L"Tex_GetItemUIStar");
                 pStar->Set_Parent(this);
                 pStar->Ready_After_Create();
                 pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+
+                refX += 0.05;
             }
 
-            {
-                auto pStar = CHoldFishUIImg::Create(-0.52f, -0.03f);
-                pStar->Set_Scale(0.0175f);
-                pStar->Set_ViewZ(0.49f);
-                pStar->Set_AssetName(L"Tex_GetItemUIStar");
-                pStar->Set_Parent(this);
-                pStar->Ready_After_Create();
-                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
-            }
 
-            {
-                auto pStar = CHoldFishUIImg::Create(-0.47f, -0.03f);
-                pStar->Set_Scale(0.0175f);
-                pStar->Set_ViewZ(0.49f);
-                pStar->Set_AssetName(L"Tex_GetItemUIStar");
-                pStar->Set_Parent(this);
-                pStar->Ready_After_Create();
-                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
-            }
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(-0.57f, -0.03f);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            //}
+
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(-0.52f, -0.03f);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            //}
+
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(-0.47f, -0.03f);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            //}
         }
     }
     return S_OK;
@@ -212,7 +229,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"RANK1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(L"Rank "+::to_wstring(m_iRank), &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -231,7 +248,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -250,7 +267,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(::to_wstring(m_iMeatCnt), &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -269,8 +286,13 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"1.1Kg", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << m_fWeight << L"Kg";
+            std::wstring result = wss.str();
+            pDefFont->Render_Font(result, &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
+
+
     }
 
 }

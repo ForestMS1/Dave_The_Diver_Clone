@@ -169,6 +169,7 @@
     <ClInclude Include="..\Header\CBackground.h" />
     <ClInclude Include="..\Header\CBackGroundSea.h" />
     <ClInclude Include="..\Header\CBancho.h" />
+    <ClInclude Include="..\Header\CBanchoGood.h" />
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
@@ -376,6 +377,7 @@
     <ClCompile Include="..\Code\CAsianSheepshead.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />
+    <ClCompile Include="..\Code\CBanchoGood.cpp" />
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />

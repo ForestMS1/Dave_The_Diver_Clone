@@ -11,6 +11,8 @@
 #include "CDInputMgr.h"
 
 #include "CDiveResultUIImg.h"
+#include "CToSushiUI.h"
+#include "CGameMemMgr.h"
 
 
 CDiveResultUI::CDiveResultUI(float fPosX, float fPosY)
@@ -63,6 +65,38 @@ HRESULT		CDiveResultUI::Ready_GameObject()
 
 
 
+    return S_OK;
+}
+
+HRESULT CDiveResultUI::Ready_AfterCreate()
+{
+
+    if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+    {
+        auto info = CGameMemMgr::GetInstance()->Get_DiveInfos().back();
+        m_sDiveNo = std::to_wstring(CGameMemMgr::GetInstance()->Get_DiveInfos().size());
+        m_sCaught = std::to_wstring(info.Get_CaughtFish());
+        m_sDepth = std::to_wstring(info.Get_Depth());
+        m_sObtained = std::to_wstring(info.Get_Obtained());
+
+        if (!info.Get_Fishes().empty())
+        {
+            auto fishes = info.Get_Fishes();
+            fishes.sort([](const auto& a, const auto& b) {
+                 return a.fWeight > b.fWeight; 
+             });
+
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
+            std::wstring result = wss.str();
+            m_sBiggestFishSize = result;
+            m_sBiggestFishName = fishes.front().sFishName;
+            m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
+            
+        }
+        m_sTime = info.CalcDiveTimeStr();
+    }
+
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
@@ -71,14 +105,14 @@ HRESULT		CDiveResultUI::Ready_GameObject()
             auto pImg = CDiveResultUIImg::Create(-2.4f, 0.14f);
             pImg->Set_Scale(0.33f);
             pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
+            pImg->Set_AssetName(m_sBiggestFishImgAsseName);
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"BiggestFishImg", pImg);
         }
     }
 
-
+    // Items
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
@@ -101,6 +135,19 @@ _int		CDiveResultUI::Update_GameObject(const _float& fTimeDelta)
 {
     if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+        {
+            if (auto pObj = pLayer->Get_GameObjectFirst(L"ToSushiUI"))
+            {
+                pObj->Set_DeadCascade();
+            }
+            else
+            {
+                CToSushiUI* pToSushi = CToSushiUI::Create(0.f, 0.f);
+                pToSushi->Ready_AfterCreate();
+                pLayer->Add_GameObject(L"ToSushiUI", pToSushi);
+            }
+        }
         Set_DeadCascade();
     }
 
@@ -169,7 +216,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"DIVE NO", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sDiveNo, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -188,7 +235,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"DATE", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(L"Wed.10.19", &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -207,7 +254,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"TEMP", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(L"21กษ", &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -226,7 +273,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"TIME", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sTime, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -245,7 +292,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"DEPTH", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sDepth, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -264,7 +311,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"CAUGHT", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sCaught, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -283,7 +330,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"OBTAINED", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sObtained, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -291,8 +338,8 @@ void		CDiveResultUI::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -1.23f;
-        float fOffsetY = 0.27f;
+        float fOffsetX = -1.900;//-1.900
+        float fOffsetY = 0.430;//0.430
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -302,7 +349,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"BIGGEST", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sBiggestFishName, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f));
         }
     }
 
@@ -310,8 +357,8 @@ void		CDiveResultUI::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -1.46f;
-        float fOffsetY = -0.09f;
+        float fOffsetX = -1.900f;
+        float fOffsetY = 0.060f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -321,7 +368,7 @@ void		CDiveResultUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"30CM", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(m_sBiggestFishSize, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f));
         }
     }
 }

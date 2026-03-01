@@ -60,10 +60,12 @@ public:
 		{
 			std::wstring sFishName;
 			std::wstring sThumbNailAssetName;
+			std::wstring sSushiThumbNailAssetName;
 			_uint iRank;
 			_uint iStar;
 			_uint iMeatCnt;
 			float fWeight;
+			float fLength;
 		} DIVE_FISH;
 
 		typedef struct tagDiveItem
@@ -79,6 +81,21 @@ public:
 		float CalcDiveTime()
 		{
 			return (float)(m_DiveEnd - m_DiveStart) / CLOCKS_PER_SEC;
+		}
+
+		std::wstring CalcDiveTimeStr()
+		{
+			auto total_seconds = (int)CalcDiveTime();
+			int hours = total_seconds / 3600;
+			int minutes = (total_seconds / 60) % 60;
+			int seconds = total_seconds % 60;
+
+			// 3. 00:00:00 포맷으로 출력
+			std::wstringstream wss;
+			wss << std::setw(2) << std::setfill(L'0') << hours << L":"
+				<< std::setw(2) << std::setfill(L'0') << minutes << L":"
+				<< std::setw(2) << std::setfill(L'0') << seconds;
+			return wss.str();
 		}
 
 		void Add_FishFront(DIVE_FISH& fish) { m_vecCaughtFishes.push_front(fish); ++m_iCaughtFish; }

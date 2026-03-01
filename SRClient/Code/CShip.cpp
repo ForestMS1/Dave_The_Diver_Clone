@@ -40,6 +40,7 @@
 #include "CGameMemMgr.h"
 #include "CGoToSushiUI.h"
 #include "CDaveConversation.h"
+#include "CBanchoGood.h"
 
 CShip::CShip()
 	: CScene()
@@ -52,6 +53,18 @@ CShip::~CShip()
 HRESULT CShip::Ready_Scene()
 {
 	CColliderMgr::GetInstance()->Set_Render(false);
+
+	if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+	{
+		if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() % 2 == 0)
+		{
+			CGameMemMgr::GetInstance()->Set_ShipNight(false);
+		}
+		else
+		{
+			CGameMemMgr::GetInstance()->Set_ShipNight(true);
+		}
+	}
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
 		return E_FAIL;
@@ -67,6 +80,8 @@ HRESULT CShip::Ready_Scene()
 	
 	IDiver::InitIDiverInfo();
 
+	m_fResultTimer = 0.f;
+	m_bResultOpend = false;
 	return S_OK;
 }
 
@@ -362,6 +377,33 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
+	if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+	{
+		if (!m_bResultOpend)
+		{
+			m_fResultTimer += fTimeDelta;
+			if (m_fResultTimer > 1.f)
+			{
+				m_bResultOpend = true;
+
+				if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+				{
+					if (auto pObj = pLayer->Get_GameObjectFirst(L"DiveResultUI"))
+					{
+						pObj->Set_DeadCascade();
+					}
+					else
+					{
+						CDiveResultUI* pDiveResult = CDiveResultUI::Create(0.f, 0.f);
+						pDiveResult->Ready_AfterCreate();
+						pLayer->Add_GameObject(L"DiveResultUI", pDiveResult);
+					}
+				}
+			}
+		}
+	}
+	
+
 	ImGui::Begin("Curr Scene: CShip");
 	if (ImGui::Button("Go Dive Scene"))
 	{
@@ -396,6 +438,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			else
 			{
 				CDiveResultUI* pDiveResult = CDiveResultUI::Create(0.f, 0.f);
+				pDiveResult->Ready_AfterCreate();
 				pLayer->Add_GameObject(L"DiveResultUI", pDiveResult);
 			}
 		}
@@ -412,6 +455,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			else
 			{
 				CToSushiUI* pToSushi = CToSushiUI::Create(0.f, 0.f);
+				pToSushi->Ready_AfterCreate();
 				pLayer->Add_GameObject(L"ToSushiUI", pToSushi);
 			}
 		}
@@ -450,6 +494,22 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			{
 				CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
 				pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+			}
+		}
+	}
+
+	if (ImGui::Button("CBanchoGood"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+		{
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"BanchoGood"))
+			{
+				pObj->Set_DeadCascade();
+			}
+			else
+			{
+				CBanchoGood* pDaveConversation = CBanchoGood::Create(5.5f, -1.f);
+				pLayer->Add_GameObject(L"BanchoGood", pDaveConversation);
 			}
 		}
 	}

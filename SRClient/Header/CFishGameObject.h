@@ -82,6 +82,7 @@ protected:
 public:
 	std::wstring_view Get_FishName() const { return m_sFishName; }
 	std::wstring_view Get_FishThumbNailAssetName() const { return m_sThumbNailAssetName ; }
+	std::wstring_view Get_SushiThumbNailAssetName() const { return m_sSushiThumbNailAssetName; }
 	_uint Get_Rank() const { return m_iRank; }
 	_uint Get_Star() const { return m_iStar; }
 	float Get_Weight() const { return m_fWeight; }
@@ -90,10 +91,13 @@ public:
 protected:
 	std::wstring m_sFishName;
 	std::wstring m_sThumbNailAssetName;
+	std::wstring m_sSushiThumbNailAssetName;
 	_uint m_iRank;
 	_uint m_iStar;
 	float m_fWeight;
 	_uint m_iPrice;
+	float m_fLength;
+	_uint m_iMeatCnt;
 
 
 protected:

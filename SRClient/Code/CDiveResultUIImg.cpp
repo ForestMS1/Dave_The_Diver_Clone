@@ -103,7 +103,7 @@ void		CDiveResultUIImg::Render_GameObject()
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
+    pGraphicDev->SetTexture(0, nullptr);
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
@@ -113,9 +113,9 @@ void		CDiveResultUIImg::Render_GameObject()
         {
             pGraphicDev->SetTexture(0, pTexture->Get_Texture());
         }
+        m_pBufferCom->Render_Buffer();
     }
 
-    m_pBufferCom->Render_Buffer();
 
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
