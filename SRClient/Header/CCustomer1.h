@@ -43,6 +43,9 @@ public:
 	wstring			sushiHanded;
 	bool			gotSushi;
 	CGameObject* MenuBubble;
+	CGameObject* TeaBubble;
+	bool			OrderedTea;
+	bool			gotTea;
 
 private:
 	State			curState;
@@ -56,6 +59,9 @@ private:
 	bool			Reacting;
 	bool			Eating;
 	float			deltaTime;
+	float			teaTime;
+	float			teaWatingTime;
+	float			teaChoosingTime;
 	float			ExitTime;
 	float			ReactionTime;
 	float			EatingTime;
@@ -63,8 +69,11 @@ private:
 	float			GoldTime;
 	CAABB*			m_pAABB;
 	_vec3 screen;
-	int random;
+	int random1;
+	int random2;
 	virtual void Free();
+	bool			choosingTea = false;
+	bool			waitingMenu = false;;
 
 };
 

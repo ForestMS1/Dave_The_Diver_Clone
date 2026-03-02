@@ -1297,6 +1297,25 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveGaugeStancil", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Dave/DashGaugeStancil.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Purple", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Purple.png"));
 
+	//오픈 이미지
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_OpenImage", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_SushiOpenText.png"));
+	// 차
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Pot", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Pot.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CupBack", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CupBack.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CupFront", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CupFront.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CupFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CupFrame.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Green", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Green.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TeaLiquid", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/TeaLiquid.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TeaLiquidStancil", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/TeaLiquidStancil3.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Brown", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Brown.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Perfect", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Perfect.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_TeaPicture", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/teaPicture.png"));
+
+	//게임 끝 이미지
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_CloseShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CloseShop.png"));
+
+
+
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);

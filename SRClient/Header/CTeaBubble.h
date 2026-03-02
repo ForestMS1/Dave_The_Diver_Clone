@@ -1,6 +1,5 @@
 #pragma once
 #include "CGameObject.h"
-#include "CAABB.h"
 
 namespace Engine
 {
@@ -9,14 +8,13 @@ namespace Engine
 	class CTransform;
 }
 
-class CWasabi : public CGameObject
+class CTeaBubble : public CGameObject
 {
 private:
-	explicit CWasabi();
-	explicit CWasabi(const CGameObject& rhs);
-	virtual ~CWasabi();
+	explicit CTeaBubble();
+	explicit CTeaBubble(const CGameObject& rhs);
+	virtual ~CTeaBubble();
 	void	Update_ImGui() override;
-
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -28,24 +26,21 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pWasabiTextureCom;
+	Engine::CTexture* m_pMenuBubbleTextureCom;
 	Engine::CTransform* m_pTransformCom;
+
 public:
-	static CWasabi* Create();
+	static CTeaBubble* Create();
 
 private:
-	_float			m_fFrame;
 	virtual void Free();
-	void	Key_Input();
 
-
-private:
-	bool	frameMove;
-	bool	wasabiCreated;
-	float   good = 0.f;
 public:
-	float   gauge = -4.04f;
-	float	m_fScale;
+	float tempY = -1.f;
+	bool  gettingTea;
+private:
+	float deltaTime = 0;
+
 
 };
 

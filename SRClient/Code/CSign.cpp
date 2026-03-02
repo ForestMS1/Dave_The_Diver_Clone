@@ -87,7 +87,7 @@ HRESULT CSign::Ready_Component()
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 1.5f, 1.5f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { -5.5f, 1.f, -3.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { -5.5f, 1.f, -2.8f };
     return S_OK;
 }
 

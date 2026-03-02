@@ -91,6 +91,7 @@ void CGameMemMgr::reduceMenu(wstring name)
 	}
 	for (iter; iter != SelectedMenu.end();) {
 		if ((*iter)->quantity <= 0) {
+			Safe_Delete(*iter);
 			iter = SelectedMenu.erase(iter);
 		}
 		else {
@@ -109,7 +110,7 @@ void CGameMemMgr::addCookingMenu(wstring name)
 void CGameMemMgr::deleteCookingMenu()
 {
 	if (!CookingMenu.empty()) {
-		delete CookingMenu.front();
+		Safe_Delete(CookingMenu.front());
 		CookingMenu.pop();
 	}
 }
@@ -117,7 +118,8 @@ void CGameMemMgr::deleteCookingMenu()
 void CGameMemMgr::ClearCookingMenu()
 {
 	while (!CookingMenu.empty()) {
-		delete CookingMenu.front();
-		CookingMenu.pop();
+
+		Safe_Delete(CookingMenu.front());
+		CookingMenu.pop(); 
 	}
 }

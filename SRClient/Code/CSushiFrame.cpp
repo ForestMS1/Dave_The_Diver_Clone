@@ -272,6 +272,9 @@ void CSushiFrame::Render_GameObject()
         }
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     }
+    else {
+        upgrade->Set_Render(false);
+    }
   
     
     

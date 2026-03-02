@@ -463,6 +463,9 @@
     <Filter Include="02. GameObject\DiveResult\BanchoGood">
       <UniqueIdentifier>{e058b1dc-e7b8-4a10-9fde-4af25a6d3217}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Tea">
+      <UniqueIdentifier>{7e6db575-4963-410e-a255-28416fdcc750}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon">
       <UniqueIdentifier>{809434f3-c0e3-4fbe-a130-cbb728a2cf14}</UniqueIdentifier>
     </Filter>
@@ -1176,6 +1179,12 @@
     <ClInclude Include="..\Header\CBanchoGood.h">
       <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTea.h">
+      <Filter>01. Scene\03. Sushi\Tea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTeaBubble.h">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CO2TxT.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
     </ClInclude>
@@ -1876,6 +1885,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBanchoGood.cpp">
       <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTea.cpp">
+      <Filter>01. Scene\03. Sushi\Tea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTeaBubble.cpp">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CO2TxT.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
