@@ -152,7 +152,7 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
             _uint iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
             if (CGameMemMgr::GetInstance()->Get_Money() > IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost)
             {
-                CGameMemMgr::GetInstance()->Set_Money(CGameMemMgr::GetInstance()->Get_Money() - IDiver::Get_Info(m_sAssetName, iCurrLevel+1).iCost);
+                CGameMemMgr::GetInstance()->Set_Money2(CGameMemMgr::GetInstance()->Get_Money() - IDiver::Get_Info(m_sAssetName, iCurrLevel+1).iCost);
 
                 if (
                     !(IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"MAX"

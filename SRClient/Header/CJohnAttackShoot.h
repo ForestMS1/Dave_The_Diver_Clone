@@ -19,6 +19,7 @@ public:
     void Exit() override;
     void Clear() override;
 
+    _uint m_iShotCnt = 0;
 public:
     static CJohnAttackShoot* Create(CJohn* pOwner);
 private:

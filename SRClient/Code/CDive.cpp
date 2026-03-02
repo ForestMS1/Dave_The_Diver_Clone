@@ -42,6 +42,7 @@
 #include "FishInclude.h"
 
 #include "CParticleMgr.h"
+#include "CJohn2.h"
 
 #include "CGameMemMgr.h"
 CDive::CDive()
@@ -381,10 +382,17 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// 보스
-	pGameObject = CJohn::Create();
+	pGameObject = CJohn::Create(10.f, 10.f, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
+		return E_FAIL;
+
+	// 보스2
+	pGameObject = CJohn2::Create(30.f, 30.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"John2", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });

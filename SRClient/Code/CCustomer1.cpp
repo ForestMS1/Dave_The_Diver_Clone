@@ -13,6 +13,8 @@
 #include "CColliderMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CGameMemMgr.h"
+#include "CAssetDefaultFont.h"
 
 
 
@@ -33,6 +35,7 @@ CCustomer1::CCustomer1()
     ReactionTime = 0.f;
     EatingTime = 0.f;
     EmotionTime = 0.f;
+    GoldTime = 0.f;
     sushiHanded = L"";
     MenuBubble = nullptr;
  
@@ -122,10 +125,17 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
         if (EatingTime > 6.f) {
             curState = LEAVE;
             m_pTransformCom->Rotation(ROT_Y, 180.f);
+            vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
+            for (auto fish : fishes) {
+                if (fish->name == sushiHanded) {
+                    CGameMemMgr::GetInstance()->Set_Money(fish->cost);
+                }
+            }
 
         }
     }
     if (curState == LEAVE) {
+        GoldTime += fTimeDelta;
         m_pTransformCom->m_vInfo[INFO_POS].x -= 0.02f;
         if (m_pTransformCom->m_vInfo[INFO_POS].x <= -8.f) {
             Empty_Chair();
@@ -140,7 +150,11 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
         }
 
     }
-
+    _vec3 curPos;
+    m_pTransformCom->Get_Info(INFO_POS, &curPos);
+    curPos.y += 1.15f;
+    curPos.x -= -0.14f;
+    CHelper::GetScreenPointFromWorld(&screen, &curPos);
 
     return iExit;
 }
@@ -315,6 +329,39 @@ void CCustomer1::Render_GameObject()
 
         pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
         m_pBufferCom->Render_Buffer();
+    }
+    if (curState == LEAVE) {
+        if (sushiHanded == static_cast<CMenuBubble*>(MenuBubble)->m_sFishName) {
+            if (GoldTime < 3.f) {
+                if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Coin"))
+                {
+                    if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                    {
+                        pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                    }
+                }
+                _matrix mat = *m_pTransformCom->Get_World();
+                mat.m[0][0] = 0.1f;
+                mat.m[1][1] = 0.1f;
+                mat.m[3][1] += 1.f;
+                mat.m[3][0] -= 0.2f;
+
+                pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
+                m_pBufferCom->Render_Buffer();
+
+                // 폰트 출력
+                CAssetDefaultFont* pQuantityFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_FishQuantity");
+
+                vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
+                for (auto fish : fishes) {
+                    if (fish->name == sushiHanded) {
+                        _vec2 vPos = { screen.x , screen.y };
+                        pQuantityFont->Render_Font(to_wstring(fish->cost), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+                    }
+                }
+                
+            }
+        }
     }
    
 }

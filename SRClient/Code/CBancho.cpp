@@ -65,19 +65,19 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
         m_fFrame += 5.f * fTimeDelta;
         break;
     case COOK:
+   
         m_fFrame += 5.f * fTimeDelta;
         break;
     }
     CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
-
-    if (static_cast<CWasabiObject*>(wasabi)->gauge > -0.9f) {
+    float percent = static_cast<CWasabiObject*>(wasabi)->percent;
+    if (static_cast<CWasabiObject*>(wasabi)->percent > 1.f) {
         if (CGameMemMgr::GetInstance()->getCookingMenu().size() != 0) {
             // 요리중으로 변경되면 현재 상태를 COOK 전 상태를 
         
             m_sFishName = CGameMemMgr::GetInstance()->getCookingMenu().front()->name;
             curState = COOK;
-            if (3.f < m_fFrame)
-                m_fFrame = 0.f;
+           
             if (m_sFishName == L"블루종") {
                 m_sTexName = L"Tex_Bluejong";
             }
@@ -102,6 +102,9 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
             if (5.f < m_fFrame)
                 m_fFrame = 0.f;
         }
+    }
+    else {
+        curState = IDLE;
     }
     
 
@@ -144,9 +147,13 @@ void CBancho::Render_GameObject()
     switch (curState)
     {
     case IDLE:
+        if (5.f < m_fFrame)
+            m_fFrame = 0.f;
         m_pIdleTextureCom->Set_Texture((_uint)m_fFrame);
         break;
     case COOK:
+        if (3.f < m_fFrame)
+            m_fFrame = 0.f;
         m_pCookTextureCom->Set_Texture((_uint)m_fFrame);
         break;
     }
@@ -313,7 +320,6 @@ CBancho* CBancho::Create()
 void CBancho::Free()
 {
     Safe_Release(m_pAABB);
-
     CGameObject::Free();
 
 }

@@ -23,6 +23,7 @@ void CShipUIMoney::Update_ImGui()
 {
     ImGui::DragFloat("fontXOffset", &m_fFontOffsetX, 0.1);
     ImGui::DragFloat("fontYOffset", &m_fFontOffsetY, 0.1);
+    ImGui::DragFloat("m_fViewZ", &m_fViewZ, 0.1);
 }
 
 
@@ -100,7 +101,7 @@ void		CShipUIMoney::Render_GameObject()
     CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
 
 
-    _vec2 vPos = { vScreenPos.x , vScreenPos.y};
+    _vec2 vPos = { vScreenPos.x  , vScreenPos.y};
     if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
     {
         
