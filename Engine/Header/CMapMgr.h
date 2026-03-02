@@ -26,6 +26,7 @@ private:
 public:
 
 	void    SetScene(CScene* Scene) { m_Scene = Scene;}
+	CScene* GetScene() { return m_Scene; }
 	void	Load();
 	void	Save();
 

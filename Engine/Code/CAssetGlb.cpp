@@ -166,7 +166,7 @@ HRESULT CAssetGlb::Load()
 		mb.min = bmin;
 		mb.max = bmax;
 		mb.center = { (bmin.x + bmax.x) * 0.5f, (bmin.y + bmax.y) * 0.5f, (bmin.z + bmax.z) * 0.5f };
-		mb.scale = { scale.x,  scale.z , scale.y};
+		mb.scale = { scale.x,   scale.y, scale.z };
 
 		vec_meshBounds[i] = mb;
 

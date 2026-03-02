@@ -42,6 +42,7 @@
 #include "FishInclude.h"
 
 #include "CParticleMgr.h"
+#include "CCoral.h"
 CDive::CDive()
 	: CScene()
 {
@@ -175,6 +176,9 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"CBackGroundSea", pBackGroundSea)))
 		return E_FAIL;
 
+
+
+	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
@@ -326,7 +330,8 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"BackGround_GLB_File", pGameObject)))
 		return E_FAIL;
-
+	dynamic_cast<CTerrian*>(pGameObject)->Set_Frustom(true);
+	dynamic_cast<CTerrian*>(pGameObject)->Set_BackGround(true);
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian1", L"Terrian1_Collision");
 	if (nullptr == pGameObject)
@@ -364,24 +369,24 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian6", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian6_Collision");
+	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian7_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian7", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian6_Collision");
+	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian8_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
 		return E_FAIL;
 
-	// 보스
-	pGameObject = CJohn::Create();
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
-		return E_FAIL;
+	//// 보스
+	//pGameObject = CJohn::Create();
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
+	//	return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
