@@ -25,6 +25,8 @@ private:
 	void		Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Ortho(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_AlphaAfterOrtho(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Transition(LPDIRECT3DDEVICE9& pGraphicDev);
 
 private:
 	list<CGameObject*>		m_RenderGroup[RENDER_END];

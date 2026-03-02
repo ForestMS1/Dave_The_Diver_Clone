@@ -13,6 +13,7 @@
 #include"CHoldFishUIDropPanel.h"
 
 #include "CHoldFishUIImg.h"
+#include "CGameMemMgr.h"
 
 CHoldFishUIItemGroup::CHoldFishUIItemGroup(float fPosX, float fPosY)
     : CGameObject()
@@ -53,28 +54,44 @@ HRESULT		CHoldFishUIItemGroup::Ready_GameObject()
 
     m_fDbgX = 0.f;
     m_fDbgY = 0.f;
+    m_fOffsetY = 0.f;
 
 
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         float refY = 0.5f;
+
+        for (auto& caughtFishe : CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes())
         {
             auto pArea = CHoldFishUIItemArea::Create(0, 0.f, refY);
             pArea->Set_Parent(this);
+            pArea->Set_Thumbnail(caughtFishe.sThumbNailAssetName);
+            pArea->Set_Title(caughtFishe.sFishName);
+            pArea->Set_Star(caughtFishe.iStar);
+            pArea->Set_MeatCnt(caughtFishe.iMeatCnt);
+            pArea->Set_Weight(caughtFishe.fWeight);
+            pArea->Set_Rank(caughtFishe.iRank);
+            pArea->Ready_AfterCreate();
             pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+            refY -= 0.15f;
         }
-        refY -= 0.15f;
-        {
-            auto pArea = CHoldFishUIItemArea::Create(1, 0.f, refY);
-            pArea->Set_Parent(this);
-            pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
-        }
-        refY -= 0.15f;
-        {
-            auto pArea = CHoldFishUIItemArea::Create(2, 0.f, refY);
-            pArea->Set_Parent(this);
-            pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
-        }
+        //{
+        //    auto pArea = CHoldFishUIItemArea::Create(0, 0.f, refY);
+        //    pArea->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+        //}
+        //refY -= 0.15f;
+        //{
+        //    auto pArea = CHoldFishUIItemArea::Create(1, 0.f, refY);
+        //    pArea->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+        //}
+        //refY -= 0.15f;
+        //{
+        //    auto pArea = CHoldFishUIItemArea::Create(2, 0.f, refY);
+        //    pArea->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"HoldFishUIItemArea", pArea);
+        //}
     }
 
     return S_OK;
@@ -88,13 +105,13 @@ _int		CHoldFishUIItemGroup::Update_GameObject(const _float& fTimeDelta)
     float fOffsetX = 0.f;
     float fOffsetY = 0.f;
     vPos.x += m_fPosX + m_fDbgX;
-    vPos.y += m_fPosY + m_fDbgY;
+    vPos.y += m_fPosY + m_fDbgY + m_fOffsetY;
 
     m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
 
     return iExit;
 }
@@ -134,6 +151,19 @@ void		CHoldFishUIItemGroup::LateUpdate_GameObject(const _float& fTimeDelta)
 
                 pIntersected->Set_EdgeVisible(true);
             }
+        }
+    }
+
+    if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+    {
+        _long dwMouseMove(0);
+        if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
+        {
+            //CLog::Debug(L"mouseYMOVE %i \n", dwMouseMove);
+            //_vec3 vUp = { 0.f, 1.f, 0.f };
+            //m_pTransformCom->Move_Pos(&vUp, 1.f, fTimeDelta);
+
+            m_fOffsetY += (float(dwMouseMove) * 0.01f);
         }
     }
 }

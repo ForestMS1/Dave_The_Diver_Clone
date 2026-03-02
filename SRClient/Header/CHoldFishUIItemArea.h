@@ -17,6 +17,9 @@ public:
 	virtual			void		Render_GameObject();
 
 public:
+	HRESULT Ready_AfterCreate();
+
+public:
 	void Set_PosY(float f) { m_fPosY = f; }
 	_uint Get_Idx() const { return m_iIdx; }
 
@@ -51,16 +54,22 @@ private:
 
 public:
 	void Set_Title(std::wstring_view svTitle) { m_sTitle = svTitle; }
-	void Set_Rank(std::wstring_view svRank) { m_sRank = svRank; }
-	void Set_Weight(std::wstring_view svWeight) { m_sWeight = svWeight; }
+	void Set_Thumbnail(std::wstring_view svName) { m_sThumbNailAssetName = svName; }
+	void Set_MeatCnt(_uint i) { m_iMeatCnt = i; }
+	void Set_Weight(float f) { m_fWeight = f; }
+	void Set_Rank(_uint i) { m_iRank = i; }
+	void Set_Star(_uint i) {
+		m_iStar = i;
+	}
 
 private:
 	std::wstring m_sTitle;
-	std::wstring m_sRank;
-	std::wstring m_sWeight;
 	const _uint m_iIdx = 0;
-
-
+	std::wstring m_sThumbNailAssetName;
+	_uint m_iMeatCnt;
+	float m_fWeight;
+	_uint m_iRank;
+	_uint m_iStar;
 
 public:
 	static CHoldFishUIItemArea* Create(_uint m_iIdx, float fPosX, float fPosY);

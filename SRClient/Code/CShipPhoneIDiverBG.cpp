@@ -76,7 +76,7 @@ HRESULT		CShipPhoneIDiverBG::Ready_GameObject()
         pShipItem->Set_RightMiddle(L"한계수심");
         pShipItem->Set_RightBottom(L"110 m");
         pShipItem->Set_Money(L"111");
-        pShipItem->Set_MoneyLack(false);
+        //pShipItem->Set_MoneyLack(false);
 
         pShipItem->Ready_AfterCreate();
         CManagement::GetInstance()

@@ -25,6 +25,16 @@ CSmallspottedDart::~CSmallspottedDart()
 
 HRESULT CSmallspottedDart::Ready_GameObject()
 {
+    m_sFishName = L"타원전갱이";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Smallspotted_dart";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+    m_fLength = 10.f;
+    m_iMeatCnt = 1;
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_SmallspottedDart";
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

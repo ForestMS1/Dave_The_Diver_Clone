@@ -6,7 +6,7 @@
 #include "CRenderer.h"
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
-
+#include "CGameMemMgr.h"
 CShipBG::CShipBG(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -24,9 +24,18 @@ HRESULT		CShipBG::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
+    wstring sShipAssetName;
+    if (CGameMemMgr::GetInstance()->Get_ShipNight())
+    {
+        sShipAssetName = L"Tex_Ship_NightBG";
+    }
+    else
+    {
+        sShipAssetName = L"Tex_Ship_BG";
+    }
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_BG"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(sShipAssetName))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -66,7 +75,16 @@ void		CShipBG::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_BG"))
+    wstring sShipAssetName;
+    if (CGameMemMgr::GetInstance()->Get_ShipNight())
+    {
+        sShipAssetName = L"Tex_Ship_NightBG";
+    }
+    else
+    {
+        sShipAssetName = L"Tex_Ship_BG";
+    }
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(sShipAssetName))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {

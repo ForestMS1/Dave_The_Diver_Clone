@@ -24,6 +24,13 @@ CGetItemUI::~CGetItemUI()
 
 HRESULT		CGetItemUI::Ready_GameObject()
 {
+    m_sTitle = L"Title";
+    m_sRank = L"Rank 1";
+    m_sWeight = L"0.5kg";
+    m_iStartCnt = 1;
+    m_sImgAssetName = L"Tex_PhoneBG";
+
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
@@ -45,33 +52,37 @@ HRESULT		CGetItemUI::Ready_GameObject()
     m_pTransformCom->Set_Pos(-13.f, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
-    m_tween = m_tween.from(-13.f).to(m_fPosX).during(500).to(m_fPosX).during(500).to(-13.f).during(500);
+    m_tween = m_tween.from(-13.f).to(m_fPosX).during(500).to(m_fPosX).during(1000).to(-13.f).during(500);
 
 
 
+    
+    return S_OK;
+}
+
+HRESULT CGetItemUI::Ready_AfterCreate()
+{
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         //Stars
+        float fStarRefX = 0.5;
+        for (int i = 0; i < m_iStartCnt; ++i)
         {
-            auto pGetItemUIStart = CGetItemUIStar::Create(0.5f, -0.2f);
+            auto pGetItemUIStart = CGetItemUIStar::Create(fStarRefX, -0.2f);
             pGetItemUIStart->Set_Parent(this);
             pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
-        }
-        {
-            auto pGetItemUIStart = CGetItemUIStar::Create(1.f, -0.2f);
-            pGetItemUIStart->Set_Parent(this);
-            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+
+            fStarRefX += 0.5f;
         }
 
         {
-            auto pGetItemImg = CGetItemUIImg::Create(-1.6f, -0.5f);
-            pGetItemImg->Set_AssetName(L"Tex_PhoneBG");
+            auto pGetItemImg = CGetItemUIImg::Create(-1.65f, -0.5f);
+            pGetItemImg->Set_AssetName(m_sImgAssetName);
             pGetItemImg->Ready_After_Create();
             pGetItemImg->Set_Parent(this);
             pLayer->Add_GameObject(L"GetItemUIImg", pGetItemImg);
         }
     }
-    
     return S_OK;
 }
 
@@ -158,7 +169,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"TITLE", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.388f, 0.133f, 0.0f, 1.0f));
         }
     }
 
@@ -177,7 +188,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"RANK 1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sRank, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
         }
     }
 
@@ -196,7 +207,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"WEIGHT", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sWeight, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
         }
     }
 
