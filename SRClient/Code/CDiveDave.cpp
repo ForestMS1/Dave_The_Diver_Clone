@@ -189,6 +189,17 @@ void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint s
 
 _bool CDiveDave::Check_GlobalState()
 {
+	if (m_fCurStorageWeight > m_fMaxStorageWeight)
+	{
+		m_fSpeed = 3.f;
+		m_bOverloaded = true;
+	}
+	else
+	{
+		m_fSpeed = 10.f;
+		m_bOverloaded = false;
+	}
+
 	if (m_bIsDie)
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::DIE);

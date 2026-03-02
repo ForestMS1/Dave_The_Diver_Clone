@@ -165,8 +165,10 @@ public:
 		Notify(e);
 	}
 
-	_float				Get_Speed()														const{ return m_fSpeed; }
+	_float				Get_Speed()const													{ return m_fSpeed; }
 	void				Set_Speed(_float fSpeed)											{ m_fSpeed = fSpeed; }
+
+	_bool				Is_Overloaded() const												{ return m_bOverloaded; }
 
 
 public:
@@ -237,6 +239,8 @@ private:
 	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
 
 	_bool  m_bSubMarine = false;
+
+	_bool  m_bOverloaded = false;
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;
