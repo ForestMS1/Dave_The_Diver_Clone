@@ -313,6 +313,13 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"OpenShop", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CShipUIMoney::Create(-7.5f, 4.5f);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"CShipUIMoney", pGameObject)))
+		return E_FAIL;
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
