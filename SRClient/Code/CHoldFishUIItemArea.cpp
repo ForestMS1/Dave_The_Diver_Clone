@@ -59,57 +59,10 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
     m_pTransformCom->Set_Pos(0.f, 0.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
-    // 왼쪽 물고기 이미지
-    {
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            //pLayer
-
-            auto pJacksalChock = CHoldFishUIImg::Create(-0.680f, 0.f);
-            pJacksalChock->Set_Scale(0.0175f);
-            pJacksalChock->Set_ViewZ(0.49f);
-            pJacksalChock->Set_AssetName(L"Tex_FishUIJaksalChock");
-            pJacksalChock->Set_Parent(this);
-            pJacksalChock->Ready_After_Create();
-            pLayer->Add_GameObject(L"HoldFishItemImg", pJacksalChock);
-        }
-    }
-
-    // 스타 Tex_GetItemUIStar
-    {
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            {
-                auto pStar = CHoldFishUIImg::Create(-0.57f, -0.03f);
-                pStar->Set_Scale(0.0175f);
-                pStar->Set_ViewZ(0.49f);
-                pStar->Set_AssetName(L"Tex_GetItemUIStar");
-                pStar->Set_Parent(this);
-                pStar->Ready_After_Create();
-                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
-            }
-
-            {
-                auto pStar = CHoldFishUIImg::Create(-0.52f, -0.03f);
-                pStar->Set_Scale(0.0175f);
-                pStar->Set_ViewZ(0.49f);
-                pStar->Set_AssetName(L"Tex_GetItemUIStar");
-                pStar->Set_Parent(this);
-                pStar->Ready_After_Create();
-                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
-            }
-
-            {
-                auto pStar = CHoldFishUIImg::Create(-0.47f, -0.03f);
-                pStar->Set_Scale(0.0175f);
-                pStar->Set_ViewZ(0.49f);
-                pStar->Set_AssetName(L"Tex_GetItemUIStar");
-                pStar->Set_Parent(this);
-                pStar->Ready_After_Create();
-                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
-            }
-        }
-    }
+    m_fViewZ = 0.499;
+    m_iMeatCnt = 1;
+    m_fWeight = 1.f;
+    m_iRank = 1;
 
     // 엣지
     {
@@ -139,6 +92,78 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
     return S_OK;
 }
 
+HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
+{
+
+    // 왼쪽 물고기 이미지
+    {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+        {
+            //pLayer
+
+            auto pJacksalChock = CHoldFishUIImg::Create(-0.685f, 0.f);
+            pJacksalChock->Set_Scale(.0585f);
+            pJacksalChock->Set_ViewZ(.49f);
+            pJacksalChock->Set_AssetName(m_sThumbNailAssetName);
+            pJacksalChock->Set_Parent(this);
+            pJacksalChock->Ready_After_Create();
+            pLayer->Add_GameObject(L"HoldFishItemImg", pJacksalChock);
+        }
+    }
+
+    // 스타 Tex_GetItemUIStar
+    {
+        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+        {
+            float refX = -0.57;
+            for (int i = 0; i < m_iStar; ++i)
+            {
+                auto pStar = CHoldFishUIImg::Create(refX, -0.03f);
+                pStar->Set_Scale(0.0175f);
+                pStar->Set_ViewZ(0.49f);
+                pStar->Set_AssetName(L"Tex_GetItemUIStar");
+                pStar->Set_Parent(this);
+                pStar->Ready_After_Create();
+                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+
+                refX += 0.05;
+            }
+
+
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(-0.57f, -0.03f);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            //}
+
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(-0.52f, -0.03f);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            //}
+
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(-0.47f, -0.03f);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+            //}
+        }
+    }
+    return S_OK;
+}
+
 _int		CHoldFishUIItemArea::Update_GameObject(const _float& fTimeDelta)
 {
     _vec3 vPos;
@@ -156,7 +181,7 @@ _int		CHoldFishUIItemArea::Update_GameObject(const _float& fTimeDelta)
     CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_HoldFishUIItems", m_pAABB);
     m_pAABB->Transform(m_pTransformCom->Get_World());
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
 
     return iExit;
 }
@@ -204,7 +229,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"RANK1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(L"Rank "+::to_wstring(m_iRank), &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -223,7 +248,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"Title", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -242,7 +267,7 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(::to_wstring(m_iMeatCnt), &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 
@@ -261,8 +286,13 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"1.1Kg", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << m_fWeight << L"Kg";
+            std::wstring result = wss.str();
+            pDefFont->Render_Font(result, &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
+
+
     }
 
 }

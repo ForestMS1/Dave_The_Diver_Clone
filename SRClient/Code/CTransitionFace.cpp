@@ -40,7 +40,7 @@ _int		CTransitionFace::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_TRANSITION, this);
     m_fAccDelayTime += fTimeDelta;
     if (m_fAccDelayTime > m_fDelay)
     {

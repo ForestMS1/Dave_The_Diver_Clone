@@ -38,10 +38,13 @@
 #include "CJohn.h"
 
 #include "CFishHQ.h"
-
+#include "CBackToShipUI.h"
 #include "FishInclude.h"
 
 #include "CParticleMgr.h"
+#include "CJohn2.h"
+
+#include "CGameMemMgr.h"
 CDive::CDive()
 	: CScene()
 {
@@ -92,12 +95,36 @@ HRESULT CDive::Ready_Scene()
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+
+
+
+
+	// [LSY] 다이브씬 시작하면 다이브 인포 기록 시작
+	CGameMemMgr::CDiveInfo info{};
+	info.DiveStart();
+	CGameMemMgr::GetInstance()->Get_DiveInfos().push_back(info);
 	return S_OK;
 }
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
 	CColliderMgr::GetInstance()->Set_Render(false);
+
+	if (ImGui::Button("BackToShipUI"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			if (auto pUI = pLayer->Get_GameObjectFirst(L"BackToShipUI"))
+			{
+				pUI->Set_DeadCascade();
+			}
+			else
+			{
+				auto pBackToShipUI = CBackToShipUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"BackToShipUI", pBackToShipUI);
+			}
+		}
+	}
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
@@ -355,10 +382,17 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// 보스
-	pGameObject = CJohn::Create();
+	pGameObject = CJohn::Create(10.f, 10.f, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
+		return E_FAIL;
+
+	// 보스2
+	pGameObject = CJohn2::Create(30.f, 30.f, 0.f);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"John2", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
@@ -513,4 +547,7 @@ void CDive::Free()
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
+
+	// [LSY] 씬이 종료될때 다이브 정보 기록
+	CGameMemMgr::GetInstance()->Get_DiveInfos().back().DiveEnd();
 }

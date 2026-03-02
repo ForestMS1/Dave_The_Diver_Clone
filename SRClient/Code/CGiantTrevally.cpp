@@ -28,6 +28,16 @@ CGiantTrevally::~CGiantTrevally()
 
 HRESULT CGiantTrevally::Ready_GameObject()
 {
+    m_sFishName = L"자이언트 트레발리";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Giant_Trevally";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+    m_fLength = 10.f;
+    m_iMeatCnt = 1;
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GiantTrevally";
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

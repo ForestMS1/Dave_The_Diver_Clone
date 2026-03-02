@@ -34,16 +34,50 @@ void CJohnIdle::Input(const _float& fTimeDelta)
 
 _int CJohnIdle::Update_State(const _float& fTimeDelta)
 {
+	//m_pOwner->EncounterTarget();
+
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);
 
+	m_pOwner->Update_ToTargetDir();
 
-	if (!m_pOwner->Check_TargetInRange())
-	{
-		m_pOwner->Set_State(JOHNSTATE::CHASE);
-	}
+	_vec3 vRotDir;
+	if (m_pOwner->Get_ToTargetDir().x > 0.f)
+		vRotDir = { 0.f, 0.f, 0.f };
 	else
+		vRotDir = { 0.f,-180.f, 0.f };
+	m_pOwner->Set_RotateDir(&vRotDir);
+
+	m_fBreakTime += fTimeDelta;
+
+	if (m_fBreakTime > 3.f)
 	{
-		m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
+		if (!m_pOwner->Check_TargetInRange(8.f))
+		{
+			m_pOwner->Set_State(JOHNSTATE::CHASE);
+		}
+		else
+		{
+			//1페이즈
+			if (m_pOwner->Get_Hp() >= 100.f)
+				m_iRand = (m_iRand + 1) % 2;
+
+			switch (m_iRand)
+			{
+			case 0:
+				// 러쉬 준비
+				m_pOwner->Set_State(JOHNSTATE::MELEEATTACK_READY);
+				break;
+			case 1:
+				// 총쏘기 준비
+				m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
+				break;
+			//case 2:
+			//	m_pOwner->Set_State(JOHNSTATE::SPLASH_MINE);
+			//	break;
+			default:
+				break;
+			}
+		}
 	}
     return 0;
 }
@@ -83,6 +117,8 @@ void CJohnIdle::Clear()
 
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	m_fBreakTime = 0.f;
 }
 
 CJohnIdle* CJohnIdle::Create(CJohn* pOwner)

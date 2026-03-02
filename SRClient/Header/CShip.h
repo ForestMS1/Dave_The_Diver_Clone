@@ -20,5 +20,9 @@ public:
 
 private:
 	void Free() override;
+
+private:
+	bool m_bResultOpend;
+	float m_fResultTimer;
 };
 

@@ -21,6 +21,7 @@ private:
 private:
 	const float m_fPosX;
 	const float m_fPosY;
+	float m_fOffsetY;
 
 private:
 	float m_fDbgX;

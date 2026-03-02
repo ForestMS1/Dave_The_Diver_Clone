@@ -9,6 +9,8 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 #include "CGetItemUI.h"
+#include "CGameMemMgr.h"
+
 CFishGameObject::CFishGameObject()
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -206,10 +208,31 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
             auto pGetItemUI = CGetItemUI::Create(-7.f, 4.f);
-            pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+            pGetItemUI->Set_Title(m_sFishName);
+            pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(m_iRank));
 
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << m_fWeight << L"kg";
+            std::wstring result = wss.str();
+
+            pGetItemUI->Set_Weight(result);
+            pGetItemUI->Set_StarCnt(m_iStar);
+            pGetItemUI->Set_ImgAssetName(m_sThumbNailAssetName);
+            pGetItemUI->Ready_AfterCreate();
+            pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
         }
         Set_DeadCascade();
+        
+        CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
+        fish.fWeight = m_fWeight;
+        fish.iRank = m_iRank;
+        fish.iStar = m_iStar;
+        fish.sFishName = m_sFishName;
+        fish.sThumbNailAssetName = m_sThumbNailAssetName;
+        fish.iMeatCnt = m_iMeatCnt;
+        fish.fLength = m_fLength;
+        fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
+        CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
         return;
     }
 
