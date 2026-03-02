@@ -3,6 +3,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
+#include "CMapMgr.h"
 CBackGroundSea::CBackGroundSea()
 	: CGameObject()
 {
@@ -39,6 +40,7 @@ _int CBackGroundSea::Update_GameObject(const _float& fTimeDelta)
 void CBackGroundSea::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	LightDown();
 }
 
 void CBackGroundSea::Render_GameObject()
@@ -98,4 +100,27 @@ CBackGroundSea* CBackGroundSea::Create()
 void CBackGroundSea::Free()
 {
 	CGameObject::Free();
+}
+
+void CBackGroundSea::LightDown() {
+
+
+
+
+	CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	_vec3 floor{};
+	pDaveTransform->Get_Info(INFO_POS, &floor);
+
+	if (floor.y <= -50.f && m_dark > 0.001f) {
+		m_dark -= 0.01f;
+	}
+	else if (floor.y > -50.f && m_dark <= 0.99f) {
+		m_dark += 0.01f;
+	}
+
+
+
+
+
 }

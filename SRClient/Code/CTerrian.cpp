@@ -363,7 +363,95 @@ HRESULT CTerrian::Ready_GameObject()
             }
 
         }
+        if (m_wsName == L"GLB_Terrian3") {
+            int iCount = 0;
 
+            CGameObject* pGameObject;
+
+            // Coral8
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(8);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+
+            }
+
+            // Coral2
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(2);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+
+            }
+
+            // Coral10
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(10);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+
+            }
+
+            // Coral7
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(7);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+                //------------------------------------------------------------------------------------
+                nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+
+            }
+
+        }
         
 
         
@@ -451,11 +539,25 @@ HRESULT CTerrian::Ready_Material()
     D3DMATERIAL9			tMtrl;
     ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
 
+
+    CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+    CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+    _vec3 floor{};
+    pDaveTransform->Get_Info(INFO_POS, &floor);
+
+    if (floor.y <= -50.f && m_dark > 0.001f) {
+        m_dark -= 0.01f;
+    }
+    else if(floor.y > -50.f && m_dark <= 0.99f){
+        m_dark += 0.01f;
+    }
+
+
     tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    tMtrl.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+    tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-    tMtrl.Emissive = D3DXCOLOR(1.f, 1.f, 1.f, 0.f);
+    tMtrl.Emissive = D3DXCOLOR(m_dark, m_dark, m_dark, 0.f);
     tMtrl.Power = 0.f;
 
     pGraphicDev->SetMaterial(&tMtrl);
@@ -463,7 +565,7 @@ HRESULT CTerrian::Ready_Material()
 
     D3DLIGHT9 light; 
     ZeroMemory(&light, sizeof(D3DLIGHT9));
-    CTransform* pDaveTransform = static_cast<CTransform*>( CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"DiveDave", L"Com_Transform"));
+
     light.Type = D3DLIGHT_POINT; 
     light.Diffuse.r = 1.0f;
     light.Diffuse.g = 1.0f;
