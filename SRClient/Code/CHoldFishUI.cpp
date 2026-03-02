@@ -264,7 +264,7 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
 
     return iExit;
 }
