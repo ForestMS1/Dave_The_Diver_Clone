@@ -54,6 +54,7 @@ HRESULT		CHoldFishUIItemGroup::Ready_GameObject()
 
     m_fDbgX = 0.f;
     m_fDbgY = 0.f;
+    m_fOffsetY = 0.f;
 
 
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
@@ -104,7 +105,7 @@ _int		CHoldFishUIItemGroup::Update_GameObject(const _float& fTimeDelta)
     float fOffsetX = 0.f;
     float fOffsetY = 0.f;
     vPos.x += m_fPosX + m_fDbgX;
-    vPos.y += m_fPosY + m_fDbgY;
+    vPos.y += m_fPosY + m_fDbgY + m_fOffsetY;
 
     m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
@@ -150,6 +151,19 @@ void		CHoldFishUIItemGroup::LateUpdate_GameObject(const _float& fTimeDelta)
 
                 pIntersected->Set_EdgeVisible(true);
             }
+        }
+    }
+
+    if (CDInputMgr::GetInstance()->Mouse_Pressing(DIM_LB))
+    {
+        _long dwMouseMove(0);
+        if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_Y))
+        {
+            //CLog::Debug(L"mouseYMOVE %i \n", dwMouseMove);
+            //_vec3 vUp = { 0.f, 1.f, 0.f };
+            //m_pTransformCom->Move_Pos(&vUp, 1.f, fTimeDelta);
+
+            m_fOffsetY += (float(dwMouseMove) * 0.01f);
         }
     }
 }
