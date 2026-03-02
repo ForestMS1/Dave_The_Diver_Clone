@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CMenuBubble.h"
+#include "CTeaBubble.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
@@ -9,78 +9,55 @@
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
 #include "CGameMemMgr.h"
-CMenuBubble::CMenuBubble()
+CTeaBubble::CTeaBubble()
     : CGameObject()
 {
     m_bRender = true;
+    gettingTea = false;
 
 }
 
-CMenuBubble::CMenuBubble(const CGameObject& rhs)
+CTeaBubble::CTeaBubble(const CGameObject& rhs)
     : CGameObject(rhs)
 {
 }
 
-CMenuBubble::~CMenuBubble()
+CTeaBubble::~CTeaBubble()
 {
 }
 
-void CMenuBubble::Update_ImGui()
+void CTeaBubble::Update_ImGui()
 {
     CGameObject::Update_ImGui();
     ImGui::DragFloat("tempY", &tempY, 0.01f);
 }
 
-HRESULT CMenuBubble::Ready_GameObject()
+HRESULT CTeaBubble::Ready_GameObject()
 {
-    if (FAILED(Ready_Component()))  
+    if (FAILED(Ready_Component()))
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 0.4f,0.4f,1.f };
 
-    vector<CGameMemMgr::FISH*> menu = CGameMemMgr::GetInstance()->getMenu();
-
-    int random = rand() % menu.size();
-    CGameMemMgr::FISH* fish = menu[random];
-    m_sFishName = fish->name;
-    CGameMemMgr::GetInstance()->reduceMenu(fish->name);
-
-    if (m_sFishName == L"ºí·çÁ¾") {
-        m_sTexName = L"Tex_Bluejong";
-    }
-    else if (m_sFishName == L"³ë¶ûÅÁ") {
-        m_sTexName = L"Tex_YellowTang";
-
-    }
-    else if (m_sFishName == L"ÄÚ¹Ý¾ÆÁö") {
-        m_sTexName = L"Tex_Dart";
-
-    }
-    else if (m_sFishName == L"³ë¶û¹é") {
-        m_sTexName = L"Tex_YellowBack";
-
-    }
-    else if (m_sFishName == L"Èòµ¿°¡¸®") {
-        m_sTexName = L"Tex_ClownFish";
-    }
-    CGameMemMgr::GetInstance()->addCookingMenu(m_sFishName);
 
     return S_OK;
 }
 
-_int CMenuBubble::Update_GameObject(const _float& fTimeDelta)
+_int CTeaBubble::Update_GameObject(const _float& fTimeDelta)
 {
- 
- 
+
+
     if (m_bRender) {
-        deltaTime += fTimeDelta;
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-        if (deltaTime >= 3.f) {
-            if (tempY <= 0) {
-                tempY += fTimeDelta * 0.02f;
+        
+        deltaTime += fTimeDelta;
+        if (!gettingTea) {
+            if (deltaTime >= 2.f) {
+                if (tempY <= 0) {
+                    tempY += fTimeDelta * 0.05f;
+                }
             }
         }
-       
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -88,7 +65,7 @@ _int CMenuBubble::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void CMenuBubble::LateUpdate_GameObject(const _float& fTimeDelta)
+void CTeaBubble::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
@@ -104,12 +81,11 @@ void CMenuBubble::LateUpdate_GameObject(const _float& fTimeDelta)
 }
 
 
-void      CMenuBubble::Render_GameObject()
+void      CTeaBubble::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
         pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
-
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
         m_pMenuBubbleTextureCom->Set_Texture(0);
@@ -155,7 +131,7 @@ void      CMenuBubble::Render_GameObject()
         pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
         pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_TeaPicture"))
         {
             if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
             {
@@ -163,17 +139,18 @@ void      CMenuBubble::Render_GameObject()
             }
         }
         _matrix scaleMat = *m_pTransformCom->Get_World();
-        scaleMat.m[0][0] = 0.2f;
-        scaleMat.m[1][1] = 0.2f;
+        scaleMat.m[0][0] = 0.15f;
+        scaleMat.m[1][1] = 0.3f;
         scaleMat.m[2][2] = 1.f;
+       // scaleMat.m[3][1] = 0.003f;
 
         pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
         m_pBufferCom->Render_Buffer();
     }
-  
+
 }
 
-HRESULT CMenuBubble::Ready_Component()
+HRESULT CTeaBubble::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -192,9 +169,9 @@ HRESULT CMenuBubble::Ready_Component()
 }
 
 
-CMenuBubble* CMenuBubble::Create()
+CTeaBubble* CTeaBubble::Create()
 {
-    CMenuBubble* overlay = new CMenuBubble;
+    CTeaBubble* overlay = new CTeaBubble;
 
     if (FAILED(overlay->Ready_GameObject()))
     {
@@ -205,7 +182,7 @@ CMenuBubble* CMenuBubble::Create()
     return overlay;
 }
 
-void CMenuBubble::Free()
+void CTeaBubble::Free()
 {
     CGameObject::Free();
 }

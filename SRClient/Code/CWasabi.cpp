@@ -92,7 +92,7 @@ void CWasabi::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
+        pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
         if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_BrownFrame"))
@@ -328,7 +328,7 @@ void CWasabi::Key_Input()
             CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
             frameMove = true;
             wasabiCreated = true;
-            m_fScale += 0.2f;
+            m_fScale += 0.3f;
             gauge += 3.74f * 0.2f;
             if (gauge >= -0.3f) {
                 static_cast<CWasabiObject*>(wasabi)->gauge = 0.03f;
