@@ -690,6 +690,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"John2Angry", CAssetTexture::Create(s.c_str()));
 	}
 
+	// 잠수함(플레이어)
+	s = L"../Bin/Resource/Texture/Dive_Player/subMarine.png";
+	CAssetMgr::GetInstance()->AddAsset(L"SubMarine", CAssetTexture::Create(s.c_str()));
 
 	// 작살 줄
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))

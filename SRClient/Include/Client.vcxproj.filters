@@ -439,6 +439,9 @@
     <Filter Include="02. GameObject\John2\MeleeAttackReturn">
       <UniqueIdentifier>{1e2f667a-f334-48af-ae33-8c38b98eaa8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\SubMarine">
+      <UniqueIdentifier>{04673cfa-9be8-491c-8ec9-d9fb03b3176c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1119,6 +1122,9 @@
     <ClInclude Include="..\Header\CJohn2MeleeAttackReturn.h">
       <Filter>02. GameObject\John2\MeleeAttackReturn</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveSubMarine.h">
+      <Filter>02. GameObject\DiveDave\State\SubMarine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1777,6 +1783,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohn2MeleeAttackReturn.cpp">
       <Filter>02. GameObject\John2\MeleeAttackReturn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp">
+      <Filter>02. GameObject\DiveDave\State\SubMarine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

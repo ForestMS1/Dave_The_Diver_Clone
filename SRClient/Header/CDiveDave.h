@@ -134,6 +134,10 @@ public:
 	// 전역 상태 바로 진입
 	_bool				Check_GlobalState();
 
+	_bool				Is_SubMarine() const { return m_bSubMarine; }
+	void				Set_SubMarine(_bool isSubMarine) { m_bSubMarine = isSubMarine; }
+	CAABB*				Get_AABB()						{ return m_pAABB; }
+
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
 	void				Set_CanMouseInput(_bool canMouse)									{ m_bCanMouseInput = canMouse; }
@@ -184,6 +188,8 @@ private:
 	_bool	m_bFlip = false; // false면 오른쪽 보는거, true면 왼쪽 보는거
 
 	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
+
+	_bool  m_bSubMarine = true;
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;
