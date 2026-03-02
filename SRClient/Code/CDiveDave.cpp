@@ -50,6 +50,8 @@ void CDiveDave::Start()
 	e.value = (_uint)m_fHp;
 	e.fValue = m_fHp / m_fMaxHp;
 	CDiveDave::Notify(e);
+
+	Change_Weight(0.f);
 }
 
 HRESULT CDiveDave::Ready_GameObject()
