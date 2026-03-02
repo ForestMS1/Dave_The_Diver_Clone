@@ -19,6 +19,7 @@
 #include "CDiveDaveDie.h"
 #include "CParticleMgr.h"
 #include "CDiveDaveSubMarine.h"
+#include "CGameMemMgr.h"
 string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
