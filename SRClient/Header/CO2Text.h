@@ -36,6 +36,7 @@ private:
 	DWORD m_dwOpt;
 	D3DXCOLOR m_color;
 	std::wstring m_sFont;
+	_vec3 m_vPos;
 
 	_uint m_iPlayerHp = 0; // 실제 플레이어의 체력
 
