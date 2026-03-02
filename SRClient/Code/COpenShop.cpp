@@ -8,6 +8,8 @@
 #include "CGraphicDev.h"
 #include "CSushi.h"
 #include "CDInputMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
 COpenShop::COpenShop()
     : CGameObject()
 {
@@ -35,9 +37,17 @@ HRESULT COpenShop::Ready_GameObject()
 
 _int COpenShop::Update_GameObject(const _float& fTimeDelta)
 {
-    if (m_bRender) {
+    if (m_bRender && !openPressed) {
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
         Key_Input();
+    }
+    else if (m_bRender && openPressed) {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+        openTime += fTimeDelta;
+        scale += fTimeDelta;
+        if (openTime > 3.f) {
+            m_bDead = true;
+        }
     }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -59,39 +69,78 @@ void COpenShop::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void COpenShop::Render_GameObject()
 {
-    if (m_bRender) {
+    if (m_bRender && !openPressed) {
+        //LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+        //float alphaRatio = 0.7f;
+        //DWORD tfactor = D3DCOLOR_ARGB(
+        //    (BYTE)(alphaRatio * 255.f),
+        //    255, 255, 255
+        //);
+        //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+        //pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        //pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+        //pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, tfactor);
+
+        //pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+        //m_pTextureCom->Set_Texture(0);
+        //// COLOR = Texture * TFACTOR
+        //pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        //pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+        //pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+
+        //// ALPHA = TextureAlpha * TFACTORAlpha
+        //pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+        //pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+        //pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+        //m_pBufferCom->Render_Buffer();
+
+        //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+        //pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xFFFFFFFF);
+        //pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+        //pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-        float alphaRatio = 0.7f;
-        DWORD tfactor = D3DCOLOR_ARGB(
-            (BYTE)(alphaRatio * 255.f),
-            255, 255, 255
-        );
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-        pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, tfactor);
+
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-        m_pTextureCom->Set_Texture(0);
-        // COLOR = Texture * TFACTOR
-        pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-        pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-        pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
 
-        // ALPHA = TextureAlpha * TFACTORAlpha
-        pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-        pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-        pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+        m_pTextureCom->Set_Texture(0);
+
         m_pBufferCom->Render_Buffer();
 
-        D3DXMATRIX matTmp;
-        D3DXMatrixIdentity(&matTmp);
-        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-        pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xFFFFFFFF);
-        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+        
+
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    }
+    else if (m_bRender && openPressed) {
+
+        LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_OpenImage"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        _matrix matTmp;
+        matTmp = *m_pTransformCom->Get_World();
+        //D3DXMatrixIdentity(&matTmp);
+        matTmp.m[0][0] = scale * 0.1f;
+        matTmp.m[1][1] = scale * 0.1f;
+        matTmp.m[3][0] = 0;
+        matTmp.m[3][1] = 0;
+        matTmp.m[3][2] -= 0.01f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     }
    
@@ -142,6 +191,7 @@ void COpenShop::Key_Input()
     {
         CScene* scene = CManagement::GetInstance()->Get_Scene();
         static_cast<CSushi*>(scene)->Set_Open(true);
-        m_bDead = true;
+        openPressed = true;
+        //m_bDead = true;
     }
 }

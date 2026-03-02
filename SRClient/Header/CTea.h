@@ -9,12 +9,12 @@ namespace Engine
 	class CTransform;
 }
 
-class CWasabi : public CGameObject
+class CTea : public CGameObject
 {
 private:
-	explicit CWasabi();
-	explicit CWasabi(const CGameObject& rhs);
-	virtual ~CWasabi();
+	explicit CTea();
+	explicit CTea(const CGameObject& rhs);
+	virtual ~CTea();
 	void	Update_ImGui() override;
 
 
@@ -31,21 +31,26 @@ private:
 	Engine::CTexture* m_pWasabiTextureCom;
 	Engine::CTransform* m_pTransformCom;
 public:
-	static CWasabi* Create();
+	static CTea* Create();
 
 private:
 	_float			m_fFrame;
 	virtual void Free();
 	void	Key_Input();
-
+	void	Reset_Value();
 
 private:
 	bool	frameMove;
 	bool	wasabiCreated;
-	float   good = 0.f;
-public:
-	float   gauge = -4.04f;
 	float	m_fScale;
-
+	float   resetTime = 0.f;
+	bool	finished = false;
+public:
+	float   gauge = -4.43f;
+	float   potGaugeX = 0.81f;
+	float   potGaugeY = 6.33f;
+	float   angle = 0.f;
+	float   potAngle = 0.f;
+	CGameObject* customer;
 };
 

@@ -33,6 +33,7 @@
 #include "COpenShop.h"
 #include "CGameMemMgr.h"
 #include "CShipUIMoney.h"
+#include "CTea.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -64,7 +65,7 @@ HRESULT CSushi::Ready_Scene()
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);      
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);       
 	//pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);   
-	CColliderMgr::GetInstance()->Set_Render(false);
+	CColliderMgr::GetInstance()->Set_Render(true);
 
 	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_BOLD));
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 16, FW_BOLD));
@@ -102,8 +103,8 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 				return iExit;
 			}
 		}
-		
 	}
+
 	return iExit;
 }
 
@@ -118,6 +119,7 @@ void CSushi::Render_Scene()
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(L"Here is CSushi", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
 }
 
 CSushi* CSushi::Create()
@@ -272,7 +274,7 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		pGameObject = CSpeaker::Create();
 		CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 		pTransform->m_vScale = { 0.4f,0.5f,1.f };
-		pTransform->m_vInfo[INFO_POS] = { -2.5f + (6.7f * i),0.8f,-3.f };
+		pTransform->m_vInfo[INFO_POS] = { -2.5f + (6.7f * i),0.8f,-2.8f };
 		if (nullptr == pGameObject)
 			return E_FAIL;
 
@@ -288,6 +290,13 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	static_cast<CWasabiObject*>(pGameObject)->created = true;
 
+	pGameObject = CTea::Create();
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Tea", pGameObject)))
+		return E_FAIL;
 	pGameObject = COverlay::Create();
 
 	if (nullptr == pGameObject)
@@ -353,32 +362,6 @@ HRESULT CSushi::Ready_UI_Layer(std::wstring_view svLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"Camera", pGameObject)))
 		return E_FAIL;
-
-	//CShipUIMoney
-	//pGameObject = CShipUIMoney::Create(-7.5f, 4.5f);
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pLayer->Add_GameObject(L"ShipUIMoney", pGameObject)))
-	//	return E_FAIL;
-	//pGameObject->Set_ViewZ(5.8f);
-	// 
-	// 
-	// 
-	//_matrix m_matView, m_matProj;
-	//_float m_fFov = D3DXToRadian(60.f);
-	//	_float m_fAspect = (_float)WINCX / WINCY;
-	//	_float m_fNear = 0.1f;
-	//_float m_fFar = 1000.f;
-	//D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
-	////D3DXMatrixOrthoLH(&m_matProj, (_float)WINCX, (_float)WINCY, m_fNear, m_fFar);
-	//D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
-
-	// CPipeline::MakeViewMatrix(&m_matView, &m_vEye, &m_vAt, &m_vUp);
-	// CPipeline::MakeProjMatrix(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
-	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
-	//pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	//pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	pGameObject = CMenuFrame::Create();
 

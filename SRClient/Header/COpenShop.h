@@ -38,5 +38,9 @@ private:
 	virtual void Free();
 	void	Key_Input();
 
+private:
+	float  openTime = 0.f;
+	float  scale = 2.9f;
+	bool   openPressed = false;
 };
 

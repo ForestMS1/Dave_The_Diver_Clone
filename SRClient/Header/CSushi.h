@@ -27,6 +27,10 @@ private:
 	ImGuizmo::OPERATION m_CurrentGizmoOperation;
 	bool	sushiOpen;
 	float   customerSpawn;
+
+public:
+	int CustomerLeave = 0;
 	int   maxCustomer;
+
 };
 

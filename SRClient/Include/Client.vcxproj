@@ -224,6 +224,8 @@
     <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
     <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
+    <ClInclude Include="..\Header\CTea.h" />
+    <ClInclude Include="..\Header\CTeaBubble.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
     <ClInclude Include="..\Header\CUpgradeImage.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
@@ -427,6 +429,8 @@
     <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
+    <ClCompile Include="..\Code\CTea.cpp" />
+    <ClCompile Include="..\Code\CTeaBubble.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />
     <ClCompile Include="..\Code\CUpgradeImage.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
