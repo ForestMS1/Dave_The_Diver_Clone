@@ -159,6 +159,9 @@ private:
 	void				Mouse_Input();
 
 private:
+	void				DoT(const _float fTimeDelta);//Damage Over Time
+
+private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
@@ -196,6 +199,8 @@ private:
 	//수심(Depth)
 	_float m_fMaxDepth = 100.f; // 최대 잠수 가능한 깊이
 	_float m_fCurDepth = 0.f; // 현재 잠수하고 있는 깊이
+
+	_float m_fDoTTime = 0.f;
 
 
 	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
