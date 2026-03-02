@@ -144,6 +144,20 @@ public:
 	void				Set_MaxDepth(_float fMaxDepth)										{ m_fMaxDepth = fMaxDepth; }
 
 
+	void				Change_Depth(_float fDepth)											
+	{ 
+		m_fCurDepth += fDepth;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_DEPTH;
+		e.fValue = m_fCurDepth;
+		Notify(e);
+	}
+
+	_float				Get_Speed()														const{ return m_fSpeed; }
+	void				Set_Speed(_float fSpeed)											{ m_fSpeed = fSpeed; }
+
+
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
 	void				Set_CanMouseInput(_bool canMouse)									{ m_bCanMouseInput = canMouse; }

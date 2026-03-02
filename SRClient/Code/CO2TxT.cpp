@@ -37,7 +37,7 @@ HRESULT      CO2TxT::Ready_GameObject()
 
 _int      CO2TxT::Update_GameObject(const _float& fTimeDelta)
 {
-    /*m_sTxt = to_wstring(m_iPlayerHp);*/
+    /*m_sTxt = to_wstring(m_iPlayerDepth);*/
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
