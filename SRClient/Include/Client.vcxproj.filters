@@ -1176,6 +1176,12 @@
     <ClInclude Include="..\Header\CO2TxT.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWeightIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1866,6 +1872,12 @@
       <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CO2TxT.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightText.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
     </ClCompile>
   </ItemGroup>

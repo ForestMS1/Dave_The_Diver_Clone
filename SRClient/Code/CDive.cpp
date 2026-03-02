@@ -47,6 +47,8 @@
 #include "CGameMemMgr.h"
 #include "CO2TxT.h"
 #include "CDepthText.h"
+#include "CWeightIcon.h"
+#include "CWeightText.h"
 CDive::CDive()
 	: CScene()
 {
@@ -529,6 +531,20 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pDepthText)); // 플레이어 관찰
+
+	pGameObject = CWeightIcon::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WeightIcon", pGameObject)))
+		return E_FAIL;
+
+	CWeightText* pWeightText = CWeightText::Create(0.f, 0.f);
+	if (nullptr == pWeightText)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WeightText", pWeightText)))
+		return E_FAIL;
+	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pWeightText)); // 플레이어 관찰
 
 	// GaugeBar UI
 	pGameObject = CGaugeBarUI::Create();

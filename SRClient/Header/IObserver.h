@@ -7,6 +7,7 @@ enum class EVENTTYPE
 	USE_ITEM,
 	CHANGE_HP,
 	CHANGE_DEPTH,
+	CHANGE_WEIGTH,
 	ATTACK_START,
 	ATTACK_GAUGE_CHANGE,
 	ATTACK_END,
@@ -22,6 +23,7 @@ struct Event
 	EVENTTYPE type = EVENTTYPE::NO_EVENT;
 	int value = 0;
 	float fValue = 0.f;
+	float fValue2 = 0.f;
 	std::wstring_view ItemTextureName;
 };
 

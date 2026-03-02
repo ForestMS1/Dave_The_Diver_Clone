@@ -144,13 +144,24 @@ public:
 	void				Set_MaxDepth(_float fMaxDepth)										{ m_fMaxDepth = fMaxDepth; }
 
 
-	void				Change_Depth(_float fDepth)											
+	void				Change_Depth(_float fChangeDepth)											
 	{ 
-		m_fCurDepth += fDepth;
+		m_fCurDepth += fChangeDepth;
 
 		Event e;
 		e.type = EVENTTYPE::CHANGE_DEPTH;
 		e.fValue = m_fCurDepth;
+		Notify(e);
+	}
+
+	void				Change_Weight(_float fChangeWeight)
+	{
+		m_fCurStorageWeight += fChangeWeight;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_WEIGTH;
+		e.fValue = m_fCurStorageWeight;
+		e.fValue2 = m_fMaxStorageWeight;
 		Notify(e);
 	}
 

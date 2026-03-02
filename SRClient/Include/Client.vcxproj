@@ -258,6 +258,8 @@
     <ClInclude Include="..\Header\CUpgradeImage.h" />
     <ClInclude Include="..\Header\CToSushiUI.h" />
     <ClInclude Include="..\Header\CToSushiUIItem.h" />
+    <ClInclude Include="..\Header\CWeightIcon.h" />
+    <ClInclude Include="..\Header\CWeightText.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
@@ -493,6 +495,8 @@
     <ClCompile Include="..\Code\CUpgradeImage.cpp" />
     <ClCompile Include="..\Code\CToSushiUI.cpp" />
     <ClCompile Include="..\Code\CToSushiUIItem.cpp" />
+    <ClCompile Include="..\Code\CWeightIcon.cpp" />
+    <ClCompile Include="..\Code\CWeightText.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />

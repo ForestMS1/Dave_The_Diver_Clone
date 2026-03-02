@@ -123,6 +123,8 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		m_bIsDie = true;
 	if (ImGui::Button("SubMarine"))
 		m_bSubMarine = !m_bSubMarine;
+	if (ImGui::Button("AddWeight +5"))
+		Change_Weight(5.f);
 
 	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
 	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);

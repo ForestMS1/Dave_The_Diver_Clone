@@ -634,7 +634,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2FrameUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Frame_New.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Stroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Stroke_re.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2StrokeFull", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_Watch_Time_Night_all.png"));
-
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WeightIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Icon_weight.png"));
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
