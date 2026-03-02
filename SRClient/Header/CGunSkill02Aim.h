@@ -1,14 +1,13 @@
 #pragma once
 #include "CBaseState.h"
+class CJohn2;
 
-class CJohn;
-
-class CJohnIdle :
-    public CBaseState<CJohn>
+class CGunSkill02Aim :
+    public CBaseState<CJohn2>
 {
 private:
-    explicit CJohnIdle(CJohn* pOwner);
-    virtual ~CJohnIdle();
+    explicit CGunSkill02Aim(CJohn2* pOwner);
+    virtual ~CGunSkill02Aim();
 
 public:
     void Enter() override;
@@ -20,13 +19,15 @@ public:
     void Clear() override;
 
 public:
-    static CJohnIdle* Create(CJohn* pOwner);
+    static CGunSkill02Aim* Create(CJohn2* pOwner);
 
 private:
-    _float m_fBreakTime = 0.f;
-    _uint  m_iRand = 0;
+    wstring_view m_wsTexName;
+    _float m_fSplashDelay = 0.f;
+    _uint m_iSplashCnt = 0;
+
+    _float m_fChangeAnimTime = 0.f;
 private:
     virtual void Free() override;
-
 };
 

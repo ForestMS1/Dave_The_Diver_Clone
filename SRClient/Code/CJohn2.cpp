@@ -1,60 +1,59 @@
-#include "CJohn.h"
+#include "CJohn2.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
-#include "CJohnIdle.h"
 #include "CSelector.h"
 #include "CSequence.h"
 #include "CActionNode.h"
 #include "CManagement.h"
 #include "CTimerMgr.h"
-#include "CJohnChase.h"
-#include "CJohnAttackReady.h"
-#include "CJohnAttackShoot.h"
 #include "CDiveDaveBullet.h"
-#include "CJohnMeleeAttackReady.h"
-#include "CJohnMeleeAttack.h"
-#include "CJohnIntro.h"
-#include "CJohnGuidedBullet.h"
 #include "CColliderMgr.h"
-#include "CJohnNoStart.h"
-#include "CJohnHit.h"
-#include "CDiveDave.h"
 #include "CJohnMine.h"
-#include "CJohnBattleAngry.h"
+#include "CDiveDave.h"
+#include "CJohn2Idle.h"
+#include "CJohn2NoStart.h"
+#include "CJohn2Intro.h"
 #include "CParticleMgr.h"
-#include "CJohnDie.h"
-#include "CJohnBullet.h"
-CJohn::CJohn(_float x, _float y, _float z)
-	: m_vCreatePos({x,y,z})
+#include "CJohn2AttackReady.h"
+#include "CJohn2Chase.h"
+#include "CJohn2AttackShoot.h"
+#include "CJohnGuidedBullet.h"
+#include "CGunSkill02Aim.h"
+#include "CJohn2MeleeAttackReady.h"
+#include "CJohn2MeleeAttack.h"
+#include "CJohn2MeleeAttackReturn.h"
+
+CJohn2::CJohn2(_float x, _float y, _float z)
+	: m_vCreatePos({ x,y,z })
 {
 }
 
-CJohn::CJohn(const CJohn& rhs)
+CJohn2::CJohn2(const CJohn2& rhs)
 	:CGameObject(rhs)
 {
 }
 
-CJohn::~CJohn()
+CJohn2::~CJohn2()
 {
 }
 
-HRESULT CJohn::Ready_GameObject()
+HRESULT CJohn2::Ready_GameObject()
 {
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 	if (FAILED(Add_State()))
 		return E_FAIL;
 
-	_vec3 vScale = { 0.75f, 0.75f, 1.f };
+	_vec3 vScale = { 1.25f, 1.25f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	Set_State(JOHNSTATE::BEFORE_START);
+	Set_State(JOHN2STATE::BEFORE_START);
 
 	m_pTransformCom->Set_Pos(m_vCreatePos.x, m_vCreatePos.y, m_vCreatePos.z);
 
-	
+
 	//-------------AABB Collider----------------
 	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
 
@@ -65,9 +64,9 @@ HRESULT CJohn::Ready_GameObject()
 	return S_OK;
 }
 
-_int CJohn::Update_GameObject(const _float& fTimeDelta)
+_int CJohn2::Update_GameObject(const _float& fTimeDelta)
 {
-	CJohn::Start();
+	CJohn2::Start();
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	// 충돌체 그룹에 넣어줘야한다.
@@ -87,7 +86,7 @@ _int CJohn::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-void CJohn::LateUpdate_GameObject(const _float& fTimeDelta)
+void CJohn2::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
@@ -95,7 +94,7 @@ void CJohn::LateUpdate_GameObject(const _float& fTimeDelta)
 
 }
 
-void CJohn::Render_GameObject()
+void CJohn2::Render_GameObject()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -110,7 +109,7 @@ void CJohn::Render_GameObject()
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CJohn::Ready_Component()
+HRESULT CJohn2::Ready_Component()
 {
 	// 버퍼
 	if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -123,27 +122,27 @@ HRESULT CJohn::Ready_Component()
 	return S_OK;
 }
 
-HRESULT	CJohn::Add_State()
+HRESULT	CJohn2::Add_State()
 {
-	m_pFSM = CFSM<CJohn, JOHNSTATE>::Create(this);
+	m_pFSM = CFSM<CJohn2, JOHN2STATE>::Create(this);
 	if (m_pFSM == nullptr)
 		return E_FAIL;
 
-	m_pFSM->Add_State<CJohnIdle>(JOHNSTATE::IDLE);
-	m_pFSM->Add_State<CJohnChase>(JOHNSTATE::CHASE);
-	m_pFSM->Add_State<CJohnAttackReady>(JOHNSTATE::ATTACK_READY);
-	m_pFSM->Add_State<CJohnAttackShoot>(JOHNSTATE::SHOT);
-	m_pFSM->Add_State<CJohnMeleeAttackReady>(JOHNSTATE::MELEEATTACK_READY);
-	m_pFSM->Add_State<CJohnMeleeAttack>(JOHNSTATE::MELEEATTACK);
-	m_pFSM->Add_State<CJohnNoStart>(JOHNSTATE::BEFORE_START);
-	m_pFSM->Add_State<CJohnHit>(JOHNSTATE::HIT);
-	m_pFSM->Add_State<CJohnBattleAngry>(JOHNSTATE::SPLASH_MINE);
-	m_pFSM->Add_State<CJohnDie>(JOHNSTATE::DIE);
+	m_pFSM->Add_State<CJohn2NoStart>(JOHN2STATE::BEFORE_START);
+	m_pFSM->Add_State<CJohn2Idle>(JOHN2STATE::IDLE);
+	m_pFSM->Add_State<CJohn2Chase>(JOHN2STATE::CHASE);
+	m_pFSM->Add_State<CJohn2AttackReady>(JOHN2STATE::ATTACK_READY);
+	m_pFSM->Add_State<CJohn2AttackShoot>(JOHN2STATE::SHOT);
+	m_pFSM->Add_State<CJohn2MeleeAttackReady>(JOHN2STATE::MELEEATTACK_READY);
+	m_pFSM->Add_State<CJohn2MeleeAttack>(JOHN2STATE::MELEEATTACK);
+	m_pFSM->Add_State<CJohn2MeleeAttackReturn>(JOHN2STATE::MELEEATTACK_RETURN);
+	//m_pFSM->Add_State<CJohn2Hit>(JOHNSTATE::HIT);
+	m_pFSM->Add_State<CGunSkill02Aim>(JOHN2STATE::SPLASH_READY);
 
 	return S_OK;
 }
 
-void CJohn::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop)
+void CJohn2::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop)
 {
 	m_fFrame += fSpeed * fTimeDelta;
 	if (loop)
@@ -158,27 +157,27 @@ void CJohn::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size,
 	}
 }
 
-CJohn* CJohn::Create(_float x, _float y, _float z)
+CJohn2* CJohn2::Create(_float x, _float y, _float z)
 {
-	CJohn* pBoss = new CJohn(x,y,z);
+	CJohn2* pBoss = new CJohn2(x, y, z);
 	if (FAILED(pBoss->Ready_GameObject()))
 	{
 		Safe_Release(pBoss);
-		MSG_BOX("CJohn Create Failed");
+		MSG_BOX("CJohn2 Create Failed");
 		return nullptr;
 	}
 	return pBoss;
 
 }
 
-void CJohn::Free()
+void CJohn2::Free()
 {
 	Safe_Release(m_pAABB);
 	Safe_Release(m_pFSM);
 	CGameObject::Free();
 }
 
-void CJohn::Start()
+void CJohn2::Start()
 {
 	if (m_bInitComplete)
 		return;
@@ -188,7 +187,7 @@ void CJohn::Start()
 		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"DiveDave", L"Com_Transform"));
 }
 
-_bool CJohn::Check_TargetInRange(_float fRange)
+_bool CJohn2::Check_TargetInRange(_float fRange)
 {
 	// 범위 내에 들어왔음
 	if (D3DXVec3Length(&m_vDirToTarget) < fRange)
@@ -197,7 +196,7 @@ _bool CJohn::Check_TargetInRange(_float fRange)
 	return false;
 }
 
-void CJohn::Update_ToTargetDir()
+void CJohn2::Update_ToTargetDir()
 {
 	if (m_pTargetTransform == nullptr)
 		return;
@@ -208,30 +207,30 @@ void CJohn::Update_ToTargetDir()
 	m_vDirToTarget = vTargetPos - vCurPos;
 }
 
-void CJohn::Shot_Bullet()
+void CJohn2::Shot_Bullet()
 {
 	_vec3 vCurPos, vNorToTarget;
 	m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
 	D3DXVec3Normalize(&vNorToTarget, &m_vDirToTarget);
 
 	_vec3 vAxisX = { 1.f, 0.f, 0.f };
-	
+
 	_float dot = vAxisX.x * vNorToTarget.x + vAxisX.y * vNorToTarget.y;
 	_float cross = vAxisX.x * vNorToTarget.y - vAxisX.y * vNorToTarget.x;
 	_float fAngle = D3DXToDegree(atan2(cross, dot));
 
-	CJohnBullet* pBullet = CJohnBullet::Create(vCurPos, vNorToTarget, fAngle);
-	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnBullet", pBullet);
+	CJohnGuidedBullet* pBullet = CJohnGuidedBullet::Create(vCurPos, vNorToTarget, fAngle, this);
+	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnGuidedBullet", pBullet);
 }
 
-void CJohn::Splash_Mine()
+void CJohn2::Splash_Mine()
 {
 	//_vec3 vCurPos, vNorToTarget;
 	//m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
 	//D3DXVec3Normalize(&vNorToTarget, &m_vDirToTarget);
 
 
-	//CJohnMine* pBullet = CJohnMine::Create(vCurPos, vNorToTarget);
+	//CJohn2Mine* pBullet = CJohn2Mine::Create(vCurPos, vNorToTarget);
 	//CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"JohnMine", pBullet);
 
 	_vec3 vCurPos;
@@ -242,21 +241,21 @@ void CJohn::Splash_Mine()
 	for (int i = 0; i < iBulletCount; ++i)
 	{
 		float fAngle = ((float)rand() / RAND_MAX) * D3DX_PI * 2.f;
-
+	
 		_vec3 vDir;
 		vDir.x = cosf(fAngle);
 		vDir.y = sinf(fAngle);
 		vDir.z = 0.f;
-
+	
 		D3DXVec3Normalize(&vDir, &vDir);
-
+	
 		CJohnMine* pBullet = CJohnMine::Create(vCurPos, vDir);
 		CManagement::GetInstance()->Get_Scene()
 			->Get_Layer(L"0_GameLogic_Layer")
 			->Add_GameObject(L"JohnMine", pBullet);
 	}
 }
-_bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
+_bool CJohn2::Rush_ToTarget(const _float& fTimeDelta)
 {
 	_vec3 vDir;
 	D3DXVec3Normalize(&vDir, &m_vDirToTarget);
@@ -273,8 +272,8 @@ _bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
 	}
 
 
-	m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
-	m_fAccRushDist += fTimeDelta * 5.f;
+	m_pTransformCom->Move_Pos(&vDir, 20.f, fTimeDelta);
+	m_fAccRushDist += fTimeDelta * 20.f;
 
 	if (m_fAccRushDist > 7.f)
 	{
@@ -285,17 +284,17 @@ _bool CJohn::Rush_ToTarget(const _float& fTimeDelta)
 	return false;
 }
 
-void CJohn::EncounterTarget()
+void CJohn2::EncounterTarget()
 {
 	if (m_bStartCombat)
 		return;
 	m_bStartCombat = true;
 
-	CJohnIntro* pIntro = CJohnIntro::Create();
-	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Add_GameObject(L"JW_Intro", pIntro);
+	CJohn2Intro* pIntro = CJohn2Intro::Create();
+	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Add_GameObject(L"JW2_Intro", pIntro);
 }
 
-void CJohn::CollisionWithTarget()
+void CJohn2::CollisionWithTarget()
 {
 	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_DiveDaveWithItemBox"))
 	{
@@ -312,17 +311,17 @@ void CJohn::CollisionWithTarget()
 	}
 }
 
-_bool CJohn::Check_GlobalState()
+_bool CJohn2::Check_GlobalState()
 {
 	if (m_bIsDie)
 	{
-		m_pFSM->Set_State(JOHNSTATE::DIE);
+		m_pFSM->Set_State(JOHN2STATE::DIE);
 		return true;
 	}
 
 	if (m_bIsHit)
 	{
-		m_pFSM->Set_State(JOHNSTATE::HIT);
+		m_pFSM->Set_State(JOHN2STATE::HIT);
 
 		return true;
 	}
@@ -330,7 +329,7 @@ _bool CJohn::Check_GlobalState()
 	return false;
 }
 
-void CJohn::Move(_vec3* vDir, const _float& fTimeDelta)
+void CJohn2::Move(_vec3* vDir, const _float& fTimeDelta)
 {
 	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
 	// 테스트

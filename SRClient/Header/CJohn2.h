@@ -3,13 +3,13 @@
 #include "CBaseState.h"
 #include "CAABB.h"
 #include "CFSM.h"
-
-class CJohn : public CGameObject
+class CJohn2 :
+    public CGameObject
 {
 private:
-	explicit			CJohn(_float x, _float y, _float z);
-	explicit			CJohn(const CJohn& rhs);
-	virtual				~CJohn();
+	explicit			CJohn2(_float x, _float y, _float z);
+	explicit			CJohn2(const CJohn2& rhs);
+	virtual				~CJohn2();
 
 public:
 	void				Start(); // 유니티 Start함수 처럼 써보기
@@ -19,10 +19,10 @@ public:
 	void				Render_GameObject() override;
 
 public:
-	JOHNSTATE			Get_State()									{ return m_pFSM->Get_State(); }
-	void				Set_State(JOHNSTATE state)					{ m_pFSM->Set_State(state); }
+	JOHN2STATE			Get_State() { return m_pFSM->Get_State(); }
+	void				Set_State(JOHN2STATE state) { m_pFSM->Set_State(state); }
 
-	void				Multiply_Scale(_vec3* vScale)				{ m_pTransformCom->Multiply_Scale(vScale); }
+	void				Multiply_Scale(_vec3* vScale) { m_pTransformCom->Multiply_Scale(vScale); }
 	void				Move(_vec3* vDir, const _float& fTimeDelta);
 	void				Set_RotateDir(_vec3* vDir)
 	{
@@ -31,16 +31,16 @@ public:
 		m_pTransformCom->m_vAngle.z = vDir->z;
 	}
 
-	void				Get_Pos(_vec3* vPos)						{ return m_pTransformCom->Get_Info(INFO_POS, vPos); }
-	void				Get_TargetPos(_vec3* vTargetPos)			{ if (m_pTargetTransform == nullptr) return; m_pTargetTransform->Get_Info(INFO_POS, vTargetPos); }
+	void				Get_Pos(_vec3* vPos) { return m_pTransformCom->Get_Info(INFO_POS, vPos); }
+	void				Get_TargetPos(_vec3* vTargetPos) { if (m_pTargetTransform == nullptr) return; m_pTargetTransform->Get_Info(INFO_POS, vTargetPos); }
 
-	_float				Get_Frame()									{ return m_fFrame; };
-	void				Init_Frame()								{ m_fFrame = 0.f; }
+	_float				Get_Frame() { return m_fFrame; };
+	void				Init_Frame() { m_fFrame = 0.f; }
 	void				AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size, _bool loop = true);
 
 	// 어느쪽 보고있는지
-	_bool				Is_Flip()															const	{ return m_bFlip; }
-	void				Set_Flip(_bool isFlip)														{ m_bFlip = isFlip; }
+	_bool				Is_Flip()															const { return m_bFlip; }
+	void				Set_Flip(_bool isFlip) { m_bFlip = isFlip; }
 
 	// 전역 상태 바로 진입
 	_bool				Check_GlobalState();
@@ -50,7 +50,7 @@ public:
 			return;
 
 		// 데미지가 일정 수준 이상일떄만 Hit 상태로 넘어간다
-		if(fDamage > 30.f)
+		if (fDamage > 30.f)
 			m_bIsHit = true;
 
 		m_fHp -= fDamage;
@@ -77,7 +77,6 @@ public:
 	void				Splash_Mine();
 
 	_float				Get_Hp() const { return m_fHp; }
-	_float				Get_Speed() const { return m_fSpeed; }
 
 	//플레이어랑 처음 마주쳐서 인트로
 	void				EncounterTarget();
@@ -113,14 +112,14 @@ private:
 	_vec3   m_vDirToTarget;
 
 	_float	m_fAccRushDist = 0.f;
-	_float m_fSpeed = 10.f;
 
+	_float m_fSpeed = 10.f;
 private:
-	CFSM<CJohn, JOHNSTATE>* m_pFSM = nullptr;
+	CFSM<CJohn2, JOHN2STATE>* m_pFSM = nullptr;
 	CTransform* m_pTargetTransform = nullptr;
 
 public:
-	static CJohn* Create(_float x = 0, _float y = 0, _float z = 0);
+	static CJohn2* Create(_float x = 0, _float y = 0, _float z = 0);
 
 private:
 	virtual void Free() override;

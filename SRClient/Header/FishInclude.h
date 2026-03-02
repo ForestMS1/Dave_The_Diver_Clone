@@ -19,6 +19,7 @@
 #include "CLayer.h"
 
 #include "CFishAABBCollider.h"
+#include "CLayer.h"
 
 
 namespace Fish

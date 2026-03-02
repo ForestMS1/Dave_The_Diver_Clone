@@ -4,6 +4,7 @@
 #include "CCollisionMgr.h"
 #include "CDiveDave.h"
 #include "CFishGameObject.h"
+#include "CJohn.h"
 CProjectileFire::CProjectileFire(CHarpoonProjectile* pOwner)
     : CBaseState<CHarpoonProjectile>(pOwner)
 {
@@ -113,6 +114,21 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 					//_vec3 vRes = vJaksalPos - vDavePos;
 					pFish->QTE(&vJaksalPos, &vDavePos);
 					break;
+				}
+			}
+		}
+	}
+	// [KDS] 작살하고 보스
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_JohnWithGuided"))
+	{
+		for (auto& pCollider : *pColliders)
+		{
+			if (pProjectile->m_pAABB->Intersect(pCollider))
+			{
+				if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
+				{
+					reinterpret_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
+					pProjectile->Set_State(PROJECTILESTATE::RETURN);
 				}
 			}
 		}

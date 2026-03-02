@@ -1,22 +1,22 @@
-#include "CJohnIdle.h"
+#include "CJohn2Idle.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CGraphicDev.h"
-#include "CJohn.h"
-CJohnIdle::CJohnIdle(CJohn* pOwner)
-    : CBaseState<CJohn>(pOwner)
+#include "CJohn2.h"
+CJohn2Idle::CJohn2Idle(CJohn2* pOwner)
+	: CBaseState<CJohn2>(pOwner)
 {
 }
 
-CJohnIdle::~CJohnIdle()
+CJohn2Idle::~CJohn2Idle()
 {
 }
 
-void CJohnIdle::Enter()
+void CJohn2Idle::Enter()
 {
 	m_pOwner->Init_Frame();
 
-	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnIdle")->at(0))->Get_ImgInfo();
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"John2Idle")->at(0))->Get_ImgInfo();
 	imgInfo.Width;
 
 	_float fWidth = imgInfo.Width;;
@@ -28,11 +28,11 @@ void CJohnIdle::Enter()
 	m_pOwner->Multiply_Scale(&vScale);
 }
 
-void CJohnIdle::Input(const _float& fTimeDelta)
+void CJohn2Idle::Input(const _float& fTimeDelta)
 {
 }
 
-_int CJohnIdle::Update_State(const _float& fTimeDelta)
+_int CJohn2Idle::Update_State(const _float& fTimeDelta)
 {
 	//m_pOwner->EncounterTarget();
 
@@ -53,44 +53,45 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 	{
 		if (!m_pOwner->Check_TargetInRange(8.f))
 		{
-			m_pOwner->Set_State(JOHNSTATE::CHASE);
+			m_pOwner->Set_State(JOHN2STATE::CHASE);
 		}
 		else
 		{
 			//1페이즈
 			if (m_pOwner->Get_Hp() >= 100.f)
 				m_iRand = (m_iRand + 1) % 2;
-
+			else // 2페이즈 (체력 50%이하)
+				m_iRand = ((m_iRand + 1) % 3) + 1;
 			switch (m_iRand)
 			{
 			case 0:
 				// 러쉬 준비
-				m_pOwner->Set_State(JOHNSTATE::MELEEATTACK_READY);
+				m_pOwner->Set_State(JOHN2STATE::MELEEATTACK_READY);
 				break;
 			case 1:
 				// 총쏘기 준비
-				m_pOwner->Set_State(JOHNSTATE::ATTACK_READY);
+				m_pOwner->Set_State(JOHN2STATE::ATTACK_READY);
 				break;
-			//case 2:
-			//	m_pOwner->Set_State(JOHNSTATE::SPLASH_MINE);
-			//	break;
+			case 2:
+				m_pOwner->Set_State(JOHN2STATE::SPLASH_READY);
+				break;
 			default:
 				break;
 			}
 		}
 	}
-    return 0;
+	return 0;
 }
 
-void CJohnIdle::LateUpdate_State(const _float& fTimeDelta)
+void CJohn2Idle::LateUpdate_State(const _float& fTimeDelta)
 {
 }
 
-void CJohnIdle::Render_State()
+void CJohn2Idle::Render_State()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-	if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnIdle"))
+	if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"John2Idle"))
 	{
 		_uint iFrame = (_uint)m_pOwner->Get_Frame();
 		if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(iFrame)))
@@ -100,14 +101,14 @@ void CJohnIdle::Render_State()
 	}
 }
 
-void CJohnIdle::Exit()
+void CJohn2Idle::Exit()
 {
 	Clear();
 }
 
-void CJohnIdle::Clear()
+void CJohn2Idle::Clear()
 {
-	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnIdle")->at(0))->Get_ImgInfo();
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"John2Idle")->at(0))->Get_ImgInfo();
 	imgInfo.Width;
 
 	_float fWidth = imgInfo.Width;;
@@ -121,13 +122,13 @@ void CJohnIdle::Clear()
 	m_fBreakTime = 0.f;
 }
 
-CJohnIdle* CJohnIdle::Create(CJohn* pOwner)
+CJohn2Idle* CJohn2Idle::Create(CJohn2* pOwner)
 {
-    CJohnIdle* pState = new CJohnIdle(pOwner);
+	CJohn2Idle* pState = new CJohn2Idle(pOwner);
 
-    return pState;
+	return pState;
 }
 
-void CJohnIdle::Free()
+void CJohn2Idle::Free()
 {
 }

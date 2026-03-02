@@ -1,14 +1,13 @@
 #pragma once
 #include "CBaseState.h"
-
 class CJohn;
 
-class CJohnIdle :
+class CJohnNoStart :
     public CBaseState<CJohn>
 {
 private:
-    explicit CJohnIdle(CJohn* pOwner);
-    virtual ~CJohnIdle();
+    explicit CJohnNoStart(CJohn* pOwner);
+    virtual ~CJohnNoStart();
 
 public:
     void Enter() override;
@@ -20,13 +19,8 @@ public:
     void Clear() override;
 
 public:
-    static CJohnIdle* Create(CJohn* pOwner);
-
-private:
-    _float m_fBreakTime = 0.f;
-    _uint  m_iRand = 0;
+    static CJohnNoStart* Create(CJohn* pOwner);
 private:
     virtual void Free() override;
-
 };
 

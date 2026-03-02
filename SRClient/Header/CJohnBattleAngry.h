@@ -1,14 +1,13 @@
 #pragma once
 #include "CBaseState.h"
-
 class CJohn;
 
-class CJohnIdle :
+class CJohnBattleAngry :
     public CBaseState<CJohn>
 {
 private:
-    explicit CJohnIdle(CJohn* pOwner);
-    virtual ~CJohnIdle();
+    explicit CJohnBattleAngry(CJohn* pOwner);
+    virtual ~CJohnBattleAngry();
 
 public:
     void Enter() override;
@@ -20,13 +19,13 @@ public:
     void Clear() override;
 
 public:
-    static CJohnIdle* Create(CJohn* pOwner);
+    static CJohnBattleAngry* Create(CJohn* pOwner);
 
 private:
-    _float m_fBreakTime = 0.f;
-    _uint  m_iRand = 0;
+    wstring_view m_wsTexName;
+    _float m_fSplashDelay = 0.f;
+    _uint m_iSplashCnt = 0;
 private:
     virtual void Free() override;
-
 };
 
