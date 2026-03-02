@@ -6,7 +6,6 @@
 #include "CDiveDaveOpen.h"
 #include "CDiveDavePickUp.h"
 #include "CSubject.h"
-
 enum class EQUIPPED
 {
 	//MELEE, // 근접무기 -> 기본 장착
@@ -134,9 +133,43 @@ public:
 	// 전역 상태 바로 진입
 	_bool				Check_GlobalState();
 
-	_bool				Is_SubMarine() const { return m_bSubMarine; }
-	void				Set_SubMarine(_bool isSubMarine) { m_bSubMarine = isSubMarine; }
-	CAABB*				Get_AABB()						{ return m_pAABB; }
+	_bool				Is_SubMarine() const												{ return m_bSubMarine; }
+	void				Set_SubMarine(_bool isSubMarine)									{ m_bSubMarine = isSubMarine; }
+	CAABB*				Get_AABB()															{ return m_pAABB; }
+
+
+	// GameMemMgr에서 사용할 Setter
+	void				Set_MaxHp(_float fMaxHp)											{ m_fMaxHp = fMaxHp; }
+	void				Set_MaxStorageWeight(_float fMaxStorageWeight)						{ m_fMaxStorageWeight = fMaxStorageWeight; }
+	void				Set_MaxDepth(_float fMaxDepth)										{ m_fMaxDepth = fMaxDepth; }
+
+
+	void				Change_Depth(_float fChangeDepth)											
+	{ 
+		m_fCurDepth += fChangeDepth;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_DEPTH;
+		e.fValue = m_fCurDepth;
+		Notify(e);
+	}
+
+	void				Change_Weight(_float fChangeWeight)
+	{
+		m_fCurStorageWeight += fChangeWeight;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_WEIGTH;
+		e.fValue = m_fCurStorageWeight;
+		e.fValue2 = m_fMaxStorageWeight;
+		Notify(e);
+	}
+
+	_float				Get_Speed()const													{ return m_fSpeed; }
+	void				Set_Speed(_float fSpeed)											{ m_fSpeed = fSpeed; }
+
+	_bool				Is_Overloaded() const												{ return m_bOverloaded; }
+
 
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
@@ -151,6 +184,9 @@ private:
 private:
 	void				Key_Input();
 	void				Mouse_Input();
+
+private:
+	void				DoT(const _float fTimeDelta);//Damage Over Time
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -179,8 +215,21 @@ private:
 	_bool m_bIsOnItemBox = false;
 	_bool m_bIsOnItem = false;
 
+	//체력(O2)
 	_float m_fMaxHp = 100.f;
-	_float m_fHp = 50.f;
+	_float m_fHp = m_fMaxHp;
+
+	//무게
+	_float m_fMaxStorageWeight = 20.f; // 최대 수용 가능한 무게
+	_float m_fCurStorageWeight = 0.f; // 현재 들고있는 무게
+
+	//수심(Depth)
+	_float m_fMaxDepth = 100.f; // 최대 잠수 가능한 깊이
+	_float m_fCurDepth = 0.f; // 현재 잠수하고 있는 깊이
+
+	_float m_fDoTTime = 0.f;
+
+
 	_float m_fIvncTime = 0.f; // 피격 당한 후 시간
 	_bool  m_bIsHit = false;
 	_bool  m_bIsDie = false; // CGameObject의 m_bDead와 다른 용도!
@@ -189,7 +238,9 @@ private:
 
 	_bool	m_bInitComplete = false; // 유니티 Start함수 처럼 써보기
 
-	_bool  m_bSubMarine = true;
+	_bool  m_bSubMarine = false;
+
+	_bool  m_bOverloaded = false;
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;

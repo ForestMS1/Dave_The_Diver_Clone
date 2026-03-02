@@ -251,6 +251,8 @@
     <ClInclude Include="..\Header\CJohnNoStart.h" />
     <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
     <ClInclude Include="..\Header\CLeah.h" />
+    <ClInclude Include="..\Header\CO2TxT.h" />
+    <ClInclude Include="..\Header\COverloadedIcon.h" />
     <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTea.h" />
@@ -259,6 +261,8 @@
     <ClInclude Include="..\Header\CUpgradeImage.h" />
     <ClInclude Include="..\Header\CToSushiUI.h" />
     <ClInclude Include="..\Header\CToSushiUIItem.h" />
+    <ClInclude Include="..\Header\CWeightIcon.h" />
+    <ClInclude Include="..\Header\CWeightText.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
@@ -487,6 +491,8 @@
     <ClCompile Include="..\Code\CJohnNoStart.cpp" />
     <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
     <ClCompile Include="..\Code\CLeah.cpp" />
+    <ClCompile Include="..\Code\CO2TxT.cpp" />
+    <ClCompile Include="..\Code\COverloadedIcon.cpp" />
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTea.cpp" />
@@ -495,6 +501,8 @@
     <ClCompile Include="..\Code\CUpgradeImage.cpp" />
     <ClCompile Include="..\Code\CToSushiUI.cpp" />
     <ClCompile Include="..\Code\CToSushiUIItem.cpp" />
+    <ClCompile Include="..\Code\CWeightIcon.cpp" />
+    <ClCompile Include="..\Code\CWeightText.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />

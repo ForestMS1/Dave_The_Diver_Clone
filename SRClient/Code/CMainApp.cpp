@@ -254,6 +254,18 @@ HRESULT CMainApp::Load_PermanentAsset()
 	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL_Size10", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 ¸Ç¹ßÀÇÃ»Ãá L", 0, 10, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL_Size10");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 50, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm_Size35", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 35, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm_Size35");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm_Size30", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 30, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm_Size30");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm_Size20", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm_Size20");
+
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"¹ÙÅÁ", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 

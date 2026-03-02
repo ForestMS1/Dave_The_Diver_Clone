@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CO2Text.h"
+#include "CWeightText.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -9,7 +9,7 @@
 #include "CManagement.h"
 #include "CO2UI.h"
 
-CO2Text::CO2Text(float fPosX, float fPosY)
+CWeightText::CWeightText(float fPosX, float fPosY)
     : IObserver()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
@@ -20,29 +20,32 @@ CO2Text::CO2Text(float fPosX, float fPosY)
 {
 }
 
-CO2Text::~CO2Text()
+CWeightText::~CWeightText()
 {
 }
 
 
-HRESULT      CO2Text::Ready_GameObject()
+HRESULT      CWeightText::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
-    m_sFont = L"Font_Snowstorm";
+    m_sFont = L"Font_Snowstorm_Size20";
     return S_OK;
 }
 
-_int      CO2Text::Update_GameObject(const _float& fTimeDelta)
+_int      CWeightText::Update_GameObject(const _float& fTimeDelta)
 {
-    m_sTxt = to_wstring(m_iPlayerHp);
+    wchar_t szBuffer[64] = {};
+    swprintf(szBuffer, 64, L"%.1f/%.1fkg", m_fPlayerCurWeight, m_fPlayerMaxWeight);
+    m_sTxt = szBuffer;
+
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     auto a = dynamic_cast<CO2UI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"O2UI"));
     a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
-    float fOffsetX = -65.f;
+    float fOffsetX = 90.f;
     float fOffsetY = -20.f;
     m_vPos.x += fOffsetX;
     m_vPos.y += fOffsetY;
@@ -52,12 +55,12 @@ _int      CO2Text::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void      CO2Text::LateUpdate_GameObject(const _float& fTimeDelta)
+void      CWeightText::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void      CO2Text::Render_GameObject()
+void      CWeightText::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -72,7 +75,7 @@ void      CO2Text::Render_GameObject()
 
 }
 
-HRESULT         CO2Text::Ready_Component()
+HRESULT         CWeightText::Ready_Component()
 {
 
     // Æ®·£½ºÆû
@@ -81,31 +84,32 @@ HRESULT         CO2Text::Ready_Component()
 }
 
 
-CO2Text* CO2Text::Create(float fPosX, float fPosY)
+CWeightText* CWeightText::Create(float fPosX, float fPosY)
 {
-    CO2Text* pWeaponImg = new CO2Text{ fPosX , fPosY };
+    CWeightText* pWeaponImg = new CWeightText{ fPosX , fPosY };
 
     if (FAILED(pWeaponImg->Ready_GameObject()))
     {
         Safe_Release(pWeaponImg);
-        MSG_BOX("CO2Text Create Failed");
+        MSG_BOX("CWeightText Create Failed");
         return nullptr;
     }
 
     return pWeaponImg;
 }
 
-void CO2Text::Free()
+void CWeightText::Free()
 {
     CGameObject::Free();
 }
 
-void CO2Text::OnNotify(const Event& e)
+void CWeightText::OnNotify(const Event& e)
 {
     switch (e.type)
     {
-    case EVENTTYPE::CHANGE_HP:
-        m_iPlayerHp = e.value;
+    case EVENTTYPE::CHANGE_WEIGTH:
+        m_fPlayerCurWeight = e.fValue;
+        m_fPlayerMaxWeight = e.fValue2;
         break;
     default:
         break;

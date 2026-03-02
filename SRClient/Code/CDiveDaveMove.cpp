@@ -70,7 +70,6 @@ void CDiveDaveMove::Input(const _float& fTimeDelta)
 		static_cast<CDiveDave*>(m_pOwner)->Set_State(DIVEDAVESTATE::IDLE);
 		m_eDir = DIR_END;
 	}
-
 }
 
 _int CDiveDaveMove::Update_State(const _float& fTimeDelta)
@@ -186,6 +185,18 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 		break;
 	default:
 		break;
+	}
+
+	//수심 증감
+	if (vDir.y > 0)
+	{
+		_float fSpeed = m_pOwner->Get_Speed();
+		m_pOwner->Change_Depth(-0.01f * fSpeed);
+	}
+	else if (vDir.y < 0)
+	{
+		_float fSpeed = m_pOwner->Get_Speed();
+		m_pOwner->Change_Depth(0.01f * fSpeed);
 	}
 }
 

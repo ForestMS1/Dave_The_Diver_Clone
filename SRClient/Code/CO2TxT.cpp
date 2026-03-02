@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CO2Text.h"
+#include "CO2TxT.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -9,7 +9,7 @@
 #include "CManagement.h"
 #include "CO2UI.h"
 
-CO2Text::CO2Text(float fPosX, float fPosY)
+CO2TxT::CO2TxT(float fPosX, float fPosY)
     : IObserver()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
@@ -20,22 +20,24 @@ CO2Text::CO2Text(float fPosX, float fPosY)
 {
 }
 
-CO2Text::~CO2Text()
+CO2TxT::~CO2TxT()
 {
 }
 
 
-HRESULT      CO2Text::Ready_GameObject()
+HRESULT      CO2TxT::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
-    m_sFont = L"Font_Snowstorm";
+    m_sFont = L"Font_Snowstorm_Size30";
+
+    m_sTxt = L"O2";
     return S_OK;
 }
 
-_int      CO2Text::Update_GameObject(const _float& fTimeDelta)
+_int      CO2TxT::Update_GameObject(const _float& fTimeDelta)
 {
-    m_sTxt = to_wstring(m_iPlayerHp);
+    /*m_sTxt = to_wstring(m_iPlayerDepth);*/
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -43,7 +45,7 @@ _int      CO2Text::Update_GameObject(const _float& fTimeDelta)
     a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
     float fOffsetX = -65.f;
-    float fOffsetY = -20.f;
+    float fOffsetY = 20.f;
     m_vPos.x += fOffsetX;
     m_vPos.y += fOffsetY;
 
@@ -52,12 +54,12 @@ _int      CO2Text::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void      CO2Text::LateUpdate_GameObject(const _float& fTimeDelta)
+void      CO2TxT::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void      CO2Text::Render_GameObject()
+void      CO2TxT::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -72,7 +74,7 @@ void      CO2Text::Render_GameObject()
 
 }
 
-HRESULT         CO2Text::Ready_Component()
+HRESULT         CO2TxT::Ready_Component()
 {
 
     // Æ®·£½ºÆû
@@ -81,26 +83,26 @@ HRESULT         CO2Text::Ready_Component()
 }
 
 
-CO2Text* CO2Text::Create(float fPosX, float fPosY)
+CO2TxT* CO2TxT::Create(float fPosX, float fPosY)
 {
-    CO2Text* pWeaponImg = new CO2Text{ fPosX , fPosY };
+    CO2TxT* pWeaponImg = new CO2TxT{ fPosX , fPosY };
 
     if (FAILED(pWeaponImg->Ready_GameObject()))
     {
         Safe_Release(pWeaponImg);
-        MSG_BOX("CO2Text Create Failed");
+        MSG_BOX("CO2TxT Create Failed");
         return nullptr;
     }
 
     return pWeaponImg;
 }
 
-void CO2Text::Free()
+void CO2TxT::Free()
 {
     CGameObject::Free();
 }
 
-void CO2Text::OnNotify(const Event& e)
+void CO2TxT::OnNotify(const Event& e)
 {
     switch (e.type)
     {

@@ -466,6 +466,9 @@
     <Filter Include="01. Scene\03. Sushi\Tea">
       <UniqueIdentifier>{7e6db575-4963-410e-a255-28416fdcc750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon">
+      <UniqueIdentifier>{809434f3-c0e3-4fbe-a130-cbb728a2cf14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1182,6 +1185,18 @@
     <ClInclude Include="..\Header\CTeaBubble.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CO2TxT.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COverloadedIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1876,6 +1891,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTeaBubble.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2TxT.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightText.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COverloadedIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
