@@ -14,6 +14,8 @@ private:
 	explicit CSushiDave();
 	explicit CSushiDave(const CGameObject& rhs);
 	virtual ~CSushiDave();
+	void	Update_ImGui() override;
+
 
 public:
 	enum State { IDLE,WALK, RUN,TIRED, SUSHI_IDLE, SUSHI_WALK, SUSHI_RUN, SUSHI_TIRED, STATE_END };
@@ -25,6 +27,7 @@ public:
 
 private:
 	HRESULT			Ready_Component();
+	virtual void Free();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -51,7 +54,10 @@ private:
 	CAABB*			m_pAABB;
 	wstring			m_sSushiName;
 	wstring			m_sTexName;
-	virtual void Free();
+	float			m_fGauge= -0.49;
+	float			tiredTime;
+public:
+	bool			makingWasabi = false;
 
 };
 

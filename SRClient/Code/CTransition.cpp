@@ -1088,9 +1088,6 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeConfirm", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeConfirm.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeConfirmTex", Engine::CTexture::Create(L"Tex_upgradeConfirm"))))
 		return E_FAIL;
-	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeMark", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_RecipeUpMark_Big.png"));
-	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeMarkTex", Engine::CTexture::Create(L"Tex_upgradeMark"))))
-		return E_FAIL;
 
 	//영업 시작
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_OpenShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/openShop.png"));
@@ -1127,12 +1124,24 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiGaugeBar", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiGaugeBar.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiGaugeStancil", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiGaugeStancil.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/WasabiIcon.png"));
-
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UpgradeArrow", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeArrow1.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UpgradeArrow", Engine::CTexture::Create(L"Tex_UpgradeArrow"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Wasabi", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/wasabi.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Good", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/good.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Orange", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Orange.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_BrownFrame", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/brownFrame.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Coin", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Customer/Effect/Coin16.png"));
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WasabiObject", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/wasabiObject.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WasabiObjectTex", Engine::CTexture::Create(L"Tex_WasabiObject"))))
 		return E_FAIL;
+
+	//플레이어 게이지
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveGauge", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Dave/DashGauge.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveGaugeStancil", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/Dave/DashGaugeStancil.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Purple", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Purple.png"));
+
 	CAssetMgr::GetInstance()->LoadAsset();
 //#ifdef _DEBUG
 //	Sleep(500);

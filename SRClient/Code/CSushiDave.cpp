@@ -26,6 +26,7 @@ CSushiDave::CSushiDave()
     curDir = LEFT;
     prevDir = LEFT;
     m_sSushiName = L"";
+    tiredTime = 0.f;
 }
 
 CSushiDave::CSushiDave(const CGameObject& rhs)
@@ -50,7 +51,11 @@ HRESULT CSushiDave::Ready_GameObject()
 
     return S_OK;
 }
-
+void CSushiDave::Update_ImGui()
+{
+    CGameObject::Update_ImGui();
+    ImGui::DragFloat("tempY", &m_fGauge, 0.01f);
+}
 _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -83,7 +88,34 @@ _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
         break;
     }
 
- 
+    //게이지가 바닥이면
+    if (m_fGauge <= -0.79f) {
+        tiredTime += fTimeDelta;
+        //2초가 지나기 전까지
+        if (tiredTime < 2.f) {
+            m_fGauge = -0.79f;
+        }
+        else {
+            m_fGauge += 0.3f * fTimeDelta * 0.3f;
+
+        }
+    }
+    else {
+        tiredTime = 0.f;
+        if(curState == SUSHI_RUN || curState == RUN){
+            m_fGauge -= 0.3f * fTimeDelta * 0.3f;
+        }
+        else {
+            m_fGauge += 0.3f * fTimeDelta * 0.3f;
+            if (m_fGauge > -0.49) {
+                m_fGauge = -0.49;
+            }
+        }
+    }
+    
+    Key_Input(fTimeDelta);
+
+
 
     return iExit;
 }
@@ -96,7 +128,6 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
     m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
     Compute_ViewZ(&vPos);
-    Key_Input(fTimeDelta);
     if (curDir != prevDir) {
         m_pTransformCom->Rotation(ROT_Y, 180.f);
     }
@@ -142,10 +173,17 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
     }
     if (m_pAABB->Intersect(wasabi->front()))
     {
-        if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE)) {
+        CGameObject* wasabiObject = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
+        float percent = static_cast<CWasabiObject*>(wasabiObject)->percent;
+        if (static_cast<CWasabiObject*>(wasabiObject)->percent < 99.7f) {
             CGameObject* wasabi1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Wasabi");
-            static_cast<CWasabi*>(wasabi1)->Set_Render(true);
+            if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE)) {
+                static_cast<CWasabi*>(wasabi1)->gauge = -4.04 + percent * 0.01f * 3.74f;
+                static_cast<CWasabi*>(wasabi1)->Set_Render(true);
+                makingWasabi = true;
+            }
         }
+     
 
     }
     if (coliders != nullptr) {
@@ -221,8 +259,8 @@ void CSushiDave::Render_GameObject()
         }
 
         _matrix scaleMat = *m_pTransformCom->Get_World();
-        scaleMat.m[0][0] = 0.3f;
-        scaleMat.m[1][1] = 0.3f;
+        scaleMat.m[0][0] = 0.1f;
+        scaleMat.m[1][1] = 0.8f;
         scaleMat.m[3][1] += 1.f;
 
         pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
@@ -241,6 +279,67 @@ void CSushiDave::Render_GameObject()
         pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
         m_pBufferCom->Render_Buffer();
     }
+    // 게이지
+    _matrix gauge = *m_pTransformCom->Get_World();
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveGauge"))
+    {
+        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        {
+            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+        }
+    }
+
+    gauge.m[0][0] = 0.15f;
+    gauge.m[1][1] = 0.15f;
+    gauge.m[3][0] += 0.45f;
+    gauge.m[3][1] += 0.75f;
+
+    pGraphicDev->SetTransform(D3DTS_WORLD, &gauge);
+    m_pBufferCom->Render_Buffer();
+
+    pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+    pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+    pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
+    pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
+
+    pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 1); // 알파가 1 이상인 것만 통과
+    pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+    // 2. 색상과 깊이 기록은 끔 (틀만 잡기 위함)
+    pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
+    pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveGaugeStancil"))
+    {
+        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        {
+            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+        }
+    }
+    m_pBufferCom->Render_Buffer();
+
+    pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
+
+    // 2. 스텐실 판정: 기록된 '1' 영역에만 그리기
+    pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+    pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+
+
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Purple"))
+    {
+        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        {
+            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+        }
+    }
+    gauge.m[3][1] = m_fGauge;
+    pGraphicDev->SetTransform(D3DTS_WORLD, &gauge);
+    m_pBufferCom->Render_Buffer();
+
+
+    pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+    pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
@@ -281,82 +380,111 @@ HRESULT CSushiDave::Ready_Component()
 void CSushiDave::Key_Input(const _float& fTimeDelta)
 {
     bool bMove = false;
-  
-    if (!holdingSushi) {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
-        {
-            _vec3 left = { -1,0,0 };
-            curState = WALK;
-            curDir = LEFT;
-            m_pTransformCom->Move_Pos(&left, 2.f, fTimeDelta);
-            bMove = true;
-        }
-
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
-        {
-            _vec3 right = { 1,0,0 };
-            curState = WALK;
-            curDir = RIGHT;
-            m_pTransformCom->Move_Pos(&right, 2.f, fTimeDelta);
-            bMove = true;
-        }
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-        {
-            curState = RUN;
+    if (!makingWasabi) {
+        if (!holdingSushi) {
             if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
             {
                 _vec3 left = { -1,0,0 };
                 curDir = LEFT;
-                m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
+                if (m_fGauge <= -0.79f) {
+                    curState = TIRED;
+                    m_pTransformCom->Move_Pos(&left, 0.3f, fTimeDelta);
+
+                }
+                else {
+                    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+                    {
+                        curState = RUN;
+                        m_pTransformCom->Move_Pos(&left, 1.5f, fTimeDelta);
+                        bMove = true;
+                        return;
+                    }
+                    curState = WALK;
+                    m_pTransformCom->Move_Pos(&left, 0.8f, fTimeDelta);
+                }
                 bMove = true;
+                return;
             }
+        
+           
+
             if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
             {
                 _vec3 right = { 1,0,0 };
                 curDir = RIGHT;
-                m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
+
+                if (m_fGauge <= -0.79f) {
+                    curState = TIRED;
+                    m_pTransformCom->Move_Pos(&right, 0.3f, fTimeDelta);
+
+                }
+                else {
+                    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+                    {
+                        curState = RUN;
+                        m_pTransformCom->Move_Pos(&right, 1.5f, fTimeDelta);
+                        bMove = true;
+                        return;
+                    }
+                    curState = WALK;
+                    m_pTransformCom->Move_Pos(&right, 0.8f, fTimeDelta);
+                }
                 bMove = true;
+                return;
             }
         }
-    }
-    else {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
-        {
-            _vec3 left = { -1,0,0 };
-            curState = SUSHI_WALK;
-            curDir = LEFT;
-            m_pTransformCom->Move_Pos(&left, 2.f, fTimeDelta);
-            bMove = true;
-        }
-
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
-        {
-            _vec3 right = { 1,0,0 };
-            curState = SUSHI_WALK;
-            curDir = RIGHT;
-            m_pTransformCom->Move_Pos(&right, 2.f, fTimeDelta);
-            bMove = true;
-        }
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-        {
-            curState = SUSHI_RUN;
+        else {
             if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_A) && m_pTransformCom->m_vInfo[INFO_POS].x > -4.2f)
             {
                 _vec3 left = { -1,0,0 };
                 curDir = LEFT;
-                m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
+                if (m_fGauge <= -0.79f) {
+                    curState = SUSHI_TIRED;
+                    m_pTransformCom->Move_Pos(&left, 0.3f, fTimeDelta);
+
+                }
+                else {
+                    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+                    {
+                        curState = SUSHI_RUN;
+                        m_pTransformCom->Move_Pos(&left, 1.5f, fTimeDelta);
+                        bMove = true;
+                        return;
+                    }
+                    curState = SUSHI_WALK;
+                    m_pTransformCom->Move_Pos(&left, 0.8f, fTimeDelta);
+                }
                 bMove = true;
+                return;
             }
+          
+
             if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_D) && m_pTransformCom->m_vInfo[INFO_POS].x < 6.5f)
             {
                 _vec3 right = { 1,0,0 };
                 curDir = RIGHT;
-                m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
+
+                if (m_fGauge <= -0.79f) {
+                    curState = SUSHI_TIRED;
+                    m_pTransformCom->Move_Pos(&right, 0.3f, fTimeDelta);
+
+                }
+                else {
+                    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+                    {
+                        curState = SUSHI_RUN;
+                        m_pTransformCom->Move_Pos(&right, 1.5f, fTimeDelta);
+                        bMove = true;
+                        return;
+                    }
+                    curState = SUSHI_WALK;
+                    m_pTransformCom->Move_Pos(&right, 0.8f, fTimeDelta);
+                }
                 bMove = true;
+                return;
             }
         }
     }
-   
     if (!bMove) {
         if (holdingSushi) {
             curState = SUSHI_IDLE;

@@ -15,6 +15,7 @@ CWasabiObject::CWasabiObject()
 {
 
     created = false;
+    percent = 100.f;
 }
 
 CWasabiObject::CWasabiObject(const CGameObject& rhs)
@@ -59,6 +60,7 @@ _int CWasabiObject::Update_GameObject(const _float& fTimeDelta)
     //vPos.m[3][2] = 0;
     //vPos.m[3][0] -= 0.3f;
     m_pAABB->Transform(&vPos);
+    percent = (gauge + 0.9f) * 100 / 0.93f;
     return iExit;
 }
 
@@ -134,7 +136,7 @@ void CWasabiObject::Render_GameObject()
     pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
     pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Red"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Orange"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {

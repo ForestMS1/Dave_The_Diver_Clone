@@ -36,18 +36,19 @@ private:
 	CAABB* m_pAABB;
 	_vec3 screen;
 	_vec3 screen2;
+	CGameObject* upgrade;
 
 public:
 	static CSushiFrame* Create(wstring fishName);
 	bool m_bSelected;
 	bool m_bImageCreated;
 	bool ConfirmOpened;
+	bool m_bUpgradeImageCreated;
 	wstring fishName;
 	wstring m_sQuanity;
 	wstring m_sLevel;
 	float m_fOffsetX = 0.f;
 	float m_fOffsetY = 0.f;
-	
 private:
 	virtual void Free();
 	

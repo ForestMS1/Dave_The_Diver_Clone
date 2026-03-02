@@ -16,6 +16,7 @@
 #include "CDevilScorpionFish.h"
 #include "CAsianSheepshead.h"
 #include "CGreyTriggerfish.h"
+#include "CLayer.h"
 
 #include "CFishAABBCollider.h"
 #include "CLayer.h"

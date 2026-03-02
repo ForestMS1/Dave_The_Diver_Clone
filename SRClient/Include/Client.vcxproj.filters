@@ -1053,6 +1053,9 @@
     <ClInclude Include="..\Header\CWasabiObject.h">
       <Filter>01. Scene\03. Sushi\Wasabi</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUpgradeImage.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CJohnMeleeAttackReady.h">
       <Filter>02. GameObject\John\MeleeAttackReady</Filter>
     </ClInclude>
@@ -1708,6 +1711,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CWasabiObject.cpp">
       <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUpgradeImage.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CJohnMeleeAttackReady.cpp">
       <Filter>02. GameObject\John\MeleeAttackReady</Filter>

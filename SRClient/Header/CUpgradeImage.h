@@ -1,7 +1,6 @@
 
 #pragma once
 #include "CGameObject.h"
-#include "CAABB.h"
 
 namespace Engine
 {
@@ -10,13 +9,12 @@ namespace Engine
 	class CTransform;
 }
 
-class CWasabiObject : public CGameObject
+class CUpgradeImage : public CGameObject
 {
 private:
-	explicit CWasabiObject();
-	explicit CWasabiObject(const CGameObject& rhs);
-	virtual ~CWasabiObject();
-	void	Update_ImGui() override;
+	explicit CUpgradeImage();
+	explicit CUpgradeImage(const CGameObject& rhs);
+	virtual ~CUpgradeImage();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -33,13 +31,10 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	static CWasabiObject* Create();
-	bool  created;
-	float gauge = 0.03f;
-	float percent;
+	static CUpgradeImage* Create();
+
 private:
 	virtual void Free();
-	CAABB* m_pAABB;
-	
+
 };
 
