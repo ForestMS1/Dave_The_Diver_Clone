@@ -45,6 +45,7 @@
 #include "CJohn2.h"
 
 #include "CGameMemMgr.h"
+#include "CO2TxT.h"
 CDive::CDive()
 	: CScene()
 {
@@ -503,6 +504,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"O2StrokeUI", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	CO2TxT* pO2TxT = CO2TxT::Create(0.f, 0.f);
+	if (nullptr == pO2TxT)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CurO2Text", pO2TxT)))
+		return E_FAIL;
+	pO2TxT->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 
 	CO2Text* pO2Text = CO2Text::Create(0.f, 0.f);
 	if (nullptr == pO2Text)

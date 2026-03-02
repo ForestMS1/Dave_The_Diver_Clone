@@ -251,6 +251,7 @@
     <ClInclude Include="..\Header\CJohnNoStart.h" />
     <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
     <ClInclude Include="..\Header\CLeah.h" />
+    <ClInclude Include="..\Header\CO2TxT.h" />
     <ClInclude Include="..\Header\CRedLionfish.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
@@ -485,6 +486,7 @@
     <ClCompile Include="..\Code\CJohnNoStart.cpp" />
     <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
     <ClCompile Include="..\Code\CLeah.cpp" />
+    <ClCompile Include="..\Code\CO2TxT.cpp" />
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />

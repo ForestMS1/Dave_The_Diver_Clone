@@ -1173,6 +1173,9 @@
     <ClInclude Include="..\Header\CBanchoGood.h">
       <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CO2TxT.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1861,6 +1864,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBanchoGood.cpp">
       <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2TxT.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
