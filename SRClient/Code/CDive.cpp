@@ -91,7 +91,8 @@ HRESULT CDive::Ready_Scene()
 	CMapMgr::GetInstance()->Load();
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
-	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	CParticleMgr::GetInstance()->Set_ParicleOn(true);
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_SEABUBBLE, {0.f,0.f,1.f}, 40);
 	return S_OK;
 }
 
@@ -130,8 +131,8 @@ void CDive::Render_Scene()
 
 
 
-	
-	
+
+
 }
 
 
@@ -342,13 +343,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian6", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian6_Collision");
+	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian7_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian7", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian6_Collision");
+	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian8_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
@@ -510,6 +511,7 @@ CDive* CDive::Create()
 void CDive::Free()
 {
 	CScene::Free();
+
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();

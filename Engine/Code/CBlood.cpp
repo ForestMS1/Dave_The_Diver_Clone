@@ -13,9 +13,7 @@ CBlood::~CBlood()
 
 HRESULT CBlood::Ready_Buffer()
 {
-	if (FAILED(Ready_Texture(L"Tex_Blood", L"../Bin/Resource/Texture/Particle/Blood", 2))) {
-		return E_FAIL;
-	}
+
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;

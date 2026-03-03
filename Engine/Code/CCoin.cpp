@@ -13,9 +13,7 @@ CCoin::~CCoin()
 
 HRESULT CCoin::Ready_Buffer()
 {
-	if (FAILED(Ready_Texture(L"Tex_Coin", L"../Bin/Resource/Texture/Particle/Coin",1))) {
-		return E_FAIL;
-	}
+
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;

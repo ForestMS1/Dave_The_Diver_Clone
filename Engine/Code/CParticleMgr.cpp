@@ -10,7 +10,7 @@
 #include "CSeaBubble.h"
 #include "CBlood.h"
 #include "CCoin.h"
-
+#include "CMapMgr.h"
 IMPLEMENT_SINGLETON(CParticleMgr)
 
 CParticleMgr::CParticleMgr(): m_pCamera(nullptr), m_pPlayer(nullptr)
@@ -61,12 +61,15 @@ void CParticleMgr::Update_Particle(float fTimeDelta)
 
 void CParticleMgr::Render_Particle()
 {
-	for (auto particle : particles) {
-		if (particle) {
+	if (m_bRenderOn) {
+		for (auto particle : particles) {
+			if (particle) {
 
-			particle->render();
+				particle->render();
+			}
 		}
 	}
+
 }
 
 void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles)
@@ -88,7 +91,11 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 			particles[PARTICLE_COIN]->addParticle(origin, { 1,1,1,1 });
 		}
 		break;
-
+	case PARTICLE_SEABUBBLE:
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[PARTICLE_SEABUBBLE]->addParticle(origin, { 1,1,1,0 });
+		}
+		break;
 
 	
 	break;
@@ -119,11 +126,31 @@ void CParticleMgr::spwan_Weather(WEATHERTYPE type, _vec3 origin, int numofPariti
 void CParticleMgr::Clear_Particle()
 {
 	for (auto particle : particles) {
-		if (particle) {
-			Safe_Delete(particle);
+		if (particle != nullptr) {
+			list<Attribute>* atrributes = particle->GetAtrribute();
+
+			for (auto i = atrributes->begin(); i != atrributes->end(); i++) {
+				const float gravity = 1.2f;
+				i->_isAlive = false;
+			}
+
+
+			auto j = atrributes->begin();
+
+			while (j != atrributes->end()) {
+				if (j->_isAlive == false) {
+					j = atrributes->erase(j);
+				}
+				else {
+					j++;
+				}
+			}
 		}
+		
 	}
-	particles.clear();
+
+
+	m_bRenderOn = false;
 }
 
 void CParticleMgr::Free()

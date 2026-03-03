@@ -24,6 +24,7 @@
 #include "CTransitionTxt.h"
 #include "CTransitionFace.h"
 #include "CAssetSpine.h"
+#include "CParticleMgr.h"
 
  bool CTransition::s_LogoAssetLoaded = false;
  bool CTransition::s_ShipAssetLoaded = false;
@@ -232,7 +233,6 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
 
 
-	
 	
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"))))
@@ -583,7 +583,34 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))
 		return E_FAIL;
 
+	// Particle
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Bubble" + ::to_wstring(i) + L".png";
+	
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Bubble", CAssetTexture::Create(s.c_str()));
+	}
 
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/SeaBubble" + ::to_wstring(0) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SeaBubble", CAssetTexture::Create(s.c_str()));
+	}
+
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Coin" + ::to_wstring(0) + L".png";
+	
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Coin", CAssetTexture::Create(s.c_str()));
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Blood" + ::to_wstring(i) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Blood", CAssetTexture::Create(s.c_str()));
+	}
+
+	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG
 	//Sleep(500);
