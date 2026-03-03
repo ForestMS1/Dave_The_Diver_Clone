@@ -469,6 +469,9 @@
     <Filter Include="02. GameObject\DiveItemDescUI">
       <UniqueIdentifier>{6814c4d9-df3e-49a6-9e68-fb4bc76364ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveGetWeaponUI">
+      <UniqueIdentifier>{40064acd-31f7-475b-9be9-924f4b2772ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1191,6 +1194,12 @@
     <ClInclude Include="..\Header\CDiveItemDescUI.h">
       <Filter>02. GameObject\DiveItemDescUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUI.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUIImg.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1891,6 +1900,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDiveItemDescUI.cpp">
       <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUIImg.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

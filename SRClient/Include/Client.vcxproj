@@ -174,6 +174,8 @@
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
+    <ClInclude Include="..\Header\CDiveGetWeaponUI.h" />
+    <ClInclude Include="..\Header\CDiveGetWeaponUIImg.h" />
     <ClInclude Include="..\Header\CDiveItemDescUI.h" />
     <ClInclude Include="..\Header\CGunSkill02Aim.h" />
     <ClInclude Include="..\Header\CBackToShipUI.h" />
@@ -409,6 +411,8 @@
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
+    <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp" />
+    <ClCompile Include="..\Code\CDiveGetWeaponUIImg.cpp" />
     <ClCompile Include="..\Code\CDiveItemDescUI.cpp" />
     <ClCompile Include="..\Code\CGunSkill02Aim.cpp" />
     <ClCompile Include="..\Code\CBackToShipUI.cpp" />

@@ -263,6 +263,12 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	// dive get weapon ui
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveGetWeaponUI", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/GetWeaponUI.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveGetWeaponUI");
+	}
+
 	// dive item desc ui
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveItemDescUI", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/DiveItemDescUI.png"));
