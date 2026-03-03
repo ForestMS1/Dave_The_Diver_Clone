@@ -36,7 +36,7 @@ public:
 	void			Set_DeadCascade() { CHelper::TreeLevelTraversal(this, [](CGameObject* pObj) { pObj->Set_Dead(); }); }
 	void			Set_Dead() { m_bDead = true; }
 	bool			Get_Dead() const { return m_bDead; }
-	void			Set_Tag(std::wstring_view svTag) { m_sTag; }
+	void			Set_Tag(std::wstring_view svTag) { m_sTag = svTag; }
 	wstring_view	Get_Tag() const { return m_sTag; }
 	void			Set_Render(bool flag) { m_bRender = flag; }
 	bool			Get_Render()const { return m_bRender; }

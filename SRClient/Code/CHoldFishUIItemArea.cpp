@@ -70,6 +70,8 @@ HRESULT		CHoldFishUIItemArea::Ready_GameObject()
         {
             //pLayer
             auto pEdge = CHoldFishUIImg::Create(0.f, 0.f);
+            pEdge->Set_Tag(L"HoldFishUIEdge");
+            pEdge->Set_Render(false);
             pEdge->Set_Scale(0.071f);
             pEdge->Set_ViewZ(999.f);
             pEdge->Set_AssetName(L"Tex_HoldFishItemAreaEdge");
@@ -102,6 +104,7 @@ HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
             //pLayer
 
             auto pJacksalChock = CHoldFishUIImg::Create(-0.685f, 0.f);
+            pJacksalChock->Set_Render(false);
             pJacksalChock->Set_Scale(.0585f);
             pJacksalChock->Set_ViewZ(.49f);
             pJacksalChock->Set_AssetName(m_sThumbNailAssetName);
@@ -119,6 +122,7 @@ HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
             for (int i = 0; i < m_iStar; ++i)
             {
                 auto pStar = CHoldFishUIImg::Create(refX, -0.03f);
+                pStar->Set_Render(false);
                 pStar->Set_Scale(0.0175f);
                 pStar->Set_ViewZ(0.49f);
                 pStar->Set_AssetName(L"Tex_GetItemUIStar");
@@ -181,7 +185,7 @@ _int		CHoldFishUIItemArea::Update_GameObject(const _float& fTimeDelta)
     CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_HoldFishUIItems", m_pAABB);
     m_pAABB->Transform(m_pTransformCom->Get_World());
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
+    //CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
 
     return iExit;
 }
@@ -314,13 +318,21 @@ void CHoldFishUIItemArea::Set_EdgeVisible(bool bVisible)
     {
         if (bVisible)
         {
-            m_pEdgeImg->Set_ViewZ(0.48f);
+            //m_pEdgeImg->Set_ViewZ(0.48f);
             m_bEdgeVisible = true;
+            _vec3 vPos;
+            //auto pTrs = m_pEdgeImg->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+            //pTrs->Get_Info(INFO_POS,&vPos);
+            //pTrs->Set_Pos(0.925f, vPos.y, vPos.z);
         }
         else
         {
-            m_pEdgeImg->Set_ViewZ(999.f);
+            //m_pEdgeImg->Set_ViewZ(999.f);
             m_bEdgeVisible = false;
+            _vec3 vPos;
+            //auto pTrs = m_pEdgeImg->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+            //pTrs->Get_Info(INFO_POS, &vPos);
+            //pTrs->Set_Pos(0.925f + 2.f, vPos.y, vPos.z);
         }
     }
 }
