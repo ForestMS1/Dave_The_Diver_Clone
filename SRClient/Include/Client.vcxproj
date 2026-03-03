@@ -173,6 +173,7 @@
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
+    <ClInclude Include="..\Header\CDiveDaveInitStart.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
     <ClInclude Include="..\Header\CGunSkill02Aim.h" />
     <ClInclude Include="..\Header\CBackToShipUI.h" />
@@ -410,6 +411,7 @@
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveInitStart.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
     <ClCompile Include="..\Code\CGunSkill02Aim.cpp" />
     <ClCompile Include="..\Code\CBackToShipUI.cpp" />

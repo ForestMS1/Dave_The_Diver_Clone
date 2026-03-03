@@ -20,7 +20,8 @@
 #include "CParticleMgr.h"
 #include "CDiveDaveSubMarine.h"
 #include "CGameMemMgr.h"
-string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "HIT", "DIE" };
+#include "CDiveDaveInitStart.h"
+string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "INIT_START", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
@@ -65,8 +66,8 @@ HRESULT CDiveDave::Ready_GameObject()
 	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	//Set_State(DIVEDAVESTATE::IDLE);
-	Set_State(DIVEDAVESTATE::SUBMARINE);
+
+	Set_State(DIVEDAVESTATE::INIT_START);
 
 	//-------------AABB Collider With ItemBox----------------
 	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
@@ -284,6 +285,8 @@ HRESULT	CDiveDave::Add_State()
 	m_pFSM->Add_State<CDiveDaveHit>(DIVEDAVESTATE::HIT);
 	m_pFSM->Add_State<CDiveDaveDie>(DIVEDAVESTATE::DIE);
 	m_pFSM->Add_State<CDiveDaveSubMarine>(DIVEDAVESTATE::SUBMARINE);
+	m_pFSM->Add_State<CDiveDaveInitStart>(DIVEDAVESTATE::INIT_START);
+	
 
 	//m_mapState.insert({ DIVEDAVESTATE::IDLE, CDiveDaveIdle::Create(this) });
 	//m_mapState.insert({ DIVEDAVESTATE::MOVE, CDiveDaveMove::Create(this) });

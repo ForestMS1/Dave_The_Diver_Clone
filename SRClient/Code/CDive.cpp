@@ -85,8 +85,8 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 	CCameraMgr::GetInstance()->Set_Camera(L"ChaseToPlayerCam", pCamera);
 	CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
-	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-	static_cast<CDiveDaveCam*>(pCamera)->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
+	//CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	//static_cast<CDiveDaveCam*>(pCamera)->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
 
 	// 개발용 FreeCam
 	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
@@ -387,17 +387,10 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// 보스
-	pGameObject = CJohn::Create(10.f, 10.f, 0.f);
+	pGameObject = CJohn::Create(15.f, 10.f, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
-		return E_FAIL;
-
-	// 보스2
-	pGameObject = CJohn2::Create(30.f, 30.f, 0.f);
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"John2", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
