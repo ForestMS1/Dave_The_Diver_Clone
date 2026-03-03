@@ -2,6 +2,8 @@
 #include "CColliderMgr.h"
 #include "CCollisionMgr.h"
 #include "CDiveDave.h"
+#include "CManagement.h"
+#include "CDiveItemDescUI.h"
 
 CDiveItem::CDiveItem(_vec3 vOriginPos)
     : m_vOriginPos(vOriginPos)
@@ -55,6 +57,19 @@ void CDiveItem::StartDrop(const _float& fTimeDelta)
     }
 }
 
+// [LSY] derive 들은 이거 호출
+void CDiveItem::GetItem()
+{
+    if (m_eCurState == ITEMSTATE::DROPPED)
+        m_eCurState = ITEMSTATE::ACQUIRED;
+
+    // 아이템 먹으면 desc ui 끄기
+    if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+    {
+        pUI->Set_Render(false);
+    }
+}
+
 void CDiveItem::Collision_With_DiveDave()
 {
 	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
@@ -85,6 +100,17 @@ void	CDiveItem::OnCollisionEnter(CCollider* pCollider)
     CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
     pDiveDave->Set_IsOnItem(true);
     pDiveDave->Set_CurOnItem(this);
+
+    // [LSY] 아이템이 다 떨어졌을때 desc ui를 활성화 한다.
+    if (m_eCurState == ITEMSTATE::DROPPED)
+    {
+        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+        {
+            pUI->Set_Title(L"아이템명");
+            pUI->Set_Desc(L"아이템설명^^");
+            pUI->Set_Render(true);
+        }
+    }
 }
 void	CDiveItem::OnCollisionStay(CCollider* pCollider)
 {
@@ -96,6 +122,12 @@ void	CDiveItem::OnCollisionExit(CCollider* pCollider)
     CDiveDave* pDiveDave = static_cast<CDiveDave*>(pCollider->Get_VoidPtr());
     pDiveDave->Set_IsOnItem(false);
     pDiveDave->Set_CurOnItem(nullptr);
+
+    // [LSY] 아이템 벗어나면 desc ui 끄기
+    if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+    {
+        pUI->Set_Render(false);
+    }
 }
 
 void CDiveItem::Free()

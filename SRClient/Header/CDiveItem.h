@@ -26,7 +26,7 @@ protected:
 
 public:
 	// [LSY] 아이템 획득 UI 호출
-	virtual void GetItem() { if(m_eCurState == ITEMSTATE::DROPPED) m_eCurState = ITEMSTATE::ACQUIRED; } // 플레이어쪽에서 호출 할 함수
+	virtual void GetItem();// 플레이어쪽에서 호출 할 함수
 	virtual void UseItem(CGameObject*) = 0;
 	std::wstring_view Get_TexName() { return m_wsTexName; }
 	ITEMTYPE	GetItemType() const { return m_eItemType; }

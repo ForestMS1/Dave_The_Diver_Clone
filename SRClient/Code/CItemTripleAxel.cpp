@@ -5,6 +5,9 @@
 #include "CAssetTexture.h"
 #include "CColliderMgr.h"
 #include "CDiveDave.h"
+#include "CManagement.h"
+#include "CDiveGetWeaponUI.h"
+
 CItemTripleAxel::CItemTripleAxel(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -88,6 +91,21 @@ void CItemTripleAxel::Render_GameObject()
 		}
 	}
 	m_pBufferCom->Render_Buffer();
+}
+
+void CItemTripleAxel::GetItem()
+{
+	CDiveItem::GetItem();
+
+	if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+	{
+		auto pGetWeaponUI = CDiveGetWeaponUI::Create(500.f, -150.f);
+		pGetWeaponUI->Set_ImgAssetName(L"Tex_UI_Gun_Triple_Accel");
+		pGetWeaponUI->Set_Title(L"Æ®¸®ÇÃ ¾Ç¼¿");
+		pGetWeaponUI->Set_Desc(L"Æ®¸®ÇÃ ¾Ç¼¼·ç´Ù.");
+		pGetWeaponUI->Ready_AfterCreate();
+		pLayer->Add_GameObject(L"GetWeaponUI", pGetWeaponUI);
+	}
 }
 
 HRESULT CItemTripleAxel::Ready_Component()
