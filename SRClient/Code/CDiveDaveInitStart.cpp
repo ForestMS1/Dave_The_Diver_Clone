@@ -53,7 +53,12 @@ _int CDiveDaveInitStart::Update_State(const _float& fTimeDelta)
 
 	_float y = -Depth * (1.f - exp(-Speed * t));
 
-	_vec3 vFinalPos = _vec3(-5.f + t * 2.f, 5.f + y, 0.f);
+	_vec3 vFinalPos = _vec3(-10.f + t * 3.f, 5.f + y, 0.f);
+
+	if (vFinalPos.y > 0)
+	{
+		m_pOwner->Change_Depth(vFinalPos.y * 0.1f);
+	}
 
 	CTransform* pTransform = m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
 	pTransform->Set_Pos(vFinalPos.x, vFinalPos.y, vFinalPos.z);
