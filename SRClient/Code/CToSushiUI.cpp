@@ -90,8 +90,12 @@ HRESULT		CToSushiUI::Ready_GameObject()
 
 
             float fRefY = 3.16f;
+
+            int i = 0;
             for (auto& pCaughtFishes : mapFish)
             {
+                if (i > 5) break;
+
                 auto pToSushiItem = CToSushiUIItem::Create(-2.73f, fRefY);
                 pToSushiItem->Set_Parent(this);
                 pToSushiItem->Set_Title(pCaughtFishes.first);
@@ -104,6 +108,8 @@ HRESULT		CToSushiUI::Ready_GameObject()
                 pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
 
                 fRefY -= 1.16;
+
+                ++i;
             }
         }
        
