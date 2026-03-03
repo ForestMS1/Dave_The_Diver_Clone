@@ -30,6 +30,7 @@ public:
 		{
 			GUN_DEFAULT,
 			GUN_TRIPLE_ACCEL,
+			GUN_PENTA_ACCEL,
 			GUN_END
 		};
 
