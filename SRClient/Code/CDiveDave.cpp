@@ -129,6 +129,8 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		m_bSubMarine = !m_bSubMarine;
 	if (ImGui::Button("AddWeight +5"))
 		Change_Weight(5.f);
+	if (ImGui::Button("AddWeight -5"))
+		Change_Weight(-5.f);
 	if (ImGui::Button("ChangeGun"))
 	{
 		CDiveDaveGun* pGun = dynamic_cast<CDiveDaveGun*>(m_vecWeaponSlot[(_uint)EQUIPPED::GUN]);
