@@ -319,8 +319,9 @@ void		CHoldFishUI::Render_GameObject()
      // 키로수
     {
         float fKg = 0.f;
-        float fMaxKg = 12.5f;
-        ;
+        float fMaxKg = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JeokjaeWeight();
+
+        // TODO: 피시뿐 아니라 아이템도
         for (auto& pFish : CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes())
         {
             fKg += pFish.fWeight;
