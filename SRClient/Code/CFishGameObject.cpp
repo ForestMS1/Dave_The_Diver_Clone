@@ -207,7 +207,7 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
     {
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
-            auto pGetItemUI = CGetItemUI::Create(-7.f, 4.f);
+            auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
             pGetItemUI->Set_Title(m_sFishName);
             pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(m_iRank));
 
