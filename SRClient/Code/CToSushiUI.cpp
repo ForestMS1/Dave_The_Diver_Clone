@@ -77,14 +77,17 @@ HRESULT		CToSushiUI::Ready_GameObject()
 
             for (auto& fish : originalFishes)
             {
-                auto iter = mapFish.find(fish.sFishName);
-                if (iter == mapFish.end())
+                if (fish.bFish)
                 {
-                    mapFish.insert({ fish.sFishName , fish });
-                }
-                else
-                {
-                    mapFish[fish.sFishName].iMeatCnt += fish.iMeatCnt;
+                    auto iter = mapFish.find(fish.sFishName);
+                    if (iter == mapFish.end())
+                    {
+                        mapFish.insert({ fish.sFishName , fish });
+                    }
+                    else
+                    {
+                        mapFish[fish.sFishName].iMeatCnt += fish.iMeatCnt;
+                    }
                 }
             }
 

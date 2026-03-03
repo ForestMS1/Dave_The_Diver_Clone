@@ -234,6 +234,7 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
         fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
         fish.iSushiLv = m_iSushiLv;
         fish.iSushiMoney = m_iSushiMoney;
+        fish.bFish = true;
         CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
         return;
     }
@@ -277,6 +278,7 @@ void CFishGameObject::JacksalAcquire()
     fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
     fish.iSushiLv = m_iSushiLv;
     fish.iSushiMoney = m_iSushiMoney;
+    fish.bFish = true;
     CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
 }
 
