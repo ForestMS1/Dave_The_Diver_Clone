@@ -295,7 +295,7 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
-	pGameObject = CDiveDaveGun::Create();
+	pGameObject = CDiveDaveGun::Create(CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGun", pGameObject)))
