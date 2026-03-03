@@ -144,10 +144,18 @@ public:
 	void				Set_MaxStorageWeight(_float fMaxStorageWeight)						{ m_fMaxStorageWeight = fMaxStorageWeight; }
 	void				Set_MaxDepth(_float fMaxDepth)										{ m_fMaxDepth = fMaxDepth; }
 
+	// [LSY] DiveInfo 기록용 현재 뎁스 게터 생성
+	_float				Get_BestDepth() const												{ return m_fBestDepth; }
 
 	void				Change_Depth(_float fChangeDepth)											
 	{ 
 		m_fCurDepth += fChangeDepth;
+
+		// [LSY] 최고 잠수 기록용 분기
+		if (m_fCurDepth > m_fBestDepth)
+		{
+			m_fBestDepth = m_fCurDepth;
+		}
 
 		Event e;
 		e.type = EVENTTYPE::CHANGE_DEPTH;
@@ -227,6 +235,7 @@ private:
 	//수심(Depth)
 	_float m_fMaxDepth = 100.f; // 최대 잠수 가능한 깊이
 	_float m_fCurDepth = 0.f; // 현재 잠수하고 있는 깊이
+	_float m_fBestDepth = 0.f; // [LSY] 이번 다이브에서 최대로 잠수한 깊이
 
 	_float m_fDoTTime = 0.f;
 

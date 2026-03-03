@@ -81,8 +81,14 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
         _uint fCaught = info.Get_CaughtFish();
         m_sCaught = std::to_wstring(fCaught);
 
-        _uint fDepth = info.Get_Depth();
-        m_sDepth = std::to_wstring(fDepth);
+        _float fDepth = info.Get_Depth();
+        {
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << fDepth << L"";
+            std::wstring result = wss.str();
+            m_sDepth = result;
+        }
+       
 
         _uint fObtained = info.Get_Obtained();
         m_sObtained = std::to_wstring(fObtained);
@@ -117,8 +123,13 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
             _uint fCaught2 = info2.Get_CaughtFish();
             m_sCaught2 = std::to_wstring(fCaught2);
 
-            _uint fDepth2 = info2.Get_Depth();
-            m_sDepth2 = std::to_wstring(fDepth2);
+            _float fDepth2 = info2.Get_Depth();
+            {
+                std::wstringstream wss;
+                wss << std::fixed << std::setprecision(1) << fDepth2 << L"";
+                std::wstring result = wss.str();
+                m_sDepth2 = result;
+            }
 
             _uint fObtained2 = info2.Get_Obtained();
             m_sObtained2 = std::to_wstring(fObtained2);

@@ -107,8 +107,8 @@ public:
 		std::list< DIVE_ITEM>& Get_Itemes() { return m_vecCaughtItems; }
 		void Add_ItemBack(DIVE_ITEM& item) { m_vecCaughtItems.push_back(item); ++m_iObtained; }
 
-		void Set_Depth(_uint i) { m_iDepth = i; }
-		_uint Get_Depth() const { return m_iDepth; }
+		void Set_Depth(_float f) { m_fDepth = f; }
+		_float Get_Depth() const { return m_fDepth; }
 
 		_uint Get_CaughtFish() const { return m_iCaughtFish; }
 		_uint Get_Obtained() const { return m_iObtained; }
@@ -123,7 +123,7 @@ public:
 		clock_t m_DiveEnd;
 
 		_uint m_iCaughtFish = 0;
-		_uint m_iDepth = 0;
+		_float m_fDepth = 0.f;
 		_uint m_iObtained = 0;
 
 		bool m_bDiveEnd = false;

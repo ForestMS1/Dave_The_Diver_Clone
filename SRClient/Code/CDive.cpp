@@ -597,11 +597,17 @@ CDive* CDive::Create()
 
 void CDive::Free()
 {
+	// [LSY] 씬이 종료될때 다이브 정보 기록
+	// TODO: Set_Depth 할때 현재 depth가 아니라 다이브중 했던 최고 잠수 기록 으로 해야 맞을거같다.
+	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+	{
+		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Set_Depth(pDave->Get_BestDepth());
+		CGameMemMgr::GetInstance()->Get_DiveInfos().back().DiveEnd();
+	}
+	
+
 	CScene::Free();
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
-
-	// [LSY] 씬이 종료될때 다이브 정보 기록
-	CGameMemMgr::GetInstance()->Get_DiveInfos().back().DiveEnd();
 }
