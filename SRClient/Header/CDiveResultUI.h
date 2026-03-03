@@ -45,6 +45,10 @@ private:
 	std::wstring m_sDepth;
 	std::wstring m_sCaught;
 	std::wstring m_sObtained;
+	std::wstring m_sTime2;
+	std::wstring m_sDepth2;
+	std::wstring m_sCaught2;
+	std::wstring m_sObtained2;
 	std::wstring m_sBiggestFishName;
 	std::wstring m_sBiggestFishSize;
 	std::wstring m_sBiggestFishImgAsseName;

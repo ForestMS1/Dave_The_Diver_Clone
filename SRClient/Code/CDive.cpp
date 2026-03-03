@@ -45,6 +45,7 @@
 #include "CJohn2.h"
 
 #include "CGameMemMgr.h"
+#include "CDiveItemDescUI.h"
 CDive::CDive()
 	: CScene()
 {
@@ -520,6 +521,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"GaugeBarUI", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+
+
+
+	// [LSY] 아이템 설명 유아이
+	auto pDescUI = CDiveItemDescUI::Create(0.f, -150.f);
+	pLayer->Add_GameObject(L"DiveItemDescUI", pDescUI);
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

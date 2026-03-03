@@ -262,6 +262,14 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	{
 		return E_FAIL;
 	}
+
+	// dive item desc ui
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveItemDescUI", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/DiveItemDescUI.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveItemDescUI");
+	}
+
+
 	// Sushi Thumbnail
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_Asian_Sheepshead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_Asian_Sheepshead.png"));
@@ -407,6 +415,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Bancho_Good", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/Bancho_Good.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_Bancho_Good");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResult_Best", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/Best.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResult_Best");
 	}
 
 	// 스파인

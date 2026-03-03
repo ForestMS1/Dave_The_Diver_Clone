@@ -15,6 +15,7 @@
 #include "CGetItemUIImg.h"
 #include "CHoldFishUI.h"
 #include "CHoldFishUIImg.h"
+#include "CDiveItemDescUI.h"
 
 CFishHQ::CFishHQ()
     : CGameObject()
@@ -37,6 +38,19 @@ HRESULT CFishHQ::Ready_GameObject()
 
 _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 {
+    if (ImGui::Button("CDiveItemDescUI"))
+    {
+        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+        {
+            pUI->Set_Title(L"Tiasdf");
+            pUI->Set_Desc(L"DDDEEESSCC");
+            pUI->Set_Render(!pUI->Get_Render());
+            //pUI->Set_DeadCascade();
+        }
+        else
+       {
+        }
+    }
     if (ImGui::Button("GetItemUI"))
     {
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))

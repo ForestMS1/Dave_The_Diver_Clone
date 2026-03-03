@@ -466,6 +466,9 @@
     <Filter Include="01. Scene\03. Sushi\Tea">
       <UniqueIdentifier>{7e6db575-4963-410e-a255-28416fdcc750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveItemDescUI">
+      <UniqueIdentifier>{6814c4d9-df3e-49a6-9e68-fb4bc76364ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1185,6 +1188,9 @@
     <ClInclude Include="..\Header\CShipUIGoSushiBtn.h">
       <Filter>02. GameObject\00. Ship\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveItemDescUI.h">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1882,6 +1888,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShipUIGoSushiBtn.cpp">
       <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItemDescUI.cpp">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
