@@ -20,7 +20,9 @@
 #include "CParticleMgr.h"
 #include "CDiveDaveSubMarine.h"
 #include "CGameMemMgr.h"
-string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "HIT", "DIE" };
+#include "CDiveDaveInitStart.h"
+#include "CDiveDaveGun.h"
+string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "INIT_START", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
@@ -65,8 +67,8 @@ HRESULT CDiveDave::Ready_GameObject()
 	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	//Set_State(DIVEDAVESTATE::IDLE);
-	Set_State(DIVEDAVESTATE::SUBMARINE);
+
+	Set_State(DIVEDAVESTATE::INIT_START);
 
 	//-------------AABB Collider With ItemBox----------------
 	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
@@ -127,6 +129,20 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		m_bSubMarine = !m_bSubMarine;
 	if (ImGui::Button("AddWeight +5"))
 		Change_Weight(5.f);
+	if (ImGui::Button("AddWeight -5"))
+		Change_Weight(-5.f);
+	if (ImGui::Button("ChangeGun"))
+	{
+		CDiveDaveGun* pGun = dynamic_cast<CDiveDaveGun*>(m_vecWeaponSlot[(_uint)EQUIPPED::GUN]);
+		if (pGun != nullptr)
+		{
+			if (pGun->Get_eGun() == CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT)
+				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_TRIPLE_ACCEL);
+			else
+				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT);
+		}
+	}
+
 
 	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
 	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);
@@ -284,6 +300,8 @@ HRESULT	CDiveDave::Add_State()
 	m_pFSM->Add_State<CDiveDaveHit>(DIVEDAVESTATE::HIT);
 	m_pFSM->Add_State<CDiveDaveDie>(DIVEDAVESTATE::DIE);
 	m_pFSM->Add_State<CDiveDaveSubMarine>(DIVEDAVESTATE::SUBMARINE);
+	m_pFSM->Add_State<CDiveDaveInitStart>(DIVEDAVESTATE::INIT_START);
+	
 
 	//m_mapState.insert({ DIVEDAVESTATE::IDLE, CDiveDaveIdle::Create(this) });
 	//m_mapState.insert({ DIVEDAVESTATE::MOVE, CDiveDaveMove::Create(this) });

@@ -469,6 +469,15 @@
     <Filter Include="02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon">
       <UniqueIdentifier>{809434f3-c0e3-4fbe-a130-cbb728a2cf14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\InitStart">
+      <UniqueIdentifier>{10153e22-8090-4042-9f88-2a87871a79bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_TripleAxel">
+      <UniqueIdentifier>{58f738d9-49f4-462b-8623-6e64ffaa6314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_PentaAxel">
+      <UniqueIdentifier>{2d8906b3-c8c2-427d-9277-bf098546dbdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1197,6 +1206,15 @@
     <ClInclude Include="..\Header\COverloadedIcon.h">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveInitStart.h">
+      <Filter>02. GameObject\DiveDave\State\InitStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemTripleAxel.h">
+      <Filter>02. GameObject\Dive_Item\Item_TripleAxel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemPentaAxel.h">
+      <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1903,6 +1921,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\COverloadedIcon.cpp">
       <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveInitStart.cpp">
+      <Filter>02. GameObject\DiveDave\State\InitStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemTripleAxel.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_TripleAxel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemPentaAxel.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

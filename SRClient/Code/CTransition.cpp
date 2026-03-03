@@ -599,6 +599,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonGun", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonGun.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonProjectile", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonProjectile.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_BasicRifle", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/BasicRifle.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"TripleAxel", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Triple.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"PentaAxel", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Penta.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Bullet", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Bullet.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));

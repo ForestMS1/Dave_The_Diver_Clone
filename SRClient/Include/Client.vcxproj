@@ -173,6 +173,7 @@
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
+    <ClInclude Include="..\Header\CDiveDaveInitStart.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
     <ClInclude Include="..\Header\CGunSkill02Aim.h" />
     <ClInclude Include="..\Header\CBackToShipUI.h" />
@@ -180,6 +181,8 @@
     <ClInclude Include="..\Header\CDiveResultUI.h" />
     <ClInclude Include="..\Header\CDiveResultUIImg.h" />
     <ClInclude Include="..\Header\CGoToSushiUI.h" />
+    <ClInclude Include="..\Header\CItemPentaAxel.h" />
+    <ClInclude Include="..\Header\CItemTripleAxel.h" />
     <ClInclude Include="..\Header\CJohn.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
@@ -410,6 +413,7 @@
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CDiveDaveInitStart.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
     <ClCompile Include="..\Code\CGunSkill02Aim.cpp" />
     <ClCompile Include="..\Code\CBackToShipUI.cpp" />
@@ -417,6 +421,8 @@
     <ClCompile Include="..\Code\CDiveResultUI.cpp" />
     <ClCompile Include="..\Code\CDiveResultUIImg.cpp" />
     <ClCompile Include="..\Code\CGoToSushiUI.cpp" />
+    <ClCompile Include="..\Code\CItemPentaAxel.cpp" />
+    <ClCompile Include="..\Code\CItemTripleAxel.cpp" />
     <ClCompile Include="..\Code\CJohn.cpp" />
     <ClCompile Include="..\Code\CChangeTab.cpp" />
     <ClCompile Include="..\Code\CCKeyUI.cpp" />
