@@ -76,6 +76,7 @@ public:
 	void				Set_IsOnItem(_bool isOn)											{ m_bIsOnItem = isOn; }
 	void				Set_CurOnItem(CGameObject* pItem)									{ m_pCurOnItem = pItem; }
 
+	CGameObject*		Get_WeponSlot(EQUIPPED equipped)									{ return m_vecWeaponSlot[(_uint)equipped]; }
 	// 무기 등록
 	void				Set_WeaponSlot(CGameObject* pWeapon, EQUIPPED equipped)
 	{

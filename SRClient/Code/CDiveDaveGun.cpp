@@ -33,8 +33,9 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
 		m_sTexName = L"TripleAxel";
 		break;
-		//case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
-		//	break;
+	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+		m_sTexName = L"PentaAxel";
+		break;
 	default:
 		m_sTexName = L"Tex_BasicRifle";
 		break;
@@ -198,8 +199,9 @@ void CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
 		m_sTexName = L"TripleAxel";
 		break;
-		//case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
-		//	break;
+	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+		m_sTexName = L"PentaAxel";
+		break;
 	default:
 		m_sTexName = L"Tex_BasicRifle";
 		break;

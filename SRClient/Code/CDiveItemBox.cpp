@@ -7,6 +7,9 @@
 #include "CDiveDave.h"
 #include "CO2Capsule.h"
 #include "CManagement.h"
+#include "CItemTripleAxel.h"
+#include "CItemPentaAxel.h"
+
 wstring wsItemBoxTex[(_uint)ITEMBOXTEX::CHEST_END] = 
 { L"Tex_Chest_A", L"Tex_Chest_Aopen", L"Tex_Chest_Box", L"Tex_Chest_Box_open", L"Tex_Chest_Weapon", L"Tex_Chest_WeaponOpen"};
 
@@ -120,9 +123,11 @@ void CDiveItemBox::Set_Open()
 		case DROPITEM::O2CAPSULE:
 			pItem = CO2Capsule::Create(vPos);
 			break;
-		//case DROPITEM::TRIPLEAXEL:
-		//	pItem = CDiveDaveGun::Create();
-		//	break;
+		case DROPITEM::TRIPLEAXEL:
+			pItem = CItemTripleAxel::Create(vPos);
+			break;
+		case DROPITEM::PENTAAXEL:
+			pItem = CItemPentaAxel::Create(vPos);
 		default:
 			break;
 		}

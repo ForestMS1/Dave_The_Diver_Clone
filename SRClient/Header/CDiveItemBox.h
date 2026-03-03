@@ -17,6 +17,7 @@ enum class DROPITEM
 {
 	O2CAPSULE = 0,
 	TRIPLEAXEL,
+	PENTAAXEL,
 	DROPITEM_END
 };
 //닫힘 다음 Open으로 순서 지킬 것.

@@ -1,12 +1,20 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAABB.h"
+#include "CGameMemMgr.h"
 enum class ITEMSTATE
 {
 	STARTDROP = 0,
 	DROPPED,
 	ACQUIRED,
 	STATE_END
+};
+
+enum class ITEMTYPE
+{
+	USEITEM = 0,
+	WEAPONITEM,
+	ITEMTYPE_END
 };
 
 class CDiveItem : public CGameObject
@@ -17,9 +25,11 @@ protected:
 	virtual ~CDiveItem();
 
 public:
-	void GetItem() { if(m_eCurState == ITEMSTATE::DROPPED) m_eCurState = ITEMSTATE::ACQUIRED; } // 플레이어쪽에서 호출 할 함수
+	virtual void GetItem() { if(m_eCurState == ITEMSTATE::DROPPED) m_eCurState = ITEMSTATE::ACQUIRED; } // 플레이어쪽에서 호출 할 함수
 	virtual void UseItem(CGameObject*) = 0;
 	std::wstring_view Get_TexName() { return m_wsTexName; }
+	ITEMTYPE	GetItemType() const { return m_eItemType; }
+	CGameMemMgr::CDaveInfo::DAVE_GUN GetGunType() const { return m_eGunType; }
 
 protected:
 	void FSM(const _float& fTimeDelta);
@@ -42,6 +52,9 @@ protected:
 	_float m_fAccTime = 0.f;
 	_bool m_bIsCollWithMe = false;
 	wstring m_wsTexName;
+
+	ITEMTYPE m_eItemType = ITEMTYPE::ITEMTYPE_END;
+	CGameMemMgr::CDaveInfo::DAVE_GUN m_eGunType;
 
 protected:
 	virtual void Free() override;
