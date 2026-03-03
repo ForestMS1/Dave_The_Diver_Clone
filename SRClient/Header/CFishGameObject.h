@@ -43,6 +43,7 @@ public:
 	void Stop();
 	void Swim();
 	void AcquireTo(_vec3 const* pPos);
+	void JacksalAcquire();
 
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
