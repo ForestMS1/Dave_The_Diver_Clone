@@ -246,7 +246,7 @@ void CDiveDaveGun::Fire()
 
 		baseAngle = m_pTransformCom->m_vAngle.z;
 
-		spreadAngle = 15.f;
+		spreadAngle = 10.f;
 
 		rad = D3DXToRadian(spreadAngle);
 
@@ -272,8 +272,35 @@ void CDiveDaveGun::Fire()
 		static_cast<CDiveDave*>(m_pParentGameObject)
 			->Set_State(DIVEDAVESTATE::IDLE);
 		break;
-		//case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
-		//	break;
+	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
+
+		baseAngle = m_pTransformCom->m_vAngle.z;
+
+		spreadAngle = 5.f;
+
+		for (int i = -2; i <= 2; ++i)
+		{
+			float currentAngle = spreadAngle * i;
+			float rad = D3DXToRadian(currentAngle);
+
+			D3DXMATRIX matRot;
+			D3DXMatrixRotationZ(&matRot, rad);
+
+			D3DXVECTOR3 vFireDir;
+			D3DXVec3TransformNormal(&vFireDir, &vDir, &matRot);
+			D3DXVec3Normalize(&vFireDir, &vFireDir);
+
+			pLayer->Add_GameObject(L"DiveDaveBullet",
+				CDiveDaveBullet::Create(vOrigin, vFireDir, baseAngle + currentAngle));
+		}
+
+		static_cast<CDiveDave*>(m_pParentGameObject)
+			->Set_State(DIVEDAVESTATE::IDLE);
+		break;
 	default:
 		break;
 	}
