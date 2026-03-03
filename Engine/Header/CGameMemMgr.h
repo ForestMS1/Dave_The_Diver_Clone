@@ -66,6 +66,8 @@ public:
 			_uint iMeatCnt;
 			float fWeight;
 			float fLength;
+			_uint iSushiMoney;
+			_uint iSushiLv;
 		} DIVE_FISH;
 
 		typedef struct tagDiveItem

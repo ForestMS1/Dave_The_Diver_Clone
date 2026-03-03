@@ -232,6 +232,8 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
         fish.iMeatCnt = m_iMeatCnt;
         fish.fLength = m_fLength;
         fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
+        fish.iSushiLv = m_iSushiLv;
+        fish.iSushiMoney = m_iSushiMoney;
         CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
         return;
     }
