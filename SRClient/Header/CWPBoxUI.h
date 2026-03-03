@@ -28,9 +28,10 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 private:
-	_bool m_bIsSub = false;
+	_bool m_bIsGunSlot = false; // false¸é HarpoonSlot true¸é GunSlot
 	_bool m_bIsChanging = false;
-	std::wstring_view m_wsTargetItemTexName;
+	_bool m_bIsFront;
+	std::wstring m_wsTargetItemTexName;
 
 public:
 	static CWPBoxUI* Create(_bool isSub = false);

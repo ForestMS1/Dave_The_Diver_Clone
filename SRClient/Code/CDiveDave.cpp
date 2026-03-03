@@ -21,6 +21,7 @@
 #include "CDiveDaveSubMarine.h"
 #include "CGameMemMgr.h"
 #include "CDiveDaveInitStart.h"
+#include "CDiveDaveGun.h"
 string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "INIT_START", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
@@ -128,6 +129,18 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		m_bSubMarine = !m_bSubMarine;
 	if (ImGui::Button("AddWeight +5"))
 		Change_Weight(5.f);
+	if (ImGui::Button("ChangeGun"))
+	{
+		CDiveDaveGun* pGun = dynamic_cast<CDiveDaveGun*>(m_vecWeaponSlot[(_uint)EQUIPPED::GUN]);
+		if (pGun != nullptr)
+		{
+			if (pGun->Get_eGun() == CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT)
+				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_TRIPLE_ACCEL);
+			else
+				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT);
+		}
+	}
+
 
 	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
 	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);

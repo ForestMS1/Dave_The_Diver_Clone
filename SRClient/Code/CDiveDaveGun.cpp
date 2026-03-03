@@ -31,7 +31,7 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 		m_sTexName = L"Tex_BasicRifle";
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
-		m_sTexName = L"TripleAxel_Lv1_Thumbnail";
+		m_sTexName = L"TripleAxel";
 		break;
 		//case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
 		//	break;
@@ -196,7 +196,7 @@ void CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 		m_sTexName = L"Tex_BasicRifle";
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
-		m_sTexName = L"TripleAxel_Lv1_Thumbnail";
+		m_sTexName = L"TripleAxel";
 		break;
 		//case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
 		//	break;
@@ -208,6 +208,7 @@ void CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 	// 새로 바꾼 총으로 사이즈 조정
 	Set_Size();
 
+	dynamic_cast<CDiveDave*>(m_pParentGameObject)->Set_WeaponSlot(this, EQUIPPED::GUN);
 }
 
 void CDiveDaveGun::Fire()

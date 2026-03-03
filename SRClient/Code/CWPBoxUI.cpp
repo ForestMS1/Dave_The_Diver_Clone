@@ -4,7 +4,8 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 CWPBoxUI::CWPBoxUI(_bool isSub)
-    : m_bIsSub(isSub)
+    : m_bIsGunSlot(isSub)
+    , m_bIsFront(isSub)
 {
 }
 
@@ -36,7 +37,7 @@ HRESULT CWPBoxUI::Ready_GameObject()
     vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
     m_pTransformCom->Multiply_Scale(&vScale);
 
-    if (!m_bIsSub)
+    if (!m_bIsGunSlot)
         m_pTransformCom->Set_Pos(510.f, -280.f, 10.f);
     else
         m_pTransformCom->Set_Pos(530.f, -295.f, 20.f);
@@ -128,7 +129,7 @@ void CWPBoxUI::Move_Slot(const _float& fTimeDelta)
         return;
 
     _vec3 vTargetPos;
-    if (m_bIsSub)
+    if (m_bIsFront)
         vTargetPos = { 510.f, -280.f, 10.f };
     else
         vTargetPos = { 530.f, -295.f, 20.f };
@@ -139,7 +140,7 @@ void CWPBoxUI::Move_Slot(const _float& fTimeDelta)
     if (D3DXVec3Length(&vDir) < 0.01f)
     {
         m_bIsChanging = false;
-        m_bIsSub = !m_bIsSub;
+        m_bIsFront = !m_bIsFront;
         return;
     }
     m_pTransformCom->Move_Pos(&vDir, 10.f, fTimeDelta);
@@ -188,14 +189,14 @@ void CWPBoxUI::OnNotify(const Event& e)
     switch (e.type)
     {
     case EVENTTYPE::GET_WEAPON:
-        if(e.value == 1 && !m_bIsSub)
+        if(e.value == 1 && !m_bIsGunSlot)
             m_wsTargetItemTexName = e.ItemTextureName;
-        if (e.value == 2 && m_bIsSub)
+        if (e.value == 2 && m_bIsGunSlot)
             m_wsTargetItemTexName = e.ItemTextureName;
         break;
     case EVENTTYPE::WEAPONSLOT_CHANGE:
         m_bIsChanging = true;
-        //m_bIsSub = !m_bIsSub;
+        //m_bIsGunSlot = !m_bIsGunSlot;
         break;
 
     default:

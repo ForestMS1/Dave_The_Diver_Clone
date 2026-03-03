@@ -19,6 +19,7 @@ public:
 	void		Render_GameObject() override;
 
 public:
+	CGameMemMgr::CDaveInfo::DAVE_GUN Get_eGun() const { return m_eCurGun; }
 	// 게임 중간에 총 변경
 	void		Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun);
 
