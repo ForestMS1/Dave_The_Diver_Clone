@@ -46,10 +46,10 @@ public:
 		void Set_JaksalDamage(_uint i) { m_iJaksalDamage = i; }
 
 	private:
-		_uint m_iGonggiVolume;
-		_uint m_iJamsuDepth;
-		_uint m_iJeokjaeWeight;
-		_uint m_iJaksalDamage;
+		_uint m_iGonggiVolume = 90;
+		_uint m_iJamsuDepth = 40;
+		_uint m_iJeokjaeWeight = 9;
+		_uint m_iJaksalDamage = 15;
 
 	};
 

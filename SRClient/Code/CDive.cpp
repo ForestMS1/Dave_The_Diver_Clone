@@ -103,7 +103,14 @@ HRESULT CDive::Ready_Scene()
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 
 
-
+	// [LSY] 데이브 아이다이버 수치 연동
+	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+	{
+		const auto daveInfo = CGameMemMgr::GetInstance()->Get_DaveInfo();
+		pDave->Set_MaxHp(daveInfo.Get_GonggiVolume());
+		pDave->Set_MaxDepth(daveInfo.Get_JamsuDepth());
+		pDave->Set_MaxStorageWeight(daveInfo.Get_JeokjaeWeight());
+	}
 
 	// [LSY] 다이브씬 시작하면 다이브 인포 기록 시작
 	CGameMemMgr::CDiveInfo info{};

@@ -442,6 +442,19 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	}
 	ImGui::End();
 
+	{
+		auto  gonggi = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_GonggiVolume();
+		auto  jamsu = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JamsuDepth();
+		auto  jeokjae = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JeokjaeWeight();
+		auto  jaksal = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JaksalDamage();
+
+		ImGui::Text("gonggi: %i", gonggi);
+		ImGui::Text("jamsu: %i", jamsu);
+		ImGui::Text("jeokjae: %i", jeokjae);
+		ImGui::Text("jaksal: %i", jaksal);
+	}
+	
+
 	if (ImGui::Button("Collider Render"))
 	{
 		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
