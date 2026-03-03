@@ -1,11 +1,11 @@
 #pragma once
 #include "IObserver.h"
-class CO2Text :
-    public IObserver
+class CWeightText :
+	public IObserver
 {
 private:
-	explicit CO2Text(float fPosX, float fPosY);
-	virtual ~CO2Text();
+	explicit CWeightText(float fPosX, float fPosY);
+	virtual ~CWeightText();
 
 public:
 	void Set_ViewZ(float fViewZ) { m_fViewZ = fViewZ; }
@@ -38,10 +38,11 @@ private:
 	std::wstring m_sFont;
 	_vec3 m_vPos;
 
-	_uint m_iPlayerHp = 0; // 실제 플레이어의 체력
+	_float m_fPlayerCurWeight = 0;
+	_float m_fPlayerMaxWeight = 0;
 
 public:
-	static CO2Text* Create(float fPosX, float fPosY);
+	static CWeightText* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();

@@ -45,6 +45,11 @@
 #include "CJohn2.h"
 
 #include "CGameMemMgr.h"
+#include "CO2TxT.h"
+#include "CDepthText.h"
+#include "CWeightIcon.h"
+#include "CWeightText.h"
+#include "COverloadedIcon.h"
 #include "CDiveItemDescUI.h"
 CDive::CDive()
 	: CScene()
@@ -81,8 +86,8 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 	CCameraMgr::GetInstance()->Set_Camera(L"ChaseToPlayerCam", pCamera);
 	CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
-	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-	static_cast<CDiveDaveCam*>(pCamera)->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
+	//CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	//static_cast<CDiveDaveCam*>(pCamera)->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
 
 	// 개발용 FreeCam
 	pCamera = CFreeCam::Create(&vEye, &vAt, &vUp, D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
@@ -291,7 +296,7 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
-	pGameObject = CDiveDaveGun::Create();
+	pGameObject = CDiveDaveGun::Create(CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGun", pGameObject)))
@@ -320,7 +325,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3, 0.1f, DROPITEM::TRIPLEAXEL);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -6, 3, 0.1f, DROPITEM::PENTAAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
@@ -383,17 +394,10 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// 보스
-	pGameObject = CJohn::Create(10.f, 10.f, 0.f);
+	pGameObject = CJohn::Create(15.f, 10.f, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
-		return E_FAIL;
-
-	// 보스2
-	pGameObject = CJohn2::Create(30.f, 30.f, 0.f);
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"John2", pGameObject)))
 		return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
@@ -463,7 +467,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// WPBox
-	pGameObject = CWPBoxUI::Create();
+	pGameObject = CWPBoxUI::Create(false);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
@@ -505,6 +509,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
+	CO2TxT* pO2TxT = CO2TxT::Create(0.f, 0.f);
+	if (nullptr == pO2TxT)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"O2Text", pO2TxT)))
+		return E_FAIL;
+	pO2TxT->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+
 	CO2Text* pO2Text = CO2Text::Create(0.f, 0.f);
 	if (nullptr == pO2Text)
 		return E_FAIL;
@@ -513,6 +524,34 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pO2Text)); // 플레이어 관찰
 
+
+	CDepthText* pDepthText = CDepthText::Create(0.f, 0.f);
+	if (nullptr == pDepthText)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CurDepthText", pDepthText)))
+		return E_FAIL;
+	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pDepthText)); // 플레이어 관찰
+
+	pGameObject = CWeightIcon::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WeightIcon", pGameObject)))
+		return E_FAIL;
+
+	CWeightText* pWeightText = CWeightText::Create(0.f, 0.f);
+	if (nullptr == pWeightText)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"WeightText", pWeightText)))
+		return E_FAIL;
+	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pWeightText)); // 플레이어 관찰
+
+	pGameObject = COverloadedIcon::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"OverloadedIconUI", pGameObject)))
+		return E_FAIL;
 
 	// GaugeBar UI
 	pGameObject = CGaugeBarUI::Create();

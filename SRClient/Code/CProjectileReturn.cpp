@@ -82,6 +82,7 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 		{
 			if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
 			{
+				// [LSY] 이 함수를 변형해서 작살과 데이브 사이 거리가 일정 거리가 되면 물고기 획득 유아이를 호출한다.
 				pFish->Pull_Fish(&pProjectile->m_vDir, -pProjectile->m_fSpeed, fTimeDelta);
 			}
 			else

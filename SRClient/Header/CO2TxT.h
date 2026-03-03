@@ -1,11 +1,11 @@
 #pragma once
 #include "IObserver.h"
-class CO2Text :
-    public IObserver
+class CO2TxT :
+	public IObserver
 {
 private:
-	explicit CO2Text(float fPosX, float fPosY);
-	virtual ~CO2Text();
+	explicit CO2TxT(float fPosX, float fPosY);
+	virtual ~CO2TxT();
 
 public:
 	void Set_ViewZ(float fViewZ) { m_fViewZ = fViewZ; }
@@ -41,7 +41,7 @@ private:
 	_uint m_iPlayerHp = 0; // 실제 플레이어의 체력
 
 public:
-	static CO2Text* Create(float fPosX, float fPosY);
+	static CO2TxT* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();
