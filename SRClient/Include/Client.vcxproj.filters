@@ -1182,6 +1182,9 @@
     <ClInclude Include="..\Header\CTeaBubble.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipUIGoSushiBtn.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1876,6 +1879,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTeaBubble.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIGoSushiBtn.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

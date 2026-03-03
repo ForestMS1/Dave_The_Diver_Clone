@@ -1542,6 +1542,9 @@ HRESULT CTransition::Common_SHIP_Load()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_NewWeapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/NewWeapon.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_NewWeapon");
 
+	// GoSushiBtn
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_GoSushiBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoSushiBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_GoSushiBtn");
 	return S_OK;
 }
 

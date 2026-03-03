@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CShipUIGoBtn.h"
+#include "CShipUIGoSushiBtn.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -8,21 +8,20 @@
 #include "CAssetDefaultFont.h"
 #include "CDInputMgr.h"
 #include "CTransition.h"
-#include "CManagement.h"
-#include "CShipUIGoSushiBtn.h"
-CShipUIGoBtn::CShipUIGoBtn(float fPosX, float fPosY)
+
+CShipUIGoSushiBtn::CShipUIGoSushiBtn(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
 {
 }
 
-CShipUIGoBtn::~CShipUIGoBtn()
+CShipUIGoSushiBtn::~CShipUIGoSushiBtn()
 {
 }
 
 
-HRESULT		CShipUIGoBtn::Ready_GameObject()
+HRESULT		CShipUIGoSushiBtn::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -32,7 +31,7 @@ HRESULT		CShipUIGoBtn::Ready_GameObject()
     m_fActiveScaleX = 1.f;
     m_fActiveScaleY = 1.f;
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_UI_GoBtn"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_GoSushiBtn"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -52,55 +51,44 @@ HRESULT		CShipUIGoBtn::Ready_GameObject()
     return S_OK;
 }
 
-_int		CShipUIGoBtn::Update_GameObject(const _float& fTimeDelta)
+_int		CShipUIGoSushiBtn::Update_GameObject(const _float& fTimeDelta)
 {
+    if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+    {
+        CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+    }
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-    if (m_bActive)
-    {
-        m_sImgName = L"Tex_Ship_UI_GoBtn";
-        _vec3 vScale = { m_fActiveScaleX , m_fActiveScaleY, 1.f };
-        m_pTransformCom->Set_Scale(&vScale);
+    //if (m_bActive)
+    //{
+    //    m_sImgName = L"Tex_Ship_UI_GoBtn";
+    //    _vec3 vScale = { m_fActiveScaleX , m_fActiveScaleY, 1.f };
+    //    m_pTransformCom->Set_Scale(&vScale);
 
-        if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
-        {
-            //CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+    //    if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+    //    {
+    //        CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+    //    }
 
-            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-            {
-                CShipUIGoSushiBtn* pGoSushiBtn = CShipUIGoSushiBtn::Create(-4.45f, -1.3f);
-                if (nullptr == pGoSushiBtn)
-                    return NOEVENT;
-                if (FAILED(pLayer->Add_GameObject(L"ShipGoSushiBtn", pGoSushiBtn)))
-                    return NOEVENT;
+    //}
+    //else
+    //{
+    //    m_sImgName = L"Tex_Ship_UI_GoBtnAlpha";
+    //    _vec3 vScale = { m_fScaleX , m_fScaleY, 1.f };
+    //    m_pTransformCom->Set_Scale(&vScale);
+    //}
 
-                if (auto pSpace = pLayer->Get_GameObjectFirst(L"ShipGoBtnSpaceKey"))
-                {
-                    pSpace->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-3.25f, -1.3f, 0.f);
-                }
-            }
-            //ShipGoBtnSpaceKey
-        }
-        
-    }
-    else
-    {
-        m_sImgName = L"Tex_Ship_UI_GoBtnAlpha";
-        _vec3 vScale = { m_fScaleX , m_fScaleY, 1.f };
-        m_pTransformCom->Set_Scale(&vScale);
-    }
-    
 
     return iExit;
 }
 
-void		CShipUIGoBtn::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CShipUIGoSushiBtn::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CShipUIGoBtn::Render_GameObject()
+void		CShipUIGoSushiBtn::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -109,7 +97,7 @@ void		CShipUIGoBtn::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sImgName))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_GoSushiBtn"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -128,7 +116,7 @@ void		CShipUIGoBtn::Render_GameObject()
 
 }
 
-HRESULT			CShipUIGoBtn::Ready_Component()
+HRESULT			CShipUIGoSushiBtn::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -140,9 +128,9 @@ HRESULT			CShipUIGoBtn::Ready_Component()
 }
 
 
-CShipUIGoBtn* CShipUIGoBtn::Create(float fPosX, float fPosY)
+CShipUIGoSushiBtn* CShipUIGoSushiBtn::Create(float fPosX, float fPosY)
 {
-    CShipUIGoBtn* pShipDiveBtn = new CShipUIGoBtn{ fPosX , fPosY };
+    CShipUIGoSushiBtn* pShipDiveBtn = new CShipUIGoSushiBtn{ fPosX , fPosY };
 
     if (FAILED(pShipDiveBtn->Ready_GameObject()))
     {
@@ -154,7 +142,7 @@ CShipUIGoBtn* CShipUIGoBtn::Create(float fPosX, float fPosY)
     return pShipDiveBtn;
 }
 
-void CShipUIGoBtn::Free()
+void CShipUIGoSushiBtn::Free()
 {
     CGameObject::Free();
 }

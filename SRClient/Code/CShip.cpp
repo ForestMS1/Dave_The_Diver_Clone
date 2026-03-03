@@ -42,6 +42,7 @@
 #include "CDaveConversation.h"
 #include "CBanchoGood.h"
 
+
 CShip::CShip()
 	: CScene()
 {
@@ -160,9 +161,6 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
-
-
-
 
 
 
@@ -348,6 +346,18 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 					->Get_GameObjectFirst<CShipUIGoBtn>(L"ShipGoBtn"))
 				{
 					pBtn->SetActive(true);
+
+					if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+					{
+						// CShipUISpaceKey
+						CShipUISpaceKey* pShipSpace = CShipUISpaceKey::Create(-5.15f, -1.3f);
+						pShipSpace->AddRender(true);
+						if (nullptr == pShipSpace)
+							return E_FAIL;
+						if (FAILED(pLayer->Add_GameObject(L"ShipGoBtnSpaceKey", pShipSpace)))
+							return E_FAIL;
+					}
+					
 				}
 			}
 			});
@@ -360,6 +370,16 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 					->Get_GameObjectFirst<CShipUIGoBtn>(L"ShipGoBtn"))
 				{
 					pBtn->SetActive(false);
+
+					if (auto pBtn = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"ShipGoBtnSpaceKey"))
+					{
+						pBtn->Set_DeadCascade();
+					}
+
+					if (auto pBtn = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"ShipGoSushiBtn"))
+					{
+						pBtn->Set_DeadCascade();
+					}
 				}
 			}
 			});
