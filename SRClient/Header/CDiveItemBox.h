@@ -12,12 +12,19 @@ enum class ITEMBOXTEX
 	CHEST_WEAPON_OPEN,
 	CHEST_END
 };
+
+enum class DROPITEM
+{
+	O2CAPSULE = 0,
+	TRIPLEAXEL,
+	DROPITEM_END
+};
 //닫힘 다음 Open으로 순서 지킬 것.
 
 class CDiveItemBox : public CGameObject
 {
 private:
-	explicit CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z);
+	explicit CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z, DROPITEM drop);
 	explicit CDiveItemBox(const CDiveItemBox& rhs);
 	virtual ~CDiveItemBox();
 
@@ -52,8 +59,10 @@ private:
 	_bool m_bIsOpen = false;
 	_bool m_bIsCollWithMe = false;
 
+	DROPITEM m_eDropItem = DROPITEM::O2CAPSULE;
+
 public:
-	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0.1f);
+	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0.1f, DROPITEM drop = DROPITEM::O2CAPSULE);
 
 private:
 	virtual void Free() override;
