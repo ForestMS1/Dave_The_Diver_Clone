@@ -57,9 +57,11 @@ HRESULT CCoral::Ready_GameObject()
 _int CCoral::Update_GameObject(const _float& fTimeDelta)
 {
 	// 충돌체 그룹에 넣어줘야한다.
+	if (b_CoralTerrian) {
+		CColliderMgr::GetInstance()->AddColliderGroup(m_nameCoralObject, m_pAABB);
+		m_pAABB->Transform(m_pTransformCom->Get_World());
+	}
 	
-	CColliderMgr::GetInstance()->AddColliderGroup(m_nameCoralObject, m_pAABB);
-	m_pAABB->Transform(m_pTransformCom->Get_World());
 	
 
 	if (b_CoralTerrian) {
@@ -78,8 +80,9 @@ _int CCoral::Update_GameObject(const _float& fTimeDelta)
 
 void CCoral::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	ColliderFrustom();
+	
 	if (b_CoralTerrian) {
+		ColliderFrustom();
 		CGameObject::LateUpdate_GameObject(fTimeDelta);
 	}
 
