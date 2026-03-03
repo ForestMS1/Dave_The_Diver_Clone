@@ -1545,6 +1545,22 @@ HRESULT CTransition::Common_SHIP_Load()
 	// GoSushiBtn
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_GoSushiBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoSushiBtn.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_GoSushiBtn");
+
+
+
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Basic", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_basic.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Basic");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Triple_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_triple_accel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Triple_Accel");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Quadro_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_quadro_accel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Quadro_Accel");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Penta_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_penta_accel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Penta_Accel");
+
 	return S_OK;
 }
 
