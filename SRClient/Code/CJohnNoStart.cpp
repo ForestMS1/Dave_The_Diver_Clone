@@ -6,6 +6,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CManagement.h"
+#include "CSoundMgr.h"
 CJohnNoStart::CJohnNoStart(CJohn* pOwner)
 	: CBaseState<CJohn>(pOwner)
 {
@@ -41,6 +42,12 @@ _int CJohnNoStart::Update_State(const _float& fTimeDelta)
 
 	if (m_pOwner->Check_TargetInRange(10.f))
 	{
+		if (!m_bSoundBgm)
+		{
+			m_bSoundBgm = true;
+			CSoundMgr::GetInstance()->StopSound(CSoundMgr::BGM);
+			CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_BGM_Boss_01", CSoundMgr::BOSS_BGM, 1.f);
+		}
 		_vec3 vRotDir;
 		if (m_pOwner->Get_ToTargetDir().x > 0.f)
 			vRotDir = { 0.f, 0.f, 0.f };

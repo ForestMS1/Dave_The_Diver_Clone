@@ -6,6 +6,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CManagement.h"
+#include "CSoundMgr.h"
 CJohn2NoStart::CJohn2NoStart(CJohn2* pOwner)
 	: CBaseState<CJohn2>(pOwner)
 {

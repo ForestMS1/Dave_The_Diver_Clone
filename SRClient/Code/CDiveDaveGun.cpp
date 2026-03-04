@@ -7,6 +7,7 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CGameMemMgr.h"
+#include "CSoundMgr.h"
 CDiveDaveGun::CDiveDaveGun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 	: m_eCurGun(eGun)
 {
@@ -247,6 +248,7 @@ void CDiveDaveGun::Fire()
 		m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
 		pLayer->Add_GameObject(L"DiveDaveBullet", CDiveDaveBullet::Create(vOrigin, vDir, m_pTransformCom->m_vAngle.z));
 		static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Vib_BasicRifle_Shoot", CSoundMgr::SFX, 1.f);
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
 		//ÃÑ¾Ë ¹ß»ç ÈÄ IDLE
@@ -282,6 +284,7 @@ void CDiveDaveGun::Fire()
 
 		static_cast<CDiveDave*>(m_pParentGameObject)
 			->Set_State(DIVEDAVESTATE::IDLE);
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_hit_Fire_TripleAxel", CSoundMgr::SFX, 1.f);
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
 		m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
@@ -311,6 +314,7 @@ void CDiveDaveGun::Fire()
 
 		static_cast<CDiveDave*>(m_pParentGameObject)
 			->Set_State(DIVEDAVESTATE::IDLE);
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_hit_Fire_TripleAxel", CSoundMgr::SFX, 1.f);
 		break;
 	default:
 		break;

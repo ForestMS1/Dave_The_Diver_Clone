@@ -34,7 +34,6 @@ void CDiveDaveInitStart::Enter()
 	pTransformCom->Get_Info(INFO_POS, &m_vOriginPos);
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DiveInGameBGM", CSoundMgr::CHANNELID::BGM, 1.f);
-	//CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DiveInGameBGM", CSoundMgr::CHANNELID::BGM, 1.f);
 }
 
 void CDiveDaveInitStart::Input(const _float& fTimeDelta)
@@ -47,6 +46,12 @@ _int CDiveDaveInitStart::Update_State(const _float& fTimeDelta)
 	m_fInitReady += fTimeDelta;
 	if (m_fInitReady < 1.f)
 		return 0;
+
+	if (!m_bDivingSound)
+	{
+		m_bDivingSound = true;
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_dave_diving", CSoundMgr::SFX, 1.f);
+	}
 
 	m_fInitTime += fTimeDelta;
 

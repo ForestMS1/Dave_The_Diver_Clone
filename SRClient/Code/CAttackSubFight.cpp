@@ -4,6 +4,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CDiveDaveAttack.h"
+#include "CSoundMgr.h"
 CAttackSubFight::CAttackSubFight(CDiveDaveAttack* pParentState)
     : CAttackSubState(pParentState)
 {
@@ -34,6 +35,7 @@ void CAttackSubFight::Enter()
     e.value = m_pOwner->Get_OwnerDave()->Is_Flip();
     m_pOwner->Get_OwnerDave()->State_Notify(e);
 
+    CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Harpoon_Pull", CSoundMgr::SFX, 1.f);
     // 카메라 쉐이킹 시작
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingStart(m_fAttackTime);
 }
@@ -43,6 +45,7 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
     if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB) || CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
         m_fAttackGauge += 1.f;
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Harpoon_Tab", CSoundMgr::SFX2, 1.f);
         if (m_fAttackGauge > 10.f)
         {
             m_pDiveDave->Set_State(DIVEDAVESTATE::IDLE);
@@ -128,6 +131,8 @@ void CAttackSubFight::Clear()
     e.type = EVENTTYPE::ATTACK_END;
     m_pOwner->Get_OwnerDave()->State_Notify(e);
 
+
+    CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX);
     // 카메라 쉐이킹 강종
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingEnd();
 }

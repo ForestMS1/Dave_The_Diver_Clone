@@ -915,8 +915,37 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 	//사운드
 	{
+		//BGM
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_DiveInGameBGM", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/BGM/BGM_InGame.wav"));
-
+		
+		//효과음
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_dave_hit", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/dave_hit_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_dave_diving", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/dave_diving.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_dave_dead", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/dave_dead_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Harpoon_Aim", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/harpoon_aim.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Harpoon_Pull", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/harpoon_line_pull_loop.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Harpoon_Shot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/harpoon_shot.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_QTE_success", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_QTE_success_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Harpoon_Tab", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/harpoon_tap_button.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Hit_Melee", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_hit_melee.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_ItemBoxTryOpen", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_ingameboxopen_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_O2CapsuleUse", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_o2_capsule_use.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_ui_ingame_attention", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/ui_ingame_attention.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_sound_gain_itembox", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_gain_itembox_02.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_sound_hit_Fire_TripleAxel", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_hit_Fire_TripleAxel_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Vib_BasicRifle_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_BasicRifle_Shoot.wav"));
+		
+		
+		
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_JohnWatson2_MIssile_Overload_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_JohnWatson2_MIssile_Overload_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_Explosion_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_Explosion_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_JohnWatson2_Missile_Move_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_JohnWatson2_Missile_Move_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_GunSkill01_Aim", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_GunSkill01_Aim.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_GunSkill01_Control_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_GunSkill01_Control_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_GunSkill01_Control_Problem_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_GunSkill01_Control_Problem_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_boss_nameplate", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/boss_nameplate.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM_Boss_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/BGM_Boss_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM_Boss_02", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/BGM_Boss_02.wav"));
 	}
 
 	//테스트용

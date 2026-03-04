@@ -7,7 +7,7 @@
 #include "CDiveDave.h"
 #include "CDiveItemDescUI.h"
 #include "CManagement.h"
-
+#include "CSoundMgr.h"
 CO2Capsule::CO2Capsule(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -136,6 +136,8 @@ void CO2Capsule::UseItem(CGameObject* pUser)
 	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pUser);
 
 	pDiveDave->Restore_Hp(50.f);
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_O2CapsuleUse", CSoundMgr::SFX, 1.f);
 }
 
 void CO2Capsule::OpenItemDesc()
