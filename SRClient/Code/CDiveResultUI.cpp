@@ -252,19 +252,60 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
     //    }
     //}
 
-    // Items
+    // Items 8 * 4 0.73
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
-            auto pImg = CDiveResultUIImg::Create(-2.55f, -1.16f);
-            pImg->Set_Scale(0.31f);
-            pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
-            pImg->Set_Parent(this);
-            pImg->Ready_After_Create();
-            pLayer->Add_GameObject(L"TestImg1", pImg);
+
+            if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+            {
+                auto items = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes();
+
+                map<std::wstring, CGameMemMgr::CDiveInfo::DIVE_FISH> mapItem;
+
+                for (auto& item : items)
+                {
+                    if (!item.bFish)
+                    {
+                        auto iter = mapItem.find(item.sFishName);
+                        if (iter == mapItem.end())
+                        {
+                            mapItem.insert({ item.sFishName , item });
+                        }
+                        else
+                        {
+                            mapItem[item.sFishName].iMeatCnt += item.iMeatCnt;
+                        }
+                    }
+                }
+
+                const float refX = -2.55f;
+                const float refY = -1.16f;
+
+
+                _uint idxX = 0;
+                _uint idxY = 0;
+                _uint idx = 0;
+                for (auto& pair : mapItem)
+                {
+                    idxX = idx % 8;
+                    idxY = idx / 8;
+
+                    auto pImg = CDiveResultUIImg::Create(refX + (idxX * 0.73f), refY + (idxY * -0.73f));
+                    pImg->Set_Scale(0.31f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(pair.second.sThumbNailAssetName);
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"ItemImg", pImg);
+
+                    ++idx;
+                }
+            }
+            
+
         }
     }
 
