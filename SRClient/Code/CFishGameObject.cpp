@@ -13,7 +13,7 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
-CFishGameObject::CFishGameObject()
+CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
     , m_fSpeed(1.f)
@@ -40,8 +40,16 @@ CFishGameObject::CFishGameObject()
     , m_bIntersectDetetboxDave(false)
     , m_bDieAndAcquire(false)
     , m_bMoveToRotateEnable(true)
-{
+    , m_bNeedSlice(false)
+    , m_fAttackIntervalTimer(0.f)
+    , m_fInvincibleTimer(1.f)
 
+    , m_fPosX(fPosX)
+    , m_fPosY(fPosY)
+    , m_fScale(fScale)
+
+    , m_fMoveTargetReLocateTimerRef(2.f)
+{
 }
 
 void CFishGameObject::Update_ImGui()
@@ -84,13 +92,19 @@ void CFishGameObject::Damaged(int iDamage)
 {
     if (m_eFishState == Fish::FS_DIE) return;
 
-    m_bDamaged = true;
-    m_pSpineCom->Set_ColorWhite(true);
-    m_iHP -= iDamage;
-    if (m_iHP <= 0)
+    if (m_fInvincibleTimer < 0.f)
     {
-        Die();
+        m_fInvincibleTimer = 0.5f;
+
+        m_bDamaged = true;
+        m_pSpineCom->Set_ColorWhite(true);
+        m_iHP -= iDamage;
+        if (m_iHP <= 0)
+        {
+            Die();
+        }
     }
+    
 }
 
 void CFishGameObject::Die()
@@ -144,7 +158,7 @@ void CFishGameObject::QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos)
 
     _vec3 vNewTarget = vMyPos + vDir * 0.5f;
     m_vMoveTarget = vNewTarget;
-    m_fCurrSpeed = 5.f;
+    m_fCurrSpeed = 30.f;
     m_fCurrRotateSpeed = D3DXToRadian(360.f * 10.f);
 }
 
@@ -170,7 +184,17 @@ void CFishGameObject::AttackTo(_vec3 const* pDavePos)
     m_fCurrSpeed = m_fSprintSpeed;
     m_fCurrRotateSpeed = m_fSprintRotateSpeed;
 
-    m_vMoveTarget = *pDavePos;
+    _vec3 vMyPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+
+    _vec3 vDir = *pDavePos - vMyPos;
+    if (D3DXVec3Length(&vDir) > 0.5f)
+    {
+        D3DXVec3Normalize(&vDir, &vDir);
+
+        m_vMoveTarget = *pDavePos - (vDir * 0.5f);
+    }
+    
 }
 
 void CFishGameObject::Stop()
@@ -301,6 +325,57 @@ void CFishGameObject::JacksalAcquire()
 
 }
 
+bool CFishGameObject::TryAttackTimer(float fTimeDelta)
+{
+    if (m_fAttackIntervalTimer> 1.5f)
+    {
+        m_fAttackIntervalTimer = 0.f;
+        return true;
+    }
+    return false;
+}
+
+void CFishGameObject::SliceComplete()
+{
+    if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+    {
+        auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
+        pGetItemUI->Set_Title(m_sFishName);
+        pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(m_iRank));
+
+        std::wstringstream wss;
+        wss << std::fixed << std::setprecision(1) << m_fWeight << L"kg";
+        std::wstring result = wss.str();
+
+        pGetItemUI->Set_Weight(result);
+        pGetItemUI->Set_StarCnt(m_iStar);
+        pGetItemUI->Set_ImgAssetName(m_sThumbNailAssetName);
+        pGetItemUI->Ready_AfterCreate();
+        pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+    }
+
+    if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+    {
+        pDave->Change_Weight(m_fWeight);
+    }
+
+    CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
+    fish.fWeight = m_fWeight;
+    fish.iRank = m_iRank;
+    fish.iStar = m_iStar;
+    fish.sFishName = m_sFishName;
+    fish.sThumbNailAssetName = m_sThumbNailAssetName;
+    fish.iMeatCnt = m_iMeatCnt;
+    fish.fLength = m_fLength;
+    fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
+    fish.iSushiLv = m_iSushiLv;
+    fish.iSushiMoney = m_iSushiMoney;
+    fish.bFish = true;
+    CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+    Set_DeadCascade();
+}
+
 _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 {
     auto tmp = CCameraMgr::GetInstance()->Get_CurCamera();
@@ -318,6 +393,12 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
         }
     }
 
+    
+    if (m_fInvincibleTimer > 0)
+    {
+        m_fInvincibleTimer -= fTimeDelta;
+    }
+
 
     if (m_bDamaged)
     {
@@ -331,6 +412,8 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
         }
     }
 
+    // 공격 게이지는 매프레임 업데이트
+    m_fAttackIntervalTimer += fTimeDelta;
 
 
     if (m_eFishState == Fish::FS_STOP)
@@ -340,18 +423,29 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
     else if (m_eFishState == Fish::FS_SWIM)
     {
         m_fMoveTargetReLocateTimer += fTimeDelta;
-        if (m_fMoveTargetReLocateTimer > 2.f)
+
+        if (m_fMoveTargetReLocateTimer > m_fMoveTargetReLocateTimerRef)
         {
             //m_vMoveTarget();
 
-            float randX = rand() % 300;
-            float randY = rand() % 300;
-            randX /= 10;
-            randY /= 10;
-            _vec3 vNewMoveTarget = { randX , randY , 0.f };
+            float fRange = 300.0f; 
+           
+            float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+            float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+
+            _vec3 vNewMoveTarget = { m_fPosX + randX, m_fPosY + randY, 0.f };
             m_vMoveTarget = vNewMoveTarget;
 
             m_fMoveTargetReLocateTimer = 0.f;
+
+
+            {
+                float fRange = 10.0f;
+
+                float randX = ((rand() % 101) / 100.f) * fRange;
+
+                m_fMoveTargetReLocateTimerRef = randX;
+            }
         }
 
         MoveTo(&m_vMoveTarget, fTimeDelta);
@@ -366,7 +460,13 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
             m_pSpineCom->Set_ColorDarkness(fDarkNess - (1.f * fTimeDelta));
         }
 
-        if (m_fDieTimer > 6.f)
+        // 뒤지기전 깜빡이는거
+        if (m_fDieTimer >= 7.0f)
+        {
+            m_bRender = sinf(m_fDieTimer * 20.0f) > 0;
+        }
+
+        if (m_fDieTimer > 10.f)
         {
             Set_DeadCascade();
             return OBJ_DEAD;
@@ -425,6 +525,10 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
         MoveTo(&m_vMoveTarget, fTimeDelta);
     }
 
+    if (m_bRender)
+    {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    }
     return iExit;
 }
 
@@ -478,17 +582,36 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
             _matrix matTrs;
             D3DXMatrixTranslation(&matTrs, 0.0f, 5.5f, 0.f);
 
+            //_matrix matWorld = *m_pTransformCom->Get_World();
+            //for (int i = 0; i < 3; ++i) {
+            //    _vec3 vAxis = *(_vec3*)&matWorld.m[i][0]; // 행렬의 각 축(Right, Up, Look) 추출
+            //    D3DXVec3Normalize(&vAxis, &vAxis);        // 방향만 남기고 정규화
+            //    vAxis *= 0.1f;                            // 원하는 스케일(0.1) 곱하기
+            //    memcpy(&matWorld.m[i][0], &vAxis, sizeof(_vec3)); // 다시 행렬에 삽입
+            //}
+
+            //_matrix res = matTrs * matWorld;
+            //_matrix mat;
+            //D3DXMatrixIdentity(&mat);
+            //matWorld.m[3][1] += 5.f;
+            //matWorld._42 += 5.5f;
+
+            //pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+
             _matrix matWorld = *m_pTransformCom->Get_World();
-            for (int i = 0; i < 3; ++i) {
-                _vec3 vAxis = *(_vec3*)&matWorld.m[i][0]; // 행렬의 각 축(Right, Up, Look) 추출
-                D3DXVec3Normalize(&vAxis, &vAxis);        // 방향만 남기고 정규화
-                vAxis *= 0.1f;                            // 원하는 스케일(0.1) 곱하기
-                memcpy(&matWorld.m[i][0], &vAxis, sizeof(_vec3)); // 다시 행렬에 삽입
-            }
+            _matrix res;
+            D3DXMatrixIdentity(&res); // 모든 회전/스케일 초기화
 
-            _matrix res = matTrs * matWorld;
+            // 기존 matWorld의 위치값(X, Y, Z)만 가져옵니다.
+            res._41 = matWorld._41;
+            res._42 = matWorld._42 + 0.5f; // 원래 위치에서 5.5만큼 위로
+            res._43 = matWorld._43;
+            _matrix matScale;
+            D3DXMatrixScaling(&matScale, 0.1f, 0.1f, 0.1f);
 
-            pGraphicDev->SetTransform(D3DTS_WORLD, &res);
+            _matrix go = matScale * res;
+
+            pGraphicDev->SetTransform(D3DTS_WORLD, &go);
             m_pBufferCom->Render_Buffer();
         }
 
@@ -567,7 +690,12 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
 
     //m_fsm.Get_CurrentState()->Enter();
 
-    //Swim();
+    Swim();
+
+    m_fViewZ = 10.1f;
+
+    m_bRender = true;
+
 	return S_OK;
 }
 

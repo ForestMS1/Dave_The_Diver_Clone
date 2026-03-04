@@ -27,7 +27,7 @@ class CFishGameObject : public CGameObject
 //	friend class Fish::CFishStopState;
 //	friend class Fish::CFishSwimState;
 public:
-	explicit CFishGameObject();
+	explicit CFishGameObject(float fPosX, float fPosY, float fScale);
 	//virtual ~CFishGameObject();
 
 public:
@@ -47,6 +47,9 @@ public:
 
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
+	bool TryAttackTimer(float fTimeDelta);
+
+	void SliceComplete();
 public:
 	//Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
 	int Get_HP() const { return m_iHP; }
@@ -59,6 +62,8 @@ public:
 	void Set_IntersectDetectboxDave(bool b) { m_bIntersectDetetboxDave = b; }
 
 	float Get_DieTimer() const { return m_fDieTimer; }
+
+	bool Get_NeedSlice() const { return m_bNeedSlice; }
 
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
@@ -92,6 +97,11 @@ public:
 	_uint Get_SushiLv() const { return m_iSushiLv; }
 
 protected:
+	const float m_fPosX;
+	const float m_fPosY;
+	const float m_fScale;
+
+protected:
 	std::wstring m_sFishName;
 	std::wstring m_sThumbNailAssetName;
 	std::wstring m_sSushiThumbNailAssetName;
@@ -116,9 +126,11 @@ protected:
 	_vec3 m_vMoveTarget;
 
 	float m_fMoveTargetReLocateTimer;
+	float m_fMoveTargetReLocateTimerRef;
 
 	bool m_bDamaged;
 	float m_fDamagedTimer;
+	float m_fInvincibleTimer;
 
 	float m_fDieTimer;
 
@@ -126,6 +138,7 @@ protected:
 	std::wstring m_sRunFromSpineAniName;
 
 	float m_fAttackToTimer;
+	float m_fAttackIntervalTimer;
 	std::wstring m_sAttackSpineAniName;
 
 	bool m_bIntersectHitboxDave;
@@ -135,6 +148,8 @@ protected:
 
 
 	bool m_bMoveToRotateEnable;
+
+	bool m_bNeedSlice;
 
 	
 protected:

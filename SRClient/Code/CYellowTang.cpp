@@ -12,10 +12,7 @@
 using namespace Fish;
 
 CYellowTang::CYellowTang(float fPosX, float fPosY, float fScale)
-    : CFishGameObject()
-    , m_fPosX(fPosX)
-    , m_fPosY(fPosY)
-    , m_fScale(fScale)
+    : CFishGameObject(fPosX, fPosY, fScale)
 {
 }
 
@@ -46,8 +43,6 @@ HRESULT CYellowTang::Ready_GameObject()
 
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
 
-    m_fViewZ = 0.5f;
-
     m_fSpeed = 1.f;
 
     m_pSpineCom->Set_AniState(L"swim");
@@ -58,8 +53,6 @@ HRESULT CYellowTang::Ready_GameObject()
 _int CYellowTang::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CFishGameObject::Update_GameObject(fTimeDelta);
-
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
     return iExit;
 }
