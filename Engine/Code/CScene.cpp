@@ -75,27 +75,27 @@ _int CScene::Update_Scene(const _float& fTimeDelta)
 		}
 	}
 
-	// 루프3. 데드 마킹된 애들에 대해서 해제 처리를 진행한다.
-	for (auto& pLayer : m_mapLayer)
-	{
-		for (auto& pObjMap : *(pLayer.second->Get_GameObjects()))
-		{
-			list<CGameObject*>* pObjList = &pObjMap.second;
+	//// 루프3. 데드 마킹된 애들에 대해서 해제 처리를 진행한다.
+	//for (auto& pLayer : m_mapLayer)
+	//{
+	//	for (auto& pObjMap : *(pLayer.second->Get_GameObjects()))
+	//	{
+	//		list<CGameObject*>* pObjList = &pObjMap.second;
 
-			for (auto iter = pObjList->begin(); iter != pObjList->end(); )
-			{
-				if ((*iter)->Get_Dead())
-				{
-					Safe_Release(*iter);
-					iter = pObjList->erase(iter);
-				}
-				else
-				{
-					++iter;
-				}
-			}
-		}
-	}
+	//		for (auto iter = pObjList->begin(); iter != pObjList->end(); )
+	//		{
+	//			if ((*iter)->Get_Dead())
+	//			{
+	//				Safe_Release(*iter);
+	//				iter = pObjList->erase(iter);
+	//			}
+	//			else
+	//			{
+	//				++iter;
+	//			}
+	//		}
+	//	}
+	//}
 	
 
     return 0;
@@ -138,6 +138,31 @@ void CScene::LateUpdate_Scene(const _float& fTimeDelta)
 			}
 		}
     }
+}
+
+void CScene::EndOfFrame()
+{
+	// 루프3. 데드 마킹된 애들에 대해서 해제 처리를 진행한다.
+	for (auto& pLayer : m_mapLayer)
+	{
+		for (auto& pObjMap : *(pLayer.second->Get_GameObjects()))
+		{
+			list<CGameObject*>* pObjList = &pObjMap.second;
+
+			for (auto iter = pObjList->begin(); iter != pObjList->end(); )
+			{
+				if ((*iter)->Get_Dead())
+				{
+					Safe_Release(*iter);
+					iter = pObjList->erase(iter);
+				}
+				else
+				{
+					++iter;
+				}
+			}
+		}
+	}
 }
 
 

@@ -6,6 +6,7 @@
 #include "CDiveDaveCam.h"
 #include "CDiveItem.h"
 #include "CParticleMgr.h"
+#include "CSoundMgr.h"
 CDiveDaveInitStart::CDiveDaveInitStart(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -31,6 +32,9 @@ void CDiveDaveInitStart::Enter()
 	CTransform* pTransformCom = m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
 	pTransformCom->Set_Pos(-20.f, 20.f, 0.f);
 	pTransformCom->Get_Info(INFO_POS, &m_vOriginPos);
+
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DiveInGameBGM", CSoundMgr::CHANNELID::BGM, 1.f);
+	//CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DiveInGameBGM", CSoundMgr::CHANNELID::BGM, 1.f);
 }
 
 void CDiveDaveInitStart::Input(const _float& fTimeDelta)

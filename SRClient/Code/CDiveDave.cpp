@@ -161,6 +161,8 @@ void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
+	m_pTransformCom->Update_Component(fTimeDelta);
+
 	m_bIsCollisionWithTerrain = CDiveDave::Collision_WithTerrain(fTimeDelta);
 
 	m_pFSM->LateUpdate_State(fTimeDelta);

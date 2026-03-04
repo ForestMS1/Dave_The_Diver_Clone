@@ -61,6 +61,11 @@ void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
     m_pScene->Render_Scene();
 }
 
+void CManagement::EndOfFrame()
+{
+    m_pScene->EndOfFrame();
+}
+
 void CManagement::Free()
 {
     Safe_Release(m_pScene);
