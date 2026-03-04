@@ -21,6 +21,7 @@
 #include "CSushi.h"
 #include "CSmallMenu.h"
 #include "CSoundMgr.h"
+#include "CTimerMgr.h"
 
 
 CSushiDave::CSushiDave()
@@ -406,6 +407,13 @@ void CSushiDave::Render_GameObject()
         matrix.m[3][1] = 1.6f;
         pGraphicDev->SetTransform(D3DTS_WORLD, &matrix);
         m_pBufferCom->Render_Buffer();
+    }
+    fireworkTime += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+
+    if (fireworkTime > 4.f) {
+        float random = rand() % 3;
+        CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { random,0,7 }, 500);
+        fireworkTime = 0;
     }
 
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

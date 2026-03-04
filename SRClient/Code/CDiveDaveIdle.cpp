@@ -25,6 +25,20 @@ void CDiveDaveIdle::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 	m_pOwner->Set_TextureCom(L"Com_IdleTexture");
+
+	m_fIdleMoveLastSpeed = m_pOwner->Get_LastMoveSpeed();
+
+	_vec3 vDir;
+	if (m_pOwner->Get_LastMoveDir().x < 0)
+	{
+		vDir = { 0.f, -180.f, 0.f };
+		m_pOwner->Set_RotateDir(&vDir);
+	}
+	else
+	{
+		vDir = { 0.f, 0.f, 0.f };
+		m_pOwner->Set_RotateDir(&vDir);
+	}
 }
 
 void CDiveDaveIdle::Input(const _float& fTimeDelta)
@@ -86,6 +100,15 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 
 _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 {
+	//if (m_fIdleMoveLastSpeed > 0.f && m_pOwner->Get_PrevState() == DIVEDAVESTATE::MOVE)
+	//{
+	//	_vec3 vLastDir = m_pOwner->Get_LastMoveDir();
+	//	m_pOwner->Move(&vLastDir, fTimeDelta, m_fIdleMoveLastSpeed);
+	//	m_fIdleMoveLastSpeed -= fTimeDelta * 5.f;
+	//}
+	//else
+	//	m_fIdleMoveLastSpeed = 0.f;
+
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);
@@ -115,6 +138,7 @@ _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 
 void CDiveDaveIdle::LateUpdate_State(const _float& fTimeDelta)
 {
+	
 }
 
 void CDiveDaveIdle::Render_State()
@@ -148,6 +172,8 @@ void CDiveDaveIdle::Clear()
 	// 무기 슬롯 체인지 딜레이
 	m_bWeaponSlotDefense = false;
 	m_fWeaponSlotChangeDelay = 1.f;
+
+	m_fIdleMoveLastSpeed = 0.f;
 }
 
 void CDiveDaveIdle::Restore_Fov(const _float& fTimeDelta)

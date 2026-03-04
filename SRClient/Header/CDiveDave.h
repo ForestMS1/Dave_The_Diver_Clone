@@ -37,6 +37,7 @@ public:
 	DIVEDAVESTATE		Get_State()															{ return m_pFSM->Get_State(); }
 	ATTACKSUBSTATE		Get_AttackSubState();
 	void				Set_State(DIVEDAVESTATE state)										{ m_pFSM->Set_State(state); }
+	DIVEDAVESTATE		Get_PrevState()														{ return m_pFSM->Get_PrevState(); }
 
 	EQUIPPED			Get_CurEquipped() const												{ return m_eCurEquipped; }
 	void				Set_CurEquipeed(EQUIPPED equip)										{ m_eCurEquipped = equip; }
@@ -46,13 +47,15 @@ public:
 	void				Set_TextureCom(wstring_view ComName)								{ m_pTextureCom = CGameObject::GetComponent<CTexture, ID_STATIC>(ComName); }
 
 	void				Multiply_Scale(_vec3* vScale)										{ m_pTransformCom->Multiply_Scale(vScale); }
-	void				Move(_vec3* vDir, const _float& fTimeDelta);
+	void				Move(_vec3* vDir, const _float& fTimeDelta, const _float& fSpeed);
 	void				Set_RotateDir(_vec3* vDir) 
 	{
 		m_pTransformCom->m_vAngle.x = vDir->x; 
 		m_pTransformCom->m_vAngle.y = vDir->y;
 		m_pTransformCom->m_vAngle.z = vDir->z;
 	}
+	_vec3				Get_LastMoveDir() const												{ return m_vLastMoveDir; }
+	_float				Get_LastMoveSpeed() const											{ return m_fLastMoveSpeed; }
 
 	void				Get_Pos(_vec3* vPos)												{ return m_pTransformCom->Get_Info(INFO_POS, vPos); }
 
@@ -98,17 +101,22 @@ public:
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+			Event e;
+			e.type = EVENTTYPE::CHANGE_HP;
+			e.value = 0;
+			e.fValue = m_fHp / m_fMaxHp;
+			CDiveDave::Notify(e);
+			return;
+		}
 		Event e;
 		e.type = EVENTTYPE::CHANGE_HP;
 		e.value = (_uint)m_fHp;
 		e.fValue = m_fHp / m_fMaxHp;
 		CDiveDave::Notify(e);
-
-		if (m_fHp <= 0.f)
-		{
-			m_fHp = 0.f;
-			On_Dead();
-		}
 	}
 	// Die 상태로 전이하기위한 함수
 	void				On_Dead() 															{ m_bIsDie = true; }
@@ -178,7 +186,7 @@ public:
 	void				Set_Speed(_float fSpeed)											{ m_fSpeed = fSpeed; }
 
 	_bool				Is_Overloaded() const												{ return m_bOverloaded; }
-
+	_bool				Collision_WithTerrain(const _float& fTimeDelta);
 
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
@@ -251,6 +259,11 @@ private:
 	_bool  m_bSubMarine = false;
 
 	_bool  m_bOverloaded = false;
+
+	_bool m_bIsCollisionWithTerrain = false;
+
+	_vec3 m_vLastMoveDir; // 마지막으로 이동중이었던 방향
+	_float m_fLastMoveSpeed; // 마지막으로 이동중이었던 스피드값
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;

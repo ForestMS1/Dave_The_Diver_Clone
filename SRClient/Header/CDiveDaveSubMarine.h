@@ -38,7 +38,11 @@ private:
 	void Restore_Fov(const _float& fTimeDelta);
 private:
 	DIR m_eDir = DIR_END;
+	_vec3 m_vLastSubMarineDir = { 0.f, 0.f, 0.f, };
 	wstring_view m_wsTexName;
+
+	_float m_fMoveSpeed = 0.f;
+	_bool m_bCanKeyInput = true;
 
 public:
 	static CDiveDaveSubMarine* Create(CDiveDave* pOwner);

@@ -17,6 +17,8 @@
 #include "CGameMemMgr.h"
 #include "CDiveDave.h"
 
+#include "CDiveDaveGun.h"
+
 CHoldFishUI::CHoldFishUI(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -137,10 +139,29 @@ HRESULT		CHoldFishUI::Ready_GameObject()
 
         // รั
         {
+
+            std::wstring sAssetName = L"Tex_Ship_InventoryUpperItem_Gun";
+            if (auto pGun = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDaveGun>(L"DiveDaveGun"))
+            {
+                switch (pGun->Get_eGun())
+                {
+                case CGameMemMgr::CDaveInfo::GUN_DEFAULT:
+                    break;
+                case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+                    sAssetName = L"Tex_UI_Gun_Penta_Accel";
+                    break;
+                case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
+                    sAssetName = L"Tex_UI_Gun_Triple_Accel";
+                    break;
+                }
+            }
+
+            //auto gunAssetAnem = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName;
+
             auto pGun = CHoldFishUIImg::Create(-1.07f, 0.43f);
             pGun->Set_Scale(0.040);
             pGun->Set_ViewZ(0.49f);
-            pGun->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Gun");
+            pGun->Set_AssetName(sAssetName);//L"Tex_Ship_InventoryUpperItem_Gun"
             pGun->Set_Parent(this);
             pGun->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIGun", pGun);

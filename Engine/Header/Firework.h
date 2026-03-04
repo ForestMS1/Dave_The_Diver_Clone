@@ -16,7 +16,7 @@ public:
 
 public:
 	//static Firework* Create(_vec3 origin, int numParticles);
-	static Firework* Create();
+	static Firework* Create(_vec3 origin);
 
 	void resetParticle(Attribute* attribute, D3DXCOLOR color);
 	void preRender();

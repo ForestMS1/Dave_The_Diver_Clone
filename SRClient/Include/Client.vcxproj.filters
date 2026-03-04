@@ -487,6 +487,36 @@
     <Filter Include="02. GameObject\Dive_Item\CommonItem_Wood">
       <UniqueIdentifier>{8afa162b-f1c4-4066-beeb-cc70eda80bc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_WoodPlate">
+      <UniqueIdentifier>{eea7ff40-6634-4d8e-bbe7-ab95696f99a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Watch">
+      <UniqueIdentifier>{252ad417-db12-4909-a00f-4c4a38377de8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Bone">
+      <UniqueIdentifier>{fc47c1aa-9dd7-4609-9887-916335b9d5ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_DeepSeaCoral">
+      <UniqueIdentifier>{b61dbdac-c598-4f63-8d81-04858b8c5610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Fragment">
+      <UniqueIdentifier>{ba484696-23e5-4e5b-b612-9b458f299bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Thurible">
+      <UniqueIdentifier>{a7fc8b10-3e2c-4608-9d2a-561b64511ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Rope">
+      <UniqueIdentifier>{4896762b-77d5-45bc-91a6-b499c3d64f7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Ruby">
+      <UniqueIdentifier>{9f6139a1-0a23-4011-870b-9d28a3b90d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Umb">
+      <UniqueIdentifier>{2fd927e7-2370-4c8b-8196-582673bd03bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Ship\Phone\App\StockMarket">
+      <UniqueIdentifier>{14d2440f-3450-40a2-b62f-1f54414f7841}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1248,6 +1278,36 @@
     <ClInclude Include="..\Header\CHeadP.h">
       <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWoodPlate.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_WoodPlate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWatch.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Watch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemBone.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Bone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemDeepseaCoral.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_DeepSeaCoral</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemFragment.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Fragment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemThurible.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Thurible</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemRope.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Rope</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemRuby.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Ruby</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemUmb.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Umb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStockMarket.h">
+      <Filter>02. GameObject\00. Ship\Phone\App\StockMarket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1987,6 +2047,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHeadP.cpp">
       <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_WoodPlate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWatch.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Watch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemBone.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemDeepseaCoral.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_DeepSeaCoral</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemFragment.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Fragment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemThurible.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Thurible</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemRope.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Rope</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemRuby.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Ruby</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemUmb.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Umb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStockMarket.cpp">
+      <Filter>02. GameObject\00. Ship\Phone\App\StockMarket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

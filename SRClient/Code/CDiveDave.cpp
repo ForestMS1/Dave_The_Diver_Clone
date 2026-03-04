@@ -160,6 +160,11 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+
+	m_pTransformCom->Update_Component(fTimeDelta);
+
+	m_bIsCollisionWithTerrain = CDiveDave::Collision_WithTerrain(fTimeDelta);
+
 	m_pFSM->LateUpdate_State(fTimeDelta);
 
 	_vec3 vPos;
@@ -188,14 +193,44 @@ ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
 		return dynamic_cast<CDiveDaveAttack*>(m_pFSM->Get_pState())->Get_State();
 }
 
-void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
+void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta, const _float& fSpeed)
 {
-	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+	m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta);
 	// 테스트
 	_vec3 Pos{};
 	m_pTransformCom->Get_Info(INFO_POS, &Pos);
 	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
 	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
+	
+	if (!m_bIsCollisionWithTerrain)
+	{
+		//수심 증감
+		if (vDir->y > 0)
+		{
+			if (abs(vDir->x) > 0)
+			{
+				Change_Depth(-0.01f * 0.8f * fSpeed);
+			}
+			else
+			{
+				Change_Depth(-0.01f * fSpeed);
+			}
+		}
+		else if (vDir->y < 0)
+		{
+			if (abs(vDir->x) > 0)
+			{
+				Change_Depth(0.01f * 0.8f * fSpeed);
+			}
+			else
+			{
+				Change_Depth(0.01f * fSpeed);
+			}
+		}
+	}
+
+	m_vLastMoveDir = { vDir->x, vDir->y, vDir->z };
+	m_fLastMoveSpeed = fSpeed;
 }
 
 void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)
@@ -316,6 +351,63 @@ HRESULT	CDiveDave::Add_State()
 	//m_mapState.insert({ DIVEDAVESTATE::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
+}
+
+_bool CDiveDave::Collision_WithTerrain(const _float& fTimeDelta)
+{
+	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Terrian"))
+	{
+		// 충돌체 순회
+		for (auto& pCollider : *pColliders)
+		{
+			// 내가 아닌것들과 체크
+			if (m_pAABB != pCollider)
+			{
+				// 충돌체 끼리 충돌 체크
+				if (m_pAABB->Intersect(pCollider))
+				{
+					// Some Logic
+					// 
+
+					//if (pCollider->Get_Tag() == L"AABB_Boat")
+					//{
+						CCollisionMgr::COLL_RECT_EX_INFO info;
+						if (CCollisionMgr::GetInstance()->Collision_RectEx(m_pAABB, dynamic_cast<CAABB*>(pCollider), &info))
+						{
+							_vec3 vPos;
+							m_pTransformCom->Get_Info(INFO_POS, &vPos);
+							if (info.eDir == CCollisionMgr::DIR_DOWN)
+							{
+								vPos.y += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_UP)
+							{
+								vPos.y -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_LEFT)
+							{
+								vPos.x -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_RIGHT)
+							{
+								vPos.x += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+
+							m_pTransformCom->Update_Component(fTimeDelta);
+							m_pAABB->Transform(m_pTransformCom->Get_World());
+							return true;
+						}
+					//}
+				}
+			}
+		}
+	}
+	return false;
 }
 
 void CDiveDave::Key_Input()

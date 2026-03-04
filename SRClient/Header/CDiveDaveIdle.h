@@ -29,6 +29,8 @@ private:
 	// 무기 슬롯 체인지 딜레이
 	_bool m_bWeaponSlotDefense = false;
 	_float m_fWeaponSlotChangeDelay = 1.f;
+
+	_float m_fIdleMoveLastSpeed = 0.f;
 public:
 	static CDiveDaveIdle* Create(CDiveDave* pOwner);
 private:

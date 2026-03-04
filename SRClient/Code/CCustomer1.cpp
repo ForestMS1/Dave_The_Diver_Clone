@@ -508,9 +508,9 @@ void CCustomer1::Render_GameObject()
                         }
                         _matrix scaleMat = *m_pTransformCom->Get_World();
                         PukeTime += 0.01f;
-                        scaleMat.m[0][0] = 0.3f;
-                        scaleMat.m[1][1] = 0.3f;
-                        scaleMat.m[3][1] = 0.2f + PukeTime;
+                        scaleMat.m[0][0] = 0.6f;
+                        scaleMat.m[1][1] = 0.35f;
+                        scaleMat.m[3][1] = 0.01f;
                         pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
                         m_pBufferCom->Render_Buffer();
                     }
