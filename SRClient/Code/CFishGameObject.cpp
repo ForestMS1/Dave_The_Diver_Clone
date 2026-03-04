@@ -39,6 +39,8 @@ CFishGameObject::CFishGameObject()
     , m_bIntersectDetetboxDave(false)
     , m_bDieAndAcquire(false)
     , m_bMoveToRotateEnable(true)
+    , m_bNeedSlice(false)
+    , m_fAttackIntervalTimer(0.f)
 {
 
 }
@@ -169,7 +171,17 @@ void CFishGameObject::AttackTo(_vec3 const* pDavePos)
     m_fCurrSpeed = m_fSprintSpeed;
     m_fCurrRotateSpeed = m_fSprintRotateSpeed;
 
-    m_vMoveTarget = *pDavePos;
+    _vec3 vMyPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+
+    _vec3 vDir = *pDavePos - vMyPos;
+    if (D3DXVec3Length(&vDir) > 0.5f)
+    {
+        D3DXVec3Normalize(&vDir, &vDir);
+
+        m_vMoveTarget = *pDavePos - (vDir * 0.5f);
+    }
+    
 }
 
 void CFishGameObject::Stop()
@@ -300,6 +312,20 @@ void CFishGameObject::JacksalAcquire()
 
 }
 
+bool CFishGameObject::TryAttackTimer(float fTimeDelta)
+{
+    if (m_fAttackIntervalTimer> 1.5f)
+    {
+        m_fAttackIntervalTimer = 0.f;
+        return true;
+    }
+    return false;
+}
+
+void CFishGameObject::SliceComplete()
+{
+}
+
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
 {
     _uint iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -325,6 +351,8 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
         }
     }
 
+    // 공격 게이지는 매프레임 업데이트
+    m_fAttackIntervalTimer += fTimeDelta;
 
 
     if (m_eFishState == Fish::FS_STOP)
@@ -472,17 +500,36 @@ void CFishGameObject::Render(function<void()> beforeDrawLambda)
             _matrix matTrs;
             D3DXMatrixTranslation(&matTrs, 0.0f, 5.5f, 0.f);
 
+            //_matrix matWorld = *m_pTransformCom->Get_World();
+            //for (int i = 0; i < 3; ++i) {
+            //    _vec3 vAxis = *(_vec3*)&matWorld.m[i][0]; // 행렬의 각 축(Right, Up, Look) 추출
+            //    D3DXVec3Normalize(&vAxis, &vAxis);        // 방향만 남기고 정규화
+            //    vAxis *= 0.1f;                            // 원하는 스케일(0.1) 곱하기
+            //    memcpy(&matWorld.m[i][0], &vAxis, sizeof(_vec3)); // 다시 행렬에 삽입
+            //}
+
+            //_matrix res = matTrs * matWorld;
+            //_matrix mat;
+            //D3DXMatrixIdentity(&mat);
+            //matWorld.m[3][1] += 5.f;
+            //matWorld._42 += 5.5f;
+
+            //pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+
             _matrix matWorld = *m_pTransformCom->Get_World();
-            for (int i = 0; i < 3; ++i) {
-                _vec3 vAxis = *(_vec3*)&matWorld.m[i][0]; // 행렬의 각 축(Right, Up, Look) 추출
-                D3DXVec3Normalize(&vAxis, &vAxis);        // 방향만 남기고 정규화
-                vAxis *= 0.1f;                            // 원하는 스케일(0.1) 곱하기
-                memcpy(&matWorld.m[i][0], &vAxis, sizeof(_vec3)); // 다시 행렬에 삽입
-            }
+            _matrix res;
+            D3DXMatrixIdentity(&res); // 모든 회전/스케일 초기화
 
-            _matrix res = matTrs * matWorld;
+            // 기존 matWorld의 위치값(X, Y, Z)만 가져옵니다.
+            res._41 = matWorld._41;
+            res._42 = matWorld._42 + 0.5f; // 원래 위치에서 5.5만큼 위로
+            res._43 = matWorld._43;
+            _matrix matScale;
+            D3DXMatrixScaling(&matScale, 0.1f, 0.1f, 0.1f);
 
-            pGraphicDev->SetTransform(D3DTS_WORLD, &res);
+            _matrix go = matScale * res;
+
+            pGraphicDev->SetTransform(D3DTS_WORLD, &go);
             m_pBufferCom->Render_Buffer();
         }
 

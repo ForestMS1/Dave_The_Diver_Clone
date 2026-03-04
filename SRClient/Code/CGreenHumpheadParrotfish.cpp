@@ -55,6 +55,8 @@ HRESULT CGreenHumpheadParrotfish::Ready_GameObject()
 
     m_pSpineCom->Set_AniState(L"swim");
 
+    m_bNeedSlice = true;
+
     return S_OK;
 }
 

@@ -321,6 +321,7 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                             if (pDaveCollider->Intersect(pFishHitBoxCollider))
                             {
                                 pFish->Set_IntersectHitboxDave(true);
+
                                 if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
                                 {
                                     if (pFish->Get_FishState() != Fish::FS_DIE)
@@ -338,7 +339,10 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                         if (pFish->Get_FishState() == Fish::FS_ATTACKTO)
                                         {
                                             // TODO: 데이브쪽에서 무적시간 존재해야함
-                                            //pDave->On_Hit(1);
+                                            if (pFish->TryAttackTimer(fTimeDelta))
+                                            {
+                                                pDave->On_Hit(1);
+                                            }
                                         }
                                     }
                                     
@@ -348,12 +352,20 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                 //물고기획득
                                 if (pFish->Get_FishState() == Fish::FS_DIE)
                                 {
-                                    if (pFish->Get_DieTimer() > 1.f)
+                                    // 슬라이스 쳐야하는 물고기가 아니라면 물고기 획득 플로우 진행
+                                    if (!pFish->Get_NeedSlice())
                                     {
-                                        CTransform* pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
-                                        _vec3 vDavePos;
-                                        pDaveTransform->Get_Info(INFO_POS, &vDavePos);
-                                        pFish->AcquireTo(&vDavePos);
+                                        if (pFish->Get_DieTimer() > 1.f)
+                                        {
+                                            CTransform* pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+                                            _vec3 vDavePos;
+                                            pDaveTransform->Get_Info(INFO_POS, &vDavePos);
+                                            pFish->AcquireTo(&vDavePos);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //pDave
                                     }
                                 }
                             }

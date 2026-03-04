@@ -47,6 +47,9 @@ public:
 
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
+	bool TryAttackTimer(float fTimeDelta);
+
+	void SliceComplete();
 public:
 	//Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
 	int Get_HP() const { return m_iHP; }
@@ -59,6 +62,8 @@ public:
 	void Set_IntersectDetectboxDave(bool b) { m_bIntersectDetetboxDave = b; }
 
 	float Get_DieTimer() const { return m_fDieTimer; }
+
+	bool Get_NeedSlice() const { return m_bNeedSlice; }
 
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
@@ -126,6 +131,7 @@ protected:
 	std::wstring m_sRunFromSpineAniName;
 
 	float m_fAttackToTimer;
+	float m_fAttackIntervalTimer;
 	std::wstring m_sAttackSpineAniName;
 
 	bool m_bIntersectHitboxDave;
@@ -135,6 +141,8 @@ protected:
 
 
 	bool m_bMoveToRotateEnable;
+
+	bool m_bNeedSlice;
 
 	
 protected:
