@@ -66,7 +66,7 @@ _int CCoral::Update_GameObject(const _float& fTimeDelta)
 
 	if (b_CoralTerrian) {
 		_int iExit = CGameObject::Update_GameObject(fTimeDelta);
-		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_SUSHIBGALPHA, this);
 
 		_vec3 vPos{};
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);

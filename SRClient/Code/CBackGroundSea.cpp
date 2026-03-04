@@ -32,8 +32,10 @@ _int CBackGroundSea::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_TERRIAN, this);
+	_vec3 vPos{};
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 	return iExit;
 }
 
