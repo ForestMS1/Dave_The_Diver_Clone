@@ -8,6 +8,7 @@
 #include "CDiveItemDescUI.h"
 #include "CManagement.h"
 #include "CSoundMgr.h"
+#include "CDiveGetWeaponUI.h"
 CO2Capsule::CO2Capsule(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -96,6 +97,16 @@ void CO2Capsule::Render_GameObject()
 void CO2Capsule::GetItem()
 {
 	CDiveItem::GetItem();
+
+	if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+	{
+		auto pGetWeaponUI = CDiveGetWeaponUI::Create(500.f, -150.f);
+		pGetWeaponUI->Set_ImgAssetName(L"Tex_O2Capsule");
+		pGetWeaponUI->Set_Title(L"O2 캡슐");
+		pGetWeaponUI->Set_Desc(L"부족한 산소를 채워주는 고마운 존재.");
+		pGetWeaponUI->Ready_AfterCreate();
+		pLayer->Add_GameObject(L"GetWeaponUI", pGetWeaponUI);
+	}
 }
 
 HRESULT CO2Capsule::Ready_Component()

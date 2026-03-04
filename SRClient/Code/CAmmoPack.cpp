@@ -9,6 +9,7 @@
 #include "CManagement.h"
 #include "CSoundMgr.h"
 #include "CDiveDaveGun.h"
+#include "CDiveGetWeaponUI.h"
 CAmmoPack::CAmmoPack(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -98,6 +99,15 @@ void CAmmoPack::Render_GameObject()
 void CAmmoPack::GetItem()
 {
 	CDiveItem::GetItem();
+	if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+	{
+		auto pGetWeaponUI = CDiveGetWeaponUI::Create(500.f, -150.f);
+		pGetWeaponUI->Set_ImgAssetName(L"Tex_AmmoPack");
+		pGetWeaponUI->Set_Title(L"Åº¾à º¸Ãæ ÆÑ");
+		pGetWeaponUI->Set_Desc(L"Åº¾àÀ» Áï½Ã º¸ÃæÇÑ´Ù.");
+		pGetWeaponUI->Ready_AfterCreate();
+		pLayer->Add_GameObject(L"GetWeaponUI", pGetWeaponUI);
+	}
 	CAmmoPack::UseItem(nullptr);
 }
 
