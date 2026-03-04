@@ -1033,7 +1033,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
-	for (int i = 0; i < 12; ++i)
+	for (int i = 0; i < 17; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/Coral/Coral" + ::to_wstring(i) + L".png";
 		wstring nameCoral = L"Tex_Coral" + ::to_wstring(i);

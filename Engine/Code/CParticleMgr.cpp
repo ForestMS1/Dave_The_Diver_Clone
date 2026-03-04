@@ -29,23 +29,28 @@ CParticleMgr::~CParticleMgr()
 HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 {
 	particles.resize(PARTICLE_END);
+	preparticles.resize(PRE_PARTICLE_END);
+	postparticles.resize(POST_PARTICLE_END);
 
 	CBubble* bubble = CBubble::Create(m_pPlayer);
 	particles[PARTICLE_BUBBLE]=(bubble);
 
-	CBlood* blood = CBlood::Create();
-	particles[PARTICLE_BLOOD]=(blood);
-
-	CBloomBubble* bloombubble = CBloomBubble::Create();
-	particles[PARTICLE_BLOOMBUBBLE] = (bloombubble);
-
-	CCoin* coin = CCoin::Create();
-	particles[PARTICLE_COIN] = (coin);
 
 
 
 	CSeaBubble* SeaBubble = CSeaBubble::Create(m_pPlayer);
-	particles[PARTICLE_SEABUBBLE]=(SeaBubble);
+	postparticles[POST_PARTICLE_SEABUBBLE] = (SeaBubble);
+
+	CBloomBubble* bloombubble = CBloomBubble::Create();
+	postparticles[POST_PARTICLE_BLOOMBUBBLE] = (bloombubble);
+
+
+	CBlood* blood = CBlood::Create();
+	postparticles[POST_PARTICLE_BLOOD] = (blood);
+
+	CCoin* coin = CCoin::Create();
+	postparticles[POST_PARTICLE_COIN] = (coin);
+
 	//CAssetMgr::GetInstance()->LoadAsset();
 	return S_OK;
 }
@@ -59,10 +64,17 @@ void CParticleMgr::Update_Particle(float fTimeDelta)
 			if (particle) {
 				particle->update(fTimeDelta);
 			}
-			
-			
 		}
 	}
+	if (!postparticles.empty()) {
+
+		for (auto particle : postparticles) {
+			if (particle) {
+				particle->update(fTimeDelta);
+			}
+		}
+	}
+
 
 }
 
@@ -75,8 +87,27 @@ void CParticleMgr::Render_Particle()
 				particle->render();
 			}
 		}
+
 	}
 
+}
+
+
+void CParticleMgr::PreRender_Particle()
+{
+}
+
+void CParticleMgr::PostRender_Particle()
+{
+	if (m_bRenderOn) {
+		for (auto particle : postparticles) {
+			if (particle) {
+
+				particle->render();
+			}
+		}
+
+	}
 }
 
 void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles)
@@ -95,22 +126,22 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 		break;
 	case PARTICLE_BLOOMBUBBLE:
 		for (int i = 0; i < numofPariticles; i++) {
-			particles[PARTICLE_BLOOMBUBBLE]->addParticle(origin, { 1,1,1,1 });
+			postparticles[POST_PARTICLE_BLOOMBUBBLE]->addParticle(origin, { 1,1,1,1 });
 		}
 		break;
 	case PARTICLE_BLOOD:
 		for (int i = 0; i < numofPariticles; i++) {
-			particles[PARTICLE_BLOOD]->addParticle(origin, { 1,1,1,1 });
+			postparticles[POST_PARTICLE_BLOOD]->addParticle(origin, { 1,1,1,1 });
 		}
 		break;
 	case PARTICLE_COIN:
 		for (int i = 0; i < numofPariticles; i++) {
-			particles[PARTICLE_COIN]->addParticle(origin, { 1,1,1,1 });
+			postparticles[POST_PARTICLE_COIN]->addParticle(origin, { 1,1,1,1 });
 		}
 		break;
 	case PARTICLE_SEABUBBLE:
 		for (int i = 0; i < numofPariticles; i++) {
-			particles[PARTICLE_SEABUBBLE]->addParticle(origin, { 1,1,1,0 });
+			postparticles[POST_PARTICLE_SEABUBBLE]->addParticle(origin, { 1,1,1,0 });
 		}
 		break;
 
@@ -170,6 +201,29 @@ void CParticleMgr::Clear_Particle()
 		}
 		
 	}
+	for (auto particle : postparticles) {
+		if (particle != nullptr) {
+			list<Attribute>* atrributes = particle->GetAtrribute();
+
+			for (auto i = atrributes->begin(); i != atrributes->end(); i++) {
+				const float gravity = 1.2f;
+				i->_isAlive = false;
+			}
+
+
+			auto j = atrributes->begin();
+
+			while (j != atrributes->end()) {
+				if (j->_isAlive == false) {
+					j = atrributes->erase(j);
+				}
+				else {
+					j++;
+				}
+			}
+		}
+
+	}
 
 
 	m_bRenderOn = false;
@@ -186,4 +240,13 @@ void CParticleMgr::Free()
 	
 	}
 	particles.clear();
+
+	for (auto particle : postparticles) {
+		if (particle) {
+			particle->Free();
+			Safe_Release(particle);
+		}
+
+	}
+	postparticles.clear();
 }

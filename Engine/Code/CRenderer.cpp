@@ -26,9 +26,11 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
+	Render_Terrian(pGraphicDev);
 	Render_SushiBGAlpha(pGraphicDev);
 	CParticleMgr::GetInstance()->Render_Particle();
 	Render_Alpha(pGraphicDev);
+	CParticleMgr::GetInstance()->PostRender_Particle();
 	Render_UI(pGraphicDev);
 	Render_Ortho(pGraphicDev);
 	Render_AlphaAfterOrtho(pGraphicDev);
@@ -112,6 +114,33 @@ void CRenderer::Render_SushiBGAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+void CRenderer::Render_Terrian(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	// pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	// pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	// pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	m_RenderGroup[RENDER_TERRIAN].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+
+	for (auto& pObj : m_RenderGroup[RENDER_TERRIAN])
+		pObj->Render_GameObject();
+
+	// pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 }
 
 
