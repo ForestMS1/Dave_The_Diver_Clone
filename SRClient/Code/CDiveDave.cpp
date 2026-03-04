@@ -188,14 +188,17 @@ ATTACKSUBSTATE CDiveDave::Get_AttackSubState()
 		return dynamic_cast<CDiveDaveAttack*>(m_pFSM->Get_pState())->Get_State();
 }
 
-void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta)
+void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta, const _float& fSpeed)
 {
-	m_pTransformCom->Move_Pos(vDir, m_fSpeed, fTimeDelta);
+	m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta);
 	// Å×½ºÆ®
 	_vec3 Pos{};
 	m_pTransformCom->Get_Info(INFO_POS, &Pos);
 	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
 	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
+
+	m_vLastMoveDir = { vDir->x, vDir->y, vDir->z };
+	m_fLastMoveSpeed = fSpeed;
 }
 
 void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint size)

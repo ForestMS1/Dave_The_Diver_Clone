@@ -487,6 +487,15 @@
     <Filter Include="02. GameObject\Dive_Item\CommonItem_Wood">
       <UniqueIdentifier>{8afa162b-f1c4-4066-beeb-cc70eda80bc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_WoodPlate">
+      <UniqueIdentifier>{eea7ff40-6634-4d8e-bbe7-ab95696f99a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Watch">
+      <UniqueIdentifier>{252ad417-db12-4909-a00f-4c4a38377de8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Bone">
+      <UniqueIdentifier>{fc47c1aa-9dd7-4609-9887-916335b9d5ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1239,6 +1248,15 @@
     <ClInclude Include="..\Header\CCommonItemWood.h">
       <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWoodPlate.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_WoodPlate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWatch.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Watch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemBone.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Bone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1969,6 +1987,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCommonItemWood.cpp">
       <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_WoodPlate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWatch.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Watch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemBone.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Bone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

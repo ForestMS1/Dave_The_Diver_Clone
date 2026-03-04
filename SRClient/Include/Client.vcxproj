@@ -173,6 +173,9 @@
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
+    <ClInclude Include="..\Header\CCommonItemBone.h" />
+    <ClInclude Include="..\Header\CCommonItemWoodPlate.h" />
+    <ClInclude Include="..\Header\CCommonItemWatch.h" />
     <ClInclude Include="..\Header\CDiveDaveInitStart.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
     <ClInclude Include="..\Header\CDiveGetWeaponUI.h" />
@@ -418,6 +421,9 @@
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CCommonItemBone.cpp" />
+    <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp" />
+    <ClCompile Include="..\Code\CCommonItemWatch.cpp" />
     <ClCompile Include="..\Code\CDiveDaveInitStart.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
     <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp" />
