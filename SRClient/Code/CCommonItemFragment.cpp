@@ -121,6 +121,7 @@ void CCommonItemFragment::GetItem()
 		//fish.iSushiLv = m_iSushiLv;
 		//fish.iSushiMoney = m_iSushiMoney;
 		fish.bFish = false;
+		fish.sItemDesc = L"볼트와 너트다.\n무언가를 제작할 때 쓰이는 듯 하다.";
 		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
 
 		if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
