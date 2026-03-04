@@ -1,5 +1,6 @@
 #include "CBubble.h"
 #include "CParticleMgr.h"
+#include "CMapMgr.h"
 
 CBubble::CBubble(CGameObject* _Player)
 {
@@ -14,9 +15,7 @@ CBubble::~CBubble()
 
 HRESULT CBubble::Ready_Buffer()
 {
-	if (FAILED(Ready_Texture(L"Tex_Bubble", L"../Bin/Resource/Texture/Particle/Bubble", 2))) {
-		return E_FAIL;
-	}
+
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
@@ -42,9 +41,15 @@ CBubble* CBubble::Create(CGameObject* camera)
 void CBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	_vec3 playerPos{};
-	if (m_pPlayer != nullptr) {
-		dynamic_cast<CTransform*>(m_pPlayer->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Info(INFO_POS,&playerPos);
+
+
+	if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+		CTransform* pDaveTransform = static_cast<CTransform*>(CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave")->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+		
+		pDaveTransform->Get_Info(INFO_POS, &playerPos);
+		
 	}
+
 
 	_size.x = 0.2f;
 	playerPos.x += GetRandomFloat(-0.2f, 0.2f);
@@ -61,7 +66,7 @@ void CBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	attribute->velocity *= 1.f;
 	attribute->_color = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	attribute->_age = 0.f;
-	attribute->_lifeTime = GetRandomFloat(0.f, 2.f);;
+	attribute->_lifeTime = GetRandomFloat(0.f, 5.f);;
 }
 
 void CBubble::render()

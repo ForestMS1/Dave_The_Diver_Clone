@@ -103,7 +103,7 @@ HRESULT CDive::Ready_Scene()
 	CMapMgr::GetInstance()->Load();
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
-	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+
 
 
 	// [LSY] 데이브 아이다이버 수치 연동
@@ -123,6 +123,8 @@ HRESULT CDive::Ready_Scene()
 	_matrix CameraProj = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ProjMatrix();
 	m_pFrustumCollider = CBoundingFrustum::Create(&CameraProj);
 	m_pFrustumCollider->Set_OriginalColor(D3DXCOLOR{});
+	CParticleMgr::GetInstance()->Set_ParicleOn(true);
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_SEABUBBLE, {0.f,0.f,1.f}, 40);
 	return S_OK;
 }
 
@@ -161,6 +163,17 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 		CTransition::FadedTransition(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
+
+	ImGui::Begin("PARTICLE_TEST");
+	if (ImGui::Button("PARTICLE_BLOOMBUBBLE"))
+	{
+		CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
+		CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	
+
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, pDaveTransform->m_vInfo[INFO_POS], 10);
+	}
+	ImGui::End();
 	return iExit;
 }
 
@@ -182,8 +195,8 @@ void CDive::Render_Scene()
 
 
 
-	
-	
+
+
 }
 
 void CDive::Frustum() {
@@ -650,6 +663,7 @@ void CDive::Free()
 	
 
 	CScene::Free();
+
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
