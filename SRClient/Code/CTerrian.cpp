@@ -553,7 +553,13 @@ HRESULT CTerrian::Ready_Material()
     else if(floor.y > -50.f && m_dark <= 1.f){
         m_dark += 0.01f;
     }
- 
+    else if (floor.y > -100.f && m_dark <= 0.5f) {
+        m_dark += 0.01f;
+    }
+    else if (floor.y <= -100.f && m_dark >= 0.0f) {
+        m_dark -= 0.01f;
+
+    }
     tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);

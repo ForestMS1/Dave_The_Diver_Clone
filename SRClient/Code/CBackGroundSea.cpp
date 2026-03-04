@@ -73,24 +73,36 @@ void CBackGroundSea::Render_GameObject()
 	_vec3 floor{};
 	pDaveTransform->Get_Info(INFO_POS, &floor);
 
-	if (floor.y <= -50.f && m_dark > 0.001f) {
+	if (floor.y <= -50.f && m_dark > 0.5f) {
 		m_dark -= 0.01f;
 	}
 	else if (floor.y > -50.f && m_dark <= 0.99f) {
 		m_dark += 0.01f;
 	}
-	// m_dark는 1 → 0 구조 유지
-	float t = 1.f - m_dark;   // 0 = 밝음, 1 = 어두움
+	else if (floor.y > -100.f && m_dark <= 0.5f) {
+		m_dark += 0.01f;
+	}
+	else if (floor.y <= -100.f && m_dark >=0.0f) {
+		m_dark -= 0.01f;
+		
+	}
+
+	if (m_dark < 0) {
+		m_dark = 0.f;
+	}
+	float t = 1.f - m_dark;   
 
 	// 시작색 (밝은)
-	const float r0 = 255.f;
-	const float g0 = 255.f;
-	const float b0 = 255.f;
+	float r0 = 255.f;
+	float g0 = 255.f;
+	float b0 = 255.f;
+
 
 	// 목표색 (어두운)
-	const float r1 = 140.f;
-	const float g1 = 140.f;
-	const float b1 = 140.f;
+	float r1 = 50.f;
+	float g1 = 50.f;
+	float b1 = 50.f;
+
 
 	// 선형보간
 	BYTE r = (BYTE)(r0 + (r1 - r0) * t);
@@ -171,21 +183,6 @@ void CBackGroundSea::Free()
 }
 
 void CBackGroundSea::LightDown() {
-
-
-
-
-	CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
-	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-	_vec3 floor{};
-	pDaveTransform->Get_Info(INFO_POS, &floor);
-
-	if (floor.y <= -50.f && m_dark > 0.001f) {
-		m_dark -= 0.01f;
-	}
-	else if (floor.y > -50.f && m_dark <= 0.99f) {
-		m_dark += 0.01f;
-	}
 
 
 
