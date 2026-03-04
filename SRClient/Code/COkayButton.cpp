@@ -21,6 +21,8 @@
 #include "CSushiFrame.h"
 #include "CAddMenuButton.h"
 #include "CSelectedFrame.h"
+#include "CSmallMenu.h"
+#include "CSoundMgr.h"
 COkayButton::COkayButton()
     : CGameObject()
 {
@@ -112,6 +114,8 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         for (iter; iter != frame->end(); iter++) {
                             static_cast<CSushiFrame*>(*iter)->ConfirmOpened = true;
                         }
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenButton", CSoundMgr::SFX, 1.0f);
+
                     }
                     else if (whichOkay == L"Add") {
                         CTransform* pTransform;
@@ -155,9 +159,17 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
                         vector<CGameMemMgr::FISH*>::iterator iter1 = fishes.begin();
                         for (iter1; iter1 != fishes.end(); iter1++) {
-                            if (fishName == (*iter1)->name) {
-                                (*iter1)->quantity = (*iter1)->quantity - stoi(quantity);
+                            if ((*iter1)->name == L"¹ÝÃÝ") {
+                                if (fishName == L"???") {
+                                    (*iter1)->quantity = (*iter1)->quantity - stoi(quantity);
+                                }
                             }
+                            else {
+                                if (fishName == (*iter1)->name) {
+                                    (*iter1)->quantity = (*iter1)->quantity - stoi(quantity);
+                                }
+                            }
+                            
                         }
                         list<CGameObject*>* frame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SushiFrame");
                         list<CGameObject*>::iterator iter2 = frame->begin();
@@ -181,8 +193,19 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                             static_cast<CAddMenuButton*>(addButtons[0])->Set_Selected(true);
                         }
 
+                        pGameObject = CSmallMenu::Create();
+                        static_cast<CSmallMenu*>(pGameObject)->Set_SushiTex(fishName);
+                        static_cast<CSmallMenu*>(pGameObject)->Set_Total(quantity);
+                        static_cast<CSmallMenu*>(pGameObject)->Set_CurQuantity(quantity);
+                        CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"SmallMenu", pGameObject);
 
-                        
+
+                        int size = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SmallMenu")->size();
+                       
+                        CTransform* trans = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                        trans->m_vInfo[INFO_POS] = {-1.1f + 0.7f * size, 0,0};
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenButton", CSoundMgr::SFX, 1.0f);
+
                     }
                     else if (whichOkay == L"Upgrade") {
 

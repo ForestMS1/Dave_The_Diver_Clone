@@ -22,6 +22,7 @@
 #include "COkayButton.h"
 #include "CFishConfirmFrame.h"
 #include "CUpgradeFrame.h"
+#include "CBanchoR.h"
 CSushiList::CSushiList()
     : CGameObject()
 {
@@ -92,6 +93,16 @@ HRESULT CSushiList::Ready_GameObject()
     pictures.push_back(pGameObject);
 
     pGameObject = CYellowTangR::Create();
+
+    if (nullptr == pGameObject)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiPic", pGameObject)))
+        return E_FAIL;
+    pictures.push_back(pGameObject);
+
+
+    pGameObject = CBanchoR::Create();
 
     if (nullptr == pGameObject)
         return E_FAIL;
@@ -217,6 +228,9 @@ void CSushiList::Render_GameObject()
                 upgradeButton->Set_Render(true);
                 okayButton->Set_Render(true);
                 m_sFishName = static_cast<CSushiFrame*>(*iter)->fishName;
+                if (m_sFishName == L"반쵸") {
+                    m_sFishName = L"???";
+                }
                 m_sSushiName = m_sFishName + L" 초밥";
                 m_sFishInfo = m_sFishName + L"으로 만든 초밥이다.";
                 vector<CGameObject*>::iterator iter3 = pictures.begin();
@@ -237,19 +251,37 @@ void CSushiList::Render_GameObject()
                 else if (m_sFishName == L"노랑탕") {
                     pictures[4]->Set_Render(true);
                 }
+                else if (m_sFishName == L"???") {
+                    pictures[5]->Set_Render(true);
+                    CTransform* pTransform = static_cast<CTransform*>(pictures[5]->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                    pTransform->m_vScale = { 0.25f, 0.2f, 1.f };
+                }
             }
         }
         vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
         vector<CGameMemMgr::FISH*>::iterator iter1 = fishes.begin();
 
         for (iter1; iter1 != fishes.end(); iter1++) {
-            if ((*iter1)->name == m_sFishName) {
-                m_sLevel = L"Lv." + std::to_wstring((*iter1)->level);
-                m_sQuanity = std::to_wstring((*iter1)->quantity);
-                m_sQuality = std::to_wstring((*iter1)->quality);
-                m_sCost = std::to_wstring((*iter1)->cost);
-                m_sPlate = L"1";
+            if ((*iter1)->name == L"반쵸") {
+                if (m_sFishName == L"???") {
+                    m_sLevel = L"Lv.1";
+                    m_sQuanity = L"1";
+                    m_sQuality = L"0";
+                    m_sCost = L"10";
+                    m_sPlate = L"1";
+                }
             }
+            else {
+                if ((*iter1)->name == m_sFishName) {
+                    m_sLevel = L"Lv." + std::to_wstring((*iter1)->level);
+                    m_sQuanity = std::to_wstring((*iter1)->quantity);
+                    m_sQuality = std::to_wstring((*iter1)->quality);
+                    m_sCost = std::to_wstring((*iter1)->cost);
+                    m_sPlate = L"1";
+                }
+               
+            }
+        
         }
         //selected 된 스시 프레임을 찾아서 fishName을 가져와서
 

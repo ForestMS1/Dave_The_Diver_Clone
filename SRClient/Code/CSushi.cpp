@@ -34,6 +34,8 @@
 #include "CGameMemMgr.h"
 #include "CShipUIMoney.h"
 #include "CTea.h"
+#include "CSmallMenu.h"
+#include "CSoundMgr.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -69,6 +71,7 @@ HRESULT CSushi::Ready_Scene()
 
 	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_BOLD));
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 16, FW_BOLD));
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_BGM", CSoundMgr::BGM, 0.5f);
 	return S_OK;
 
 }
@@ -103,6 +106,10 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 				return iExit;
 			}
 		}
+	}
+	if (CustomerLeave == 9 && !gameEnd) {
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseShop", CSoundMgr::SFX, 1.0f);
+		gameEnd = true;
 	}
 
 	return iExit;
@@ -320,6 +327,16 @@ HRESULT CSushi::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"CShipUIMoney", pGameObject)))
 		return E_FAIL;
+
+	//pGameObject = CSmallMenu::Create();
+
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+
+	//if (FAILED(pLayer->Add_GameObject(L"SmallMenu", pGameObject)))
+	//	return E_FAIL;
+
+	//static_cast<CSmallMenu*>(pGameObject)->Set_SushiTex(L"")
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
@@ -393,7 +410,8 @@ void CSushi::Key_Input()
 		}
 		CGameObject* button2 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
 		button2->Set_Render(true);
-	
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenButton", CSoundMgr::SFX, 1.0f);
+
 	}
 
 	/*if (CDInputMgr::GetInstance()->Key_Up(DIKEYBOARD_O))
@@ -408,6 +426,8 @@ void CSushi::Key_Input()
 
 void CSushi::Free()
 {
+	CSoundMgr::GetInstance()->StopAll();
+
 	CScene::Free();
 	
 }

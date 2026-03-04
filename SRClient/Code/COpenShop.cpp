@@ -10,6 +10,7 @@
 #include "CDInputMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CSoundMgr.h"
 COpenShop::COpenShop()
     : CGameObject()
 {
@@ -190,6 +191,8 @@ void COpenShop::Key_Input()
     if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_E))
     {
         CScene* scene = CManagement::GetInstance()->Get_Scene();
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenShop", CSoundMgr::SFX, 1.0f);
+
         static_cast<CSushi*>(scene)->Set_Open(true);
         openPressed = true;
         //m_bDead = true;

@@ -15,6 +15,8 @@
 #include "CAssetTexture.h"
 #include "CSushiDave.h"
 #include "CCustomer1.h"
+#include "CSoundMgr.h"
+#include "CTimerMgr.h"
 
 
 
@@ -76,6 +78,10 @@ _int CTea::Update_GameObject(const _float& fTimeDelta)
            
         }
         static_cast<CCustomer1*>(customer)->gotTea = true;
+        if (!soundPlayed) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Perfect", CSoundMgr::SFX, 1.0f);
+            soundPlayed = true;
+        }
     }
 
 
@@ -414,6 +420,11 @@ void CTea::Key_Input()
 {
     if (!frameMove) {
         if (CDInputMgr::GetInstance()->Key_Pressing(DIKEYBOARD_L)) {
+            soundPlayedTime += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+            if (soundPlayedTime > 2.3f) {
+                CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_TeaPouring", CSoundMgr::SFX, 1.0f);
+                soundPlayedTime = 0.f;
+            }
             angle += 0.05f;
             if (potAngle < 0.52f) {
                 potAngle += 0.3f;
@@ -450,4 +461,5 @@ void CTea::Reset_Value()
     angle = 0.f;
     potAngle = 0.f;
     resetTime = 0.f;
+    soundPlayed = false;
 }

@@ -46,6 +46,7 @@ HRESULT CGameMemMgr::Ready()
 	addFish(L"코반아지", 6, 18, 30);
 	addFish(L"노랑백", 7, 12, 20);
 	addFish(L"흰동가리", 8, 15, 23);
+	addFish(L"반쵸", 9, 10, 0);
     return S_OK;
 }
 

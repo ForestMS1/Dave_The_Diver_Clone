@@ -44,7 +44,9 @@ private:
 	bool	wasabiCreated;
 	float	m_fScale;
 	float   resetTime = 0.f;
+	float   soundPlayedTime = 0.f;
 	bool	finished = false;
+	bool	soundPlayed = false;
 public:
 	float   gauge = -4.43f;
 	float   potGaugeX = 0.81f;
@@ -52,5 +54,7 @@ public:
 	float   angle = 0.f;
 	float   potAngle = 0.f;
 	CGameObject* customer;
+	
+	
 };
 

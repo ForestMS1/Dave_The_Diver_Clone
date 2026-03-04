@@ -170,6 +170,7 @@
     <ClInclude Include="..\Header\CBackGroundSea.h" />
     <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CBanchoGood.h" />
+    <ClInclude Include="..\Header\CBanchoR.h" />
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="..\Header\CDiveResultUI.h" />
     <ClInclude Include="..\Header\CDiveResultUIImg.h" />
     <ClInclude Include="..\Header\CGoToSushiUI.h" />
+    <ClInclude Include="..\Header\CHeadP.h" />
     <ClInclude Include="..\Header\CJohn.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
@@ -252,6 +254,7 @@
     <ClInclude Include="..\Header\CJuvenileCircularBatFish.h" />
     <ClInclude Include="..\Header\CLeah.h" />
     <ClInclude Include="..\Header\CRedLionfish.h" />
+    <ClInclude Include="..\Header\CSmallMenu.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
     <ClInclude Include="..\Header\CTea.h" />
     <ClInclude Include="..\Header\CTeaBubble.h" />
@@ -403,6 +406,7 @@
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />
     <ClCompile Include="..\Code\CBanchoGood.cpp" />
+    <ClCompile Include="..\Code\CBanchoR.cpp" />
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
@@ -413,6 +417,7 @@
     <ClCompile Include="..\Code\CDiveResultUI.cpp" />
     <ClCompile Include="..\Code\CDiveResultUIImg.cpp" />
     <ClCompile Include="..\Code\CGoToSushiUI.cpp" />
+    <ClCompile Include="..\Code\CHeadP.cpp" />
     <ClCompile Include="..\Code\CJohn.cpp" />
     <ClCompile Include="..\Code\CChangeTab.cpp" />
     <ClCompile Include="..\Code\CCKeyUI.cpp" />
@@ -488,6 +493,7 @@
     <ClCompile Include="..\Code\CJuvenileCircularBatFish.cpp" />
     <ClCompile Include="..\Code\CLeah.cpp" />
     <ClCompile Include="..\Code\CRedLionfish.cpp" />
+    <ClCompile Include="..\Code\CSmallMenu.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
     <ClCompile Include="..\Code\CTea.cpp" />
     <ClCompile Include="..\Code\CTeaBubble.cpp" />
