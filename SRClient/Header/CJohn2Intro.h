@@ -27,6 +27,8 @@ private:
 
 	_float m_fFrame = 0.f;
 
+	_bool	m_bSound = false;
+
 public:
 	static CJohn2Intro* Create();
 

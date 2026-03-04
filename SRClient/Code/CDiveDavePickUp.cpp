@@ -6,6 +6,7 @@
 #include "CDiveDaveCam.h"
 #include "CDiveItem.h"
 #include "CDiveDaveGun.h"
+#include "CSoundMgr.h"
 CDiveDavePickUp::CDiveDavePickUp(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -93,6 +94,7 @@ void CDiveDavePickUp::Clear()
 				e.value = 2;
 				m_pOwner->Notify(e);
 			}
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX, 1.f);
 		}
 		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::WEAPONITEM)
 		{
@@ -105,11 +107,19 @@ void CDiveDavePickUp::Clear()
 			CGameMemMgr::CDaveInfo::DAVE_GUN eGun = static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetGunType();
 			static_cast<CDiveDaveGun*>(m_pOwner->Get_WeponSlot(EQUIPPED::GUN))->Change_Gun(eGun);
 			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_ui_ingame_attention", CSoundMgr::SFX, 1.f);
 		}
 		// [LSY] 잡템분기추가
 		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::COMMONITEM)
 		{
 			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX, 1.f);
+		}
+		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::USEIMMEDIATELY)
+		{
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX, 1.f);
 		}
 		else
 			return;

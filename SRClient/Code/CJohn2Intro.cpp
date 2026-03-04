@@ -7,6 +7,7 @@
 #include "CDiveDave.h"
 #include "CO2Capsule.h"
 #include "CManagement.h"
+#include "CSoundMgr.h"
 
 
 CJohn2Intro::CJohn2Intro()
@@ -44,6 +45,12 @@ HRESULT CJohn2Intro::Ready_GameObject()
 
 _int CJohn2Intro::Update_GameObject(const _float& fTimeDelta)
 {
+	if (!m_bSound)
+	{
+		m_bSound = true;
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_boss_nameplate", CSoundMgr::BOSS_SFX1, 1.f);
+	}
+
 	// 충돌체 그룹에 넣어줘야한다.
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
 

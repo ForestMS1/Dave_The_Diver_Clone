@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CActionNode.h" />
     <ClInclude Include="..\Header\CAddMenuButton.h" />
+    <ClInclude Include="..\Header\CAmmoPack.h" />
     <ClInclude Include="..\Header\CAsianSheepshead.h" />
     <ClInclude Include="..\Header\CAttackSubFail.h" />
     <ClInclude Include="..\Header\CAttackSubFight.h" />
@@ -284,6 +285,7 @@
     <ClInclude Include="..\Header\CToSushiUIItem.h" />
     <ClInclude Include="..\Header\CWeightIcon.h" />
     <ClInclude Include="..\Header\CWeightText.h" />
+    <ClInclude Include="..\Header\CWPAmmoCntText.h" />
     <ClInclude Include="..\Header\CYellowbackFusilier.h" />
     <ClInclude Include="..\Header\CYellowTang.h" />
     <ClInclude Include="..\Header\CFSM.h" />
@@ -424,6 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAddMenuButton.cpp" />
+    <ClCompile Include="..\Code\CAmmoPack.cpp" />
     <ClCompile Include="..\Code\CAsianSheepshead.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />
@@ -545,6 +548,7 @@
     <ClCompile Include="..\Code\CToSushiUIItem.cpp" />
     <ClCompile Include="..\Code\CWeightIcon.cpp" />
     <ClCompile Include="..\Code\CWeightText.cpp" />
+    <ClCompile Include="..\Code\CWPAmmoCntText.cpp" />
     <ClCompile Include="..\Code\CYellowbackFusilier.cpp" />
     <ClCompile Include="..\Code\CYellowTang.cpp" />
     <ClCompile Include="..\Code\CFSM.cpp" />

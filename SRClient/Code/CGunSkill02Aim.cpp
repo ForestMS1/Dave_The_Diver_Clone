@@ -5,6 +5,7 @@
 #include "CJohn2.h"
 #include "CColliderMgr.h"
 #include "CJohnMine.h"
+#include "CSoundMgr.h"
 CGunSkill02Aim::CGunSkill02Aim(CJohn2* pOwner)
 	: CBaseState<CJohn2>(pOwner)
 {

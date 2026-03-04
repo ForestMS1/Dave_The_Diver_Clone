@@ -517,6 +517,9 @@
     <Filter Include="02. GameObject\00. Ship\Phone\App\StockMarket">
       <UniqueIdentifier>{14d2440f-3450-40a2-b62f-1f54414f7841}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_AmmoPack">
+      <UniqueIdentifier>{92022bed-b197-48e1-b97d-e8c18052a0df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1308,6 +1311,12 @@
     <ClInclude Include="..\Header\CStockMarket.h">
       <Filter>02. GameObject\00. Ship\Phone\App\StockMarket</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWPAmmoCntText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\WeaponBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAmmoPack.h">
+      <Filter>02. GameObject\Dive_Item\Item_AmmoPack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2077,6 +2086,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CStockMarket.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\StockMarket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWPAmmoCntText.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\WeaponBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAmmoPack.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_AmmoPack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

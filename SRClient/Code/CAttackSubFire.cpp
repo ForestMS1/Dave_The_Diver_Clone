@@ -7,6 +7,7 @@
 #include "CManagement.h"
 #include "CHarpoonProjectile.h"
 #include "CDiveDaveGun.h"
+#include "CSoundMgr.h"
 CAttackSubFire::CAttackSubFire(CDiveDaveAttack* pParentState)
     : CAttackSubState(pParentState)
 {
@@ -36,6 +37,7 @@ void CAttackSubFire::Enter()
         CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>
             (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"HarpoonProjectile"));
         pProjectile->TriggerOn();
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Harpoon_Shot", CSoundMgr::SFX, 1.f);
     }
     else if (m_pDiveDave->Get_CurEquipped() == EQUIPPED::GUN)
     {

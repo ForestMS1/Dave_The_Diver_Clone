@@ -79,6 +79,10 @@ public:
 	void				Set_IsOnItem(_bool isOn)											{ m_bIsOnItem = isOn; }
 	void				Set_CurOnItem(CGameObject* pItem)									{ m_pCurOnItem = pItem; }
 
+	// With SlicableFish
+	void				Set_SlicableFish(CGameObject* pFish)								{ m_pCurSlicableFish = pFish; }
+	CGameObject*		Get_SlicableFish()													{ return m_pCurSlicableFish; }
+
 	CGameObject*		Get_WeponSlot(EQUIPPED equipped)									{ return m_vecWeaponSlot[(_uint)equipped]; }
 	// 무기 등록
 	void				Set_WeaponSlot(CGameObject* pWeapon, EQUIPPED equipped)
@@ -268,6 +272,7 @@ private:
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;
 	CGameObject* m_pCurOnItem = nullptr;
+	CGameObject* m_pCurSlicableFish = nullptr;
 
 	unordered_map<std::wstring_view, CGameObject*> m_mapCanUseItemSlot = { {L"ItemSlot1", nullptr}, {L"ItemSlot2", nullptr} };
 	CGameObject* m_vecWeaponSlot[(_uint)EQUIPPED::EQUIPPED_END] = {nullptr, nullptr};

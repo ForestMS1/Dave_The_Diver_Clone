@@ -26,6 +26,7 @@
 #include "CParticleMgr.h"
 #include "CJohnDie.h"
 #include "CJohnBullet.h"
+#include "CSoundMgr.h"
 CJohn::CJohn(_float x, _float y, _float z)
 	: m_vCreatePos({x,y,z})
 {

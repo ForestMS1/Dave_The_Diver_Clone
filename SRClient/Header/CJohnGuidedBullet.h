@@ -66,6 +66,13 @@ private:
 	_float m_fExplosionTime = 0.f;
 
 
+	// 사운드를 위한 하드코딩...
+	_bool m_bSoundOverload = false;
+	_bool m_bSoundExplosion = false;
+	_bool m_bSoundMove = false;
+	_bool m_bSoundReturn = false;
+
+
 	CTransform* m_pTargetTransform = nullptr;
 	CTransform* m_pReturnTargetTransform = nullptr;
 	CGameObject* m_pReturnTarget = nullptr;
