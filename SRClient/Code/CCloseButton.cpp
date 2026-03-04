@@ -21,6 +21,7 @@
 #include "CSushiFrame.h"
 #include "CMenuFrame.h"
 #include "CCustomer1.h"
+#include "CSoundMgr.h"
 CCloseButton::CCloseButton()
     : CGameObject()
 {
@@ -96,8 +97,9 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         if (addButton->size() == 0) {
                             CGameObject* openShop = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"OpenShop");
                             openShop->Set_Render(true);
-                          
                         }
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
+
 
                     }
                     else if (whichFrame == L"FishConfirmFrame") {
@@ -116,6 +118,8 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         for (iter; iter != frame->end(); iter++) {
                             static_cast<CSushiFrame*>(*iter)->ConfirmOpened = false;
                         }
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
+
                     }
                     else if (whichFrame == L"RecipeFrame") {
                         // 레시피랑 스시리스트 닫기
@@ -127,6 +131,8 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         CGameObject* menuFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
                         static_cast<CMenuFrame*>(menuFrame)->Hide();
                         static_cast<CMenuFrame*>(menuFrame)->Reset_Frame();
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
+
                     }
                     else if (whichFrame == L"UpgradeConfirmFrame") {
 

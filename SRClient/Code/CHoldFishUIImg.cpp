@@ -78,7 +78,7 @@ _int		CHoldFishUIImg::Update_GameObject(const _float& fTimeDelta)
 
     if (m_bRender)
     {
-        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
     }
    
 

@@ -33,6 +33,7 @@ public:
 public:
 
 	void	Show_GUI();
+	void	Collider_Show();
 	void	Object_Show();
 	void	Frame_Show();
 	void	SaveLoad_Show();

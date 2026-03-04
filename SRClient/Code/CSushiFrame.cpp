@@ -19,6 +19,7 @@
 #include "CGameMemMgr.h"
 #include "CAssetTexture.h"
 #include "CUpgradeImage.h"
+#include "CBanchoR.h"
 CSushiFrame::CSushiFrame()
     : CGameObject()
 {
@@ -141,13 +142,33 @@ _int CSushiFrame::Update_GameObject(const _float& fTimeDelta)
             if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushi", pGameObject)))
                 return E_FAIL;
         }
+        else if (fishName == L"¹ÝÃÝ") {
+            pGameObject = CBanchoR::Create();
+
+            if (nullptr == pGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushi", pGameObject)))
+                return E_FAIL;
+        }
         if (pGameObject != nullptr) {
-            CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-            pTransform->m_vScale = { 0.2f, 0.12f, 1.f };
-            pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
-            pTransform->m_vInfo[INFO_POS].z -= 0.001f;
-            pTransform->m_vInfo[INFO_POS].x -= 0.01f;
-            pTransform->m_vInfo[INFO_POS].y -= 0.05f;
+            if (fishName == L"¹ÝÃÝ") {
+                CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                pTransform->m_vScale = { 0.2f, 0.15f, 1.f };
+                pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
+                pTransform->m_vInfo[INFO_POS].z -= 0.001f;
+                pTransform->m_vInfo[INFO_POS].x -= 0.01f;
+                pTransform->m_vInfo[INFO_POS].y -= 0.05f;
+            }
+            else {
+                CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                pTransform->m_vScale = { 0.2f, 0.12f, 1.f };
+                pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
+                pTransform->m_vInfo[INFO_POS].z -= 0.001f;
+                pTransform->m_vInfo[INFO_POS].x -= 0.01f;
+                pTransform->m_vInfo[INFO_POS].y -= 0.05f;
+            }
+         
 
             m_bImageCreated = true;
         }
@@ -244,12 +265,11 @@ void CSushiFrame::Render_GameObject()
         CAssetDefaultFont* plevelFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Level");
         vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
         vector<CGameMemMgr::FISH*>::iterator iter = fishes.begin();
-        for (iter; iter != fishes.end(); iter++) {
-            if ((*iter)->name == fishName) {
-                m_sQuanity = std::to_wstring((*iter)->quantity);
-                m_sLevel = L"Lv." + std::to_wstring((*iter)->level);
-           
-            }
+        for (iter; iter != fishes.end(); iter++) {  
+             if (((*iter)->name == fishName)) {
+                 m_sQuanity = std::to_wstring((*iter)->quantity);
+                 m_sLevel = L"Lv." + std::to_wstring((*iter)->level);
+             }
         }
         _vec2 vPos = { screen2.x , screen2.y  };
 
@@ -271,6 +291,9 @@ void CSushiFrame::Render_GameObject()
 
         }
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    }
+    else {
+        upgrade->Set_Render(false);
     }
   
     

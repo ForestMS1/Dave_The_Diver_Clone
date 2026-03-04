@@ -37,7 +37,7 @@ HRESULT		CGetItemUIStar::Ready_GameObject()
           
             vScale = { fAspect, 1.f, 1.f };
 
-            float fScale = 0.15;
+            float fScale = 0.15 * 50.f;
             vScale.x *= fScale;
             vScale.y *= fScale;
         }
@@ -62,7 +62,7 @@ _int		CGetItemUIStar::Update_GameObject(const _float& fTimeDelta)
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
 
     return iExit;
 }

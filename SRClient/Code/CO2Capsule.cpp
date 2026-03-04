@@ -5,6 +5,9 @@
 #include "CAssetTexture.h"
 #include "CColliderMgr.h"
 #include "CDiveDave.h"
+#include "CDiveItemDescUI.h"
+#include "CManagement.h"
+
 CO2Capsule::CO2Capsule(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -23,6 +26,8 @@ HRESULT CO2Capsule::Ready_GameObject()
 {
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
+
+	m_eItemType = ITEMTYPE::USEITEM;
 
 	_vec3 vScale = { 0.2f, 0.2f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
@@ -88,6 +93,11 @@ void CO2Capsule::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
+void CO2Capsule::GetItem()
+{
+	CDiveItem::GetItem();
+}
+
 HRESULT CO2Capsule::Ready_Component()
 {
 	// ¹öÆÛ
@@ -126,4 +136,17 @@ void CO2Capsule::UseItem(CGameObject* pUser)
 	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pUser);
 
 	pDiveDave->Restore_Hp(50.f);
+}
+
+void CO2Capsule::OpenItemDesc()
+{
+	if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+	{
+		if (!pUI->Get_Render())
+		{
+			pUI->Set_Title(L"O2Ä¸½¶");
+			pUI->Set_Desc(L"¼ûÀ» ½®´Ù.");
+			pUI->Set_Render(true);
+		}
+	}
 }

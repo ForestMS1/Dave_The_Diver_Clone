@@ -42,10 +42,11 @@ private:
 private:
 	bool	frameMove;
 	bool	wasabiCreated;
-	float	m_fScale;
+	bool	soundPlayed = false;
 	float   good = 0.f;
 public:
 	float   gauge = -4.04f;
+	float	m_fScale;
 
 };
 

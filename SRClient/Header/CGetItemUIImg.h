@@ -7,6 +7,9 @@ private:
 	virtual ~CGetItemUIImg();
 
 public:
+	void Update_ImGui() override;
+
+public:
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
@@ -21,6 +24,8 @@ private:
 private:
 	const float m_fPosX;
 	const float m_fPosY;
+	float m_fDbgX;
+	float m_fDbgY;
 
 private:
 	Engine::CRcTex* m_pBufferCom;

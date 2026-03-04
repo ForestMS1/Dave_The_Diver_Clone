@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
+#include "CAABB.h"
 namespace Engine
 {
 	class CRcTex;
@@ -56,6 +56,11 @@ private:
 	wstring			m_sTexName;
 	float			m_fGauge= -0.49;
 	float			tiredTime;
+	float			runningSoundTime = 0.f;
+	float			walkSoundTime = 0.f;
+	float			DashSoundTime = 0.f;
+	bool			tiredSoundPlayed = false;
+
 public:
 	bool			makingWasabi = false;
 

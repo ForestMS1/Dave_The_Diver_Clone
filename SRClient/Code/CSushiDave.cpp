@@ -16,6 +16,11 @@
 #include "CAssetTexture.h"
 #include "CWasabi.h"
 #include "CWasabiObject.h"
+#include "CTea.h"
+#include "CTeaBubble.h"
+#include "CSushi.h"
+#include "CSmallMenu.h"
+#include "CSoundMgr.h"
 
 
 CSushiDave::CSushiDave()
@@ -115,7 +120,35 @@ _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
     
     Key_Input(fTimeDelta);
 
+    if ((curState == WALK || curState == SUSHI_WALK) && (curState != RUN && curState != SUSHI_RUN)) {
+        walkSoundTime += fTimeDelta;
+        if (walkSoundTime > 0.5f) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_DaveWalk", CSoundMgr::SFX, 1.0f);
+            walkSoundTime = 0.f;
+        }
+        DashSoundTime = 0.f;
+        tiredSoundPlayed = false;
+        
+    }else if((curState == RUN || curState == SUSHI_RUN) && (curState != WALK && curState != SUSHI_WALK)) {
+        DashSoundTime += fTimeDelta;
 
+        if (DashSoundTime > 0.5f) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_DaveRun", CSoundMgr::SFX, 1.0f);
+            DashSoundTime = 0.f;
+        }
+        walkSoundTime = 0.f;
+        tiredSoundPlayed = false;
+    }
+    else if (curState == TIRED || curState == SUSHI_TIRED) {
+     
+        if (!tiredSoundPlayed) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_DaveTired", CSoundMgr::SFX, 1.0f);
+            tiredSoundPlayed = true;
+         }
+        walkSoundTime = 0.f;
+        DashSoundTime = 0.f;
+
+    }
 
     return iExit;
 }
@@ -163,8 +196,13 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
                     else if (m_sSushiName == L"흰동가리") {
                         m_sTexName = L"Tex_ClownFish";
                     }
+                    else if (m_sSushiName == L"???") {
+                        m_sTexName = L"Tex_BanchoSushi";
+                    }
                     CGameMemMgr::GetInstance()->deleteCookingMenu();
+                 
                     static_cast<CBancho*>(bancho)->m_fGauge = -1;
+                    static_cast<CBancho*>(bancho)->spending = false;
                     static_cast<CBancho*>(bancho)->wasabiUse = false;
 
                 }
@@ -179,6 +217,7 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
             CGameObject* wasabi1 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Wasabi");
             if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE)) {
                 static_cast<CWasabi*>(wasabi1)->gauge = -4.04 + percent * 0.01f * 3.74f;
+                static_cast<CWasabi*>(wasabi1)->m_fScale = 0.f;
                 static_cast<CWasabi*>(wasabi1)->Set_Render(true);
                 makingWasabi = true;
             }
@@ -188,29 +227,41 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
     }
     if (coliders != nullptr) {
         list<CGameObject*>* customers = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"Customer");
-        for (auto customer : *customers) {
-            if (m_pAABB->Intersect(static_cast<CCustomer1*>(customer)->Get_AABB())) {
-                if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE))
-                {
-                    if (static_cast<CCustomer1*>(customer)->MenuBubble != nullptr) {
-                        static_cast<CCustomer1*>(customer)->gotSushi = true;
-                        static_cast<CCustomer1*>(customer)->sushiHanded = m_sSushiName;
-                        holdingSushi = false;
-                    }
+        CGameObject* tea = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"Tea");
 
+        for (auto customer : *customers) {
+            if (static_cast<CCustomer1*>(customer)->Get_AABB() != nullptr) {
+                if (m_pAABB->Intersect(static_cast<CCustomer1*>(customer)->Get_AABB())) {
+                    if (CDInputMgr::GetInstance()->Key_Down(DIKEYBOARD_SPACE))
+                    {
+
+                        if (static_cast<CCustomer1*>(customer)->MenuBubble != nullptr) {
+                            if (holdingSushi) {
+                                static_cast<CCustomer1*>(customer)->gotSushi = true;
+                                static_cast<CCustomer1*>(customer)->sushiHanded = m_sSushiName;
+                                holdingSushi = false;
+                            }
+                        }
+                        else {
+                            if (static_cast<CCustomer1*>(customer)->OrderedTea) {
+                                static_cast<CTea*>(tea)->customer = customer;
+                                tea->Set_Render(true);
+                                static_cast<CTeaBubble*>(static_cast<CCustomer1*>(customer)->TeaBubble)->gettingTea = true;
+                            }
+                        }
+                    }
                 }
             }
-
         }
 
     }
-  
+
 }
 
 void CSushiDave::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
+    pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
@@ -247,39 +298,7 @@ void CSushiDave::Render_GameObject()
     }
 
     m_pBufferCom->Render_Buffer();
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-    if (holdingSushi) {
-        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_SushiBox2"))
-        {
-            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-            {
-                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-            }
-        }
-
-        _matrix scaleMat = *m_pTransformCom->Get_World();
-        scaleMat.m[0][0] = 0.1f;
-        scaleMat.m[1][1] = 0.8f;
-        scaleMat.m[3][1] += 1.f;
-
-        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
-        m_pBufferCom->Render_Buffer();
-
-        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
-        {
-            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-            {
-                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-            }
-        }
-
-        scaleMat.m[0][0] = 0.15f;
-        scaleMat.m[1][1] = 0.15f;
-        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
-        m_pBufferCom->Render_Buffer();
-    }
-    // 게이지
     _matrix gauge = *m_pTransformCom->Get_World();
     if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveGauge"))
     {
@@ -340,7 +359,58 @@ void CSushiDave::Render_GameObject()
     pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
     pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-    //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    if (holdingSushi) {
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_SushiBox2"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        _matrix scaleMat = *m_pTransformCom->Get_World();
+        scaleMat.m[0][0] = 0.4f;
+        scaleMat.m[1][1] = 0.4f;
+        scaleMat.m[3][1] += 1.5f;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+        m_pBufferCom->Render_Buffer();
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        scaleMat.m[0][0] = 0.2f;
+        scaleMat.m[1][1] = 0.2f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+        m_pBufferCom->Render_Buffer();
+    }
+    CScene* scene = CManagement::GetInstance()->Get_Scene();
+    if (static_cast<CSushi*>(scene)->CustomerLeave == 9) {
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_CloseShop"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        _matrix matrix;
+        D3DXMatrixIdentity(&matrix);
+        matrix.m[0][0] = 12.f;
+        matrix.m[1][1] = 3.f;
+        matrix.m[3][1] = 1.6f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matrix);
+        m_pBufferCom->Render_Buffer();
+    }
+
+    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+
 }
 
 HRESULT CSushiDave::Ready_Component()
@@ -389,18 +459,19 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
                 if (m_fGauge <= -0.79f) {
                     curState = TIRED;
                     m_pTransformCom->Move_Pos(&left, 0.3f, fTimeDelta);
+                    return;
 
                 }
                 else {
                     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
                     {
                         curState = RUN;
-                        m_pTransformCom->Move_Pos(&left, 1.5f, fTimeDelta);
+                        m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
                         bMove = true;
                         return;
                     }
                     curState = WALK;
-                    m_pTransformCom->Move_Pos(&left, 0.8f, fTimeDelta);
+                    m_pTransformCom->Move_Pos(&left, 1.5f, fTimeDelta);
                 }
                 bMove = true;
                 return;
@@ -422,12 +493,12 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
                     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
                     {
                         curState = RUN;
-                        m_pTransformCom->Move_Pos(&right, 1.5f, fTimeDelta);
+                        m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
                         bMove = true;
                         return;
                     }
                     curState = WALK;
-                    m_pTransformCom->Move_Pos(&right, 0.8f, fTimeDelta);
+                    m_pTransformCom->Move_Pos(&right, 1.5f, fTimeDelta);
                 }
                 bMove = true;
                 return;
@@ -447,12 +518,12 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
                     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
                     {
                         curState = SUSHI_RUN;
-                        m_pTransformCom->Move_Pos(&left, 1.5f, fTimeDelta);
+                        m_pTransformCom->Move_Pos(&left, 2.5f, fTimeDelta);
                         bMove = true;
                         return;
                     }
                     curState = SUSHI_WALK;
-                    m_pTransformCom->Move_Pos(&left, 0.8f, fTimeDelta);
+                    m_pTransformCom->Move_Pos(&left, 1.5f, fTimeDelta);
                 }
                 bMove = true;
                 return;
@@ -473,12 +544,12 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
                     if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
                     {
                         curState = SUSHI_RUN;
-                        m_pTransformCom->Move_Pos(&right, 1.5f, fTimeDelta);
+                        m_pTransformCom->Move_Pos(&right, 2.5f, fTimeDelta);
                         bMove = true;
                         return;
                     }
                     curState = SUSHI_WALK;
-                    m_pTransformCom->Move_Pos(&right, 0.8f, fTimeDelta);
+                    m_pTransformCom->Move_Pos(&right, 1.5f, fTimeDelta);
                 }
                 bMove = true;
                 return;

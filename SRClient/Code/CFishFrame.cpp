@@ -15,6 +15,7 @@
 #include "CAssetDefaultFont.h"
 #include "CAssetMgr.h"
 #include "CDepthP.h"
+#include "CHeadP.h"
 CFishFrame::CFishFrame()
     : CGameObject()
 {
@@ -90,6 +91,16 @@ HRESULT CFishFrame::Ready_GameObject()
 
     if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"fishPic", pGameObject)))
         return E_FAIL;
+    pictures.push_back(pGameObject);
+    pGameObject = CHeadP::Create();
+
+    if (nullptr == pGameObject)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"fishPic", pGameObject)))
+        return E_FAIL;
+    CTransform* pTransform = static_cast<CTransform*>(pGameObject->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+    pTransform->m_vScale.y = 0.25f;
     pictures.push_back(pGameObject);
 
     pGameObject = CDepthP::Create();
@@ -175,6 +186,9 @@ void CFishFrame::Render_GameObject()
                 CGameObject* depth = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Depth");
                 depth->Set_Render(true);
                 m_sFishName = static_cast<CSushiFrame*>(*iter)->fishName;
+                if (m_sFishName == L"¹ÝÃÝ") {
+                    m_sFishName = L"???";
+                }
                 m_sFishQuantity = static_cast<CSushiFrame*>(*iter)->m_sQuanity + L"/1";
                 vector<CGameObject*>::iterator iter3 = pictures.begin();
                 for (iter3; iter3 != pictures.end(); iter3++) {
@@ -194,6 +208,10 @@ void CFishFrame::Render_GameObject()
                 }
                 else if (m_sFishName == L"³ë¶ûÅÁ") {
                     pictures[4]->Set_Render(true);
+                }
+                else if (m_sFishName == L"???") {
+                    pictures[5]->Set_Render(true);
+                    
                 }
             }
         }

@@ -2,8 +2,63 @@
 IMPLEMENT_SINGLETON(CGameMemMgr)
 
 
+std::wstring CGameMemMgr::Get_ItemTexName(DAVE_ITEM eItem)
+{
+	switch (eItem)
+	{
+	case	IT_WOOD: return L"Tex_UIITem_Wood";
+	case	IT_BONE: return L"Tex_UIITem_Bone";
+	case	IT_FRAGMENT: return L"Tex_UIITem_Fragment";
+	case	IT_JADETHURIBLE: return L"Tex_UIITem_JadeThurible";
+	case	IT_ROPE: return L"Tex_UIITem_Rope";
+	case	IT_RUBYRING: return L"Tex_UIITem_RubyRing";
+	case	IT_UMBELLULA: return L"Tex_UIITem_Umbellula";
+	case	IT_WOODPLATE: return L"Tex_UIITem_Woodplate";
+	case	IT_WATCH: return L"Tex_UIITem_Watch";
+	}
+
+	return L"";
+}
+
+std::wstring CGameMemMgr::Get_ItemTitle(DAVE_ITEM eItem)
+{
+	switch (eItem)
+	{
+	case	IT_WOOD: return L"³ª¹«";
+	case	IT_BONE: return L"»À";
+	case	IT_FRAGMENT: return L"ºÎÇ°";
+	case	IT_JADETHURIBLE: return L"¿ÁÇâ·Î";
+	case	IT_ROPE: return L"·ÎÇÁ";
+	case	IT_RUBYRING: return L"·çºñ¹ÝÁö";
+	case	IT_UMBELLULA: return L"¿òº§·ê¶ó";
+	case	IT_WOODPLATE: return L"³ª¹«ÆÇÀÚ";
+	case	IT_WATCH: return L"°í±Þ½Ã°è";
+	}
+
+	return L"404";
+}
+
+std::wstring CGameMemMgr::Get_ItemDesc(DAVE_ITEM eItem)
+{
+	switch (eItem)
+	{
+	case	IT_WOOD: return L"³ª¹« ´Ù";
+	case	IT_BONE: return L"»À ´Ù";
+	case	IT_FRAGMENT: return L"ºÎÇ° ÀÌ´Ù";
+	case	IT_JADETHURIBLE: return L"¿ÁÇâ·Î ´Ù";
+	case	IT_ROPE: return L"·ÎÇÁ ´Ù";
+	case	IT_RUBYRING: return L"·çºñ¹ÝÁö ´Ù";
+	case	IT_UMBELLULA: return L"¿òº§·ê¶ó ´Ù";
+	case	IT_WOODPLATE: return L"³ª¹«ÆÇÀÚ ´Ù";
+	case	IT_WATCH: return L"°í±Þ½Ã°è ´Ù";
+	}
+
+	return L"404";
+}
+
 CGameMemMgr::CGameMemMgr()
 	: m_iMoney(300)
+	, m_bShipNight(false)
 {
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] = 1;
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Clothes"] = 1;
@@ -45,6 +100,7 @@ HRESULT CGameMemMgr::Ready()
 	addFish(L"ÄÚ¹Ý¾ÆÁö", 6, 18, 30);
 	addFish(L"³ë¶û¹é", 7, 12, 20);
 	addFish(L"Èòµ¿°¡¸®", 8, 15, 23);
+	addFish(L"¹ÝÃÝ", 9, 10, 0);
     return S_OK;
 }
 
@@ -90,6 +146,7 @@ void CGameMemMgr::reduceMenu(wstring name)
 	}
 	for (iter; iter != SelectedMenu.end();) {
 		if ((*iter)->quantity <= 0) {
+			Safe_Delete(*iter);
 			iter = SelectedMenu.erase(iter);
 		}
 		else {
@@ -108,7 +165,7 @@ void CGameMemMgr::addCookingMenu(wstring name)
 void CGameMemMgr::deleteCookingMenu()
 {
 	if (!CookingMenu.empty()) {
-		delete CookingMenu.front();
+		Safe_Delete(CookingMenu.front());
 		CookingMenu.pop();
 	}
 }
@@ -116,7 +173,41 @@ void CGameMemMgr::deleteCookingMenu()
 void CGameMemMgr::ClearCookingMenu()
 {
 	while (!CookingMenu.empty()) {
-		delete CookingMenu.front();
-		CookingMenu.pop();
+
+		Safe_Delete(CookingMenu.front());
+		CookingMenu.pop(); 
 	}
+}
+
+std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunTexName(DAVE_GUN eItem)
+{
+	switch (eItem)
+	{
+	case GUN_DEFAULT: return L"";
+	case GUN_PENTA_ACCEL: return L"Tex_UI_Gun_Penta_Accel";
+	case GUN_TRIPLE_ACCEL: return L"Tex_UI_Gun_Triple_Accel";
+	}
+	return L"";
+}
+
+std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunTitle(DAVE_GUN eItem)
+{
+	switch (eItem)
+	{
+	case GUN_DEFAULT: return L"";
+	case GUN_PENTA_ACCEL: return L"ÆæÅ¸ ¾Ç¼¿";
+	case GUN_TRIPLE_ACCEL: return L"Æ®¸®ÇÃ ¾Ç¼¿";
+	}
+	return L"";
+}
+
+std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunDesc(DAVE_GUN eItem)
+{
+	switch (eItem)
+	{
+	case GUN_DEFAULT: return L"";
+	case GUN_PENTA_ACCEL: return L"ÆæÅ¸ ¾Ç¼¿ ÀÌ´Ù";
+	case GUN_TRIPLE_ACCEL: return L"Æ®¸®ÇÃ ¾Ç¼¿ ÀÌ´Ù";
+	}
+	return L"";
 }

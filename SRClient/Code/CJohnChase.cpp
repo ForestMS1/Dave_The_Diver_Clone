@@ -29,6 +29,7 @@ void CJohnChase::Input(const _float& fTimeDelta)
 
 _int CJohnChase::Update_State(const _float& fTimeDelta)
 {
+	m_pOwner->Update_ToTargetDir();
 	Switch_TexName();
 	MoveTo_Target(fTimeDelta);
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 8);

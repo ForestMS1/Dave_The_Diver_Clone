@@ -47,7 +47,7 @@ _int		CTransitionFade::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_TRANSITION, this);
 
     m_fAlpha = m_tween.step(int(fTimeDelta * 1000.f));
 

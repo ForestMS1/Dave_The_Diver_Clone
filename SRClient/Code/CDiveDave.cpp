@@ -18,7 +18,11 @@
 #include "CDiveDaveHit.h"
 #include "CDiveDaveDie.h"
 #include "CParticleMgr.h"
-string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "HIT", "DIE" };
+#include "CDiveDaveSubMarine.h"
+#include "CGameMemMgr.h"
+#include "CDiveDaveInitStart.h"
+#include "CDiveDaveGun.h"
+string debugState[(_uint)DIVEDAVESTATE::DAVE_STATE_END] = { "IDLE", "MOVE", "ATTACK", "MELEEATTACK", "TANNING", "OPEN", "PICKUP", "SUBMARINE", "INIT_START", "HIT", "DIE" };
 string debugEquipped[(_uint)EQUIPPED::EQUIPPED_END] = {  "HARPOON", "GUN" };
 
 CDiveDave::CDiveDave()
@@ -42,12 +46,16 @@ void CDiveDave::Start()
 	if (m_bInitComplete)
 		return;
 
+	m_fHp = m_fMaxHp;
+
 	m_bInitComplete = true;
 	Event e;
 	e.type = EVENTTYPE::CHANGE_HP;
 	e.value = (_uint)m_fHp;
 	e.fValue = m_fHp / m_fMaxHp;
 	CDiveDave::Notify(e);
+
+	Change_Weight(0.f);
 }
 
 HRESULT CDiveDave::Ready_GameObject()
@@ -61,8 +69,8 @@ HRESULT CDiveDave::Ready_GameObject()
 	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	Set_State(DIVEDAVESTATE::IDLE);
 
+	Set_State(DIVEDAVESTATE::INIT_START);
 
 	//-------------AABB Collider With ItemBox----------------
 	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
@@ -92,6 +100,9 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		Mouse_Input();
 	}
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
+
+	DoT(fTimeDelta);
+
 	m_pFSM->Update_State(fTimeDelta);
 
 #ifdef _DEBUG
@@ -109,13 +120,31 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		//Å×½ºÆ®
 		_vec3 Pos{};
 		m_pTransformCom->Get_Info(INFO_POS, &Pos);
-		//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
-		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_COIN, Pos, 10);
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
+		//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_COIN, Pos, 10);
 	}
 
 	
 	if (ImGui::Button("OnDead"))
 		m_bIsDie = true;
+	if (ImGui::Button("SubMarine"))
+		m_bSubMarine = !m_bSubMarine;
+	if (ImGui::Button("AddWeight +5"))
+		Change_Weight(5.f);
+	if (ImGui::Button("AddWeight -5"))
+		Change_Weight(-5.f);
+	if (ImGui::Button("ChangeGun"))
+	{
+		CDiveDaveGun* pGun = dynamic_cast<CDiveDaveGun*>(m_vecWeaponSlot[(_uint)EQUIPPED::GUN]);
+		if (pGun != nullptr)
+		{
+			if (pGun->Get_eGun() == CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT)
+				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_TRIPLE_ACCEL);
+			else
+				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT);
+		}
+	}
+
 
 	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
 	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);
@@ -178,6 +207,17 @@ void CDiveDave::AddFrame(const _float& fTimeDelta, const _float& fSpeed, _uint s
 
 _bool CDiveDave::Check_GlobalState()
 {
+	if (m_fCurStorageWeight > m_fMaxStorageWeight)
+	{
+		m_fSpeed = 3.f;
+		m_bOverloaded = true;
+	}
+	else
+	{
+		m_fSpeed = 10.f;
+		m_bOverloaded = false;
+	}
+
 	if (m_bIsDie)
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::DIE);
@@ -188,6 +228,12 @@ _bool CDiveDave::Check_GlobalState()
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::HIT);
 	
+		return true;
+	}
+
+	if (m_bSubMarine)
+	{
+		m_pFSM->Set_State(DIVEDAVESTATE::SUBMARINE);
 		return true;
 	}
 
@@ -255,6 +301,9 @@ HRESULT	CDiveDave::Add_State()
 	m_pFSM->Add_State<CDiveDavePickUp>(DIVEDAVESTATE::PICKUP);
 	m_pFSM->Add_State<CDiveDaveHit>(DIVEDAVESTATE::HIT);
 	m_pFSM->Add_State<CDiveDaveDie>(DIVEDAVESTATE::DIE);
+	m_pFSM->Add_State<CDiveDaveSubMarine>(DIVEDAVESTATE::SUBMARINE);
+	m_pFSM->Add_State<CDiveDaveInitStart>(DIVEDAVESTATE::INIT_START);
+	
 
 	//m_mapState.insert({ DIVEDAVESTATE::IDLE, CDiveDaveIdle::Create(this) });
 	//m_mapState.insert({ DIVEDAVESTATE::MOVE, CDiveDaveMove::Create(this) });
@@ -284,6 +333,29 @@ void CDiveDave::Mouse_Input()
 		Set_State(DIVEDAVESTATE::MELEEATTACK);
 	else if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB))
 		Set_State(DIVEDAVESTATE::ATTACK);
+}
+
+void CDiveDave::DoT(const _float fTimeDelta)
+{
+	m_fDoTTime += fTimeDelta;
+
+	if (m_fDoTTime > 5.f)
+	{
+		m_fHp -= 1.f;
+
+		Event e;
+		e.type = EVENTTYPE::CHANGE_HP;
+		e.value = (_uint)m_fHp;
+		e.fValue = m_fHp / m_fMaxHp;
+		CDiveDave::Notify(e);
+
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+		}
+		m_fDoTTime = 0.f;
+	}
 }
 
 

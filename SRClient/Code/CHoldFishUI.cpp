@@ -14,6 +14,8 @@
 #include "CHoldFishUIItemGroup.h"
 
 #include "CHoldFishUIImg.h"
+#include "CGameMemMgr.h"
+#include "CDiveDave.h"
 
 CHoldFishUI::CHoldFishUI(float fPosX, float fPosY)
     : CGameObject()
@@ -51,6 +53,8 @@ HRESULT		CHoldFishUI::Ready_GameObject()
 
     m_fDbgX = 0.f;
     m_fDbgY = 0.f;
+    
+    m_fViewZ = 0.499;
 
 
     m_pDaveTextureFrameCom->RegistTextureFrame(L"Default", L"Tex_Ship_DiverBoxDave", 0.2f);
@@ -96,7 +100,19 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             pLayer->Add_GameObject(L"HoldFishUIItemAreaGroup", pGroup);
         }
 
+
         // 작살총
+        {
+            auto pJacksalChock = CHoldFishUIImg::Create(-1.07f, 0.62f);
+            pJacksalChock->Set_Scale(0.040);
+            pJacksalChock->Set_ViewZ(0.49f);
+            pJacksalChock->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Jaksal");
+            pJacksalChock->Set_Parent(this);
+            pJacksalChock->Ready_After_Create();
+            pLayer->Add_GameObject(L"HoldFishUIJacksalChong", pJacksalChock);
+        }
+
+        // 작살촉
         {
             auto pJacksalChong = CHoldFishUIImg::Create(-0.6f, 0.62f);
             pJacksalChong->Set_Scale(0.040);
@@ -107,23 +123,13 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             pLayer->Add_GameObject(L"HoldFishUIJacksalChong", pJacksalChong);
         }
 
-        // 작살촉
-        {
-            auto pJacksalChock = CHoldFishUIImg::Create(-1.07f, 0.62f);
-            pJacksalChock->Set_Scale(0.040);
-            pJacksalChock->Set_ViewZ(0.49f);
-            pJacksalChock->Set_AssetName(L"Tex_FishUIJaksalChock");
-            pJacksalChock->Set_Parent(this);
-            pJacksalChock->Ready_After_Create();
-            pLayer->Add_GameObject(L"HoldFishUIJacksalChock", pJacksalChock);
-        }
 
         // 근접무기
         {
             auto pKnief = CHoldFishUIImg::Create(-0.14f, 0.62f);
             pKnief->Set_Scale(0.040);
             pKnief->Set_ViewZ(0.49f);
-            pKnief->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pKnief->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Knief");
             pKnief->Set_Parent(this);
             pKnief->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIKnief", pKnief);
@@ -134,7 +140,7 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             auto pGun = CHoldFishUIImg::Create(-1.07f, 0.43f);
             pGun->Set_Scale(0.040);
             pGun->Set_ViewZ(0.49f);
-            pGun->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pGun->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Gun");
             pGun->Set_Parent(this);
             pGun->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIGun", pGun);
@@ -145,7 +151,7 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             auto pBujeok = CHoldFishUIImg::Create(-0.72f, 0.43f);
             pBujeok->Set_Scale(0.040);
             pBujeok->Set_ViewZ(0.49f);
-            pBujeok->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pBujeok->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Jusin");
             pBujeok->Set_Parent(this);
             pBujeok->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIBujeok1", pBujeok);
@@ -156,7 +162,7 @@ HRESULT		CHoldFishUI::Ready_GameObject()
             auto pBujeok = CHoldFishUIImg::Create(-0.5f, 0.43f);
             pBujeok->Set_Scale(0.040);
             pBujeok->Set_ViewZ(0.49f);
-            pBujeok->Set_AssetName(L"Tex_FishUIJaksalChock");
+            pBujeok->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Jusin");
             pBujeok->Set_Parent(this);
             pBujeok->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIBujeok2", pBujeok);
@@ -176,27 +182,40 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
             if (auto pObjs = pLayer->Get_GameObjects(L"HoldFishUIItemArea"))
             {
                 bool bReSorting = false;
+                int idx = 0;
+                auto iter = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes().begin();
                 for (auto& pObj : *pObjs)
                 {
                     if (auto pArea = dynamic_cast<CHoldFishUIItemArea*>(pObj))
                     {
                         if (pArea->Get_EdgeVisible())
                         {
-                            
                             if (auto pPanel = pLayer->Get_GameObjectFirst(L"HoldFishUIDropPanel"))
                             {
                                 pArea->Set_DeadCascade();
                                 pPanel->Set_DeadCascade();
                                 bReSorting = true;
+
+                                if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+                                {
+                                    pDave->Change_Weight(-iter->fWeight);
+                                }
+
+                                iter = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes().erase(iter);
+                                
+                                break;
                             }
                             else
                             {
                                 auto pArea = CHoldFishUIDropPanel::Create(0.f, 0.f);
                                 pArea->Set_Parent(this);
+                                pArea->Set_Title(iter->sFishName);
                                 pLayer->Add_GameObject(L"HoldFishUIDropPanel", pArea);
                             }
                         }
                     }
+                    ++iter;
+                    ++idx;
                 }
 
                 if (bReSorting)
@@ -252,7 +271,7 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
 
     return iExit;
 }
@@ -306,6 +325,14 @@ void		CHoldFishUI::Render_GameObject()
 
      // 키로수
     {
+        float fKg = 0.f;
+        float fMaxKg = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JeokjaeWeight();
+
+        // TODO: 피시뿐 아니라 아이템도
+        for (auto& pFish : CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes())
+        {
+            fKg += pFish.fWeight;
+        }
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
         float fOffsetX = 0.380f;
@@ -319,7 +346,10 @@ void		CHoldFishUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"12.3/12.2 kg", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << fKg << L"/" << fMaxKg << L"Kg";
+            std::wstring result = wss.str();
+            pDefFont->Render_Font(result, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 

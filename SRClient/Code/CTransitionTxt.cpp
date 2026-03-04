@@ -53,7 +53,7 @@ _int		CTransitionTxt::Update_GameObject(const _float& fTimeDelta)
 
 
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_TRANSITION, this);
 
     return iExit;
 }

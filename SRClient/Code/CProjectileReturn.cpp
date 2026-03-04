@@ -95,6 +95,11 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 	{
 		if (pProjectile->m_pCaughtFish != nullptr && static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
 		{
+			// [LSY] 피시 죽이기전에 물고기 잡았다고 해주기
+			if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
+			{
+				pFish->JacksalAcquire();
+			}
 			pProjectile->m_pCaughtFish->Set_DeadCascade();
 			pProjectile->m_pCaughtFish = nullptr;
 			static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_FishCaught(false);

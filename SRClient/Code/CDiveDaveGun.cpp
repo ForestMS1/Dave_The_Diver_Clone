@@ -4,7 +4,10 @@
 #include "CDiveDave.h"
 #include "CHelper.h"
 #include "CDiveDaveBullet.h"
-CDiveDaveGun::CDiveDaveGun()
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
+CDiveDaveGun::CDiveDaveGun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
+	: m_eCurGun(eGun)
 {
 }
 
@@ -22,16 +25,27 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 	if (FAILED(Ready_Component()))
 		return E_FAIL;
 
+	switch (m_eCurGun)
+	{
+	case CGameMemMgr::CDaveInfo::GUN_DEFAULT:
+		m_sTexName = L"Tex_BasicRifle";
+		break;
+	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
+		m_sTexName = L"TripleAxel";
+		break;
+	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+		m_sTexName = L"PentaAxel";
+		break;
+	default:
+		m_sTexName = L"Tex_BasicRifle";
+		break;
+	}
+
 	_vec3 vScale = { 0.4f, 0.4f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	_float fWidth = 32.f;
-	_float fHeight = 12.f;
-	_float fAspect = fWidth + fHeight;
-	fAspect /= 2.f;
+	CDiveDaveGun::Set_Size();
 
-	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-	m_pTransformCom->Multiply_Scale(&vScale);
 	return S_OK;
 }
 
@@ -39,8 +53,6 @@ void CDiveDaveGun::Init()
 {
 	if (m_bInitComplete)
 		return;
-
-	m_sTexName = L"Tex_BasicRifle";
 	static_cast<CDiveDave*>(m_pParentGameObject)->Set_WeaponSlot(this, EQUIPPED::GUN);
 	m_bInitComplete = true;
 }
@@ -87,7 +99,13 @@ void CDiveDaveGun::Render_GameObject()
 
 	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	m_pTextureCom->Set_Texture(0);
+	if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
+	{
+		if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+		{
+			pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+		}
+	}
 
 	m_pBufferCom->Render_Buffer();
 
@@ -98,10 +116,6 @@ HRESULT CDiveDaveGun::Ready_Component()
 {
 	// 버퍼
 	if (FAILED((AddComponent<Engine::CAttackReadyArmTex, ID_STATIC>(L"Proto_AttackReadyArmBuffer", L"Com_Buffer", &m_pBufferCom))))
-		return E_FAIL;
-
-	// 텍스쳐
-	if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_BasicRifleTexture", L"Com_Texture", &m_pTextureCom))))
 		return E_FAIL;
 
 	// 트랜스폼
@@ -166,21 +180,135 @@ void CDiveDaveGun::Rotate_ToMouse()
 	m_pTransformCom->m_vAngle.z = fDegree;
 }
 
-void CDiveDaveGun::Fire()
+void CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 {
-	//총알 발사 후 IDLE
-	_vec3 vOrigin, vDir;
-	m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
-	D3DXVec3Normalize(&vDir, &vDir);
-	m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
-	CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->
-		Add_GameObject(L"DiveDaveBullet", CDiveDaveBullet::Create(vOrigin, vDir, m_pTransformCom->m_vAngle.z));
-	static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
+	if (m_bInitComplete == false)
+		return;
+
+	// 기존 총 사이즈 해제
+	Reset_Size();
+
+	// 총 변경
+	m_eCurGun = eGun;
+
+	switch (m_eCurGun)
+	{
+	case CGameMemMgr::CDaveInfo::GUN_DEFAULT:
+		m_sTexName = L"Tex_BasicRifle";
+		break;
+	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
+		m_sTexName = L"TripleAxel";
+		break;
+	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+		m_sTexName = L"PentaAxel";
+		break;
+	default:
+		m_sTexName = L"Tex_BasicRifle";
+		break;
+	}
+
+	// 새로 바꾼 총으로 사이즈 조정
+	Set_Size();
+
+	dynamic_cast<CDiveDave*>(m_pParentGameObject)->Set_WeaponSlot(this, EQUIPPED::GUN);
 }
 
-CDiveDaveGun* CDiveDaveGun::Create()
+void CDiveDaveGun::Fire()
 {
-	CDiveDaveGun* pGun = new CDiveDaveGun;
+	_vec3 vOrigin, vDir;
+
+	_float baseAngle;
+	_float spreadAngle = 15.f;
+	_float rad;
+	_matrix matLeft, matRight;
+	_vec3 vLeftDir, vRightDir;
+
+	auto pLayer = CManagement::GetInstance()
+		->Get_Scene()
+		->Get_Layer(L"0_GameLogic_Layer");
+
+	switch (m_eCurGun)
+	{
+	case CGameMemMgr::CDaveInfo::GUN_DEFAULT:
+		//총알 발사 후 IDLE
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+		m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
+		pLayer->Add_GameObject(L"DiveDaveBullet", CDiveDaveBullet::Create(vOrigin, vDir, m_pTransformCom->m_vAngle.z));
+		static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
+		break;
+	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
+		//총알 발사 후 IDLE
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
+
+		baseAngle = m_pTransformCom->m_vAngle.z;
+
+		spreadAngle = 10.f;
+
+		rad = D3DXToRadian(spreadAngle);
+
+		// 좌/우 회전용
+		D3DXMatrixRotationZ(&matLeft, rad);
+		D3DXMatrixRotationZ(&matRight, -rad);
+
+		D3DXVec3TransformNormal(&vLeftDir, &vDir, &matLeft);
+		D3DXVec3TransformNormal(&vRightDir, &vDir, &matRight);
+
+		D3DXVec3Normalize(&vLeftDir, &vLeftDir);
+		D3DXVec3Normalize(&vRightDir, &vRightDir);
+
+		pLayer->Add_GameObject(L"DiveDaveBullet",
+			CDiveDaveBullet::Create(vOrigin, vDir, baseAngle));
+
+		pLayer->Add_GameObject(L"DiveDaveBullet",
+			CDiveDaveBullet::Create(vOrigin, vLeftDir, baseAngle + spreadAngle));
+
+		pLayer->Add_GameObject(L"DiveDaveBullet",
+			CDiveDaveBullet::Create(vOrigin, vRightDir, baseAngle - spreadAngle));
+
+		static_cast<CDiveDave*>(m_pParentGameObject)
+			->Set_State(DIVEDAVESTATE::IDLE);
+		break;
+	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vOrigin);
+
+		baseAngle = m_pTransformCom->m_vAngle.z;
+
+		spreadAngle = 5.f;
+
+		for (int i = -2; i <= 2; ++i)
+		{
+			float currentAngle = spreadAngle * i;
+			float rad = D3DXToRadian(currentAngle);
+
+			D3DXMATRIX matRot;
+			D3DXMatrixRotationZ(&matRot, rad);
+
+			D3DXVECTOR3 vFireDir;
+			D3DXVec3TransformNormal(&vFireDir, &vDir, &matRot);
+			D3DXVec3Normalize(&vFireDir, &vFireDir);
+
+			pLayer->Add_GameObject(L"DiveDaveBullet",
+				CDiveDaveBullet::Create(vOrigin, vFireDir, baseAngle + currentAngle));
+		}
+
+		static_cast<CDiveDave*>(m_pParentGameObject)
+			->Set_State(DIVEDAVESTATE::IDLE);
+		break;
+	default:
+		break;
+	}
+}
+
+CDiveDaveGun* CDiveDaveGun::Create(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
+{
+	CDiveDaveGun* pGun = new CDiveDaveGun(eGun);
 
 	if (FAILED(pGun->Ready_GameObject()))
 	{
@@ -194,4 +322,28 @@ CDiveDaveGun* CDiveDaveGun::Create()
 void CDiveDaveGun::Free()
 {
 	CGameObject::Free();
+}
+
+
+void	CDiveDaveGun::Set_Size()
+{
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(m_sTexName)->at(0))->Get_ImgInfo();
+	_float fWidth = imgInfo.Width;
+	_float fHeight = imgInfo.Height;
+	_float fAspect = fWidth + fHeight;
+	fAspect /= 2.f;
+
+	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
+}
+void	CDiveDaveGun::Reset_Size()
+{
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(m_sTexName)->at(0))->Get_ImgInfo();
+	_float fWidth = imgInfo.Width;
+	_float fHeight = imgInfo.Height;
+	_float fAspect = fWidth + fHeight;
+	fAspect /= 2.f;
+
+	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
 }

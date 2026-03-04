@@ -25,6 +25,8 @@
 #include "CLessButton.h"
 #include "CMaxButton.h"
 #include "CCloseButton.h"
+#include "CBanchoR.h"
+#include "CHeadP.h"
 CFishConfirmFrame::CFishConfirmFrame()
     : CGameObject()
 {
@@ -103,6 +105,9 @@ HRESULT CFishConfirmFrame::Ready_GameObject()
     fishPictures.push_back(pGameObject);
     frameGameObjects.push_back(pGameObject);
 
+
+    
+
     pGameObject = CClownFishP::Create();
 
     if (nullptr == pGameObject)
@@ -123,6 +128,16 @@ HRESULT CFishConfirmFrame::Ready_GameObject()
     fishPictures.push_back(pGameObject);
     frameGameObjects.push_back(pGameObject);
 
+    pGameObject = CHeadP::Create();
+
+    if (nullptr == pGameObject)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"fishConfirmPic", pGameObject)))
+        return E_FAIL;
+
+    fishPictures.push_back(pGameObject);
+    frameGameObjects.push_back(pGameObject);
 
     pGameObject = CBluejongR::Create();
 
@@ -174,6 +189,17 @@ HRESULT CFishConfirmFrame::Ready_GameObject()
         return E_FAIL;
     sushiPictures.push_back(pGameObject);
     frameGameObjects.push_back(pGameObject);
+
+    pGameObject = CBanchoR::Create();
+
+    if (nullptr == pGameObject)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirmPic", pGameObject)))
+        return E_FAIL;
+    sushiPictures.push_back(pGameObject);
+    frameGameObjects.push_back(pGameObject);
+
     pGameObject = CDepthP::Create();
 
     if (nullptr == pGameObject)
@@ -339,6 +365,9 @@ void CFishConfirmFrame::Render_GameObject()
                 depth->Set_Render(true);
              
                 m_sFishName = static_cast<CSushiFrame*>(*iter)->fishName;
+                if (m_sFishName == L"π›√›") {
+                    m_sFishName = L"???";
+                }
                 m_sSushiName = m_sFishName + L" √ π‰";
                 m_sFishQuantity = static_cast<CSushiFrame*>(*iter)->m_sQuanity + L"/1";
                 //m_sQuantitySelected = 
@@ -369,6 +398,13 @@ void CFishConfirmFrame::Render_GameObject()
                 else if (m_sFishName == L"≥Î∂˚≈¡") {
                     fishPictures[4]->Set_Render(true);
                     sushiPictures[4]->Set_Render(true);
+                }
+                else if (m_sFishName == L"???") {
+                    fishPictures[5]->Set_Render(true);
+                    sushiPictures[5]->Set_Render(true);
+                    CTransform* pTransform = static_cast<CTransform*>(sushiPictures[5]->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                    pTransform->m_vScale = { 0.2f, 0.13f, 1.f };
+
                 }
             }
         }

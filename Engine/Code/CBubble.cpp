@@ -64,7 +64,7 @@ void CBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 
 	GetRandomVector(&attribute->velocity, &min, &max);
 	attribute->velocity *= 1.f;
-	attribute->_color = D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.f);
+	attribute->_color = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	attribute->_age = 0.f;
 	attribute->_lifeTime = GetRandomFloat(0.f, 5.f);;
 }

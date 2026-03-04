@@ -63,6 +63,9 @@ HRESULT CMenuBubble::Ready_GameObject()
     else if (m_sFishName == L"Èòµ¿°¡¸®") {
         m_sTexName = L"Tex_ClownFish";
     }
+    else if (m_sFishName == L"???") {
+        m_sTexName = L"Tex_BanchoSushi";
+    }
     CGameMemMgr::GetInstance()->addCookingMenu(m_sFishName);
 
     return S_OK;
@@ -75,9 +78,9 @@ _int CMenuBubble::Update_GameObject(const _float& fTimeDelta)
     if (m_bRender) {
         deltaTime += fTimeDelta;
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-        if (deltaTime >= 2.f) {
+        if (deltaTime >= 3.f) {
             if (tempY <= 0) {
-                tempY += fTimeDelta * 0.05f;
+                tempY += fTimeDelta * 0.02f;
             }
         }
        
@@ -108,6 +111,8 @@ void      CMenuBubble::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+        pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
+
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
         m_pMenuBubbleTextureCom->Set_Texture(0);

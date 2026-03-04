@@ -12,6 +12,7 @@
 #include "CDInputMgr.h"
 #include "CColliderMgr.h"
 #include "CWasabiObject.h"
+#include "CSmallMenu.h"
 CBancho::CBancho()
     : CGameObject() 
 {
@@ -19,6 +20,7 @@ CBancho::CBancho()
     m_sFishName = L"";
     m_sTexName = L"";
     wasabiUse = false;
+    spending = false;
 }
 
 CBancho::CBancho(const CGameObject& rhs)
@@ -70,13 +72,15 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
         break;
     }
     CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
+
     float percent = static_cast<CWasabiObject*>(wasabi)->percent;
-    if (static_cast<CWasabiObject*>(wasabi)->percent > 1.f) {
+    if (static_cast<CWasabiObject*>(wasabi)->percent >= 1.f) {
         if (CGameMemMgr::GetInstance()->getCookingMenu().size() != 0) {
             // 요리중으로 변경되면 현재 상태를 COOK 전 상태를 
-        
             m_sFishName = CGameMemMgr::GetInstance()->getCookingMenu().front()->name;
             curState = COOK;
+            
+
            
             if (m_sFishName == L"블루종") {
                 m_sTexName = L"Tex_Bluejong";
@@ -96,6 +100,9 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
             else if (m_sFishName == L"흰동가리") {
                 m_sTexName = L"Tex_ClownFish";
             }
+            else if (m_sFishName == L"???") {
+                m_sTexName = L"Tex_BanchoSushi";
+            }
         }
         else {
             curState = IDLE;
@@ -107,7 +114,19 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
         curState = IDLE;
     }
     
-
+    if (curState == COOK && m_fGauge == -1.f && !spending) {
+        list<CGameObject*>* smallMenus = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SmallMenu");
+        if (smallMenus != nullptr) {
+            list<CGameObject*>::iterator iter = smallMenus->begin();
+            for (iter; iter != smallMenus->end(); iter++) {
+                if (m_sFishName == static_cast<CSmallMenu*>(*iter)->fishName) {
+                    static_cast<CSmallMenu*>(*iter)->CurQuantity = to_wstring(stoi(static_cast<CSmallMenu*>(*iter)->CurQuantity) - 1);
+                    spending = true;
+                    break;
+                }
+            }
+        }
+    }
     return iExit;
 }
 
@@ -124,24 +143,13 @@ void CBancho::LateUpdate_GameObject(const _float& fTimeDelta)
     if (curState == COOK) {
         m_fGauge += fTimeDelta * 0.15f;
     }
-    //if (m_pAABB->Intersect())
-    //{
-    //    // Some Logic
-    //    if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
-    //    {
-    //        // 만약 충돌한다면 태그비교후 보이드포인터 들고와서 캐스팅한다음 조작한다.
-    //        if (m_pAABB->Get_Tag() == L"AABB_Bancho")
-    //        {
 
-    //        }
-    //    }
-    //}
 }
 
 void CBancho::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
+    pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
     switch (curState)
@@ -200,6 +208,7 @@ void CBancho::Render_GameObject()
         pGraphicDev->SetTransform(D3DTS_WORLD, &bancho);
 
         m_pBufferCom->Render_Buffer();
+
         if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_CookingGauge"))
         {
             if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))

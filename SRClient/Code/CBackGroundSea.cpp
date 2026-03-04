@@ -3,6 +3,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
+#include "CMapMgr.h"
 CBackGroundSea::CBackGroundSea()
 	: CGameObject()
 {
@@ -39,21 +40,105 @@ _int CBackGroundSea::Update_GameObject(const _float& fTimeDelta)
 void CBackGroundSea::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	LightDown();
 }
 
 void CBackGroundSea::Render_GameObject()
 {
+	//LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+
+
+	//pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
+
+
+	//m_pTextureCom->Set_Texture(0);
+
+	//m_pBufferCom->Render_Buffer();
+
+	//D3DXMATRIX matTmp;
+	//D3DXMatrixIdentity(&matTmp);
+	//pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+
+
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
+	IDirect3DStateBlock9* pState = nullptr;
+	pGraphicDev->CreateStateBlock(D3DSBT_ALL, &pState);
+	pState->Capture();
+	_vec3 floor{};
+	if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+		CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+		CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 
+		pDaveTransform->Get_Info(INFO_POS, &floor);
+	}
+
+
+	if (floor.y <= -50.f && m_dark > 0.5f) {
+		m_dark -= 0.01f;
+	}
+	else if (floor.y > -50.f && m_dark <= 0.99f) {
+		m_dark += 0.01f;
+	}
+	else if (floor.y > -100.f && m_dark <= 0.5f) {
+		m_dark += 0.01f;
+	}
+	else if (floor.y <= -100.f && m_dark >=0.0f) {
+		m_dark -= 0.01f;
+		
+	}
+
+	if (m_dark < 0) {
+		m_dark = 0.f;
+	}
+	float t = 1.f - m_dark;   
+
+	// 시작색 (밝은)
+	float r0 = 255.f;
+	float g0 = 255.f;
+	float b0 = 255.f;
+
+
+	// 목표색 (어두운)
+	float r1 = 100.f;
+	float g1 = 100.f;
+	float b1 = 100.f;
+
+
+	// 선형보간
+	BYTE r = (BYTE)(r0 + (r1 - r0) * t);
+	BYTE g = (BYTE)(g0 + (g1 - g0) * t);
+	BYTE b = (BYTE)(b0 + (b1 - b0) * t);
+
+	DWORD tfactor = D3DCOLOR_ARGB(255, r, g, b);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, tfactor);
+
+	pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+
+	// 알파는 원본 텍스쳐 알파 그대로
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 
 	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
-
-
 	m_pTextureCom->Set_Texture(0);
 
+
 	m_pBufferCom->Render_Buffer();
+	// -------------------------------------------------------------
+
+	pState->Apply();
+	pState->Release();
+
+
+
 
 	D3DXMATRIX matTmp;
 	D3DXMatrixIdentity(&matTmp);
@@ -98,4 +183,12 @@ CBackGroundSea* CBackGroundSea::Create()
 void CBackGroundSea::Free()
 {
 	CGameObject::Free();
+}
+
+void CBackGroundSea::LightDown() {
+
+
+
+
+
 }

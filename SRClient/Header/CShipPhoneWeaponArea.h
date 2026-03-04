@@ -8,6 +8,7 @@ private:
 
 public:
 	_uint Get_Idx()const { return m_iIdx; }
+	void Set_AssetName(std::wstring_view sv) { m_sAssetName = sv; }
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -29,6 +30,9 @@ private:
 	const float m_fPosX;
 	const float m_fPosY;
 	_uint m_iIdx;
+
+	std::wstring m_sAssetName;
+	
 public:
 	static CShipPhoneWeaponArea* Create(_uint iIdx, float fPosX, float fPosY);
 

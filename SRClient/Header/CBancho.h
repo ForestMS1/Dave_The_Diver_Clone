@@ -47,6 +47,7 @@ private:
 public:
 	float			m_fGauge = -1.f;
 	bool			wasabiUse;
+	bool			spending;
 
 };
 

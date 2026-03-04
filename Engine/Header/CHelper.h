@@ -159,6 +159,17 @@ public:
 
 		*pOut = rayStart + rayDir * t;
 	}
+
+	static std::wstring ToCommaWString(int n) {
+		std::wstring s = std::to_wstring(n);
+		int insert_pos = (int)s.length() - 3;
+
+		while (insert_pos > 0) {
+			s.insert(insert_pos, L",");
+			insert_pos -= 3;
+		}
+		return s;
+	}
 };
 
 END

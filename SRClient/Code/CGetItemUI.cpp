@@ -24,6 +24,13 @@ CGetItemUI::~CGetItemUI()
 
 HRESULT		CGetItemUI::Ready_GameObject()
 {
+    m_sTitle = L"Title";
+    m_sRank = L"Rank 1";
+    m_sWeight = L"0.5kg";
+    m_iStartCnt = 1;
+    m_sImgAssetName = L"Tex_PhoneBG";
+
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
@@ -38,54 +45,65 @@ HRESULT		CGetItemUI::Ready_GameObject()
             float fHeight = pTexture->Get_ImgInfo()->Height;
             float fAspect = fWidth / fHeight;
             vScale = { fAspect, 1.f, 1.f };
+
+            float fScale = 50.f;
+            vScale.x *= fScale;
+            vScale.y *= fScale;
         }
     }
 
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
-    m_pTransformCom->Set_Pos(-13.f, m_fPosY, 0.f);
+    m_pTransformCom->Set_Pos(-640.f - 200.f , m_fPosY * 50.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
-    m_tween = m_tween.from(-13.f).to(m_fPosX).during(500).to(m_fPosX).during(500).to(-13.f).during(500);
+    m_tween = m_tween.from(-640.f - 200.f).to(m_fPosX).during(500).to(m_fPosX).during(1000).to(-640.f - 200.f).during(500);
 
+    
+    return S_OK;
+}
 
-
+HRESULT CGetItemUI::Ready_AfterCreate()
+{
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         //Stars
-        {
-            auto pGetItemUIStart = CGetItemUIStar::Create(0.5f, -0.2f);
-            pGetItemUIStart->Set_Parent(this);
-            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
-        }
-        {
-            auto pGetItemUIStart = CGetItemUIStar::Create(1.f, -0.2f);
-            pGetItemUIStart->Set_Parent(this);
-            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
-        }
+        //float fStarRefX = 0.5;
+        //for (int i = 0; i < m_iStartCnt; ++i)
+        //{
+        //    auto pGetItemUIStart = CGetItemUIStar::Create(fStarRefX, -0.2f);
+        //    pGetItemUIStart->Set_Parent(this);
+        //    pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+
+        //    fStarRefX += 0.5f;
+        //}
 
         {
-            auto pGetItemImg = CGetItemUIImg::Create(-1.6f, -0.5f);
-            pGetItemImg->Set_AssetName(L"Tex_PhoneBG");
+            auto pGetItemImg = CGetItemUIImg::Create(-83.2f, -23.f);
+            pGetItemImg->Set_AssetName(m_sImgAssetName);
             pGetItemImg->Ready_After_Create();
             pGetItemImg->Set_Parent(this);
             pLayer->Add_GameObject(L"GetItemUIImg", pGetItemImg);
         }
     }
-    
     return S_OK;
 }
 
 _int		CGetItemUI::Update_GameObject(const _float& fTimeDelta)
 {
-    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-    _matrix matView, matInvView;
-    pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-    D3DXMatrixInverse(&matInvView, 0, &matView);
+    //LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+    //_matrix matView, matInvView;
+    //pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+    //D3DXMatrixInverse(&matInvView, 0, &matView);
 
-    float x = matInvView.m[3][0];
-    float y = matInvView.m[3][1];
-    float val = -13.f;
-
+    //float x = matInvView.m[3][0];
+    //float y = matInvView.m[3][1];
+    //float val = -640.f - 200.f;
+    //val = m_tween.step(int(fTimeDelta * 1000.f));
+    //if (m_tween.progress() >= 1.0f) {
+    //    Set_DeadCascade();
+    //    return OBJ_DEAD;
+    //}
+    float val = -640.f - 200.f;
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         if (auto pObj = pLayer->Get_GameObjects(L"GetItemUI"))
@@ -101,12 +119,12 @@ _int		CGetItemUI::Update_GameObject(const _float& fTimeDelta)
         }
     }
 
-    m_pTransformCom->Set_Pos(x + val, y + m_fPosY, 0.f);
+    m_pTransformCom->Set_Pos( val,  m_fPosY, 0.f);
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
 
     return iExit;
 }
@@ -147,8 +165,8 @@ void		CGetItemUI::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -2.0f;
-        float fOffsetY = +0.6f;
+        float fOffsetX = -2.0f * 50.f;
+        float fOffsetY = +0.6f * 50.f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -158,7 +176,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"TITLE", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.388f, 0.133f, 0.0f, 1.0f));
         }
     }
 
@@ -166,8 +184,8 @@ void		CGetItemUI::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -0.9f;
-        float fOffsetY = -0.1f;
+        float fOffsetX = -0.9f * 50.f;
+        float fOffsetY = -0.1f * 50.f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -177,7 +195,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"RANK 1", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sRank, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
         }
     }
 
@@ -185,8 +203,8 @@ void		CGetItemUI::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -0.3f;
-        float fOffsetY = -0.6f;
+        float fOffsetX = -0.3f * 50.f;
+        float fOffsetY = -0.55f * 50.f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -196,7 +214,7 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(L"WEIGHT", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 0.5f));
+            pDefFont->Render_Font(m_sWeight, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
         }
     }
 
