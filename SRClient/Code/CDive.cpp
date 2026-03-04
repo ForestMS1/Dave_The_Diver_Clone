@@ -176,6 +176,8 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 		}
 	}
 
+	//::GetInstance()->Set_Render(false);
+	Frustum();
 	if (ImGui::Button("BackToShipUI"))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
@@ -195,7 +197,7 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 
 	
 	
-	Frustum();
+
 
 	
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
@@ -517,57 +519,57 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	pGameObject = CTerrian::Create(L"GLB_Terrian1", L"Terrian1_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian1", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian1", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian2", L"Terrian2_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian2", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian2", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian3", L"Terrian3_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian3", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian3", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian4", L"Terrian4_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian4", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian4", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian5", L"Terrian5_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian5", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian5", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian6", L"Terrian6_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian6", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian6", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian7_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian7", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian7", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian8_Collision");
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
-		return E_FAIL;
+	//pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian8_Collision");
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"0GLB_Terrian8", pGameObject)))
+	//	return E_FAIL;
 
-	// 보스
-	pGameObject = CJohn::Create(15.f, 10.f, 0.f);
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
-		return E_FAIL;
+	//// 보스
+	//pGameObject = CJohn::Create(15.f, 10.f, 0.f);
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pLayer->Add_GameObject(L"John", pGameObject)))
+	//	return E_FAIL;
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 

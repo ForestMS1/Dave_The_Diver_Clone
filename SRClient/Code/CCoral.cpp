@@ -82,8 +82,9 @@ void CCoral::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	
 	if (b_CoralTerrian) {
-		ColliderFrustom();
+
 		CGameObject::LateUpdate_GameObject(fTimeDelta);
+		ColliderFrustom();
 	}
 
 
@@ -156,22 +157,25 @@ void CCoral::ColliderFrustom() {
 		CCollider* CameraCollider = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera")->front();
 		if (m_nameCoralObject != L"") {
 			list<CCollider*>* ColliderList = CColliderMgr::GetInstance()->Get_Colliders(m_nameCoralObject);
-			for (auto& pCollider : *ColliderList)
-			{
-
-				if (CameraCollider->Intersect(pCollider) && CORAL_OFF == e_Coral)
+			if (ColliderList != nullptr) {
+				for (auto& pCollider : *ColliderList)
 				{
-					e_Coral = CORAL_ON;
 
+					if (CameraCollider->Intersect(pCollider) && CORAL_OFF == e_Coral)
+					{
+						e_Coral = CORAL_ON;
+
+
+					}
+
+					if (!CameraCollider->Intersect(pCollider) && CORAL_ON == e_Coral) {
+						e_Coral = CORAL_OFF;
+
+					}
 
 				}
-
-				if (!CameraCollider->Intersect(pCollider) && CORAL_ON == e_Coral) {
-					e_Coral = CORAL_OFF;
-
-				}
-
 			}
+		
 
 		}
 

@@ -76,23 +76,20 @@ void CBackGroundSea::Render_GameObject()
 	}
 
 
-	if (floor.y <= -50.f && m_dark > 0.5f) {
+	if (floor.y <= -80.f && m_dark > 0.5f) {
 		m_dark -= 0.01f;
 	}
-	else if (floor.y > -50.f && m_dark <= 0.99f) {
+	else if (floor.y > -80.f && m_dark <= 0.99f) {
 		m_dark += 0.01f;
 	}
-	else if (floor.y > -100.f && m_dark <= 0.5f) {
+	else if (floor.y > -130.f && m_dark <= 0.5f) {
 		m_dark += 0.01f;
 	}
-	else if (floor.y <= -100.f && m_dark >=0.0f) {
+	else if (floor.y <= -130.f && m_dark >=0.1f) {
 		m_dark -= 0.01f;
 		
 	}
 
-	if (m_dark < 0) {
-		m_dark = 0.f;
-	}
 	float t = 1.f - m_dark;   
 
 	// ½ÃÀÛ»ö (¹àÀº)
