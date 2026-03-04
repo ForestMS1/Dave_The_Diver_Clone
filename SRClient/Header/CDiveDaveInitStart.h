@@ -22,6 +22,8 @@ private:
 	_float m_fInitTime = 0.00001f;
 	_vec3 m_vOriginPos;
 
+	_bool m_bDivingSound = false;
+
 public:
 	static CDiveDaveInitStart* Create(CDiveDave* pOwner);
 private:

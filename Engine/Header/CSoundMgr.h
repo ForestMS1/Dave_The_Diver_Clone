@@ -26,6 +26,10 @@ public:
 		SFX,
 		SFX1,
 		SFX2,
+		BOSS_BGM,
+		BOSS_SFX,
+		BOSS_SFX1,
+		BOSS_SFX2,
 		MAXCHANNEL
 	};
 private:

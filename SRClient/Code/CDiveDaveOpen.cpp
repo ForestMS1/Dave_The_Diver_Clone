@@ -5,6 +5,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CDiveItemBox.h"
+#include "CSoundMgr.h"
 CDiveDaveOpen::CDiveDaveOpen(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -25,6 +26,8 @@ void CDiveDaveOpen::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 	m_pOwner->Set_TextureCom(L"Com_OpenTexture");
+
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_ItemBoxTryOpen", CSoundMgr::SFX, 1.f);
 }
 
 void CDiveDaveOpen::Input(const _float& fTimeDelta)
@@ -44,6 +47,7 @@ _int CDiveDaveOpen::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	if (m_fOpenTime > 5.f)
 	{
+		static_cast<CDiveItemBox*>(m_pOwner->m_pCurOnItemBox)->Set_Open();
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}
 
@@ -79,7 +83,7 @@ void CDiveDaveOpen::Exit()
 
 void CDiveDaveOpen::Clear()
 {
-	static_cast<CDiveItemBox*>(m_pOwner->m_pCurOnItemBox)->Set_Open();
+	CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX);
 	m_fOpenTime = 0.f;
 }
 

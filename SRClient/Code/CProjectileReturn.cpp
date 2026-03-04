@@ -3,7 +3,7 @@
 #include "CDiveDave.h"
 #include "CTestFish.h"
 #include "CFishGameObject.h"
-
+#include "CSoundMgr.h"
 CProjectileReturn::CProjectileReturn(CHarpoonProjectile* pOwner)
     : CBaseState<CHarpoonProjectile>(pOwner)
 {
@@ -103,6 +103,7 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 			pProjectile->m_pCaughtFish->Set_DeadCascade();
 			pProjectile->m_pCaughtFish = nullptr;
 			static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Set_FishCaught(false);
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_QTE_success", CSoundMgr::SFX, 1.f);
 		}
 		Set_ParentTransform();
 		pProjectile->Set_State(PROJECTILESTATE::READY);

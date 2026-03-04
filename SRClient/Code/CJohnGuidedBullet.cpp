@@ -10,6 +10,7 @@
 #include "CManagement.h"
 #include "CDiveDave.h"
 #include "CJohn.h"
+#include "CSoundMgr.h"
 CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner)
 	: m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -233,6 +234,11 @@ void CJohnGuidedBullet::FSM(const _float& fTimeDelta)
 
 void CJohnGuidedBullet::Chase(const _float& fTimeDelta)
 {
+	if (!m_bSoundMove)
+	{
+		m_bSoundMove = true;
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_JohnWatson2_Missile_Move_01", CSoundMgr::BOSS_SFX, 1.f);
+	}
 	m_fChaseTime += fTimeDelta;
 
 	if (m_fChaseTime > 3.f)
@@ -266,6 +272,11 @@ void CJohnGuidedBullet::Chase(const _float& fTimeDelta)
 
 void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 {
+	if (!m_bSoundOverload)
+	{
+		m_bSoundOverload = true;
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_JohnWatson2_MIssile_Overload_01", CSoundMgr::BOSS_SFX, 1.f);
+	}
 	m_fExplosionReadyTime += fTimeDelta;
 	if (m_fExplosionReadyTime > 3.f)
 	{
@@ -299,6 +310,11 @@ void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 
 void CJohnGuidedBullet::Return(const _float& fTimeDelta)
 {
+	if (!m_bSoundReturn)
+	{
+		m_bSoundReturn = true;
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_GunSkill01_Control_Problem_01", CSoundMgr::BOSS_SFX, 1.f);
+	}
 	m_pReturnTargetTransform = m_pReturnTarget->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
 	if (m_pReturnTargetTransform == nullptr)
 		return;
@@ -324,6 +340,11 @@ void CJohnGuidedBullet::Return(const _float& fTimeDelta)
 
 void CJohnGuidedBullet::Explosion(const _float& fTimeDelta)
 {
+	if (!m_bSoundExplosion)
+	{
+		m_bSoundExplosion = true;
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_Explosion_01", CSoundMgr::BOSS_SFX, 1.f);
+	}
 	m_fExplosionTime += fTimeDelta;
 	if (m_fExplosionTime > 1.f)
 	{

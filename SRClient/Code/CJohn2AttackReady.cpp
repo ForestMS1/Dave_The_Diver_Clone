@@ -3,6 +3,7 @@
 #include "CAssetTexture.h"
 #include "CGraphicDev.h"
 #include "CJohn2.h"
+#include "CSoundMgr.h"
 CJohn2AttackReady::CJohn2AttackReady(CJohn2* pOwner)
 	: CBaseState<CJohn2>(pOwner)
 {
@@ -26,6 +27,8 @@ void CJohn2AttackReady::Enter()
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_GunSkill01_Aim", CSoundMgr::BOSS_SFX, 1.f);
 }
 
 void CJohn2AttackReady::Input(const _float& fTimeDelta)

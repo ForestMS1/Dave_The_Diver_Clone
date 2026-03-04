@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CDiveDaveHit.h"
 #include "CDiveDave.h"
+#include "CSoundMgr.h"
 CDiveDaveHit::CDiveDaveHit(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -21,6 +22,8 @@ void CDiveDaveHit::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 	m_pOwner->Set_TextureCom(L"Com_HitTexture");
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_dave_hit", CSoundMgr::SFX, 1.f);
 }
 
 void CDiveDaveHit::Input(const _float& fTimeDelta)

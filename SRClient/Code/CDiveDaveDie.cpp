@@ -4,6 +4,7 @@
 #include "CManagement.h"
 
 #include "CBackToShipUI.h"
+#include "CSoundMgr.h"
 
 CDiveDaveDie::CDiveDaveDie(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
@@ -38,6 +39,9 @@ void CDiveDaveDie::Enter()
 			pLayer->Add_GameObject(L"BackToShipUI", pBackToShipUI);
 		}
 	}
+
+	CSoundMgr::GetInstance()->StopAll();
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_dave_dead", CSoundMgr::SFX, 1.f);
 }
 
 void CDiveDaveDie::Input(const _float& fTimeDelta)

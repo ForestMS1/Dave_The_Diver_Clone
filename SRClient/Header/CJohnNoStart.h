@@ -18,6 +18,9 @@ public:
     void Exit() override;
     void Clear() override;
 
+private:
+    _bool m_bSoundBgm = false;
+
 public:
     static CJohnNoStart* Create(CJohn* pOwner);
 private:

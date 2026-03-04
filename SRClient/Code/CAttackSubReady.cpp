@@ -5,6 +5,7 @@
 #include "CDInputMgr.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveAttack.h"
+#include "CSoundMgr.h"
 CAttackSubReady::CAttackSubReady(CDiveDaveAttack* pParentState)
 	: CAttackSubState(pParentState)
 {
@@ -26,6 +27,8 @@ void CAttackSubReady::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pDiveDave->Multiply_Scale(&vScale);
 	m_pDiveDave->Set_TextureCom(L"Com_AttackReadyTexture");
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Harpoon_Aim", CSoundMgr::SFX, 1.f);
 }
 
 void CAttackSubReady::Input(const _float& fTimeDelta)
