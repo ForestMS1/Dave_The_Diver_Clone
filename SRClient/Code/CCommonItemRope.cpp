@@ -138,7 +138,7 @@ void CCommonItemRope::OpenItemDesc()
 		if (!pUI->Get_Render())
 		{
 			pUI->Set_Title(L"밧줄");
-			pUI->Set_Desc(L"다양한 용도로 사용할 수 있는 밧줄이다. 누군가는 장난감으로 쓰기도 한다고 한다.");
+			pUI->Set_Desc(L"다양한 용도로 사용할 수 있는 밧줄이다.\n 누군가는 장난감으로 쓰기도 한다고 한다.");
 			pUI->Set_Render(true);
 		}
 	}
