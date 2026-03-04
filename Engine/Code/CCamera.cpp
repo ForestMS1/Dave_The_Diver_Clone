@@ -79,8 +79,7 @@ void CCamera::Set_Perspective()
 
 
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
-    pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);   // ← 이거 필수
+    pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
     pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 

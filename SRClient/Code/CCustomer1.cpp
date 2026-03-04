@@ -9,6 +9,17 @@
 #include "CDInputMgr.h"
 #include "CMenuBubble.h"
 #include "CChair.h"
+#include "CAABB.h"
+#include "CColliderMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
+#include "CGameMemMgr.h"
+#include "CAssetDefaultFont.h"
+#include "CTeaBubble.h"
+#include "CSushi.h"
+#include "CBancho.h"
+#include "CSoundMgr.h"
+
 
 
 CCustomer1::CCustomer1()
@@ -20,8 +31,24 @@ CCustomer1::CCustomer1()
     ChairFound = false;
     Sitted = false;
     ChoosingMenu = false;
-    Waiting = false;
+    gotSushi = false;
+    Reacting = false;
+    Eating = false;
+    gotTea = false;
     deltaTime = 0.f;
+    ExitTime = 0.f;
+    ReactionTime = 0.f;
+    EatingTime = 0.f;
+    EmotionTime = 0.f;
+    PukeTime = 0.f;
+    GoldTime = 0.f;
+    teaTime = 0.f;
+    teaChoosingTime = 0.f;
+    sushiHanded = L"";
+    MenuBubble = nullptr;
+    TeaBubble = nullptr;
+    OrderedTea = false;
+ 
 }
 
 CCustomer1::CCustomer1(const CGameObject& rhs)
@@ -35,6 +62,10 @@ CCustomer1::~CCustomer1()
 
 HRESULT CCustomer1::Ready_GameObject()
 {
+    srand(time(NULL));
+    random1 = rand() % 3;
+    random2 = rand() % 5;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
@@ -43,7 +74,10 @@ HRESULT CCustomer1::Ready_GameObject()
     m_pTransformCom->m_vScale = { 0.4f,0.9f,1.f };
     m_pTransformCom->m_vInfo[INFO_POS] = { -7.f ,-1.84f,-2.999f };
   
-   
+    _vec3 vExtents = { 1.0f, 1.0f, 0.01f };
+    _vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
+    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Customer", this);
+  
     return S_OK;
 }
 
@@ -52,7 +86,21 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+  
 
+    if (curState == LEAVE) {
+        Safe_Release(m_pAABB);
+    }
+    else if (curState == MENU) {
+        CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Customer", m_pAABB);
+    }
+    else {
+        _matrix vPos = *m_pTransformCom->Get_World();
+        m_pAABB->Transform(&vPos);
+
+    }
+    //vPos.m[3][2] = 0;
+    //vPos.m[3][0] -= 0.3f;
     switch (curState)
     {
     case WALK:
@@ -62,9 +110,7 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
         break;
     case MENU:
         m_fFrame = 0.f;
-        /*m_fFrame += 1.f * fTimeDelta;
-        if (1.f < m_fFrame)
-            m_fFrame = 0.f;*/
+        
         break;
     case WAIT:
         m_fFrame += 3.f * fTimeDelta;
@@ -86,10 +132,54 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
         if (2.f < m_fFrame)
             m_fFrame = 0.f;
         break;
+    case LEAVE:
+        m_fFrame += 8.f * fTimeDelta;
+        if (8.f < m_fFrame)
+            m_fFrame = 0.f;
+        break;
     }
 
+   
+    if (curState == EAT) {
+        EatingTime += fTimeDelta;
+        if (EatingTime > 6.f) {
+            curState = LEAVE;
+            m_pTransformCom->Rotation(ROT_Y, 180.f);
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Pay", CSoundMgr::SFX, 1.0f); 
 
+            vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
+            for (auto fish : fishes) {
+                if (fish->name == sushiHanded) {
+                    CGameMemMgr::GetInstance()->Set_Money(fish->cost);
+                }
+            }
 
+        }
+    }
+    if (curState == LEAVE) {
+        GoldTime += fTimeDelta;
+        m_pTransformCom->m_vInfo[INFO_POS].x -= 0.02f;
+        if (m_pTransformCom->m_vInfo[INFO_POS].x <= -8.f) {
+            Empty_Chair();
+            m_bDead = true;
+            static_cast<CSushi*>(CManagement::GetInstance()->Get_Scene())->CustomerLeave++;
+
+        }
+    }
+
+    if (MenuBubble != nullptr && curState == MENU) {
+        if (static_cast<CMenuBubble*>(MenuBubble)->tempY >= 0) {
+            MenuBubble->Set_Render(false);
+            curState = ANGER;
+        }
+
+    }
+
+    _vec3 curPos;
+    m_pTransformCom->Get_Info(INFO_POS, &curPos);
+    curPos.y += 1.15f;
+    curPos.x -= -0.14f;
+    CHelper::GetScreenPointFromWorld(&screen, &curPos);
 
     return iExit;
 }
@@ -110,24 +200,162 @@ void CCustomer1::LateUpdate_GameObject(const _float& fTimeDelta)
         _vec3 right = { 1,0,0 };
         m_pTransformCom->Move_Pos(&right, 0.9f, fTimeDelta);
         if (fabsf(vPos.x - targetPos.x) < 0.1f) {
-            curState = MENU;
             Sitted = true;
             ChoosingMenu = true;
         }
     }
     if (ChoosingMenu) {
         deltaTime += fTimeDelta;
-        if (deltaTime >= 1.5f) {
-            MenuBubble = CMenuBubble::Create();
-            CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"MenuBubble", MenuBubble);
-            CTransform* pTransform = static_cast<CTransform*> (MenuBubble->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-            pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
-            pTransform->m_vInfo[INFO_POS].z -= 0.01f;
-            pTransform->m_vInfo[INFO_POS].y += 1.5f;
+        curState = MENU;
+
+        if (deltaTime >= 2.5f) {
+            if (random2 == 0) {
+                TeaBubble = CTeaBubble::Create();
+                CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"TeaBubble", TeaBubble);
+                CTransform* pTransform = static_cast<CTransform*> (TeaBubble->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
+                pTransform->m_vInfo[INFO_POS].z -= 0.01f;
+                pTransform->m_vInfo[INFO_POS].y += 1.4f;
+                OrderedTea = true;
+            }
+            else {
+                MenuBubble = CMenuBubble::Create();
+                CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"MenuBubble", MenuBubble);
+                CTransform* pTransform = static_cast<CTransform*> (MenuBubble->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+                pTransform->m_vInfo[INFO_POS] = m_pTransformCom->m_vInfo[INFO_POS];
+                pTransform->m_vInfo[INFO_POS].z -= 0.01f;
+                pTransform->m_vInfo[INFO_POS].y += 1.4f;
+            }
+            
             ChoosingMenu = false;
+            deltaTime = 0;
+        }
+    }
+    if (OrderedTea) {
+        teaChoosingTime += fTimeDelta;
+        if (teaChoosingTime < 2.f) {
+            curState = MENU;
+        }
+        else {
+            //차를 받았고 
+            if (gotTea) {
+                teaTime += fTimeDelta;
+                TeaBubble->Set_Render(false);
+                //2초 전까진
+                if (teaTime < 2.f) {
+                    curState = HAPPY;
+                }
+                else {
+                    OrderedTea = false;
+                    ChoosingMenu = true;
+                    random2 = 1;
+                }
+
+            }
+            else {
+                if (static_cast<CTeaBubble*>(TeaBubble)->tempY >= 0) {
+                    TeaBubble->Set_Render(false);
+                    teaTime += fTimeDelta;
+                    if (teaTime < 2.f) {
+                        curState = MENU;
+                    }
+                    else {
+                        OrderedTea = false;
+                        ChoosingMenu = true;
+                        random2 = 1;
+                    }
+                }
+            }
+        }
+       
+    }
+
+    // 차를 생성 안하고 스시를 받았으면
+    if (gotSushi) {
+        if (TeaBubble == nullptr) {
+            if (sushiHanded == static_cast<CMenuBubble*>(MenuBubble)->m_sFishName) {
+                curState = HAPPY;
+                MenuBubble->Set_Render(false);
+                if (!gotSushiSoundPlayed) {
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Served", CSoundMgr::SFX, 1.0f);
+                    gotSushiSoundPlayed = true;
+                }
+            }
+            else {
+                curState = ANGER;
+                MenuBubble->Set_Render(false);
+            }
+            ReactionTime += fTimeDelta;
+            if (ReactionTime > 2.f) {
+                if (curState == HAPPY) {
+                    curState = EAT;
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Eat", CSoundMgr::SFX, 1.0f);
+                    
+                }
+                else if (curState == ANGER) {
+                    curState = LEAVE;
+                    m_pTransformCom->Rotation(ROT_Y, 180.f);
+                }
+                gotSushi = false;
+            }
+        }
+        else {
+            if (sushiHanded == static_cast<CMenuBubble*>(MenuBubble)->m_sFishName) {
+                curState = HAPPY;
+                MenuBubble->Set_Render(false);
+
+            }
+            else {
+                curState = ANGER;
+                MenuBubble->Set_Render(false);
+            }
+            ReactionTime += fTimeDelta;
+            if (ReactionTime > 2.f) {
+                if (curState == HAPPY) {
+                    curState = EAT;
+                }
+                else if (curState == ANGER) {
+                    curState = LEAVE;
+                    m_pTransformCom->Rotation(ROT_Y, 180.f);
+                }
+                gotSushi = false;
+            }
+        }
+    }
+    else {
+        if (curState == ANGER) {
+            ReactionTime += fTimeDelta;
+            if (ReactionTime > 2.f) {
+                m_pTransformCom->Rotation(ROT_Y, 180.f);
+                curState = LEAVE;
+            }
         }
     }
   
+    ////차를 생성 안하고 스시를 못받았으면 << 여기도 문제
+    //else if(!gotSushi && TeaBubble == nullptr){
+    //    if (curState == ANGER) {
+    //        ReactionTime += fTimeDelta;
+    //        if (ReactionTime > 2.f) {
+    //            m_pTransformCom->Rotation(ROT_Y, 180.f);
+    //            curState = LEAVE;
+    //        }
+    //    }
+    //}
+    //차를 생성 하고 스시를 받았으면
+    
+    // 스시를 못받았고 티버블이 있으면  <- 이건 teabubble이 생성 될때부터 됨 이거 문제임
+  /*  else if (!gotSushi && TeaBubble != nullptr) {
+        if (curState == ANGER) {
+            ReactionTime += fTimeDelta;
+            if (ReactionTime > 2.f) {
+                m_pTransformCom->Rotation(ROT_Y, 180.f);
+                curState = LEAVE;
+            }
+        }
+    }*/
+
+
   /*  if (curDir != prevDir) {
         m_pTransformCom->Rotation(ROT_Y, 180.f);
     }
@@ -166,17 +394,134 @@ void CCustomer1::Render_GameObject()
     case ANGER:
         m_pAngerTextureCom->Set_Texture((_uint)m_fFrame);
         break;
+    case LEAVE:
+        m_pWalkTextureCom->Set_Texture((_uint)m_fFrame);
+        
+        break;
 
     }
 
     m_pBufferCom->Render_Buffer();
 
+    if ((MenuBubble == nullptr && ChoosingMenu && TeaBubble != nullptr && choosingTea) 
+        || (TeaBubble == nullptr  && MenuBubble == nullptr && ChoosingMenu) ) {
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_MenuChoosing"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        _matrix scaleMat = *m_pTransformCom->Get_World();
+        scaleMat.m[0][0] = 0.3f;
+        scaleMat.m[1][1] = 0.3f;
+        scaleMat.m[3][1] += 1.3f;
+        scaleMat.m[3][0] -= 0.2f;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+        m_pBufferCom->Render_Buffer();
+    }
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    if (curState == HAPPY) {
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Happy"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+        _matrix scaleMat = *m_pTransformCom->Get_World();
+        EmotionTime += 0.01f;
+        scaleMat.m[0][0] = 0.3f;
+        scaleMat.m[1][1] = 0.3f;
+        scaleMat.m[3][1] = 0.2f + EmotionTime;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+        m_pBufferCom->Render_Buffer();
+    }
+    else if (curState == ANGER) {
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Angry"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+        _matrix scaleMat = *m_pTransformCom->Get_World();
+        EmotionTime += 0.01f;
+        scaleMat.m[0][0] = 0.3f;
+        scaleMat.m[1][1] = 0.3f;
+        scaleMat.m[3][1] = 0.2f +EmotionTime;
+
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+        m_pBufferCom->Render_Buffer();
+    }
+    if (curState == LEAVE) {
+        if (MenuBubble != nullptr) {
+            if (sushiHanded == static_cast<CMenuBubble*>(MenuBubble)->m_sFishName) {
+                if (sushiHanded != L"???") {
+                    if (GoldTime < 3.f) {
+                        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Coin"))
+                        {
+                            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                            {
+                                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                            }
+                        }
+                        _matrix mat = *m_pTransformCom->Get_World();
+                        mat.m[0][0] = 0.1f;
+                        mat.m[1][1] = 0.1f;
+                        mat.m[3][1] += 1.f;
+                        mat.m[3][0] -= 0.2f;
+
+                        pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
+                        m_pBufferCom->Render_Buffer();
+
+                        // 폰트 출력
+                        CAssetDefaultFont* pQuantityFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_FishQuantity");
+
+                        vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
+                        for (auto fish : fishes) {
+                            if (fish->name == sushiHanded) {
+                                _vec2 vPos = { screen.x , screen.y };
+                                pQuantityFont->Render_Font(to_wstring(fish->cost), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+                            }
+                        }
+
+                    }
+                }
+                else {
+                    if (PukeTime < 2.f) {
+                        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Puke"))
+                        {
+                            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                            {
+                                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                            }
+                        }
+                        _matrix scaleMat = *m_pTransformCom->Get_World();
+                        PukeTime += 0.01f;
+                        scaleMat.m[0][0] = 0.3f;
+                        scaleMat.m[1][1] = 0.3f;
+                        scaleMat.m[3][1] = 0.2f + PukeTime;
+                        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+                        m_pBufferCom->Render_Buffer();
+                    }
+                   
+                }
+               
+            }
+        }
+        
+    }
+   
 }
 
 void CCustomer1::Find_Chair()
@@ -188,6 +533,7 @@ void CCustomer1::Find_Chair()
         if (static_cast<CChair*>(*iter)->isEmtpy()) {
             CTransform* pTransform = static_cast<CTransform*>((*iter)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
             targetPos = pTransform->m_vInfo[INFO_POS];
+            targetPos.x +=  0.05f;
             static_cast<CChair*>(*iter)->Set_Emtpy(false);
             ChairFound = true;
             return ;
@@ -198,25 +544,75 @@ void CCustomer1::Find_Chair()
 
 }
 
+void CCustomer1::Empty_Chair()
+{
+    list<CGameObject*>* Chairs = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjects(L"Chair");
+    list<CGameObject*>::iterator iter = Chairs->begin();
+    for (iter; iter != Chairs->end(); iter++) {
+        CTransform* pTransform = static_cast<CTransform*>((*iter)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+        _vec3 chair = pTransform->m_vInfo[INFO_POS];
+        chair.x += 0.05f;
+        if (targetPos == chair) {
+            static_cast<CChair*>(*iter)->Set_Emtpy(true);
+            return;
+
+        }
+    }
+}
+
+
+
 HRESULT CCustomer1::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
         return E_FAIL;
 
-
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
-        return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1MenuTex", L"Com_Texture1", &m_pMenuTextureCom))))
-        return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WaitTexture", L"Com_Texture2", &m_pWaitTextureCom))))
-        return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1EatTexture", L"Com_Texture3", &m_pEatTextureCom))))
-        return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1HappyTexture", L"Com_Texture4", &m_pHappyTextureCom))))
-        return E_FAIL;
-    if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1AngerTexture", L"Com_Texture5", &m_pAngerTextureCom))))
-        return E_FAIL;
+    switch (random1) {
+    case 0:
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1MenuTex", L"Com_Texture1", &m_pMenuTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1WaitTexture", L"Com_Texture2", &m_pWaitTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1EatTexture", L"Com_Texture3", &m_pEatTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1HappyTexture", L"Com_Texture4", &m_pHappyTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer1AngerTexture", L"Com_Texture5", &m_pAngerTextureCom))))
+            return E_FAIL;
+        break;
+    case 1:
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer2WalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer2MenuTex", L"Com_Texture1", &m_pMenuTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer2WaitTexture", L"Com_Texture2", &m_pWaitTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer2EatTexture", L"Com_Texture3", &m_pEatTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer2HappyTexture", L"Com_Texture4", &m_pHappyTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer2AngerTexture", L"Com_Texture5", &m_pAngerTextureCom))))
+            return E_FAIL;
+        break;
+    case 2:
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer3WalkTexture", L"Com_Texture", &m_pWalkTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer3MenuTex", L"Com_Texture1", &m_pMenuTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer3WaitTexture", L"Com_Texture2", &m_pWaitTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer3EatTexture", L"Com_Texture3", &m_pEatTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer3HappyTexture", L"Com_Texture4", &m_pHappyTextureCom))))
+            return E_FAIL;
+        if (FAILED((AddComponent<Engine::CTexture, ID_STATIC>(L"Proto_Customer3AngerTexture", L"Com_Texture5", &m_pAngerTextureCom))))
+            return E_FAIL;
+        break;
+    }
+    
     
     // 트랜스폼
     if (FAILED((AddComponent<Engine::CTransform, ID_DYNAMIC>(L"Proto_Transform", L"Com_Transform", &m_pTransformCom))))
@@ -243,6 +639,9 @@ CCustomer1* CCustomer1::Create()
 
 void CCustomer1::Free()
 {
+
+    Safe_Release(MenuBubble);
+    Safe_Release(TeaBubble);
     CGameObject::Free();
  
 }

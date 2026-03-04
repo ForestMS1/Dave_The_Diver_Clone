@@ -10,6 +10,7 @@
 #include "CColliderMgr.h"
 #include "CBluejongR.h"
 #include "CCloseButton.h"
+#include "CUpgradeImage.h"
 
 
 
@@ -36,7 +37,7 @@ HRESULT CRecipe::Ready_GameObject()
     int col = 0;
     int row = 0;
     CGameObject* pGameObject = nullptr;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         //pGameObject = CSushiFrame::Create(L"ºí·ç");
         switch (i) {
         case 0:
@@ -54,6 +55,9 @@ HRESULT CRecipe::Ready_GameObject()
             break;
         case 4:
             pGameObject = CSushiFrame::Create(L"³ë¶ûÅÁ");
+            break;
+        case 5:
+            pGameObject = CSushiFrame::Create(L"¹ÝÃÝ");
             break;
         }
       
@@ -91,6 +95,7 @@ HRESULT CRecipe::Ready_GameObject()
     }
     objects.push_back(pGameObject);
 
+ 
     return S_OK;
 }
 

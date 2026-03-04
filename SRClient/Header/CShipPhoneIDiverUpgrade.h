@@ -1,10 +1,18 @@
 #pragma once
 #include "CGameObject.h"
+#include "CShipPhoneIDiverUpgradeBtn.h"
 class CShipPhoneIDiverUpgrade : public CGameObject
 {
 private:
 	explicit CShipPhoneIDiverUpgrade(float fPosX, float fPosY);
 	virtual ~CShipPhoneIDiverUpgrade();
+
+public:
+	void Update_ImGui() override;
+
+private:
+	float m_fDbgX = 0.f;
+	float m_fDbgY = 0.f;
 
 public:
 	void Set_AssetName(std::wstring_view sv) { m_sAssetName = sv; }
@@ -64,6 +72,9 @@ private:
 	std::wstring m_sMoney;
 
 	bool m_bMoneyLack;
+
+private:
+	CShipPhoneIDiverUpgradeBtn* m_pUpBtn;
 public:
 	static CShipPhoneIDiverUpgrade* Create(float fPosX, float fPosY);
 

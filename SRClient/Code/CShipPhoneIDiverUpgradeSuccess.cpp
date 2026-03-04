@@ -182,7 +182,7 @@ void		CShipPhoneIDiverUpgradeSuccess::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUpgradeSuccessDesc, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUpgradeSuccessDesc, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_NOCLIP));
         }
     }
 

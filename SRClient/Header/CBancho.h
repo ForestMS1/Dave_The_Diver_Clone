@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAABB.h"
 
 namespace Engine
 {
@@ -14,6 +15,8 @@ private:
 	explicit CBancho();
 	explicit CBancho(const CGameObject& rhs);
 	virtual ~CBancho();
+	void	Update_ImGui() override;
+
 
 public:
 	enum State{IDLE, COOK, STATE_END};
@@ -30,6 +33,7 @@ private:
 	Engine::CTexture* m_pIdleTextureCom;
 	Engine::CTexture* m_pCookTextureCom;
 	Engine::CTransform* m_pTransformCom;
+	CAABB* m_pAABB;
 
 public:
 	static CBancho* Create();
@@ -37,9 +41,13 @@ public:
 private:
 	State			curState;
 	_float			m_fFrame;
-	float			m_fGauge = -1.f;
-
+	wstring			m_sFishName;
+	wstring			m_sTexName;
 	virtual void Free();
+public:
+	float			m_fGauge = -1.f;
+	bool			wasabiUse;
+	bool			spending;
 
 };
 

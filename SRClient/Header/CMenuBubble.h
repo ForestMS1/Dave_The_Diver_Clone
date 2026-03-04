@@ -38,8 +38,9 @@ private:
 public:
 	wstring m_sFishName;
 	wstring m_sTexName;
-private:
 	float tempY = -1.f;
+
+private:
 	float deltaTime = 0;
 	
 };

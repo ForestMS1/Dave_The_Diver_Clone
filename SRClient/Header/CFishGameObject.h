@@ -43,11 +43,11 @@ public:
 	void Stop();
 	void Swim();
 	void AcquireTo(_vec3 const* pPos);
+	void JacksalAcquire();
 
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
 public:
-	std::wstring_view Get_FishName() const { return m_sFishName; }
 	//Fish::CFishStateMachine& Get_StateMachin() { return m_fsm; }
 	int Get_HP() const { return m_iHP; }
 	void Set_HP(int iHP) { m_iHP = iHP; }
@@ -79,8 +79,32 @@ protected:
 	Engine::CSpine* m_pSpineCom;
 	Engine::CRcTex* m_pBufferCom;
 
+
+public:
+	std::wstring_view Get_FishName() const { return m_sFishName; }
+	std::wstring_view Get_FishThumbNailAssetName() const { return m_sThumbNailAssetName ; }
+	std::wstring_view Get_SushiThumbNailAssetName() const { return m_sSushiThumbNailAssetName; }
+	_uint Get_Rank() const { return m_iRank; }
+	_uint Get_Star() const { return m_iStar; }
+	float Get_Weight() const { return m_fWeight; }
+	_uint Get_Price() const { return m_iPrice; }
+	_uint Get_SushiMoney() const { return m_iSushiMoney; }
+	_uint Get_SushiLv() const { return m_iSushiLv; }
+
 protected:
 	std::wstring m_sFishName;
+	std::wstring m_sThumbNailAssetName;
+	std::wstring m_sSushiThumbNailAssetName;
+	_uint m_iRank;
+	_uint m_iStar;
+	float m_fWeight;
+	_uint m_iPrice;
+	float m_fLength;
+	_uint m_iMeatCnt;
+	_uint m_iSushiMoney;
+	_uint m_iSushiLv;
+
+protected:
 	float m_fCurrSpeed;
 	float m_fSpeed;
 	float m_fSprintSpeed;

@@ -28,6 +28,18 @@ CGreatSpiderCrab::~CGreatSpiderCrab()
 
 HRESULT CGreatSpiderCrab::Ready_GameObject()
 {
+    m_sFishName = L"키다리게";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Great_Spider_Crab";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+    m_fLength = 10.f;
+    m_iMeatCnt = 1;
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreatSpiderCrab";
+    m_iSushiMoney = 12;
+    m_iSushiLv = 1;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

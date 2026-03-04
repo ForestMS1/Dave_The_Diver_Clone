@@ -12,6 +12,8 @@
 CMenuBubble::CMenuBubble()
     : CGameObject()
 {
+    m_bRender = true;
+
 }
 
 CMenuBubble::CMenuBubble(const CGameObject& rhs)
@@ -61,6 +63,9 @@ HRESULT CMenuBubble::Ready_GameObject()
     else if (m_sFishName == L"흰동가리") {
         m_sTexName = L"Tex_ClownFish";
     }
+    else if (m_sFishName == L"???") {
+        m_sTexName = L"Tex_BanchoSushi";
+    }
     CGameMemMgr::GetInstance()->addCookingMenu(m_sFishName);
 
     return S_OK;
@@ -70,12 +75,12 @@ _int CMenuBubble::Update_GameObject(const _float& fTimeDelta)
 {
  
  
-    if (!m_bRender) {
+    if (m_bRender) {
         deltaTime += fTimeDelta;
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-        if (deltaTime >= 2.f) {
+        if (deltaTime >= 3.f) {
             if (tempY <= 0) {
-                tempY += fTimeDelta * 0.05f;
+                tempY += fTimeDelta * 0.02f;
             }
         }
        
@@ -88,7 +93,7 @@ _int CMenuBubble::Update_GameObject(const _float& fTimeDelta)
 
 void CMenuBubble::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    if (!m_bRender) {
+    if (m_bRender) {
         CGameObject::LateUpdate_GameObject(fTimeDelta);
 
         _vec3		vPos;
@@ -96,98 +101,79 @@ void CMenuBubble::LateUpdate_GameObject(const _float& fTimeDelta)
 
         Compute_ViewZ(&vPos);
     }
+    //if (tempY < 0)
+    //    m_bDead = true;
 
 }
 
 
 void      CMenuBubble::Render_GameObject()
 {
-    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-    m_pMenuBubbleTextureCom->Set_Texture(0);
-    m_pBufferCom->Render_Buffer();
-    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    if (m_bRender) {
+        LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+        pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
+
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+        m_pMenuBubbleTextureCom->Set_Texture(0);
+        m_pBufferCom->Render_Buffer();
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 
-    pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-    pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
-    pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
-    pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
+        pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+        pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
+        pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
 
-    pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-    pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 140); // 알파가 1 이상인 것만 통과
-    pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 140); // 알파가 1 이상인 것만 통과
+        pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-    // 2. 색상과 깊이 기록은 끔 (틀만 잡기 위함)
-    pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
-    pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-   // pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-    //if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_MenuBubble"))
-    //{
-    //    if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-    //    {
-    //        pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-    //    }
-    //}
-    //_matrix mat;
-    //D3DXMatrixIdentity(&mat);
-    //pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
-    m_pBufferCom->Render_Buffer();
+        // 2. 색상과 깊이 기록은 끔 (틀만 잡기 위함)
+        pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
+        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-    pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
+        m_pBufferCom->Render_Buffer();
 
-    // 2. 스텐실 판정: 기록된 '1' 영역에만 그리기
-    pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-    pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+        pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
 
-    //if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_MenuBubble"))
-    //{
-    //    if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-    //    {
-    //        pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-    //    }
-    //}
+        // 2. 스텐실 판정: 기록된 '1' 영역에만 그리기
+        pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+        pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 
-
-
-    //m_pBufferCom->Render_Buffer();
-
-    //D3DXMATRIX matTmp;
-    //D3DXMatrixIdentity(&matTmp);
-    //pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Red"))
-    {
-        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Red"))
         {
-            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
         }
-    }
-    _matrix newMat = *m_pTransformCom->Get_World();
-    newMat.m[3][1] += tempY;
-    
-    pGraphicDev->SetTransform(D3DTS_WORLD, &newMat);
-    m_pBufferCom->Render_Buffer();
+        _matrix newMat = *m_pTransformCom->Get_World();
+        newMat.m[3][1] += tempY;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &newMat);
+        m_pBufferCom->Render_Buffer();
 
 
-    pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-    pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-    
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
-    {
-        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+        pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
         {
-            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
         }
-    }
-    _matrix scaleMat = *m_pTransformCom->Get_World();
-    scaleMat.m[0][0] = 0.2f;
-    scaleMat.m[1][1] = 0.2f;
-    scaleMat.m[2][2] = 1.f;
+        _matrix scaleMat = *m_pTransformCom->Get_World();
+        scaleMat.m[0][0] = 0.2f;
+        scaleMat.m[1][1] = 0.2f;
+        scaleMat.m[2][2] = 1.f;
 
-    pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
-    m_pBufferCom->Render_Buffer();
+        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+        m_pBufferCom->Render_Buffer();
+    }
+  
 }
 
 HRESULT CMenuBubble::Ready_Component()
@@ -219,7 +205,6 @@ CMenuBubble* CMenuBubble::Create()
         MSG_BOX("overlay Create Failed");
         return nullptr;
     }
-
     return overlay;
 }
 

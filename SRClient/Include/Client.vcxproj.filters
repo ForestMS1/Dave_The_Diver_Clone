@@ -379,6 +379,114 @@
     <Filter Include="02. GameObject\Fish\UI\HoldFish">
       <UniqueIdentifier>{f1756187-72fa-4b25-9ddd-da71f198f849}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. Sushi\Wasabi">
+      <UniqueIdentifier>{fd042b25-98c8-40a3-a4bd-f60dbcbe7d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\MeleeAttackReady">
+      <UniqueIdentifier>{c5758d6d-757a-4714-8fe3-cd21815f2728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\MeleeAttack">
+      <UniqueIdentifier>{4de75e6c-fc0e-4b85-bfbe-7136a0474a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\Intro">
+      <UniqueIdentifier>{92f78695-0ad1-4be6-b322-6bd30345c6d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\Bullet">
+      <UniqueIdentifier>{1b724738-92a7-4556-85f1-ae1582392f71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\NoStart">
+      <UniqueIdentifier>{dd6ecac0-0c83-489b-9161-368050b37bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\Hit">
+      <UniqueIdentifier>{9a529591-3314-4545-98cd-8f566ff00917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\BattleAngry">
+      <UniqueIdentifier>{60ec1b62-71dd-4476-a750-7d91890e7df5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2">
+      <UniqueIdentifier>{143c0185-5b83-4077-84f5-a24e1fb4f31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Idle">
+      <UniqueIdentifier>{242d7319-2911-4263-8fb2-0d0b05d774ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\NoStart">
+      <UniqueIdentifier>{e79f3f7b-3079-4e7f-ae60-2efb7544956f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Intro">
+      <UniqueIdentifier>{1e240791-666e-4777-910e-453bd6f158c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John\Die">
+      <UniqueIdentifier>{578368ac-03b5-4407-97ae-e6ccb03c473e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\AttackReady">
+      <UniqueIdentifier>{e0efd47f-4094-4bca-a3aa-6a63f3919a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Chase">
+      <UniqueIdentifier>{2a59f70a-ade4-4440-9349-8b1f2694fdb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\AttackShoot">
+      <UniqueIdentifier>{b148ca4c-1525-4895-b12e-a2dd5b6c7fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\GunSkill02_Aim">
+      <UniqueIdentifier>{5fb8d4b9-1e9f-4584-a63d-e35dc0866408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\MeleeAttack">
+      <UniqueIdentifier>{47cd0bea-e4a6-405a-83b8-a84ebe31acc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\MeleeAttackReady">
+      <UniqueIdentifier>{37e35cf4-24fd-40c3-b665-50c46d3b19bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\MeleeAttackReturn">
+      <UniqueIdentifier>{1e2f667a-f334-48af-ae33-8c38b98eaa8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\SubMarine">
+      <UniqueIdentifier>{04673cfa-9be8-491c-8ec9-d9fb03b3176c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult">
+      <UniqueIdentifier>{57c1a566-ae2f-4754-8d7e-d08dc9042042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\BackToShipUI">
+      <UniqueIdentifier>{25d94ffb-b043-4b76-85ac-16ff310be786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Conversation">
+      <UniqueIdentifier>{61c8e9c0-35a6-4932-905e-6a89042af3ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\Result">
+      <UniqueIdentifier>{a3356668-8d9d-48db-ae98-1f38d90dad4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\GoToSushi">
+      <UniqueIdentifier>{300a6f58-96f6-48a3-b9f0-d9e456a0396c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\ToSushi">
+      <UniqueIdentifier>{e6912de4-4352-4504-b1d6-327ed71ff877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveResult\BanchoGood">
+      <UniqueIdentifier>{e058b1dc-e7b8-4a10-9fde-4af25a6d3217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Sushi\Tea">
+      <UniqueIdentifier>{7e6db575-4963-410e-a255-28416fdcc750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon">
+      <UniqueIdentifier>{809434f3-c0e3-4fbe-a130-cbb728a2cf14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\InitStart">
+      <UniqueIdentifier>{10153e22-8090-4042-9f88-2a87871a79bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_TripleAxel">
+      <UniqueIdentifier>{58f738d9-49f4-462b-8623-6e64ffaa6314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_PentaAxel">
+      <UniqueIdentifier>{2d8906b3-c8c2-427d-9277-bf098546dbdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveItemDescUI">
+      <UniqueIdentifier>{6814c4d9-df3e-49a6-9e68-fb4bc76364ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveGetWeaponUI">
+      <UniqueIdentifier>{40064acd-31f7-475b-9be9-924f4b2772ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Wood">
+      <UniqueIdentifier>{8afa162b-f1c4-4066-beeb-cc70eda80bc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -987,6 +1095,159 @@
     <ClInclude Include="..\Header\CHoldFishUIDave.h">
       <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWasabi.h">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWasabiObject.h">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUpgradeImage.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnMeleeAttackReady.h">
+      <Filter>02. GameObject\John\MeleeAttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnMeleeAttack.h">
+      <Filter>02. GameObject\John\MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnIntro.h">
+      <Filter>02. GameObject\John\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnGuidedBullet.h">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnNoStart.h">
+      <Filter>02. GameObject\John\NoStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnHit.h">
+      <Filter>02. GameObject\John\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnBattleAngry.h">
+      <Filter>02. GameObject\John\BattleAngry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnMine.h">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2.h">
+      <Filter>02. GameObject\John2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Idle.h">
+      <Filter>02. GameObject\John2\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2NoStart.h">
+      <Filter>02. GameObject\John2\NoStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Intro.h">
+      <Filter>02. GameObject\John2\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnDie.h">
+      <Filter>02. GameObject\John\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2AttackReady.h">
+      <Filter>02. GameObject\John2\AttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Chase.h">
+      <Filter>02. GameObject\John2\Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2AttackShoot.h">
+      <Filter>02. GameObject\John2\AttackShoot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGunSkill02Aim.h">
+      <Filter>02. GameObject\John2\GunSkill02_Aim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohnBullet.h">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2MeleeAttackReady.h">
+      <Filter>02. GameObject\John2\MeleeAttackReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2MeleeAttack.h">
+      <Filter>02. GameObject\John2\MeleeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2MeleeAttackReturn.h">
+      <Filter>02. GameObject\John2\MeleeAttackReturn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveSubMarine.h">
+      <Filter>02. GameObject\DiveDave\State\SubMarine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBackToShipUI.h">
+      <Filter>02. GameObject\BackToShipUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDaveConversation.h">
+      <Filter>02. GameObject\Conversation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLeah.h">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveResultUI.h">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveResultUIImg.h">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGoToSushiUI.h">
+      <Filter>02. GameObject\DiveResult\GoToSushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToSushiUI.h">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToSushiUIItem.h">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanchoGood.h">
+      <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTea.h">
+      <Filter>01. Scene\03. Sushi\Tea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTeaBubble.h">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CO2TxT.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COverloadedIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveInitStart.h">
+      <Filter>02. GameObject\DiveDave\State\InitStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemTripleAxel.h">
+      <Filter>02. GameObject\Dive_Item\Item_TripleAxel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemPentaAxel.h">
+      <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipUIGoSushiBtn.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveItemDescUI.h">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUI.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUIImg.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWood.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSmallMenu.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanchoR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHeadP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1286,9 +1547,6 @@
     <ClCompile Include="..\Code\CShipPhoneIDiverItem.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\IDiver\09. ShipPhoneIDiverItem</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CShipDiverBoxInventory.cpp">
-      <Filter>02. GameObject\00. Ship\01. Boat</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CShipPhoneWeaponBG.cpp">
       <Filter>02. GameObject\00. Ship\Phone\App\Weapon</Filter>
     </ClCompile>
@@ -1573,6 +1831,162 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHoldFishUIDave.cpp">
       <Filter>02. GameObject\Fish\UI\HoldFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWasabi.cpp">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWasabiObject.cpp">
+      <Filter>01. Scene\03. Sushi\Wasabi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUpgradeImage.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnMeleeAttackReady.cpp">
+      <Filter>02. GameObject\John\MeleeAttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnMeleeAttack.cpp">
+      <Filter>02. GameObject\John\MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnIntro.cpp">
+      <Filter>02. GameObject\John\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnGuidedBullet.cpp">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnNoStart.cpp">
+      <Filter>02. GameObject\John\NoStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnHit.cpp">
+      <Filter>02. GameObject\John\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnBattleAngry.cpp">
+      <Filter>02. GameObject\John\BattleAngry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnMine.cpp">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2.cpp">
+      <Filter>02. GameObject\John2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Idle.cpp">
+      <Filter>02. GameObject\John2\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2NoStart.cpp">
+      <Filter>02. GameObject\John2\NoStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Intro.cpp">
+      <Filter>02. GameObject\John2\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnDie.cpp">
+      <Filter>02. GameObject\John\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2AttackReady.cpp">
+      <Filter>02. GameObject\John2\AttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Chase.cpp">
+      <Filter>02. GameObject\John2\Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2AttackShoot.cpp">
+      <Filter>02. GameObject\John2\AttackShoot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGunSkill02Aim.cpp">
+      <Filter>02. GameObject\John2\GunSkill02_Aim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohnBullet.cpp">
+      <Filter>02. GameObject\John\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2MeleeAttackReady.cpp">
+      <Filter>02. GameObject\John2\MeleeAttackReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2MeleeAttack.cpp">
+      <Filter>02. GameObject\John2\MeleeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2MeleeAttackReturn.cpp">
+      <Filter>02. GameObject\John2\MeleeAttackReturn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp">
+      <Filter>02. GameObject\DiveDave\State\SubMarine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipDiverBoxInventory.cpp">
+      <Filter>02. GameObject\00. Ship\02. ShipDiverBoxInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBackToShipUI.cpp">
+      <Filter>02. GameObject\BackToShipUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDaveConversation.cpp">
+      <Filter>02. GameObject\Conversation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLeah.cpp">
+      <Filter>02. GameObject\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveResultUI.cpp">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveResultUIImg.cpp">
+      <Filter>02. GameObject\DiveResult\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGoToSushiUI.cpp">
+      <Filter>02. GameObject\DiveResult\GoToSushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToSushiUI.cpp">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToSushiUIItem.cpp">
+      <Filter>02. GameObject\DiveResult\ToSushi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanchoGood.cpp">
+      <Filter>02. GameObject\DiveResult\BanchoGood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTea.cpp">
+      <Filter>01. Scene\03. Sushi\Tea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTeaBubble.cpp">
+      <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2TxT.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightText.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COverloadedIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveInitStart.cpp">
+      <Filter>02. GameObject\DiveDave\State\InitStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemTripleAxel.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_TripleAxel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemPentaAxel.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIGoSushiBtn.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItemDescUI.cpp">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUIImg.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWood.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSmallMenu.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanchoR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHeadP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

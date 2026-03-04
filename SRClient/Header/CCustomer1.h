@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CAABB.h"
 
 namespace Engine
 {
@@ -16,13 +17,15 @@ private:
 	virtual ~CCustomer1();
 
 public:
-	enum State { WALK, MENU, WAIT, EAT, HAPPY, ANGER, STATE_END };
+	enum State { WALK, MENU, WAIT, EAT, HAPPY, ANGER,LEAVE, STATE_END };
 	enum Facing { LEFT, RIGHT, FACE_END };
 	virtual			HRESULT		Ready_GameObject();
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
 	void						Find_Chair();
+	void						Empty_Chair();
+	CAABB* Get_AABB()		 { return m_pAABB; }
 private:
 	HRESULT			Ready_Component();
 
@@ -37,9 +40,14 @@ private:
 	Engine::CTransform* m_pTransformCom;
 public:
 	static CCustomer1* Create();
+	wstring			sushiHanded;
+	bool			gotSushi;
+	CGameObject* MenuBubble;
+	CGameObject* TeaBubble;
+	bool			OrderedTea;
+	bool			gotTea;
 
 private:
-	CGameObject*	MenuBubble;
 	State			curState;
 	_float			m_fFrame;
 	Facing			curDir;
@@ -48,10 +56,26 @@ private:
 	bool			ChairFound;
 	bool			Sitted;
 	bool			ChoosingMenu;
-	bool			Waiting;
+	bool			Reacting;
+	bool			Eating;
 	float			deltaTime;
-	
+	float			teaTime;
+	float			teaWatingTime;
+	float			teaChoosingTime;
+	float			ExitTime;
+	float			ReactionTime;
+	float			EatingTime;
+	float			EmotionTime;
+	float			PukeTime;
+	float			GoldTime;
+	CAABB*			m_pAABB;
+	_vec3 screen;
+	int random1;
+	int random2;
 	virtual void Free();
+	bool			choosingTea = false;
+	bool			waitingMenu = false;;
+	bool			gotSushiSoundPlayed = false;
 
 };
 

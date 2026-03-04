@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-
+#include "CAABB.h"
 namespace Engine
 {
 	class CRcTex;
@@ -14,6 +14,8 @@ private:
 	explicit CSushiDave();
 	explicit CSushiDave(const CGameObject& rhs);
 	virtual ~CSushiDave();
+	void	Update_ImGui() override;
+
 
 public:
 	enum State { IDLE,WALK, RUN,TIRED, SUSHI_IDLE, SUSHI_WALK, SUSHI_RUN, SUSHI_TIRED, STATE_END };
@@ -25,6 +27,7 @@ public:
 
 private:
 	HRESULT			Ready_Component();
+	virtual void Free();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -48,7 +51,18 @@ private:
 	bool			holdingSushi;
 	Facing			curDir;
 	Facing			prevDir;
-	virtual void Free();
+	CAABB*			m_pAABB;
+	wstring			m_sSushiName;
+	wstring			m_sTexName;
+	float			m_fGauge= -0.49;
+	float			tiredTime;
+	float			runningSoundTime = 0.f;
+	float			walkSoundTime = 0.f;
+	float			DashSoundTime = 0.f;
+	bool			tiredSoundPlayed = false;
+
+public:
+	bool			makingWasabi = false;
 
 };
 

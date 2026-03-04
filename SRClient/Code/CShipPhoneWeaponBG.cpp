@@ -62,9 +62,25 @@ HRESULT		CShipPhoneWeaponBG::Ready_GameObject()
             ->Add_GameObject(L"ShipPhoneWeaponLogo", pImg);
     }
 
+    //  ¿ÞÀ§
     {
         CShipPhoneWeaponArea* pArea = CShipPhoneWeaponArea::Create(0, -1.f, 2.f);
         pArea->Set_Parent(this);
+        pArea->Set_AssetName(L"Tex_UI_Gun_Basic");
+        pArea->Ready_AfterCreate();
+
+
+        CManagement::GetInstance()
+            ->Get_Scene()
+            ->Get_Layer(L"0_GameLogic_Layer")
+            ->Add_GameObject(L"ShipPhoneWeaponArea", pArea);
+    }
+
+    // ¿ÀÀ§
+    {
+        CShipPhoneWeaponArea* pArea = CShipPhoneWeaponArea::Create(1, 1.f, 2.f);
+        pArea->Set_Parent(this);
+        pArea->Set_AssetName(L"Tex_UI_Gun_Triple_Accel");
         pArea->Ready_AfterCreate();
 
         CManagement::GetInstance()
@@ -73,9 +89,24 @@ HRESULT		CShipPhoneWeaponBG::Ready_GameObject()
             ->Add_GameObject(L"ShipPhoneWeaponArea", pArea);
     }
 
+    // ¿Þ¾Æ
     {
-        CShipPhoneWeaponArea* pArea = CShipPhoneWeaponArea::Create(1, 1.f, 2.f);
+        CShipPhoneWeaponArea* pArea = CShipPhoneWeaponArea::Create(2, -1.f, 0.f);
         pArea->Set_Parent(this);
+        pArea->Set_AssetName(L"Tex_UI_Gun_Quadro_Accel");
+        pArea->Ready_AfterCreate();
+
+        CManagement::GetInstance()
+            ->Get_Scene()
+            ->Get_Layer(L"0_GameLogic_Layer")
+            ->Add_GameObject(L"ShipPhoneWeaponArea", pArea);
+    }
+
+    // ¿À¾Æ
+    {
+        CShipPhoneWeaponArea* pArea = CShipPhoneWeaponArea::Create(3, 1.f, 0.f);
+        pArea->Set_Parent(this);
+        pArea->Set_AssetName(L"Tex_UI_Gun_Penta_Accel");
         pArea->Ready_AfterCreate();
 
         CManagement::GetInstance()
@@ -142,7 +173,25 @@ _int		CShipPhoneWeaponBG::Update_GameObject(const _float& fTimeDelta)
         if (!pExitst)
         {
             CShipPhoneWeaponCreateSuccess* pSuccess = CShipPhoneWeaponCreateSuccess::Create();
+
+            if (iCurrentIdx == 0)
+            {
+                pSuccess->Set_AssetName(L"Tex_UI_Gun_Basic");
+            }
+            else if (iCurrentIdx == 1)
+            {
+                pSuccess->Set_AssetName(L"Tex_UI_Gun_Triple_Accel");
+            }
+            else if (iCurrentIdx == 2)
+            {
+                pSuccess->Set_AssetName(L"Tex_UI_Gun_Quadro_Accel");
+            }
+            else if (iCurrentIdx == 3)
+            {
+                pSuccess->Set_AssetName(L"Tex_UI_Gun_Penta_Accel");
+            }
             pSuccess->Set_Parent(this);
+            pSuccess->Ready_AfterCreate();
 
             CManagement::GetInstance()
                 ->Get_Scene()
@@ -181,9 +230,18 @@ void		CShipPhoneWeaponBG::LateUpdate_GameObject(const _float& fTimeDelta)
                     }
                     else if (pCollider->Get_Tag() == L"AABB_WeaponArea_1")
                     {
-                        int x = 0;
                         m_pEdge->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(1.f, 2.f, 0.f);
                         iCurrentIdx = 1;
+                    }
+                    else if (pCollider->Get_Tag() == L"AABB_WeaponArea_2")
+                    {
+                        m_pEdge->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-1.f, 0.f, 0.f);
+                        iCurrentIdx = 2;
+                    }
+                    else if (pCollider->Get_Tag() == L"AABB_WeaponArea_3")
+                    {
+                        m_pEdge->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(1.f, 0.f, 0.f);
+                        iCurrentIdx = 3;
                     }
                 }
             }

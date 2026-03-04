@@ -28,6 +28,18 @@ CGreenHumpheadParrotfish::~CGreenHumpheadParrotfish()
 
 HRESULT CGreenHumpheadParrotfish::Ready_GameObject()
 {
+    m_sFishName = L"¹öÆÈ·ÎÆÐ·µÇÇ½¬";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Green_Humphead_Parrotfish";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+    m_fLength = 10.f;
+    m_iMeatCnt = 1;
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreenHumpheadParrotfish";
+    m_iSushiMoney = 12;
+    m_iSushiLv = 1;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

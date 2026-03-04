@@ -5,6 +5,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CDiveItem.h"
+#include "CDiveDaveGun.h"
 CDiveDavePickUp::CDiveDavePickUp(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -72,23 +73,43 @@ void CDiveDavePickUp::Clear()
 {
 	if (m_pOwner->m_pCurOnItem != nullptr)
 	{
-		Event e;
-		e.type = EVENTTYPE::GET_ITEM;
-		e.ItemTextureName = static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->Get_TexName();
+		if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::USEITEM)
+		{
+			Event e;
+			e.type = EVENTTYPE::GET_ITEM;
+			e.ItemTextureName = static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->Get_TexName();
 
-		if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] == nullptr)
-		{
-			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_pCurOnItem;
-			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
-			e.value = 1;
-			m_pOwner->Notify(e);
+			if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] == nullptr)
+			{
+				m_pOwner->m_mapCanUseItemSlot[L"ItemSlot1"] = m_pOwner->m_pCurOnItem;
+				static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+				e.value = 1;
+				m_pOwner->Notify(e);
+			}
+			else if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] == nullptr)
+			{
+				m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = m_pOwner->m_pCurOnItem;
+				static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+				e.value = 2;
+				m_pOwner->Notify(e);
+			}
 		}
-		else if (m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] == nullptr)
+		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::WEAPONITEM)
 		{
-			m_pOwner->m_mapCanUseItemSlot[L"ItemSlot2"] = m_pOwner->m_pCurOnItem;
-			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
-			e.value = 2;
+			Event e;
+			e.type = EVENTTYPE::GET_WEAPON;
+			e.ItemTextureName = static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->Get_TexName();
+			e.value = 2; // GunSlot UI에 아이템 획득을 알림
 			m_pOwner->Notify(e);
+
+			CGameMemMgr::CDaveInfo::DAVE_GUN eGun = static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetGunType();
+			static_cast<CDiveDaveGun*>(m_pOwner->Get_WeponSlot(EQUIPPED::GUN))->Change_Gun(eGun);
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+		}
+		// [LSY] 잡템분기추가
+		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::COMMONITEM)
+		{
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
 		}
 		else
 			return;

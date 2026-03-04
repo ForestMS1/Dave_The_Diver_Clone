@@ -8,7 +8,8 @@
 #include "CAssetDefaultFont.h"
 #include "CDInputMgr.h"
 #include "CTransition.h"
-
+#include "CManagement.h"
+#include "CShipUIGoSushiBtn.h"
 CShipUIGoBtn::CShipUIGoBtn(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -64,7 +65,22 @@ _int		CShipUIGoBtn::Update_GameObject(const _float& fTimeDelta)
 
         if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
         {
-            CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+            //CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                CShipUIGoSushiBtn* pGoSushiBtn = CShipUIGoSushiBtn::Create(-4.45f, -1.3f);
+                if (nullptr == pGoSushiBtn)
+                    return NOEVENT;
+                if (FAILED(pLayer->Add_GameObject(L"ShipGoSushiBtn", pGoSushiBtn)))
+                    return NOEVENT;
+
+                if (auto pSpace = pLayer->Get_GameObjectFirst(L"ShipGoBtnSpaceKey"))
+                {
+                    pSpace->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-3.25f, -1.3f, 0.f);
+                }
+            }
+            //ShipGoBtnSpaceKey
         }
         
     }

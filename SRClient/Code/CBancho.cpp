@@ -7,10 +7,20 @@
 #include "Engine_Define.h"
 #include "CGraphicDev.h"
 #include "CGameMemMgr.h"
+#include "CAssetMgr.h"
+#include "CAssetTexture.h"
+#include "CDInputMgr.h"
+#include "CColliderMgr.h"
+#include "CWasabiObject.h"
+#include "CSmallMenu.h"
 CBancho::CBancho()
     : CGameObject() 
 {
     curState = IDLE;
+    m_sFishName = L"";
+    m_sTexName = L"";
+    wasabiUse = false;
+    spending = false;
 }
 
 CBancho::CBancho(const CGameObject& rhs)
@@ -28,16 +38,28 @@ HRESULT CBancho::Ready_GameObject()
         return E_FAIL;
 
     m_fFrame = 0.f;
-
-
+    _vec3 vExtents = { 0.3f, 1.0f, 3.1f };
+    _vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
+    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Bancho", this);
     return S_OK;
-}
 
+}
+void CBancho::Update_ImGui()
+{
+    CGameObject::Update_ImGui();
+    ImGui::DragFloat("tempY", &m_fGauge, 0.01f);
+}
 _int CBancho::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
-
+ 
+    
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_Bancho", m_pAABB);
+    _matrix temp = *m_pTransformCom->Get_World();
+    temp.m[3][0] = 5.2f;
+    temp.m[3][2] = -1.5f;
+    m_pAABB->Transform(&temp);
 
     switch (curState)
     {
@@ -45,21 +67,66 @@ _int CBancho::Update_GameObject(const _float& fTimeDelta)
         m_fFrame += 5.f * fTimeDelta;
         break;
     case COOK:
+   
         m_fFrame += 5.f * fTimeDelta;
         break;
     }
-    if (CGameMemMgr::GetInstance()->getCookingMenu().size() != 0) {
-        // 요리중으로 변경되면 현재 상태를 COOK 전 상태를 
-        curState = COOK;
-        if (3.f < m_fFrame)
-            m_fFrame = 0.f;
+    CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
+
+    float percent = static_cast<CWasabiObject*>(wasabi)->percent;
+    if (static_cast<CWasabiObject*>(wasabi)->percent >= 1.f) {
+        if (CGameMemMgr::GetInstance()->getCookingMenu().size() != 0) {
+            // 요리중으로 변경되면 현재 상태를 COOK 전 상태를 
+            m_sFishName = CGameMemMgr::GetInstance()->getCookingMenu().front()->name;
+            curState = COOK;
+            
+
+           
+            if (m_sFishName == L"블루종") {
+                m_sTexName = L"Tex_Bluejong";
+            }
+            else if (m_sFishName == L"노랑탕") {
+                m_sTexName = L"Tex_YellowTang";
+
+            }
+            else if (m_sFishName == L"코반아지") {
+                m_sTexName = L"Tex_Dart";
+
+            }
+            else if (m_sFishName == L"노랑백") {
+                m_sTexName = L"Tex_YellowBack";
+
+            }
+            else if (m_sFishName == L"흰동가리") {
+                m_sTexName = L"Tex_ClownFish";
+            }
+            else if (m_sFishName == L"???") {
+                m_sTexName = L"Tex_BanchoSushi";
+            }
+        }
+        else {
+            curState = IDLE;
+            if (5.f < m_fFrame)
+                m_fFrame = 0.f;
+        }
     }
     else {
         curState = IDLE;
-        if (5.f < m_fFrame)
-            m_fFrame = 0.f;
     }
-
+    
+    if (curState == COOK && m_fGauge == -1.f && !spending) {
+        list<CGameObject*>* smallMenus = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SmallMenu");
+        if (smallMenus != nullptr) {
+            list<CGameObject*>::iterator iter = smallMenus->begin();
+            for (iter; iter != smallMenus->end(); iter++) {
+                if (m_sFishName == static_cast<CSmallMenu*>(*iter)->fishName) {
+                    static_cast<CSmallMenu*>(*iter)->CurQuantity = to_wstring(stoi(static_cast<CSmallMenu*>(*iter)->CurQuantity) - 1);
+                    spending = true;
+                    break;
+                }
+            }
+        }
+    }
     return iExit;
 }
 
@@ -74,22 +141,27 @@ void CBancho::LateUpdate_GameObject(const _float& fTimeDelta)
 
 
     if (curState == COOK) {
-        m_fGauge += fTimeDelta;
+        m_fGauge += fTimeDelta * 0.15f;
     }
+
 }
 
 void CBancho::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-
+    pGraphicDev->Clear(0, NULL, D3DCLEAR_STENCIL, 0, 1.0f, 0);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
     switch (curState)
     {
     case IDLE:
+        if (5.f < m_fFrame)
+            m_fFrame = 0.f;
         m_pIdleTextureCom->Set_Texture((_uint)m_fFrame);
         break;
     case COOK:
+        if (3.f < m_fFrame)
+            m_fFrame = 0.f;
         m_pCookTextureCom->Set_Texture((_uint)m_fFrame);
         break;
     }
@@ -100,6 +172,123 @@ void CBancho::Render_GameObject()
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
+    if (curState == COOK) {
+        if (m_fGauge <= 0) {
+            if (!wasabiUse) {
+                CGameObject* wasabi = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"WasabiObject");
+                static_cast<CWasabiObject*>(wasabi)->gauge -= 0.93 * 0.25;
+                wasabiUse = true;
+            }
+            if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_CookingBox"))
+            {
+                if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                {
+                    pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                }
+            }
+        }
+        else {
+            if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_CookingComplete"))
+            {
+                if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                {
+                    pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                }
+                m_fGauge = 0;
+            }
+        }
+        _matrix bancho = *m_pTransformCom->Get_World();
+        bancho.m[0][0] = 1.2f;
+        bancho.m[1][1] = 0.2f;
+        bancho.m[3][1] += 2.0f; 
+
+        _matrix sushi = bancho;
+
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &bancho);
+
+        m_pBufferCom->Render_Buffer();
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_CookingGauge"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        bancho.m[0][0] = 0.55f;
+        bancho.m[1][1] = 0.05f;
+
+       pGraphicDev->SetTransform(D3DTS_WORLD, &bancho);
+       m_pBufferCom->Render_Buffer();
+
+        pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+        pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
+        pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
+
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+        pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 140); // 알파가 1 이상인 것만 통과
+        pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+        // 2. 색상과 깊이 기록은 끔 (틀만 잡기 위함)
+        pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
+        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+        m_pBufferCom->Render_Buffer();
+
+        pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
+
+        // 2. 스텐실 판정: 기록된 '1' 영역에만 그리기
+        pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+        pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+
+ 
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Yellow"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+        _matrix newMat = *m_pTransformCom->Get_World();
+         bancho.m[3][0] += m_fGauge;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &bancho);
+        m_pBufferCom->Render_Buffer();
+
+
+        pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_sTexName))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        sushi.m[0][0] = 0.15f;
+        sushi.m[1][1] = 0.15f;
+        sushi.m[3][0] += 0.63f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &sushi);
+        m_pBufferCom->Render_Buffer();
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_CookingIcon"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        sushi.m[0][0] = 0.13f;
+        sushi.m[1][1] = 0.13f;
+        sushi.m[3][0] -= 1.25f;
+        pGraphicDev->SetTransform(D3DTS_WORLD, &sushi);
+        m_pBufferCom->Render_Buffer();
+
+    }
 }
 
 HRESULT CBancho::Ready_Component()
@@ -118,7 +307,7 @@ HRESULT CBancho::Ready_Component()
         return E_FAIL;
 
     m_pTransformCom->m_vScale = { 1.f, 1.5f, 1.f };
-    m_pTransformCom->m_vInfo[INFO_POS] = { 8.8f, -1.9f, 1.f };
+    m_pTransformCom->m_vInfo[INFO_POS] = { 8.f, -1.9f, 1.f };
     return S_OK;
 }
 
@@ -139,6 +328,7 @@ CBancho* CBancho::Create()
 
 void CBancho::Free()
 {
+    Safe_Release(m_pAABB);
     CGameObject::Free();
 
 }

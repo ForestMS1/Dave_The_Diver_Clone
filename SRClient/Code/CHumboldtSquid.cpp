@@ -28,6 +28,19 @@ CHumboldtSquid::~CHumboldtSquid()
 
 HRESULT CHumboldtSquid::Ready_GameObject()
 {
+
+    m_sFishName = L"ÈÉº¼Æ® ¿ÀÂ¡¾î";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Humboldt_Squid";
+    m_iRank = 1;
+    m_iStar = 1;
+    m_fWeight = 0.5f;
+    m_iPrice = 10;
+    m_fLength = 10.f;
+    m_iMeatCnt = 1;
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Humboldt_Squid";
+    m_iSushiMoney = 12;
+    m_iSushiLv = 1;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

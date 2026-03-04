@@ -36,6 +36,7 @@ _int CJohnAttackReady::Update_State(const _float& fTimeDelta)
 {
 	m_pOwner->AddFrame(fTimeDelta, 10.f, 2);
 
+	m_pOwner->Update_ToTargetDir();
 
 	_vec3 vRotDir;
 	if (m_pOwner->Get_ToTargetDir().x > 0.f)

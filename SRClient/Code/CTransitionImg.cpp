@@ -102,7 +102,7 @@ _int		CTransitionImg::Update_GameObject(const _float& fTimeDelta)
     //}
     //m_pTransformCom->Set_Scale(&vScale);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_TRANSITION, this);
 
     if (!m_sColliderGroup.empty())
     {

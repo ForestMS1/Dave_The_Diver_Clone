@@ -36,6 +36,14 @@ CShipPhoneIDiverUpgrade::~CShipPhoneIDiverUpgrade()
 {
 }
 
+void CShipPhoneIDiverUpgrade::Update_ImGui()
+{
+    CGameObject::Update_ImGui();
+
+    ImGui::DragFloat("m_fDbgX", &m_fDbgX, 0.01f);
+    ImGui::DragFloat("m_fDbgY", &m_fDbgY, 0.01f);
+}
+
 
 HRESULT		CShipPhoneIDiverUpgrade::Ready_GameObject()
 {
@@ -71,6 +79,8 @@ void CShipPhoneIDiverUpgrade::Ready_AfterCreate()
     pUpBtn->Set_Parent(this);
     pUpBtn->Set_AssetName(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
 
+    m_pUpBtn = pUpBtn;
+
     CManagement::GetInstance()
         ->Get_Scene()
         ->Get_Layer(L"0_GameLogic_Layer")
@@ -90,6 +100,26 @@ void CShipPhoneIDiverUpgrade::Ready_AfterCreate()
 
 _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
 {
+
+
+    _uint iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
+
+    if (IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"MAX" || IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"최종병기작살")
+    {
+        m_pUpBtn->Set_AssetName(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
+    }
+    else
+    {
+        if (CGameMemMgr::GetInstance()->Get_Money() > IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost)
+        {
+            m_pUpBtn->Set_AssetName(L"Tex_Ship_IDiver_UpgradeBtn");
+        }
+        else
+        {
+            m_pUpBtn->Set_AssetName(L"Tex_Ship_IDiver_UpgradeBtnAlpha");
+        }
+    }
+    
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     //m_bSuccessOpen
@@ -119,21 +149,67 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
     {
         if (!m_bSuccessOpen)
         {
-            CShipPhoneIDiverUpgradeSuccess* pUpSucess = CShipPhoneIDiverUpgradeSuccess::Create(0.f, 0.f);
-            pUpSucess->Set_Parent(this);
+            _uint iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
+            if (CGameMemMgr::GetInstance()->Get_Money() > IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost)
+            {
+                CGameMemMgr::GetInstance()->Set_Money2(CGameMemMgr::GetInstance()->Get_Money() - IDiver::Get_Info(m_sAssetName, iCurrLevel+1).iCost);
 
-            pUpSucess->Set_Title(L"공기통");
-            pUpSucess->Set_Top(L"LV 1");
-            pUpSucess->Set_Bottom(L"공기량 111");
-            pUpSucess->Set_Desc(L"더 오래 잠수 할수 있습니다.");
-            pUpSucess->Set_AssetName(m_sAssetName);
+                if (
+                    !(IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"MAX"
+                        || IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"최종병기작살"))
+                {
+                    CGameMemMgr::GetInstance()->Set_IDiverCurrentLevel(m_sAssetName, iCurrLevel + 1);
 
-            pUpSucess->Ready_AfterCreate();
+                    //auto currLvl = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel();
+                    //IDiver::Get_Info(m_sAssetName, currLvl);
+                    //
+                    // 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] = 1;
+                    //m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Clothes"] = 1;
+                    //m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Cage"] = 1;
+                    //m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Jaksal"] = 1;
+                    iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
+                    if (m_sAssetName == L"Tex_Ship_IDiver_Item_Sanso")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_GonggiVolume(amount);
+                    }
+                    else if (m_sAssetName == L"Tex_Ship_IDiver_Item_Clothes")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_JamsuDepth(amount);
+                    }
+                    else if (m_sAssetName == L"Tex_Ship_IDiver_Item_Cage")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_JeokjaeWeight(amount);
+                    }
+                    else if (m_sAssetName == L"Tex_Ship_IDiver_Item_Jaksal")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_JaksalDamage(amount);
+                    }
+                    
 
-            CManagement::GetInstance()
-                ->Get_Scene()
-                ->Get_Layer(L"0_GameLogic_Layer")
-                ->Add_GameObject(L"ShipPhoneIDiverUpgradeSuccess", pUpSucess);
+                    CShipPhoneIDiverUpgradeSuccess* pUpSucess = CShipPhoneIDiverUpgradeSuccess::Create(0.f, 0.f);
+                    pUpSucess->Set_Parent(m_pParentGameObject);
+
+                    pUpSucess->Set_Title(L"공기통");
+                    pUpSucess->Set_Top(L"LV 1");
+                    pUpSucess->Set_Bottom(L"공기량 111");
+                    pUpSucess->Set_Desc(L"더 오래 잠수 할수 있습니다.");
+                    pUpSucess->Set_AssetName(m_sAssetName);
+
+                    pUpSucess->Ready_AfterCreate();
+
+                    CManagement::GetInstance()
+                        ->Get_Scene()
+                        ->Get_Layer(L"0_GameLogic_Layer")
+                        ->Add_GameObject(L"ShipPhoneIDiverUpgradeSuccess", pUpSucess);
+
+                    Set_DeadCascade();
+                    return OBJ_DEAD;
+                }
+            }
         }
     }
 
@@ -180,8 +256,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -0.3f;
-        float fOffsetY = 2.7f;
+        float fOffsetX = 0.f;
+        float fOffsetY = 2.53f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -191,7 +267,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sTitle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sTitle, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -199,8 +275,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -1.2f;
-        float fOffsetY = 1.1f;
+        float fOffsetX = -0.93f;
+        float fOffsetY = 0.96f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -210,7 +286,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -218,8 +294,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -1.2f;
-        float fOffsetY = 0.8f;
+        float fOffsetX = -0.93f;
+        float fOffsetY = 0.64f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -229,7 +305,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUnitName, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUnitName, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -237,8 +313,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -1.2f;
-        float fOffsetY = 0.5f;
+        float fOffsetX = -0.93f;
+        float fOffsetY = 0.36f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -248,7 +324,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUnit, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUnit, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -257,8 +333,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = 0.7f;
-        float fOffsetY = 1.1f;
+        float fOffsetX = 0.93f;
+        float fOffsetY = 0.96f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -268,7 +344,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sLevel, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sLevel, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -276,8 +352,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = 0.7f;
-        float fOffsetY = 0.8f;
+        float fOffsetX = 0.93f;
+        float fOffsetY = 0.64f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -287,7 +363,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sUnitName, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sUnitName, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -295,8 +371,8 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = 0.7f;
-        float fOffsetY = 0.5f;
+        float fOffsetX = 0.93f;
+        float fOffsetY = 0.36f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -306,7 +382,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sUnit, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).sUnit, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -326,7 +402,7 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUpgradeDesc, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f),(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(IDiver::Get_Info(m_sAssetName, iCurrLevel).sUpgradeDesc, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f),(DT_CENTER | DT_VCENTER  | DT_NOCLIP));
         }
     }
 
@@ -347,13 +423,13 @@ void		CShipPhoneIDiverUpgrade::Render_GameObject()
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
             D3DXCOLOR col;
-            if (m_bMoneyLack)
+            if (CGameMemMgr::GetInstance()->Get_Money() > IDiver::Get_Info(m_sAssetName, iCurrLevel).iCost)
             {
-                col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+                col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
             }
             else
             {
-                col = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+                col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
             }
             pDefFont->Render_Font(to_wstring(IDiver::Get_Info(m_sAssetName, iCurrLevel + 1).iCost), &vPos, col);
             //pDefFont->Render_Font(L"123", &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f));

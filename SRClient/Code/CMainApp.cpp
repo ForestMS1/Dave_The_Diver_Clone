@@ -203,7 +203,7 @@ HRESULT CMainApp::Load_PermanentAsset()
 			cnt += L"0";
 		}
 		cnt += ::to_wstring(i);
-		std::wstring s = L"../Bin/Resource/Texture/Transition/leah2/06_Body_" + cnt + L".png";
+		std::wstring s = L"../Bin/Resource/Texture/Transition/leah3/06_Body_" + cnt + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_Leah2", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_Leah2");
@@ -251,6 +251,21 @@ HRESULT CMainApp::Load_PermanentAsset()
 	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL_Size15", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 ¸Ç¹ßÀÇÃ»Ãá L", 0, 15, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL_Size15");
 
+	CAssetMgr::GetInstance()->AddAsset(L"Font_210YouthL_Size10", CAssetDefaultFont::Create(L"../Bin/Resource/Font/210YouthL.ttf", L"210 ¸Ç¹ßÀÇÃ»Ãá L", 0, 10, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_210YouthL_Size10");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 50, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm_Size35", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 35, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm_Size35");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm_Size30", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 30, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm_Size30");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Font_Snowstorm_Size20", CAssetDefaultFont::Create(L"../Bin/Resource/Font/Snowstorm.ttf", L"Snowstorm", 0, 20, FW_HEAVY));
+	CAssetMgr::GetInstance()->LoadAsset(L"Font_Snowstorm_Size20");
+
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Default", CAssetDefaultFont::Create(L"¹ÙÅÁ", 0, 20, FW_HEAVY));
 	CAssetMgr::GetInstance()->LoadAsset(L"Font_Default");
 
@@ -291,8 +306,8 @@ void CMainApp::Free()
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CImguiMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
-	CGameMemMgr::GetInstance()->DestroyInstance();
 	m_pManagement->DestroyInstance();
+	CGameMemMgr::GetInstance()->DestroyInstance();
 	CParticleMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 	CColliderMgr::GetInstance()->DestroyInstance();
