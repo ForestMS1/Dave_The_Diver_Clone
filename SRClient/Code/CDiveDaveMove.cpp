@@ -187,16 +187,30 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 		break;
 	}
 
+
+	_float fSpeed = m_pOwner->Get_Speed();
 	//수심 증감
 	if (vDir.y > 0)
 	{
-		_float fSpeed = m_pOwner->Get_Speed();
-		m_pOwner->Change_Depth(-0.01f * fSpeed);
+		if (abs(vDir.x) > 0)
+		{
+			m_pOwner->Change_Depth(-0.01f * 0.8f * fSpeed);
+		}
+		else
+		{
+			m_pOwner->Change_Depth(-0.01f * fSpeed);
+		}
 	}
 	else if (vDir.y < 0)
 	{
-		_float fSpeed = m_pOwner->Get_Speed();
-		m_pOwner->Change_Depth(0.01f * fSpeed);
+		if (abs(vDir.x) > 0)
+		{
+			m_pOwner->Change_Depth(0.01f * 0.8f * fSpeed);
+		}
+		else
+		{
+			m_pOwner->Change_Depth(0.01f * fSpeed);
+		}
 	}
 }
 
