@@ -53,6 +53,14 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
+	if (!CGameMemMgr::GetInstance()->Get_DaveInfo().Get_InventoryInitialized())
+	{
+		CGameMemMgr::GetInstance()->Get_DaveInfo().InventoryInitialize();
+		CGameMemMgr::GetInstance()->Get_DaveInfo().Set_InventoryInitialized();
+	}
+
+
+
 	CColliderMgr::GetInstance()->Set_Render(false);
 
 	if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())

@@ -1,16 +1,10 @@
 #pragma once
 #include "CGameObject.h"
 #include "CAABB.h"
+#include "CGameMemMgr.h"
 class CShipDiverBoxInventory : public CGameObject
 {
-public:
-	typedef struct tagDiverBoxItem
-	{
-		std::wstring sItemName;
-		std::wstring sItemDesc;
-		_uint iCnt;
-		std::wstring sAssetName;
-	} DIVERBOX_ITEM;
+
 private:
 	explicit CShipDiverBoxInventory();
 	explicit CShipDiverBoxInventory(const CShipDiverBoxInventory& rhs);
@@ -45,7 +39,7 @@ private:
 
 	int m_iSelectItemIdx;
 
-	map<_uint, DIVERBOX_ITEM> m_mapInventory;
+	//map<_uint, CGameMemMgr::DIVERBOX_ITEM> m_mapInventory;
 public:
 	static CShipDiverBoxInventory* Create();
 

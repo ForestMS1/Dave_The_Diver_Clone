@@ -137,10 +137,12 @@ HRESULT		CHoldFishUI::Ready_GameObject()
 
         // รั
         {
+            auto gunAssetAnem = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName;
+
             auto pGun = CHoldFishUIImg::Create(-1.07f, 0.43f);
             pGun->Set_Scale(0.040);
             pGun->Set_ViewZ(0.49f);
-            pGun->Set_AssetName(L"Tex_Ship_InventoryUpperItem_Gun");
+            pGun->Set_AssetName(gunAssetAnem);//L"Tex_Ship_InventoryUpperItem_Gun"
             pGun->Set_Parent(this);
             pGun->Ready_After_Create();
             pLayer->Add_GameObject(L"HoldFishUIGun", pGun);
