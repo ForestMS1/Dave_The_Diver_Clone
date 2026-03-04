@@ -10,6 +10,7 @@
 #include "CSeaBubble.h"
 #include "CBlood.h"
 #include "CCoin.h"
+#include "CBloomBubble.h"
 #include "CMapMgr.h"
 IMPLEMENT_SINGLETON(CParticleMgr)
 
@@ -33,6 +34,9 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 
 	CBlood* blood = CBlood::Create();
 	particles[PARTICLE_BLOOD]=(blood);
+
+	CBloomBubble* bloombubble = CBloomBubble::Create();
+	particles[PARTICLE_BLOOMBUBBLE] = (bloombubble);
 
 	CCoin* coin = CCoin::Create();
 	particles[PARTICLE_COIN] = (coin);
@@ -79,6 +83,11 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 	case PARTICLE_BUBBLE:
 		for (int i = 0; i < numofPariticles; i++) {
 			particles[PARTICLE_BUBBLE]->addParticle(origin, { 1,1,1,1 });
+		}
+		break;
+	case PARTICLE_BLOOMBUBBLE:
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[PARTICLE_BLOOMBUBBLE]->addParticle(origin, { 1,1,1,1 });
 		}
 		break;
 	case PARTICLE_BLOOD:

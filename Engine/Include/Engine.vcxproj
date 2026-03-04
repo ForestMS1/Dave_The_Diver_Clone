@@ -176,6 +176,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CAssetTextureFromInMem.h" />
     <ClInclude Include="..\Header\CAttackReadyArmTex.h" />
     <ClInclude Include="..\Header\CBlood.h" />
+    <ClInclude Include="..\Header\CBloomBubble.h" />
     <ClInclude Include="..\Header\CBoundingFrustum.h" />
     <ClInclude Include="..\Header\CBoundingSphere.h" />
     <ClInclude Include="..\Header\CBubble.h" />
@@ -271,6 +272,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CAssetTextureFromInMem.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArmTex.cpp" />
     <ClCompile Include="..\Code\CBlood.cpp" />
+    <ClCompile Include="..\Code\CBloomBubble.cpp" />
     <ClCompile Include="..\Code\CBoundingFrustum.cpp" />
     <ClCompile Include="..\Code\CBoundingSphere.cpp" />
     <ClCompile Include="..\Code\CBubble.cpp" />

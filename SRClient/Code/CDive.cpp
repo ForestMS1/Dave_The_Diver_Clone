@@ -110,6 +110,17 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 		CTransition::FadedTransition(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
+
+	ImGui::Begin("PARTICLE_TEST");
+	if (ImGui::Button("PARTICLE_BLOOMBUBBLE"))
+	{
+		CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
+		CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	
+
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, pDaveTransform->m_vInfo[INFO_POS], 10);
+	}
+	ImGui::End();
 	return iExit;
 }
 

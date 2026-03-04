@@ -602,6 +602,11 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Coin", CAssetTexture::Create(s.c_str()));
 	}
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/BloomBubble" + ::to_wstring(2) + L".png";
+	
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_BloomBubble", CAssetTexture::Create(s.c_str()));
+	}
 
 	for (int i = 0; i < 2; ++i)
 	{
