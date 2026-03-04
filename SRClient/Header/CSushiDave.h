@@ -59,10 +59,12 @@ private:
 	float			runningSoundTime = 0.f;
 	float			walkSoundTime = 0.f;
 	float			DashSoundTime = 0.f;
+	float			fireworkTime = 0.f;
 	bool			tiredSoundPlayed = false;
 
 public:
 	bool			makingWasabi = false;
+	
 
 };
 

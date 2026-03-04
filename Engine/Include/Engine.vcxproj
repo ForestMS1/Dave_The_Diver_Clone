@@ -253,6 +253,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
     <ClInclude Include="..\Header\Firework.h" />
+    <ClInclude Include="..\Header\FireworkTail.h" />
     <ClInclude Include="..\Header\PSystem.h" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +344,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
     <ClCompile Include="..\Code\CWeather.cpp" />
     <ClCompile Include="..\Code\Firework.cpp" />
+    <ClCompile Include="..\Code\FireworkTail.cpp" />
     <ClCompile Include="..\Code\PSystem.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\imgui-1.83\imgui.cpp">
       <IncludeInUnityFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IncludeInUnityFile>

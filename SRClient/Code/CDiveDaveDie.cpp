@@ -1,6 +1,10 @@
 #include "CDiveDaveDie.h"
 #include "CDiveDave.h"
 
+#include "CManagement.h"
+
+#include "CBackToShipUI.h"
+
 CDiveDaveDie::CDiveDaveDie(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -21,6 +25,19 @@ void CDiveDaveDie::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 	m_pOwner->Set_TextureCom(L"Com_DieTexture");
+
+	if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+	{
+		if (auto pUI = pLayer->Get_GameObjectFirst(L"BackToShipUI"))
+		{
+			pUI->Set_DeadCascade();
+		}
+		else
+		{
+			auto pBackToShipUI = CBackToShipUI::Create(0.f, 0.f);
+			pLayer->Add_GameObject(L"BackToShipUI", pBackToShipUI);
+		}
+	}
 }
 
 void CDiveDaveDie::Input(const _float& fTimeDelta)

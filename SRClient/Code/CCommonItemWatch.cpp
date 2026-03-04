@@ -121,6 +121,7 @@ void CCommonItemWatch::GetItem()
 		//fish.iSushiLv = m_iSushiLv;
 		//fish.iSushiMoney = m_iSushiMoney;
 		fish.bFish = false;
+		fish.sItemDesc = L"황금 시계이다. 상점에 비싸게 팔 수 있을 듯";
 		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
 
 		if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))

@@ -275,6 +275,7 @@
     <ClInclude Include="..\Header\CShipUIGoSushiBtn.h" />
     <ClInclude Include="..\Header\CSmallMenu.h" />
     <ClInclude Include="..\Header\CSmallspottedDart.h" />
+    <ClInclude Include="..\Header\CStockMarket.h" />
     <ClInclude Include="..\Header\CTea.h" />
     <ClInclude Include="..\Header\CTeaBubble.h" />
     <ClInclude Include="..\Header\CTitanTriggerfish.h" />
@@ -535,6 +536,7 @@
     <ClCompile Include="..\Code\CShipUIGoSushiBtn.cpp" />
     <ClCompile Include="..\Code\CSmallMenu.cpp" />
     <ClCompile Include="..\Code\CSmallspottedDart.cpp" />
+    <ClCompile Include="..\Code\CStockMarket.cpp" />
     <ClCompile Include="..\Code\CTea.cpp" />
     <ClCompile Include="..\Code\CTeaBubble.cpp" />
     <ClCompile Include="..\Code\CTitanTriggerfish.cpp" />

@@ -61,6 +61,10 @@
 #include "CCommonItemRope.h"
 #include "CCommonItemUmb.h"
 
+#include "CDInputMgr.h"
+
+#include "CHoldFishUI.h"
+
 #include "CCoral.h"
 CDive::CDive()
 	: CScene()
@@ -138,6 +142,40 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
+	//CColliderMgr::GetInstance()->Set_Render(false);
+
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			if (auto pUI = pLayer->Get_GameObjectFirst(L"HoldFishUI"))
+			{
+				pUI->Set_DeadCascade();
+			}
+			else
+			{
+				auto pHoldFishUI = CHoldFishUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"HoldFishUI", pHoldFishUI);
+			}
+		}
+	}
+
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_B))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			if (auto pUI = pLayer->Get_GameObjectFirst(L"BackToShipUI"))
+			{
+				pUI->Set_DeadCascade();
+			}
+			else
+			{
+				auto pBackToShipUI = CBackToShipUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"BackToShipUI", pBackToShipUI);
+			}
+		}
+	}
+
 	//::GetInstance()->Set_Render(false);
 	Frustum();
 	if (ImGui::Button("BackToShipUI"))

@@ -101,6 +101,7 @@ HRESULT CGameMemMgr::Ready()
 	addFish(L"노랑백", 7, 12, 20);
 	addFish(L"흰동가리", 8, 15, 23);
 	addFish(L"반쵸", 9, 10, 0);
+	stockPicIndex = 0;
     return S_OK;
 }
 
@@ -179,6 +180,17 @@ void CGameMemMgr::ClearCookingMenu()
 	}
 }
 
+void CGameMemMgr::AddStockMarketIndex()
+{
+	if (stockPicIndex < 13) {
+		stockPicIndex++;
+	}
+}
+
+
+
+
+
 std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunTexName(DAVE_GUN eItem)
 {
 	switch (eItem)
@@ -210,4 +222,55 @@ std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunDesc(DAVE_GUN eItem)
 	case GUN_TRIPLE_ACCEL: return L"트리플 악셀 이다";
 	}
 	return L"";
+}
+
+void CGameMemMgr::CDaveInfo::InventoryInitialize()
+{
+	// 0 ~ 31: 잡템칸
+	// 32: 작살
+	// 33: 총
+	// 34: 근접무기
+	// 35: 부적1
+	// 36: 부적2
+	for (int i = 0; i < 37; ++i)
+	{
+		CGameMemMgr::DIVERBOX_ITEM item1{};
+		m_mapInventory.insert({ i, item1 });
+	}
+
+	{
+		m_mapInventory[32].sItemName = L"작살";
+		m_mapInventory[32].sItemDesc = L"작살난다.";
+		m_mapInventory[32].sAssetName = L"Tex_Ship_InventoryUpperItem_Jaksal";
+		m_mapInventory[32].iCnt = 0;
+	}
+
+	{
+		m_mapInventory[33].sItemName = L"총";
+		m_mapInventory[33].sItemDesc = L"살살 맞으면 살지도?";
+		m_mapInventory[33].sAssetName = L"Tex_Ship_InventoryUpperItem_Gun";
+		//m_mapInventory[33].sAssetName = L"Tex_UI_Gun_Triple_Accel";
+		m_mapInventory[33].iCnt = 0;
+	}
+
+	{
+		m_mapInventory[34].sItemName = L"칼";
+		m_mapInventory[34].sItemDesc = L"목이 칼칼하군.";
+		m_mapInventory[34].sAssetName = L"Tex_Ship_InventoryUpperItem_Knief";
+		m_mapInventory[34].iCnt = 0;
+	}
+
+	{
+		m_mapInventory[35].sItemName = L"쥬신";
+		m_mapInventory[35].sItemDesc = L"저 취업 할수 있는거 맞죠?";
+		m_mapInventory[35].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
+		m_mapInventory[35].iCnt = 0;
+	}
+
+	{
+		m_mapInventory[36].sItemName = L"쥬신";
+		m_mapInventory[36].sItemDesc = L"저 취업 할수 있는거 맞죠?";
+		m_mapInventory[36].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
+		m_mapInventory[36].iCnt = 0;
+	}
 }

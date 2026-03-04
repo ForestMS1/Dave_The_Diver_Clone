@@ -121,6 +121,7 @@ void CCommonItemThurible::GetItem()
 		//fish.iSushiLv = m_iSushiLv;
 		//fish.iSushiMoney = m_iSushiMoney;
 		fish.bFish = false;
+		fish.sItemDesc = L"향로의 향을 맡고 있다보면\n매우 기분이 좋아진다.";
 		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
 
 		if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))

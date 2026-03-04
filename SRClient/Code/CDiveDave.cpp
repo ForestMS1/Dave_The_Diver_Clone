@@ -160,9 +160,12 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-	m_pFSM->LateUpdate_State(fTimeDelta);
 
-	CDiveDave::Collision_WithTerrain(fTimeDelta);
+	m_pTransformCom->Update_Component(fTimeDelta);
+
+	m_bIsCollisionWithTerrain = CDiveDave::Collision_WithTerrain(fTimeDelta);
+
+	m_pFSM->LateUpdate_State(fTimeDelta);
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -198,6 +201,33 @@ void CDiveDave::Move(_vec3* vDir, const _float& fTimeDelta, const _float& fSpeed
 	m_pTransformCom->Get_Info(INFO_POS, &Pos);
 	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
 	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
+	
+	if (!m_bIsCollisionWithTerrain)
+	{
+		//수심 증감
+		if (vDir->y > 0)
+		{
+			if (abs(vDir->x) > 0)
+			{
+				Change_Depth(-0.01f * 0.8f * fSpeed);
+			}
+			else
+			{
+				Change_Depth(-0.01f * fSpeed);
+			}
+		}
+		else if (vDir->y < 0)
+		{
+			if (abs(vDir->x) > 0)
+			{
+				Change_Depth(0.01f * 0.8f * fSpeed);
+			}
+			else
+			{
+				Change_Depth(0.01f * fSpeed);
+			}
+		}
+	}
 
 	m_vLastMoveDir = { vDir->x, vDir->y, vDir->z };
 	m_fLastMoveSpeed = fSpeed;
@@ -323,7 +353,7 @@ HRESULT	CDiveDave::Add_State()
 	return S_OK;
 }
 
-void CDiveDave::Collision_WithTerrain(const _float& fTimeDelta)
+_bool CDiveDave::Collision_WithTerrain(const _float& fTimeDelta)
 {
 	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
 	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Terrian"))
@@ -370,12 +400,14 @@ void CDiveDave::Collision_WithTerrain(const _float& fTimeDelta)
 
 							m_pTransformCom->Update_Component(fTimeDelta);
 							m_pAABB->Transform(m_pTransformCom->Get_World());
+							return true;
 						}
 					//}
 				}
 			}
 		}
 	}
+	return false;
 }
 
 void CDiveDave::Key_Input()

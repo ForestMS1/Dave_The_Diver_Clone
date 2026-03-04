@@ -121,6 +121,7 @@ void CCommonItemBone::GetItem()
 		//fish.iSushiLv = m_iSushiLv;
 		//fish.iSushiMoney = m_iSushiMoney;
 		fish.bFish = false;
+		fish.sItemDesc = L"누군가의 뼈다.\n사람의 것인지 명확히 알 수 없다.";
 		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
 
 		if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))

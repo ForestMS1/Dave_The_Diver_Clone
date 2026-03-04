@@ -6,6 +6,7 @@
 #include "CDiveDaveBullet.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CGameMemMgr.h"
 CDiveDaveGun::CDiveDaveGun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 	: m_eCurGun(eGun)
 {
@@ -55,6 +56,16 @@ void CDiveDaveGun::Init()
 		return;
 	static_cast<CDiveDave*>(m_pParentGameObject)->Set_WeaponSlot(this, EQUIPPED::GUN);
 	m_bInitComplete = true;
+	
+	// [LSY] 초기에 어떤 총으로 시작할지 현재 인벤토리 장착중인 총으로 결정
+	if (CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName == L"Tex_UI_Gun_Triple_Accel")
+	{
+		CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_TRIPLE_ACCEL);
+	}
+	else if (CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName == L"Tex_UI_Gun_Penta_Accel")
+	{
+		CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_PENTA_ACCEL);
+	}
 }
 
 _int CDiveDaveGun::Update_GameObject(const _float& fTimeDelta)

@@ -3,20 +3,20 @@
 #include "PSystem.h"
 BEGIN(Engine)
 
-class ENGINE_DLL Firework : public PSystem
+class ENGINE_DLL FireworkTail : public PSystem
 {
 public:
-	explicit Firework();
-	explicit Firework(_vec3 origin); 
-	virtual ~Firework();
+	explicit FireworkTail();
+	explicit FireworkTail(_vec3 origin);
+	virtual ~FireworkTail();
 
 public:
 	virtual		HRESULT		Ready_Buffer();
 	virtual		void		render();
 
 public:
-	//static Firework* Create(_vec3 origin, int numParticles);
-	static Firework* Create(_vec3 origin);
+	//static FireworkTail* Create(_vec3 origin, int numParticles);
+	static FireworkTail* Create(_vec3 origin);
 
 	void resetParticle(Attribute* attribute, D3DXCOLOR color);
 	void preRender();

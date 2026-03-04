@@ -166,55 +166,55 @@ HRESULT		CShipDiverBoxInventory::Ready_GameObject()
 
 
 
-    for (int i = 0; i < 37; ++i)
-    {
-        DIVERBOX_ITEM item1{};
-        m_mapInventory.insert({ i, item1 });
-    }
+    //for (int i = 0; i < 37; ++i)
+    //{
+    //    CGameMemMgr::DIVERBOX_ITEM item1{};
+    //    m_mapInventory.insert({ i, item1 });
+    //}
 
 
-    {;
-        m_mapInventory[32].sItemName = L"작살";
-        m_mapInventory[32].sItemDesc = L"작살난다.";
-        m_mapInventory[32].sAssetName = L"Tex_Ship_InventoryUpperItem_Jaksal";
-        m_mapInventory[32].iCnt = 0;
-    }
+    //{;
+    //    m_mapInventory[32].sItemName = L"작살";
+    //    m_mapInventory[32].sItemDesc = L"작살난다.";
+    //    m_mapInventory[32].sAssetName = L"Tex_Ship_InventoryUpperItem_Jaksal";
+    //    m_mapInventory[32].iCnt = 0;
+    //}
 
-    {
-        m_mapInventory[33].sItemName = L"총";
-        m_mapInventory[33].sItemDesc = L"살살 맞으면 살지도?";
-        m_mapInventory[33].sAssetName = L"Tex_Ship_InventoryUpperItem_Gun";
-        m_mapInventory[33].iCnt = 0;
-    }
+    //{
+    //    m_mapInventory[33].sItemName = L"총";
+    //    m_mapInventory[33].sItemDesc = L"살살 맞으면 살지도?";
+    //    m_mapInventory[33].sAssetName = L"Tex_Ship_InventoryUpperItem_Gun";
+    //    m_mapInventory[33].iCnt = 0;
+    //}
 
-    {
-        m_mapInventory[34].sItemName = L"칼";
-        m_mapInventory[34].sItemDesc = L"목이 칼칼하군.";
-        m_mapInventory[34].sAssetName = L"Tex_Ship_InventoryUpperItem_Knief";
-        m_mapInventory[34].iCnt = 0;
-    }
+    //{
+    //    m_mapInventory[34].sItemName = L"칼";
+    //    m_mapInventory[34].sItemDesc = L"목이 칼칼하군.";
+    //    m_mapInventory[34].sAssetName = L"Tex_Ship_InventoryUpperItem_Knief";
+    //    m_mapInventory[34].iCnt = 0;
+    //}
 
-    {
-        m_mapInventory[35].sItemName = L"쥬신";
-        m_mapInventory[35].sItemDesc = L"저 취업 할수 있는거 맞죠?";
-        m_mapInventory[35].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
-        m_mapInventory[35].iCnt = 0;
-    }
+    //{
+    //    m_mapInventory[35].sItemName = L"쥬신";
+    //    m_mapInventory[35].sItemDesc = L"저 취업 할수 있는거 맞죠?";
+    //    m_mapInventory[35].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
+    //    m_mapInventory[35].iCnt = 0;
+    //}
 
-    {
-        m_mapInventory[36].sItemName = L"쥬신";
-        m_mapInventory[36].sItemDesc = L"저 취업 할수 있는거 맞죠?";
-        m_mapInventory[36].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
-        m_mapInventory[36].iCnt = 0;
-    }
+    //{
+    //    m_mapInventory[36].sItemName = L"쥬신";
+    //    m_mapInventory[36].sItemDesc = L"저 취업 할수 있는거 맞죠?";
+    //    m_mapInventory[36].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
+    //    m_mapInventory[36].iCnt = 0;
+    //}
 
-    {
-        //Tex_Ship_InventoryUpperItem_WoodPanel
-        m_mapInventory[0].sItemName = L"나무";
-        m_mapInventory[0].sItemDesc = L"카더가든";
-        m_mapInventory[0].sAssetName = L"Tex_Ship_InventoryUpperItem_WoodPanel";
-        m_mapInventory[0].iCnt = 1;
-    }
+    //{
+    //    //Tex_Ship_InventoryUpperItem_WoodPanel
+    //    m_mapInventory[0].sItemName = L"나무";
+    //    m_mapInventory[0].sItemDesc = L"카더가든";
+    //    m_mapInventory[0].sAssetName = L"Tex_Ship_InventoryUpperItem_WoodPanel";
+    //    m_mapInventory[0].iCnt = 1;
+    //}
 
     return S_OK;
 }
@@ -223,6 +223,7 @@ _int		CShipDiverBoxInventory::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
+    auto& m_mapInventory = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory();
     if (auto pItems = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjects(L"ShipDiverBoxItemArea"))
     {
         int i = 0;

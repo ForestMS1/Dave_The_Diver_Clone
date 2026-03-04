@@ -101,17 +101,22 @@ public:
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+			Event e;
+			e.type = EVENTTYPE::CHANGE_HP;
+			e.value = 0;
+			e.fValue = m_fHp / m_fMaxHp;
+			CDiveDave::Notify(e);
+			return;
+		}
 		Event e;
 		e.type = EVENTTYPE::CHANGE_HP;
 		e.value = (_uint)m_fHp;
 		e.fValue = m_fHp / m_fMaxHp;
 		CDiveDave::Notify(e);
-
-		if (m_fHp <= 0.f)
-		{
-			m_fHp = 0.f;
-			On_Dead();
-		}
 	}
 	// Die 상태로 전이하기위한 함수
 	void				On_Dead() 															{ m_bIsDie = true; }
@@ -181,7 +186,7 @@ public:
 	void				Set_Speed(_float fSpeed)											{ m_fSpeed = fSpeed; }
 
 	_bool				Is_Overloaded() const												{ return m_bOverloaded; }
-
+	_bool				Collision_WithTerrain(const _float& fTimeDelta);
 
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
@@ -192,7 +197,6 @@ public:
 private:
 	HRESULT				Ready_Component();
 	HRESULT				Add_State();
-	void				Collision_WithTerrain(const _float& fTimeDelta);
 
 private:
 	void				Key_Input();
@@ -255,6 +259,8 @@ private:
 	_bool  m_bSubMarine = false;
 
 	_bool  m_bOverloaded = false;
+
+	_bool m_bIsCollisionWithTerrain = false;
 
 	_vec3 m_vLastMoveDir; // 마지막으로 이동중이었던 방향
 	_float m_fLastMoveSpeed; // 마지막으로 이동중이었던 스피드값

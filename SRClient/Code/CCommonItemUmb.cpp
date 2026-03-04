@@ -121,6 +121,7 @@ void CCommonItemUmb::GetItem()
 		//fish.iSushiLv = m_iSushiLv;
 		//fish.iSushiMoney = m_iSushiMoney;
 		fish.bFish = false;
+		fish.sItemDesc = L"깊은 바다에 서식하는\n산호충아문 바다조랭이류의 한 속.";
 		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
 
 		if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))

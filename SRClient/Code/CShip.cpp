@@ -41,6 +41,7 @@
 #include "CGoToSushiUI.h"
 #include "CDaveConversation.h"
 #include "CBanchoGood.h"
+#include "CStockMarket.h"
 
 
 CShip::CShip()
@@ -53,6 +54,14 @@ CShip::~CShip()
 
 HRESULT CShip::Ready_Scene()
 {
+	if (!CGameMemMgr::GetInstance()->Get_DaveInfo().Get_InventoryInitialized())
+	{
+		CGameMemMgr::GetInstance()->Get_DaveInfo().InventoryInitialize();
+		CGameMemMgr::GetInstance()->Get_DaveInfo().Set_InventoryInitialized();
+	}
+
+
+
 	CColliderMgr::GetInstance()->Set_Render(false);
 
 	if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
@@ -458,6 +467,23 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	if (ImGui::Button("Collider Render"))
 	{
 		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
+	}
+
+	if (ImGui::Button("StockMarket"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+		{
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"StockMarket"))
+			{
+				pObj->Set_DeadCascade();
+			}
+			else
+			{
+				CStockMarket* pStockmarket = CStockMarket::Create();
+				//pDiveResult->Ready_AfterCreate();
+				pLayer->Add_GameObject(L"StockMarket", pStockmarket);
+			}
+		}
 	}
 
 	if (ImGui::Button("DiveResult"))
