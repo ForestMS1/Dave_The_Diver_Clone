@@ -45,7 +45,7 @@ void CBlood::resetParticle(Attribute* attribute, D3DXCOLOR color)
 
 	float Random = GetRandomFloat(-1.f, 1.f);
 	attribute->_position = _hitPosition;
-	attribute->_position.z = -1.f;
+	attribute->_position.z = 0.f;
 	attribute->_isAlive = true;
 
 	if (Random >= 0) {

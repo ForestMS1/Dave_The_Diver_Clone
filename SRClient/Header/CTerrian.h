@@ -2,13 +2,17 @@
 #include "CGameObject.h"
 #include "CAABB.h"
 
+
 namespace Engine {
 	class CGlbTex;
 
 	
 }
+
+
 class CTerrian : public CGameObject
 {
+	enum STATE{TERRIAN_ON, TERRIAN_OFF};
 private:
 	explicit CTerrian();
 	explicit CTerrian(const wstring_view tex);
@@ -25,6 +29,11 @@ public:
 	void						Set_CollisionName(wstring _CollsionName) { m_CollisionName = _CollsionName; }
 	void						Set_Fog();
 
+	void						Set_Frustom(_bool _frustum) { m_bFrustum = _frustum;}
+	void						Set_BackGround(_bool _BackGround) { m_backGround = _BackGround;}
+
+	void						ColliderFrustom();
+
 private:
 	HRESULT			Ready_Component();
 	HRESULT			Ready_Material();
@@ -33,9 +42,14 @@ private:
 private:
 	Engine::CGlbTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
-	const wstring_view m_wsName;
+	const wstring m_wsName;
 	vector<CAABB*> m_pAABB;
 	CAABB* m_pfrustomAABB;
+	STATE  e_Terrian{ TERRIAN_OFF };
+	_bool  m_bFrustum{false};
+	_bool  m_backGround{ false };
+	float  m_dark{1.f};
+	vector<CGameObject*> m_vecCoral;
 private:
 	wstring m_CollisionName;
 public:

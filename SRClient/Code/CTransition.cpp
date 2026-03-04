@@ -919,6 +919,14 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		return E_FAIL;
 
 
+	for (int i = 0; i < 12; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Coral/Coral" + ::to_wstring(i) + L".png";
+		wstring nameCoral = L"Tex_Coral" + ::to_wstring(i);
+		CAssetMgr::GetInstance()->AddAsset(nameCoral, CAssetTexture::Create(s.c_str()));
+	}
+
+
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG
 	//Sleep(500);
