@@ -52,6 +52,14 @@
 #include "COverloadedIcon.h"
 #include "CDiveItemDescUI.h"
 #include "CCommonItemWood.h"
+#include "CCommonItemWoodPlate.h"
+#include "CCommonItemWatch.h"
+#include "CCommonItemBone.h"
+#include "CCommonItemDeepseaCoral.h"
+#include "CCommonItemFragment.h"
+#include "CCommonItemThurible.h"
+#include "CCommonItemRope.h"
+#include "CCommonItemUmb.h"
 
 #include "CCoral.h"
 CDive::CDive()
@@ -361,30 +369,36 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3);
+
+	//-----------------------------------------------------ItemBox---------------------------------------------------------------------
+	// ItemBox 생성
+	// [KDS] : 박스의 종류와 위치를 인자로 받습니다. DROPITEM의 종류도 넣어 주세요.
+	// 추가로 z좌표는 0.1f 해줘야 플레이어 뒤에 보입니다.
+	// Add_GameObject 태그를 다르게 해줘야 트랜스폼이 각자마다 적용됩니다.
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0.1f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox1", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0.1f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox2", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3, 0.1f, DROPITEM::TRIPLEAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox3", pGameObject)))
 		return E_FAIL;
 
 	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -6, 3, 0.1f, DROPITEM::PENTAAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox4", pGameObject)))
 		return E_FAIL;
-
+	//-----------------------------------------------------ItemBox---------------------------------------------------------------------
 
 	// [LSY] test item
 	{
@@ -394,6 +408,64 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
+
+		vtmp = { -10, 5, 0.1f };
+		pGameObject = CCommonItemWoodPlate::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -9, 5, 0.1f };
+		pGameObject = CCommonItemWatch::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -8, 5, 0.1f };
+		pGameObject = CCommonItemBone::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+
+		vtmp = { -7, 5, 0.1f };
+		pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -6, 5, 0.1f };
+		pGameObject = CCommonItemFragment::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -5, 5, 0.1f };
+		pGameObject = CCommonItemThurible::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -4, 5, 0.1f };
+		pGameObject = CCommonItemRope::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -3, 5, 0.1f };
+		pGameObject = CCommonItemUmb::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
 	}
 
 	
