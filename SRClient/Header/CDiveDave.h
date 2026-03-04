@@ -181,7 +181,7 @@ public:
 	void				Set_Speed(_float fSpeed)											{ m_fSpeed = fSpeed; }
 
 	_bool				Is_Overloaded() const												{ return m_bOverloaded; }
-
+	_bool				Collision_WithTerrain(const _float& fTimeDelta);
 
 public:
 	void				Set_CanKeyInput(_bool canKey)										{ m_bCanKeyInput = canKey; }
@@ -192,7 +192,6 @@ public:
 private:
 	HRESULT				Ready_Component();
 	HRESULT				Add_State();
-	void				Collision_WithTerrain(const _float& fTimeDelta);
 
 private:
 	void				Key_Input();
@@ -255,6 +254,8 @@ private:
 	_bool  m_bSubMarine = false;
 
 	_bool  m_bOverloaded = false;
+
+	_bool m_bIsCollisionWithTerrain = false;
 
 	_vec3 m_vLastMoveDir; // 마지막으로 이동중이었던 방향
 	_float m_fLastMoveSpeed; // 마지막으로 이동중이었던 스피드값

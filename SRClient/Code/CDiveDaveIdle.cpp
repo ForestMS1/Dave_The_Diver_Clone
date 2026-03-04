@@ -105,30 +105,6 @@ _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 		_vec3 vLastDir = m_pOwner->Get_LastMoveDir();
 		m_pOwner->Move(&vLastDir, fTimeDelta, m_fIdleMoveLastSpeed);
 		m_fIdleMoveLastSpeed -= fTimeDelta * 5.f;
-
-		//수심 증감
-		if (vLastDir.y > 0)
-		{
-			if (abs(vLastDir.x) > 0)
-			{
-				m_pOwner->Change_Depth(-0.01f * 0.8f * m_fIdleMoveLastSpeed);
-			}
-			else
-			{
-				m_pOwner->Change_Depth(-0.01f * m_fIdleMoveLastSpeed);
-			}
-		}
-		else if (vLastDir.y < 0)
-		{
-			if (abs(vLastDir.x) > 0)
-			{
-				m_pOwner->Change_Depth(0.01f * 0.8f * m_fIdleMoveLastSpeed);
-			}
-			else
-			{
-				m_pOwner->Change_Depth(0.01f * m_fIdleMoveLastSpeed);
-			}
-		}
 	}
 	else
 		m_fIdleMoveLastSpeed = 0.f;
@@ -162,6 +138,7 @@ _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 
 void CDiveDaveIdle::LateUpdate_State(const _float& fTimeDelta)
 {
+	
 }
 
 void CDiveDaveIdle::Render_State()
