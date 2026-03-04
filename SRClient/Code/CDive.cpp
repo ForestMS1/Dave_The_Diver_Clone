@@ -409,27 +409,26 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	//-----------------------------------------------------ItemBox---------------------------------------------------------------------
 	// ItemBox 생성
 	// [KDS] : 박스의 종류와 위치를 인자로 받습니다. DROPITEM의 종류도 넣어 주세요.
-	// 추가로 z좌표는 0.1f 해줘야 플레이어 뒤에 보입니다.
 	// Add_GameObject 태그를 다르게 해줘야 트랜스폼이 각자마다 적용됩니다.
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0.1f);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox1", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0.1f);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0.f);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox2", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3, 0.1f, DROPITEM::TRIPLEAXEL);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3, 0.f, DROPITEM::TRIPLEAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox3", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -6, 3, 0.1f, DROPITEM::PENTAAXEL);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -6, 3, 0.f, DROPITEM::PENTAAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox4", pGameObject)))
