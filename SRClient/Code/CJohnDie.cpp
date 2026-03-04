@@ -88,7 +88,7 @@ _int CJohnDie::Update_State(const _float& fTimeDelta)
 		}
 
 	}
-	if (m_fAccMoveDist > 10.f)
+	if (m_fAccMoveDist > 20.f)
 	{
 		Exit();
 		m_pOwner->Set_Dead();

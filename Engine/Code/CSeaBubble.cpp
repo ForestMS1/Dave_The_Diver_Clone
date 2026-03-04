@@ -55,7 +55,7 @@ void CSeaBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	attribute->_isAlive = true;
 	//attribute->_position = position;
 	GetRandomVector(&attribute->_position, &min, &max);
-	attribute->_position.z = GetRandomFloat(-2.f, 0.f);
+	//attribute->_position.z = GetRandomFloat(0.f, 2.f);
 
 	if (attribute->_position.x <= playerPos.x + 7.f && attribute->_position.x <= playerPos.x - 7.f &&
 		attribute->_position.y <= playerPos.y + 5.f && attribute->_position.y <= playerPos.y - 5.f) {

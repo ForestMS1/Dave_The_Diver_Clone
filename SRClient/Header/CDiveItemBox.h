@@ -63,7 +63,7 @@ private:
 	DROPITEM m_eDropItem = DROPITEM::O2CAPSULE;
 
 public:
-	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0.1f, DROPITEM drop = DROPITEM::O2CAPSULE);
+	static CDiveItemBox* Create(ITEMBOXTEX ItemBoxType, _float x = 0, _float y = 0, _float z = 0.f, DROPITEM drop = DROPITEM::O2CAPSULE);
 
 private:
 	virtual void Free() override;

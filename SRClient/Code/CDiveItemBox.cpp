@@ -72,9 +72,10 @@ _int CDiveItemBox::Update_GameObject(const _float& fTimeDelta)
 
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	Compute_ViewZ(&vPos);
+	m_fViewZ = 10.5f;
+	//_vec3 vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//Compute_ViewZ(&vPos);
     return 0;
 }
 

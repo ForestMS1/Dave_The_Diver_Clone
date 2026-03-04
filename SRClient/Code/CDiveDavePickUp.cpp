@@ -116,6 +116,11 @@ void CDiveDavePickUp::Clear()
 			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
 			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX, 1.f);
 		}
+		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::USEIMMEDIATELY)
+		{
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX, 1.f);
+		}
 		else
 			return;
 	}
