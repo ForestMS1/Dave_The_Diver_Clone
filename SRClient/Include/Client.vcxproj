@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CActionNode.h" />
     <ClInclude Include="..\Header\CAddMenuButton.h" />
+    <ClInclude Include="..\Header\CAmmoPack.h" />
     <ClInclude Include="..\Header\CAsianSheepshead.h" />
     <ClInclude Include="..\Header\CAttackSubFail.h" />
     <ClInclude Include="..\Header\CAttackSubFight.h" />
@@ -425,6 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAddMenuButton.cpp" />
+    <ClCompile Include="..\Code\CAmmoPack.cpp" />
     <ClCompile Include="..\Code\CAsianSheepshead.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />

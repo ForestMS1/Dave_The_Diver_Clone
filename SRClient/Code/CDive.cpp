@@ -67,6 +67,7 @@
 
 #include "CCoral.h"
 #include "CWPAmmoCntText.h"
+#include "CAmmoPack.h"
 CDive::CDive()
 	: CScene()
 {
@@ -497,6 +498,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 		vtmp = { -3, 5, 0.1f };
 		pGameObject = CCommonItemUmb::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -2, 5, 0.1f };
+		pGameObject = CAmmoPack::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))

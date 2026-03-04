@@ -722,6 +722,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 	// Item
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Capsule", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_O2Capsule.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_AmmoPack", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_AmmoPack.png"));
 
 	// UI
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_GaugeBar", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Gauge_Bar_Normal.png"));

@@ -20,6 +20,7 @@ public:
 
 	_uint		Get_AmmoCnt() const { return m_iAmmoCnt; }
 	void		Set_AmmoCnt(const _uint& iAmmoCnt) { m_iAmmoCnt = iAmmoCnt; }
+	void		Add_AmmoCnt(const _uint& iAmmoCnt) { m_iAmmoCnt += iAmmoCnt; }
 
 public:
 	CGameMemMgr::CDaveInfo::DAVE_GUN Get_eGun() const { return m_eCurGun; }
