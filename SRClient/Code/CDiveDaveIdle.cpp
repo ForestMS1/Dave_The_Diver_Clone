@@ -100,14 +100,14 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 
 _int CDiveDaveIdle::Update_State(const _float& fTimeDelta)
 {
-	//if (m_fIdleMoveLastSpeed > 0.f && m_pOwner->Get_PrevState() == DIVEDAVESTATE::MOVE)
-	//{
-	//	_vec3 vLastDir = m_pOwner->Get_LastMoveDir();
-	//	m_pOwner->Move(&vLastDir, fTimeDelta, m_fIdleMoveLastSpeed);
-	//	m_fIdleMoveLastSpeed -= fTimeDelta * 5.f;
-	//}
-	//else
-	//	m_fIdleMoveLastSpeed = 0.f;
+	if (m_fIdleMoveLastSpeed > 0.f && m_pOwner->Get_PrevState() == DIVEDAVESTATE::MOVE)
+	{
+		_vec3 vLastDir = m_pOwner->Get_LastMoveDir();
+		m_pOwner->Move(&vLastDir, fTimeDelta, m_fIdleMoveLastSpeed);
+		m_fIdleMoveLastSpeed -= fTimeDelta * 5.f;
+	}
+	else
+		m_fIdleMoveLastSpeed = 0.f;
 
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);

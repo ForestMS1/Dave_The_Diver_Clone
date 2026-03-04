@@ -44,6 +44,7 @@ _int CDiveDaveOpen::Update_State(const _float& fTimeDelta)
 	Input(fTimeDelta);
 	if (m_fOpenTime > 5.f)
 	{
+		static_cast<CDiveItemBox*>(m_pOwner->m_pCurOnItemBox)->Set_Open();
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}
 
@@ -79,7 +80,6 @@ void CDiveDaveOpen::Exit()
 
 void CDiveDaveOpen::Clear()
 {
-	static_cast<CDiveItemBox*>(m_pOwner->m_pCurOnItemBox)->Set_Open();
 	m_fOpenTime = 0.f;
 }
 
