@@ -441,28 +441,28 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 	// [LSY] test item
 	{
-		_vec3 vtmp{ -10, 3, 0.1f };
+		_vec3 vtmp{ -10, 3, 0.f };
 		pGameObject = CCommonItemWood::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -10, 5, 0.1f };
+		vtmp = { -10, 5, 0.f };
 		pGameObject = CCommonItemWoodPlate::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -9, 5, 0.1f };
+		vtmp = { -9, 5, 0.f };
 		pGameObject = CCommonItemWatch::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -8, 5, 0.1f };
+		vtmp = { -8, 5, 0.f };
 		pGameObject = CCommonItemBone::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
@@ -470,42 +470,42 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 
 
-		vtmp = { -7, 5, 0.1f };
+		vtmp = { -7, 5, 0.f };
 		pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -6, 5, 0.1f };
+		vtmp = { -6, 5, 0.f };
 		pGameObject = CCommonItemFragment::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -5, 5, 0.1f };
+		vtmp = { -5, 5, 0.f };
 		pGameObject = CCommonItemThurible::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -4, 5, 0.1f };
+		vtmp = { -4, 5, 0.f };
 		pGameObject = CCommonItemRope::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -3, 5, 0.1f };
+		vtmp = { -3, 5, 0.f };
 		pGameObject = CCommonItemUmb::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -2, 5, 0.1f };
+		vtmp = { -2, 5, 0.f };
 		pGameObject = CAmmoPack::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
