@@ -483,6 +483,8 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
         MoveTo(&m_vMoveTarget, fTimeDelta);
     }
 
+
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
     return iExit;
 }
 
