@@ -126,6 +126,7 @@ protected:
 	_vec3 m_vMoveTarget;
 
 	float m_fMoveTargetReLocateTimer;
+	float m_fMoveTargetReLocateTimerRef;
 
 	bool m_bDamaged;
 	float m_fDamagedTimer;

@@ -47,6 +47,8 @@ CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
     , m_fScale(fScale)
+
+    , m_fMoveTargetReLocateTimerRef(2.f)
 {
 }
 
@@ -156,7 +158,7 @@ void CFishGameObject::QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos)
 
     _vec3 vNewTarget = vMyPos + vDir * 0.5f;
     m_vMoveTarget = vNewTarget;
-    m_fCurrSpeed = 5.f;
+    m_fCurrSpeed = 30.f;
     m_fCurrRotateSpeed = D3DXToRadian(360.f * 10.f);
 }
 
@@ -421,18 +423,29 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
     else if (m_eFishState == Fish::FS_SWIM)
     {
         m_fMoveTargetReLocateTimer += fTimeDelta;
-        if (m_fMoveTargetReLocateTimer > 2.f)
+
+        if (m_fMoveTargetReLocateTimer > m_fMoveTargetReLocateTimerRef)
         {
             //m_vMoveTarget();
 
-            float randX = rand() % 300;
-            float randY = rand() % 300;
-            randX /= 10;
-            randY /= 10;
-            _vec3 vNewMoveTarget = { randX , randY , 0.f };
+            float fRange = 300.0f; 
+           
+            float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+            float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+
+            _vec3 vNewMoveTarget = { m_fPosX + randX, m_fPosY + randY, 0.f };
             m_vMoveTarget = vNewMoveTarget;
 
             m_fMoveTargetReLocateTimer = 0.f;
+
+
+            {
+                float fRange = 10.0f;
+
+                float randX = ((rand() % 101) / 100.f) * fRange;
+
+                m_fMoveTargetReLocateTimerRef = randX;
+            }
         }
 
         MoveTo(&m_vMoveTarget, fTimeDelta);
