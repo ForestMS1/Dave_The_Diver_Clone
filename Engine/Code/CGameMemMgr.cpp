@@ -101,6 +101,7 @@ HRESULT CGameMemMgr::Ready()
 	addFish(L"³ë¶û¹é", 7, 12, 20);
 	addFish(L"Èòµ¿°¡¸®", 8, 15, 23);
 	addFish(L"¹ÝÃÝ", 9, 10, 0);
+	stockPicIndex = 0;
     return S_OK;
 }
 
@@ -178,6 +179,17 @@ void CGameMemMgr::ClearCookingMenu()
 		CookingMenu.pop(); 
 	}
 }
+
+void CGameMemMgr::AddStockMarketIndex()
+{
+	if (stockPicIndex < 13) {
+		stockPicIndex++;
+	}
+}
+
+
+
+
 
 std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunTexName(DAVE_GUN eItem)
 {
