@@ -162,6 +162,8 @@ void CDiveDave::LateUpdate_GameObject(const _float& fTimeDelta)
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 	m_pFSM->LateUpdate_State(fTimeDelta);
 
+	CDiveDave::Collision_WithTerrain(fTimeDelta);
+
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
@@ -319,6 +321,61 @@ HRESULT	CDiveDave::Add_State()
 	//m_mapState.insert({ DIVEDAVESTATE::DIE, CDiveDaveDie::Create(this) });
 
 	return S_OK;
+}
+
+void CDiveDave::Collision_WithTerrain(const _float& fTimeDelta)
+{
+	// Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
+	if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_Terrian"))
+	{
+		// 충돌체 순회
+		for (auto& pCollider : *pColliders)
+		{
+			// 내가 아닌것들과 체크
+			if (m_pAABB != pCollider)
+			{
+				// 충돌체 끼리 충돌 체크
+				if (m_pAABB->Intersect(pCollider))
+				{
+					// Some Logic
+					// 
+
+					//if (pCollider->Get_Tag() == L"AABB_Boat")
+					//{
+						CCollisionMgr::COLL_RECT_EX_INFO info;
+						if (CCollisionMgr::GetInstance()->Collision_RectEx(m_pAABB, dynamic_cast<CAABB*>(pCollider), &info))
+						{
+							_vec3 vPos;
+							m_pTransformCom->Get_Info(INFO_POS, &vPos);
+							if (info.eDir == CCollisionMgr::DIR_DOWN)
+							{
+								vPos.y += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_UP)
+							{
+								vPos.y -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_LEFT)
+							{
+								vPos.x -= info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+							else if (info.eDir == CCollisionMgr::DIR_RIGHT)
+							{
+								vPos.x += info.fDistance;
+								m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+							}
+
+							m_pTransformCom->Update_Component(fTimeDelta);
+							m_pAABB->Transform(m_pTransformCom->Get_World());
+						}
+					//}
+				}
+			}
+		}
+	}
 }
 
 void CDiveDave::Key_Input()
