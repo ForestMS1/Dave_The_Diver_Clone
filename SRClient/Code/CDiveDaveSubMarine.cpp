@@ -30,7 +30,7 @@ void CDiveDaveSubMarine::Enter()
 	fAspect /= 2.f;
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-	vScale *= 2.f;
+	vScale *= 4.f;
 	m_pOwner->Multiply_Scale(&vScale);
 }
 
@@ -153,7 +153,7 @@ void CDiveDaveSubMarine::Exit()
 	fAspect /= 2.f;
 
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
-	vScale *= 0.5f;
+	vScale *= 0.25f;
 	m_pOwner->Multiply_Scale(&vScale);
 
 	_vec3 vRotateDir = { 0.f, 0.f, 0.f };
@@ -238,6 +238,31 @@ void CDiveDaveSubMarine::Go_Dir(const _float& fTimeDelta)
 
 	if(m_eDir != DIR_END)
 		memcpy(&m_vLastSubMarineDir, &vDir, sizeof(_vec3));
+
+	_float fSpeed = m_pOwner->Get_Speed();
+	//수심 증감
+	if (vDir.y > 0)
+	{
+		if (abs(vDir.x) > 0)
+		{
+			m_pOwner->Change_Depth(-0.01f * 0.8f * fSpeed);
+		}
+		else
+		{
+			m_pOwner->Change_Depth(-0.01f * fSpeed);
+		}
+	}
+	else if (vDir.y < 0)
+	{
+		if (abs(vDir.x) > 0)
+		{
+			m_pOwner->Change_Depth(0.01f * 0.8f * fSpeed);
+		}
+		else
+		{
+			m_pOwner->Change_Depth(0.01f * fSpeed);
+		}
+	}
 }
 
 void CDiveDaveSubMarine::Restore_Fov(const _float& fTimeDelta)
