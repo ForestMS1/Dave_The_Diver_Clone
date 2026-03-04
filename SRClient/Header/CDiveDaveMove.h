@@ -37,6 +37,8 @@ private:
 private:
 	DIR m_eDir = DIR_END;
 
+	_float m_fMoveSpeed = 2.f;
+
 public:
 	static CDiveDaveMove* Create(CDiveDave* pOwner);
 private:

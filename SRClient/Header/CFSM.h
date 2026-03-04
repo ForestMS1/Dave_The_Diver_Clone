@@ -44,10 +44,12 @@ public:
 			m_pState->Exit();
 
 		m_pState = m_mapState[state];
+		m_ePrevState = m_eCurState; // 현재 상태를 이전 상태로 설정
 		m_eCurState = state;
 
 		m_pState->Enter();
 	}
+	E							Get_PrevState()				{ return m_ePrevState; }
 
 public:
 	static CFSM*				Create(T* pOwner){
@@ -60,6 +62,7 @@ private:
 	T*									m_pOwner = nullptr;
 	CBaseState<T>*						m_pState = nullptr;
 	E									m_eCurState;
+	E									m_ePrevState;
 	unordered_map<E, CBaseState<T>*>	m_mapState;
 
 private:
