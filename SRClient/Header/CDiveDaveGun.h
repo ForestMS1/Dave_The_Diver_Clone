@@ -18,6 +18,9 @@ public:
 	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
 	void		Render_GameObject() override;
 
+	_uint		Get_AmmoCnt() const { return m_iAmmoCnt; }
+	void		Set_AmmoCnt(const _uint& iAmmoCnt) { m_iAmmoCnt = iAmmoCnt; }
+
 public:
 	CGameMemMgr::CDaveInfo::DAVE_GUN Get_eGun() const { return m_eCurGun; }
 	// 게임 중간에 총 변경
@@ -40,6 +43,7 @@ private:
 private:
 	_bool m_bIsFlip = false;
 	_bool m_bInitComplete = false;
+	_uint m_iAmmoCnt = 0;
 
 
 	CGameMemMgr::CDaveInfo::DAVE_GUN m_eCurGun = CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT;

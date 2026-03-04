@@ -424,7 +424,12 @@ void CDiveDave::Mouse_Input()
 	if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
 		Set_State(DIVEDAVESTATE::MELEEATTACK);
 	else if (CDInputMgr::GetInstance()->Mouse_Down(DIM_RB))
+	{
+		if (m_eCurEquipped == EQUIPPED::GUN && static_cast<CDiveDaveGun*>(m_vecWeaponSlot[(_uint)EQUIPPED::GUN])->Get_AmmoCnt() == 0)
+			return;
 		Set_State(DIVEDAVESTATE::ATTACK);
+
+	}
 }
 
 void CDiveDave::DoT(const _float fTimeDelta)

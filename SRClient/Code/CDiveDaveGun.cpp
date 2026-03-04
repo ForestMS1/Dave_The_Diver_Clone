@@ -31,15 +31,19 @@ HRESULT CDiveDaveGun::Ready_GameObject()
 	{
 	case CGameMemMgr::CDaveInfo::GUN_DEFAULT:
 		m_sTexName = L"Tex_BasicRifle";
+		m_iAmmoCnt = 10;
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
 		m_sTexName = L"TripleAxel";
+		m_iAmmoCnt = 7;
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
 		m_sTexName = L"PentaAxel";
+		m_iAmmoCnt = 3;
 		break;
 	default:
 		m_sTexName = L"Tex_BasicRifle";
+		m_iAmmoCnt = 10;
 		break;
 	}
 
@@ -207,15 +211,19 @@ void CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 	{
 	case CGameMemMgr::CDaveInfo::GUN_DEFAULT:
 		m_sTexName = L"Tex_BasicRifle";
+		m_iAmmoCnt = 10;
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL:
 		m_sTexName = L"TripleAxel";
+		m_iAmmoCnt = 7;
 		break;
 	case CGameMemMgr::CDaveInfo::GUN_PENTA_ACCEL:
 		m_sTexName = L"PentaAxel";
+		m_iAmmoCnt = 3;
 		break;
 	default:
 		m_sTexName = L"Tex_BasicRifle";
+		m_iAmmoCnt = 10;
 		break;
 	}
 
@@ -227,6 +235,16 @@ void CDiveDaveGun::Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN eGun)
 
 void CDiveDaveGun::Fire()
 {
+	if (m_iAmmoCnt <= 0)
+	{
+		static_cast<CDiveDave*>(m_pParentGameObject)->Set_State(DIVEDAVESTATE::IDLE);
+		return;
+	}
+
+	m_iAmmoCnt--;
+	if (m_iAmmoCnt < 0)
+		m_iAmmoCnt = 0;
+
 	_vec3 vOrigin, vDir;
 
 	_float baseAngle;

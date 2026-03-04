@@ -1302,6 +1302,9 @@
     <ClInclude Include="..\Header\CCommonItemUmb.h">
       <Filter>02. GameObject\Dive_Item\CommonItem_Umb</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWPAmmoCntText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\WeaponBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2068,6 +2071,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCommonItemUmb.cpp">
       <Filter>02. GameObject\Dive_Item\CommonItem_Umb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWPAmmoCntText.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\WeaponBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

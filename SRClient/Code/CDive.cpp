@@ -66,6 +66,7 @@
 #include "CHoldFishUI.h"
 
 #include "CCoral.h"
+#include "CWPAmmoCntText.h"
 CDive::CDive()
 	: CScene()
 {
@@ -664,6 +665,14 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
+	CWPAmmoCntText * pAmmoCnt = CWPAmmoCntText::Create(0.f, 0.f);
+	if (nullptr == pAmmoCnt)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"AmmoCntTextUI", pAmmoCnt)))
+		return E_FAIL;
+	pAmmoCnt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pAmmoCnt)); // 플레이어 관찰
+
 	// O2 UI
 	pGameObject = CO2UI::Create();
 	if (nullptr == pGameObject)
@@ -700,7 +709,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"CurDepthText", pDepthText)))
 		return E_FAIL;
-	pO2Text->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	pDepthText->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pDepthText)); // 플레이어 관찰
 
 	pGameObject = CWeightIcon::Create();
