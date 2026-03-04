@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CGetItemUIImg.h"
+#include "CDiveGetWeaponUIImg.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -7,7 +7,7 @@
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
 
-CGetItemUIImg::CGetItemUIImg(float fPosX, float fPosY)
+CDiveGetWeaponUIImg::CDiveGetWeaponUIImg(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
@@ -15,11 +15,11 @@ CGetItemUIImg::CGetItemUIImg(float fPosX, float fPosY)
 {
 }
 
-CGetItemUIImg::~CGetItemUIImg()
+CDiveGetWeaponUIImg::~CDiveGetWeaponUIImg()
 {
 }
 
-void CGetItemUIImg::Update_ImGui()
+void CDiveGetWeaponUIImg::Update_ImGui()
 {
     CGameObject::Update_ImGui();
     ImGui::DragFloat("m_fDbgX", &m_fDbgX, 0.1f);
@@ -27,18 +27,18 @@ void CGetItemUIImg::Update_ImGui()
 }
 
 
-HRESULT		CGetItemUIImg::Ready_GameObject()
+HRESULT		CDiveGetWeaponUIImg::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
     m_fDbgX = 0.f;
     m_fDbgY = 0.f;
-   
+
     return S_OK;
 }
 
-_int		CGetItemUIImg::Update_GameObject(const _float& fTimeDelta)
+_int		CDiveGetWeaponUIImg::Update_GameObject(const _float& fTimeDelta)
 {
     auto pTransform = m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
 
@@ -56,12 +56,12 @@ _int		CGetItemUIImg::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void		CGetItemUIImg::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CDiveGetWeaponUIImg::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CGetItemUIImg::Render_GameObject()
+void		CDiveGetWeaponUIImg::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -89,7 +89,7 @@ void		CGetItemUIImg::Render_GameObject()
 
 }
 
-void CGetItemUIImg::Ready_After_Create()
+void CDiveGetWeaponUIImg::Ready_After_Create()
 {
     if (!m_sAssetName.empty())
     {
@@ -116,7 +116,7 @@ void CGetItemUIImg::Ready_After_Create()
     }
 }
 
-HRESULT			CGetItemUIImg::Ready_Component()
+HRESULT			CDiveGetWeaponUIImg::Ready_Component()
 {
     // ¹öÆÛ
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -128,9 +128,9 @@ HRESULT			CGetItemUIImg::Ready_Component()
 }
 
 
-CGetItemUIImg* CGetItemUIImg::Create(float fPosX, float fPosY)
+CDiveGetWeaponUIImg* CDiveGetWeaponUIImg::Create(float fPosX, float fPosY)
 {
-    CGetItemUIImg* pStar = new CGetItemUIImg{ fPosX , fPosY };
+    CDiveGetWeaponUIImg* pStar = new CDiveGetWeaponUIImg{ fPosX , fPosY };
 
     if (FAILED(pStar->Ready_GameObject()))
     {
@@ -142,7 +142,7 @@ CGetItemUIImg* CGetItemUIImg::Create(float fPosX, float fPosY)
     return pStar;
 }
 
-void CGetItemUIImg::Free()
+void CDiveGetWeaponUIImg::Free()
 {
     CGameObject::Free();
 }

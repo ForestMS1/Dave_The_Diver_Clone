@@ -1,13 +1,10 @@
 #pragma once
 #include "CGameObject.h"
-class CGetItemUIImg : public CGameObject
+class CDiveItemDescUI : public CGameObject
 {
 private:
-	explicit CGetItemUIImg(float fPosX, float fPosY);
-	virtual ~CGetItemUIImg();
-
-public:
-	void Update_ImGui() override;
+	explicit CDiveItemDescUI(float fPosX, float fPosY);
+	virtual ~CDiveItemDescUI();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -16,7 +13,7 @@ public:
 	virtual			void		Render_GameObject();
 
 public:
-	void Ready_After_Create();
+	HRESULT Ready_AfterCreate();
 
 private:
 	HRESULT			Ready_Component();
@@ -24,21 +21,21 @@ private:
 private:
 	const float m_fPosX;
 	const float m_fPosY;
-	float m_fDbgX;
-	float m_fDbgY;
 
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	void Set_AssetName(std::wstring_view svAsset) { m_sAssetName = svAsset ; }
+	void Set_Title(std::wstring_view svTitle) { m_sTitle = svTitle; }
+	void Set_Desc(std::wstring_view svDesc) { m_sDesc = svDesc; }
 
 private:
-	std::wstring m_sAssetName;
+	std::wstring m_sTitle;
+	std::wstring m_sDesc;
 
 public:
-	static CGetItemUIImg* Create(float fPosX, float fPosY);
+	static CDiveItemDescUI* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();

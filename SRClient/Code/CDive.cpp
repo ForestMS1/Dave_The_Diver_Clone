@@ -50,6 +50,9 @@
 #include "CWeightIcon.h"
 #include "CWeightText.h"
 #include "COverloadedIcon.h"
+#include "CDiveItemDescUI.h"
+#include "CCommonItemWood.h"
+
 CDive::CDive()
 	: CScene()
 {
@@ -102,7 +105,14 @@ HRESULT CDive::Ready_Scene()
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 
 
-
+	// [LSY] 데이브 아이다이버 수치 연동
+	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+	{
+		const auto daveInfo = CGameMemMgr::GetInstance()->Get_DaveInfo();
+		pDave->Set_MaxHp(daveInfo.Get_GonggiVolume());
+		pDave->Set_MaxDepth(daveInfo.Get_JamsuDepth());
+		pDave->Set_MaxStorageWeight(daveInfo.Get_JeokjaeWeight());
+	}
 
 	// [LSY] 다이브씬 시작하면 다이브 인포 기록 시작
 	CGameMemMgr::CDiveInfo info{};
@@ -335,6 +345,18 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
 		return E_FAIL;
+
+
+	// [LSY] test item
+	{
+		_vec3 vtmp{ -10, 3, 0.1f };
+		pGameObject = CCommonItemWood::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+	}
+
 	
 	// 맵 
 	pGameObject = CTerrian::Create(L"BackGround_GLB_File");
@@ -562,6 +584,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
+
+
+
+	// [LSY] 아이템 설명 유아이
+	auto pDescUI = CDiveItemDescUI::Create(0.f, -150.f);
+	pLayer->Add_GameObject(L"DiveItemDescUI", pDescUI);
+
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	m_pDive = nullptr;
@@ -584,11 +613,17 @@ CDive* CDive::Create()
 
 void CDive::Free()
 {
+	// [LSY] 씬이 종료될때 다이브 정보 기록
+	// TODO: Set_Depth 할때 현재 depth가 아니라 다이브중 했던 최고 잠수 기록 으로 해야 맞을거같다.
+	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+	{
+		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Set_Depth(pDave->Get_BestDepth());
+		CGameMemMgr::GetInstance()->Get_DiveInfos().back().DiveEnd();
+	}
+	
+
 	CScene::Free();
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
-
-	// [LSY] 씬이 종료될때 다이브 정보 기록
-	CGameMemMgr::GetInstance()->Get_DiveInfos().back().DiveEnd();
 }

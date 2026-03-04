@@ -478,6 +478,15 @@
     <Filter Include="02. GameObject\Dive_Item\Item_PentaAxel">
       <UniqueIdentifier>{2d8906b3-c8c2-427d-9277-bf098546dbdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveItemDescUI">
+      <UniqueIdentifier>{6814c4d9-df3e-49a6-9e68-fb4bc76364ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveGetWeaponUI">
+      <UniqueIdentifier>{40064acd-31f7-475b-9be9-924f4b2772ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Wood">
+      <UniqueIdentifier>{8afa162b-f1c4-4066-beeb-cc70eda80bc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1215,6 +1224,21 @@
     <ClInclude Include="..\Header\CItemPentaAxel.h">
       <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CShipUIGoSushiBtn.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveItemDescUI.h">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUI.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUIImg.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWood.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1930,6 +1954,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\CItemPentaAxel.cpp">
       <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIGoSushiBtn.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItemDescUI.cpp">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUIImg.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWood.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

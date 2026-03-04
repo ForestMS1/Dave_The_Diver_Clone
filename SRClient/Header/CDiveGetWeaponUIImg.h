@@ -1,10 +1,10 @@
 #pragma once
 #include "CGameObject.h"
-class CGetItemUIImg : public CGameObject
+class CDiveGetWeaponUIImg : public CGameObject
 {
 private:
-	explicit CGetItemUIImg(float fPosX, float fPosY);
-	virtual ~CGetItemUIImg();
+	explicit CDiveGetWeaponUIImg(float fPosX, float fPosY);
+	virtual ~CDiveGetWeaponUIImg();
 
 public:
 	void Update_ImGui() override;
@@ -32,13 +32,13 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 public:
-	void Set_AssetName(std::wstring_view svAsset) { m_sAssetName = svAsset ; }
+	void Set_AssetName(std::wstring_view svAsset) { m_sAssetName = svAsset; }
 
 private:
 	std::wstring m_sAssetName;
 
 public:
-	static CGetItemUIImg* Create(float fPosX, float fPosY);
+	static CDiveGetWeaponUIImg* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();

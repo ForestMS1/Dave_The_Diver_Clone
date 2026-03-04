@@ -47,10 +47,16 @@ HRESULT		CShipPhoneWeaponCreateSuccess::Ready_GameObject()
 
     m_fViewZ = 0.45f;
 
+    
+    return S_OK;
+}
+
+HRESULT CShipPhoneWeaponCreateSuccess::Ready_AfterCreate()
+{
     {
-        CShipPhoneWeaponImg* pWeaponImg = CShipPhoneWeaponImg::Create(0.f, 0.7f);
+        CShipPhoneWeaponImg* pWeaponImg = CShipPhoneWeaponImg::Create(0.f, 0.8f);
         pWeaponImg->Set_Parent(this);
-        pWeaponImg->Set_AssetName(L"Tex_Ship_Weapon_GukikRifle");
+        pWeaponImg->Set_AssetName(m_sAssetName);
         pWeaponImg->Set_ViewZ(0.44f);
         pWeaponImg->Set_CustomScaleX(2.f);
         pWeaponImg->Set_CustomScaleY(2.f);
@@ -64,7 +70,6 @@ HRESULT		CShipPhoneWeaponCreateSuccess::Ready_GameObject()
     }
     return S_OK;
 }
-
 _int		CShipPhoneWeaponCreateSuccess::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -128,7 +133,15 @@ void		CShipPhoneWeaponCreateSuccess::Render_GameObject()
             }
             else if (CShipPhoneWeaponBG::iCurrentIdx == 1)
             {
-                pDefFont->Render_Font(L"π∫∞°√—", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+                pDefFont->Render_Font(L"∆Æ∏Æ«√ æ«ºø", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            }
+            else if (CShipPhoneWeaponBG::iCurrentIdx == 2)
+            {
+                pDefFont->Render_Font(L"ƒıµÂ∑Œ æ«ºø", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            }
+            else if (CShipPhoneWeaponBG::iCurrentIdx == 3)
+            {
+                pDefFont->Render_Font(L"∆Ê≈∏ æ«ºø", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
             }
         }
     }

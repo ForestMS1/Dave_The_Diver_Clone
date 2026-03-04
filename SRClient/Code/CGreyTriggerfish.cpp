@@ -37,6 +37,8 @@ HRESULT CGreyTriggerfish::Ready_GameObject()
     m_fLength = 10.f;
     m_iMeatCnt = 1;
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreyTriggerfish";
+    m_iSushiMoney = 12;
+    m_iSushiLv = 1;
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

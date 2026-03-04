@@ -2,6 +2,60 @@
 IMPLEMENT_SINGLETON(CGameMemMgr)
 
 
+std::wstring CGameMemMgr::Get_ItemTexName(DAVE_ITEM eItem)
+{
+	switch (eItem)
+	{
+	case	IT_WOOD: return L"Tex_UIITem_Wood";
+	case	IT_BONE: return L"Tex_UIITem_Bone";
+	case	IT_FRAGMENT: return L"Tex_UIITem_Fragment";
+	case	IT_JADETHURIBLE: return L"Tex_UIITem_JadeThurible";
+	case	IT_ROPE: return L"Tex_UIITem_Rope";
+	case	IT_RUBYRING: return L"Tex_UIITem_RubyRing";
+	case	IT_UMBELLULA: return L"Tex_UIITem_Umbellula";
+	case	IT_WOODPLATE: return L"Tex_UIITem_Woodplate";
+	case	IT_WATCH: return L"Tex_UIITem_Watch";
+	}
+
+	return L"";
+}
+
+std::wstring CGameMemMgr::Get_ItemTitle(DAVE_ITEM eItem)
+{
+	switch (eItem)
+	{
+	case	IT_WOOD: return L"나무";
+	case	IT_BONE: return L"뼈";
+	case	IT_FRAGMENT: return L"부품";
+	case	IT_JADETHURIBLE: return L"옥향로";
+	case	IT_ROPE: return L"로프";
+	case	IT_RUBYRING: return L"루비반지";
+	case	IT_UMBELLULA: return L"움벨룰라";
+	case	IT_WOODPLATE: return L"나무판자";
+	case	IT_WATCH: return L"고급시계";
+	}
+
+	return L"404";
+}
+
+std::wstring CGameMemMgr::Get_ItemDesc(DAVE_ITEM eItem)
+{
+	switch (eItem)
+	{
+	case	IT_WOOD: return L"나무 다";
+	case	IT_BONE: return L"뼈 다";
+	case	IT_FRAGMENT: return L"부품 이다";
+	case	IT_JADETHURIBLE: return L"옥향로 다";
+	case	IT_ROPE: return L"로프 다";
+	case	IT_RUBYRING: return L"루비반지 다";
+	case	IT_UMBELLULA: return L"움벨룰라 다";
+	case	IT_WOODPLATE: return L"나무판자 다";
+	case	IT_WATCH: return L"고급시계 다";
+	}
+
+	return L"404";
+}
+
 CGameMemMgr::CGameMemMgr()
 	: m_iMoney(300)
 	, m_bShipNight(false)
@@ -122,4 +176,37 @@ void CGameMemMgr::ClearCookingMenu()
 		Safe_Delete(CookingMenu.front());
 		CookingMenu.pop(); 
 	}
+}
+
+std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunTexName(DAVE_GUN eItem)
+{
+	switch (eItem)
+	{
+	case GUN_DEFAULT: return L"";
+	case GUN_PENTA_ACCEL: return L"Tex_UI_Gun_Penta_Accel";
+	case GUN_TRIPLE_ACCEL: return L"Tex_UI_Gun_Triple_Accel";
+	}
+	return L"";
+}
+
+std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunTitle(DAVE_GUN eItem)
+{
+	switch (eItem)
+	{
+	case GUN_DEFAULT: return L"";
+	case GUN_PENTA_ACCEL: return L"펜타 악셀";
+	case GUN_TRIPLE_ACCEL: return L"트리플 악셀";
+	}
+	return L"";
+}
+
+std::wstring CGameMemMgr::CDaveInfo::Get_DaveGunDesc(DAVE_GUN eItem)
+{
+	switch (eItem)
+	{
+	case GUN_DEFAULT: return L"";
+	case GUN_PENTA_ACCEL: return L"펜타 악셀 이다";
+	case GUN_TRIPLE_ACCEL: return L"트리플 악셀 이다";
+	}
+	return L"";
 }

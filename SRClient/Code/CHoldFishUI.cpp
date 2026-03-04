@@ -15,6 +15,7 @@
 
 #include "CHoldFishUIImg.h"
 #include "CGameMemMgr.h"
+#include "CDiveDave.h"
 
 CHoldFishUI::CHoldFishUI(float fPosX, float fPosY)
     : CGameObject()
@@ -194,8 +195,14 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
                                 pArea->Set_DeadCascade();
                                 pPanel->Set_DeadCascade();
                                 bReSorting = true;
-                              
+
+                                if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+                                {
+                                    pDave->Change_Weight(-iter->fWeight);
+                                }
+
                                 iter = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes().erase(iter);
+                                
                                 break;
                             }
                             else
@@ -319,8 +326,9 @@ void		CHoldFishUI::Render_GameObject()
      // 키로수
     {
         float fKg = 0.f;
-        float fMaxKg = 12.5f;
-        ;
+        float fMaxKg = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JeokjaeWeight();
+
+        // TODO: 피시뿐 아니라 아이템도
         for (auto& pFish : CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes())
         {
             fKg += pFish.fWeight;

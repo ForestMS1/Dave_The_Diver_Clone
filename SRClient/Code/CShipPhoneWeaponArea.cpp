@@ -59,7 +59,7 @@ void CShipPhoneWeaponArea::Ready_AfterCreate()
     {
         CShipPhoneWeaponImg* pWeaponImg = CShipPhoneWeaponImg::Create(0.f, 0.3f);
         pWeaponImg->Set_Parent(pImg);
-        pWeaponImg->Set_AssetName(L"Tex_Ship_Weapon_GukikRifle");
+        pWeaponImg->Set_AssetName(m_sAssetName);
 
         pWeaponImg->Ready_AfterCreate();
 
@@ -119,15 +119,15 @@ void		CShipPhoneWeaponArea::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_Weapon_BG"))
-    {
-        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
-        {
-            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
-        }
-    }
+    //if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Ship_Weapon_BG"))
+    //{
+    //    if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+    //    {
+    //        pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+    //    }
+    //}
 
-    m_pBufferCom->Render_Buffer();
+    //m_pBufferCom->Render_Buffer();
 
     D3DXMATRIX matTmp;
     D3DXMatrixIdentity(&matTmp);
@@ -155,7 +155,15 @@ void		CShipPhoneWeaponArea::Render_GameObject()
             }
             else if (m_iIdx == 1)
             {
-                pDefFont->Render_Font(L"π∫∞°√—", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+                pDefFont->Render_Font(L"∆Æ∏Æ«√ æ«ºø", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            }
+            else if (m_iIdx == 2)
+            {
+                pDefFont->Render_Font(L"ƒıµÂ∑Œ æ«ºø", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            }
+            else if (m_iIdx == 3)
+            {
+                pDefFont->Render_Font(L"∆Ê≈∏ æ«ºø", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
             }
             
         }

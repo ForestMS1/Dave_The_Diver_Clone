@@ -37,11 +37,15 @@ HRESULT		CBackToShipUI::Ready_GameObject()
             float fHeight = pTexture->Get_ImgInfo()->Height;
             float fAspect = fWidth / fHeight;
             vScale = { fAspect, 1.f, 1.f };
+
+            float fScale = 360.f;
+            vScale.x *= fScale;
+            vScale.y *= fScale;
         }
     }
 
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
-    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, -8.3f);
+    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
     m_fDbgX = 0.f;
@@ -70,7 +74,7 @@ _int		CBackToShipUI::Update_GameObject(const _float& fTimeDelta)
 
 
     //m_pTransformCom->Set_Pos(x + m_fPosX, y + m_fPosY, -8.3f);
-    m_pTransformCom->Set_Pos(0, 0, -8.3f);
+    //m_pTransformCom->Set_Pos(0, 0, -8.3f);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);

@@ -5,6 +5,10 @@
 #include "CAssetTexture.h"
 #include "CColliderMgr.h"
 #include "CDiveDave.h"
+#include "CManagement.h"
+#include "CDiveGetWeaponUI.h"
+#include "CDiveItemDescUI.h"
+
 CItemPentaAxel::CItemPentaAxel(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
 {
@@ -90,6 +94,21 @@ void CItemPentaAxel::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
+void CItemPentaAxel::GetItem()
+{
+	CDiveItem::GetItem();
+
+	if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+	{
+		auto pGetWeaponUI = CDiveGetWeaponUI::Create(500.f, -150.f);
+		pGetWeaponUI->Set_ImgAssetName(L"Tex_UI_Gun_Penta_Accel");
+		pGetWeaponUI->Set_Title(L"ÆæÅ¸ ¾Ç¼¿");
+		pGetWeaponUI->Set_Desc(L"ÆæÅ¸ ¾Ç¼¼·ç´Ù.");
+		pGetWeaponUI->Ready_AfterCreate();
+		pLayer->Add_GameObject(L"GetWeaponUI", pGetWeaponUI);
+	}
+}
+
 HRESULT CItemPentaAxel::Ready_Component()
 {
 	// ¹öÆÛ
@@ -128,4 +147,17 @@ void CItemPentaAxel::UseItem(CGameObject* pUser)
 	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pUser);
 
 	//pDiveDave->Restore_Hp(50.f);
+}
+
+void CItemPentaAxel::OpenItemDesc()
+{
+	if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+	{
+		if (!pUI->Get_Render())
+		{
+			pUI->Set_Title(L"ÆæÅ¸ ¾Ç¼¿");
+			pUI->Set_Desc(L"ÆæÅ¸¾Ç¼¿ ÀÌ´Ù.");
+			pUI->Set_Render(true);
+		}
+	}
 }

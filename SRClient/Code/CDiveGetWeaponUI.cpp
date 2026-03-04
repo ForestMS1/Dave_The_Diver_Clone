@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CGetItemUI.h"
+#include "CDiveGetWeaponUI.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -7,27 +7,30 @@
 #include "CHelper.h"
 #include "CAssetDefaultFont.h"
 #include "CManagement.h"
-#include "CGetItemUIStar.h"
-#include "CGetItemUIImg.h"
+#include "CDiveGetWeaponUIImg.h"
 
-CGetItemUI::CGetItemUI(float fPosX, float fPosY)
+CDiveGetWeaponUI::CDiveGetWeaponUI(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
 {
 }
 
-CGetItemUI::~CGetItemUI()
+CDiveGetWeaponUI::~CDiveGetWeaponUI()
 {
 }
 
+void CDiveGetWeaponUI::Update_ImGui()
+{
+    CGameObject::Update_ImGui();
 
-HRESULT		CGetItemUI::Ready_GameObject()
+    ImGui::DragFloat("m_fDbgX", &m_fDbgX, 0.1f);
+    ImGui::DragFloat("m_fDbgY", &m_fDbgY, 0.1f);
+}
+
+HRESULT		CDiveGetWeaponUI::Ready_GameObject()
 {
     m_sTitle = L"Title";
-    m_sRank = L"Rank 1";
-    m_sWeight = L"0.5kg";
-    m_iStartCnt = 1;
     m_sImgAssetName = L"Tex_PhoneBG";
 
 
@@ -36,11 +39,11 @@ HRESULT		CGetItemUI::Ready_GameObject()
 
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_GetItemUI"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DiveGetWeaponUI"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
-            
+
             float fWidth = pTexture->Get_ImgInfo()->Width;
             float fHeight = pTexture->Get_ImgInfo()->Height;
             float fAspect = fWidth / fHeight;
@@ -53,16 +56,19 @@ HRESULT		CGetItemUI::Ready_GameObject()
     }
 
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
-    m_pTransformCom->Set_Pos(-640.f - 200.f , m_fPosY * 50.f, 0.f);
+    m_pTransformCom->Set_Pos(640.f + 250.f, m_fPosY * 50.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
 
-    m_tween = m_tween.from(-640.f - 200.f).to(m_fPosX).during(500).to(m_fPosX).during(1000).to(-640.f - 200.f).during(500);
+    m_fDbgX = 0.f;
+    m_fDbgY = 0.f;
 
-    
+    m_tween = m_tween.from(640.f + 250.f).to(m_fPosX).during(500).to(m_fPosX).during(1000).to(640.f + 250.f).during(500);
+
+
     return S_OK;
 }
 
-HRESULT CGetItemUI::Ready_AfterCreate()
+HRESULT CDiveGetWeaponUI::Ready_AfterCreate()
 {
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
@@ -78,17 +84,17 @@ HRESULT CGetItemUI::Ready_AfterCreate()
         //}
 
         {
-            auto pGetItemImg = CGetItemUIImg::Create(-83.2f, -23.f);
-            pGetItemImg->Set_AssetName(m_sImgAssetName);
-            pGetItemImg->Ready_After_Create();
-            pGetItemImg->Set_Parent(this);
-            pLayer->Add_GameObject(L"GetItemUIImg", pGetItemImg);
+            auto pGetWeaponImg = CDiveGetWeaponUIImg::Create(-113.f, -12.f);
+            pGetWeaponImg->Set_AssetName(m_sImgAssetName);
+            pGetWeaponImg->Ready_After_Create();
+            pGetWeaponImg->Set_Parent(this);
+            pLayer->Add_GameObject(L"GetWeaponUIImg", pGetWeaponImg);
         }
     }
     return S_OK;
 }
 
-_int		CGetItemUI::Update_GameObject(const _float& fTimeDelta)
+_int		CDiveGetWeaponUI::Update_GameObject(const _float& fTimeDelta)
 {
     //LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
     //_matrix matView, matInvView;
@@ -103,23 +109,23 @@ _int		CGetItemUI::Update_GameObject(const _float& fTimeDelta)
     //    Set_DeadCascade();
     //    return OBJ_DEAD;
     //}
-    float val = -640.f - 200.f;
+    float val = 640.f + 250.f;
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
-        if (auto pObj = pLayer->Get_GameObjects(L"GetItemUI"))
+        if (auto pObj = pLayer->Get_GameObjects(L"GetWeaponUI"))
         {
             if (pObj->front() == this)
             {
                 val = m_tween.step(int(fTimeDelta * 1000.f));
-               if (m_tween.progress() >= 1.0f) {
-                   Set_DeadCascade();
-                   return OBJ_DEAD;
-               }
+                if (m_tween.progress() >= 1.0f) {
+                    Set_DeadCascade();
+                    return OBJ_DEAD;
+                }
             }
         }
     }
 
-    m_pTransformCom->Set_Pos( val,  m_fPosY, 0.f);
+    m_pTransformCom->Set_Pos(val, m_fPosY, 0.f);
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -129,12 +135,12 @@ _int		CGetItemUI::Update_GameObject(const _float& fTimeDelta)
     return iExit;
 }
 
-void		CGetItemUI::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CDiveGetWeaponUI::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CGetItemUI::Render_GameObject()
+void		CDiveGetWeaponUI::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
@@ -143,7 +149,7 @@ void		CGetItemUI::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_GetItemUI"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DiveGetWeaponUI"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -160,13 +166,31 @@ void		CGetItemUI::Render_GameObject()
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     //pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
+    // TITLE
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -168.f;
+        float fOffsetY = 35.f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+        {
+            pDefFont->Render_Font(L"장비를 획득하였습니다.", &vPos, D3DXCOLOR(0.64f, 0.78f, 0.91f, 1.0f));
+        }
+    }
 
     // TITLE
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -2.0f * 50.f;
-        float fOffsetY = +0.6f * 50.f;
+        float fOffsetX = -22.f;
+        float fOffsetY = 10.f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -176,16 +200,17 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.388f, 0.133f, 0.0f, 1.0f));
+            pDefFont->Render_Font(m_sTitle, &vPos, D3DXCOLOR(0.94f, 0.86f, 0.17f, 1.0f));
         }
     }
 
-    // RANK
+
+    // DESC
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -0.9f * 50.f;
-        float fOffsetY = -0.1f * 50.f;
+        float fOffsetX = -22.f;
+        float fOffsetY = -12.f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;
 
@@ -195,32 +220,13 @@ void		CGetItemUI::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
-            pDefFont->Render_Font(m_sRank, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
-        }
-    }
-
-    // WEIGHT
-    {
-        _vec3 vInfoPos;
-        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -0.3f * 50.f;
-        float fOffsetY = -0.55f * 50.f;
-        vInfoPos.x += fOffsetX;
-        vInfoPos.y += fOffsetY;
-
-        _vec3 vScreenPos;
-        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
-
-        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
-        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
-        {
-            pDefFont->Render_Font(m_sWeight, &vPos, D3DXCOLOR(0.200f, 0.455f, 0.588f, 1.0f));
+            pDefFont->Render_Font(m_sDesc, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.0f));
         }
     }
 
 }
 
-HRESULT			CGetItemUI::Ready_Component()
+HRESULT			CDiveGetWeaponUI::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -232,9 +238,9 @@ HRESULT			CGetItemUI::Ready_Component()
 }
 
 
-CGetItemUI* CGetItemUI::Create(float fPosX, float fPosY)
+CDiveGetWeaponUI* CDiveGetWeaponUI::Create(float fPosX, float fPosY)
 {
-    CGetItemUI* pGetItemUI = new CGetItemUI{ fPosX , fPosY };
+    CDiveGetWeaponUI* pGetItemUI = new CDiveGetWeaponUI{ fPosX , fPosY };
 
     if (FAILED(pGetItemUI->Ready_GameObject()))
     {
@@ -246,7 +252,7 @@ CGetItemUI* CGetItemUI::Create(float fPosX, float fPosY)
     return pGetItemUI;
 }
 
-void CGetItemUI::Free()
+void CDiveGetWeaponUI::Free()
 {
     CGameObject::Free();
 }
