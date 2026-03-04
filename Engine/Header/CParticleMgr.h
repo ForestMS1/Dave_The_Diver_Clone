@@ -19,6 +19,8 @@ public:
 	HRESULT Ready_Particle(HWND hWnd);
 	void Update_Particle(float fTimeDelta);
 	void Render_Particle( );
+	void PreRender_Particle( );
+	void PostRender_Particle( );
 	void spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles);
 	void spwan_Weather(WEATHERTYPE type, _vec3 origin, int numofPariticles, D3DXCOLOR color);
 	void Set_Camera(CCamera* camera) { m_pCamera = camera; }
@@ -31,6 +33,8 @@ private:
 	CCamera* m_pCamera;
 	CGameObject* m_pPlayer;
 	vector <PSystem*> particles;
+	vector <PSystem*> preparticles;
+	vector <PSystem*> postparticles;
 	bool m_bRenderOn{false};
 	bool cameraOn;
 };

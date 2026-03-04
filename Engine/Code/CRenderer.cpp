@@ -26,9 +26,9 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
-
-	Render_Alpha(pGraphicDev);
 	CParticleMgr::GetInstance()->Render_Particle();
+	Render_Alpha(pGraphicDev);
+	CParticleMgr::GetInstance()->PostRender_Particle();
 	Render_UI(pGraphicDev);
 	Render_Ortho(pGraphicDev);
 	Render_AlphaAfterOrtho(pGraphicDev);
