@@ -424,6 +424,12 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
             m_pSpineCom->Set_ColorDarkness(fDarkNess - (1.f * fTimeDelta));
         }
 
+        // µÚÁö±âÀü ±ôºýÀÌ´Â°Å
+        if (m_fDieTimer >= 7.0f)
+        {
+            m_bRender = sinf(m_fDieTimer * 20.0f) > 0;
+        }
+
         if (m_fDieTimer > 10.f)
         {
             Set_DeadCascade();
@@ -483,8 +489,10 @@ _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
         MoveTo(&m_vMoveTarget, fTimeDelta);
     }
 
-
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    if (m_bRender)
+    {
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    }
     return iExit;
 }
 
@@ -649,6 +657,9 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
     //Swim();
 
     m_fViewZ = 10.1f;
+
+    m_bRender = true;
+
 	return S_OK;
 }
 
