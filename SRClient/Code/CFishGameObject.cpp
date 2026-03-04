@@ -11,7 +11,8 @@
 #include "CGetItemUI.h"
 #include "CGameMemMgr.h"
 #include "CDiveDave.h"
-
+#include "CCameraMgr.h"
+#include "CDiveDaveCam.h"
 CFishGameObject::CFishGameObject()
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -300,8 +301,13 @@ void CFishGameObject::JacksalAcquire()
 
 }
 
-_int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
+_int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 {
+    auto tmp = CCameraMgr::GetInstance()->Get_CurCamera();
+    _float fTimeDelta = _fTimeDelta;
+    if (static_cast<CDiveDaveCam*>(tmp)->GetFov() < D3DXToRadian(60.f))
+        fTimeDelta *= 0.25f;
+
     _uint iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     if (m_bManual)
