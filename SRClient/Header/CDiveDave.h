@@ -192,6 +192,7 @@ public:
 private:
 	HRESULT				Ready_Component();
 	HRESULT				Add_State();
+	void				Collision_WithTerrain(const _float& fTimeDelta);
 
 private:
 	void				Key_Input();
