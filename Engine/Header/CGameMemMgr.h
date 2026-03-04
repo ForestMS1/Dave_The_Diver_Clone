@@ -202,6 +202,9 @@ public:
 	void addCookingMenu(wstring name);
 	void deleteCookingMenu();
 	void ClearCookingMenu();
+	void AddStockMarketIndex();
+	void SetStockMarketIndex(int index) { stockPicIndex = index; }
+	int GetStockMarketIndex() { return stockPicIndex; }
 	vector<FISH*>& getFishes() { return fishes; }
 	vector<FISH*>& getMenu() { return SelectedMenu; }
 	queue<FISH*>& getCookingMenu() { return CookingMenu; }
@@ -212,7 +215,7 @@ private:
 	vector<FISH*> fishes;
 	vector<FISH*> SelectedMenu;
 	queue<FISH*> CookingMenu;
-
+	int			stockPicIndex;
 
 	// µ·
 public:

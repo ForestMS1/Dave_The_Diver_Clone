@@ -264,6 +264,52 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+
+	//stockMarket
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket1.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket1", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket2.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket1");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket2", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket3.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket2");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket3", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket4.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket3");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket4", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket5.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket4");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket5", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket6.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket5");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket6", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket7.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket6");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket7", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket8.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket7");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket8", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket9.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket8");
+		
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket9", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket10.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket9");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket10", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket11.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket10");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket11", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket12.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket11");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket12", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket13.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket12");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket13", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket14.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_stockMarket13");
+	}
+
 	// items
 	{
 		// Item_Bone.png
