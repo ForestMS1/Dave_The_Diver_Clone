@@ -37,6 +37,7 @@ public:
 	DIVEDAVESTATE		Get_State()															{ return m_pFSM->Get_State(); }
 	ATTACKSUBSTATE		Get_AttackSubState();
 	void				Set_State(DIVEDAVESTATE state)										{ m_pFSM->Set_State(state); }
+	DIVEDAVESTATE		Get_PrevState()														{ return m_pFSM->Get_PrevState(); }
 
 	EQUIPPED			Get_CurEquipped() const												{ return m_eCurEquipped; }
 	void				Set_CurEquipeed(EQUIPPED equip)										{ m_eCurEquipped = equip; }
@@ -46,13 +47,15 @@ public:
 	void				Set_TextureCom(wstring_view ComName)								{ m_pTextureCom = CGameObject::GetComponent<CTexture, ID_STATIC>(ComName); }
 
 	void				Multiply_Scale(_vec3* vScale)										{ m_pTransformCom->Multiply_Scale(vScale); }
-	void				Move(_vec3* vDir, const _float& fTimeDelta);
+	void				Move(_vec3* vDir, const _float& fTimeDelta, const _float& fSpeed);
 	void				Set_RotateDir(_vec3* vDir) 
 	{
 		m_pTransformCom->m_vAngle.x = vDir->x; 
 		m_pTransformCom->m_vAngle.y = vDir->y;
 		m_pTransformCom->m_vAngle.z = vDir->z;
 	}
+	_vec3				Get_LastMoveDir() const												{ return m_vLastMoveDir; }
+	_float				Get_LastMoveSpeed() const											{ return m_fLastMoveSpeed; }
 
 	void				Get_Pos(_vec3* vPos)												{ return m_pTransformCom->Get_Info(INFO_POS, vPos); }
 
@@ -251,6 +254,9 @@ private:
 	_bool  m_bSubMarine = false;
 
 	_bool  m_bOverloaded = false;
+
+	_vec3 m_vLastMoveDir; // 마지막으로 이동중이었던 방향
+	_float m_fLastMoveSpeed; // 마지막으로 이동중이었던 스피드값
 
 private:
 	CGameObject* m_pCurOnItemBox = nullptr;

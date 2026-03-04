@@ -29,7 +29,7 @@ void CDiveDaveInitStart::Enter()
 
 
 	CTransform* pTransformCom = m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
-	pTransformCom->Set_Pos(-20.f, -20.f, 0.f);
+	pTransformCom->Set_Pos(-20.f, 20.f, 0.f);
 	pTransformCom->Get_Info(INFO_POS, &m_vOriginPos);
 }
 

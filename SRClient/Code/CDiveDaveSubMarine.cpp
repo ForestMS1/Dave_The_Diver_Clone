@@ -36,6 +36,9 @@ void CDiveDaveSubMarine::Enter()
 
 void CDiveDaveSubMarine::Input(const _float& fTimeDelta)
 {
+	if (!m_bCanKeyInput)
+		return;
+
 	if (CDInputMgr::GetInstance()->Key_Pressing(DIK_W))
 	{
 		if (CDInputMgr::GetInstance()->Key_Pressing(DIK_A))
@@ -84,6 +87,18 @@ void CDiveDaveSubMarine::Input(const _float& fTimeDelta)
 
 _int CDiveDaveSubMarine::Update_State(const _float& fTimeDelta)
 {
+	if (m_eDir != DIR_END && m_fMoveSpeed < m_pOwner->Get_Speed())
+		m_fMoveSpeed += fTimeDelta * 2.f;
+	if (m_eDir == DIR_END)
+	{
+		m_fMoveSpeed -= fTimeDelta * 5.f;
+		m_bCanKeyInput = false;
+		if (m_fMoveSpeed <= 0.f)
+		{
+			m_fMoveSpeed = 0.f;
+			m_bCanKeyInput = true;
+		}
+	}
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);
 	Go_Dir(fTimeDelta);
@@ -143,77 +158,86 @@ void CDiveDaveSubMarine::Exit()
 
 	_vec3 vRotateDir = { 0.f, 0.f, 0.f };
 	m_pOwner->Set_RotateDir(&vRotateDir);
+
+	Clear();
 }
 
 void CDiveDaveSubMarine::Clear()
 {
+	m_vLastSubMarineDir = { 0.f, 0.f, 0.f };
+	m_fMoveSpeed = 0.f;
 }
 
 void CDiveDaveSubMarine::Go_Dir(const _float& fTimeDelta)
 {
 	CDiveDave* pPlayer = m_pOwner;
-	_vec3 vDir;
-	_vec3 vRotateDir;
+	_vec3 vDir = { 0.f, 0.f, 0.f };
+	_vec3 vRotateDir = { 0.f, 0.f, 0.f };
 
 	switch (m_eDir)
 	{
 	case UP:
 		vDir = { 0.f, 1.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, 0.f, 90.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case UP_RIGHT:
 		vDir = { 1.f, 1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, 0.f, 45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case UP_LEFT:
 		vDir = { -1.f, 1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, -180.f, -45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case RIGHT:
 		vDir = { 1.f, 0.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, 0.f, 0.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case LEFT:
 		vDir = { -1.f, 0.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, -180.f, 0.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case DOWN:
 		vDir = { 0.f, -1.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, 0.f, -90.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case DOWN_RIGHT:
 		vDir = { 1.f, -1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, 0.f, -45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case DOWN_LEFT:
 		vDir = { -1.f, -1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		vRotateDir = { 0.f, -180.f, 45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case DIR_END:
+		if(m_fMoveSpeed > 0.f)
+			pPlayer->Move(&m_vLastSubMarineDir, fTimeDelta, m_fMoveSpeed);
 		break;
 	default:
 		break;
 	}
+
+	if(m_eDir != DIR_END)
+		memcpy(&m_vLastSubMarineDir, &vDir, sizeof(_vec3));
 }
 
 void CDiveDaveSubMarine::Restore_Fov(const _float& fTimeDelta)

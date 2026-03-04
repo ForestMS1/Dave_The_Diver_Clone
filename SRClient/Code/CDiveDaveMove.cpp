@@ -74,6 +74,8 @@ void CDiveDaveMove::Input(const _float& fTimeDelta)
 
 _int CDiveDaveMove::Update_State(const _float& fTimeDelta)
 {
+	if(m_fMoveSpeed < m_pOwner->Get_Speed())
+		m_fMoveSpeed += fTimeDelta * 3.f;
 	Input(fTimeDelta);
 	Restore_Fov(fTimeDelta);
 	Go_Dir(fTimeDelta);
@@ -107,10 +109,13 @@ void CDiveDaveMove::Exit()
 
 	_vec3 vRotateDir = { 0.f, 0.f, 0.f };
 	m_pOwner->Set_RotateDir(&vRotateDir);
+
+	Clear();
 }
 
 void CDiveDaveMove::Clear()
 {
+	m_fMoveSpeed = 2.f;
 }
 
 void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
@@ -123,7 +128,7 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 	{
 	case UP:
 		vDir = { 0.f, 1.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveUpTexture");
 		vRotateDir = { 0.f, 0.f, 90.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
@@ -131,7 +136,7 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 	case UP_RIGHT:
 		vDir = { 1.f, 1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveSideUpTexture");
 		vRotateDir = { 0.f, 0.f, 45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
@@ -139,28 +144,28 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 	case UP_LEFT:
 		vDir = { -1.f, 1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveSideUpTexture");
 		vRotateDir = { 0.f, -180.f, -45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case RIGHT:
 		vDir = { 1.f, 0.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveSideTexture");
 		vRotateDir = { 0.f, 0.f, 0.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case LEFT:
 		vDir = { -1.f, 0.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveSideTexture");
 		vRotateDir = { 0.f, -180.f, 0.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
 		break;
 	case DOWN:
 		vDir = { 0.f, -1.f, 0.f };
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveDownTexture");
 		vRotateDir = { 0.f, 0.f, -90.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
@@ -168,7 +173,7 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 	case DOWN_RIGHT:
 		vDir = { 1.f, -1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveSideDownTexture");
 		vRotateDir = { 0.f, 0.f, -45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);
@@ -176,7 +181,7 @@ void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)
 	case DOWN_LEFT:
 		vDir = { -1.f, -1.f, 0.f };
 		D3DXVec3Normalize(&vDir, &vDir);
-		pPlayer->Move(&vDir, fTimeDelta);
+		pPlayer->Move(&vDir, fTimeDelta, m_fMoveSpeed);
 		pPlayer->Set_TextureCom(L"Com_MoveSideDownTexture");
 		vRotateDir = { 0.f, -180.f, 45.f };
 		pPlayer->Set_RotateDir(&vRotateDir);

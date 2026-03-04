@@ -52,6 +52,8 @@
 #include "COverloadedIcon.h"
 #include "CDiveItemDescUI.h"
 #include "CCommonItemWood.h"
+#include "CCommonItemWoodPlate.h"
+#include "CCommonItemWatch.h"
 
 CDive::CDive()
 	: CScene()
@@ -351,6 +353,20 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	{
 		_vec3 vtmp{ -10, 3, 0.1f };
 		pGameObject = CCommonItemWood::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -10, 5, 0.1f };
+		pGameObject = CCommonItemWoodPlate::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -9, 5, 0.1f };
+		pGameObject = CCommonItemWatch::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
