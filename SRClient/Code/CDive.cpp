@@ -54,7 +54,12 @@
 #include "CCommonItemWood.h"
 #include "CCommonItemWoodPlate.h"
 #include "CCommonItemWatch.h"
-
+#include "CCommonItemBone.h"
+#include "CCommonItemDeepseaCoral.h"
+#include "CCommonItemFragment.h"
+#include "CCommonItemThurible.h"
+#include "CCommonItemRope.h"
+#include "CCommonItemUmb.h"
 CDive::CDive()
 	: CScene()
 {
@@ -371,6 +376,50 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 			return E_FAIL;
 		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
 			return E_FAIL;
+
+		vtmp = { -8, 5, 0.1f };
+		pGameObject = CCommonItemBone::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+
+		vtmp = { -7, 5, 0.1f };
+		pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -6, 5, 0.1f };
+		pGameObject = CCommonItemFragment::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -5, 5, 0.1f };
+		pGameObject = CCommonItemThurible::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -4, 5, 0.1f };
+		pGameObject = CCommonItemRope::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
+		vtmp = { -3, 5, 0.1f };
+		pGameObject = CCommonItemUmb::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+
 	}
 
 	
