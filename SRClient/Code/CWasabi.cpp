@@ -15,6 +15,7 @@
 #include "CAssetTexture.h"
 #include "CWasabiObject.h"
 #include "CSushiDave.h"
+#include "CSoundMgr.h"
 
 
 
@@ -69,6 +70,10 @@ _int CWasabi::Update_GameObject(const _float& fTimeDelta)
         if (gauge >= -0.3f) {
             gauge = -0.3f;
             good += fTimeDelta;
+            if (!soundPlayed) {
+                CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_WasabiGood", CSoundMgr::SFX, 1.0f);
+                soundPlayed = true;
+            }
         }
     }
 
@@ -271,6 +276,7 @@ void CWasabi::Render_GameObject()
                 static_cast<CSushiDave*>(dave)->makingWasabi = false;
                 m_bRender = false;
                 good = 0.f;
+                soundPlayed = false;
             }
         }
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -334,6 +340,8 @@ void CWasabi::Key_Input()
                 static_cast<CWasabiObject*>(wasabi)->gauge = 0.03f;
                 gauge = -0.3f;
             }
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Grind", CSoundMgr::SFX, 1.0f);
+
         }
     }
 }

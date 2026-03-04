@@ -24,6 +24,8 @@ public:
 	{
 		BGM,
 		SFX,
+		SFX1,
+		SFX2,
 		MAXCHANNEL
 	};
 private:

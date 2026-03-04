@@ -17,6 +17,8 @@
 #include "CAssetDefaultFont.h"
 #include "CTeaBubble.h"
 #include "CSushi.h"
+#include "CBancho.h"
+#include "CSoundMgr.h"
 
 
 
@@ -38,6 +40,7 @@ CCustomer1::CCustomer1()
     ReactionTime = 0.f;
     EatingTime = 0.f;
     EmotionTime = 0.f;
+    PukeTime = 0.f;
     GoldTime = 0.f;
     teaTime = 0.f;
     teaChoosingTime = 0.f;
@@ -142,6 +145,8 @@ _int CCustomer1::Update_GameObject(const _float& fTimeDelta)
         if (EatingTime > 6.f) {
             curState = LEAVE;
             m_pTransformCom->Rotation(ROT_Y, 180.f);
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Pay", CSoundMgr::SFX, 1.0f); 
+
             vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
             for (auto fish : fishes) {
                 if (fish->name == sushiHanded) {
@@ -271,6 +276,10 @@ void CCustomer1::LateUpdate_GameObject(const _float& fTimeDelta)
             if (sushiHanded == static_cast<CMenuBubble*>(MenuBubble)->m_sFishName) {
                 curState = HAPPY;
                 MenuBubble->Set_Render(false);
+                if (!gotSushiSoundPlayed) {
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Served", CSoundMgr::SFX, 1.0f);
+                    gotSushiSoundPlayed = true;
+                }
             }
             else {
                 curState = ANGER;
@@ -280,6 +289,8 @@ void CCustomer1::LateUpdate_GameObject(const _float& fTimeDelta)
             if (ReactionTime > 2.f) {
                 if (curState == HAPPY) {
                     curState = EAT;
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Eat", CSoundMgr::SFX, 1.0f);
+                    
                 }
                 else if (curState == ANGER) {
                     curState = LEAVE;
@@ -455,35 +466,57 @@ void CCustomer1::Render_GameObject()
     if (curState == LEAVE) {
         if (MenuBubble != nullptr) {
             if (sushiHanded == static_cast<CMenuBubble*>(MenuBubble)->m_sFishName) {
-                if (GoldTime < 3.f) {
-                    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Coin"))
-                    {
-                        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                if (sushiHanded != L"???") {
+                    if (GoldTime < 3.f) {
+                        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Coin"))
                         {
-                            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                            {
+                                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                            }
                         }
-                    }
-                    _matrix mat = *m_pTransformCom->Get_World();
-                    mat.m[0][0] = 0.1f;
-                    mat.m[1][1] = 0.1f;
-                    mat.m[3][1] += 1.f;
-                    mat.m[3][0] -= 0.2f;
+                        _matrix mat = *m_pTransformCom->Get_World();
+                        mat.m[0][0] = 0.1f;
+                        mat.m[1][1] = 0.1f;
+                        mat.m[3][1] += 1.f;
+                        mat.m[3][0] -= 0.2f;
 
-                    pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
-                    m_pBufferCom->Render_Buffer();
+                        pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
+                        m_pBufferCom->Render_Buffer();
 
-                    // 폰트 출력
-                    CAssetDefaultFont* pQuantityFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_FishQuantity");
+                        // 폰트 출력
+                        CAssetDefaultFont* pQuantityFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_FishQuantity");
 
-                    vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
-                    for (auto fish : fishes) {
-                        if (fish->name == sushiHanded) {
-                            _vec2 vPos = { screen.x , screen.y };
-                            pQuantityFont->Render_Font(to_wstring(fish->cost), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+                        vector<CGameMemMgr::FISH*> fishes = CGameMemMgr::GetInstance()->getFishes();
+                        for (auto fish : fishes) {
+                            if (fish->name == sushiHanded) {
+                                _vec2 vPos = { screen.x , screen.y };
+                                pQuantityFont->Render_Font(to_wstring(fish->cost), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+                            }
                         }
-                    }
 
+                    }
                 }
+                else {
+                    if (PukeTime < 2.f) {
+                        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_Puke"))
+                        {
+                            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                            {
+                                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                            }
+                        }
+                        _matrix scaleMat = *m_pTransformCom->Get_World();
+                        PukeTime += 0.01f;
+                        scaleMat.m[0][0] = 0.3f;
+                        scaleMat.m[1][1] = 0.3f;
+                        scaleMat.m[3][1] = 0.2f + PukeTime;
+                        pGraphicDev->SetTransform(D3DTS_WORLD, &scaleMat);
+                        m_pBufferCom->Render_Buffer();
+                    }
+                   
+                }
+               
             }
         }
         
