@@ -263,6 +263,63 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	{
 		return E_FAIL;
 	}
+
+	// items
+	{
+		// Item_Bone.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Bone", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Bone.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Bone");
+
+		// Item_DeepseaCoral.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_DeepseaCoral", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_DeepseaCoral.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_DeepseaCoral");
+
+		// Item_Fragment.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Fragment", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Fragment.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Fragment");
+
+		// Item_JadeThurible.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_JadeThurible", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_JadeThurible.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_JadeThurible");
+
+		// Item_Rope.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Rope", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Rope.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Rope");
+
+		// Item_RubyRing.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_RubyRing", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_RubyRing.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_RubyRing");
+
+		// Item_Umbellula.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Umbellula", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Umbellula.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Umbellula");
+
+		// Item_watch.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Watch", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_watch.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Watch");
+
+		// Item_Wood.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Wood", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Wood.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Wood");
+
+		// Item_woodplate.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Woodplate", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_woodplate.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Woodplate");
+	}
+
+	// dive get weapon ui
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveGetWeaponUI", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/GetWeaponUI.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveGetWeaponUI");
+	}
+
+	// dive item desc ui
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveItemDescUI", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/DiveItemDescUI.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveItemDescUI");
+	}
+
+
 	// Sushi Thumbnail
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_Asian_Sheepshead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_Asian_Sheepshead.png"));
@@ -408,6 +465,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Bancho_Good", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/Bancho_Good.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_Bancho_Good");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResult_Best", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/Best.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResult_Best");
 	}
 
 	// 스파인
@@ -600,6 +660,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonGun", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonGun.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_HarpoonProjectile", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/HarpoonProjectile.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_BasicRifle", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/BasicRifle.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"TripleAxel", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Triple.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"PentaAxel", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Penta.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Bullet", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Bullet.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
@@ -635,8 +697,13 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2FrameUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Frame_New.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2Stroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_O2_Stroke_re.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_O2StrokeFull", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_Watch_Time_Night_all.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_WeightIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Icon_weight.png"));
 
-
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Dive_Player/UI/UI_Overloaded0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"UI_Overloaded", CAssetTexture::Create(s.c_str()));
+	}
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerIdleTexture", Engine::CTexture::Create(L"Tex_DivePlayerIdle"))))
 		return E_FAIL;
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DivePlayerMoveUpTexture", Engine::CTexture::Create(L"Tex_DivePlayerMoveUp"))))
@@ -1580,6 +1647,25 @@ HRESULT CTransition::Common_SHIP_Load()
 	//NewWeapon.png
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_Weapon_UI_NewWeapon", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/Weapon/NewWeapon.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_Weapon_UI_NewWeapon");
+
+	// GoSushiBtn
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Ship_GoSushiBtn", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/GoSushiBtn.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Ship_GoSushiBtn");
+
+
+
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Basic", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_basic.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Basic");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Triple_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_triple_accel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Triple_Accel");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Quadro_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_quadro_accel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Quadro_Accel");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Penta_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_penta_accel.png"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Penta_Accel");
 
 	return S_OK;
 }

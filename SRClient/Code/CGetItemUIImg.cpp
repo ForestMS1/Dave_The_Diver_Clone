@@ -19,12 +19,21 @@ CGetItemUIImg::~CGetItemUIImg()
 {
 }
 
+void CGetItemUIImg::Update_ImGui()
+{
+    CGameObject::Update_ImGui();
+    ImGui::DragFloat("m_fDbgX", &m_fDbgX, 0.1f);
+    ImGui::DragFloat("m_fDbgY", &m_fDbgY, 0.1f);
+}
+
 
 HRESULT		CGetItemUIImg::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
+    m_fDbgX = 0.f;
+    m_fDbgY = 0.f;
    
     return S_OK;
 }
@@ -35,14 +44,14 @@ _int		CGetItemUIImg::Update_GameObject(const _float& fTimeDelta)
 
     _vec3 vParentPos;
     pTransform->Get_Info(INFO_POS, &vParentPos);
-    vParentPos.x += m_fPosX;
-    vParentPos.y += m_fPosY;
+    vParentPos.x += m_fPosX + m_fDbgX;
+    vParentPos.y += m_fPosY + m_fDbgY;
 
     m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
 
     return iExit;
 }
@@ -95,7 +104,7 @@ void CGetItemUIImg::Ready_After_Create()
 
                 vScale = { fAspect, 1.f, 1.f };
 
-                float fScale = 0.5;
+                float fScale = 23.f;
                 vScale.x *= fScale;
                 vScale.y *= fScale;
             }

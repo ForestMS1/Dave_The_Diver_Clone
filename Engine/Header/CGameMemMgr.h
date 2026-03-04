@@ -11,6 +11,23 @@ class ENGINE_DLL CGameMemMgr : public CBase
 	DECLARE_SINGLETON(CGameMemMgr)
 
 public:
+	enum DAVE_ITEM
+	{
+		IT_WOOD,
+		IT_BONE,
+		IT_FRAGMENT,
+		IT_JADETHURIBLE,
+		IT_ROPE,
+		IT_RUBYRING,
+		IT_UMBELLULA,
+		IT_WOODPLATE,
+		IT_WATCH,
+		IT_END,
+	};
+	std::wstring Get_ItemTexName(DAVE_ITEM eItem);
+	std::wstring Get_ItemTitle(DAVE_ITEM eItem);
+	std::wstring Get_ItemDesc(DAVE_ITEM eItem);
+
 	class CDaveInfo
 	{
 	public:
@@ -30,8 +47,13 @@ public:
 		{
 			GUN_DEFAULT,
 			GUN_TRIPLE_ACCEL,
+			GUN_PENTA_ACCEL,
 			GUN_END
 		};
+		std::wstring Get_DaveGunTexName(DAVE_GUN eItem);
+		std::wstring Get_DaveGunTitle(DAVE_GUN eItem);
+		std::wstring Get_DaveGunDesc(DAVE_GUN eItem);
+		
 
 	public:
 		_uint Get_GonggiVolume() const { return m_iGonggiVolume; }
@@ -44,11 +66,17 @@ public:
 		void Set_JeokjaeWeight(_uint i) { m_iJeokjaeWeight = i; }
 		void Set_JaksalDamage(_uint i) { m_iJaksalDamage = i; }
 
+	public:
+		map< DAVE_ITEM, _uint>& Get_Inventory() { return m_mapInventory; }
+
 	private:
-		_uint m_iGonggiVolume;
-		_uint m_iJamsuDepth;
-		_uint m_iJeokjaeWeight;
-		_uint m_iJaksalDamage;
+		_uint m_iGonggiVolume = 90;
+		_uint m_iJamsuDepth = 40;
+		_uint m_iJeokjaeWeight = 9;
+		_uint m_iJaksalDamage = 15;
+
+	private:
+		map<DAVE_ITEM, _uint> m_mapInventory;
 
 	};
 
@@ -66,6 +94,10 @@ public:
 			_uint iMeatCnt;
 			float fWeight;
 			float fLength;
+			_uint iSushiMoney;
+			_uint iSushiLv;
+			bool bFish = true;
+			DAVE_ITEM eDiveItem = IT_END;
 		} DIVE_FISH;
 
 		typedef struct tagDiveItem
@@ -98,14 +130,25 @@ public:
 			return wss.str();
 		}
 
-		void Add_FishFront(DIVE_FISH& fish) { m_vecCaughtFishes.push_front(fish); ++m_iCaughtFish; }
+		void Add_FishFront(DIVE_FISH& fish)
+		{
+			m_vecCaughtFishes.push_front(fish);
+			if (fish.bFish)
+			{
+				++m_iCaughtFish;
+			}
+			else
+			{
+				++m_iObtained;
+			}
+		}
 		std::list<DIVE_FISH>& Get_Fishes() { return m_vecCaughtFishes; }
 
-		std::list< DIVE_ITEM>& Get_Itemes() { return m_vecCaughtItems; }
-		void Add_ItemBack(DIVE_ITEM& item) { m_vecCaughtItems.push_back(item); ++m_iObtained; }
+		//std::list< DIVE_ITEM>& Get_Itemes() { return m_vecCaughtItems; }
+		//void Add_ItemBack(DIVE_ITEM& item) { m_vecCaughtItems.push_back(item); ++m_iObtained; }
 
-		void Set_Depth(_uint i) { m_iDepth = i; }
-		_uint Get_Depth() const { return m_iDepth; }
+		void Set_Depth(_float f) { m_fDepth = f; }
+		_float Get_Depth() const { return m_fDepth; }
 
 		_uint Get_CaughtFish() const { return m_iCaughtFish; }
 		_uint Get_Obtained() const { return m_iObtained; }
@@ -120,7 +163,7 @@ public:
 		clock_t m_DiveEnd;
 
 		_uint m_iCaughtFish = 0;
-		_uint m_iDepth = 0;
+		_float m_fDepth = 0.f;
 		_uint m_iObtained = 0;
 
 		bool m_bDiveEnd = false;

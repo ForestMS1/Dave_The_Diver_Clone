@@ -43,6 +43,7 @@ public:
 	void Stop();
 	void Swim();
 	void AcquireTo(_vec3 const* pPos);
+	void JacksalAcquire();
 
 	void Pull_Fish(_vec3* vDir, _float fSpeed, _float fTimeDelta) { m_pTransformCom->Move_Pos(vDir, fSpeed, fTimeDelta); }
 
@@ -87,6 +88,8 @@ public:
 	_uint Get_Star() const { return m_iStar; }
 	float Get_Weight() const { return m_fWeight; }
 	_uint Get_Price() const { return m_iPrice; }
+	_uint Get_SushiMoney() const { return m_iSushiMoney; }
+	_uint Get_SushiLv() const { return m_iSushiLv; }
 
 protected:
 	std::wstring m_sFishName;
@@ -98,7 +101,8 @@ protected:
 	_uint m_iPrice;
 	float m_fLength;
 	_uint m_iMeatCnt;
-
+	_uint m_iSushiMoney;
+	_uint m_iSushiLv;
 
 protected:
 	float m_fCurrSpeed;

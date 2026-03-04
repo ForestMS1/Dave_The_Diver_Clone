@@ -31,6 +31,14 @@ HRESULT CJohn2Intro::Ready_GameObject()
 	_vec3 vScale = { 640.f, 360.f, 0.f };
 	m_pTransformCom->Set_Scale(&vScale);
 
+	CDiveDave* pDiveDave = dynamic_cast<CDiveDave*>
+		(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"));
+
+	Event e;
+	e.type = EVENTTYPE::BOSS_INTRO_START;
+	if (pDiveDave != nullptr)
+		pDiveDave->State_Notify(e);
+
 	return S_OK;
 }
 
@@ -42,7 +50,17 @@ _int CJohn2Intro::Update_GameObject(const _float& fTimeDelta)
 	AddFrame(fTimeDelta, 50.f, 142, false);
 
 	if (m_fFrame == 141)
+	{
+		CDiveDave* pDiveDave = dynamic_cast<CDiveDave*>
+			(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"));
+		if (pDiveDave == nullptr)
+			return 0;
+
+		Event e;
+		e.type = EVENTTYPE::BOSS_INTRO_END;
+		pDiveDave->State_Notify(e);
 		m_bDead = true;
+	}
 
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 

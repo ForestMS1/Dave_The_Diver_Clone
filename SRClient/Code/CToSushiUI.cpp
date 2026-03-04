@@ -77,33 +77,42 @@ HRESULT		CToSushiUI::Ready_GameObject()
 
             for (auto& fish : originalFishes)
             {
-                auto iter = mapFish.find(fish.sFishName);
-                if (iter == mapFish.end())
+                if (fish.bFish)
                 {
-                    mapFish.insert({ fish.sFishName , fish });
-                }
-                else
-                {
-                    mapFish[fish.sFishName].iMeatCnt += fish.iMeatCnt;
+                    auto iter = mapFish.find(fish.sFishName);
+                    if (iter == mapFish.end())
+                    {
+                        mapFish.insert({ fish.sFishName , fish });
+                    }
+                    else
+                    {
+                        mapFish[fish.sFishName].iMeatCnt += fish.iMeatCnt;
+                    }
                 }
             }
 
 
             float fRefY = 3.16f;
+
+            int i = 0;
             for (auto& pCaughtFishes : mapFish)
             {
+                if (i > 5) break;
+
                 auto pToSushiItem = CToSushiUIItem::Create(-2.73f, fRefY);
                 pToSushiItem->Set_Parent(this);
                 pToSushiItem->Set_Title(pCaughtFishes.first);
                 pToSushiItem->Set_Cnt(std::to_wstring(pCaughtFishes.second.iMeatCnt));
-                pToSushiItem->Set_Money(L"42");//TODO
-                pToSushiItem->Set_Lv(L"Lv 2");//TODO
+                pToSushiItem->Set_Money(::to_wstring(pCaughtFishes.second.iSushiMoney));
+                pToSushiItem->Set_Lv(L"Lv " + ::to_wstring(pCaughtFishes.second.iSushiLv));
                 pToSushiItem->Set_FishImgAssetName(pCaughtFishes.second.sThumbNailAssetName);
                 pToSushiItem->Set_SushiImgAssetName(pCaughtFishes.second.sSushiThumbNailAssetName);
                 pToSushiItem->Ready_AfterCreate();
                 pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
 
                 fRefY -= 1.16;
+
+                ++i;
             }
         }
        

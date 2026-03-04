@@ -10,6 +10,7 @@
 #include "CManagement.h"
 #include "CGetItemUI.h"
 #include "CGameMemMgr.h"
+#include "CDiveDave.h"
 
 CFishGameObject::CFishGameObject()
     : m_sFishName({})
@@ -207,7 +208,7 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
     {
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
-            auto pGetItemUI = CGetItemUI::Create(-7.f, 4.f);
+            auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
             pGetItemUI->Set_Title(m_sFishName);
             pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(m_iRank));
 
@@ -221,8 +222,12 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
             pGetItemUI->Ready_AfterCreate();
             pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
         }
-        Set_DeadCascade();
-        
+
+        if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+        {
+            pDave->Change_Weight(m_fWeight);
+        }
+
         CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
         fish.fWeight = m_fWeight;
         fish.iRank = m_iRank;
@@ -232,7 +237,14 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
         fish.iMeatCnt = m_iMeatCnt;
         fish.fLength = m_fLength;
         fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
+        fish.iSushiLv = m_iSushiLv;
+        fish.iSushiMoney = m_iSushiMoney;
+        fish.bFish = true;
         CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+        Set_DeadCascade();
+        
+
         return;
     }
 
@@ -242,6 +254,50 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
 
     m_bDieAndAcquire = true;
     m_vMoveTarget = *pDavePos;
+}
+
+void CFishGameObject::JacksalAcquire()
+{
+    if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+    {
+        auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
+        pGetItemUI->Set_Title(m_sFishName);
+        pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(m_iRank));
+
+        std::wstringstream wss;
+        wss << std::fixed << std::setprecision(1) << m_fWeight << L"kg";
+        std::wstring result = wss.str();
+
+        pGetItemUI->Set_Weight(result);
+        pGetItemUI->Set_StarCnt(m_iStar);
+        pGetItemUI->Set_ImgAssetName(m_sThumbNailAssetName);
+        pGetItemUI->Ready_AfterCreate();
+        pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+
+    }
+
+    if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+    {
+        pDave->Change_Weight(m_fWeight);
+    }
+
+
+    CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
+    fish.fWeight = m_fWeight;
+    fish.iRank = m_iRank;
+    fish.iStar = m_iStar;
+    fish.sFishName = m_sFishName;
+    fish.sThumbNailAssetName = m_sThumbNailAssetName;
+    fish.iMeatCnt = m_iMeatCnt;
+    fish.fLength = m_fLength;
+    fish.sSushiThumbNailAssetName = m_sSushiThumbNailAssetName;
+    fish.iSushiLv = m_iSushiLv;
+    fish.iSushiMoney = m_iSushiMoney;
+    fish.bFish = true;
+    CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+    Set_DeadCascade();
+
 }
 
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)

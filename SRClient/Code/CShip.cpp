@@ -42,6 +42,7 @@
 #include "CDaveConversation.h"
 #include "CBanchoGood.h"
 
+
 CShip::CShip()
 	: CScene()
 {
@@ -160,9 +161,6 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"ShipDave", pShipDave)))
 		return E_FAIL;
-
-
-
 
 
 
@@ -348,6 +346,18 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 					->Get_GameObjectFirst<CShipUIGoBtn>(L"ShipGoBtn"))
 				{
 					pBtn->SetActive(true);
+
+					if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+					{
+						// CShipUISpaceKey
+						CShipUISpaceKey* pShipSpace = CShipUISpaceKey::Create(-5.15f, -1.3f);
+						pShipSpace->AddRender(true);
+						if (nullptr == pShipSpace)
+							return E_FAIL;
+						if (FAILED(pLayer->Add_GameObject(L"ShipGoBtnSpaceKey", pShipSpace)))
+							return E_FAIL;
+					}
+					
 				}
 			}
 			});
@@ -360,6 +370,16 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 					->Get_GameObjectFirst<CShipUIGoBtn>(L"ShipGoBtn"))
 				{
 					pBtn->SetActive(false);
+
+					if (auto pBtn = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"ShipGoBtnSpaceKey"))
+					{
+						pBtn->Set_DeadCascade();
+					}
+
+					if (auto pBtn = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"ShipGoSushiBtn"))
+					{
+						pBtn->Set_DeadCascade();
+					}
 				}
 			}
 			});
@@ -421,6 +441,19 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_SHIP, CTransition::SCENE_LOGO));
 	}
 	ImGui::End();
+
+	{
+		auto  gonggi = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_GonggiVolume();
+		auto  jamsu = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JamsuDepth();
+		auto  jeokjae = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JeokjaeWeight();
+		auto  jaksal = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_JaksalDamage();
+
+		ImGui::Text("gonggi: %i", gonggi);
+		ImGui::Text("jamsu: %i", jamsu);
+		ImGui::Text("jeokjae: %i", jeokjae);
+		ImGui::Text("jaksal: %i", jaksal);
+	}
+	
 
 	if (ImGui::Button("Collider Render"))
 	{

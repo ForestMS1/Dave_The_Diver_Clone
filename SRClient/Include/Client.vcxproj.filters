@@ -466,6 +466,27 @@
     <Filter Include="01. Scene\03. Sushi\Tea">
       <UniqueIdentifier>{7e6db575-4963-410e-a255-28416fdcc750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon">
+      <UniqueIdentifier>{809434f3-c0e3-4fbe-a130-cbb728a2cf14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveDave\State\InitStart">
+      <UniqueIdentifier>{10153e22-8090-4042-9f88-2a87871a79bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_TripleAxel">
+      <UniqueIdentifier>{58f738d9-49f4-462b-8623-6e64ffaa6314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\Item_PentaAxel">
+      <UniqueIdentifier>{2d8906b3-c8c2-427d-9277-bf098546dbdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveItemDescUI">
+      <UniqueIdentifier>{6814c4d9-df3e-49a6-9e68-fb4bc76364ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\DiveGetWeaponUI">
+      <UniqueIdentifier>{40064acd-31f7-475b-9be9-924f4b2772ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Dive_Item\CommonItem_Wood">
+      <UniqueIdentifier>{8afa162b-f1c4-4066-beeb-cc70eda80bc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1182,6 +1203,42 @@
     <ClInclude Include="..\Header\CTeaBubble.h">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CO2TxT.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeightText.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\COverloadedIcon.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveDaveInitStart.h">
+      <Filter>02. GameObject\DiveDave\State\InitStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemTripleAxel.h">
+      <Filter>02. GameObject\Dive_Item\Item_TripleAxel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemPentaAxel.h">
+      <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShipUIGoSushiBtn.h">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveItemDescUI.h">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUI.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDiveGetWeaponUIImg.h">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCommonItemWood.h">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CSmallMenu.h">
       <Filter>01. Scene\03. Sushi\Background</Filter>
     </ClInclude>
@@ -1885,6 +1942,42 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTeaBubble.cpp">
       <Filter>01. Scene\03. Sushi\Customers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CO2TxT.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeightText.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\O2UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COverloadedIcon.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\OverloadedIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveDaveInitStart.cpp">
+      <Filter>02. GameObject\DiveDave\State\InitStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemTripleAxel.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_TripleAxel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemPentaAxel.cpp">
+      <Filter>02. GameObject\Dive_Item\Item_PentaAxel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShipUIGoSushiBtn.cpp">
+      <Filter>02. GameObject\00. Ship\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveItemDescUI.cpp">
+      <Filter>02. GameObject\DiveItemDescUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDiveGetWeaponUIImg.cpp">
+      <Filter>02. GameObject\DiveGetWeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCommonItemWood.cpp">
+      <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSmallMenu.cpp">
       <Filter>01. Scene\03. Sushi\Background</Filter>

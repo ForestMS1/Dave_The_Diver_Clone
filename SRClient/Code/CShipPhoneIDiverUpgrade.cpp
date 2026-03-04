@@ -159,7 +159,36 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
                         || IDiver::Get_Info(m_sAssetName, iCurrLevel).sLevel == L"최종병기작살"))
                 {
                     CGameMemMgr::GetInstance()->Set_IDiverCurrentLevel(m_sAssetName, iCurrLevel + 1);
-                    //iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
+
+                    //auto currLvl = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel();
+                    //IDiver::Get_Info(m_sAssetName, currLvl);
+                    //
+                    // 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] = 1;
+                    //m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Clothes"] = 1;
+                    //m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Cage"] = 1;
+                    //m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Jaksal"] = 1;
+                    iCurrLevel = CGameMemMgr::GetInstance()->Get_IDiverCurrentLevel()->at(m_sAssetName);
+                    if (m_sAssetName == L"Tex_Ship_IDiver_Item_Sanso")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_GonggiVolume(amount);
+                    }
+                    else if (m_sAssetName == L"Tex_Ship_IDiver_Item_Clothes")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_JamsuDepth(amount);
+                    }
+                    else if (m_sAssetName == L"Tex_Ship_IDiver_Item_Cage")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_JeokjaeWeight(amount);
+                    }
+                    else if (m_sAssetName == L"Tex_Ship_IDiver_Item_Jaksal")
+                    {
+                        auto amount = IDiver::Get_Info(m_sAssetName, iCurrLevel).iAmount;
+                        CGameMemMgr::GetInstance()->Get_DaveInfo().Set_JaksalDamage(amount);
+                    }
+                    
 
                     CShipPhoneIDiverUpgradeSuccess* pUpSucess = CShipPhoneIDiverUpgradeSuccess::Create(0.f, 0.f);
                     pUpSucess->Set_Parent(m_pParentGameObject);

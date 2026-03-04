@@ -73,28 +73,153 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
 
     if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
     {
+
+    
         auto info = CGameMemMgr::GetInstance()->Get_DiveInfos().back();
         m_sDiveNo = std::to_wstring(CGameMemMgr::GetInstance()->Get_DiveInfos().size());
-        m_sCaught = std::to_wstring(info.Get_CaughtFish());
-        m_sDepth = std::to_wstring(info.Get_Depth());
-        m_sObtained = std::to_wstring(info.Get_Obtained());
+
+        _uint fCaught = info.Get_CaughtFish();
+        m_sCaught = std::to_wstring(fCaught);
+
+        _float fDepth = info.Get_Depth();
+        {
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << fDepth << L"";
+            std::wstring result = wss.str();
+            m_sDepth = result;
+        }
+       
+
+        _uint fObtained = info.Get_Obtained();
+        m_sObtained = std::to_wstring(fObtained);
+
+        float fTime = info.CalcDiveTime();
+        m_sTime = info.CalcDiveTimeStr();
 
         if (!info.Get_Fishes().empty())
         {
             auto fishes = info.Get_Fishes();
-            fishes.sort([](const auto& a, const auto& b) {
-                 return a.fWeight > b.fWeight; 
-             });
+            for (auto iter = fishes.begin(); iter != fishes.end();)
+            {
+                if (iter->bFish)
+                {
+                    ++iter;
+                }
+                else
+                {
+                    iter = fishes.erase(iter);
+                }
+            }
 
-            std::wstringstream wss;
-            wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
-            std::wstring result = wss.str();
-            m_sBiggestFishSize = result;
-            m_sBiggestFishName = fishes.front().sFishName;
-            m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
-            
+            if (!fishes.empty())
+            {
+                fishes.sort([](const auto& a, const auto& b) {
+                    return a.fLength > b.fLength;
+                    });
+
+                std::wstringstream wss;
+                wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
+                std::wstring result = wss.str();
+                m_sBiggestFishSize = result;
+                m_sBiggestFishName = fishes.front().sFishName;
+                m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
+            }
         }
-        m_sTime = info.CalcDiveTimeStr();
+
+
+
+        if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() > 1)
+        {
+            auto info2 = CGameMemMgr::GetInstance()->Get_DiveInfos()[CGameMemMgr::GetInstance()->Get_DiveInfos().size() - 2];
+            float fTime2 = info2.CalcDiveTime(); 
+            m_sTime2 = info2.CalcDiveTimeStr();
+            
+            _uint fCaught2 = info2.Get_CaughtFish();
+            m_sCaught2 = std::to_wstring(fCaught2);
+
+            _float fDepth2 = info2.Get_Depth();
+            {
+                std::wstringstream wss;
+                wss << std::fixed << std::setprecision(1) << fDepth2 << L"";
+                std::wstring result = wss.str();
+                m_sDepth2 = result;
+            }
+
+            _uint fObtained2 = info2.Get_Obtained();
+            m_sObtained2 = std::to_wstring(fObtained2);
+
+            
+            if (fTime > fTime2)
+            {
+                //Time Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    auto pImg = CDiveResultUIImg::Create(-0.34f, 2.1f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_Best");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"DiveResultBest", pImg);
+                }
+            }
+
+            if (fCaught > fCaught2)
+            {
+                // Caught Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    auto pImg = CDiveResultUIImg::Create(-0.64f, 1.16f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_Best");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"DiveResultBest", pImg);
+                }
+            }
+
+            if (fDepth > fDepth2)
+            {
+                // Depth Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    auto pImg = CDiveResultUIImg::Create(2.4f, 2.1f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_Best");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"DiveResultBest", pImg);
+                }
+            }
+
+            if (fObtained > fObtained2)
+            {
+                // Obtaine Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    auto pImg = CDiveResultUIImg::Create(2.3f, 1.16f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_Best");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"DiveResultBest", pImg);
+                }
+
+            }
+
+        }
+
     }
 
     {
@@ -112,19 +237,75 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
         }
     }
 
-    // Items
+    //{
+    //    if (auto pLayer = CManagement::GetInstance()
+    //        ->Get_Scene()
+    //        ->Get_Layer(L"0_GameLogic_Layer"))
+    //    {
+    //        auto pImg = CDiveResultUIImg::Create(0.f, 0.f); // -0.290
+    //        pImg->Set_Scale(0.1f);
+    //        pImg->Set_ViewZ(0.49f);
+    //        pImg->Set_AssetName(L"Tex_DiveResult_Best");
+    //        pImg->Set_Parent(this);
+    //        pImg->Ready_After_Create();
+    //        pLayer->Add_GameObject(L"DiveResult_Best", pImg);
+    //    }
+    //}
+
+    // Items 8 * 4 0.73
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
             ->Get_Layer(L"0_GameLogic_Layer"))
         {
-            auto pImg = CDiveResultUIImg::Create(-2.55f, -1.16f);
-            pImg->Set_Scale(0.31f);
-            pImg->Set_ViewZ(0.49f);
-            pImg->Set_AssetName(L"Tex_FishThumb_Yellowback_Fusilier");
-            pImg->Set_Parent(this);
-            pImg->Ready_After_Create();
-            pLayer->Add_GameObject(L"TestImg1", pImg);
+
+            if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+            {
+                auto items = CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes();
+
+                map<std::wstring, CGameMemMgr::CDiveInfo::DIVE_FISH> mapItem;
+
+                for (auto& item : items)
+                {
+                    if (!item.bFish)
+                    {
+                        auto iter = mapItem.find(item.sFishName);
+                        if (iter == mapItem.end())
+                        {
+                            mapItem.insert({ item.sFishName , item });
+                        }
+                        else
+                        {
+                            mapItem[item.sFishName].iMeatCnt += item.iMeatCnt;
+                        }
+                    }
+                }
+
+                const float refX = -2.55f;
+                const float refY = -1.16f;
+
+
+                _uint idxX = 0;
+                _uint idxY = 0;
+                _uint idx = 0;
+                for (auto& pair : mapItem)
+                {
+                    idxX = idx % 8;
+                    idxY = idx / 8;
+
+                    auto pImg = CDiveResultUIImg::Create(refX + (idxX * 0.73f), refY + (idxY * -0.73f));
+                    pImg->Set_Scale(0.31f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(pair.second.sThumbNailAssetName);
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"ItemImg", pImg);
+
+                    ++idx;
+                }
+            }
+            
+
         }
     }
 
@@ -277,6 +458,25 @@ void		CDiveResultUI::Render_GameObject()
         }
     }
 
+    // Time 2
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.21f;
+        float fOffsetY = 2.36f - 0.28f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sTime2, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+        }
+    }
+
     // DEPTH
     {
         _vec3 vInfoPos;
@@ -293,6 +493,25 @@ void		CDiveResultUI::Render_GameObject()
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
             pDefFont->Render_Font(m_sDepth, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+        }
+    }
+
+    // DEPTH 2
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 1.72f;
+        float fOffsetY = 2.36f - 0.28f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sDepth2, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
@@ -315,6 +534,25 @@ void		CDiveResultUI::Render_GameObject()
         }
     }
 
+    // CAUGHT2 
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = -1.21f;
+        float fOffsetY = 1.47f - 0.28f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sCaught2, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+        }
+    }
+
     // OBTAINED
     {
         _vec3 vInfoPos;
@@ -331,6 +569,25 @@ void		CDiveResultUI::Render_GameObject()
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
         {
             pDefFont->Render_Font(m_sObtained, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+        }
+    }
+
+    // OBTAINED 2 
+    {
+        _vec3 vInfoPos;
+        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+        float fOffsetX = 1.76f;
+        float fOffsetY = 1.47f - 0.28f;
+        vInfoPos.x += fOffsetX;
+        vInfoPos.y += fOffsetY;
+
+        _vec3 vScreenPos;
+        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
+        {
+            pDefFont->Render_Font(m_sObtained2, &vPos, D3DXCOLOR(.266f, 0.251f, 0.227f, 1.0f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 

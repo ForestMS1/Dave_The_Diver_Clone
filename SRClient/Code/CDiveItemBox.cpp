@@ -7,14 +7,18 @@
 #include "CDiveDave.h"
 #include "CO2Capsule.h"
 #include "CManagement.h"
+#include "CItemTripleAxel.h"
+#include "CItemPentaAxel.h"
+
 wstring wsItemBoxTex[(_uint)ITEMBOXTEX::CHEST_END] = 
 { L"Tex_Chest_A", L"Tex_Chest_Aopen", L"Tex_Chest_Box", L"Tex_Chest_Box_open", L"Tex_Chest_Weapon", L"Tex_Chest_WeaponOpen"};
 
-CDiveItemBox::CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z)
+CDiveItemBox::CDiveItemBox(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z, DROPITEM drop)
 	: m_pBufferCom(nullptr)
 	, m_pTransformCom(nullptr)
 	, m_eCurBoxTex(ItemBoxType)
 	, m_vInitPos({x,y,z})
+	, m_eDropItem(drop)
 {
 
 }
@@ -113,7 +117,20 @@ void CDiveItemBox::Set_Open()
 
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		CO2Capsule* pItem = CO2Capsule::Create(vPos);
+		CGameObject* pItem = nullptr;
+		switch (m_eDropItem)
+		{
+		case DROPITEM::O2CAPSULE:
+			pItem = CO2Capsule::Create(vPos);
+			break;
+		case DROPITEM::TRIPLEAXEL:
+			pItem = CItemTripleAxel::Create(vPos);
+			break;
+		case DROPITEM::PENTAAXEL:
+			pItem = CItemPentaAxel::Create(vPos);
+		default:
+			break;
+		}
 		if (pItem != nullptr)
 		{
 			CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"Item", pItem);
@@ -197,9 +214,9 @@ void CDiveItemBox::OnCollisionExit(CCollider* pCollider)
 	pDiveDave->Set_CurOnItemBox(nullptr);
 }
 
-CDiveItemBox* CDiveItemBox::Create(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z)
+CDiveItemBox* CDiveItemBox::Create(ITEMBOXTEX ItemBoxType, _float x, _float y, _float z, DROPITEM drop)
 {
-	CDiveItemBox* pItemBox = new CDiveItemBox(ItemBoxType, x, y, z);
+	CDiveItemBox* pItemBox = new CDiveItemBox(ItemBoxType, x, y, z, drop);
 	if (FAILED(pItemBox->Ready_GameObject()))
 	{
 		Safe_Release(pItemBox);

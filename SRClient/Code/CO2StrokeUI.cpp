@@ -26,6 +26,7 @@ HRESULT CO2StrokeUI::Ready_GameObject()
     m_pTransformCom->Set_Scale(&vScale);
     m_pTransformCom->Set_Pos(-536.f, -265.f, 5.f);
 
+    m_bRender = true;
     return S_OK;
 }
 
@@ -52,6 +53,8 @@ void CO2StrokeUI::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CO2StrokeUI::Render_GameObject()
 {
+    if (!m_bRender)
+        return;
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -132,6 +135,12 @@ void CO2StrokeUI::OnNotify(const Event& e)
             m_IsRestore = true;
         else
             m_IsRestore = false;
+        break;
+    case EVENTTYPE::BOSS_INTRO_START:
+        m_bRender = false;
+        break;
+    case EVENTTYPE::BOSS_INTRO_END:
+        m_bRender = true;
         break;
     default:
         break;
