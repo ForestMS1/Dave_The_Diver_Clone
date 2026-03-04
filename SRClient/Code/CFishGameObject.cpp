@@ -42,7 +42,6 @@ CFishGameObject::CFishGameObject()
     , m_bNeedSlice(false)
     , m_fAttackIntervalTimer(0.f)
 {
-
 }
 
 void CFishGameObject::Update_ImGui()
@@ -609,6 +608,8 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
     //m_fsm.Get_CurrentState()->Enter();
 
     //Swim();
+
+    m_fViewZ = 10.1f;
 	return S_OK;
 }
 

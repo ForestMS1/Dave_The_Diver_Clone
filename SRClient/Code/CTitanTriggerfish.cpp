@@ -49,8 +49,6 @@ HRESULT CTitanTriggerfish::Ready_GameObject()
 
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
 
-    m_fViewZ = 0.5f;
-
     m_fSpeed = 1.f;
 
     m_pSpineCom->Set_AniState(L"swim");
