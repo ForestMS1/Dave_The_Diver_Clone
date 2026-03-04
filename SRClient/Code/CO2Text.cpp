@@ -30,6 +30,8 @@ HRESULT      CO2Text::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
     m_sFont = L"Font_Snowstorm";
+
+    m_bRender = true;
     return S_OK;
 }
 
@@ -59,6 +61,8 @@ void      CO2Text::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void      CO2Text::Render_GameObject()
 {
+    if (!m_bRender)
+        return;
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     _vec3 vScreenPos;
@@ -106,6 +110,12 @@ void CO2Text::OnNotify(const Event& e)
     {
     case EVENTTYPE::CHANGE_HP:
         m_iPlayerHp = e.value;
+        break;
+    case EVENTTYPE::BOSS_INTRO_START:
+        m_bRender = false;
+        break;
+    case EVENTTYPE::BOSS_INTRO_END:
+        m_bRender = true;
         break;
     default:
         break;

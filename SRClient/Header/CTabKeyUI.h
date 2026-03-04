@@ -1,7 +1,7 @@
 #pragma once
-#include "CGameObject.h"
+#include "IObserver.h"
 class CTabKeyUI :
-    public CGameObject
+    public IObserver
 {
 private:
 	explicit CTabKeyUI(_float x, _float y, _float z);
@@ -14,6 +14,8 @@ public:
 	_int		Update_GameObject(const _float& fTimeDelta) override;
 	void		LateUpdate_GameObject(const _float& fTimeDelta) override;
 	void		Render_GameObject() override;
+	
+	void		OnNotify(const Event& e) override;
 
 private:
 	HRESULT Ready_Component();

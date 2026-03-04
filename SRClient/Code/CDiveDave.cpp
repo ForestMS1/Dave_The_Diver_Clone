@@ -46,6 +46,8 @@ void CDiveDave::Start()
 	if (m_bInitComplete)
 		return;
 
+	m_fHp = m_fMaxHp;
+
 	m_bInitComplete = true;
 	Event e;
 	e.type = EVENTTYPE::CHANGE_HP;
