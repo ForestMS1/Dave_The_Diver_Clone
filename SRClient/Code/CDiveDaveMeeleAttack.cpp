@@ -1,6 +1,7 @@
 #include "CDiveDaveMeeleAttack.h"
 #include "CDiveDave.h"
 #include "CHelper.h"
+#include "CSoundMgr.h"
 CDiveDaveMeeleAttack::CDiveDaveMeeleAttack(CDiveDave* pOwner)
     : CBaseState<CDiveDave>(pOwner)
 {
@@ -21,6 +22,8 @@ void CDiveDaveMeeleAttack::Enter()
     _vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
     m_pOwner->Multiply_Scale(&vScale);
     m_pOwner->Set_TextureCom(L"Com_MeleeDaggerAttackTexture");
+
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Hit_Melee", CSoundMgr::SFX, 1.f);
 }
 
 void CDiveDaveMeeleAttack::Input(const _float& fTimeDelta)
