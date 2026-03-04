@@ -142,7 +142,7 @@ void CScene::LateUpdate_Scene(const _float& fTimeDelta)
 
 void CScene::EndOfFrame()
 {
-	// 루프3. 데드 마킹된 애들에 대해서 해제 처리를 진행한다.
+	// 프레임 맨 마지막에 데드 마킹된 애들에 대해서 해제 처리를 진행한다(건전하게 by God대성) 
 	for (auto& pLayer : m_mapLayer)
 	{
 		for (auto& pObjMap : *(pLayer.second->Get_GameObjects()))
