@@ -30,6 +30,8 @@ HRESULT      CWeightText::Ready_GameObject()
     if (FAILED(Ready_Component()))
         return E_FAIL;
     m_sFont = L"Font_Snowstorm_Size20";
+
+    m_bRender = true;
     return S_OK;
 }
 
@@ -62,6 +64,8 @@ void      CWeightText::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void      CWeightText::Render_GameObject()
 {
+    if (!m_bRender)
+        return;
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     _vec3 vScreenPos;
@@ -110,6 +114,12 @@ void CWeightText::OnNotify(const Event& e)
     case EVENTTYPE::CHANGE_WEIGTH:
         m_fPlayerCurWeight = e.fValue;
         m_fPlayerMaxWeight = e.fValue2;
+        break;
+    case EVENTTYPE::BOSS_INTRO_START:
+        m_bRender = false;
+        break;
+    case EVENTTYPE::BOSS_INTRO_END:
+        m_bRender = true;
         break;
     default:
         break;

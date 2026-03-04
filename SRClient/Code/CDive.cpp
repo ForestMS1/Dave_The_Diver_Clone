@@ -305,7 +305,7 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
-	pGameObject = CDiveDaveGun::Create(CGameMemMgr::CDaveInfo::GUN_TRIPLE_ACCEL);
+	pGameObject = CDiveDaveGun::Create(CGameMemMgr::CDaveInfo::GUN_DEFAULT);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveDaveGun", pGameObject)))
@@ -480,6 +480,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"RKeyUI", pGameObject)))
 		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
 	pGameObject = CCKeyUI::Create(350.f, -255.f, 0.f);
 	if (nullptr == pGameObject)
@@ -514,7 +515,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"TabKeyUI", pGameObject)))
 		return E_FAIL;
-
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
 	// O2 UI
 	pGameObject = CO2UI::Create();
@@ -536,6 +537,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"O2Text", pO2TxT)))
 		return E_FAIL;
 	pO2TxT->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pO2TxT)); // 플레이어 관찰
 
 	CO2Text* pO2Text = CO2Text::Create(0.f, 0.f);
 	if (nullptr == pO2Text)

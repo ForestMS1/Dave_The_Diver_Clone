@@ -9,7 +9,7 @@ CTabKeyUI::CTabKeyUI(_float x, _float y, _float z)
 }
 
 CTabKeyUI::CTabKeyUI(const CTabKeyUI& rhs)
-    :CGameObject(rhs)
+    :IObserver(rhs)
 {
 }
 
@@ -25,6 +25,8 @@ HRESULT CTabKeyUI::Ready_GameObject()
     _vec3 vScale = { 20.f, 15.f, 1.f };
     m_pTransformCom->Set_Scale(&vScale);
     m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+
+    m_bRender = true;
 
     return S_OK;
 }
@@ -47,6 +49,8 @@ void CTabKeyUI::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CTabKeyUI::Render_GameObject()
 {
+    if (!m_bRender)
+        return;
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -89,4 +93,19 @@ CTabKeyUI* CTabKeyUI::Create(_float x, _float y, _float z)
 void CTabKeyUI::Free()
 {
     CGameObject::Free();
+}
+
+void CTabKeyUI::OnNotify(const Event& e)
+{
+    switch (e.type)
+    {
+    case EVENTTYPE::BOSS_INTRO_START:
+        m_bRender = false;
+        break;
+    case EVENTTYPE::BOSS_INTRO_END:
+        m_bRender = true;
+        break;
+    default:
+        break;
+    }
 }
