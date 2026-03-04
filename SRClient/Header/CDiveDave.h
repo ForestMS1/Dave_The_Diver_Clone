@@ -101,17 +101,22 @@ public:
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+			Event e;
+			e.type = EVENTTYPE::CHANGE_HP;
+			e.value = 0;
+			e.fValue = m_fHp / m_fMaxHp;
+			CDiveDave::Notify(e);
+			return;
+		}
 		Event e;
 		e.type = EVENTTYPE::CHANGE_HP;
 		e.value = (_uint)m_fHp;
 		e.fValue = m_fHp / m_fMaxHp;
 		CDiveDave::Notify(e);
-
-		if (m_fHp <= 0.f)
-		{
-			m_fHp = 0.f;
-			On_Dead();
-		}
 	}
 	// Die 상태로 전이하기위한 함수
 	void				On_Dead() 															{ m_bIsDie = true; }
