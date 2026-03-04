@@ -974,6 +974,7 @@ _int CTerrian::Update_GameObject(const _float& fTimeDelta)
     CColliderMgr::GetInstance()->AddColliderGroup(m_CollisionName, m_pfrustomAABB);
 
 
+   
 
     if (e_Terrian == TERRIAN_ON) {
         for (auto i : m_pAABB) {
@@ -983,13 +984,14 @@ _int CTerrian::Update_GameObject(const _float& fTimeDelta)
     }
 
 
- 
     if (m_bFrustum) {
         _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-        CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-
-
+        CRenderer::GetInstance()->Add_RenderGroup(RENDER_TERRIAN, this);
+  
+        _vec3 vPos{};
+        m_pTransformCom->Get_Info(INFO_POS, &vPos);
+        Compute_ViewZ(&vPos);
         return iExit;
     }
   
