@@ -60,6 +60,8 @@
 #include "CCommonItemThurible.h"
 #include "CCommonItemRope.h"
 #include "CCommonItemUmb.h"
+
+#include "CCoral.h"
 CDive::CDive()
 	: CScene()
 {
@@ -109,7 +111,7 @@ HRESULT CDive::Ready_Scene()
 	CMapMgr::GetInstance()->Load();
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
-	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+
 
 
 	// [LSY] 데이브 아이다이버 수치 연동
@@ -125,6 +127,12 @@ HRESULT CDive::Ready_Scene()
 	CGameMemMgr::CDiveInfo info{};
 	info.DiveStart();
 	CGameMemMgr::GetInstance()->Get_DiveInfos().push_back(info);
+
+	_matrix CameraProj = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ProjMatrix();
+	m_pFrustumCollider = CBoundingFrustum::Create(&CameraProj);
+	m_pFrustumCollider->Set_OriginalColor(D3DXCOLOR{});
+	CParticleMgr::GetInstance()->Set_ParicleOn(true);
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_SEABUBBLE, {0.f,0.f,1.f}, 40);
 	return S_OK;
 }
 
@@ -149,6 +157,11 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 	}
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
+	
+	
+	Frustum();
+
+	
 	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	ImGui::Begin("Curr Scene: CDive");
 	if (ImGui::Button("Go Ship Scene"))
@@ -156,6 +169,17 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 		CMapMgr::GetInstance()->SetScene(nullptr);
 		//CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP));
 		CTransition::FadedTransition(CTransition::SCENE_DIVE, CTransition::SCENE_SHIP);
+	}
+	ImGui::End();
+
+	ImGui::Begin("PARTICLE_TEST");
+	if (ImGui::Button("PARTICLE_BLOOMBUBBLE"))
+	{
+		CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
+		CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	
+
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, pDaveTransform->m_vInfo[INFO_POS], 10);
 	}
 	ImGui::End();
 	return iExit;
@@ -179,11 +203,24 @@ void CDive::Render_Scene()
 
 
 
-	
-	
+
+
 }
 
+void CDive::Frustum() {
+	CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_TestCamera", m_pFrustumCollider);
 
+	CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
+	_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
+	D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
+	_matrix MoveMatrix;
+	D3DXMatrixIdentity(&MoveMatrix);
+	memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
+	MoveMatrix.m[3][2] = CameraView.m[3][2];
+	m_pFrustumCollider->Transform(&MoveMatrix);
+}
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 {
@@ -202,6 +239,9 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"CBackGroundSea", pBackGroundSea)))
 		return E_FAIL;
 
+
+
+	
 
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
@@ -435,7 +475,8 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"BackGround_GLB_File", pGameObject)))
 		return E_FAIL;
-
+	dynamic_cast<CTerrian*>(pGameObject)->Set_Frustom(true);
+	dynamic_cast<CTerrian*>(pGameObject)->Set_BackGround(true);
 
 	pGameObject = CTerrian::Create(L"GLB_Terrian1", L"Terrian1_Collision");
 	if (nullptr == pGameObject)
@@ -473,13 +514,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian6", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian6_Collision");
+	pGameObject = CTerrian::Create(L"GLB_Terrian7", L"Terrian7_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian7", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian6_Collision");
+	pGameObject = CTerrian::Create(L"GLB_Terrian8", L"Terrian8_Collision");
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GLB_Terrian8", pGameObject)))
@@ -694,7 +735,10 @@ void CDive::Free()
 	
 
 	CScene::Free();
+
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
+	Safe_Release(m_pFrustumCollider);
 }
+

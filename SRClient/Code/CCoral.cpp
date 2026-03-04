@@ -5,12 +5,14 @@
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
 #include "CAssetMgr.h"
+#include "CColliderMgr.h"
+
 CCoral::CCoral()
 	: CGameObject()
 {
 }
 
-CCoral::CCoral(const wstring_view _TextureName) : CGameObject(), m_TextureName(_TextureName)
+CCoral::CCoral(const wstring_view _TextureName, wstring _objectName) : CGameObject(), m_TextureName(_TextureName), m_nameCoralObject(_objectName)
 {
 }
 
@@ -31,19 +33,21 @@ HRESULT CCoral::Ready_GameObject()
 	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
-	//D3DXIMAGE_INFO imgInfo;// = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset()->Get_ImgInfo();
-	//imgInfo.Width;
 
-	//_float fWidth = imgInfo.Width;;
-	//_float fHeight = imgInfo.Height;
-	//_float fAspect = fWidth + fHeight;
-	//fAspect /= 2.f;
+	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(m_TextureName)->at(0))->Get_ImgInfo();
+	imgInfo.Width;
 
-	//vScale = { fWidth / fAspect, fHeight / fAspect, 0.f };
-	//m_pTransformCom->Multiply_Scale(&vScale);
+	_float fWidth = imgInfo.Width;;
+	_float fHeight = imgInfo.Height;
+	_float fAspect = fWidth + fHeight;
+	fAspect /= 2.f;
 
-	//m_pTransformCom->Set_Pos(0,0,0);
-
+	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
+	m_pTransformCom->Multiply_Scale(&vScale);
+		//-------------AABB Collider With ItemBox----------------
+	_vec3 vExtents = { 1.0f, 1.0f, 1.0f };
+	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_Coral", this);
 
 
 
@@ -52,14 +56,36 @@ HRESULT CCoral::Ready_GameObject()
 
 _int CCoral::Update_GameObject(const _float& fTimeDelta)
 {
-	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-	return iExit;
+	// 충돌체 그룹에 넣어줘야한다.
+	if (b_CoralTerrian) {
+		CColliderMgr::GetInstance()->AddColliderGroup(m_nameCoralObject, m_pAABB);
+		m_pAABB->Transform(m_pTransformCom->Get_World());
+	}
+	
+	
+
+	if (b_CoralTerrian) {
+		_int iExit = CGameObject::Update_GameObject(fTimeDelta);
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+		_vec3 vPos{};
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		Compute_ViewZ(&vPos);
+		return iExit;
+	}
+
+
+
 }
 
 void CCoral::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	
+	if (b_CoralTerrian) {
+		ColliderFrustom();
+		CGameObject::LateUpdate_GameObject(fTimeDelta);
+	}
+
 
 
 
@@ -67,17 +93,27 @@ void CCoral::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CCoral::Render_GameObject()
 {
-	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+	if (e_Coral == CORAL_ON) {
+		LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
+		if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(m_TextureName.data()))
+		{
+			if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+			{
+				pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+			}
+		}
 
+		pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+		m_pBufferCom->Render_Buffer();
 
-	m_pBufferCom->Render_Buffer();
+		D3DXMATRIX matTmp;
+		D3DXMatrixIdentity(&matTmp);
+		pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+	}
+	
 
-	D3DXMATRIX matTmp;
-	D3DXMatrixIdentity(&matTmp);
-	pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
 }
 
@@ -95,9 +131,9 @@ HRESULT CCoral::Add_Component()
 }
 
 
-CCoral* CCoral::Create(const wstring_view _TextureName)
+CCoral* CCoral::Create(const wstring_view _TextureName, wstring _objectName)
 {
-	CCoral* pCoral = new CCoral(_TextureName);
+	CCoral* pCoral = new CCoral(_TextureName, _objectName);
 
 	if (FAILED(pCoral->Ready_GameObject()))
 	{
@@ -111,5 +147,33 @@ CCoral* CCoral::Create(const wstring_view _TextureName)
 
 void CCoral::Free()
 {
+	Safe_Release(m_pAABB);
 	CGameObject::Free();
+}
+
+void CCoral::ColliderFrustom() {
+	if (CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera") != nullptr) {
+		CCollider* CameraCollider = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera")->front();
+		if (m_nameCoralObject != L"") {
+			list<CCollider*>* ColliderList = CColliderMgr::GetInstance()->Get_Colliders(m_nameCoralObject);
+			for (auto& pCollider : *ColliderList)
+			{
+
+				if (CameraCollider->Intersect(pCollider) && CORAL_OFF == e_Coral)
+				{
+					e_Coral = CORAL_ON;
+
+
+				}
+
+				if (!CameraCollider->Intersect(pCollider) && CORAL_ON == e_Coral) {
+					e_Coral = CORAL_OFF;
+
+				}
+
+			}
+
+		}
+
+	}
 }

@@ -21,6 +21,7 @@ public:
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
+	void						LightDown();
 
 private:
 	HRESULT			Add_Component();
@@ -29,12 +30,13 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
-
+	float  m_dark{1.f};
 public:
 	static CBackGroundSea* Create();
 
 private:
 	virtual void Free();
+
 
 };
 

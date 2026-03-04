@@ -26,12 +26,14 @@ private:
 public:
 
 	void    SetScene(CScene* Scene) { m_Scene = Scene;}
+	CScene* GetScene() { return m_Scene; }
 	void	Load();
 	void	Save();
 
 public:
 
 	void	Show_GUI();
+	void	Collider_Show();
 	void	Object_Show();
 	void	Frame_Show();
 	void	SaveLoad_Show();

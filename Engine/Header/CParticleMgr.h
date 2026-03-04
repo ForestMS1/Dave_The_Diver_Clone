@@ -23,6 +23,7 @@ public:
 	void spwan_Weather(WEATHERTYPE type, _vec3 origin, int numofPariticles, D3DXCOLOR color);
 	void Set_Camera(CCamera* camera) { m_pCamera = camera; }
 	void Set_Player(CGameObject* pPlayer) { m_pPlayer = pPlayer; }
+	void Set_ParicleOn(_bool _particle) { m_bRenderOn = _particle; }
 	void Clear_Particle();
 
 private:
@@ -30,6 +31,7 @@ private:
 	CCamera* m_pCamera;
 	CGameObject* m_pPlayer;
 	vector <PSystem*> particles;
+	bool m_bRenderOn{false};
 	bool cameraOn;
 };
 

@@ -23,7 +23,9 @@
 #include "CTransitionFade.h"
 #include "CTransitionTxt.h"
 #include "CTransitionFace.h"
+#include "CAssetFmodSound.h"
 #include "CAssetSpine.h"
+#include "CParticleMgr.h"
 #include "CLeah.h"
 
  bool CTransition::s_LogoAssetLoaded = false;
@@ -233,7 +235,6 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	CAssetMgr::GetInstance()->AddAsset(L"BackGround", CAssetTexture::Create(L"../Bin/Resource/Texture/Map/BackGround1.png"));
 
 
-	
 	
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"))))
@@ -917,6 +918,46 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))
 		return E_FAIL;
 
+	// Particle
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Bubble" + ::to_wstring(i) + L".png";
+	
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Bubble", CAssetTexture::Create(s.c_str()));
+	}
+
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/SeaBubble" + ::to_wstring(0) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SeaBubble", CAssetTexture::Create(s.c_str()));
+	}
+
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Coin" + ::to_wstring(0) + L".png";
+	
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Coin", CAssetTexture::Create(s.c_str()));
+	}
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/BloomBubble" + ::to_wstring(2) + L".png";
+	
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_BloomBubble", CAssetTexture::Create(s.c_str()));
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Blood" + ::to_wstring(i) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Blood", CAssetTexture::Create(s.c_str()));
+	}
+
+	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	for (int i = 0; i < 12; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Coral/Coral" + ::to_wstring(i) + L".png";
+		wstring nameCoral = L"Tex_Coral" + ::to_wstring(i);
+		CAssetMgr::GetInstance()->AddAsset(nameCoral, CAssetTexture::Create(s.c_str()));
+	}
+
 
 	CAssetMgr::GetInstance()->LoadAsset();
 #ifdef _DEBUG
@@ -1245,6 +1286,9 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBack", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/Sushi_YellowbackFusilier.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackTex", Engine::CTexture::Create(L"Tex_YellowBack"))))
 		return E_FAIL;
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_BanchoSushi", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Sushi/bancho_sushi.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BanchoSushi", Engine::CTexture::Create(L"Tex_BanchoSushi"))))
+		return E_FAIL;
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Fishcell", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Fishcell.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Fishcell", Engine::CTexture::Create(L"Tex_Fishcell"))))
 		return E_FAIL;
@@ -1264,6 +1308,10 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 		return E_FAIL;
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_YellowBackP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/Yellowback_Fusilier.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_YellowBackP", Engine::CTexture::Create(L"Tex_YellowBackP"))))
+		return E_FAIL;
+
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_HeadP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/Fish/JohnHead.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HeadP", Engine::CTexture::Create(L"Tex_HeadP"))))
 		return E_FAIL;
 	//깊이 사진
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DepthP", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/depth.png"));
@@ -1305,7 +1353,10 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_upgradeConfirm", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/upgradeConfirm.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_upgradeConfirmTex", Engine::CTexture::Create(L"Tex_upgradeConfirm"))))
 		return E_FAIL;
-
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SmallMenu", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/smallMenu1.png"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SmallMenu", Engine::CTexture::Create(L"Tex_SmallMenu"))))
+		return E_FAIL;
+	
 	//영업 시작
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_OpenShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/openShop.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OpenShopTex", Engine::CTexture::Create(L"Tex_OpenShop"))))
@@ -1326,6 +1377,7 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WasabiAnim", Engine::CTexture::Create(L"Tex_WasabiAnim"))))
 		return E_FAIL;
 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_Puke", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/puke.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingBox", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Box2.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingComplete", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Box_Complete1.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_CookingIcon", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/UI_Sushi_Cooking_Icon.png"));
@@ -1376,6 +1428,33 @@ HRESULT CTransition::Transition_SHIP_TO_SUSHI()
 	//게임 끝 이미지
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_CloseShop", CAssetTexture::Create(L"../Bin/Resource/Texture/SushiBar/UI/CloseShop.png"));
 
+	//사운드
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/BGM_SushiBar_Night.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_ClospShop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_sushibar_close.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_OpenShop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_sushibar_open.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Pay", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sound_sushibar_pay.ogg"));
+
+		//와사비
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Grind", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sushi_wasabi_grind.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_WasabiGood", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sushi_wasabi_good.ogg"));
+
+		//차
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_TeaPouring", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sushi_tea_pouring.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Perfect", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sushi_drink_perfect.ogg"));
+		//손님 
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Served", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sushi_customer_served.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Eat", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sushi_customer_eat_04.ogg"));
+		//데이브
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_DaveWalk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sound_dave_foot_01.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_DaveRun", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sound_dave_dash_02.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_DaveTired", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/sound_dave_tired_01.ogg"));
+
+		//버튼
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_OpenButton", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_button_click_open_01.ogg"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_CloseButton", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_button_click_close_01.ogg"));
+
+	}
 
 
 	CAssetMgr::GetInstance()->LoadAsset();

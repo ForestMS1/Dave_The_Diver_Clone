@@ -66,6 +66,7 @@ private:
 	float			ReactionTime;
 	float			EatingTime;
 	float			EmotionTime;
+	float			PukeTime;
 	float			GoldTime;
 	CAABB*			m_pAABB;
 	_vec3 screen;
@@ -74,6 +75,7 @@ private:
 	virtual void Free();
 	bool			choosingTea = false;
 	bool			waitingMenu = false;;
+	bool			gotSushiSoundPlayed = false;
 
 };
 

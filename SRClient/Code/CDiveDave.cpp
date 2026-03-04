@@ -120,8 +120,8 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		//Å×½ºÆ®
 		_vec3 Pos{};
 		m_pTransformCom->Get_Info(INFO_POS, &Pos);
-		//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
-		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_COIN, Pos, 10);
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
+		//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_COIN, Pos, 10);
 	}
 
 	

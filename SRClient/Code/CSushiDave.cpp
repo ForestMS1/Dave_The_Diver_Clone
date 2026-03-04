@@ -19,6 +19,8 @@
 #include "CTea.h"
 #include "CTeaBubble.h"
 #include "CSushi.h"
+#include "CSmallMenu.h"
+#include "CSoundMgr.h"
 
 
 CSushiDave::CSushiDave()
@@ -118,7 +120,35 @@ _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
     
     Key_Input(fTimeDelta);
 
+    if ((curState == WALK || curState == SUSHI_WALK) && (curState != RUN && curState != SUSHI_RUN)) {
+        walkSoundTime += fTimeDelta;
+        if (walkSoundTime > 0.5f) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_DaveWalk", CSoundMgr::SFX, 1.0f);
+            walkSoundTime = 0.f;
+        }
+        DashSoundTime = 0.f;
+        tiredSoundPlayed = false;
+        
+    }else if((curState == RUN || curState == SUSHI_RUN) && (curState != WALK && curState != SUSHI_WALK)) {
+        DashSoundTime += fTimeDelta;
 
+        if (DashSoundTime > 0.5f) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_DaveRun", CSoundMgr::SFX, 1.0f);
+            DashSoundTime = 0.f;
+        }
+        walkSoundTime = 0.f;
+        tiredSoundPlayed = false;
+    }
+    else if (curState == TIRED || curState == SUSHI_TIRED) {
+     
+        if (!tiredSoundPlayed) {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_DaveTired", CSoundMgr::SFX, 1.0f);
+            tiredSoundPlayed = true;
+         }
+        walkSoundTime = 0.f;
+        DashSoundTime = 0.f;
+
+    }
 
     return iExit;
 }
@@ -166,8 +196,13 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
                     else if (m_sSushiName == L"Èòµ¿°¡¸®") {
                         m_sTexName = L"Tex_ClownFish";
                     }
+                    else if (m_sSushiName == L"???") {
+                        m_sTexName = L"Tex_BanchoSushi";
+                    }
                     CGameMemMgr::GetInstance()->deleteCookingMenu();
+                 
                     static_cast<CBancho*>(bancho)->m_fGauge = -1;
+                    static_cast<CBancho*>(bancho)->spending = false;
                     static_cast<CBancho*>(bancho)->wasabiUse = false;
 
                 }
@@ -220,7 +255,7 @@ void CSushiDave::LateUpdate_GameObject(const _float& fTimeDelta)
         }
 
     }
-  
+
 }
 
 void CSushiDave::Render_GameObject()
@@ -424,6 +459,7 @@ void CSushiDave::Key_Input(const _float& fTimeDelta)
                 if (m_fGauge <= -0.79f) {
                     curState = TIRED;
                     m_pTransformCom->Move_Pos(&left, 0.3f, fTimeDelta);
+                    return;
 
                 }
                 else {

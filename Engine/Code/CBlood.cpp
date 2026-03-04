@@ -13,9 +13,7 @@ CBlood::~CBlood()
 
 HRESULT CBlood::Ready_Buffer()
 {
-	if (FAILED(Ready_Texture(L"Tex_Blood", L"../Bin/Resource/Texture/Particle/Blood", 2))) {
-		return E_FAIL;
-	}
+
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
@@ -45,7 +43,7 @@ void CBlood::resetParticle(Attribute* attribute, D3DXCOLOR color)
 
 	float Random = GetRandomFloat(-1.f, 1.f);
 	attribute->_position = _hitPosition;
-	attribute->_position.z = -1.f;
+	attribute->_position.z = 0.f;
 	attribute->_isAlive = true;
 
 	if (Random >= 0) {

@@ -1266,6 +1266,15 @@
     <ClInclude Include="..\Header\CCommonItemWood.h">
       <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSmallMenu.h">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanchoR.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHeadP.h">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CCommonItemWoodPlate.h">
       <Filter>02. GameObject\Dive_Item\CommonItem_WoodPlate</Filter>
     </ClInclude>
@@ -2023,6 +2032,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCommonItemWood.cpp">
       <Filter>02. GameObject\Dive_Item\CommonItem_Wood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSmallMenu.cpp">
+      <Filter>01. Scene\03. Sushi\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanchoR.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\SushiPicture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHeadP.cpp">
+      <Filter>01. Scene\03. Sushi\UI\SushiIcon\FishPicture</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp">
       <Filter>02. GameObject\Dive_Item\CommonItem_WoodPlate</Filter>

@@ -31,6 +31,8 @@ public:
 		D3DXVECTOR3* min,
 		D3DXVECTOR3* max);
 
+	list<Attribute>* GetAtrribute() { return &_particles; }
+
 public:
 	//virtual HRESULT	Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint& iCnt);
 	HRESULT Ready_Texture(std::wstring_view svLayerTag, std::wstring_view svPath, const _uint& iCnt);

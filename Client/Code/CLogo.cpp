@@ -112,6 +112,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		if (ImGui::Button(utf8Buf))
 		{
 			CLog::Debug(L"Clicked!1\n");
+
 			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_TADA", CSoundMgr::SFX, 1.f);
 		}
 			

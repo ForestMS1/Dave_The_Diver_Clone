@@ -63,6 +63,9 @@ HRESULT CMenuBubble::Ready_GameObject()
     else if (m_sFishName == L"Èòµ¿°¡¸®") {
         m_sTexName = L"Tex_ClownFish";
     }
+    else if (m_sFishName == L"???") {
+        m_sTexName = L"Tex_BanchoSushi";
+    }
     CGameMemMgr::GetInstance()->addCookingMenu(m_sFishName);
 
     return S_OK;

@@ -16,6 +16,7 @@
 #include "CAssetDefaultFont.h"
 #include "CAssetMgr.h"
 #include "CMenuFrame.h"
+#include "CBanchoR.h"
 CSelectedFrame::CSelectedFrame()
     : CGameObject()
 {
@@ -105,6 +106,15 @@ _int CSelectedFrame::Update_GameObject(const _float& fTimeDelta)
         }
         else if (m_sFishName == L"³ë¶ûÅÁ") {
             pSushiGameObject = CYellowTangR::Create();
+
+            if (nullptr == pSushiGameObject)
+                return E_FAIL;
+
+            if (FAILED(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Add_GameObject(L"sushiConfirm", pSushiGameObject)))
+                return E_FAIL;
+        }
+        else if (m_sFishName == L"???") {
+            pSushiGameObject = CBanchoR::Create();
 
             if (nullptr == pSushiGameObject)
                 return E_FAIL;

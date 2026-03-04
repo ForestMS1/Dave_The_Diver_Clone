@@ -1,5 +1,6 @@
 #include "CSeaBubble.h"
 #include "CParticleMgr.h"
+#include "CMapMgr.h"
 
 CSeaBubble::CSeaBubble(CGameObject* _Player)
 {
@@ -15,15 +16,12 @@ CSeaBubble::~CSeaBubble()
 
 HRESULT CSeaBubble::Ready_Buffer()
 {
-	if (FAILED(Ready_Texture(L"Tex_SeaBubble", L"../Bin/Resource/Texture/Particle/SeaBubble", 1))) {
-		return E_FAIL;
-	}
+
 
 	if (FAILED(PSystem::Ready_Buffer()))
 		return E_FAIL;
 
-	for (int i = 0; i < 70; i++)
-		addParticle(_origin, { 1,1,1,1 });
+
 
 	return S_OK;
 }
@@ -45,8 +43,11 @@ CSeaBubble* CSeaBubble::Create(CGameObject* camera)
 void CSeaBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	_vec3 playerPos{};
-	if (m_pPlayer != nullptr) {
-		dynamic_cast<CTransform*>(m_pPlayer->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Info(INFO_POS, &playerPos);
+	if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+		CTransform* pDaveTransform = static_cast<CTransform*>(CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave")->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+
+		pDaveTransform->Get_Info(INFO_POS, &playerPos);
+
 	}
 
 	_vec3 max = { playerPos.x + 15.f, playerPos.y + 10.f, 0.f };
@@ -91,11 +92,11 @@ void CSeaBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 
 void CSeaBubble::render()
 {
-
-		Set_Texture(L"Tex_SeaBubble", 0);
-		preRender();
-		__super::render();
-		postRender();
+	
+	Set_Texture(L"Tex_SeaBubble", 0);
+	preRender();
+	__super::render();
+	postRender();
 	
 
 }
@@ -121,16 +122,19 @@ void CSeaBubble::update(float fTimeDelta)
 			i->_position += i->velocity * fTimeDelta;
 
 			if (i->_color.r <= 0.9f) {
-				i->_color += D3DXCOLOR{ 0.1f,0.1f,0.1f,0.f };
+				i->_color += D3DXCOLOR{ 0.f,0.f,0.f,0.005f };
 			}
 		
 
 			_vec3 playerPos{};
-			if (m_pPlayer != nullptr) {
-				dynamic_cast<CTransform*>(m_pPlayer->Get_Component(ID_DYNAMIC, L"Com_Transform"))->Get_Info(INFO_POS, &playerPos);
+			if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+				CTransform* pDaveTransform = static_cast<CTransform*>(CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave")->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+
+				pDaveTransform->Get_Info(INFO_POS, &playerPos);
+
 			}
 			if (!CheckPlayer(playerPos, i->_position)) {
-				resetParticle(&(*i), D3DXCOLOR{0.f,0.f,0.f,1.f});
+				resetParticle(&(*i), D3DXCOLOR{1.f,1.f,1.f,0.f});
 			}
 		}
 		removeDeadParticles();
