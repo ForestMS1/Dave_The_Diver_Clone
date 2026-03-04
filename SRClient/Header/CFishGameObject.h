@@ -27,7 +27,7 @@ class CFishGameObject : public CGameObject
 //	friend class Fish::CFishStopState;
 //	friend class Fish::CFishSwimState;
 public:
-	explicit CFishGameObject();
+	explicit CFishGameObject(float fPosX, float fPosY, float fScale);
 	//virtual ~CFishGameObject();
 
 public:
@@ -97,6 +97,11 @@ public:
 	_uint Get_SushiLv() const { return m_iSushiLv; }
 
 protected:
+	const float m_fPosX;
+	const float m_fPosY;
+	const float m_fScale;
+
+protected:
 	std::wstring m_sFishName;
 	std::wstring m_sThumbNailAssetName;
 	std::wstring m_sSushiThumbNailAssetName;
@@ -124,6 +129,7 @@ protected:
 
 	bool m_bDamaged;
 	float m_fDamagedTimer;
+	float m_fInvincibleTimer;
 
 	float m_fDieTimer;
 

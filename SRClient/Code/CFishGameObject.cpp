@@ -13,7 +13,7 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
-CFishGameObject::CFishGameObject()
+CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
     , m_fSpeed(1.f)
@@ -42,6 +42,11 @@ CFishGameObject::CFishGameObject()
     , m_bMoveToRotateEnable(true)
     , m_bNeedSlice(false)
     , m_fAttackIntervalTimer(0.f)
+    , m_fInvincibleTimer(1.f)
+
+    , m_fPosX(fPosX)
+    , m_fPosY(fPosY)
+    , m_fScale(fScale)
 {
 }
 
@@ -85,13 +90,19 @@ void CFishGameObject::Damaged(int iDamage)
 {
     if (m_eFishState == Fish::FS_DIE) return;
 
-    m_bDamaged = true;
-    m_pSpineCom->Set_ColorWhite(true);
-    m_iHP -= iDamage;
-    if (m_iHP <= 0)
+    if (m_fInvincibleTimer < 0.f)
     {
-        Die();
+        m_fInvincibleTimer = 0.5f;
+
+        m_bDamaged = true;
+        m_pSpineCom->Set_ColorWhite(true);
+        m_iHP -= iDamage;
+        if (m_iHP <= 0)
+        {
+            Die();
+        }
     }
+    
 }
 
 void CFishGameObject::Die()
@@ -380,6 +391,12 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
         }
     }
 
+    
+    if (m_fInvincibleTimer > 0)
+    {
+        m_fInvincibleTimer -= fTimeDelta;
+    }
+
 
     if (m_bDamaged)
     {
@@ -660,7 +677,7 @@ HRESULT CFishGameObject::Ready(std::wstring_view svSpineName)
 
     //m_fsm.Get_CurrentState()->Enter();
 
-    //Swim();
+    Swim();
 
     m_fViewZ = 10.1f;
 

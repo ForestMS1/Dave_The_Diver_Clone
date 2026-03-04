@@ -18,11 +18,6 @@ namespace Fish
 	private:
 		HRESULT			Ready_Component();
 
-	private:
-		const float m_fPosX;
-		const float m_fPosY;
-		const float m_fScale;
-
 	public:
 		static CRedLionfish* Create(float fPosX, float fPosY, float fScale);
 

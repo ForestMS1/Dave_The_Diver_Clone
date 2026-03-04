@@ -12,10 +12,7 @@
 using namespace Fish;
 
 CClownfish::CClownfish(float fPosX, float fPosY, float fScale)
-    : CFishGameObject()
-    , m_fPosX(fPosX)
-    , m_fPosY(fPosY)
-    , m_fScale(fScale)
+    : CFishGameObject(fPosX, fPosY, fScale)
 {
 }
 
