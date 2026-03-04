@@ -263,6 +263,49 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	// items
+	{
+		// Item_Bone.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Bone", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Bone.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Bone");
+
+		// Item_DeepseaCoral.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_DeepseaCoral", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_DeepseaCoral.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_DeepseaCoral");
+
+		// Item_Fragment.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Fragment", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Fragment.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Fragment");
+
+		// Item_JadeThurible.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_JadeThurible", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_JadeThurible.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_JadeThurible");
+
+		// Item_Rope.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Rope", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Rope.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Rope");
+
+		// Item_RubyRing.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_RubyRing", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_RubyRing.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_RubyRing");
+
+		// Item_Umbellula.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Umbellula", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Umbellula.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Umbellula");
+
+		// Item_watch.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Watch", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_watch.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Watch");
+
+		// Item_Wood.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Wood", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_Wood.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Wood");
+
+		// Item_woodplate.png
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_UIITem_Woodplate", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/items/Item_woodplate.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_UIITem_Woodplate");
+	}
+
 	// dive get weapon ui
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveGetWeaponUI", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/GetWeaponUI.png"));

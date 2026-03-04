@@ -11,6 +11,23 @@ class ENGINE_DLL CGameMemMgr : public CBase
 	DECLARE_SINGLETON(CGameMemMgr)
 
 public:
+	enum DAVE_ITEM
+	{
+		IT_WOOD,
+		IT_BONE,
+		IT_FRAGMENT,
+		IT_JADETHURIBLE,
+		IT_ROPE,
+		IT_RUBYRING,
+		IT_UMBELLULA,
+		IT_WOODPLATE,
+		IT_WATCH,
+		IT_END,
+	};
+	std::wstring Get_ItemTexName(DAVE_ITEM eItem);
+	std::wstring Get_ItemTitle(DAVE_ITEM eItem);
+	std::wstring Get_ItemDesc(DAVE_ITEM eItem);
+
 	class CDaveInfo
 	{
 	public:
@@ -33,6 +50,10 @@ public:
 			GUN_PENTA_ACCEL,
 			GUN_END
 		};
+		std::wstring Get_DaveGunTexName(DAVE_GUN eItem);
+		std::wstring Get_DaveGunTitle(DAVE_GUN eItem);
+		std::wstring Get_DaveGunDesc(DAVE_GUN eItem);
+		
 
 	public:
 		_uint Get_GonggiVolume() const { return m_iGonggiVolume; }
@@ -45,11 +66,17 @@ public:
 		void Set_JeokjaeWeight(_uint i) { m_iJeokjaeWeight = i; }
 		void Set_JaksalDamage(_uint i) { m_iJaksalDamage = i; }
 
+	public:
+		map< DAVE_ITEM, _uint>& Get_Inventory() { return m_mapInventory; }
+
 	private:
 		_uint m_iGonggiVolume = 90;
 		_uint m_iJamsuDepth = 40;
 		_uint m_iJeokjaeWeight = 9;
 		_uint m_iJaksalDamage = 15;
+
+	private:
+		map<DAVE_ITEM, _uint> m_mapInventory;
 
 	};
 
@@ -69,7 +96,8 @@ public:
 			float fLength;
 			_uint iSushiMoney;
 			_uint iSushiLv;
-			bool bFish;
+			bool bFish = true;
+			DAVE_ITEM eDiveItem = IT_END;
 		} DIVE_FISH;
 
 		typedef struct tagDiveItem

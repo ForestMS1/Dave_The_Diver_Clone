@@ -106,6 +106,11 @@ void CDiveDavePickUp::Clear()
 			static_cast<CDiveDaveGun*>(m_pOwner->Get_WeponSlot(EQUIPPED::GUN))->Change_Gun(eGun);
 			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
 		}
+		// [LSY] 잡템분기추가
+		else if (static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItemType() == ITEMTYPE::COMMONITEM)
+		{
+			static_cast<CDiveItem*>(m_pOwner->m_pCurOnItem)->GetItem();
+		}
 		else
 			return;
 	}

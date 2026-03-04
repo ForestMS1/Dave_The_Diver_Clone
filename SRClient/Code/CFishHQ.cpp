@@ -62,7 +62,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             //pUI->Set_DeadCascade();
         }
         else
-       {
+        {
         }
     }
     if (ImGui::Button("GetItemUI"))

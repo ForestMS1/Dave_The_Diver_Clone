@@ -51,6 +51,8 @@
 #include "CWeightText.h"
 #include "COverloadedIcon.h"
 #include "CDiveItemDescUI.h"
+#include "CCommonItemWood.h"
+
 CDive::CDive()
 	: CScene()
 {
@@ -343,6 +345,18 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox", pGameObject)))
 		return E_FAIL;
+
+
+	// [LSY] test item
+	{
+		_vec3 vtmp{ -10, 3, 0.1f };
+		pGameObject = CCommonItemWood::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+			return E_FAIL;
+	}
+
 	
 	// ¸Ê 
 	pGameObject = CTerrian::Create(L"BackGround_GLB_File");

@@ -14,6 +14,7 @@ enum class ITEMTYPE
 {
 	USEITEM = 0,
 	WEAPONITEM,
+	COMMONITEM, // [LSY]
 	ITEMTYPE_END
 };
 
@@ -31,6 +32,8 @@ public:
 	std::wstring_view Get_TexName() { return m_wsTexName; }
 	ITEMTYPE	GetItemType() const { return m_eItemType; }
 	CGameMemMgr::CDaveInfo::DAVE_GUN GetGunType() const { return m_eGunType; }
+	// [LSY] derived들이 아이템 설명 여는 함수
+	virtual void OpenItemDesc() {};
 
 protected:
 	void FSM(const _float& fTimeDelta);

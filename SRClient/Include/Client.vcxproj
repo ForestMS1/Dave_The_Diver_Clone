@@ -186,6 +186,7 @@
     <ClInclude Include="..\Header\CGoToSushiUI.h" />
     <ClInclude Include="..\Header\CItemPentaAxel.h" />
     <ClInclude Include="..\Header\CItemTripleAxel.h" />
+    <ClInclude Include="..\Header\CCommonItemWood.h" />
     <ClInclude Include="..\Header\CJohn.h" />
     <ClInclude Include="..\Header\CChair.h" />
     <ClInclude Include="..\Header\CAttackReadyArm.h" />
@@ -430,6 +431,7 @@
     <ClCompile Include="..\Code\CGoToSushiUI.cpp" />
     <ClCompile Include="..\Code\CItemPentaAxel.cpp" />
     <ClCompile Include="..\Code\CItemTripleAxel.cpp" />
+    <ClCompile Include="..\Code\CCommonItemWood.cpp" />
     <ClCompile Include="..\Code\CJohn.cpp" />
     <ClCompile Include="..\Code\CChangeTab.cpp" />
     <ClCompile Include="..\Code\CCKeyUI.cpp" />

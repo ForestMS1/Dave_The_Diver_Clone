@@ -7,6 +7,7 @@
 #include "CDiveDave.h"
 #include "CManagement.h"
 #include "CDiveGetWeaponUI.h"
+#include "CDiveItemDescUI.h"
 
 CItemPentaAxel::CItemPentaAxel(_vec3 vOriginPos)
 	: CDiveItem(vOriginPos)
@@ -146,4 +147,17 @@ void CItemPentaAxel::UseItem(CGameObject* pUser)
 	CDiveDave* pDiveDave = static_cast<CDiveDave*>(pUser);
 
 	//pDiveDave->Restore_Hp(50.f);
+}
+
+void CItemPentaAxel::OpenItemDesc()
+{
+	if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+	{
+		if (!pUI->Get_Render())
+		{
+			pUI->Set_Title(L"ÆæÅ¸ ¾Ç¼¿");
+			pUI->Set_Desc(L"ÆæÅ¸¾Ç¼¿ ÀÌ´Ù.");
+			pUI->Set_Render(true);
+		}
+	}
 }

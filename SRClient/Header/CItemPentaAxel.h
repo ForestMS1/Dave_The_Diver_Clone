@@ -19,6 +19,7 @@ public:
 
 	// CDiveItem을(를) 통해 상속됨
 	void UseItem(CGameObject*) override;
+	void OpenItemDesc() override; //[LSY]
 
 private:
 	HRESULT Ready_Component();

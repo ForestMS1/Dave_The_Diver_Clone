@@ -104,12 +104,13 @@ void	CDiveItem::OnCollisionEnter(CCollider* pCollider)
     // [LSY] 아이템이 다 떨어졌을때 desc ui를 활성화 한다.
     if (m_eCurState == ITEMSTATE::DROPPED)
     {
-        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
-        {
-            pUI->Set_Title(L"아이템명");
-            pUI->Set_Desc(L"아이템설명^^");
-            pUI->Set_Render(true);
-        }
+        OpenItemDesc();
+        //if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+        //{
+        //    pUI->Set_Title(L"아이템명");
+        //    pUI->Set_Desc(L"아이템설명^^");
+        //    pUI->Set_Render(true);
+        //}
     }
 }
 void	CDiveItem::OnCollisionStay(CCollider* pCollider)
