@@ -176,10 +176,12 @@ _int		CShipPhoneWeaponBG::Update_GameObject(const _float& fTimeDelta)
 
             if (iCurrentIdx == 0)
             {
+                CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName = L"Tex_Ship_InventoryUpperItem_Gun";
                 pSuccess->Set_AssetName(L"Tex_UI_Gun_Basic");
             }
             else if (iCurrentIdx == 1)
             {
+                CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName = L"Tex_UI_Gun_Triple_Accel";
                 pSuccess->Set_AssetName(L"Tex_UI_Gun_Triple_Accel");
             }
             else if (iCurrentIdx == 2)
@@ -188,6 +190,7 @@ _int		CShipPhoneWeaponBG::Update_GameObject(const _float& fTimeDelta)
             }
             else if (iCurrentIdx == 3)
             {
+                CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory()[33].sAssetName = L"Tex_UI_Gun_Penta_Accel";
                 pSuccess->Set_AssetName(L"Tex_UI_Gun_Penta_Accel");
             }
             pSuccess->Set_Parent(this);

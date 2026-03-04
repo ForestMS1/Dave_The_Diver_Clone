@@ -273,6 +273,7 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                         if (iter == mapItem.end())
                         {
                             mapItem.insert({ item.sFishName , item });
+                            mapItem[item.sFishName].iMeatCnt = 1;
                         }
                         else
                         {
@@ -280,6 +281,43 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                         }
                     }
                 }
+
+                // Send To Inventory
+                for (auto& pair : mapItem)
+                {
+                    auto& mapDaveInventory = CGameMemMgr::GetInstance()->Get_DaveInfo().Get_Inventory();
+
+                    bool bFound = false;
+                    int i = 0;
+                    for (; i < 32; ++i)
+                    {
+                        if (mapDaveInventory[i].sAssetName == pair.second.sThumbNailAssetName)
+                        {
+                            bFound = true;
+                            break;
+                        }
+                    }
+
+                    if (bFound)
+                    {
+                        mapDaveInventory[i].iCnt += pair.second.iMeatCnt;
+                    }
+                    else
+                    {
+                        for (int j = 0; j < 32; ++j)
+                        {
+                            if (mapDaveInventory[j].iCnt == 0)
+                            {
+                                mapDaveInventory[j].sAssetName = pair.second.sThumbNailAssetName;
+                                mapDaveInventory[j].iCnt = pair.second.iMeatCnt;
+                                mapDaveInventory[j].sItemName = pair.second.sFishName;
+                                mapDaveInventory[j].sItemDesc = pair.second.sItemDesc;
+                                break;
+                            }
+                        }
+                    }
+                }
+
 
                 const float refX = -2.55f;
                 const float refY = -1.16f;

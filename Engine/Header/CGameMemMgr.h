@@ -11,6 +11,15 @@ class ENGINE_DLL CGameMemMgr : public CBase
 	DECLARE_SINGLETON(CGameMemMgr)
 
 public:
+	typedef struct tagDiverBoxItem
+	{
+		std::wstring sItemName;
+		std::wstring sItemDesc;
+		_uint iCnt;
+		std::wstring sAssetName;
+	} DIVERBOX_ITEM;
+
+	// ¾È¾¸
 	enum DAVE_ITEM
 	{
 		IT_WOOD,
@@ -28,7 +37,7 @@ public:
 	std::wstring Get_ItemTitle(DAVE_ITEM eItem);
 	std::wstring Get_ItemDesc(DAVE_ITEM eItem);
 
-	class CDaveInfo
+	class ENGINE_DLL CDaveInfo
 	{
 	public:
 		enum DAVE_JACKSALCHONG
@@ -67,7 +76,10 @@ public:
 		void Set_JaksalDamage(_uint i) { m_iJaksalDamage = i; }
 
 	public:
-		map< DAVE_ITEM, _uint>& Get_Inventory() { return m_mapInventory; }
+		map<_uint, DIVERBOX_ITEM>& Get_Inventory() { return m_mapInventory; }
+		bool Get_InventoryInitialized() const { return m_bInventoryInitialized; }
+		void Set_InventoryInitialized() { m_bInventoryInitialized = true; }
+		void InventoryInitialize();
 
 	private:
 		_uint m_iGonggiVolume = 90;
@@ -76,7 +88,8 @@ public:
 		_uint m_iJaksalDamage = 15;
 
 	private:
-		map<DAVE_ITEM, _uint> m_mapInventory;
+		map<_uint, DIVERBOX_ITEM> m_mapInventory;
+		bool m_bInventoryInitialized = false;
 
 	};
 
@@ -98,6 +111,7 @@ public:
 			_uint iSushiLv;
 			bool bFish = true;
 			DAVE_ITEM eDiveItem = IT_END;
+			std::wstring sItemDesc;
 		} DIVE_FISH;
 
 		typedef struct tagDiveItem
