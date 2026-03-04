@@ -1,4 +1,5 @@
 #include "Firework.h"
+#include "CGraphicDev.h"
 
 
 Firework::Firework() : PSystem()
@@ -27,7 +28,7 @@ Firework::~Firework()
 HRESULT Firework::Ready_Buffer()
 {
 
-	if (FAILED(Ready_Texture(L"Tex_Firework", L"../Bin/Resource/Texture/flare", 1))) {
+	if (FAILED(Ready_Texture(L"Tex_Firework", L"../Bin/Resource/Texture/Particle/flare", 1))) {
 		return E_FAIL;
 	}
 
@@ -59,9 +60,9 @@ void Firework::render()
 //	return firework;
 //}
 
-Firework* Firework::Create()
+Firework* Firework::Create(_vec3 origin)
 {
-	Firework* firework = new Firework();
+	Firework* firework = new Firework(origin);
 
 	if (FAILED(firework->Ready_Buffer()))
 	{
@@ -81,7 +82,7 @@ void Firework::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute->velocity, &min, &max);
 	D3DXVec3Normalize(&attribute->velocity, &attribute->velocity);
-	attribute->velocity *= 10.f;
+	attribute->velocity *= 2.f;
 	attribute->_color = D3DXCOLOR(GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), 1.0f);
 	attribute->_age = 0.0f;
 	attribute->_lifeTime = 2.0f;
@@ -104,6 +105,7 @@ void Firework::postRender()
 
 void Firework::update(float fTimeDelta)
 {
+
 	list<Attribute>::iterator i;
 	for (i = _particles.begin(); i != _particles.end(); i++) {
 		if (i->_isAlive) {

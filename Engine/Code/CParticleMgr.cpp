@@ -1,5 +1,6 @@
 #include "CParticleMgr.h"
 #include "Firework.h"
+#include "FireworkTail.h"
 #include "CBulletSpark.h"
 #include "CBullet.h"
 #include "CWeather.h"
@@ -41,6 +42,8 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 	CCoin* coin = CCoin::Create();
 	particles[PARTICLE_COIN] = (coin);
 
+
+
 	CSeaBubble* SeaBubble = CSeaBubble::Create(m_pPlayer);
 	particles[PARTICLE_SEABUBBLE]=(SeaBubble);
 	//CAssetMgr::GetInstance()->LoadAsset();
@@ -78,6 +81,11 @@ void CParticleMgr::Render_Particle()
 
 void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles)
 {
+	if (particles.size() == 0) {
+		particles.resize(PARTICLE_END);
+		FireworkTail* firework = FireworkTail::Create(origin);
+		particles[FIREWORK] = (firework);
+	}
 	switch(type) {
 
 	case PARTICLE_BUBBLE:
@@ -107,6 +115,11 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 		break;
 
 	
+	case FIREWORK:
+		for (int i = 0; i < numofPariticles; i++) {
+			particles[FIREWORK]->addParticle(origin, { 1,1,1,1 });
+		}
+		break;
 	break;
 	}
 }
