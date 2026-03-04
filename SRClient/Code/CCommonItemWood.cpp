@@ -104,12 +104,13 @@ void CCommonItemWood::GetItem()
 		pGetItemUI->Set_ImgAssetName(L"Tex_UIITem_Wood");
 		pGetItemUI->Set_Title(L"나무");
 		pGetItemUI->Set_Rank(L"Rank_");
+		pGetItemUI->Set_Weight(L"0.1kg");
 		pGetItemUI->Ready_AfterCreate();
 		pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
 
 
 		CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
-		//fish.fWeight = m_fWeight;
+		fish.fWeight = 0.1f;
 		//fish.iRank = m_iRank;
 		//fish.iStar = m_iStar;
 		fish.sFishName = L"나무";
@@ -121,6 +122,12 @@ void CCommonItemWood::GetItem()
 		//fish.iSushiMoney = m_iSushiMoney;
 		fish.bFish = false;
 		CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+		if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+		{
+			pDave->Change_Weight(fish.fWeight);
+		}
+
 	}
 }
 

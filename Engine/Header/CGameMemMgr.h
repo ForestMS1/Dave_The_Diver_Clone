@@ -130,11 +130,22 @@ public:
 			return wss.str();
 		}
 
-		void Add_FishFront(DIVE_FISH& fish) { m_vecCaughtFishes.push_front(fish); ++m_iCaughtFish; }
+		void Add_FishFront(DIVE_FISH& fish)
+		{
+			m_vecCaughtFishes.push_front(fish);
+			if (fish.bFish)
+			{
+				++m_iCaughtFish;
+			}
+			else
+			{
+				++m_iObtained;
+			}
+		}
 		std::list<DIVE_FISH>& Get_Fishes() { return m_vecCaughtFishes; }
 
-		std::list< DIVE_ITEM>& Get_Itemes() { return m_vecCaughtItems; }
-		void Add_ItemBack(DIVE_ITEM& item) { m_vecCaughtItems.push_back(item); ++m_iObtained; }
+		//std::list< DIVE_ITEM>& Get_Itemes() { return m_vecCaughtItems; }
+		//void Add_ItemBack(DIVE_ITEM& item) { m_vecCaughtItems.push_back(item); ++m_iObtained; }
 
 		void Set_Depth(_float f) { m_fDepth = f; }
 		_float Get_Depth() const { return m_fDepth; }

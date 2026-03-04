@@ -99,17 +99,31 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
         if (!info.Get_Fishes().empty())
         {
             auto fishes = info.Get_Fishes();
-            fishes.sort([](const auto& a, const auto& b) {
-                 return a.fWeight > b.fWeight; 
-             });
+            for (auto iter = fishes.begin(); iter != fishes.end();)
+            {
+                if (iter->bFish)
+                {
+                    ++iter;
+                }
+                else
+                {
+                    iter = fishes.erase(iter);
+                }
+            }
 
-            std::wstringstream wss;
-            wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
-            std::wstring result = wss.str();
-            m_sBiggestFishSize = result;
-            m_sBiggestFishName = fishes.front().sFishName;
-            m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
-            
+            if (!fishes.empty())
+            {
+                fishes.sort([](const auto& a, const auto& b) {
+                    return a.fLength > b.fLength;
+                    });
+
+                std::wstringstream wss;
+                wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
+                std::wstring result = wss.str();
+                m_sBiggestFishSize = result;
+                m_sBiggestFishName = fishes.front().sFishName;
+                m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
+            }
         }
 
 

@@ -10,6 +10,7 @@
 #include "CManagement.h"
 #include "CGetItemUI.h"
 #include "CGameMemMgr.h"
+#include "CDiveDave.h"
 
 CFishGameObject::CFishGameObject()
     : m_sFishName({})
@@ -221,8 +222,12 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
             pGetItemUI->Ready_AfterCreate();
             pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
         }
-        Set_DeadCascade();
-        
+
+        if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+        {
+            pDave->Change_Weight(m_fWeight);
+        }
+
         CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
         fish.fWeight = m_fWeight;
         fish.iRank = m_iRank;
@@ -236,6 +241,10 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
         fish.iSushiMoney = m_iSushiMoney;
         fish.bFish = true;
         CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+        Set_DeadCascade();
+        
+
         return;
     }
 
@@ -264,8 +273,14 @@ void CFishGameObject::JacksalAcquire()
         pGetItemUI->Set_ImgAssetName(m_sThumbNailAssetName);
         pGetItemUI->Ready_AfterCreate();
         pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+
     }
-    Set_DeadCascade();
+
+    if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+    {
+        pDave->Change_Weight(m_fWeight);
+    }
+
 
     CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
     fish.fWeight = m_fWeight;
@@ -280,6 +295,9 @@ void CFishGameObject::JacksalAcquire()
     fish.iSushiMoney = m_iSushiMoney;
     fish.bFish = true;
     CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+    Set_DeadCascade();
+
 }
 
 _int CFishGameObject::Update_GameObject(const _float& fTimeDelta)
