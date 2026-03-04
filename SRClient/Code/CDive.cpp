@@ -190,7 +190,7 @@ void CDive::Frustum() {
 	CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
 	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_TestCamera", m_pFrustumCollider);
-	static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->Set_Target(&pDaveTransform->m_vInfo[INFO_POS]);
+
 	CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
 	_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
 	D3DXMatrixInverse(&CameraView, nullptr, &CameraView);

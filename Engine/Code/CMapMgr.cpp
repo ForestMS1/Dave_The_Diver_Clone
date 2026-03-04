@@ -31,7 +31,7 @@ void CMapMgr::Load() {
 
 				if ((&(*m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName)))) != nullptr) {
 					list<CGameObject*> CGameObjectLayer = *m_Layer->Get_GameObjects(StringToWString(GameObjectLayerName));
-					if ((GameObjectLayerName) != "DiveDave") {
+					if ((GameObjectLayerName) != "DiveDave" && (GameObjectLayerName) != "ChaseToPlayerCam") {
 						auto it = CGameObjectLayer.begin();
 						for (auto& k : j["GameObjectLayer"]) {
 							int ObjCnt = k["ObjCnt"];

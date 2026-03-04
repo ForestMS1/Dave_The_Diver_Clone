@@ -67,11 +67,14 @@ void CBackGroundSea::Render_GameObject()
 	IDirect3DStateBlock9* pState = nullptr;
 	pGraphicDev->CreateStateBlock(D3DSBT_ALL, &pState);
 	pState->Capture();
-
-	CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
-	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 	_vec3 floor{};
-	pDaveTransform->Get_Info(INFO_POS, &floor);
+	if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+		CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+		CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+
+		pDaveTransform->Get_Info(INFO_POS, &floor);
+	}
+
 
 	if (floor.y <= -50.f && m_dark > 0.5f) {
 		m_dark -= 0.01f;
@@ -99,9 +102,9 @@ void CBackGroundSea::Render_GameObject()
 
 
 	// 목표색 (어두운)
-	float r1 = 50.f;
-	float g1 = 50.f;
-	float b1 = 50.f;
+	float r1 = 100.f;
+	float g1 = 100.f;
+	float b1 = 100.f;
 
 
 	// 선형보간

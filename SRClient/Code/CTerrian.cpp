@@ -540,12 +540,17 @@ HRESULT CTerrian::Ready_Material()
 
     D3DMATERIAL9			tMtrl;
     ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-
-
-    CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
-    CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
     _vec3 floor{};
-    pDaveTransform->Get_Info(INFO_POS, &floor);
+    _vec3 Pos;
+    if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+        CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+        CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+        pDaveTransform->Get_Info(INFO_POS, &floor);
+        pDaveTransform->Get_Info(INFO_POS, &Pos);
+
+    }
+
+
 
     if (floor.y <= -50.f && m_dark > 0.5f) {
         m_dark -= 0.01f;
@@ -581,8 +586,7 @@ HRESULT CTerrian::Ready_Material()
     light.Attenuation1 = 0.1f;
     light.Attenuation2 = 0.0f;
     light.Range = 10.f; 
-    _vec3 Pos;
-    pDaveTransform->Get_Info(INFO_POS, &Pos);
+
     light.Position = Pos;
     pGraphicDev->SetLight(1, &light); 
     pGraphicDev->LightEnable(1, TRUE);
