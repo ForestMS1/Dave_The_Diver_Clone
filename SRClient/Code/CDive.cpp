@@ -142,7 +142,7 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
-	CColliderMgr::GetInstance()->Set_Render(false);
+	//CColliderMgr::GetInstance()->Set_Render(false);
 
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
 	{

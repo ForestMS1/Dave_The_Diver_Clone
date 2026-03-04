@@ -28,6 +28,7 @@ public:
 	int				Update_MainApp(const float& fTimeDelta);
 	void			LateUpdate_MainApp(const float& fTimeDelta);
 	void			Render_MainApp();
+	void			EndOfFrame_MainApp();
 
 private:
 	HRESULT			Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);

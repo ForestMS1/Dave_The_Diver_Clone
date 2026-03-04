@@ -28,6 +28,8 @@ public:
 	void			LateUpdate_Scene(const _float& fTimeDelta);
 	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
 
+	void			EndOfFrame();
+
 	bool			Is_ScheneChanged()
 	{
 		return !!m_pTmpChangeScene;

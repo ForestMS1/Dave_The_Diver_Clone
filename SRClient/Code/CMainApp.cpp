@@ -87,10 +87,14 @@ void CMainApp::Render_MainApp()
 
 
 	m_pDeviceClass->Render_End();
+}
 
+void CMainApp::EndOfFrame_MainApp()
+{
 	// 프레임의 맨마지막에 호출하고싶은데 여기가 적당한듯
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 
+	m_pManagement->EndOfFrame();
 
 	// 프레임의 맨마지막에서 씬을 바꿔준다.
 	if (m_pManagement->Is_ScheneChanged())

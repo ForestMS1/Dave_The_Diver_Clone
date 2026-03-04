@@ -913,6 +913,12 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LineBuffer", Engine::CLineBuffer::Create())))
 		return E_FAIL;
 
+	//사운드
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_DiveInGameBGM", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/BGM/BGM_InGame.wav"));
+
+	}
+
 	//테스트용
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_TestFish", CAssetTexture::Create(L"../Bin/Resource/Texture/Item/Item_O2Capsule.png"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))

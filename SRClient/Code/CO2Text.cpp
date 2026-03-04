@@ -37,6 +37,8 @@ HRESULT      CO2Text::Ready_GameObject()
 
 _int      CO2Text::Update_GameObject(const _float& fTimeDelta)
 {
+    if (m_iPlayerHp <= 0)
+        m_iPlayerHp = 0;
     m_sTxt = to_wstring(m_iPlayerHp);
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
@@ -110,6 +112,8 @@ void CO2Text::OnNotify(const Event& e)
     {
     case EVENTTYPE::CHANGE_HP:
         m_iPlayerHp = e.value;
+        if (e.value == 0)
+            m_iPlayerHp = 0;
         break;
     case EVENTTYPE::BOSS_INTRO_START:
         m_bRender = false;

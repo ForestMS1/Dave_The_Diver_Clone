@@ -38,7 +38,7 @@ private:
 	std::wstring m_sFont;
 	_vec3 m_vPos;
 
-	_uint m_iPlayerHp = 0; // 실제 플레이어의 체력
+	int m_iPlayerHp = 0; // 실제 플레이어의 체력
 
 public:
 	static CO2Text* Create(float fPosX, float fPosY);
