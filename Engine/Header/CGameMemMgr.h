@@ -62,7 +62,7 @@ public:
 		std::wstring Get_DaveGunTexName(DAVE_GUN eItem);
 		std::wstring Get_DaveGunTitle(DAVE_GUN eItem);
 		std::wstring Get_DaveGunDesc(DAVE_GUN eItem);
-		
+
 
 	public:
 		_uint Get_GonggiVolume() const { return m_iGonggiVolume; }
@@ -235,7 +235,7 @@ private:
 public:
 	unordered_map<std::wstring, _uint>* Get_IDiverCurrentLevel() { return &m_mapIDiverCurrentLevel; }
 	void Set_IDiverCurrentLevel(std::wstring& s, _uint i) { m_mapIDiverCurrentLevel[s] = i; };
-	void Set_IDiverSansoLevelUp() { m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"]+=1; }
+	void Set_IDiverSansoLevelUp() { m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] += 1; }
 private:
 	unordered_map<std::wstring, _uint> m_mapIDiverCurrentLevel;
 
@@ -246,6 +246,18 @@ public:
 private:
 	std::vector<CDiveInfo> m_vecDiveInfo;
 	CDaveInfo m_DaveInfo;
+
+public:
+	void Set_BossAppear(_bool _bBossAppear) { m_bBossAppear = _bBossAppear; }
+	_bool Get_BossAppear() { return m_bBossAppear; }
+private:
+	_bool m_bBossAppear{false};
+
+public:
+	void Set_BossKilled(_bool _bBossKilled) { m_bBossKilled = _bBossKilled; }
+	_bool Get_BossKilled() { return m_bBossKilled; }
+private:
+	_bool m_bBossKilled{ false };
 };
 
 END

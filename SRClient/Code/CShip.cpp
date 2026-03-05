@@ -64,16 +64,20 @@ HRESULT CShip::Ready_Scene()
 
 	CColliderMgr::GetInstance()->Set_Render(false);
 
-	if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
-	{
-		if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() % 2 == 0)
-		{
-			CGameMemMgr::GetInstance()->Set_ShipNight(false);
-		}
-		else
-		{
-			CGameMemMgr::GetInstance()->Set_ShipNight(true);
-		}
+	//if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+	//{
+	//	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() % 2 == 0)
+	//	{
+	//		CGameMemMgr::GetInstance()->Set_ShipNight(false);
+	//	}
+	//	else
+	//	{
+	//		CGameMemMgr::GetInstance()->Set_ShipNight(true);
+	//	}
+	//}
+
+	if (CGameMemMgr::GetInstance()->Get_BossKilled()) {
+		CGameMemMgr::GetInstance()->Set_ShipNight(true);
 	}
 
 	if (FAILED(Ready_GameLogic_Layer(L"0_GameLogic_Layer")))
