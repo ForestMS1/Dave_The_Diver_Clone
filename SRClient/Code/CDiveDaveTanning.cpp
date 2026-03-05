@@ -48,8 +48,8 @@ _int CDiveDaveTanning::Update_State(const _float& fTimeDelta)
 		CFishGameObject* pSlicableFish = dynamic_cast<CFishGameObject*>(m_pOwner->Get_SlicableFish());
 		if (pSlicableFish != nullptr)
 		{
-			// [LSY] TODO 여기가 슬라이스 완료부분
-			//pSlicableFish->
+			// [LSY] 여기가 슬라이스 완료부분
+			pSlicableFish->SliceComplete();
 		}
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}

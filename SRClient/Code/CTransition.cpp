@@ -1600,14 +1600,14 @@ HRESULT CTransition::Common_SHIP_Load()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/PhoneBG.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneBG");
 
-	for (int i = 1; i <= 22; ++i)
+	for (int i = 1; i <= 23; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp_2/SmartPhoneApp" + ::to_wstring(i) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneApp", CAssetTexture::Create(s));
 	}
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_PhoneApp");
 
-	for (int i = 1; i <= 22; ++i)
+	for (int i = 1; i <= 23; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/Ship/PhoneApp_2Alpha/SmartPhoneApp" + ::to_wstring(i) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_PhoneAppAlpha", CAssetTexture::Create(s));

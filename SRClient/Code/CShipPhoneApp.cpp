@@ -129,6 +129,10 @@ void		CShipPhoneApp::LateUpdate_GameObject(const _float& fTimeDelta)
                         {
                             pPhone->Focus_App(L"IDiver");
                         }
+                        else if (m_iAppIdx == 22)
+                        {
+                            pPhone->Focus_App(L"Stock");
+                        }
                     }
                 }
                 else

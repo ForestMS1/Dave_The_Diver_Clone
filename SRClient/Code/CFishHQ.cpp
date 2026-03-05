@@ -39,6 +39,21 @@ HRESULT CFishHQ::Ready_GameObject()
 
 _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 {
+    if (ImGui::Button("Spawn Dave Pos Fish"))
+    {
+        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+        {
+            _vec3 vPos;
+            pUI->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+            {
+                Fish::AddLayer_Fish<Fish::CGreenHumpheadParrotfish>(L"GreenHumpheadParrotfish", pLayer, vPos.x, vPos.y, 0.3f, this);
+            }
+
+            //pUI->Set_DeadCascade();
+        }
+    }
     if (ImGui::Button("CDiveGetWeaponUI"))
     {
         //CDiveGetWeaponUI
@@ -272,6 +287,7 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
         {
             if (pDaveCollider->Get_Tag() == L"AABB_DiveDaveWithItemBox")
             {
+                CDiveDave* pDave = reinterpret_cast<CDiveDave*>(pDaveCollider->Get_VoidPtr());
                 // 데이브와 물고기 디텍트 박스 충돌체크
                 if (auto pFishDetectBoxColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_FishesDetectBox"))
                 {
@@ -279,7 +295,6 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                     {
                         if (pFishDetectBoxCollider->Get_Tag() == L"AABB_FishDetectbox")
                         {
-                            CDiveDave* pDave = reinterpret_cast<CDiveDave*>(pDaveCollider->Get_VoidPtr());
                             CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pFishDetectBoxCollider->Get_VoidPtr());
                             if (pDaveCollider->Intersect(pFishDetectBoxCollider))
                             {
@@ -312,15 +327,16 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                 // TODO: 마우스 클릭시점이 아니라 공격시점으로
                 if (auto pFishHitBoxColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_FishesHitbox"))
                 {
+                    CFishGameObject* pCurrSclicableFish = nullptr;
                     for (auto pFishHitBoxCollider : *pFishHitBoxColliders)
                     {
                         if (pFishHitBoxCollider->Get_Tag() == L"AABB_FishHitbox")
                         {
-                            CDiveDave* pDave = reinterpret_cast<CDiveDave*>(pDaveCollider->Get_VoidPtr());
                             CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pFishHitBoxCollider->Get_VoidPtr());
                             if (pDaveCollider->Intersect(pFishHitBoxCollider))
                             {
                                 pFish->Set_IntersectHitboxDave(true);
+
                                 if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
                                 {
                                     if (pFish->Get_FishState() != Fish::FS_DIE)
@@ -338,7 +354,10 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                         if (pFish->Get_FishState() == Fish::FS_ATTACKTO)
                                         {
                                             // TODO: 데이브쪽에서 무적시간 존재해야함
-                                            //pDave->On_Hit(1);
+                                            if (pFish->TryAttackTimer(fTimeDelta))
+                                            {
+                                                pDave->On_Hit(1);
+                                            }
                                         }
                                     }
                                     
@@ -348,12 +367,20 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                 //물고기획득
                                 if (pFish->Get_FishState() == Fish::FS_DIE)
                                 {
-                                    if (pFish->Get_DieTimer() > 1.f)
+                                    // 슬라이스 쳐야하는 물고기가 아니라면 물고기 획득 플로우 진행
+                                    if (pFish->Get_NeedSlice())
                                     {
-                                        CTransform* pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
-                                        _vec3 vDavePos;
-                                        pDaveTransform->Get_Info(INFO_POS, &vDavePos);
-                                        pFish->AcquireTo(&vDavePos);
+                                        pCurrSclicableFish = pFish;
+                                    }
+                                    else
+                                    {
+                                        if (pFish->Get_DieTimer() > 1.f)
+                                        {
+                                            CTransform* pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+                                            _vec3 vDavePos;
+                                            pDaveTransform->Get_Info(INFO_POS, &vDavePos);
+                                            pFish->AcquireTo(&vDavePos);
+                                        }
                                     }
                                 }
                             }
@@ -363,6 +390,7 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                             }
                         }
                     }
+                    pDave->Set_SlicableFish(pCurrSclicableFish);
                 }
             }
             break;
