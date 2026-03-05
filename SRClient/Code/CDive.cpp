@@ -68,6 +68,7 @@
 #include "CCoral.h"
 #include "CWPAmmoCntText.h"
 #include "CAmmoPack.h"
+#include "CSoundMgr.h"
 CDive::CDive()
 	: CScene()
 {
@@ -794,5 +795,6 @@ void CDive::Free()
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	Safe_Release(m_pFrustumCollider);
+	CSoundMgr::GetInstance()->StopAll();
 }
 

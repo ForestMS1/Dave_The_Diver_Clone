@@ -9,6 +9,7 @@
 #include "CHelper.h"
 #include "CDInputMgr.h"
 #include "CShipPhone.h"
+#include "CSoundMgr.h"
 
 CShipPhoneApp::CShipPhoneApp(_uint iAppIdx, _float fPosX, _float fPosY)
     : CGameObject()
@@ -106,46 +107,52 @@ void		CShipPhoneApp::LateUpdate_GameObject(const _float& fTimeDelta)
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 
     // 레이와 충돌 체크
-    _vec3 vRayPos, vRayDir;
-    CHelper::GetMousePointRay(&vRayPos, &vRayDir);
-    float fDist{};
-    if (m_pOBB->Intersect(&vRayPos, &vRayDir, fDist))
-    {
+   
         // Some Logic
-        if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
+    if (CDInputMgr::GetInstance()->Mouse_Down(DIM_LB))
+    {
+        _vec3 vRayPos, vRayDir;
+        CHelper::GetMousePointRay(&vRayPos, &vRayDir);
+        float fDist{};
+        if (m_pOBB->Intersect(&vRayPos, &vRayDir, fDist))
         {
             // 만약 충돌한다면 태그비교후 보이드포인터 들고와서 캐스팅한다음 조작한다.
             if (m_pOBB->Get_Tag() == L"OBB_PhoneApp")
             {
-                if (reinterpret_cast<CShipPhoneApp*>(m_pOBB->Get_VoidPtr())->Get_Select())
+                auto pPhone = dynamic_cast<CShipPhone*>(m_pParentGameObject);
+                if (!pPhone->Get_Focus())
                 {
-                    if (auto pPhone = dynamic_cast<CShipPhone*>(m_pParentGameObject))
+                    if (reinterpret_cast<CShipPhoneApp*>(m_pOBB->Get_VoidPtr())->Get_Select())
                     {
                         if (m_iAppIdx == 7)
                         {
                             pPhone->Focus_App(L"Weapon");
+                            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_APP_CLICK, 1.f);
                         }
                         else if (m_iAppIdx == 11)
                         {
                             pPhone->Focus_App(L"IDiver");
+                            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_APP_CLICK, 1.f);
                         }
                         else if (m_iAppIdx == 22)
                         {
                             pPhone->Focus_App(L"Stock");
+                            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_APP_CLICK, 1.f);
                         }
                     }
-                }
-                else
-                {
-                    for (auto pChild : *m_pParentGameObject->Get_Children())
+                    else
                     {
-                        if (auto pApp = dynamic_cast<CShipPhoneApp*>(pChild))
+                        for (auto pChild : *m_pParentGameObject->Get_Children())
                         {
-                            pApp->Set_Select(false);
+                            if (auto pApp = dynamic_cast<CShipPhoneApp*>(pChild))
+                            {
+                                pApp->Set_Select(false);
+                            }
                         }
-                    }
 
-                    reinterpret_cast<CShipPhoneApp*>(m_pOBB->Get_VoidPtr())->Set_Select(true);
+                        reinterpret_cast<CShipPhoneApp*>(m_pOBB->Get_VoidPtr())->Set_Select(true);
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
+                    }
                 }
             }
         }

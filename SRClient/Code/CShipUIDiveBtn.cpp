@@ -9,6 +9,8 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 #include "CShipDave.h"
+#include "CSoundMgr.h"
+#include "CLog.h"
 
 CShipUIDiveBtn::CShipUIDiveBtn(float fPosX, float fPosY)
     : CGameObject()
@@ -69,10 +71,21 @@ _int		CShipUIDiveBtn::Update_GameObject(const _float& fTimeDelta)
             m_bSpacePressed = true;
             if (m_iFrame < 37)
             {
-                if (m_fAccFrameDelta > 0.05f)
+                if (m_fAccFrameDelta > 0.055f)
                 {
                     ++m_iFrame;
                     m_fAccFrameDelta = 0;
+                }
+
+
+                if (m_iFrame == 1)
+                {
+                   
+                    if (!CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_SHIP_DIVE_BTN))
+                    {
+                        //CLog::Debug(L"PlaySoundOne \n");
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_lobby_dive_01", CSoundMgr::SFX_SHIP_DIVE_BTN, 1.f);
+                    }
                 }
             }
         }
@@ -85,6 +98,8 @@ _int		CShipUIDiveBtn::Update_GameObject(const _float& fTimeDelta)
                 pDave->DoDiveReady();
             }
 
+            //CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX_SHIP_DIVE_BTN);
+
         }
         // 끝까지 채우지 않았으면 초기화
         if (!m_bSpacePressed)
@@ -92,6 +107,11 @@ _int		CShipUIDiveBtn::Update_GameObject(const _float& fTimeDelta)
             if (m_iFrame < 37)
             {
                 m_iFrame = 0;
+            }
+            if (CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_SHIP_DIVE_BTN))
+            {
+                //CLog::Debug(L"StopSound \n");
+                CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX_SHIP_DIVE_BTN);
             }
         }
     }

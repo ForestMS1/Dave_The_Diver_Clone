@@ -10,6 +10,8 @@
 #include "CTransition.h"
 #include "CManagement.h"
 #include "CShipUIGoSushiBtn.h"
+#include "CSoundMgr.h"
+
 CShipUIGoBtn::CShipUIGoBtn(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -80,6 +82,7 @@ _int		CShipUIGoBtn::Update_GameObject(const _float& fTimeDelta)
                     pSpace->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-3.25f, -1.3f, 0.f);
                 }
             }
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_APP_CLICK, 1.f);
             //ShipGoBtnSpaceKey
         }
         
