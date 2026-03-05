@@ -80,6 +80,7 @@ _int		CShipUIDiveBtn::Update_GameObject(const _float& fTimeDelta)
         if (m_iFrame == 37)
         {
             //ShipDave
+      
             if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CShipDave>(L"ShipDave"))
             {
                 pDave->DoDiveReady();
