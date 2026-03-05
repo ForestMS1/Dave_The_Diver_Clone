@@ -19,7 +19,7 @@ HRESULT CAssetFmodSound::Load()
 	FMOD_RESULT eRes = FMOD_System_CreateSound(
 		CSoundMgr::GetInstance()->Get_System(),
 		CHelper::WStringToString(m_sAssetPath).c_str(),
-		FMOD_DEFAULT, 0, &m_pFmodSound);
+		FMOD_CREATESTREAM, 0, &m_pFmodSound);
 
 	if (eRes != FMOD_OK)
 	{
