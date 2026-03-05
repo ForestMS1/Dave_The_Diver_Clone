@@ -11,6 +11,7 @@
 #include "CLog.h"
 #include "CShipPhoneIDiverBG.h"
 #include "CShipPhoneWeaponBG.h"
+#include "CStockMarket.h"
 
 CShipPhone::CShipPhone()
     : CGameObject()
@@ -286,6 +287,12 @@ void CShipPhone::OnFocus_App()
         CShipPhoneWeaponBG* pWeapon = CShipPhoneWeaponBG::Create();
         pLayer->Add_GameObject(L"ShipPhoneWeaponBG", pWeapon);
     }
+    else if (m_sFocusedAppName == L"Stock")
+    {
+        auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer");
+        CStockMarket* pStock = CStockMarket::Create();
+        pLayer->Add_GameObject(L"StockMarket", pStock);
+    }
 
 }
 void CShipPhone::OnFocusing_App()
@@ -308,6 +315,13 @@ void CShipPhone::OnUnFocus_App()
         ->Get_Scene()
         ->Get_Layer(L"0_GameLogic_Layer")
         ->Get_GameObjectFirst(L"ShipPhoneWeaponBG"))
+    {
+        pGameObj->Set_DeadCascade();
+    }
+    else if (auto pGameObj = CManagement::GetInstance()
+        ->Get_Scene()
+        ->Get_Layer(L"0_GameLogic_Layer")
+        ->Get_GameObjectFirst(L"StockMarket"))
     {
         pGameObj->Set_DeadCascade();
     }

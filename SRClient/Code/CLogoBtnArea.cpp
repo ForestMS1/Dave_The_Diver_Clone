@@ -164,7 +164,7 @@ void		CLogoBtnArea::Render_GameObject()
             {
                 col = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
             }
-            pDefFont->Render_Font(L"새 게임", &vPos, col, (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+            pDefFont->Render_Font(L"새 게임 주식", &vPos, col, (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
         }
     }
 
