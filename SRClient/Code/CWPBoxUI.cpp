@@ -3,6 +3,7 @@
 #include "CRenderer.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CSoundMgr.h"
 CWPBoxUI::CWPBoxUI(_bool isSub)
     : m_bIsGunSlot(isSub)
     , m_bIsFront(isSub)
@@ -196,6 +197,7 @@ void CWPBoxUI::OnNotify(const Event& e)
         break;
     case EVENTTYPE::WEAPONSLOT_CHANGE:
         m_bIsChanging = true;
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_ui_button_click", CSoundMgr::SFX, 1.f);
         //m_bIsGunSlot = !m_bIsGunSlot;
         break;
 

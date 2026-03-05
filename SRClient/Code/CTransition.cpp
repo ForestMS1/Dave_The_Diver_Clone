@@ -974,15 +974,15 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Harpoon_Shot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/harpoon_shot.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_QTE_success", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_QTE_success_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Harpoon_Tab", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/harpoon_tap_button.wav"));
-		CAssetMgr::GetInstance()->AddAsset(L"Sound_Hit_Melee", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_hit_melee.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Hit_Melee", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_Melee_Hit.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_ItemBoxTryOpen", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_ingameboxopen_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_O2CapsuleUse", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_o2_capsule_use.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_ui_ingame_attention", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/ui_ingame_attention.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_sound_gain_itembox", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_gain_itembox_02.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_sound_hit_Fire_TripleAxel", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_hit_Fire_TripleAxel_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Vib_BasicRifle_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_BasicRifle_Shoot.wav"));
-		
-		
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_ui_button_click", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/ui_button_click.wav"));
+
 		
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_JohnWatson2_MIssile_Overload_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_JohnWatson2_MIssile_Overload_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_Explosion_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_Explosion_01.wav"));

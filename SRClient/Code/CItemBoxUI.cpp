@@ -3,6 +3,7 @@
 #include "CRenderer.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CSoundMgr.h"
 CItemBoxUI::CItemBoxUI(_bool isSub)
     : m_bIsSub(isSub)
 {
@@ -210,6 +211,7 @@ void CItemBoxUI::OnNotify(const Event& e)
 
     case EVENTTYPE::ITEMSLOT_CHANGE:
         m_bIsChanging = true;
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_ui_button_click", CSoundMgr::SFX, 1.f);
         //m_bIsSub = !m_bIsSub;
         break;
 
