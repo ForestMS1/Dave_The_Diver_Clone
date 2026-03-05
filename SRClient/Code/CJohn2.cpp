@@ -24,6 +24,7 @@
 #include "CJohn2MeleeAttackReady.h"
 #include "CJohn2MeleeAttack.h"
 #include "CJohn2MeleeAttackReturn.h"
+#include "CGameMemMgr.h"
 
 CJohn2::CJohn2(_float x, _float y, _float z)
 	: m_vCreatePos({ x,y,z })
@@ -337,4 +338,11 @@ void CJohn2::Move(_vec3* vDir, const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(INFO_POS, &Pos);
 	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BUBBLE, Pos, 4);
 	//CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 4);
+}
+
+void CJohn2::On_Dead() {
+	 m_bIsDie = true; 
+	 if (!CGameMemMgr::GetInstance()->Get_BossKilled()) {
+		 CGameMemMgr::GetInstance()->Set_BossKilled(true);
+	}
 }
