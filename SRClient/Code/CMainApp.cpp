@@ -51,6 +51,8 @@ HRESULT CMainApp::Ready_MainApp()
 int CMainApp::Update_MainApp(const float& fTimeDelta)
 {
 	CDInputMgr::GetInstance()->Update_InputDev();
+
+	CSoundMgr::GetInstance()->UpdateSound();
 	
 	CImguiMgr::GetInstance()->Update_Imgui();
 
