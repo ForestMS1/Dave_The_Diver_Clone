@@ -118,7 +118,7 @@ HRESULT CDive::Ready_Scene()
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
 
-
+	
 
 	// [LSY] 데이브 아이다이버 수치 연동
 	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
@@ -144,7 +144,7 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
-	//CColliderMgr::GetInstance()->Set_Render(false);
+	//CColliderMgr::GetInstance()->Set_Render(true);
 
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
 	{

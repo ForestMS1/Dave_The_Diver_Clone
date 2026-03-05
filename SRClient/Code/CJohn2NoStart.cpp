@@ -7,6 +7,8 @@
 #include "CDiveDaveCam.h"
 #include "CManagement.h"
 #include "CSoundMgr.h"
+#include "CJohnConversation.h"
+#include "CDaveConversation.h"
 CJohn2NoStart::CJohn2NoStart(CJohn2* pOwner)
 	: CBaseState<CJohn2>(pOwner)
 {
@@ -74,19 +76,67 @@ _int CJohn2NoStart::Update_State(const _float& fTimeDelta)
 		_vec3 vCurPos;
 		m_pOwner->Get_Pos(&vCurPos);
 		pCam->Set_Target(&m_pOwner->GetTransformCom()->m_vInfo[INFO_POS]);
-	}
-	else
-	{
-		_vec3 vDir = { -1.f, 0.f, 0.f };
-		m_pOwner->CJohn2::Move(&vDir, fTimeDelta);
-	}
+		if (!m_bJohnDialogCreated) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"JohnConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CJohnConversation* JohnConversation = CJohnConversation::Create(m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].x, m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].y - 2.f);
+					JohnConversation->SetCurrentConversation(CJohnConversation::CONVERSATION::CONV_2);
+					pLayer->Add_GameObject(L"JohnConversation", JohnConversation);
+					m_bJohnDialogCreated = true;
+				}
+			}
+		}
 
+		if (m_bJohnDialogCreated) {
+			if (!m_bDaveDialogCreated) {
+				if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer"))
+				{
+					if (auto pObj = pLayer->Get_GameObjectFirst(L"JohnConversation"))
+					{
+					}
+					else {
+						if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer"))
+						{
+							if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+							{
+								pObj->Set_DeadCascade();
+							}
+							else
+							{
+								CDaveConversation* DaveConversation = CDaveConversation::Create(m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].x, m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].y - 2.f);
+								DaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::BOSS_2);
+								pLayer->Add_GameObject(L"DaveConversation", DaveConversation);
+								m_bDaveDialogCreated = true;
+							}
+						}
+					}
+				}
+			}
 
-	if (m_pOwner->Get_Frame() == 7)
-	{
-		m_pOwner->EncounterTarget();
-		m_pOwner->Set_State(JOHN2STATE::IDLE);
+		}
+		if (m_bDaveDialogCreated) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+				}
+				else {
+					if (m_pOwner->Get_Frame() == 7)
+					{
+						m_pOwner->EncounterTarget();
+						m_pOwner->Set_State(JOHN2STATE::IDLE);
+					}
+				}
+			}
+		}
 	}
+	
 
 	return 0;
 }

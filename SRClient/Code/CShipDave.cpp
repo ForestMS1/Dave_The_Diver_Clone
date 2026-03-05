@@ -7,6 +7,10 @@
 #include "CCollisionMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CGameMemMgr.h"
+#include "CTimerMgr.h"
+#include "CManagement.h"
+#include "CDaveConversation.h"
 
 CShipDave::CShipDave()
     : CGameObject()
@@ -37,9 +41,11 @@ HRESULT CShipDave::Ready_GameObject()
   
     m_iFrame = 0;
     m_fAccFrameDelta = 0.f;
+    m_fConvAppearTimer = 0.f;
+    m_fTransitionTimer = 0.f;
     m_sCurrentMotion = L"Tex_ShipDave_Idle";
     m_bSeeRight = true;
-
+    m_bTalking = false;
     m_bDiveReady = false;
 
     return S_OK;
@@ -178,6 +184,45 @@ void CShipDave::Render_GameObject()
 
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+void CShipDave::DoDiveReady()
+{
+    if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1) {
+        if (!m_bTalking) {
+            m_fConvAppearTimer += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+            if (m_fConvAppearTimer > 1.f) {
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+                    {
+                        pObj->Set_DeadCascade();
+                    }
+                    else
+                    {
+                        CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+                        pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_3);
+                        pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+                        m_fConvAppearTimer = 0;
+                        m_bTalking = true;
+                    }
+                }
+            }
+        }
+        else {
+            m_fTransitionTimer += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+            if (m_fTransitionTimer > 3.f) {
+                CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
+                m_bDiveReady = true;
+            }
+        }
+    }
+    else {
+        CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
+        m_bDiveReady = true;
+    }
+   
+
 }
 
 HRESULT CShipDave::Ready_Component()
