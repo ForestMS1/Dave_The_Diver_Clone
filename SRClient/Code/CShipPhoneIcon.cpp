@@ -158,7 +158,7 @@ HRESULT CShipPhoneIcon::Open_Phone()
             return E_FAIL;
 
         int xCnt = 4;
-        for (int i = 0; i < 22; ++i)
+        for (int i = 0; i < 23; ++i)
         {
             float fPosX = +(i % 4) - 1.5f;
             float fPosY = -(i / 4) + 2.5f;

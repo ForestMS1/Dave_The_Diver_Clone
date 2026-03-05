@@ -60,6 +60,14 @@ _int		CStockMarket::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
+    if (auto pPhone = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CShipPhone>(L"ShipPhone"))
+    {
+        if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
+        {
+            pPhone->UnFocus_App();
+        }
+    }
+
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
   
     if (CGameMemMgr::GetInstance()->GetStockMarketIndex() > 0) {
