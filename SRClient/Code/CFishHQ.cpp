@@ -39,6 +39,21 @@ HRESULT CFishHQ::Ready_GameObject()
 
 _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 {
+    if (ImGui::Button("Spawn Dave Pos Fish"))
+    {
+        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+        {
+            _vec3 vPos;
+            pUI->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+            {
+                Fish::AddLayer_Fish<Fish::CGreenHumpheadParrotfish>(L"GreenHumpheadParrotfish", pLayer, vPos.x, vPos.y, 0.3f, this);
+            }
+
+            //pUI->Set_DeadCascade();
+        }
+    }
     if (ImGui::Button("CDiveGetWeaponUI"))
     {
         //CDiveGetWeaponUI

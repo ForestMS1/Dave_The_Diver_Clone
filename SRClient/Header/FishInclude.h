@@ -42,7 +42,7 @@ namespace Fish
 		_vec3* pDetecboxExtents,
 		CGameObject* pParent = nullptr)
 	{
-		T* pFish = T::Create(fPosX, fPosX, 0.05f * fScale);
+		T* pFish = T::Create(fPosX, fPosY, 0.05f * fScale);
 		if (pParent)
 		{
 			pFish->Set_Parent(pParent);

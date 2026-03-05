@@ -4,7 +4,7 @@
 
 HRESULT Fish::AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
@@ -43,7 +43,7 @@ HRESULT Fish::AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY
 
 HRESULT Fish::AddLayer_TitanTriggerfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CTitanTriggerfish* pFish = Fish::CTitanTriggerfish::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CTitanTriggerfish* pFish = Fish::CTitanTriggerfish::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
@@ -80,7 +80,7 @@ HRESULT Fish::AddLayer_TitanTriggerfish(Engine::CLayer* pLayer, float fPosX, flo
 
 HRESULT Fish::AddLayer_Clownfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CClownfish* pFish = Fish::CClownfish::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CClownfish* pFish = Fish::CClownfish::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
@@ -117,7 +117,7 @@ HRESULT Fish::AddLayer_Clownfish(Engine::CLayer* pLayer, float fPosX, float fPos
 
 HRESULT Fish::AddLayer_SmallspottedDart(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CSmallspottedDart* pFish = Fish::CSmallspottedDart::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CSmallspottedDart* pFish = Fish::CSmallspottedDart::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
@@ -154,7 +154,7 @@ HRESULT Fish::AddLayer_SmallspottedDart(Engine::CLayer* pLayer, float fPosX, flo
 
 HRESULT Fish::AddLayer_YellowbackFusilier(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CYellowbackFusilier* pFish = Fish::CYellowbackFusilier::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CYellowbackFusilier* pFish = Fish::CYellowbackFusilier::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
@@ -191,7 +191,7 @@ HRESULT Fish::AddLayer_YellowbackFusilier(Engine::CLayer* pLayer, float fPosX, f
 
 HRESULT Fish::AddLayer_YellowTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CYellowTang* pFish = Fish::CYellowTang::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CYellowTang* pFish = Fish::CYellowTang::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
@@ -228,7 +228,7 @@ HRESULT Fish::AddLayer_YellowTang(Engine::CLayer* pLayer, float fPosX, float fPo
 
 HRESULT Fish::AddLayer_Blobfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
-	Fish::CBlobfish* pFish = Fish::CBlobfish::Create(fPosX, fPosX, 0.05f * fScale);
+	Fish::CBlobfish* pFish = Fish::CBlobfish::Create(fPosX, fPosY, 0.05f * fScale);
 	if (pParent)
 	{
 		pFish->Set_Parent(pParent);
