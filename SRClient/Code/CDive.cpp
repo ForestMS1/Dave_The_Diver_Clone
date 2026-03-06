@@ -74,6 +74,7 @@
 #include "CGetItemUI.h"
 #include "CSpaceKeyUI.h"
 #include "CFishTankCollider.h"
+#include "CDaveGoldBall.h"
 CDive::CDive()
 	: CScene()
 {
@@ -481,6 +482,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
+	pGameObject = CDaveGoldBall::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DaveGoldBall", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
 	pGameObject = CDiveDaveGun::Create(CGameMemMgr::CDaveInfo::GUN_DEFAULT);
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -879,7 +887,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"CurDepthText", pDepthText)))
 		return E_FAIL;
-	pDepthText->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	//pDepthText->Set_Opt();
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pDepthText)); // 플레이어 관찰
 
 	pGameObject = CWeightIcon::Create();

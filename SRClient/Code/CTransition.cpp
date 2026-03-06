@@ -754,6 +754,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
 
+	// 데이브 황금알 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveGoldBall", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/DaveGoldBall.png"));
+
 	// DiveItemBox
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_A", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_A.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_Aopen", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_Aopen.png"));
