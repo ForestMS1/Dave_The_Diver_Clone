@@ -100,8 +100,8 @@ HRESULT CDive::Ready_Scene()
 		return E_FAIL;
 
 	//Ä«¸Þ¶ó
-	_vec3	vEye{ 0.f, 0.f, -10.f };
-	_vec3	vAt{ 0.f, 0.f, 0.f };
+	_vec3	vEye{ -30.f, -20.f, -10.f };
+	_vec3	vAt{ -30.f, -20.f, 0.f };
 	_vec3	vUp{ 0.f, 1.f, 0.f };
 	_matrix	matView, matProj;
 
