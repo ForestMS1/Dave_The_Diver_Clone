@@ -73,6 +73,7 @@ void CLogo::Render_Scene()
 	}
 	ImGui::End();
 
+
 	// Black To Screen
 	if (ImGui::Button("FadeIn"))
 	{

@@ -14,6 +14,7 @@
 #include "CGraphicDev.h"
 #include "CParticleMgr.h"
 #include "CTransitionFade.h"
+#include "CFinalConversation.h"
 
 CEnding::CEnding()
 	: CScene()
@@ -67,6 +68,16 @@ HRESULT CEnding::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pLayer)
 		return E_FAIL;
 
+
+	CGameObject* pGameObject = nullptr;
+
+	pGameObject = CFinalConversation::Create(0.f, -2.f);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	if (FAILED(pLayer->Add_GameObject(L"Background", pGameObject)))
+		return E_FAIL;
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
@@ -76,7 +87,7 @@ void CEnding::Update_Camera()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	D3DXMATRIX matView, matProj;
-	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);
+	D3DXVECTOR3 vEye(0.0f, 0.0f, -10.0f);
 	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
 	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
