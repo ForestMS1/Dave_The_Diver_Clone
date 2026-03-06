@@ -43,15 +43,18 @@ _int      CDepthText::Update_GameObject(const _float& fTimeDelta)
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    auto a = dynamic_cast<CO2UI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"O2UI"));
-    a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
+    if (m_bEndFrame)
+    {
+        auto a = dynamic_cast<CO2UI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"O2UI"));
+        a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
-    float fOffsetX = 100.f;
-    float fOffsetY = 30.f;
-    m_vPos.x += fOffsetX;
-    m_vPos.y += fOffsetY;
+        float fOffsetX = 100.f;
+        float fOffsetY = 30.f;
+        m_vPos.x += fOffsetX;
+        m_vPos.y += fOffsetY;
 
-    m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+        m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+    }
 
     return iExit;
 }
@@ -76,6 +79,7 @@ void      CDepthText::Render_GameObject()
         pDefFont->Render_Font(m_sTxt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
     }
 
+    m_bEndFrame = true;
 }
 
 HRESULT         CDepthText::Ready_Component()
