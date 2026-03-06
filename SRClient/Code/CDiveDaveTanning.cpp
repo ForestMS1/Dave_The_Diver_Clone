@@ -56,6 +56,7 @@ _int CDiveDaveTanning::Update_State(const _float& fTimeDelta)
 		if (pSlicableJohn != nullptr)
 		{
 			pSlicableJohn->SliceComplete();
+			m_pOwner->Set_SlicableJohn(nullptr);
 		}
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}

@@ -5,6 +5,7 @@
 #include "CAssetTexture.h"
 #include "CColliderMgr.h"
 #include "CDiveDave.h"
+#include "CManagement.h"
 CJohn2Slicable::CJohn2Slicable(CJohn2* pOwner)
 	:CBaseState<CJohn2>(pOwner)
 {
@@ -144,7 +145,13 @@ void CJohn2Slicable::Exit()
 
 void CJohn2Slicable::Clear()
 {
+    CDiveDave* pDave = dynamic_cast<CDiveDave*>
+        (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"));
 
+    if (pDave != nullptr)
+    {
+        pDave->Set_SlicableJohn(nullptr);
+    }
 }
 
 
