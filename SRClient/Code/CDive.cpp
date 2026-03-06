@@ -72,6 +72,7 @@
 
 #include "CDiveGetWeaponUI.h"
 #include "CGetItemUI.h"
+#include "CSpaceKeyUI.h"
 CDive::CDive()
 	: CScene()
 {
@@ -835,6 +836,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GaugeBarUI", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	pGameObject = CSpaceKeyUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"SpaceKeyUI", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 

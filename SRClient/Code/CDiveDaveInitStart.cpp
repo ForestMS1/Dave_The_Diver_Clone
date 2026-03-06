@@ -33,6 +33,7 @@ void CDiveDaveInitStart::Enter()
 	pTransformCom->Set_Pos(-20.f, 20.f, 0.f);
 	pTransformCom->Get_Info(INFO_POS, &m_vOriginPos);
 
+	CSoundMgr::GetInstance()->StopAll();
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DiveInGameBGM", CSoundMgr::CHANNELID::BGM, 1.f);
 }
 

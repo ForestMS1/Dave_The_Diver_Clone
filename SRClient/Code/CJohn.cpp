@@ -94,6 +94,12 @@ void CJohn::LateUpdate_GameObject(const _float& fTimeDelta)
 
 	m_pFSM->LateUpdate_State(fTimeDelta);
 
+#ifdef _DEBUG
+	ImGui::Begin("John1");
+	if (ImGui::Button("Die"))
+		m_bIsDie = true;
+	ImGui::End();
+#endif
 }
 
 void CJohn::Render_GameObject()
