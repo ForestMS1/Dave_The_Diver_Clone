@@ -2240,7 +2240,8 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
-			pTxt->Set_Txt(L"로비로비로");
+			pTxt->Set_Txt(L"로비");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;
@@ -2270,6 +2271,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
 			pTxt->Set_Txt(L"두다이브");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;
@@ -2298,6 +2300,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
 			pTxt->Set_Txt(L"회식은갓파스시?");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;

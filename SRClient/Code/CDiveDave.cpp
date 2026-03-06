@@ -55,7 +55,7 @@ void CDiveDave::Start()
 	e.fValue = m_fHp / m_fMaxHp;
 	CDiveDave::Notify(e);
 
-	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2)
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 3)
 	{
 		m_bSubMarine = true;
 	}
