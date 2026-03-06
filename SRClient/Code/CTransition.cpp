@@ -464,6 +464,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_YellowTang", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_YellowTang.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_YellowTang");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_John", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_John.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_John");
 	}
 
 	// Fish Thumbnails
@@ -524,7 +527,12 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Yellowback_Fusilier", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Yellowback_Fusilier_Thumbnail.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Yellowback_Fusilier");
-	}
+	
+//O_JohnHead_Thumbnail
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_JohnHead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/O_JohnHead_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_JohnHead");
+}
 
 	// DaveConversation
 	{

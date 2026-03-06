@@ -304,7 +304,7 @@ void CDive::Render_Scene()
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
 		{
 			auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
-			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_Asian_Sheepshead");
+			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_JohnHead");
 			pGetItemUI->Ready_AfterCreate();
 			pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
 		}

@@ -392,6 +392,7 @@ void CJohn2::SliceComplete()
 		auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
 		pGetItemUI->Set_Title(L"정체불명의 고기");
 		pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(5));
+		pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_JohnHead");
 
 		std::wstringstream wss;
 		wss << std::fixed << std::setprecision(1) << 37.7 << L"kg";
@@ -399,8 +400,7 @@ void CJohn2::SliceComplete()
 
 		pGetItemUI->Set_Weight(result);
 		pGetItemUI->Set_StarCnt(5);
-		pGetItemUI->Set_ImgAssetName(L"");//m_sThumbNailAssetName);
-		pGetItemUI->Ready_AfterCreate();
+		pGetItemUI->Ready_AfterCreate();  
 		pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
 	}
 
@@ -414,10 +414,10 @@ void CJohn2::SliceComplete()
 	fish.iRank = 5;
 	fish.iStar = 5;
 	fish.sFishName = L"정체불명의 고기";
-	fish.sThumbNailAssetName = L""; // m_sThumbNailAssetName;
+	fish.sThumbNailAssetName = L"Tex_FishThumb_JohnHead"; // m_sThumbNailAssetName;
 	fish.iMeatCnt = 5;
 	fish.fLength = 5;
-	fish.sSushiThumbNailAssetName = L""; //m_sSushiThumbNailAssetName;
+	fish.sSushiThumbNailAssetName = L"Tex_SushiThumb_John"; //m_sSushiThumbNailAssetName;
 	fish.iSushiLv = 5;
 	fish.iSushiMoney = 9999;
 	fish.bFish = true;
