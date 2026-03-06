@@ -54,9 +54,7 @@ _int CDaveGoldBall::Update_GameObject(const _float& fTimeDelta)
 	Set_ParentTransform();
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	Compute_ViewZ(&vPos);
+	m_fViewZ = 10.1f;
 
 	return iExit;
 }
