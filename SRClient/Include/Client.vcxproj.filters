@@ -547,6 +547,9 @@
     <Filter Include="01. Scene\05. Ending\Conversation">
       <UniqueIdentifier>{b624b17c-8698-4ef7-b283-73985af9a3e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Fish\FishTankCollider">
+      <UniqueIdentifier>{c62bdf84-01a4-48f9-96a1-a39bfa51d19f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1374,6 +1377,9 @@
     <ClInclude Include="..\Header\CFinalConversation.h">
       <Filter>01. Scene\05. Ending\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFishTankCollider.h">
+      <Filter>02. GameObject\Fish\FishTankCollider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2179,6 +2185,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFinalConversation.cpp">
       <Filter>01. Scene\05. Ending\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFishTankCollider.cpp">
+      <Filter>02. GameObject\Fish\FishTankCollider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
