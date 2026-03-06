@@ -305,20 +305,20 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                         pCurrSclicableFish = pFish;
 
                                         //
-                                        if (CDInputMgr::GetInstance()->Key_Pressing(DIK_SPACE))
-                                        {
-                                            _vec3 vFishPos;
-                                            pFish->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vFishPos);
-                                            float fRange = 1.f;
-                                            for (int i = 0; i < 1; ++i)
-                                            {
-                                                float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
-                                                float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
-                                                vFishPos.x += randX;
-                                                vFishPos.y += randY;
-                                                CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, vFishPos, 1);
-                                            }
-                                        }
+                                        //if (CDInputMgr::GetInstance()->Key_Pressing(DIK_SPACE))
+                                        //{
+                                        //    _vec3 vFishPos;
+                                        //    pFish->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vFishPos);
+                                        //    float fRange = 1.f;
+                                        //    for (int i = 0; i < 1; ++i)
+                                        //    {
+                                        //        float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+                                        //        float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+                                        //        vFishPos.x += randX;
+                                        //        vFishPos.y += randY;
+                                        //        CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, vFishPos, 1);
+                                        //    }
+                                        //}
                                         
                                     }
                                     else
