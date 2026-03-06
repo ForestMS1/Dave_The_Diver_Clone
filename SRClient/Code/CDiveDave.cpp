@@ -150,6 +150,15 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 		}
 	}
 
+	if (ImGui::Button("SpeedUP"))
+	{
+		m_fSpeed += 30.f;
+	}
+	if(ImGui::Button("SpeedDown"))
+	{
+		m_fSpeed -= 30.f;
+	}
+
 
 	string ItemSlot1 = "ItemSlot1 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot1"]);
 	string ItemSlot2 = "ItemSlot2 : " + to_string((_int)m_mapCanUseItemSlot[L"ItemSlot2"]);
@@ -252,9 +261,9 @@ _bool CDiveDave::Check_GlobalState()
 		m_fSpeed = 3.f;
 		m_bOverloaded = true;
 	}
-	else
+	else if(m_bOverloaded)
 	{
-		m_fSpeed = 10.f;
+		m_fSpeed = m_fOriginSpeed;
 		m_bOverloaded = false;
 	}
 
