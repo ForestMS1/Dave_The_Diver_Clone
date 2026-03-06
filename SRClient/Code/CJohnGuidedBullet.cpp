@@ -289,14 +289,6 @@ void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 		//---------------------------------------------------------------
 		m_eCurState = EXLPOSION;
 		//---------------------------------------------------------------
-		fWidth = 51.f;
-		fHeight = 51.f;
-		fAspect = fWidth + fHeight;
-		fAspect /= 2.f;
-
-		vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-		vScale *= 5.f;
-		m_pTransformCom->Multiply_Scale(&vScale);
 		return;
 	}
 

@@ -24,8 +24,6 @@ void CJohn2Explosion::Enter()
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
-
-	m_pOwner->Reset_BreakTime();
 }
 
 void CJohn2Explosion::Input(const _float& fTimeDelta)
@@ -70,6 +68,7 @@ void CJohn2Explosion::Exit()
 	_float fHeight = imgInfo.Height;
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
+
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 
