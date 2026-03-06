@@ -55,6 +55,11 @@ void CDiveDave::Start()
 	e.fValue = m_fHp / m_fMaxHp;
 	CDiveDave::Notify(e);
 
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2)
+	{
+		m_bSubMarine = true;
+	}
+
 	Change_Weight(0.f);
 }
 
@@ -269,6 +274,8 @@ _bool CDiveDave::Check_GlobalState()
 	if (m_bSubMarine)
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::SUBMARINE);
+		if (CDInputMgr::GetInstance()->Key_Down(DIK_L))
+			m_bSubMarine = !m_bSubMarine;
 		return true;
 	}
 
