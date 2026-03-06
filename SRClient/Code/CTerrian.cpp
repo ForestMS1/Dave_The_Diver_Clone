@@ -1023,6 +1023,7 @@ void CTerrian::Render_GameObject()
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
         for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_MeshCnt(); ++i) {
+            
             pGraphicDev->SetTexture(0, CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_Texture()->at(i));
             
             _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].first;
