@@ -448,6 +448,84 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	}
 	
 
+
+
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 1.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 10.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}
+	else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 10.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}
+	return iExit;
+}
+
+void CShip::LateUpdate_Scene(const _float& fTimeDelta)
+{
+	CScene::LateUpdate_Scene(fTimeDelta);
+}
+
+void CShip::Render_Scene()
+{
+#ifdef _DEBUG
+	_vec2	vPos{ 0.f, 0.f };
+	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
+	pDefFont->Render_Font(L"Here is CShip", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
+
 	ImGui::Begin("Curr Scene: CShip");
 	if (ImGui::Button("Go Dive Scene"))
 	{
@@ -477,7 +555,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 		ImGui::Text("jeokjae: %i", jeokjae);
 		ImGui::Text("jaksal: %i", jaksal);
 	}
-	
+
 
 	if (ImGui::Button("Collider Render"))
 	{
@@ -515,7 +593,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
 		{
-			if (auto pObj =pLayer->Get_GameObjectFirst(L"DiveResultUI"))
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"DiveResultUI"))
 			{
 				pObj->Set_DeadCascade();
 			}
@@ -527,7 +605,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			}
 		}
 	}
-	
+
 	if (ImGui::Button("ToSushi"))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
@@ -603,79 +681,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 		CGameMemMgr::GetInstance()->Set_Money2(CGameMemMgr::GetInstance()->Get_Money() + 1000);
 	}
 
-
-	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 1.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 10.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}
-	else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 10.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}
-	return iExit;
-}
-
-void CShip::LateUpdate_Scene(const _float& fTimeDelta)
-{
-	CScene::LateUpdate_Scene(fTimeDelta);
-}
-
-void CShip::Render_Scene()
-{
-	_vec2	vPos{ 0.f, 0.f };
-	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
-	pDefFont->Render_Font(L"Here is CShip", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+#endif
 }
 
 CShip* CShip::Create()

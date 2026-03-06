@@ -1076,9 +1076,11 @@ HRESULT CTerrian::Ready_Material()
 
     }
     
+#ifdef _DEBUG
     ImGui::Begin("TestDark");
     ImGui::Text("Dark : %lf", m_dark);
     ImGui::End();
+#endif
 
     tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
