@@ -63,8 +63,8 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	m_pManagement->Update_Scene(fTimeDelta);
 
 	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
-	m_pManagement->Update_ImGui();
-	CAssetMgr::GetInstance()->Update_ImGui();
+	//m_pManagement->Update_ImGui();
+	//CAssetMgr::GetInstance()->Update_ImGui();
 
 	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempUpdate(fTimeDelta);
 
@@ -171,6 +171,7 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
+	auto a = CAssetMgr::GetInstance();
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Lobby", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_Lobby.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Lobby");
 

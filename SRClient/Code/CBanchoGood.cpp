@@ -155,16 +155,16 @@ HRESULT			CBanchoGood::Ready_Component()
 
 CBanchoGood* CBanchoGood::Create(float fPosX, float fPosY)
 {
-    CBanchoGood* pIDiverUpgrade = new CBanchoGood{ fPosX , fPosY };
+    CBanchoGood* pBanchoGood = new CBanchoGood{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pBanchoGood->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pBanchoGood);
+        MSG_BOX("pBanchoGood Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pBanchoGood;
 }
 
 void CBanchoGood::Free()

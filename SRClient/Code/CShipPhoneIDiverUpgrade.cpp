@@ -458,16 +458,16 @@ HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()
 
 CShipPhoneIDiverUpgrade* CShipPhoneIDiverUpgrade::Create(float fPosX, float fPosY)
 {
-    CShipPhoneIDiverUpgrade* pIDiverUpgrade = new CShipPhoneIDiverUpgrade{ fPosX , fPosY };
+    CShipPhoneIDiverUpgrade* pShipPhoneIDiverUpgrade = new CShipPhoneIDiverUpgrade{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipPhoneIDiverUpgrade->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipPhoneIDiverUpgrade);
+        MSG_BOX("pShipPhoneIDiverUpgrade Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipPhoneIDiverUpgrade;
 }
 
 void CShipPhoneIDiverUpgrade::Free()

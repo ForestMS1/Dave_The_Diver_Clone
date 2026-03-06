@@ -74,7 +74,6 @@ _int CShipDave::Update_GameObject(const _float& fTimeDelta)
         m_fAccFrameDelta = 0;
     }
    
-   auto zz = CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size();
     if (CAssetMgr::GetInstance()->Get_Asset(m_sCurrentMotion)->size() <= m_iFrame)
     {
         if (L"Tex_ShipDave_DiveReady" == m_sCurrentMotion)
@@ -88,11 +87,7 @@ _int CShipDave::Update_GameObject(const _float& fTimeDelta)
         }
         
     }
-
-    
-
-    string s = "Frame" + ::to_string(m_iFrame);
-    ImGui::Text(s.c_str());
+   
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
     // 충돌체 그룹에 넣어줘야한다.

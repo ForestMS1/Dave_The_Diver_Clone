@@ -174,16 +174,16 @@ HRESULT			CGoToSushiUI::Ready_Component()
 
 CGoToSushiUI* CGoToSushiUI::Create(float fPosX, float fPosY)
 {
-    CGoToSushiUI* pIDiverUpgrade = new CGoToSushiUI{ fPosX , fPosY };
+    CGoToSushiUI* pGoToSushiUI = new CGoToSushiUI{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pGoToSushiUI->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pGoToSushiUI);
+        MSG_BOX("pGoToSushiUI Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pGoToSushiUI;
 }
 
 void CGoToSushiUI::Free()

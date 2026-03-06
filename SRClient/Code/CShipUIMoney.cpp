@@ -128,16 +128,16 @@ HRESULT			CShipUIMoney::Ready_Component()
 
 CShipUIMoney* CShipUIMoney::Create(float fPosX, float fPosY)
 {
-    CShipUIMoney* pIDiverUpgrade = new CShipUIMoney{ fPosX , fPosY };
+    CShipUIMoney* pShipUIMoney = new CShipUIMoney{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipUIMoney->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipUIMoney);
+        MSG_BOX("pShipUIMoney Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipUIMoney;
 }
 
 void CShipUIMoney::Free()

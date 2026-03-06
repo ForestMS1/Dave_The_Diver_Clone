@@ -313,16 +313,16 @@ HRESULT			CHoldFishUIItemGroup::Ready_Component()
 
 CHoldFishUIItemGroup* CHoldFishUIItemGroup::Create(float fPosX, float fPosY)
 {
-    CHoldFishUIItemGroup* pIDiverUpgrade = new CHoldFishUIItemGroup{ fPosX , fPosY };
+    CHoldFishUIItemGroup* pHoldFishUIItemGroup = new CHoldFishUIItemGroup{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pHoldFishUIItemGroup->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pHoldFishUIItemGroup);
+        MSG_BOX("pHoldFishUIItemGroup Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pHoldFishUIItemGroup;
 }
 
 void CHoldFishUIItemGroup::Free()
