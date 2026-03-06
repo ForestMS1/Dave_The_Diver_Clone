@@ -2043,7 +2043,9 @@ HRESULT CTransition::Ready_Scene()
 
 
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+	{
 		return E_FAIL;
+	}
 
 
 	m_bFadeEnd = false;
@@ -2296,9 +2298,11 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 void CTransition::Render_Scene()
 {
+#ifdef _DEBUG
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(m_sComment, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+#endif
 }
 
 CTransition* CTransition::Create(SCENE_ID eSrcScene, SCENE_ID eDstScene)

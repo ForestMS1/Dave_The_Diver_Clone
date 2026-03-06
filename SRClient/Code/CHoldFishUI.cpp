@@ -413,16 +413,16 @@ HRESULT			CHoldFishUI::Ready_Component()
 
 CHoldFishUI* CHoldFishUI::Create(float fPosX, float fPosY)
 {
-    CHoldFishUI* pIDiverUpgrade = new CHoldFishUI{ fPosX , fPosY };
+    CHoldFishUI* pHoldFishUI = new CHoldFishUI{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pHoldFishUI->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pHoldFishUI);
+        MSG_BOX("pHoldFishUI Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pHoldFishUI;
 }
 
 void CHoldFishUI::Free()

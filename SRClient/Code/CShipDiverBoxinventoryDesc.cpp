@@ -149,16 +149,16 @@ HRESULT			CShipDiverBoxinventoryDesc::Ready_Component()
 
 CShipDiverBoxinventoryDesc* CShipDiverBoxinventoryDesc::Create(float fPosX, float fPosY, std::wstring_view svAssetName)
 {
-    CShipDiverBoxinventoryDesc* pIDiverUpgrade = new CShipDiverBoxinventoryDesc{ fPosX , fPosY, svAssetName };
+    CShipDiverBoxinventoryDesc* pShipDiverBoxinventoryDesc = new CShipDiverBoxinventoryDesc{ fPosX , fPosY, svAssetName };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipDiverBoxinventoryDesc->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipDiverBoxinventoryDesc);
+        MSG_BOX("pShipDiverBoxinventoryDesc Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipDiverBoxinventoryDesc;
 }
 
 void CShipDiverBoxinventoryDesc::Free()

@@ -48,7 +48,7 @@ private:
 	STATE  e_Terrian{ TERRIAN_OFF };
 	_bool  m_bFrustum{false};
 	_bool  m_backGround{ false };
-	float  m_dark{1.f};
+
 	vector<CGameObject*> m_vecCoral;
 private:
 	wstring m_CollisionName;

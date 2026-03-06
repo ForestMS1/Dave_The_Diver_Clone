@@ -69,6 +69,9 @@
 #include "CWPAmmoCntText.h"
 #include "CAmmoPack.h"
 #include "CSoundMgr.h"
+
+#include "CDiveGetWeaponUI.h"
+#include "CGetItemUI.h"
 #include "CSpaceKeyUI.h"
 CDive::CDive()
 	: CScene()
@@ -146,8 +149,8 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
-	//CColliderMgr::GetInstance()->Set_Render(true);
-
+	//CColliderMgr::GetInstance()->Set_Render(false);
+	DeepDark();
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
@@ -182,6 +185,38 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 
 	//::GetInstance()->Set_Render(false);
 	Frustum();
+	
+	_int		iExit = CScene::Update_Scene(fTimeDelta);
+
+	
+	
+
+
+	
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
+
+	
+	return iExit;
+}
+
+void CDive::LateUpdate_Scene(const _float& fTimeDelta)
+{
+	CScene::LateUpdate_Scene(fTimeDelta);
+
+	
+
+}
+
+void CDive::Render_Scene()
+{
+#ifdef _DEBUG
+	_vec2	vPos{ 0.f, 0.f };
+	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
+	pDefFont->Render_Font(L"Here is CDive", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
+
+
 	if (ImGui::Button("BackToShipUI"))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
@@ -197,14 +232,6 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 			}
 		}
 	}
-	_int		iExit = CScene::Update_Scene(fTimeDelta);
-
-	
-	
-
-
-	
-	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	ImGui::Begin("Curr Scene: CDive");
 	if (ImGui::Button("Go Ship Scene"))
 	{
@@ -219,32 +246,88 @@ _int CDive::Update_Scene(const _float& fTimeDelta)
 	{
 		CGameObject* pDiveDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst(L"DiveDave");
 		CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-	
+
 
 		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, pDaveTransform->m_vInfo[INFO_POS], 10);
 	}
 	ImGui::End();
-	return iExit;
-}
 
-void CDive::LateUpdate_Scene(const _float& fTimeDelta)
-{
-	CScene::LateUpdate_Scene(fTimeDelta);
 
-	
+	if (ImGui::Button("Spawn Dave Pos Fish"))
+	{
+		if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+		{
+			_vec3 vPos;
+			pUI->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
 
-}
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+			{
+				if (auto pHq = pLayer->Get_GameObjectFirst<CFishHQ>(L"FishHQ"))
+				{
+					Fish::AddLayer_Fish<Fish::CGreenHumpheadParrotfish>(L"GreenHumpheadParrotfish", pLayer, vPos.x, vPos.y, 0.3f, pHq);
+				}
+			}
 
-void CDive::Render_Scene()
-{
-	_vec2	vPos{ 0.f, 0.f };
-	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
-	pDefFont->Render_Font(L"Here is CDive", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			//pUI->Set_DeadCascade();
+		}
+	}
+	if (ImGui::Button("CDiveGetWeaponUI"))
+	{
+		//CDiveGetWeaponUI
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			auto pGetWeaponUI = CDiveGetWeaponUI::Create(500.f, -150.f);
+			pGetWeaponUI->Set_ImgAssetName(L"Tex_UI_Gun_Penta_Accel");
+			pGetWeaponUI->Set_Title(L"ÆæÅ¸ ¾Ç¼¿");
+			pGetWeaponUI->Set_Desc(L"ÆæÅ¸ ¾Ç¼¼·ç´Ù.");
+			pGetWeaponUI->Ready_AfterCreate();
+			pLayer->Add_GameObject(L"GetWeaponUI", pGetWeaponUI);
+		}
+	}
+	if (ImGui::Button("CDiveItemDescUI"))
+	{
+		if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
+		{
+			pUI->Set_Title(L"Tiasdf");
+			pUI->Set_Desc(L"DDDEEESSCC");
+			pUI->Set_Render(!pUI->Get_Render());
+			//pUI->Set_DeadCascade();
+		}
+		else
+		{
+		}
+	}
+	if (ImGui::Button("GetItemUI"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
+			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_Asian_Sheepshead");
+			pGetItemUI->Ready_AfterCreate();
+			pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+		}
+	}
+
+	if (ImGui::Button("HoldUI"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			if (auto pUI = pLayer->Get_GameObjectFirst(L"HoldFishUI"))
+			{
+				pUI->Set_DeadCascade();
+			}
+			else
+			{
+				auto pHoldFishUI = CHoldFishUI::Create(0.f, 0.f);
+				pLayer->Add_GameObject(L"HoldFishUI", pHoldFishUI);
+
+
+			}
+		}
+	}
+#endif
 	CCameraMgr::GetInstance()->Render_Camera();
 	CMapMgr::GetInstance()->Render_Map();
-
-
-
 
 
 }
@@ -447,28 +530,28 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		pGameObject = CCommonItemWood::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Wood", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -10, 5, 0.f };
 		pGameObject = CCommonItemWoodPlate::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_WoodPlate", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -9, 5, 0.f };
 		pGameObject = CCommonItemWatch::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Watch", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -8, 5, 0.f };
 		pGameObject = CCommonItemBone::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Bone", pGameObject)))
 			return E_FAIL;
 
 
@@ -476,42 +559,42 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_DeepseaCoral", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -6, 5, 0.f };
 		pGameObject = CCommonItemFragment::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Fragment", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -5, 5, 0.f };
 		pGameObject = CCommonItemThurible::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Thurible", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -4, 5, 0.f };
 		pGameObject = CCommonItemRope::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Rope", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -3, 5, 0.f };
 		pGameObject = CCommonItemUmb::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Umb", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -2, 5, 0.f };
 		pGameObject = CAmmoPack::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack", pGameObject)))
 			return E_FAIL;
 
 	}
@@ -806,3 +889,33 @@ void CDive::Free()
 	CSoundMgr::GetInstance()->StopAll();
 }
 
+void CDive::DeepDark() {
+
+
+	_vec3 floor;
+	
+	CGameObject* pDiveDave = Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	pDaveTransform->Get_Info(INFO_POS, &floor);
+
+	
+	float _dark = CGameMemMgr::GetInstance()->Get_Dark();
+
+	if (floor.y <= -80.f && _dark > 0.5f) {
+		_dark -= 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y > -80.f && _dark <= 0.99f) {
+		_dark += 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y > -130.f && _dark <= 0.5f) {
+		_dark += 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y <= -130.f && _dark >= 0.12f) {
+		_dark -= 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+
+	}
+}

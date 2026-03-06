@@ -66,6 +66,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     if (FAILED(CFrameMgr::GetInstance()->Ready_Frame(L"Frame60", 1.f / 60.f)))
         return FALSE;
 
+#ifdef _DEBUG
+    SetWindowText(g_hWnd, L"DEBUG");
+#else
+    SetWindowText(g_hWnd, L"RELEASE");
+#endif // _DEBUG
+
+    
+
     // 기본 메시지 루프입니다:
     while (true)
     {

@@ -39,75 +39,7 @@ HRESULT CFishHQ::Ready_GameObject()
 
 _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 {
-    if (ImGui::Button("Spawn Dave Pos Fish"))
-    {
-        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
-        {
-            _vec3 vPos;
-            pUI->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
-
-            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-            {
-                Fish::AddLayer_Fish<Fish::CGreenHumpheadParrotfish>(L"GreenHumpheadParrotfish", pLayer, vPos.x, vPos.y, 0.3f, this);
-            }
-
-            //pUI->Set_DeadCascade();
-        }
-    }
-    if (ImGui::Button("CDiveGetWeaponUI"))
-    {
-        //CDiveGetWeaponUI
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            auto pGetWeaponUI = CDiveGetWeaponUI::Create(500.f, -150.f);
-            pGetWeaponUI->Set_ImgAssetName(L"Tex_UI_Gun_Penta_Accel");
-            pGetWeaponUI->Set_Title(L"ÆæÅ¸ ¾Ç¼¿");
-            pGetWeaponUI->Set_Desc(L"ÆæÅ¸ ¾Ç¼¼·ç´Ù.");
-            pGetWeaponUI->Ready_AfterCreate();
-            pLayer->Add_GameObject(L"GetWeaponUI", pGetWeaponUI);
-        }
-    }
-    if (ImGui::Button("CDiveItemDescUI"))
-    {
-        if (auto pUI = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst<CDiveItemDescUI>(L"DiveItemDescUI"))
-        {
-            pUI->Set_Title(L"Tiasdf");
-            pUI->Set_Desc(L"DDDEEESSCC");
-            pUI->Set_Render(!pUI->Get_Render());
-            //pUI->Set_DeadCascade();
-        }
-        else
-        {
-        }
-    }
-    if (ImGui::Button("GetItemUI"))
-    {
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
-            pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_Asian_Sheepshead");
-            pGetItemUI->Ready_AfterCreate();
-            pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
-        }
-    }
-
-    if (ImGui::Button("HoldUI"))
-    {
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            if (auto pUI = pLayer->Get_GameObjectFirst(L"HoldFishUI"))
-            {
-                pUI->Set_DeadCascade();
-            }
-            else
-            {
-                auto pHoldFishUI = CHoldFishUI::Create(0.f, 0.f);
-                pLayer->Add_GameObject(L"HoldFishUI", pHoldFishUI);
-
-                
-            }
-        }
-    }
+    
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
     m_fTimer += fTimeDelta;

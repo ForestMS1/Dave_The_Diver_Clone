@@ -137,16 +137,16 @@ HRESULT			CTransitionFade::Ready_Component()
 
 CTransitionFade* CTransitionFade::Create(float fPosX, float fPosY, FADE_ID eFade)
 {
-    CTransitionFade* pIDiverUpgrade = new CTransitionFade{ fPosX , fPosY, eFade };
+    CTransitionFade* pTransitionFade = new CTransitionFade{ fPosX , fPosY, eFade };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pTransitionFade->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pTransitionFade);
+        MSG_BOX("pTransitionFade Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pTransitionFade;
 }
 
 void CTransitionFade::Free()

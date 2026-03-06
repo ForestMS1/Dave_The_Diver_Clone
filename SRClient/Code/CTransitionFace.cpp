@@ -101,16 +101,16 @@ HRESULT			CTransitionFace::Ready_Component()
 
 CTransitionFace* CTransitionFace::Create(float fPosX, float fPosY)
 {
-    CTransitionFace* pIDiverUpgrade = new CTransitionFace{ fPosX , fPosY };
+    CTransitionFace* pTransitionFace = new CTransitionFace{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pTransitionFace->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pTransitionFace);
+        MSG_BOX("pTransitionFace Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pTransitionFace;
 }
 
 void CTransitionFace::Free()

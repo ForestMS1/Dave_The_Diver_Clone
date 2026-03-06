@@ -258,6 +258,12 @@ public:
 	_bool Get_BossKilled() { return m_bBossKilled; }
 private:
 	_bool m_bBossKilled{ false };
+
+public:
+		void Set_Dark(_float _fDark) { m_fDark = _fDark; }
+		_float Get_Dark() { return m_fDark; }
+private:
+	_float m_fDark{ 1.f };
 };
 
 END
