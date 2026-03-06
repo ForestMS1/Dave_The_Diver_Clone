@@ -74,6 +74,7 @@
 #include "CGetItemUI.h"
 #include "CSpaceKeyUI.h"
 #include "CFishTankCollider.h"
+#include "CDaveGoldBall.h"
 CDive::CDive()
 	: CScene()
 {
@@ -306,7 +307,7 @@ void CDive::Render_Scene()
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
 		{
 			auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
-			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_Asian_Sheepshead");
+			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_JohnHead");
 			pGetItemUI->Ready_AfterCreate();
 			pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
 		}
@@ -534,6 +535,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"HarpoonProjectile", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CDaveGoldBall::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DaveGoldBall", pGameObject)))
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
@@ -863,14 +871,14 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// WPBox
-	pGameObject = CWPBoxUI::Create(false);
+	pGameObject = CWPBoxUI::Create(true);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
-	pGameObject = CWPBoxUI::Create(true);
+	pGameObject = CWPBoxUI::Create(false);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI2", pGameObject)))
@@ -935,7 +943,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"CurDepthText", pDepthText)))
 		return E_FAIL;
-	pDepthText->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	//pDepthText->Set_Opt();
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pDepthText)); // 플레이어 관찰
 
 	pGameObject = CWeightIcon::Create();

@@ -553,6 +553,9 @@
     <Filter Include="01. Scene\05. Ending\Background">
       <UniqueIdentifier>{91aa63e5-ba38-4f6f-9179-88abef5640d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\DaveGoldBall">
+      <UniqueIdentifier>{10cf98a1-5af8-4e8a-b640-c566911c6558}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1386,6 +1389,9 @@
     <ClInclude Include="..\Header\CEndingBG.h">
       <Filter>01. Scene\05. Ending\Background</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDaveGoldBall.h">
+      <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2197,6 +2203,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEndingBG.cpp">
       <Filter>01. Scene\05. Ending\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDaveGoldBall.cpp">
+      <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

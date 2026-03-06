@@ -9,6 +9,7 @@
 #include "CManagement.h"
 #include "CDiveDave.h"
 #include "CJohn.h"
+#include "CSoundMgr.h"
 CJohnMine::CJohnMine(_vec3 vOrigin, _vec3 vDir)
 	: m_vDir(vDir)
 	, m_vOrigin(vOrigin)
@@ -234,6 +235,11 @@ void CJohnMine::Explosion(const _float& fTimeDelta)
 	m_fExplosionTime += fTimeDelta;
 	if (m_fExplosionTime > 1.f)
 	{
+		if (!m_bSoundExplosion)
+		{
+			m_bSoundExplosion = true;
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_Explosion_01", CSoundMgr::BOSS_SFX, 1.f);
+		}
 		m_bDead = true;
 		return;
 	}

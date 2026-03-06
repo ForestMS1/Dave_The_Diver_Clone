@@ -464,6 +464,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_YellowTang", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_YellowTang.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_YellowTang");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_John", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_John.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_John");
 	}
 
 	// Fish Thumbnails
@@ -524,7 +527,12 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Yellowback_Fusilier", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Yellowback_Fusilier_Thumbnail.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Yellowback_Fusilier");
-	}
+	
+//O_JohnHead_Thumbnail
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_JohnHead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/O_JohnHead_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_JohnHead");
+}
 
 	// DaveConversation
 	{
@@ -759,6 +767,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Bullet", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Bullet.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
+
+	// 데이브 황금알 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveGoldBall", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/DaveGoldBall.png"));
 
 	// DiveItemBox
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_A", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_A.png"));
@@ -1054,7 +1065,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_sound_hit_Fire_TripleAxel", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_hit_Fire_TripleAxel_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Vib_BasicRifle_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_BasicRifle_Shoot.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_ui_button_click", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/ui_button_click.wav"));
-
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_DaveSwim", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_Dave_Swim_01.wav"));
+		
 		
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_JohnWatson2_MIssile_Overload_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_JohnWatson2_MIssile_Overload_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_Explosion_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_Explosion_01.wav"));
@@ -1065,6 +1077,10 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_boss_nameplate", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/boss_nameplate.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM_Boss_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/BGM_Boss_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM_Boss_02", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/BGM_Boss_02.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Boss_Die", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/boss_johnwatson_die.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Cutting", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_sound_cuting.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_John_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Boss_JohnWatson3_Attack_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_John1To2", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/VO_JohnWatson/VO_JohnWatson_Angry_02.wav"));
 	}
 
 	//테스트용

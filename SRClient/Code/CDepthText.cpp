@@ -29,7 +29,7 @@ HRESULT      CDepthText::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
-    m_sFont = L"Font_Snowstorm_Size35";
+    m_sFont = L"Font_Snowstorm_Size30";
     m_bRender = true;
     return S_OK;
 }
@@ -48,8 +48,8 @@ _int      CDepthText::Update_GameObject(const _float& fTimeDelta)
         auto a = dynamic_cast<CO2UI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"O2UI"));
         a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
-        float fOffsetX = 100.f;
-        float fOffsetY = 30.f;
+        float fOffsetX = 50.f;
+        float fOffsetY = 50.f;
         m_vPos.x += fOffsetX;
         m_vPos.y += fOffsetY;
 
@@ -76,7 +76,7 @@ void      CDepthText::Render_GameObject()
     _vec2 vPos = { vScreenPos.x , vScreenPos.y };
     if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(m_sFont))
     {
-        pDefFont->Render_Font(m_sTxt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
+        pDefFont->Render_Font(m_sTxt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
     }
 
     m_bEndFrame = true;

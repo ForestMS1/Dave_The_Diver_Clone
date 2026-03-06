@@ -53,6 +53,7 @@ private:
 	_float m_fExplosionTime = 0.f;
 
 	_bool m_bCompleteSetSize = false;
+	_bool m_bSoundExplosion = false;
 
 	CTransform* m_pTargetTransform = nullptr;
 	CTransform* m_pReturnTargetTransform = nullptr;
