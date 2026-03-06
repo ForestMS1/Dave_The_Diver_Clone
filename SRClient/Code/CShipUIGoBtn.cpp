@@ -67,20 +67,30 @@ _int		CShipUIGoBtn::Update_GameObject(const _float& fTimeDelta)
 
         if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
         {
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                if (auto pSpace = pLayer->Get_GameObjectFirst(L"ShipGoSushiBtn"))
+                {
+                    //pSpace->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-3.25f, -1.3f, 0.f);
+                }
+                else {
+                    CShipUIGoSushiBtn* pGoSushiBtn = CShipUIGoSushiBtn::Create(-4.45f, -1.3f);
+                    if (nullptr == pGoSushiBtn)
+                        return NOEVENT;
+                    if (FAILED(pLayer->Add_GameObject(L"ShipGoSushiBtn", pGoSushiBtn)))
+                        return NOEVENT;
+
+                    if (auto pSpace = pLayer->Get_GameObjectFirst(L"ShipGoBtnSpaceKey"))
+                    {
+                        pSpace->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-3.25f, -1.3f, 0.f);
+                    }
+                }
+            }
             //CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
 
             if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
             {
-                CShipUIGoSushiBtn* pGoSushiBtn = CShipUIGoSushiBtn::Create(-4.45f, -1.3f);
-                if (nullptr == pGoSushiBtn)
-                    return NOEVENT;
-                if (FAILED(pLayer->Add_GameObject(L"ShipGoSushiBtn", pGoSushiBtn)))
-                    return NOEVENT;
-
-                if (auto pSpace = pLayer->Get_GameObjectFirst(L"ShipGoBtnSpaceKey"))
-                {
-                    pSpace->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-3.25f, -1.3f, 0.f);
-                }
+                
             }
             CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_APP_CLICK, 1.f);
             //ShipGoBtnSpaceKey

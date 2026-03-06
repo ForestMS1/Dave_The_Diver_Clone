@@ -27,16 +27,21 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 	bool m_bActive;
+	bool m_bGoToSushi;
+	bool m_bTalking;
 	wstring m_sImgName;
 	float m_fScaleX;
 	float m_fScaleY;
 	float m_fActiveScaleX;
 	float m_fActiveScaleY;
+	float m_fConvAppearTimer;
+	float m_fTransitionTimer;
 
 public:
 	static CShipUIGoSushiBtn* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();
+
 };
 

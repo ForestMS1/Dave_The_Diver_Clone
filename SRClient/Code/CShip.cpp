@@ -96,12 +96,14 @@ HRESULT CShip::Ready_Scene()
 	IDiver::InitIDiverInfo();
 
 	m_fResultTimer = 0.f;
+	m_fConvAppearTimer = 0.f;
 	m_bResultOpend = false;
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_BGM", CSoundMgr::BGM_SHIP_LOBBY, 0.1f);
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_amb_lobby_far_bird", CSoundMgr::CHANNELID::BGM_SHIP_BIRD, 0.1f);
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_amb_lobby_loop", CSoundMgr::BGM_SHIP_LOOP, 1.0f);
 
+	m_bTalking = false;
 	return S_OK;
 }
 
@@ -599,6 +601,67 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	if (ImGui::Button("Get Money"))
 	{
 		CGameMemMgr::GetInstance()->Set_Money2(CGameMemMgr::GetInstance()->Get_Money() + 1000);
+	}
+
+
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 1.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 10.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}
+	else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 10.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
 	}
 	return iExit;
 }

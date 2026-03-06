@@ -498,6 +498,11 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveConversation", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/DaveConversation.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DaveConversation");
 	}
+	//JohnWatsonvConversation
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_JohnConversation", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/JohnConversation.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_JohnConversation");
+	}
 
 	// BackToShip
 	{

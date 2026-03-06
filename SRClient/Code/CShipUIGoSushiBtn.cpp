@@ -8,6 +8,8 @@
 #include "CAssetDefaultFont.h"
 #include "CDInputMgr.h"
 #include "CTransition.h"
+#include "CManagement.h"
+#include "CDaveConversation.h"
 
 CShipUIGoSushiBtn::CShipUIGoSushiBtn(float fPosX, float fPosY)
     : CGameObject()
@@ -44,7 +46,10 @@ HRESULT		CShipUIGoSushiBtn::Ready_GameObject()
     }
 
     m_bActive = false;
-
+    m_bGoToSushi = false;
+    m_bTalking = false;
+    m_fConvAppearTimer = 0.f;
+    m_fTransitionTimer = 0.f;
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
     m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
@@ -53,10 +58,62 @@ HRESULT		CShipUIGoSushiBtn::Ready_GameObject()
 
 _int		CShipUIGoSushiBtn::Update_GameObject(const _float& fTimeDelta)
 {
-    if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
-    {
-        CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+
+    if (m_bGoToSushi) {
+        m_fTransitionTimer += fTimeDelta;
+        m_fConvAppearTimer += fTimeDelta;
+        if (!m_bTalking && m_fConvAppearTimer > 1.f) {
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+                {
+                    pObj->Set_DeadCascade();
+                }
+                else
+                {
+                    CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+                    pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_5);
+                    pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+                    m_fConvAppearTimer = 0;
+                    m_bTalking = true;
+
+                }
+            }
+        }
+       /* if (!m_bTalking) {
+            m_fConvAppearTimer += fTimeDelta;
+            if (m_fConvAppearTimer > 1.f) {
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+                    {
+                        pObj->Set_DeadCascade();
+                    }
+                    else
+                    {
+                        CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+                        pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_5);
+                        pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+                        m_fConvAppearTimer = 0;
+                        m_bTalking = true;
+                        
+                    }
+                }
+            }
+
+        }*/
+        if (m_fTransitionTimer > 5.f) {
+            CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_SUSHI);
+            //m_bGoToSushi = false;
+        }
     }
+    if (!m_bGoToSushi) {
+        if (CDInputMgr::GetInstance()->Key_Up(DIK_SPACE))
+        {
+            m_bGoToSushi = true;
+        }
+    }
+   
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);

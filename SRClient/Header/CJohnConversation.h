@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-class CDaveConversation : public CGameObject
+class CJohnConversation : public CGameObject
 {
 public:
 	enum CONVERSATION
@@ -8,15 +8,11 @@ public:
 		CONV_1,
 		CONV_2,
 		CONV_3,
-		CONV_4,
-		CONV_5,
-		BOSS_1,
-		BOSS_2,
 		CONV_END
 	};
 private:
-	explicit CDaveConversation(float fPosX, float fPosY);
-	virtual ~CDaveConversation();
+	explicit CJohnConversation(float fPosX, float fPosY);
+	virtual ~CJohnConversation();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -53,13 +49,13 @@ private:
 
 
 public:
-	static CDaveConversation* Create(float fPosX, float fPosY);
+	static CJohnConversation* Create(float fPosX, float fPosY);
 
 private:
 	virtual void Free();
 
 public:
-	CONVERSATION GetCurrentConversation() { return m_eCurrentConversation;}
+	CONVERSATION GetCurrentConversation() { return m_eCurrentConversation; }
 	void		SetCurrentConversation(CONVERSATION curIndex) { m_eCurrentConversation = curIndex; }
 };
 

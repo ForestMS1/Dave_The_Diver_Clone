@@ -21,6 +21,8 @@ public:
 private:
     wstring_view m_wsTexName;
     _bool m_bChangeMotion = false;
+    _bool m_bJohnDialogCreated = false;
+    _bool m_bDaveDialogCreated = false;
 public:
     static CJohn2NoStart* Create(CJohn2* pOwner);
 private:

@@ -23,6 +23,9 @@ private:
 
 private:
 	bool m_bResultOpend;
+	bool m_bTalking;
 	float m_fResultTimer;
+	float m_fConvAppearTimer;
+
 };
 
