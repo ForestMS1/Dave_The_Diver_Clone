@@ -7,6 +7,7 @@
 #include "CCameraMgr.h"
 #include "CManagement.h"
 #include "CJohn2.h"
+#include "CSoundMgr.h"
 CJohnDie::CJohnDie(CJohn* pOwner)
 	:CBaseState<CJohn>(pOwner)
 {
@@ -34,6 +35,8 @@ void CJohnDie::Enter()
 	CDiveDaveCam* pCam = static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_CurCamera());
 	m_pOwner->Get_Pos(&m_vAt);
 	pCam->Set_Target(&m_vAt);
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_John1To2", CSoundMgr::BOSS_SFX1, 1.f);
 }
 
 void CJohnDie::Input(const _float& fTimeDelta)

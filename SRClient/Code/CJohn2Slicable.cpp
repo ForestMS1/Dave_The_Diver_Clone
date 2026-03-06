@@ -6,6 +6,7 @@
 #include "CColliderMgr.h"
 #include "CDiveDave.h"
 #include "CManagement.h"
+#include "CSoundMgr.h"
 CJohn2Slicable::CJohn2Slicable(CJohn2* pOwner)
 	:CBaseState<CJohn2>(pOwner)
 {
@@ -32,6 +33,10 @@ void CJohn2Slicable::Enter()
 	m_vRotDir = { 0.f, 0.f, 0.f };
 
     m_tween = m_tween.from(1.f).to(0.7f).during(300).via(tweeny::easing::linear);
+
+    CSoundMgr::GetInstance()->StopSound(CSoundMgr::BOSS_BGM);
+    CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DiveInGameBGM", CSoundMgr::CHANNELID::BGM, 1.f);
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Boss_Die", CSoundMgr::BOSS_SFX1, 1.f);
 }
 
 void CJohn2Slicable::Input(const _float& fTimeDelta)

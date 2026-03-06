@@ -3,6 +3,7 @@
 #include "CJohn2.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CSoundMgr.h"
 CJohn2Explosion::CJohn2Explosion(CJohn2* pOwner)
 	:CBaseState<CJohn2>(pOwner)
 {
@@ -24,6 +25,8 @@ void CJohn2Explosion::Enter()
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_JW2_Explosion_01", CSoundMgr::BOSS_SFX, 1.f);
 }
 
 void CJohn2Explosion::Input(const _float& fTimeDelta)
