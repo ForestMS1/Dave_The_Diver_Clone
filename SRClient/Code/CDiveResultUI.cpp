@@ -14,6 +14,8 @@
 #include "CToSushiUI.h"
 #include "CGameMemMgr.h"
 
+#include "CSoundMgr.h"
+
 
 CDiveResultUI::CDiveResultUI(float fPosX, float fPosY)
     : CGameObject()
@@ -64,7 +66,8 @@ HRESULT		CDiveResultUI::Ready_GameObject()
     m_pTransformCom->Update_Component(0.f);
 
 
-
+    
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_lobby_result_open", CSoundMgr::SFX, 1.0f);
     return S_OK;
 }
 

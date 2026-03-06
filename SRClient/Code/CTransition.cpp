@@ -240,6 +240,16 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BackGroundSea", CTexture::Create(L"BackGround"))))
 		return E_FAIL;
 
+	// Logo Sound
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Logo_BGM", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Logo/BGM_Title.wav"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Logo_BGM");
+
+		//ui_button_click.wav
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Logo_ui_button_click", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Logo/ui_button_click.wav"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Logo_ui_button_click");
+	}
+
 
 
 	// Write By SY
@@ -1793,6 +1803,60 @@ HRESULT CTransition::Common_SHIP_Load()
 
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_UI_Gun_Penta_Accel", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/gun_penta_accel.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_UI_Gun_Penta_Accel");
+
+
+
+
+	// ShipSound
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_BGM", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/BGM_Lobby.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_BGM");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_amb_lobby_far_bird", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/amb_lobby_far_bird.wav"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_amb_lobby_far_bird");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_amb_lobby_loop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/amb_lobby_loop.wav"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_amb_lobby_loop");
+
+		//ui_lobby_dive_01
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_dive_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_dive_01.wav"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_dive_01");
+
+		//lobby_dave_foot_01
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_lobby_dave_foot_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/Vib_lobby_dave_foot_01.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_lobby_dave_foot_01");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_button_choice", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_button_choice.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_button_choice");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_button_click", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_button_click.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_button_click");
+
+		//ui_app_click_01.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_app_click_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_app_click_01.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_app_click_01");
+
+		//ui_Mima_Buff_Popup_01.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_Mima_Buff_Popup_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_Mima_Buff_Popup_01.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_Mima_Buff_Popup_01");
+
+		//ui_Mima_Buff_Popup_02.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_Mima_Buff_Popup_02", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_Mima_Buff_Popup_02.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_Mima_Buff_Popup_02");
+
+
+		//ui_lobby_sushi_openpopup.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_sushi_openpopup", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_sushi_openpopup.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_sushi_openpopup");
+
+		//ui_lobby_result_open.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_result_open", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_result_open.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_result_open");
+
+		// ui_lobby_sms.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_sms", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_sms.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_sms");
+	}
 
 	return S_OK;
 }

@@ -11,9 +11,9 @@
 #include "CColliderMgr.h"
 #include "CDInputMgr.h"
 #include"CHoldFishUIDropPanel.h"
-#include "CHelper.h"
 #include "CHoldFishUIImg.h"
 #include "CGameMemMgr.h"
+#include "CSoundMgr.h"
 #include "CInfoMgr.h"
 
 CHoldFishUIItemGroup::CHoldFishUIItemGroup(float fPosX, float fPosY)
@@ -186,6 +186,8 @@ void		CHoldFishUIItemGroup::LateUpdate_GameObject(const _float& fTimeDelta)
                 }
 
                 pIntersected->Set_EdgeVisible(true);
+
+                CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX, 1.f);
             }
         }
     }

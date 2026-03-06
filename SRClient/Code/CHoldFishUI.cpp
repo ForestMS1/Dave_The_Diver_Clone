@@ -16,7 +16,7 @@
 #include "CHoldFishUIImg.h"
 #include "CGameMemMgr.h"
 #include "CDiveDave.h"
-
+#include "CSoundMgr.h"
 #include "CDiveDaveGun.h"
 
 CHoldFishUI::CHoldFishUI(float fPosX, float fPosY)
@@ -191,6 +191,8 @@ HRESULT		CHoldFishUI::Ready_GameObject()
 
        
     }
+
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
     return S_OK;
 }
 
@@ -213,6 +215,7 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
                         {
                             if (auto pPanel = pLayer->Get_GameObjectFirst(L"HoldFishUIDropPanel"))
                             {
+                                CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
                                 pArea->Set_DeadCascade();
                                 pPanel->Set_DeadCascade();
                                 bReSorting = true;
@@ -424,5 +427,6 @@ CHoldFishUI* CHoldFishUI::Create(float fPosX, float fPosY)
 
 void CHoldFishUI::Free()
 {
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
     CGameObject::Free();
 }
