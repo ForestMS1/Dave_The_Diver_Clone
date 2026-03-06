@@ -16,6 +16,8 @@
 #include "CTransitionFade.h"
 #include "CFinalConversation.h"
 #include "CEndingBG.h"
+#include "CLogoBG.h"
+#include "CLogoTitle.h"
 
 CEnding::CEnding()
 	: CScene()
@@ -79,14 +81,24 @@ HRESULT CEnding::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 
 	CGameObject* pGameObject = nullptr;
+	CLogoBG* pLogoBG = CLogoBG::Create(0.f, 0.f);
+	if (nullptr == pLogoBG)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CLogoBG", pLogoBG)))
+		return E_FAIL;
 
-	pGameObject = CEndingBG::Create();
+	CLogoTitle* LogoTitle = CLogoTitle::Create(0.f, 0.f);
+	if (nullptr == LogoTitle)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CLogoTitle", LogoTitle)))
+		return E_FAIL;
+	/*pGameObject = CEndingBG::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Background", pGameObject)))
-		return E_FAIL;
+		return E_FAIL;*/
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
