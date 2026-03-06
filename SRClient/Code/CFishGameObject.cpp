@@ -13,6 +13,8 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CColliderMgr.h"
+#include "CFishAABBCollider.h"
 CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -454,23 +456,33 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
         {
             //m_vMoveTarget();
 
-            float fRange = 300.0f; 
-           
-            float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
-            float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+            _vec3 vParentPos;
+            m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
 
-            _vec3 vNewMoveTarget = { m_fPosX + randX, m_fPosY + randY, 0.f };
+            _vec3 vParentScale;
+            m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Scale(&vParentScale);
+
+            float fRangeX = vParentScale.x * 2.f;
+            float fRangeY = vParentScale.y * 2.f;
+
+            
+            //float fRange = 300.0f; 
+           
+            float randX = ((rand() % 101) / 100.f) * fRangeX - (fRangeX * 0.5f);
+            float randY = ((rand() % 101) / 100.f) * fRangeY - (fRangeY * 0.5f);
+
+            _vec3 vNewMoveTarget = { vParentPos.x + randX, vParentPos.y + randY, 0.f };
             m_vMoveTarget = vNewMoveTarget;
 
             m_fMoveTargetReLocateTimer = 0.f;
 
 
             {
-                float fRange = 10.0f;
+                float fRange = 15.0f;
 
-                float randX = ((rand() % 101) / 100.f) * fRange;
+                float randTime = ((rand() % 101) / 100.f) * fRange;
 
-                m_fMoveTargetReLocateTimerRef = randX;
+                m_fMoveTargetReLocateTimerRef = randTime;
             }
         }
 
@@ -561,10 +573,15 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 void CFishGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
+    Frustrum();
 }
 
 void CFishGameObject::Render(function<void()> beforeDrawLambda)
 {
+
+    if (m_bFrustum) 
+        return;
+    
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -844,4 +861,38 @@ void CFishGameObject::MoveTo(_vec3* vToPos, const float& fTimeDelta)
 void CFishGameObject::Free()
 {
     CGameObject::Free();
+}
+
+void CFishGameObject::Frustrum() {
+    //L"AABB_FishHitbox"
+
+    if (CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera") != nullptr) {
+        CCollider* CameraCollider = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera")->front();
+
+        if (auto pChildren = this->Get_Children()) {
+            for (auto& Collider : *pChildren) {
+                if (Collider->Get_Tag() == L"FishHitBoxCollider") {
+
+                    if (CameraCollider->Intersect(dynamic_cast<CFishAABBCollider*>(Collider)->Get_AABB() ))
+                    {
+
+                        m_bFrustum = false;
+
+
+                    }
+
+                    else{
+
+                        m_bFrustum = true;
+
+                    }
+                }
+            }
+
+        }
+
+    }
+            
+
+    
 }

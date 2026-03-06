@@ -65,8 +65,11 @@ void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstr
 HRESULT CTransition::Transition_INIT_TO_LOGO()
 {
 	
-	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Resource/Data/Map1.json"));
+	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Resource/Data/MapSave.json"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Json_Map");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Json_MapLoad", CAssetJson::Create(L"../Bin/Resource/Data/MapLoad.json"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Json_MapLoad");
 
 
 
