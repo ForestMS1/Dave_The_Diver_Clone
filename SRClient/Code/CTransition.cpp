@@ -277,17 +277,21 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//Ending Background
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_EndingBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ending/BG/EndingLogo.jpg"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndingBG", Engine::CTexture::Create(L"Tex_EndingBG"))))
+		return E_FAIL;
 	// FinalConversation
 	{
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv1", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv1.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv1", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal1_1.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv1");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv2", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv2.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv2", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal2_2.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv2");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv3", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv3.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv3", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal3_3.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv3");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv4", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv4.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv4", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal4_4.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv4");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv5", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv5.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv5", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal5_5.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv5");
 	}
 	//firework sound
@@ -301,6 +305,8 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"talk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/talk.mp3"));
 		CAssetMgr::GetInstance()->LoadAsset(L"talk");
+		CAssetMgr::GetInstance()->AddAsset(L"bosstalk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/bosstalk.mp3"));
+		CAssetMgr::GetInstance()->LoadAsset(L"bosstalk");
 	}
 	//stockMarket
 	{

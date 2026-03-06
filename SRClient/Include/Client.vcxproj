@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\CDiveGetWeaponUIImg.h" />
     <ClInclude Include="..\Header\CDiveItemDescUI.h" />
     <ClInclude Include="..\Header\CEnding.h" />
+    <ClInclude Include="..\Header\CEndingBG.h" />
     <ClInclude Include="..\Header\CFinalConversation.h" />
     <ClInclude Include="..\Header\CFishTankCollider.h" />
     <ClInclude Include="..\Header\CGunSkill02Aim.h" />
@@ -461,6 +462,7 @@
     <ClCompile Include="..\Code\CDiveGetWeaponUIImg.cpp" />
     <ClCompile Include="..\Code\CDiveItemDescUI.cpp" />
     <ClCompile Include="..\Code\CEnding.cpp" />
+    <ClCompile Include="..\Code\CEndingBG.cpp" />
     <ClCompile Include="..\Code\CFinalConversation.cpp" />
     <ClCompile Include="..\Code\CFishTankCollider.cpp" />
     <ClCompile Include="..\Code\CGunSkill02Aim.cpp" />

@@ -15,6 +15,9 @@
 #include "CParticleMgr.h"
 #include "CTransitionFade.h"
 #include "CFinalConversation.h"
+#include "CEndingBG.h"
+#include "CLogoBG.h"
+#include "CLogoTitle.h"
 
 CEnding::CEnding()
 	: CScene()
@@ -34,7 +37,8 @@ HRESULT CEnding::Ready_Scene()
 		return E_FAIL;
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Logo_BGM", CSoundMgr::BGM, 1.f);
-
+	m_bImageCreated = false;
+	m_fTimer = 0.f;
 	return S_OK;
 }
 
@@ -42,7 +46,14 @@ _int CEnding::Update_Scene(const _float& fTimeDelta)
 {
 	Update_Camera();
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
-
+	if (!m_bImageCreated) {
+		m_fTimer += fTimeDelta;
+		if (m_fTimer > 1.5f) {
+			CFinalConversation* conversation = CFinalConversation::Create(0.f, -1.5f);
+			CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_Environment_Layer")->Add_GameObject(L"EndingCV", conversation);
+			m_bImageCreated = true;
+		}
+	}
 
 	return iExit;
 }
@@ -70,14 +81,24 @@ HRESULT CEnding::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 
 	CGameObject* pGameObject = nullptr;
+	CLogoBG* pLogoBG = CLogoBG::Create(0.f, 0.f);
+	if (nullptr == pLogoBG)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CLogoBG", pLogoBG)))
+		return E_FAIL;
 
-	pGameObject = CFinalConversation::Create(0.f, -2.f);
+	CLogoTitle* LogoTitle = CLogoTitle::Create(0.f, 0.f);
+	if (nullptr == LogoTitle)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"CLogoTitle", LogoTitle)))
+		return E_FAIL;
+	/*pGameObject = CEndingBG::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
 	if (FAILED(pLayer->Add_GameObject(L"Background", pGameObject)))
-		return E_FAIL;
+		return E_FAIL;*/
 	m_mapLayer.insert({ std::wstring(svLayerTag), pLayer });
 
 	return S_OK;
