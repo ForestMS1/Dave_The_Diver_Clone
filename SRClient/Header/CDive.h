@@ -14,6 +14,7 @@ public:
 	void		Render_Scene() override;
 	void		Frustum();
 	void		DeepDark();
+	void		Place_Fish();
 private:
 	HRESULT Ready_GameLogic_Layer(std::wstring_view svLayerTag);
 	HRESULT Ready_Environment_Layer(std::wstring_view svLayerTag);
@@ -25,7 +26,8 @@ public:
 private:
 	CGameObject* m_pDive = nullptr; // Dive구독용 // 여기서 해제하지않는다!
 	CBoundingFrustum* m_pFrustumCollider{nullptr};
-
+	_bool		m_bFishCreate{ false };
+	
 private:
 	void Free() override;
 

@@ -74,6 +74,8 @@
 #include "CGetItemUI.h"
 #include "CSpaceKeyUI.h"
 #include "CFishTankCollider.h"
+#include "CDaveGoldBall.h"
+
 CDive::CDive()
 	: CScene()
 {
@@ -145,11 +147,14 @@ HRESULT CDive::Ready_Scene()
 	m_pFrustumCollider->Set_OriginalColor(D3DXCOLOR{});
 	CParticleMgr::GetInstance()->Set_ParicleOn(true);
 	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_SEABUBBLE, {0.f,0.f,1.f}, 40);
+
+
 	return S_OK;
 }
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
+
 	//CColliderMgr::GetInstance()->Set_Render(false);
 	DeepDark();
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
@@ -205,7 +210,7 @@ void CDive::LateUpdate_Scene(const _float& fTimeDelta)
 	CScene::LateUpdate_Scene(fTimeDelta);
 
 	
-
+	Place_Fish();
 }
 
 void CDive::Render_Scene()
@@ -303,7 +308,7 @@ void CDive::Render_Scene()
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
 		{
 			auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
-			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_Asian_Sheepshead");
+			pGetItemUI->Set_ImgAssetName(L"Tex_FishThumb_JohnHead");
 			pGetItemUI->Ready_AfterCreate();
 			pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
 		}
@@ -326,6 +331,52 @@ void CDive::Render_Scene()
 			}
 		}
 	}
+
+	if (ImGui::Button("Fish_Object"))
+	{
+		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+		{
+			if (auto pColl1 = pLayer->Get_GameObjectFirst(L"FishTankCollider_1"))
+			{
+				_vec3 vPos;
+				pColl1->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl1);
+			}
+			if (auto pColl2 = pLayer->Get_GameObjectFirst(L"FishTankCollider_2"))
+			{
+
+			}
+			if (auto pColl3 = pLayer->Get_GameObjectFirst(L"FishTankCollider_3"))
+			{
+
+			}
+			if (auto pColl4 = pLayer->Get_GameObjectFirst(L"FishTankCollider_4"))
+			{
+
+			}
+			if (auto pColl5 = pLayer->Get_GameObjectFirst(L"FishTankCollider_5"))
+			{
+
+			}
+			if (auto pColl6 = pLayer->Get_GameObjectFirst(L"FishTankCollider_6"))
+			{
+
+			}
+			if (auto pColl7 = pLayer->Get_GameObjectFirst(L"FishTankCollider_7"))
+			{
+
+			}
+			if (auto pColl8 = pLayer->Get_GameObjectFirst(L"FishTankCollider_8"))
+			{
+
+			}
+			if (auto pColl9 = pLayer->Get_GameObjectFirst(L"FishTankCollider_9"))
+			{
+
+			}
+			
+		}
+	}
 #endif
 	CCameraMgr::GetInstance()->Render_Camera();
 	CMapMgr::GetInstance()->Render_Map();
@@ -338,14 +389,41 @@ void CDive::Frustum() {
 	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_TestCamera", m_pFrustumCollider);
 
-	CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
-	_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
-	D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
-	_matrix MoveMatrix;
-	D3DXMatrixIdentity(&MoveMatrix);
-	memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
-	MoveMatrix.m[3][2] = CameraView.m[3][2];
-	m_pFrustumCollider->Transform(&CameraView);
+	if(CDInputMgr::GetInstance()->Key_Down(DIK_1)) {
+		if (!CColliderMgr::GetInstance()->Get_Render()) {
+			CColliderMgr::GetInstance()->Set_Render(true);
+			CCameraMgr::GetInstance()->Change_CurCamera(L"FreeCam");
+
+
+		}
+		else {
+			CColliderMgr::GetInstance()->Set_Render(false);
+			CCameraMgr::GetInstance()->Change_CurCamera(L"ChaseToPlayerCam");
+
+		}
+	}
+
+
+	if (CColliderMgr::GetInstance()->Get_Render()) {
+		_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
+		D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
+		_matrix MoveMatrix;
+		D3DXMatrixIdentity(&MoveMatrix);
+		memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
+		MoveMatrix.m[3][2] = CameraView.m[3][2];
+		m_pFrustumCollider->Transform(&MoveMatrix);
+
+	}
+	else {
+		CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
+		_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
+		D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
+
+		m_pFrustumCollider->Transform(&CameraView);
+	}
+
+
+	
 }
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
@@ -380,9 +458,16 @@ HRESULT CDive::Ready_Fish_Layer(std::wstring_view svLayerTag)
 
 	CFishHQ* pFishHQ = CFishHQ::Create();
 	pLayer->Add_GameObject(L"FishHQ", pFishHQ);
+	for (int i = 1; i <= 9; ++i) {
+		CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(1.f, 1.f);
+		pLayer->Add_GameObject(L"FishTankCollider_" + to_wstring(i), pFishTankCollider);
+	}
 
-	CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(L"AABB_FishTank", L"Coll_FishTankFishes");
-	pLayer->Add_GameObject(L"FishTankCollider", pFishTankCollider);
+	
+
+
+	//CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(L"AABB_FishTank", L"Coll_FishTankFishes");
+	//pLayer->Add_GameObject(L"FishTankCollider", pFishTankCollider);
 
 	//{
 	//	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(0.f, 0.f, 0.05f * 0.3f);
@@ -478,6 +563,13 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"HarpoonProjectile", pGameObject)))
+		return E_FAIL;
+	pGameObject->Set_Parent(pDiveDave);
+
+	pGameObject = CDaveGoldBall::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DaveGoldBall", pGameObject)))
 		return E_FAIL;
 	pGameObject->Set_Parent(pDiveDave);
 
@@ -807,14 +899,14 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// WPBox
-	pGameObject = CWPBoxUI::Create(false);
+	pGameObject = CWPBoxUI::Create(true);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
-	pGameObject = CWPBoxUI::Create(true);
+	pGameObject = CWPBoxUI::Create(false);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI2", pGameObject)))
@@ -879,7 +971,7 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"CurDepthText", pDepthText)))
 		return E_FAIL;
-	pDepthText->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
+	//pDepthText->Set_Opt();
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pDepthText)); // 플레이어 관찰
 
 	pGameObject = CWeightIcon::Create();
@@ -993,4 +1085,422 @@ void CDive::DeepDark() {
 		CGameMemMgr::GetInstance()->Set_Dark(_dark);
 
 	}
+}
+
+
+void CDive::Place_Fish() {
+	if (!m_bFishCreate) {
+		if (auto pLayer = m_mapLayer[L"2_Fish_Layer"])
+		{
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_1"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_2"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_3"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_4"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_5"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_6"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_7"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_8"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_9"))
+			{
+				_vec3 vPos;
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				pColl->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
+				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl);
+			}
+
+		}
+
+		m_bFishCreate = true;
+	}
+	
 }

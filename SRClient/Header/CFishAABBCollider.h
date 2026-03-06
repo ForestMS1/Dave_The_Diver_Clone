@@ -18,6 +18,8 @@ public:
 	void Set_ApplyParentAngle(bool b) { m_bApplyParentAngle = b; };
 	void Set_PosOffset(_vec3 const* pOffset) { m_vPosOffset = *pOffset; }
 
+public:
+	CAABB* Get_AABB() { return m_pAABB; }
 private:
 	HRESULT			Ready_Component();
 

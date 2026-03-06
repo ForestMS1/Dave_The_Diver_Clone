@@ -27,15 +27,16 @@ HRESULT CGreyTriggerfish::Ready_GameObject()
 {
     m_sFishName = L"회색쥐치";
     m_sThumbNailAssetName = L"Tex_FishThumb_Grey_Triggerfish";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 2;  // 랭크 2 (중간)
+    m_iStar = 2;  // 별 2개
+    m_fWeight = 0.8f;  // 0.8kg
+    m_iPrice = 12;  // 가격 12
+    m_fLength = 18.f;  // 길이 18cm
+    m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreyTriggerfish";
-    m_iSushiMoney = 12;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 18;  // 스시 가격 18
+    m_iSushiLv = 2;  // 스시 레벨 2
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

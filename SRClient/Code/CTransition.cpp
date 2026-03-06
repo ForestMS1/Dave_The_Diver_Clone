@@ -65,8 +65,11 @@ void CTransition::After_SceneChange(const pair<std::wstring, map<const std::wstr
 HRESULT CTransition::Transition_INIT_TO_LOGO()
 {
 	
-	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Resource/Data/Map1.json"));
+	CAssetMgr::GetInstance()->AddAsset(L"Json_Map", CAssetJson::Create(L"../Bin/Resource/Data/MapSave.json"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Json_Map");
+
+	CAssetMgr::GetInstance()->AddAsset(L"Json_MapLoad", CAssetJson::Create(L"../Bin/Resource/Data/MapLoad.json"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Json_MapLoad");
 
 
 
@@ -277,17 +280,25 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//close shop sound
+	CAssetMgr::GetInstance()->AddAsset(L"Sound_CloseShop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_sushibar_close.ogg"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Sound_CloseShop");
+
+	//Ending Background
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_EndingBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ending/BG/EndingLogo.jpg"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndingBG", Engine::CTexture::Create(L"Tex_EndingBG"))))
+		return E_FAIL;
 	// FinalConversation
 	{
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv1", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv1.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv1", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal1_1.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv1");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv2", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv2.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv2", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal2_2.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv2");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv3", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv3.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv3", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal3_3.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv3");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv4", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv4.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv4", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal4_4.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv4");
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv5", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv5.png"));
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv5", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/MyFinal5_5.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv5");
 	}
 	//firework sound
@@ -301,6 +312,8 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"talk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/talk.mp3"));
 		CAssetMgr::GetInstance()->LoadAsset(L"talk");
+		CAssetMgr::GetInstance()->AddAsset(L"bosstalk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/bosstalk.mp3"));
+		CAssetMgr::GetInstance()->LoadAsset(L"bosstalk");
 	}
 	//stockMarket
 	{
@@ -458,6 +471,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_YellowTang", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_YellowTang.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_YellowTang");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_John", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_John.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_John");
 	}
 
 	// Fish Thumbnails
@@ -518,7 +534,12 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Yellowback_Fusilier", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Yellowback_Fusilier_Thumbnail.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Yellowback_Fusilier");
-	}
+	
+//O_JohnHead_Thumbnail
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_JohnHead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/O_JohnHead_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_JohnHead");
+}
 
 	// DaveConversation
 	{
@@ -753,6 +774,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Bullet", CAssetTexture::Create(L"../Bin/Resource/Texture/Weapon/Bullet.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFire", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFire/AttackFire01.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_DivePlayerAttackFail", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/AttackFail/AttackFail01.png"));
+
+	// 데이브 황금알 
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_DaveGoldBall", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/DaveGoldBall.png"));
 
 	// DiveItemBox
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Chest_A", CAssetTexture::Create(L"../Bin/Resource/Texture/Box/Chest_A.png"));
@@ -1048,7 +1072,8 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_sound_hit_Fire_TripleAxel", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_hit_Fire_TripleAxel_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Vib_BasicRifle_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_BasicRifle_Shoot.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_ui_button_click", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/ui_button_click.wav"));
-
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_DaveSwim", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/sound_Dave_Swim_01.wav"));
+		
 		
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_JohnWatson2_MIssile_Overload_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_JohnWatson2_MIssile_Overload_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_JW2_Explosion_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/JW2_Explosion_01.wav"));
@@ -1059,6 +1084,10 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_boss_nameplate", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/boss_nameplate.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM_Boss_01", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/BGM_Boss_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_BGM_Boss_02", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/JW2/BGM_Boss_02.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Boss_Die", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/boss_johnwatson_die.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Cutting", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_sound_cuting.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_John_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Boss_JohnWatson3_Attack_01.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_John1To2", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/VO_JohnWatson/VO_JohnWatson_Angry_02.wav"));
 	}
 
 	//테스트용
@@ -2218,7 +2247,8 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
-			pTxt->Set_Txt(L"로비로비로");
+			pTxt->Set_Txt(L"로비");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;
@@ -2248,6 +2278,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
 			pTxt->Set_Txt(L"두다이브");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;
@@ -2276,6 +2307,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
 			pTxt->Set_Txt(L"회식은갓파스시?");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;

@@ -25,5 +25,9 @@ public:
 
 private:
 	virtual void	Free();
+
+private:
+	float m_fTimer;
+	bool m_bImageCreated;
 };
 
