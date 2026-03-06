@@ -94,7 +94,7 @@ _int		CStockMarket::Update_GameObject(const _float& fTimeDelta)
             CGameMemMgr::GetInstance()->Set_Money2(0);
             moneyChanged = true;
         }else if (CGameMemMgr::GetInstance()->GetStockMarketIndex() == 8) {
-            CGameMemMgr::GetInstance()->Set_Money2(2850);
+            CGameMemMgr::GetInstance()->Set_Money2(50000);
             moneyChanged = true;
         }else if (CGameMemMgr::GetInstance()->GetStockMarketIndex() == 11) {
             CGameMemMgr::GetInstance()->Set_Money2(-99999);

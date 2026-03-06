@@ -101,6 +101,11 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 		e.type = EVENTTYPE::WEAPONSLOT_CHANGE;
 		m_pOwner->Notify(e);
 	}
+
+	if (CDInputMgr::GetInstance()->Key_Down(DIK_P))
+	{
+		m_pOwner->On_Hit(10.f);//m_bIsHit = true;
+	}
 		
 
 

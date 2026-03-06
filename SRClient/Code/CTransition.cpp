@@ -277,6 +277,10 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//close shop sound
+	CAssetMgr::GetInstance()->AddAsset(L"Sound_CloseShop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_sushibar_close.ogg"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Sound_CloseShop");
+
 	//Ending Background
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_EndingBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ending/BG/EndingLogo.jpg"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndingBG", Engine::CTexture::Create(L"Tex_EndingBG"))))
