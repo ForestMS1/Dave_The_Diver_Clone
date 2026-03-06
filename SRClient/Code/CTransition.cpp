@@ -2343,13 +2343,36 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 
 	{
-		wstring tipTxt[3];
-		tipTxt[0] = L"그거 아시나요? 거북이는 엉덩이로 숨을 쉴 수 있어서 물속에서 오래 버텨요.";
-		tipTxt[1] = L"그거 아시나요? 굴은 살면서 필요에 따라 암수 성별을 자유자재로 바꿀 수 있답니다.";
-		tipTxt[2] = L"그거 아시나요? 흰수염고래의 혀 무게만 해도 코끼리 한 마리랑 맞먹을 정도로 커요.";
+		wstring tipTxt[13];
+		tipTxt[0] = L"그거 아시나요? 상어는 바닥에서 20분 넘게 숨을 참을 수 있어요.";
 
-		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f);
-		pTxt->Set_Txt(tipTxt[rand() % 3]);
+		tipTxt[1] = L"그거 아시나요? 문어는 팔을 잘라내도 다시 자라나요!";
+
+		tipTxt[2] = L"그거 아시나요? 바다거북은 생애 동안 대륙을 3번이나 왕복할 수 있다고 해요.";
+
+		tipTxt[3] = L"그거 아시나요? 고래는 1년에 수천 킬로미터를 이동하며, 1주일만에 3000km도 간다고 해요.";
+
+		tipTxt[4] = L"그거 아시나요? 바다표범은 겨울에 물속에서 잠을 자며, 호흡을 멈추고 동면을 해요.";
+
+		tipTxt[5] = L"그거 아시나요? 바다의 플랑크톤은 지구의 산소의 절반을 만든다고 해요!";
+
+		tipTxt[6] = L"그거 아시나요? 물고기의 눈은 그 자체로 빛을 반사할 수 있어 어두운 바다에서 빛나요.";
+
+		tipTxt[7] = L"그거 아시나요? 바다 속에서 가장 빠른 동물은 '검은팁상어'로 시속 60킬로미터 이상 나가요.";
+
+		tipTxt[8] = L"그거 아시나요? 해파리는 뇌도 심장도 없지만, 95%가 물로 이루어져 있어요.";
+
+		tipTxt[9] = L"그거 아시나요? 진주조개는 주기적으로 진주를 생성하며, 그 크기가 점점 커질 수 있어요.";
+
+		tipTxt[10] = L"그거 아시나요? 거북이는 엉덩이로 숨을 쉴 수 있어서 물속에서 오래 버텨요.";
+		tipTxt[11] = L"그거 아시나요? 굴은 살면서 필요에 따라 암수 성별을 자유자재로 바꿀 수 있답니다.";
+		tipTxt[12] = L"그거 아시나요? 흰수염고래의 혀 무게만 해도 코끼리 한 마리랑 맞먹을 정도로 커요.";
+		 srand((unsigned int)time(0));  // 랜덤 시드 초기화
+		int randomIndex = rand() % 13;  // 0부터 12까지 랜덤 인덱스 생성
+
+		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f); // 텍스트 전환 객체 생성
+		pTxt->Set_Txt(tipTxt[randomIndex]);  // 랜덤 팁 텍스트 설정
+
 		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 		if (nullptr == pTxt)
 			return E_FAIL;
