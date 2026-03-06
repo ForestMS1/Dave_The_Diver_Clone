@@ -3,6 +3,7 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CSoundMgr.h"
 CDiveDaveMove::CDiveDaveMove(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -22,6 +23,8 @@ void CDiveDaveMove::Enter()
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_DaveSwim", CSoundMgr::SFX2, 1.f);
 }
 
 void CDiveDaveMove::Input(const _float& fTimeDelta)
@@ -117,6 +120,7 @@ void CDiveDaveMove::Exit()
 void CDiveDaveMove::Clear()
 {
 	m_fMoveSpeed = 2.f;
+	CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX2);
 }
 
 void CDiveDaveMove::Go_Dir(const _float& fTimeDelta)

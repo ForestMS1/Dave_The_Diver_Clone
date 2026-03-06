@@ -5,6 +5,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CDiveItem.h"
+#include "CSoundMgr.h"
 CDiveDaveIdle::CDiveDaveIdle(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -53,10 +54,17 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 
 	// Slicalbe 물고기랑 충돌상태에서 SPACE 누르면 물고기 슬라이스
 	if (m_pOwner->Get_SlicableFish() != nullptr && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+	{
 		m_pOwner->Set_State(DIVEDAVESTATE::TANNING);
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Cutting", CSoundMgr::SFX2, 1.f);
+	}
 
-	if(m_pOwner->Get_SlicableJohn() != nullptr && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+
+	if (m_pOwner->Get_SlicableJohn() != nullptr && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+	{
 		m_pOwner->Set_State(DIVEDAVESTATE::TANNING);
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Cutting", CSoundMgr::SFX2, 1.f);
+	}
 
 	// Item 사용 (Item사용은 무조건 ItemSlot1에서만)
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_C))

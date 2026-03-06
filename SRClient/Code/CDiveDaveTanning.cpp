@@ -6,6 +6,7 @@
 #include "CDiveDaveCam.h"
 #include "CFishGameObject.h"
 #include "CJohn2.h"
+#include "CSoundMgr.h"
 CDiveDaveTanning::CDiveDaveTanning(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -69,6 +70,7 @@ void CDiveDaveTanning::Input(const _float& fTimeDelta)
 	}
 	if (CDInputMgr::GetInstance()->Key_Up(DIK_SPACE))
 	{
+		CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX2);
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}
 }
@@ -91,6 +93,7 @@ _int CDiveDaveTanning::Update_State(const _float& fTimeDelta)
 			pSlicableJohn->SliceComplete();
 			m_pOwner->Set_SlicableJohn(nullptr);
 		}
+		CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX2);
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}
 

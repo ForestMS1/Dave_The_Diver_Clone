@@ -3,6 +3,7 @@
 #include "CAssetTexture.h"
 #include "CGraphicDev.h"
 #include "CJohn.h"
+#include "CSoundMgr.h"
 CJohnAttackShoot::CJohnAttackShoot(CJohn* pOwner)
 	: CBaseState<CJohn>(pOwner)
 {
@@ -26,6 +27,8 @@ void CJohnAttackShoot::Enter()
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_John_Shoot", CSoundMgr::BOSS_SFX, 1.f);
 }
 
 void CJohnAttackShoot::Input(const _float& fTimeDelta)
