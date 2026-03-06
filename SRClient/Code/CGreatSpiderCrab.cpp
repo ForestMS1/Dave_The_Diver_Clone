@@ -27,15 +27,16 @@ HRESULT CGreatSpiderCrab::Ready_GameObject()
 {
     m_sFishName = L"키다리게";
     m_sThumbNailAssetName = L"Tex_FishThumb_Great_Spider_Crab";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 3;  // 랭크 3 (상위)
+    m_iStar = 3;  // 별 3개
+    m_fWeight = 3.0f;  // 3.0kg
+    m_iPrice = 30;  // 가격 30
+    m_fLength = 40.f;  // 길이 40cm
+    m_iMeatCnt = 4;  // 고기 4개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreatSpiderCrab";
-    m_iSushiMoney = 12;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 50;  // 스시 가격 50
+    m_iSushiLv = 3;  // 스시 레벨 3
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

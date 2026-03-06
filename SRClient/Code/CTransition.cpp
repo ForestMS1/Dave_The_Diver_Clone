@@ -280,6 +280,10 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//close shop sound
+	CAssetMgr::GetInstance()->AddAsset(L"Sound_CloseShop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_sushibar_close.ogg"));
+	CAssetMgr::GetInstance()->LoadAsset(L"Sound_CloseShop");
+
 	//Ending Background
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_EndingBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ending/BG/EndingLogo.jpg"));
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndingBG", Engine::CTexture::Create(L"Tex_EndingBG"))))
@@ -2243,7 +2247,8 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
-			pTxt->Set_Txt(L"로비로비로");
+			pTxt->Set_Txt(L"로비");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;
@@ -2273,6 +2278,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
 			pTxt->Set_Txt(L"두다이브");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;
@@ -2301,6 +2307,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		{
 			CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, 0.6f);
 			pTxt->Set_Txt(L"회식은갓파스시?");
+			pTxt->Set_Font(L"Font_210YouthL");
 			pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
 			if (nullptr == pTxt)
 				return E_FAIL;

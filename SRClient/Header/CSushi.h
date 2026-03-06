@@ -27,7 +27,8 @@ private:
 	ImGuizmo::OPERATION m_CurrentGizmoOperation;
 	bool	sushiOpen;
 	float   customerSpawn;
-	float   gameEnd = false;
+	bool   gameEnd = false;
+	float   m_fGameEnd = false;
 
 public:
 	int CustomerLeave = 0;

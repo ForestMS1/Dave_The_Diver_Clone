@@ -24,15 +24,16 @@ HRESULT CYellowbackFusilier::Ready_GameObject()
 {
     m_sFishName = L"노랑등이 나비돔";
     m_sThumbNailAssetName = L"Tex_FishThumb_Yellowback_Fusilier";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 2;  // 랭크 2 (중간)
+    m_iStar = 2;  // 별 2개
+    m_fWeight = 0.7f;  // 0.7kg
+    m_iPrice = 14;  // 가격 14
+    m_fLength = 22.f;  // 길이 22cm
+    m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_YellowbackFusilier";
-    m_iSushiMoney = 13;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 20;  // 스시 가격 20
+    m_iSushiLv = 2;  // 스시 레벨 2
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

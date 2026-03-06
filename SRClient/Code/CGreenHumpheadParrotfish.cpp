@@ -27,15 +27,16 @@ HRESULT CGreenHumpheadParrotfish::Ready_GameObject()
 {
     m_sFishName = L"버팔로패럿피쉬";
     m_sThumbNailAssetName = L"Tex_FishThumb_Green_Humphead_Parrotfish";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 3;  // 랭크 3 (상위)
+    m_iStar = 3;  // 별 3개
+    m_fWeight = 1.5f;  // 1.5kg
+    m_iPrice = 18;  // 가격 18
+    m_fLength = 28.f;  // 길이 28cm
+    m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreenHumpheadParrotfish";
-    m_iSushiMoney = 12;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 25;  // 스시 가격 25
+    m_iSushiLv = 2;  // 스시 레벨 2
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

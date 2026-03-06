@@ -24,15 +24,16 @@ HRESULT CSmallspottedDart::Ready_GameObject()
 {
     m_sFishName = L"타원전갱이";
     m_sThumbNailAssetName = L"Tex_FishThumb_Smallspotted_dart";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 2;  // 랭크 2 (중간)
+    m_iStar = 2;  // 별 2개
+    m_fWeight = 0.6f;  // 0.6kg
+    m_iPrice = 12;  // 가격 12
+    m_fLength = 15.f;  // 길이 15cm
+    m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_SmallspottedDart";
-    m_iSushiMoney = 18;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 18;  // 스시 가격 18
+    m_iSushiLv = 2;  // 스시 레벨 2
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

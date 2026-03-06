@@ -104,8 +104,17 @@ void		CShipUIMoney::Render_GameObject()
     _vec2 vPos = { vScreenPos.x  , vScreenPos.y};
     if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
     {
-        
-        pDefFont->Render_Font(CHelper::ToCommaWString(CGameMemMgr::GetInstance()->Get_Money()), &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+        D3DXCOLOR col;
+		auto money = CGameMemMgr::GetInstance()->Get_Money();
+        if (money < 0)
+        {
+			col = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+        }
+        else
+        {
+            col = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+        }
+        pDefFont->Render_Font(CHelper::ToCommaWString(money), &vPos, col);
     }
    
 

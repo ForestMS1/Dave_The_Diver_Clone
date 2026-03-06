@@ -73,6 +73,7 @@ HRESULT CSushi::Ready_Scene()
 	CAssetMgr::GetInstance()->AddAsset(L"Font_DefaultXX", CAssetDefaultFont::Create(L"바탕", 0, 16, FW_BOLD));
 	CAssetMgr::GetInstance()->AddAsset(L"Font_Level", CAssetDefaultFont::Create(L"Arial", 5, 16, FW_BOLD));
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_BGM", CSoundMgr::BGM, 0.5f);
+	m_fGameEnd = 0.f;
 	return S_OK;
 
 }
@@ -80,10 +81,10 @@ HRESULT CSushi::Ready_Scene()
 _int CSushi::Update_Scene(const _float& fTimeDelta)
 {
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
-
-
 	Key_Input();
-
+	if (CustomerLeave == 9) {
+		sushiOpen = false;
+	}
 	if (sushiOpen) {
 		customerSpawn += fTimeDelta;
 		list<CGameObject*>* Chairs = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjects(L"Chair");
@@ -103,8 +104,15 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 		}
 	}
 	if (CustomerLeave == 9 && !gameEnd) {
-		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseShop", CSoundMgr::SFX, 1.0f);
-		gameEnd = true;
+		if (m_fGameEnd == 0.f) {
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseShop", CSoundMgr::SFX, 1.0f);
+		}
+		m_fGameEnd += fTimeDelta;
+		if (m_fGameEnd > 2.f) {
+			CTransition::FadedTransition(CTransition::SCENE_SUSHI, CTransition::SCENE_ENDING);
+			gameEnd = true;
+		}
+		
 	}
 	return iExit;
 }
