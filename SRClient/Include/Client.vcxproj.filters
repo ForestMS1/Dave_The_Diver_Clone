@@ -520,11 +520,32 @@
     <Filter Include="02. GameObject\Dive_Item\Item_AmmoPack">
       <UniqueIdentifier>{92022bed-b197-48e1-b97d-e8c18052a0df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\John2\Hit">
+      <UniqueIdentifier>{cbc086bf-3d75-485a-8482-b9150cad9dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Die">
+      <UniqueIdentifier>{1c916ea8-c8c8-4424-a6e2-0c28957b605b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Explosion">
+      <UniqueIdentifier>{cd6b0a2f-26a4-41c0-9727-ea11006e89ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Panties">
+      <UniqueIdentifier>{ec09dd2a-20a5-4a41-88a2-dbe7bdbdc260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Panties_Swim">
+      <UniqueIdentifier>{8ffe36bb-ad98-4568-820b-da7d55287502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\John2\Slicable">
+      <UniqueIdentifier>{f574f30f-ab65-4df8-bf83-e57fc04bd2e0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\05. Ending">
       <UniqueIdentifier>{cc44f231-7151-4bc3-a5d4-ff611256b855}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\05. Ending\GameObject">
       <UniqueIdentifier>{41b49ca4-8582-4629-85bd-40887a888d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\05. Ending\Conversation">
+      <UniqueIdentifier>{b624b17c-8698-4ef7-b283-73985af9a3e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1326,6 +1347,27 @@
     <ClInclude Include="..\Header\CJohnConversation.h">
       <Filter>02. GameObject\Conversation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSpaceKeyUI.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Hit.h">
+      <Filter>02. GameObject\John2\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Die.h">
+      <Filter>02. GameObject\John2\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Panties.h">
+      <Filter>02. GameObject\John2\Panties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Explosion.h">
+      <Filter>02. GameObject\John2\Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2PantiesSwim.h">
+      <Filter>02. GameObject\John2\Panties_Swim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJohn2Slicable.h">
+      <Filter>02. GameObject\John2\Slicable</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CEnding.h">
       <Filter>01. Scene\05. Ending</Filter>
     </ClInclude>
@@ -2110,6 +2152,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnConversation.cpp">
       <Filter>02. GameObject\Conversation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpaceKeyUI.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Hit.cpp">
+      <Filter>02. GameObject\John2\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Die.cpp">
+      <Filter>02. GameObject\John2\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Panties.cpp">
+      <Filter>02. GameObject\John2\Panties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Explosion.cpp">
+      <Filter>02. GameObject\John2\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2PantiesSwim.cpp">
+      <Filter>02. GameObject\John2\Panties_Swim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJohn2Slicable.cpp">
+      <Filter>02. GameObject\John2\Slicable</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEnding.cpp">
       <Filter>01. Scene\05. Ending</Filter>

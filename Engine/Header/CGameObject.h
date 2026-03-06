@@ -51,6 +51,8 @@ protected:
 	std::wstring							m_sTag;
 	std::wstring							m_sTexName;
 
+	_bool									m_bEndFrame = false; // 한 프레임이 끝났는지 체크
+
 	// 계층 관련
 public:
 	CGameObject* Get_Parent() const { return m_pParentGameObject; }

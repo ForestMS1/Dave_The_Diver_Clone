@@ -55,6 +55,11 @@ void CDiveDave::Start()
 	e.fValue = m_fHp / m_fMaxHp;
 	CDiveDave::Notify(e);
 
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2)
+	{
+		m_bSubMarine = true;
+	}
+
 	Change_Weight(0.f);
 }
 
@@ -143,6 +148,15 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 			else
 				pGun->Change_Gun(CGameMemMgr::CDaveInfo::DAVE_GUN::GUN_DEFAULT);
 		}
+	}
+
+	if (ImGui::Button("SpeedUP"))
+	{
+		m_fSpeed += 30.f;
+	}
+	if(ImGui::Button("SpeedDown"))
+	{
+		m_fSpeed -= 30.f;
 	}
 
 
@@ -247,9 +261,9 @@ _bool CDiveDave::Check_GlobalState()
 		m_fSpeed = 3.f;
 		m_bOverloaded = true;
 	}
-	else
+	else if(m_bOverloaded)
 	{
-		m_fSpeed = 10.f;
+		m_fSpeed = m_fOriginSpeed;
 		m_bOverloaded = false;
 	}
 
@@ -269,6 +283,8 @@ _bool CDiveDave::Check_GlobalState()
 	if (m_bSubMarine)
 	{
 		m_pFSM->Set_State(DIVEDAVESTATE::SUBMARINE);
+		if (CDInputMgr::GetInstance()->Key_Down(DIK_L))
+			m_bSubMarine = !m_bSubMarine;
 		return true;
 	}
 
@@ -436,7 +452,7 @@ void CDiveDave::DoT(const _float fTimeDelta)
 {
 	m_fDoTTime += fTimeDelta;
 
-	if (m_fDoTTime > 5.f)
+	if (m_fDoTTime > 1.5f)
 	{
 		m_fHp -= 1.f;
 

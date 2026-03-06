@@ -93,14 +93,6 @@ void CJohnMine::LateUpdate_GameObject(const _float& fTimeDelta)
 						//---------------------------------------------------------------
 						m_eCurState = EXPLOSION;
 						//---------------------------------------------------------------
-						fWidth = 51.f;
-						fHeight = 51.f;
-						fAspect = fWidth + fHeight;
-						fAspect /= 2.f;
-
-						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-						vScale *= 5.f;
-						m_pTransformCom->Multiply_Scale(&vScale);
 					}
 					if (m_eCurState == EXPLOSION_READY)
 					{
@@ -115,14 +107,6 @@ void CJohnMine::LateUpdate_GameObject(const _float& fTimeDelta)
 						//---------------------------------------------------------------
 						m_eCurState = EXPLOSION;
 						//---------------------------------------------------------------
-						fWidth = 51.f;
-						fHeight = 51.f;
-						fAspect = fWidth + fHeight;
-						fAspect /= 2.f;
-
-						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-						vScale *= 5.f;
-						m_pTransformCom->Multiply_Scale(&vScale);
 					}
 					if (m_eCurState == EXPLOSION)
 					{
@@ -187,6 +171,18 @@ void CJohnMine::FSM(const _float& fTimeDelta)
 		break;
 	case EXPLOSION:
 		m_wsTexName = L"JohnBulletExplosion";
+		if (!m_bCompleteSetSize)
+		{
+			m_bCompleteSetSize = true;
+			_float fWidth = 51.f;
+			_float fHeight = 51.f;
+			_float fAspect = fWidth + fHeight;
+			fAspect /= 2.f;
+
+			_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
+			vScale *= 5.f;
+			m_pTransformCom->Multiply_Scale(&vScale);
+		}
 		AddFrame(fTimeDelta, 5.f, 9, false);
 		Explosion(fTimeDelta);
 		break;
@@ -227,14 +223,6 @@ void CJohnMine::StopReady(const _float& fTimeDelta)
 		//---------------------------------------------------------------
 		m_eCurState = EXPLOSION;
 		//---------------------------------------------------------------
-		fWidth = 51.f;
-		fHeight = 51.f;
-		fAspect = fWidth + fHeight;
-		fAspect /= 2.f;
-
-		vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-		vScale *= 5.f;
-		m_pTransformCom->Multiply_Scale(&vScale);
 		return;
 	}
 

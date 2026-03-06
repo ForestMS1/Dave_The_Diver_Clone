@@ -6,6 +6,8 @@
 #include "CDiveDaveOpen.h"
 #include "CDiveDavePickUp.h"
 #include "CSubject.h"
+#include "CParticleMgr.h"
+
 enum class EQUIPPED
 {
 	//MELEE, // 근접무기 -> 기본 장착
@@ -82,6 +84,9 @@ public:
 	// With SlicableFish
 	void				Set_SlicableFish(CGameObject* pFish)								{ m_pCurSlicableFish = pFish; }
 	CGameObject*		Get_SlicableFish()													{ return m_pCurSlicableFish; }
+	void				Set_SlicableJohn(CGameObject* pJohn)								{ m_pSlicableJohn = pJohn; }
+	CGameObject*		Get_SlicableJohn()													{ return m_pSlicableJohn; }
+
 
 	CGameObject*		Get_WeponSlot(EQUIPPED equipped)									{ return m_vecWeaponSlot[(_uint)equipped]; }
 	// 무기 등록
@@ -100,8 +105,26 @@ public:
 
 	void				On_Hit(const _float& fDamage) 
 	{ 
+
+
 		if (m_fIvncTime > 0.f)
 			return;
+
+		_vec3 Pos{};
+		m_pTransformCom->Get_Info(INFO_POS, &Pos);
+
+		float fRange = 0.3f;
+
+		for (int i = 0; i < 10; ++i)
+		{
+			float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+			float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+			Pos.x += randX;
+			Pos.y += randY;
+			CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 1);
+		}
+		
+
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
@@ -226,7 +249,9 @@ private:
 	EQUIPPED m_eCurEquipped = EQUIPPED::HARPOON;
 
 private:
+	const _float m_fOriginSpeed = 10.f;
 	_float m_fSpeed = 10.f;
+	_float m_fDashPlusSpeed = 30.f;
 	_float m_fFrame = 0.f;
 	_bool  m_bFishCaught = false;
 
@@ -273,6 +298,7 @@ private:
 	CGameObject* m_pCurOnItemBox = nullptr;
 	CGameObject* m_pCurOnItem = nullptr;
 	CGameObject* m_pCurSlicableFish = nullptr;
+	CGameObject* m_pSlicableJohn = nullptr;
 
 	unordered_map<std::wstring_view, CGameObject*> m_mapCanUseItemSlot = { {L"ItemSlot1", nullptr}, {L"ItemSlot2", nullptr} };
 	CGameObject* m_vecWeaponSlot[(_uint)EQUIPPED::EQUIPPED_END] = {nullptr, nullptr};

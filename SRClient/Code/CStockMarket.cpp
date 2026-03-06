@@ -13,13 +13,20 @@
 CStockMarket::CStockMarket()
     : CGameObject()
 {
-    if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0) {
+    CGameMemMgr::GetInstance()->IncreaseCreated();
+    if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0+1) {
         CGameMemMgr::GetInstance()->SetStockMarketIndex(0);
         //pictureIndex = 0;
-    }else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 ) {
-        CGameMemMgr::GetInstance()->SetStockMarketIndex(5);
+    }else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1+1 ) {
+        if (CGameMemMgr::GetInstance()->GetStockCreated() == 3) {
+            CGameMemMgr::GetInstance()->SetStockMarketIndex(9);
+        }
+        else {
+            CGameMemMgr::GetInstance()->SetStockMarketIndex(5);
+        }
+
         //pictureIndex = 5;
-    }else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2) {
+    }else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2+1) {
         CGameMemMgr::GetInstance()->SetStockMarketIndex(13);
        // pictureIndex = 13;
     }
@@ -152,7 +159,6 @@ CStockMarket* CStockMarket::Create()
         MSG_BOX("pIDiverBG Create Failed");
         return nullptr;
     }
-
     return pIDiverBG;
 }
 

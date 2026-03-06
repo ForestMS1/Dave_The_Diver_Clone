@@ -34,17 +34,21 @@ _int CWeightIcon::Update_GameObject(const _float& fTimeDelta)
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     CGameObject::Update_GameObject(fTimeDelta);
 
-    auto a = dynamic_cast<CO2UI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"O2UI"));
-    a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
+    if (m_bEndFrame)
+    {
+        auto a = dynamic_cast<CO2UI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"O2UI"));
+        a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
-    float fOffsetX = 20.f;
-    float fOffsetY = -20.f;
-    float fOffsetZ = -1.f;
-    m_vPos.x += fOffsetX;
-    m_vPos.y += fOffsetY;
-    m_vPos.z += fOffsetZ;
+        float fOffsetX = 20.f;
+        float fOffsetY = -20.f;
+        float fOffsetZ = -1.f;
+        m_vPos.x += fOffsetX;
+        m_vPos.y += fOffsetY;
+        m_vPos.z += fOffsetZ;
 
-    m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+        m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+    }
+  
 
 
     _vec3 vPos;
@@ -73,6 +77,8 @@ void CWeightIcon::Render_GameObject()
     }
 
     m_pBufferCom->Render_Buffer();
+
+    m_bEndFrame = true;
 }
 
 HRESULT CWeightIcon::Ready_Component()

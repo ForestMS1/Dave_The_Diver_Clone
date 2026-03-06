@@ -11,6 +11,7 @@
 #include "CDiveDave.h"
 #include "CJohn.h"
 #include "CSoundMgr.h"
+#include "CJohn2.h"
 CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner)
 	: m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -99,14 +100,6 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 						//---------------------------------------------------------------
 						m_eCurState = EXLPOSION;
 						//---------------------------------------------------------------
-						fWidth = 51.f;
-						fHeight = 51.f;
-						fAspect = fWidth + fHeight;
-						fAspect /= 2.f;
-
-						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-						vScale *= 5.f;
-						m_pTransformCom->Multiply_Scale(&vScale);
 					}
 					if (m_eCurState == STOP)
 					{
@@ -133,7 +126,7 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 			{
 				if (m_pAABB->Intersect(pCollider))
 				{
-					if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
+					if (pCollider->Get_Tag() == L"AABB_JohnWithGuided" || pCollider->Get_Tag() == L"AABB_John2WithGuided")
 					{
 						_float fWidth = 28.f;
 						_float fHeight = 17.f;
@@ -146,18 +139,13 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 						//---------------------------------------------------------------
 						m_eCurState = EXLPOSION;
 						//---------------------------------------------------------------
-						fWidth = 51.f;
-						fHeight = 51.f;
-						fAspect = fWidth + fHeight;
-						fAspect /= 2.f;
-
-						vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-						vScale *= 5.f;
-						m_pTransformCom->Multiply_Scale(&vScale);
 					}
 					if (m_eCurState == EXLPOSION)
 					{
-						static_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
+						if(pCollider->Get_Tag() == L"AABB_JohnWithGuided")
+							reinterpret_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
+						if(pCollider->Get_Tag() == L"AABB_John2WithGuided")
+							reinterpret_cast<CJohn2*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
 					}
 				}
 			}
@@ -224,6 +212,18 @@ void CJohnGuidedBullet::FSM(const _float& fTimeDelta)
 		break;
 	case EXLPOSION:
 		m_wsTexName = L"JohnBulletExplosion";
+		if (!m_bCompleteSetSize)
+		{
+			m_bCompleteSetSize = true;
+			_float fWidth = 51.f;
+			_float fHeight = 51.f;
+			_float fAspect = fWidth + fHeight;
+			fAspect /= 2.f;
+
+			_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
+			vScale *= 5.f;
+			m_pTransformCom->Multiply_Scale(&vScale);
+		}
 		AddFrame(fTimeDelta, 5.f, 9, false);
 		Explosion(fTimeDelta);
 		break;
@@ -293,14 +293,6 @@ void CJohnGuidedBullet::StopReady(const _float& fTimeDelta)
 		//---------------------------------------------------------------
 		m_eCurState = EXLPOSION;
 		//---------------------------------------------------------------
-		fWidth = 51.f;
-		fHeight = 51.f;
-		fAspect = fWidth + fHeight;
-		fAspect /= 2.f;
-
-		vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
-		vScale *= 5.f;
-		m_pTransformCom->Multiply_Scale(&vScale);
 		return;
 	}
 

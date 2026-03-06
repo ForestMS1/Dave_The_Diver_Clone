@@ -13,6 +13,8 @@
 #include "CCoin.h"
 #include "CBloomBubble.h"
 #include "CMapMgr.h"
+#include "CSoundMgr.h"
+#include "CAssetFmodSound.h"
 IMPLEMENT_SINGLETON(CParticleMgr)
 
 CParticleMgr::CParticleMgr(): m_pCamera(nullptr), m_pPlayer(nullptr)
@@ -52,6 +54,7 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 	postparticles[POST_PARTICLE_COIN] = (coin);
 
 	//CAssetMgr::GetInstance()->LoadAsset();
+
 	return S_OK;
 }
 
@@ -160,6 +163,7 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 		if (preparticles[FIREWORK] == nullptr) {
 			FireworkTail* firework = FireworkTail::Create(origin);
 			preparticles[FIREWORK] = (firework);
+
 		}
 	/*	if (particles.size() == 0) {
 			particles.resize(PARTICLE_END);

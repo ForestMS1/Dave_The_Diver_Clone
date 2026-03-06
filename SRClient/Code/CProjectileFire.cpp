@@ -5,6 +5,7 @@
 #include "CDiveDave.h"
 #include "CFishGameObject.h"
 #include "CJohn.h"
+#include "CJohn2.h"
 CProjectileFire::CProjectileFire(CHarpoonProjectile* pOwner)
     : CBaseState<CHarpoonProjectile>(pOwner)
 {
@@ -128,6 +129,11 @@ void CProjectileFire::LateUpdate_State(const _float& fTimeDelta)
 				if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
 				{
 					reinterpret_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
+					pProjectile->Set_State(PROJECTILESTATE::RETURN);
+				}
+				if (pCollider->Get_Tag() == L"AABB_John2WithGuided")
+				{
+					reinterpret_cast<CJohn2*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
 					pProjectile->Set_State(PROJECTILESTATE::RETURN);
 				}
 			}

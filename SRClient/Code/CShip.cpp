@@ -44,6 +44,7 @@
 #include "CStockMarket.h"
 #include "CSoundMgr.h"
 #include "CParticleMgr.h"
+#include "CAssetFmodSound.h"
 
 
 CShip::CShip()
@@ -99,13 +100,15 @@ HRESULT CShip::Ready_Scene()
 	m_fResultTimer = 0.f;
 	m_fConvAppearTimer = 0.f;
 	m_fFireworkTimer = 0.f;
+	m_fFireworkSoundTimer = 0.f;
 	m_bResultOpend = false;
+	m_bFireworkSound = false;
+	m_bTalking = false;
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_BGM", CSoundMgr::BGM_SHIP_LOBBY, 0.1f);
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_amb_lobby_far_bird", CSoundMgr::CHANNELID::BGM_SHIP_BIRD, 0.1f);
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_amb_lobby_loop", CSoundMgr::BGM_SHIP_LOOP, 1.0f);
 
-	m_bTalking = false;
 	return S_OK;
 }
 
@@ -452,7 +455,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 
 
 
-	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0+1 && !m_bTalking) {
 		m_fConvAppearTimer += fTimeDelta;
 		if (m_fConvAppearTimer > 1.f) {
 			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
@@ -472,6 +475,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			}
 		}
 	}
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	
 	return iExit;
 }
@@ -652,13 +656,25 @@ void CShip::LateUpdate_Scene(const _float& fTimeDelta)
 	
 	if (CGameMemMgr::GetInstance()->Get_ShipNight()) {
 		m_fFireworkTimer += fTimeDelta;
+		m_fFireworkSoundTimer += fTimeDelta;
+
+		if (!m_bFireworkSound) {
+			if (m_fFireworkSoundTimer > 3.f) {
+				CSoundMgr::GetInstance()->PlaySoundLoop(L"firework3", CSoundMgr::SFX, 0.4f);
+				m_bFireworkSound = true;
+			}
+			else {
+				if (m_fFireworkTimer < 0.02f) {
+					CSoundMgr::GetInstance()->PlaySoundLoop(L"beforeExplode", CSoundMgr::SFX, 0.3f);
+				}
+			}
+		}
 		if (m_fFireworkTimer > 1.f) {
 
 			//-5 ~ 5
 			float x = (rand() % 10 + 1) - 5;
 			// 0 ~ 2
 			float y = 2.f - (2.f - (rand() % 3));
-
 			CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { x,y,5.f }, 300);
 			m_fFireworkTimer = 0.f;
 		}

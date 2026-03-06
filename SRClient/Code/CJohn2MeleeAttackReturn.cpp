@@ -21,6 +21,7 @@ void CJohn2MeleeAttackReturn::Enter()
 	Set_Size();
 
 	m_pOwner->Update_ToTargetDir();
+	m_pOwner->Reset_BreakTime();
 }
 
 void CJohn2MeleeAttackReturn::Input(const _float& fTimeDelta)

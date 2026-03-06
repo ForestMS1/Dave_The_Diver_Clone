@@ -23,7 +23,6 @@ public:
     static CJohnIdle* Create(CJohn* pOwner);
 
 private:
-    _float m_fBreakTime = 0.f;
     _uint  m_iRand = 0;
 private:
     virtual void Free() override;

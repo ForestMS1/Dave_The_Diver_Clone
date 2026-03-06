@@ -72,6 +72,7 @@
 
 #include "CDiveGetWeaponUI.h"
 #include "CGetItemUI.h"
+#include "CSpaceKeyUI.h"
 CDive::CDive()
 	: CScene()
 {
@@ -343,7 +344,7 @@ void CDive::Frustum() {
 	D3DXMatrixIdentity(&MoveMatrix);
 	memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
 	MoveMatrix.m[3][2] = CameraView.m[3][2];
-	m_pFrustumCollider->Transform(&MoveMatrix);
+	m_pFrustumCollider->Transform(&CameraView);
 }
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
@@ -485,119 +486,123 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 
 
 
-	//테스트용
-	pGameObject = CTestFish::Create();
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"TestFish", pGameObject)))
-		return E_FAIL;
-
-
-
 	//-----------------------------------------------------ItemBox---------------------------------------------------------------------
 	// ItemBox 생성
 	// [KDS] : 박스의 종류와 위치를 인자로 받습니다. DROPITEM의 종류도 넣어 주세요.
 	// Add_GameObject 태그를 다르게 해줘야 트랜스폼이 각자마다 적용됩니다.
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0.f);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0,DROPITEM::O2CAPSULE);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox1", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_1", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0.f);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0, DROPITEM::O2CAPSULE);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox2", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_2", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3, 0.f, DROPITEM::TRIPLEAXEL);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0, DROPITEM::O2CAPSULE);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox3", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_3", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, -3, 3,0, DROPITEM::O2CAPSULE);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_4", pGameObject)))
+		return E_FAIL;
+	
 	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -6, 3, 0.f, DROPITEM::PENTAAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox4", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_PENTAAXEL", pGameObject)))
 		return E_FAIL;
 	//-----------------------------------------------------ItemBox---------------------------------------------------------------------
 
-	// [LSY] test item
-	{
-		_vec3 vtmp{ -10, 3, 0.f };
-		pGameObject = CCommonItemWood::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Wood", pGameObject)))
-			return E_FAIL;
 
-		vtmp = { -10, 5, 0.f };
-		pGameObject = CCommonItemWoodPlate::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_WoodPlate", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -9, 5, 0.f };
-		pGameObject = CCommonItemWatch::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Watch", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -8, 5, 0.f };
-		pGameObject = CCommonItemBone::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Bone", pGameObject)))
-			return E_FAIL;
-
-
-		vtmp = { -7, 5, 0.f };
-		pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_DeepseaCoral", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -6, 5, 0.f };
-		pGameObject = CCommonItemFragment::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Fragment", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -5, 5, 0.f };
-		pGameObject = CCommonItemThurible::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Thurible", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -4, 5, 0.f };
-		pGameObject = CCommonItemRope::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Rope", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -3, 5, 0.f };
-		pGameObject = CCommonItemUmb::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_Umb", pGameObject)))
-			return E_FAIL;
-
-		vtmp = { -2, 5, 0.f };
-		pGameObject = CAmmoPack::Create(vtmp);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack", pGameObject)))
-			return E_FAIL;
-
-	}
-
+	_vec3 vtmp{ -10, 3, 0.f };
+	pGameObject = CCommonItemWood::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Wood", pGameObject)))
+		return E_FAIL;
+	vtmp = { -10, 5, 0.f };
+	pGameObject = CCommonItemWoodPlate::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_WoodPlate", pGameObject)))
+		return E_FAIL;
+	vtmp = { -9, 5, 0.f };
+	pGameObject = CCommonItemWatch::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Watch", pGameObject)))
+		return E_FAIL;
+	vtmp = { -8, 5, 0.f };
+	pGameObject = CCommonItemBone::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Bone", pGameObject)))
+		return E_FAIL;
+	vtmp = { -7, 5, 0.f };
+	pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_DeepseaCoral", pGameObject)))
+		return E_FAIL;
+	vtmp = { -6, 5, 0.f };
+	pGameObject = CCommonItemFragment::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Fragment", pGameObject)))
+		return E_FAIL;
+	vtmp = { -5, 5, 0.f };
+	pGameObject = CCommonItemThurible::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Thurible", pGameObject)))
+		return E_FAIL;
+	vtmp = { -4, 5, 0.f };
+	pGameObject = CCommonItemRope::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Rope", pGameObject)))
+		return E_FAIL;
+	vtmp = { -3, 5, 0.f };
+	pGameObject = CCommonItemUmb::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Umb", pGameObject)))
+		return E_FAIL;
+	vtmp = { 0.f, 0.f, 0.f };
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack0", pGameObject)))
+		return E_FAIL;
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack1", pGameObject)))
+		return E_FAIL;
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack2", pGameObject)))
+		return E_FAIL;
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack3", pGameObject)))
+		return E_FAIL;
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack4", pGameObject)))
+		return E_FAIL;
+	
 	
 	// 맵 
 	pGameObject = CTerrian::Create(L"BackGround_GLB_File");
@@ -731,14 +736,14 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// WPBox
-	pGameObject = CWPBoxUI::Create(true);
+	pGameObject = CWPBoxUI::Create(false);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
-	pGameObject = CWPBoxUI::Create(false);
+	pGameObject = CWPBoxUI::Create(true);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI2", pGameObject)))
@@ -831,6 +836,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"GaugeBarUI", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
+	pGameObject = CSpaceKeyUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"SpaceKeyUI", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 

@@ -112,6 +112,8 @@ void CJohnMeleeAttack::Clear()
 
 	m_bGoComplete = false;
 	m_bCompleteFramSizeCalc = false;
+
+	m_pOwner->Reset_BreakTime();
 }
 
 CJohnMeleeAttack* CJohnMeleeAttack::Create(CJohn* pOwner)
