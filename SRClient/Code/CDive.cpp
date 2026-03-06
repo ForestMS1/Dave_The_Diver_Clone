@@ -148,8 +148,8 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
-	//CColliderMgr::GetInstance()->Set_Render(true);
-
+	//CColliderMgr::GetInstance()->Set_Render(false);
+	DeepDark();
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
@@ -529,28 +529,28 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		pGameObject = CCommonItemWood::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Wood", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -10, 5, 0.f };
 		pGameObject = CCommonItemWoodPlate::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_WoodPlate", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -9, 5, 0.f };
 		pGameObject = CCommonItemWatch::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Watch", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -8, 5, 0.f };
 		pGameObject = CCommonItemBone::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Bone", pGameObject)))
 			return E_FAIL;
 
 
@@ -558,42 +558,42 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_DeepseaCoral", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -6, 5, 0.f };
 		pGameObject = CCommonItemFragment::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Fragment", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -5, 5, 0.f };
 		pGameObject = CCommonItemThurible::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Thurible", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -4, 5, 0.f };
 		pGameObject = CCommonItemRope::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Rope", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -3, 5, 0.f };
 		pGameObject = CCommonItemUmb::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_Umb", pGameObject)))
 			return E_FAIL;
 
 		vtmp = { -2, 5, 0.f };
 		pGameObject = CAmmoPack::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack", pGameObject)))
 			return E_FAIL;
 
 	}
@@ -881,3 +881,33 @@ void CDive::Free()
 	CSoundMgr::GetInstance()->StopAll();
 }
 
+void CDive::DeepDark() {
+
+
+	_vec3 floor;
+	
+	CGameObject* pDiveDave = Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	pDaveTransform->Get_Info(INFO_POS, &floor);
+
+	
+	float _dark = CGameMemMgr::GetInstance()->Get_Dark();
+
+	if (floor.y <= -80.f && _dark > 0.5f) {
+		_dark -= 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y > -80.f && _dark <= 0.99f) {
+		_dark += 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y > -130.f && _dark <= 0.5f) {
+		_dark += 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y <= -130.f && _dark >= 0.12f) {
+		_dark -= 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+
+	}
+}
