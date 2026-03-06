@@ -466,6 +466,22 @@ HRESULT CTerrian::Ready_GameObject()
             }
 
 
+            // Coral8
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(8);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+                m_vecCoral.emplace_back(pGameObject);
+                
+            }
 
 
             
@@ -1120,6 +1136,41 @@ HRESULT CTerrian::Ready_GameObject()
 
                 m_vecCoral.emplace_back(pGameObject);
 
+
+                // Coral1
+                {
+                    wstring nameCoral = L"Tex_Coral" + ::to_wstring(1);
+
+                    //------------------------------------------------------------------------------------
+                    wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                    pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                    CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                    if (nullptr == pGameObject)
+                        return E_FAIL;
+                    if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                        return E_FAIL;
+
+                    m_vecCoral.emplace_back(pGameObject);
+                }
+
+
+                // Coral2
+                {
+                    wstring nameCoral = L"Tex_Coral" + ::to_wstring(2);
+
+                    //------------------------------------------------------------------------------------
+                    wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                    pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                    CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                    if (nullptr == pGameObject)
+                        return E_FAIL;
+                    if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                        return E_FAIL;
+
+                    m_vecCoral.emplace_back(pGameObject);
+                }
             }
         }
         if (m_wsName == L"GLB_Terrian4") {
@@ -1348,6 +1399,62 @@ HRESULT CTerrian::Ready_GameObject()
 
                 m_vecCoral.emplace_back(pGameObject);
             }
+
+            // Coral3
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(3);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+            }
+
+
+            // Coral12
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(12);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+            }
+
+
+            // Coral14
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(14);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+            }
+
+
+
         }
 
         
