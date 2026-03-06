@@ -550,6 +550,9 @@
     <Filter Include="02. GameObject\Fish\FishTankCollider">
       <UniqueIdentifier>{c62bdf84-01a4-48f9-96a1-a39bfa51d19f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DiveDave\DaveGoldBall">
+      <UniqueIdentifier>{10cf98a1-5af8-4e8a-b640-c566911c6558}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1380,6 +1383,9 @@
     <ClInclude Include="..\Header\CFishTankCollider.h">
       <Filter>02. GameObject\Fish\FishTankCollider</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDaveGoldBall.h">
+      <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2188,6 +2194,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFishTankCollider.cpp">
       <Filter>02. GameObject\Fish\FishTankCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDaveGoldBall.cpp">
+      <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

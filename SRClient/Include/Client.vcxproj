@@ -184,6 +184,7 @@
     <ClInclude Include="..\Header\CCommonItemUmb.h" />
     <ClInclude Include="..\Header\CCommonItemWoodPlate.h" />
     <ClInclude Include="..\Header\CCommonItemWatch.h" />
+    <ClInclude Include="..\Header\CDaveGoldBall.h" />
     <ClInclude Include="..\Header\CDiveDaveInitStart.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
     <ClInclude Include="..\Header\CDiveGetWeaponUI.h" />
@@ -455,6 +456,7 @@
     <ClCompile Include="..\Code\CCommonItemUmb.cpp" />
     <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp" />
     <ClCompile Include="..\Code\CCommonItemWatch.cpp" />
+    <ClCompile Include="..\Code\CDaveGoldBall.cpp" />
     <ClCompile Include="..\Code\CDiveDaveInitStart.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
     <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp" />
