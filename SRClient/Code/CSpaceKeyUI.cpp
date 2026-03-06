@@ -132,9 +132,6 @@ void CSpaceKeyUI::OnNotify(const Event& e)
     case EVENTTYPE::BOSS_INTRO_START:
         m_bRender = false;
         break;
-    case EVENTTYPE::BOSS_INTRO_END:
-        m_bRender = true;
-        break;
     default:
         break;
     }
