@@ -443,7 +443,7 @@ void CDiveDave::DoT(const _float fTimeDelta)
 {
 	m_fDoTTime += fTimeDelta;
 
-	if (m_fDoTTime > 5.f)
+	if (m_fDoTTime > 1.5f)
 	{
 		m_fHp -= 1.f;
 
