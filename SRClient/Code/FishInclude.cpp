@@ -20,6 +20,7 @@ HRESULT Fish::AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY
 			CAABB::Create(&vPos, &vExt, L"AABB_FishHitbox", pFish),
 			L"Coll_FishesHitbox");
 		pCollider->Set_Parent(pFish);
+		pCollider->Set_Tag(L"FishHitBoxCollider");
 		pLayer->Add_GameObject(L"FishHitboxCollider", pCollider);
 	}
 

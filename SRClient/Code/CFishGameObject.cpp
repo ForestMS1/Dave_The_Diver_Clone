@@ -13,6 +13,8 @@
 #include "CDiveDave.h"
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
+#include "CColliderMgr.h"
+#include "CFishAABBCollider.h"
 CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -571,10 +573,15 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 void CFishGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
+    Frustrum();
 }
 
 void CFishGameObject::Render(function<void()> beforeDrawLambda)
 {
+
+    if (m_bFrustum) 
+        return;
+    
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -854,4 +861,38 @@ void CFishGameObject::MoveTo(_vec3* vToPos, const float& fTimeDelta)
 void CFishGameObject::Free()
 {
     CGameObject::Free();
+}
+
+void CFishGameObject::Frustrum() {
+    //L"AABB_FishHitbox"
+
+    if (CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera") != nullptr) {
+        CCollider* CameraCollider = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera")->front();
+
+        if (auto pChildren = this->Get_Children()) {
+            for (auto& Collider : *pChildren) {
+                if (Collider->Get_Tag() == L"FishHitBoxCollider") {
+
+                    if (CameraCollider->Intersect(dynamic_cast<CFishAABBCollider*>(Collider)->Get_AABB() ))
+                    {
+
+                        m_bFrustum = false;
+
+
+                    }
+
+                    else{
+
+                        m_bFrustum = true;
+
+                    }
+                }
+            }
+
+        }
+
+    }
+            
+
+    
 }

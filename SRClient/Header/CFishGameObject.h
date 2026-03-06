@@ -151,6 +151,13 @@ protected:
 
 	bool m_bNeedSlice;
 
+
+public:
+	void Set_Frustum(_bool _Frustrum) { m_bFrustum = _Frustrum; }
+	_bool Get_Frustrum() { return m_bFrustum; }
+	void Frustrum();
+private:
+	bool m_bFrustum{ false };
 	
 protected:
 	bool m_bManual;
