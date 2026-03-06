@@ -186,6 +186,11 @@ void CJohn2::Start()
 	m_bInitComplete = true;
 	m_pTargetTransform = static_cast<CTransform*>
 		(CManagement::GetInstance()->Get_FirstObjectComponent(ID_DYNAMIC, L"0_GameLogic_Layer", L"DiveDave", L"Com_Transform"));
+
+
+	if (!CGameMemMgr::GetInstance()->Get_BossKilled()) {
+		CGameMemMgr::GetInstance()->Set_BossKilled(true);
+	}
 }
 
 _bool CJohn2::Check_TargetInRange(_float fRange)
