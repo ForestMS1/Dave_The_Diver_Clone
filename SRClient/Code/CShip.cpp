@@ -642,28 +642,8 @@ void CShip::Render_Scene()
 	}
 
 
-	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 1.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}
-	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
-	return iExit;
+
+#endif
 }
 
 void CShip::LateUpdate_Scene(const _float& fTimeDelta)
