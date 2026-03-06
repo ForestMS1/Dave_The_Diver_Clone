@@ -9,6 +9,7 @@
 #include "CManagement.h"
 #include "CColliderMgr.h"
 #include "CDInputMgr.h"
+#include "CSoundMgr.h"
 
 
 CJohnConversation::CJohnConversation(float fPosX, float fPosY)
@@ -98,6 +99,9 @@ _int		CJohnConversation::Update_GameObject(const _float& fTimeDelta)
             Set_DeadCascade();
             return OBJ_DEAD;
         }
+        else {
+            CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX, 1.f);
+        }
         m_iCurrentTxtIdx = 0;
         m_fTimer = 0.f;
     }
@@ -112,6 +116,9 @@ _int		CJohnConversation::Update_GameObject(const _float& fTimeDelta)
         if (m_iCurrentTxtIdx < m_vecConversation[m_eCurrentConversation][m_iCurrentConversationIdx].size())
         {
             ++m_iCurrentTxtIdx;
+            /*if (m_iCurrentTxtIdx % 12 == 0) {
+
+            }*/
         }
         m_fTimer = 0.f;
     }
@@ -199,6 +206,7 @@ CJohnConversation* CJohnConversation::Create(float fPosX, float fPosY)
         MSG_BOX("pJohnConversation Create Failed");
         return nullptr;
     }
+    CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX, 1.f);
 
     return pJohnConversation;
 }

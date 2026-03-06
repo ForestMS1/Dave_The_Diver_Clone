@@ -277,6 +277,10 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//Ending Background
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_EndingBG", CAssetTexture::Create(L"../Bin/Resource/Texture/Ending/BG/EndingLogo.jpg"));
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndingBG", Engine::CTexture::Create(L"Tex_EndingBG"))))
+		return E_FAIL;
 	// FinalConversation
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv1", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv1.png"));
@@ -301,6 +305,8 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"talk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/talk.mp3"));
 		CAssetMgr::GetInstance()->LoadAsset(L"talk");
+		CAssetMgr::GetInstance()->AddAsset(L"bosstalk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/bosstalk.mp3"));
+		CAssetMgr::GetInstance()->LoadAsset(L"bosstalk");
 	}
 	//stockMarket
 	{

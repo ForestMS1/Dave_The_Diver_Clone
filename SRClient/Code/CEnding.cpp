@@ -15,6 +15,7 @@
 #include "CParticleMgr.h"
 #include "CTransitionFade.h"
 #include "CFinalConversation.h"
+#include "CEndingBG.h"
 
 CEnding::CEnding()
 	: CScene()
@@ -34,7 +35,8 @@ HRESULT CEnding::Ready_Scene()
 		return E_FAIL;
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Logo_BGM", CSoundMgr::BGM, 1.f);
-
+	m_bImageCreated = false;
+	m_fTimer = 0.f;
 	return S_OK;
 }
 
@@ -42,7 +44,14 @@ _int CEnding::Update_Scene(const _float& fTimeDelta)
 {
 	Update_Camera();
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
-
+	if (!m_bImageCreated) {
+		m_fTimer += fTimeDelta;
+		if (m_fTimer > 1.5f) {
+			CFinalConversation* conversation = CFinalConversation::Create(0.f, -1.5f);
+			CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_Environment_Layer")->Add_GameObject(L"EndingCV", conversation);
+			m_bImageCreated = true;
+		}
+	}
 
 	return iExit;
 }
@@ -71,7 +80,7 @@ HRESULT CEnding::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	pGameObject = CFinalConversation::Create(0.f, -2.f);
+	pGameObject = CEndingBG::Create();
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
