@@ -18,7 +18,7 @@ void CMapMgr::Load() {
 	using json = nlohmann::json;
 	json scene;
 
-	scene = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetJson>(L"Json_Map")->Get_Json();
+	scene = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetJson>(L"Json_MapLoad")->Get_Json();
 	
 
 

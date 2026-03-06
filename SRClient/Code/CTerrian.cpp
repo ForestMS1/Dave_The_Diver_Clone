@@ -1480,7 +1480,7 @@ _int CTerrian::Update_GameObject(const _float& fTimeDelta)
     }
 
 
-    if (!m_bFrustum) {
+    if (m_bFrustum) {
         _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
         CRenderer::GetInstance()->Add_RenderGroup(RENDER_TERRIAN, this);
@@ -1495,8 +1495,8 @@ _int CTerrian::Update_GameObject(const _float& fTimeDelta)
 
 void CTerrian::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-    //ColliderFrustom();
-    if (!m_bFrustum) {
+    ColliderFrustom();
+    if (m_bFrustum) {
 
         CGameObject::LateUpdate_GameObject(fTimeDelta);
     }
@@ -1504,7 +1504,7 @@ void CTerrian::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CTerrian::Render_GameObject()
 {
-    if (!m_bFrustum) {
+    if (m_bFrustum) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
 
