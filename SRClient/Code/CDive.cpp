@@ -343,7 +343,7 @@ void CDive::Frustum() {
 	D3DXMatrixIdentity(&MoveMatrix);
 	memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
 	MoveMatrix.m[3][2] = CameraView.m[3][2];
-	m_pFrustumCollider->Transform(&MoveMatrix);
+	m_pFrustumCollider->Transform(&CameraView);
 }
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
@@ -498,28 +498,34 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 	// ItemBox 생성
 	// [KDS] : 박스의 종류와 위치를 인자로 받습니다. DROPITEM의 종류도 넣어 주세요.
 	// Add_GameObject 태그를 다르게 해줘야 트랜스폼이 각자마다 적용됩니다.
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0.f);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0,DROPITEM::O2CAPSULE);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox1", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_1", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0.f);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_A, 3, 3, 0, DROPITEM::O2CAPSULE);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox2", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_2", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -3, 3, 0.f, DROPITEM::TRIPLEAXEL);
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, 0, 3, 0, DROPITEM::O2CAPSULE);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox3", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_3", pGameObject)))
 		return E_FAIL;
 
+	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_BOX, -3, 3,0, DROPITEM::O2CAPSULE);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_O2_4", pGameObject)))
+		return E_FAIL;
+	
 	pGameObject = CDiveItemBox::Create(ITEMBOXTEX::CHEST_WEAPON, -6, 3, 0.f, DROPITEM::PENTAAXEL);
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox4", pGameObject)))
+	if (FAILED(pLayer->Add_GameObject(L"DiveItemBox_PENTAAXEL", pGameObject)))
 		return E_FAIL;
 	//-----------------------------------------------------ItemBox---------------------------------------------------------------------
 
@@ -589,13 +595,36 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"Item_Umb", pGameObject)))
 			return E_FAIL;
 
-		vtmp = { -2, 5, 0.f };
+		vtmp = { 0.f, 0.f, 0.f };
 		pGameObject = CAmmoPack::Create(vtmp);
 		if (nullptr == pGameObject)
 			return E_FAIL;
-		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack", pGameObject)))
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack0", pGameObject)))
 			return E_FAIL;
 
+		pGameObject = CAmmoPack::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack1", pGameObject)))
+			return E_FAIL;
+
+		pGameObject = CAmmoPack::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack2", pGameObject)))
+			return E_FAIL;
+
+		pGameObject = CAmmoPack::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack3", pGameObject)))
+			return E_FAIL;
+
+		pGameObject = CAmmoPack::Create(vtmp);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack4", pGameObject)))
+			return E_FAIL;
 	}
 
 	
