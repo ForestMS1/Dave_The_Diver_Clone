@@ -82,6 +82,9 @@ public:
 	// With SlicableFish
 	void				Set_SlicableFish(CGameObject* pFish)								{ m_pCurSlicableFish = pFish; }
 	CGameObject*		Get_SlicableFish()													{ return m_pCurSlicableFish; }
+	void				Set_SlicableJohn(CGameObject* pJohn)								{ m_pSlicableJohn = pJohn; }
+	CGameObject*		Get_SlicableJohn()													{ return m_pSlicableJohn; }
+
 
 	CGameObject*		Get_WeponSlot(EQUIPPED equipped)									{ return m_vecWeaponSlot[(_uint)equipped]; }
 	// 무기 등록
@@ -273,6 +276,7 @@ private:
 	CGameObject* m_pCurOnItemBox = nullptr;
 	CGameObject* m_pCurOnItem = nullptr;
 	CGameObject* m_pCurSlicableFish = nullptr;
+	CGameObject* m_pSlicableJohn = nullptr;
 
 	unordered_map<std::wstring_view, CGameObject*> m_mapCanUseItemSlot = { {L"ItemSlot1", nullptr}, {L"ItemSlot2", nullptr} };
 	CGameObject* m_vecWeaponSlot[(_uint)EQUIPPED::EQUIPPED_END] = {nullptr, nullptr};

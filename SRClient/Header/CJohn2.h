@@ -85,6 +85,8 @@ public:
 
 	void				CollisionWithTarget();
 
+	void				SliceComplete();
+
 
 private:
 	HRESULT				Ready_Component();

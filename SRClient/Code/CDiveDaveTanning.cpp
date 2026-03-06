@@ -5,6 +5,7 @@
 #include "CCameraMgr.h"
 #include "CDiveDaveCam.h"
 #include "CFishGameObject.h"
+#include "CJohn2.h"
 CDiveDaveTanning::CDiveDaveTanning(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -46,10 +47,15 @@ _int CDiveDaveTanning::Update_State(const _float& fTimeDelta)
 	if (m_fTanningTime > 5.f)
 	{
 		CFishGameObject* pSlicableFish = dynamic_cast<CFishGameObject*>(m_pOwner->Get_SlicableFish());
+		CJohn2* pSlicableJohn = dynamic_cast<CJohn2*>(m_pOwner->Get_SlicableJohn());
 		if (pSlicableFish != nullptr)
 		{
 			// [LSY] 여기가 슬라이스 완료부분
 			pSlicableFish->SliceComplete();
+		}
+		if (pSlicableJohn != nullptr)
+		{
+			pSlicableJohn->SliceComplete();
 		}
 		m_pOwner->Set_State(DIVEDAVESTATE::IDLE);
 	}

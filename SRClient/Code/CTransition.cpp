@@ -958,6 +958,26 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"John2Hit", CAssetTexture::Create(s.c_str()));
 	}
 
+	// 보스 2 DeathMove
+	for (int i = 0; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/DeathMove/JohnWatson2_DeathMove_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_DeathMove", CAssetTexture::Create(s.c_str()));
+	}
+	// 보스 2 빤스
+	for (int i = 0; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/Panties/JohnWatson2_Panties_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_Panties", CAssetTexture::Create(s.c_str()));
+	}
+	for (int i = 0; i < 7; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/PantiesSwim/JohnWatson2_Panties_Swim0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_PantiesSwim", CAssetTexture::Create(s.c_str()));
+	}
+	s = L"../Bin/Resource/Texture/JohnWatson2/JohnWatson2_Slicable.png";
+	CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_Slicable", CAssetTexture::Create(s.c_str()));
+
 	s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill02_Shoot/JohnWatson2_GunSkill02_Shoot_01.png";
 	CAssetMgr::GetInstance()->AddAsset(L"John2GunSkill02_Shoot", CAssetTexture::Create(s.c_str()));
 
