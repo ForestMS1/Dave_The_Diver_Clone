@@ -27,11 +27,13 @@
 #include "CAssetSpine.h"
 #include "CParticleMgr.h"
 #include "CLeah.h"
+#include "CEnding.h"
 
  bool CTransition::s_LogoAssetLoaded = false;
  bool CTransition::s_ShipAssetLoaded = false;
  bool CTransition::s_DiveAssetLoaded = false;
  bool CTransition::s_SushiAssetLoaded = false;
+ bool CTransition::s_EndingAssetLoaded = false;
 
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
@@ -1575,6 +1577,17 @@ HRESULT CTransition::Transition_SUSHI_TO_SHIP()
 	return S_OK;
 }
 
+HRESULT CTransition::Transition_SUSHI_TO_ENDING()
+{
+	m_sComment = L"Transition_SUSHI_TO_ENDING COMPLETE";
+#ifdef _DEBUG
+	//Sleep(500);
+#endif // DEBUG
+	m_bFinish = true;
+
+	return S_OK;
+}
+
 HRESULT CTransition::Common_SHIP_Load()
 {
 	for (int i = 1; i <= 2; ++i)
@@ -2095,6 +2108,14 @@ _int CTransition::Update_Scene(const _float& fTimeDelta)
 				CManagement::GetInstance()->Set_Scene(pLogo);
 				});
 		}
+		else if (m_eDstScene == SCENE_ENDING)
+		{
+			AddFadeOut(this, [=]() {
+				auto pEnding = CEnding::Create();
+				AddFadeIn(pEnding);
+				CManagement::GetInstance()->Set_Scene(pEnding);
+				});
+		}
 	}
 	
 
@@ -2467,6 +2488,18 @@ unsigned int CTransition::Thread_Main(void* pArg)
 			{
 				CTransition::s_ShipAssetLoaded = true;
 				pTransition->Transition_SUSHI_TO_SHIP();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
+		}
+		else if (eDst == SCENE_ENDING)
+		{
+			if (!CTransition::s_EndingAssetLoaded)
+			{
+				CTransition::s_EndingAssetLoaded = true;
+				pTransition->Transition_SUSHI_TO_ENDING();
 			}
 			else
 			{

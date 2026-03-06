@@ -126,6 +126,11 @@ void CSushi::Render_Scene()
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(L"Here is CSushi", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	if (ImGui::Button("Ending"))
+	{
+		CTransition::FadedTransition(CTransition::SCENE_SUSHI, CTransition::SCENE_ENDING);
+	}
 #endif
 
 }

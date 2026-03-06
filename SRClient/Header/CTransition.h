@@ -10,6 +10,7 @@ public:
 		SCENE_SHIP,
 		SCENE_DIVE,
 		SCENE_SUSHI,
+		SCENE_ENDING,
 		SCENE_ID_END
 	};
 
@@ -42,7 +43,7 @@ public:
 	HRESULT Transition_DIVE_TO_SHIP();
 	HRESULT Transition_SHIP_TO_SUSHI();
 	HRESULT Transition_SUSHI_TO_SHIP();
-
+	HRESULT Transition_SUSHI_TO_ENDING();
 
 private:
 	HRESULT Common_SHIP_Load();
@@ -89,6 +90,7 @@ public:
 	static bool s_ShipAssetLoaded;
 	static bool s_DiveAssetLoaded;
 	static bool s_SushiAssetLoaded;
+	static bool s_EndingAssetLoaded;
 
 private:
 	void AddFadeIn(CScene* pScene, function<void()> funcOnEnd = nullptr);

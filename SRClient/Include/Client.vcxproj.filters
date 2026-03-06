@@ -520,6 +520,9 @@
     <Filter Include="02. GameObject\Dive_Item\Item_AmmoPack">
       <UniqueIdentifier>{92022bed-b197-48e1-b97d-e8c18052a0df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\05. Ending">
+      <UniqueIdentifier>{cc44f231-7151-4bc3-a5d4-ff611256b855}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1320,6 +1323,9 @@
     <ClInclude Include="..\Header\CJohnConversation.h">
       <Filter>02. GameObject\Conversation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEnding.h">
+      <Filter>01. Scene\05. Ending</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2098,6 +2104,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnConversation.cpp">
       <Filter>02. GameObject\Conversation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEnding.cpp">
+      <Filter>01. Scene\05. Ending</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
