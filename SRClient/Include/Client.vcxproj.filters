@@ -1320,6 +1320,9 @@
     <ClInclude Include="..\Header\CJohnConversation.h">
       <Filter>02. GameObject\Conversation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSpaceKeyUI.h">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2098,6 +2101,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohnConversation.cpp">
       <Filter>02. GameObject\Conversation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpaceKeyUI.cpp">
+      <Filter>02. GameObject\DiveDave\DiveDaveUI\GaugeBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -751,6 +751,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_ChangeTab", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_LB.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_RKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/R_Key_Dark.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_CKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/C_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SpaceKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Space_Key_Dark_Symbol.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Main_Box.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Main_Stroke.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainSubBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Sub_Box.png"));
