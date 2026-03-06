@@ -1075,22 +1075,92 @@ HRESULT CTerrian::Ready_Material()
 
     pGraphicDev->SetMaterial(&tMtrl);
 
-    D3DLIGHT9 light;
-    ZeroMemory(&light, sizeof(D3DLIGHT9));
+    {
+        D3DLIGHT9 light;
+        ZeroMemory(&light, sizeof(D3DLIGHT9));
 
-    light.Type = D3DLIGHT_POINT;
+        light.Type = D3DLIGHT_POINT;
 
-    light.Diffuse.r = 1.5f;
-    light.Diffuse.g = 1.5f;
-    light.Diffuse.b = 1.5f;
+        light.Diffuse.r = 1.5f;
+        light.Diffuse.g = 1.5f;
+        light.Diffuse.b = 1.5f;
 
-    light.Attenuation0 = 1.0f;
-    light.Attenuation1 = 0.1f;
-    light.Attenuation2 = 0.01f;
-    light.Range = 8.f;
-    light.Position = Pos;
-    pGraphicDev->SetLight(1, &light);
-    pGraphicDev->LightEnable(1, TRUE);
+        light.Attenuation0 = 1.0f;
+        light.Attenuation1 = 0.1f;
+        light.Attenuation2 = 0.01f;
+        light.Range = 3.f;
+        light.Position = {25.f, -157.f, 0.f};
+
+        pGraphicDev->SetLight(1, &light);
+        pGraphicDev->LightEnable(1, TRUE);
+    }
+
+
+
+
+
+    {
+        D3DLIGHT9 light;
+        ZeroMemory(&light, sizeof(D3DLIGHT9));
+
+        light.Type = D3DLIGHT_POINT;
+
+        light.Diffuse.r = 1.5f;
+        light.Diffuse.g = 1.5f;
+        light.Diffuse.b = 1.5f;
+
+        light.Attenuation0 = 1.0f;
+        light.Attenuation1 = 0.1f;
+        light.Attenuation2 = 0.01f;
+        light.Range = 3.f;
+        light.Position = { 74.f, -182.f, 0.f };
+
+        pGraphicDev->SetLight(2, &light);
+        pGraphicDev->LightEnable(2, TRUE);
+    }
+
+
+    {
+        D3DLIGHT9 light;
+        ZeroMemory(&light, sizeof(D3DLIGHT9));
+
+        light.Type = D3DLIGHT_POINT;
+
+        light.Diffuse.r = 1.5f;
+        light.Diffuse.g = 1.5f;
+        light.Diffuse.b = 1.5f;
+
+        light.Attenuation0 = 1.0f;
+        light.Attenuation1 = 0.1f;
+        light.Attenuation2 = 0.01f;
+        light.Range = 3.f;
+        light.Position = { 65.f, -181.f, 0.f };
+
+        pGraphicDev->SetLight(3, &light);
+        pGraphicDev->LightEnable(3, TRUE);
+    }
+
+    {
+        D3DLIGHT9 light;
+        ZeroMemory(&light, sizeof(D3DLIGHT9));
+
+        light.Type = D3DLIGHT_POINT;
+
+        light.Diffuse.r = 1.5f;
+        light.Diffuse.g = 1.5f;
+        light.Diffuse.b = 1.5f;
+
+        light.Attenuation0 = 1.0f;
+        light.Attenuation1 = 0.1f;
+        light.Attenuation2 = 0.01f;
+        light.Range = 8.f;
+        light.Position = Pos;
+
+        pGraphicDev->SetLight(4, &light);
+        pGraphicDev->LightEnable(4, TRUE);
+    }
+
+    
     pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
     pGraphicDev->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
