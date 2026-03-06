@@ -100,8 +100,9 @@ HRESULT CGameMemMgr::Ready()
 	addFish(L"ÄÚ¹Ý¾ÆÁö", 6, 18, 30);
 	addFish(L"³ë¶û¹é", 7, 12, 20);
 	addFish(L"Èòµ¿°¡¸®", 8, 15, 23);
-	addFish(L"¹ÝÃÝ", 9, 10, 0);
+	addFish(L"¹ÝÃÝ", 1, 10, 0);
 	stockPicIndex = 0;
+	stockCreated = 0;
     return S_OK;
 }
 
@@ -188,9 +189,18 @@ void CGameMemMgr::AddStockMarketIndex()
 		}
 	}
 	else if (Get_DiveInfos().size() == 1) {
-		if (stockPicIndex < 12) {
-			stockPicIndex++;
+		if (CGameMemMgr::GetInstance()->GetStockCreated() == 2) {
+			if (stockPicIndex < 9) {
+				stockPicIndex++;
+			}
 		}
+		else if (CGameMemMgr::GetInstance()->GetStockCreated() == 3) {
+			if (stockPicIndex < 12) {
+				stockPicIndex++;
+			}
+		}
+		
+
 	}
 	else if(Get_DiveInfos().size() == 2){
 		if (stockPicIndex < 13) {

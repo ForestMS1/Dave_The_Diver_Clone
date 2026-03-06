@@ -208,7 +208,8 @@ public:
 	vector<FISH*>& getFishes() { return fishes; }
 	vector<FISH*>& getMenu() { return SelectedMenu; }
 	queue<FISH*>& getCookingMenu() { return CookingMenu; }
-
+	void	IncreaseCreated() { stockCreated++; }
+	int		GetStockCreated() { return stockCreated; }
 	void levelUp(wstring name);
 private:
 	virtual void		Free();
@@ -216,6 +217,7 @@ private:
 	vector<FISH*> SelectedMenu;
 	queue<FISH*> CookingMenu;
 	int			stockPicIndex;
+	int			stockCreated;
 
 	// µ·
 public:
