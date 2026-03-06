@@ -389,7 +389,7 @@ void CJohn2::SliceComplete()
 		pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(5));
 
 		std::wstringstream wss;
-		wss << std::fixed << std::setprecision(1) << 7.7 << L"kg";
+		wss << std::fixed << std::setprecision(1) << 37.7 << L"kg";
 		std::wstring result = wss.str();
 
 		pGetItemUI->Set_Weight(result);
@@ -401,11 +401,11 @@ void CJohn2::SliceComplete()
 
 	if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
 	{
-		pDave->Change_Weight(7.7);
+		pDave->Change_Weight(37.7);
 	}
 
 	CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
-	fish.fWeight = 7.7;
+	fish.fWeight = 37.7;
 	fish.iRank = 5;
 	fish.iStar = 5;
 	fish.sFishName = L"정체불명의 고기";
