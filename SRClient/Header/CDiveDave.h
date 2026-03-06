@@ -112,7 +112,18 @@ public:
 
 		_vec3 Pos{};
 		m_pTransformCom->Get_Info(INFO_POS, &Pos);
-		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
+
+		float fRange = 0.3f;
+
+		for (int i = 0; i < 10; ++i)
+		{
+			float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+			float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+			Pos.x += randX;
+			Pos.y += randY;
+			CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 1);
+		}
+		
 
 
 		m_bIsHit = true;

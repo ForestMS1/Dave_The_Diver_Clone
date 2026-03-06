@@ -99,6 +99,19 @@ void CFishGameObject::Damaged(int iDamage)
         m_bDamaged = true;
         m_pSpineCom->Set_ColorWhite(true);
         m_iHP -= iDamage;
+
+        _vec3 vPos;
+        float fRange = 0.3f;
+        m_pTransformCom->Get_Info(INFO_POS, &vPos);
+        for (int i = 0; i < 7; ++i)
+        {
+            float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+            float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+            vPos.x += randX;
+            vPos.y += randY;
+            CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, vPos, 1);
+        }
+
         if (m_iHP <= 0)
         {
             Die();
@@ -160,6 +173,19 @@ void CFishGameObject::QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos)
     m_vMoveTarget = vNewTarget;
     m_fCurrSpeed = 30.f;
     m_fCurrRotateSpeed = D3DXToRadian(360.f * 10.f);
+
+
+    //_vec3 vPos;
+    float fRange = 0.3f;
+    //m_pTransformCom->Get_Info(INFO_POS, &vPos);
+    for (int i = 0; i < 7; ++i)
+    {
+        float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+        float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+        vMyPos.x += randX;
+        vMyPos.y += randY;
+        CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, vMyPos, 1);
+    }
 }
 
 void CFishGameObject::QTERelease()
