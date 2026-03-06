@@ -77,7 +77,7 @@ FireworkTail* FireworkTail::Create(_vec3 origin)
 void FireworkTail::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	attribute->_isAlive = true;
-	attribute->_position = _origin;
+	attribute->_position = _hitPosition;
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute->velocity, &min, &max);

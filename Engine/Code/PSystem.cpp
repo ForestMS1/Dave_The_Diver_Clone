@@ -55,7 +55,7 @@ void PSystem::addParticle(_vec3 position, D3DXCOLOR color)
 	Attribute attribute;
 	_hitPosition = position;
 	resetParticle(&attribute, color);
-	attribute._position = position;
+	
 	_particles.push_back(attribute);
 	
 }

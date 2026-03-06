@@ -38,19 +38,38 @@ CBloomBubble* CBloomBubble::Create()
 
 void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
-
-	float Random = GetRandomFloat(-1.f, 1.f);
 	attribute->_position = _hitPosition;
+
+	float Random = GetRandomFloat(-10.f, 10.f);
 	attribute->_position.x += Random;
 
 
-	Random = GetRandomFloat(-1.f, 1.f);
+	Random = GetRandomFloat(-10.f, 10.f);
 	attribute->_position.y += Random;
+
+
 	attribute->_isAlive = true;
 
+	_vec3 min{};
+	_vec3 max{};
+	if (_hitPosition.x >= attribute->_position.x && _hitPosition.y < attribute->_position.y) {
+		min = { 0.f, -1.f,0.f };
+		max = { 1.f, 0.f,0.f };
+	}
+	if (_hitPosition.x < attribute->_position.x && _hitPosition.y < attribute->_position.y) {
+		min = { -1.f, -1.f,0.f };
+		max = { 0.f, 0.f,0.f };
+	}
 
-	_vec3 min = { -0.1f, 0.1f,0.f };
-	_vec3 max = { 0.1f, 0.1f,0.f };
+	if (_hitPosition.x >= attribute->_position.x && _hitPosition.y >= attribute->_position.y) {
+		min = { 0.f, 0.f,0.f };
+		max = { 1.f, 1.f,0.f };
+	}
+	if (_hitPosition.x < attribute->_position.x && _hitPosition.y >= attribute->_position.y) {
+		min = { -1.f, 0.f,0.f };
+		max = { 0.f, 1.f,0.f };
+	}
+
 
 	GetRandomVector(&attribute->velocity, &min, &max);
 
@@ -104,14 +123,15 @@ void CBloomBubble::update(float fTimeDelta)
 {
 	list<Attribute>::iterator i;
 	for (i = _particles.begin(); i != _particles.end(); i++) {
-		const float gravity = 1.2f;
-		//i->velocity.y -= gravity * fTimeDelta;
 		i->_position += i->velocity * fTimeDelta;
 		i->_age += fTimeDelta;
 		
+		i->velocity.x += sin(i->_age) * fTimeDelta;
+		i->velocity.y += sin(i->_age) * fTimeDelta;
 	
 
-
+	
+		const double PI = 3.1415926;
 		if (i->_age > (i->_lifeTime)) {
 			i->_isAlive = false;
 		}
