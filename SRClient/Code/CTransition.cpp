@@ -274,6 +274,7 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 
 	//stockMarket
 	{
@@ -1047,7 +1048,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Blood", CAssetTexture::Create(s.c_str()));
 	}
 
-	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 	for (int i = 0; i < 17; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/Coral/Coral" + ::to_wstring(i) + L".png";
@@ -2019,7 +2020,9 @@ HRESULT CTransition::Ready_Scene()
 
 
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+	{
 		return E_FAIL;
+	}
 
 
 	m_bFadeEnd = false;
@@ -2272,9 +2275,11 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 
 void CTransition::Render_Scene()
 {
+#ifdef _DEBUG
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(m_sComment, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+#endif
 }
 
 CTransition* CTransition::Create(SCENE_ID eSrcScene, SCENE_ID eDstScene)

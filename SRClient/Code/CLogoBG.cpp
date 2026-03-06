@@ -100,16 +100,16 @@ HRESULT			CLogoBG::Ready_Component()
 
 CLogoBG* CLogoBG::Create(float fPosX, float fPosY)
 {
-    CLogoBG* pIDiverUpgrade = new CLogoBG{ fPosX , fPosY };
+    CLogoBG* pLogoBG = new CLogoBG{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pLogoBG->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pLogoBG);
+        MSG_BOX("pLogoBG Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pLogoBG;
 }
 
 void CLogoBG::Free()

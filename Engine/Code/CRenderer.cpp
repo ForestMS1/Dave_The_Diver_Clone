@@ -28,6 +28,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_NonAlpha(pGraphicDev);
 	Render_Terrian(pGraphicDev);
 	Render_SushiBGAlpha(pGraphicDev);
+	CParticleMgr::GetInstance()->PreRender_Particle();
 	CParticleMgr::GetInstance()->Render_Particle();
 	Render_Alpha(pGraphicDev);
 	CParticleMgr::GetInstance()->PostRender_Particle();

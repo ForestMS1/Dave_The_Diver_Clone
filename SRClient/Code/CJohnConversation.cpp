@@ -68,13 +68,13 @@ HRESULT		CJohnConversation::Ready_GameObject()
        m_vecConversation[CONV_1].push_back(L"저 사실\n...\n...\n...");
        m_vecConversation[CONV_1].push_back(L"중퇴가 하고싶어요");*/
     m_vecConversation[CONV_1].push_back(L"왔군. 나는 존 왓슨, 이 바다의 균형을 지키는 방위대장이다.");
-    m_vecConversation[CONV_1].push_back(L"너를 몇일간 지켜봤지만 너는 이 바다의 규칙을 어기고있다.");
-    m_vecConversation[CONV_1].push_back(L"하루 인당 포획량은 10kg이지만\n너는 항상 그 이상을 가져가더군");
+    m_vecConversation[CONV_1].push_back(L"너를 몇일간 지켜봤지만\n너는 이 바다의 규칙을 어기고있다.");
+    m_vecConversation[CONV_1].push_back(L"하루 인당 포획량은 10kg이지만\n너는 항상 그 이상을 가져가더군.");
     m_vecConversation[CONV_1].push_back(L"긴말은 안하겠다.");
     m_vecConversation[CONV_1].push_back(L"앞으로 규정을 지키겠다고 약속을 하면\n지금까지의 일은 없던걸로 해주겠다.");
 
     m_vecConversation[CONV_2].push_back(L"말이 안통하는군.");
-    m_vecConversation[CONV_2].push_back(L"어쩔수 없지. 제압하겠다.");
+    m_vecConversation[CONV_2].push_back(L"어쩔수 없지.\n제압하겠다.");
 
     m_vecConversation[CONV_3].push_back(L"평범한 다이버 주제에 제법이군.");
     m_vecConversation[CONV_3].push_back(L"진심으로 상대해주지.");
@@ -107,7 +107,7 @@ _int		CJohnConversation::Update_GameObject(const _float& fTimeDelta)
 
     m_fTimer += fTimeDelta;
 
-    if (m_fTimer > 0.1f)
+    if (m_fTimer > 0.05f)
     {
         if (m_iCurrentTxtIdx < m_vecConversation[m_eCurrentConversation][m_iCurrentConversationIdx].size())
         {
@@ -191,16 +191,16 @@ HRESULT			CJohnConversation::Ready_Component()
 
 CJohnConversation* CJohnConversation::Create(float fPosX, float fPosY)
 {
-    CJohnConversation* pIDiverUpgrade = new CJohnConversation{ fPosX , fPosY };
+    CJohnConversation* pJohnConversation = new CJohnConversation{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pJohnConversation->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pJohnConversation);
+        MSG_BOX("pJohnConversation Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pJohnConversation;
 }
 
 void CJohnConversation::Free()

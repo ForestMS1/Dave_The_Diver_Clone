@@ -227,7 +227,10 @@ void CMapMgr::LateUpdate_Map(const _float& fTimeDelta)
 
 void CMapMgr::Render_Map()
 {
+#ifdef _DEBUG
 	Show_GUI();
+#endif
+	
 }
 
 void CMapMgr::Free()

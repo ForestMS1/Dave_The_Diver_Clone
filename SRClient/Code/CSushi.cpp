@@ -36,6 +36,7 @@
 #include "CTea.h"
 #include "CSmallMenu.h"
 #include "CSoundMgr.h"
+#include "CParticleMgr.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -111,7 +112,6 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseShop", CSoundMgr::SFX, 1.0f);
 		gameEnd = true;
 	}
-
 	return iExit;
 }
 
@@ -122,10 +122,11 @@ void CSushi::LateUpdate_Scene(const _float& fTimeDelta)
 
 void CSushi::Render_Scene()
 {
-
+#ifdef _DEBUG
 	_vec2	vPos{ 0.f, 0.f };
 	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
 	pDefFont->Render_Font(L"Here is CSushi", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+#endif
 
 }
 
@@ -427,7 +428,7 @@ void CSushi::Key_Input()
 void CSushi::Free()
 {
 	CSoundMgr::GetInstance()->StopAll();
-
+	CParticleMgr::GetInstance()->Clear_Particle();
 	CScene::Free();
 	
 }

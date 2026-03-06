@@ -43,6 +43,7 @@
 #include "CBanchoGood.h"
 #include "CStockMarket.h"
 #include "CSoundMgr.h"
+#include "CParticleMgr.h"
 
 
 CShip::CShip()
@@ -97,6 +98,7 @@ HRESULT CShip::Ready_Scene()
 
 	m_fResultTimer = 0.f;
 	m_fConvAppearTimer = 0.f;
+	m_fFireworkTimer = 0.f;
 	m_bResultOpend = false;
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_BGM", CSoundMgr::BGM_SHIP_LOBBY, 0.1f);
@@ -448,6 +450,42 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	}
 	
 
+
+
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 1.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}
+	
+	return iExit;
+}
+
+
+void CShip::Render_Scene()
+{
+#ifdef _DEBUG
+	_vec2	vPos{ 0.f, 0.f };
+	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
+	pDefFont->Render_Font(L"Here is CShip", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
+
 	ImGui::Begin("Curr Scene: CShip");
 	if (ImGui::Button("Go Dive Scene"))
 	{
@@ -477,7 +515,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 		ImGui::Text("jeokjae: %i", jeokjae);
 		ImGui::Text("jaksal: %i", jaksal);
 	}
-	
+
 
 	if (ImGui::Button("Collider Render"))
 	{
@@ -515,7 +553,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
 		{
-			if (auto pObj =pLayer->Get_GameObjectFirst(L"DiveResultUI"))
+			if (auto pObj = pLayer->Get_GameObjectFirst(L"DiveResultUI"))
 			{
 				pObj->Set_DeadCascade();
 			}
@@ -527,7 +565,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			}
 		}
 	}
-	
+
 	if (ImGui::Button("ToSushi"))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
@@ -604,79 +642,30 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	}
 
 
-	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 1.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 10.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}
-	else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 10.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}
-	return iExit;
+
+#endif
 }
 
 void CShip::LateUpdate_Scene(const _float& fTimeDelta)
 {
 	CScene::LateUpdate_Scene(fTimeDelta);
+	
+	if (CGameMemMgr::GetInstance()->Get_ShipNight()) {
+		m_fFireworkTimer += fTimeDelta;
+		if (m_fFireworkTimer > 1.f) {
+
+			//-5 ~ 5
+			float x = (rand() % 10 + 1) - 5;
+			// 0 ~ 2
+			float y = 2.f - (2.f - (rand() % 3));
+
+			CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { x,y,5.f }, 300);
+			m_fFireworkTimer = 0.f;
+		}
+	}
 }
 
-void CShip::Render_Scene()
-{
-	_vec2	vPos{ 0.f, 0.f };
-	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
-	pDefFont->Render_Font(L"Here is CShip", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-}
+
 
 CShip* CShip::Create()
 {
@@ -694,6 +683,7 @@ CShip* CShip::Create()
 void CShip::Free()
 {
 	CScene::Free();
+	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CSoundMgr::GetInstance()->StopAll();
 }

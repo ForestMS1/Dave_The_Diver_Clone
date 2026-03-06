@@ -367,6 +367,25 @@ void CTea::Render_GameObject()
         pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
         pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
+
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_FKey"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+
+        D3DXMatrixIdentity(&matTmp);
+        matTmp.m[0][0] = 0.5f;
+        matTmp.m[1][1] = 0.5f;
+        matTmp.m[3][1] = 2.93f;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+
+
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     }
@@ -411,7 +430,7 @@ CTea* CTea::Create()
 
 void CTea::Free()
 {
-    Safe_Release(customer);
+    //Safe_Release(customer);
     CGameObject::Free();
 
 }
@@ -419,7 +438,7 @@ void CTea::Free()
 void CTea::Key_Input()
 {
     if (!frameMove) {
-        if (CDInputMgr::GetInstance()->Key_Pressing(DIKEYBOARD_L)) {
+        if (CDInputMgr::GetInstance()->Key_Pressing(DIKEYBOARD_F)) {
             soundPlayedTime += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
             if (soundPlayedTime > 2.3f) {
                 CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_TeaPouring", CSoundMgr::SFX, 1.0f);

@@ -150,6 +150,15 @@ _int CSushiDave::Update_GameObject(const _float& fTimeDelta)
         DashSoundTime = 0.f;
 
     }
+    //m_fFireworkTimer += fTimeDelta;
+    //if (m_fFireworkTimer > 2.f) {
+
+    //    //0~9 0~0.9
+    //    float f = (rand() % 10) * 0.1f;
+    //    CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { 0,0,0 }, 300);
+    //    m_fFireworkTimer = 0.f;
+    //}
+    CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 
     return iExit;
 }
@@ -408,13 +417,17 @@ void CSushiDave::Render_GameObject()
         pGraphicDev->SetTransform(D3DTS_WORLD, &matrix);
         m_pBufferCom->Render_Buffer();
     }
-    fireworkTime += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
 
-    if (fireworkTime > 4.f) {
-        float random = rand() % 3;
-        CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { random,0,7 }, 500);
-        fireworkTime = 0;
+    fireworkTime += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+    if (fireworkTime > 1.f) {
+        //-8 ~ 8   16
+        float x = 8 -(rand() % 17);
+        // 0 ~ 2
+        float y = 2.f - (2.f - (rand() % 3));
+        CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { x,y,7.f }, 300);
+        fireworkTime = 0.f;
     }
+
 
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
