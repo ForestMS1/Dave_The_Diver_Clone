@@ -145,7 +145,7 @@ HRESULT CDive::Ready_Scene()
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
 	//CColliderMgr::GetInstance()->Set_Render(false);
-
+	DeepDark();
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
@@ -796,3 +796,33 @@ void CDive::Free()
 	Safe_Release(m_pFrustumCollider);
 }
 
+void CDive::DeepDark() {
+
+
+	_vec3 floor;
+	
+	CGameObject* pDiveDave = Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
+	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	pDaveTransform->Get_Info(INFO_POS, &floor);
+
+	
+	float _dark = CGameMemMgr::GetInstance()->Get_Dark();
+
+	if (floor.y <= -80.f && _dark > 0.5f) {
+		_dark -= 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y > -80.f && _dark <= 0.99f) {
+		_dark += 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y > -130.f && _dark <= 0.5f) {
+		_dark += 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+	}
+	else if (floor.y <= -130.f && _dark >= 0.12f) {
+		_dark -= 0.01f;
+		CGameMemMgr::GetInstance()->Set_Dark(_dark);
+
+	}
+}

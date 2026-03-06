@@ -10,7 +10,7 @@
 #include "CCoral.h"
 #include "CMapMgr.h"
 
-
+#include "CGameMemMgr.h"
 CTerrian::CTerrian()
     : CGameObject()
 {
@@ -1018,7 +1018,7 @@ void CTerrian::Render_GameObject()
             return;
 
         Set_Fog();
-        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
         //  pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -1050,41 +1050,27 @@ HRESULT CTerrian::Ready_Material()
 
     D3DMATERIAL9			tMtrl;
     ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-    _vec3 floor{};
+
     _vec3 Pos;
     if (CMapMgr::GetInstance()->GetScene() != nullptr) {
         CGameObject* pDiveDave = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave");
         CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-        pDaveTransform->Get_Info(INFO_POS, &floor);
         pDaveTransform->Get_Info(INFO_POS, &Pos);
 
     }
 
 
 
-    if (floor.y <= -80.f && m_dark > 0.5f) {
-        m_dark -= 0.01f;
-    }
-    else if (floor.y > -80.f && m_dark <= 0.99f) {
-        m_dark += 0.01f;
-    }
-    else if (floor.y > -130.f && m_dark <= 0.5f) {
-        m_dark += 0.01f;
-    }
-    else if (floor.y <= -130.f && m_dark >= 0.12f) {
-        m_dark -= 0.01f;
+  
 
-    }
-    
-    ImGui::Begin("TestDark");
-    ImGui::Text("Dark : %lf", m_dark);
-    ImGui::End();
+    float dark = CGameMemMgr::GetInstance()->Get_Dark();
+
 
     tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-    tMtrl.Emissive = D3DXCOLOR(m_dark, m_dark, m_dark, 0.f);
+    tMtrl.Emissive = D3DXCOLOR(dark, dark, dark, 0.f);
     tMtrl.Power = 0.f;
 
     pGraphicDev->SetMaterial(&tMtrl);
@@ -1191,9 +1177,9 @@ void CTerrian::Set_Fog() {
     float Start = -50.f;
     float End   = 400.f;
 
-
+    float dark = CGameMemMgr::GetInstance()->Get_Dark();
     // m_dark는 1 → 0 구조 유지
-    float t = 1.f - m_dark;   // 0 = 밝음, 1 = 어두움
+    float t = 1.f - dark;   // 0 = 밝음, 1 = 어두움
 
     // 시작색 (밝은)
     const float r0 = 28.f;

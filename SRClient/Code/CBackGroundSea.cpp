@@ -79,19 +79,10 @@ void CBackGroundSea::Render_GameObject()
 
 		pDaveTransform->Get_Info(INFO_POS, &floor);
 	}
+	
+	_float Dark = CGameMemMgr::GetInstance()->Get_Dark();
 
-
-	if (floor.y <= -80.f && m_dark > 0.5f) {
-		m_dark -= 0.01f;
-	}
-	else if (floor.y > -80.f && m_dark <= 0.99f) {
-		m_dark += 0.01f;
-	}
-	else if (floor.y > -130.f && m_dark <= 0.5f) {
-		m_dark += 0.01f;
-	}
-	else if (floor.y <= -130.f && m_dark >=0.1f) {
-		m_dark -= 0.01f;
+	if (floor.y <= -130.f ) {
 		if (!CGameMemMgr::GetInstance()->Get_BossAppear()) {
 			CGameMemMgr::GetInstance()->Set_BossAppear(true);
 
@@ -103,7 +94,7 @@ void CBackGroundSea::Render_GameObject()
 		}
 	}
 
-	float t = 1.f - m_dark;   
+	float t = 1.f - Dark;
 
 	// 시작색 (밝은)
 	float r0 = 255.f;
