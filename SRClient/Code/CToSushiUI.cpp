@@ -155,8 +155,15 @@ _int		CToSushiUI::Update_GameObject(const _float& fTimeDelta)
             }
             else
             {
-                CBanchoGood* pBanchoGood = CBanchoGood::Create(5.5f, -1.f);
-                pLayer->Add_GameObject(L"BanchoGood", pBanchoGood);
+                if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+                {
+                    if (!CGameMemMgr::GetInstance()->Get_DiveInfos().back().Get_Fishes().empty())
+                    {
+                        CBanchoGood* pBanchoGood = CBanchoGood::Create(5.5f, -1.f);
+                        pLayer->Add_GameObject(L"BanchoGood", pBanchoGood);
+                    }
+                }
+                
             }
         }
 
