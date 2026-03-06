@@ -63,8 +63,11 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 	m_pManagement->Update_Scene(fTimeDelta);
 
 	//CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
-	//m_pManagement->Update_ImGui();
-	//CAssetMgr::GetInstance()->Update_ImGui();
+#ifdef _DEBUG
+	m_pManagement->Update_ImGui();
+	CAssetMgr::GetInstance()->Update_ImGui();
+#endif
+
 
 	//CAssetMgr::GetInstance()->Get_AssetFirst<CAssetSpine>(L"Test_Spine")->TempUpdate(fTimeDelta);
 
