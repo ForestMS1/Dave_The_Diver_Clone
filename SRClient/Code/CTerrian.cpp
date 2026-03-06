@@ -1023,8 +1023,8 @@ void CTerrian::Render_GameObject()
 
         pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
         for (int i = 0; i < CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_MeshCnt(); ++i) {
-            pGraphicDev->SetTexture(0, (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_Texture())[i]);
-
+            pGraphicDev->SetTexture(0, CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_Texture()->at(i));
+            
             _uint first = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].first;
             _uint second = (*CAssetMgr::GetInstance()->Get_AssetFirst<CAssetGlb>(m_wsName)->Get_vecTexVtxTriCnt())[i].second;
             m_pBufferCom->Render_Buffer(first, second);
@@ -1037,7 +1037,6 @@ void CTerrian::Render_GameObject()
         // pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
         pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-        pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 
     }
