@@ -541,6 +541,9 @@
     <Filter Include="01. Scene\05. Ending">
       <UniqueIdentifier>{cc44f231-7151-4bc3-a5d4-ff611256b855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\05. Ending\GameObject">
+      <UniqueIdentifier>{41b49ca4-8582-4629-85bd-40887a888d89}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\05. Ending\Conversation">
       <UniqueIdentifier>{b624b17c-8698-4ef7-b283-73985af9a3e2}</UniqueIdentifier>
     </Filter>
@@ -1371,6 +1374,9 @@
     <ClInclude Include="..\Header\CEnding.h">
       <Filter>01. Scene\05. Ending</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFinalConversation.h">
+      <Filter>01. Scene\05. Ending\GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CFishTankCollider.h">
       <Filter>02. GameObject\Fish\FishTankCollider</Filter>
     </ClInclude>
@@ -2176,6 +2182,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEnding.cpp">
       <Filter>01. Scene\05. Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFinalConversation.cpp">
+      <Filter>01. Scene\05. Ending\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFishTankCollider.cpp">
       <Filter>02. GameObject\Fish\FishTankCollider</Filter>
