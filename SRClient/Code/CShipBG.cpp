@@ -56,7 +56,7 @@ _int		CShipBG::Update_GameObject(const _float& fTimeDelta)
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_SUSHIBGALPHA, this);
 
     return iExit;
 }

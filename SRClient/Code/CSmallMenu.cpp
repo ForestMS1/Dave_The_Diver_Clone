@@ -89,6 +89,8 @@ void CSmallMenu::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
+
+
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -120,7 +122,7 @@ void CSmallMenu::Render_GameObject()
         pNumberFont->Render_Font(totalQuantity, &vPos2, D3DXCOLOR(255 / 255.f, 255 / 255.f, 255 / 255.f, 1.f));
         
     }
-
+    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(sushiTex))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
@@ -136,7 +138,7 @@ void CSmallMenu::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
     m_pBufferCom->Render_Buffer();
-
+    pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CSmallMenu::Ready_Component()

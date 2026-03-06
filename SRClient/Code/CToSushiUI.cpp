@@ -17,6 +17,7 @@
 #include "CGoToSushiUI.h"
 
 #include "CBanchoGood.h"
+#include "CDaveConversation.h"
 
 CToSushiUI::CToSushiUI(float fPosX, float fPosY)
     : CGameObject()
@@ -156,6 +157,36 @@ _int		CToSushiUI::Update_GameObject(const _float& fTimeDelta)
         }
 
         Set_DeadCascade();
+        if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1) {
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+                {
+                    pObj->Set_DeadCascade();
+                }
+                else
+                {
+                    CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+                    pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
+                    pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+                }
+            }
+        }
+        else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2) {
+            if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+            {
+               if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+               {
+                   pObj->Set_DeadCascade();
+               }
+               else
+               {
+                   CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+                   pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
+                   pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+               }
+            }
+        }
     }
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);

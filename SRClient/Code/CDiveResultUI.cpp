@@ -368,6 +368,7 @@ _int		CDiveResultUI::Update_GameObject(const _float& fTimeDelta)
             }
         }
         Set_DeadCascade();
+        
     }
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);

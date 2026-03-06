@@ -118,7 +118,7 @@ _int		CDaveConversation::Update_GameObject(const _float& fTimeDelta)
 
     m_fTimer += fTimeDelta;
 
-    if (m_fTimer > 0.1f)
+    if (m_fTimer > 0.05f)
     {
         if (m_iCurrentTxtIdx < m_vecConversation[m_eCurrentConversation][m_iCurrentConversationIdx].size())
         {
