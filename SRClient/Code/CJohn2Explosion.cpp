@@ -63,11 +63,12 @@ void CJohn2Explosion::Render_State()
 void CJohn2Explosion::Exit()
 {
 	D3DXIMAGE_INFO imgInfo = *static_cast<CAssetTexture*>(CAssetMgr::GetInstance()->Get_Asset(L"JohnBulletExplosion")->at(0))->Get_ImgInfo();
-
+	
 	_float fWidth = imgInfo.Width;
 	_float fHeight = imgInfo.Height;
 	_float fAspect = fWidth + fHeight;
 	fAspect /= 2.f;
+	
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 

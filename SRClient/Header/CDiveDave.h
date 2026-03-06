@@ -6,6 +6,8 @@
 #include "CDiveDaveOpen.h"
 #include "CDiveDavePickUp.h"
 #include "CSubject.h"
+#include "CParticleMgr.h"
+
 enum class EQUIPPED
 {
 	//MELEE, // 근접무기 -> 기본 장착
@@ -103,8 +105,26 @@ public:
 
 	void				On_Hit(const _float& fDamage) 
 	{ 
+
+
 		if (m_fIvncTime > 0.f)
 			return;
+
+		_vec3 Pos{};
+		m_pTransformCom->Get_Info(INFO_POS, &Pos);
+
+		float fRange = 0.3f;
+
+		for (int i = 0; i < 10; ++i)
+		{
+			float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+			float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+			Pos.x += randX;
+			Pos.y += randY;
+			CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 1);
+		}
+		
+
 
 		m_bIsHit = true;
 		m_fHp -= fDamage;
@@ -229,7 +249,9 @@ private:
 	EQUIPPED m_eCurEquipped = EQUIPPED::HARPOON;
 
 private:
+	const _float m_fOriginSpeed = 10.f;
 	_float m_fSpeed = 10.f;
+	_float m_fDashPlusSpeed = 30.f;
 	_float m_fFrame = 0.f;
 	_bool  m_bFishCaught = false;
 

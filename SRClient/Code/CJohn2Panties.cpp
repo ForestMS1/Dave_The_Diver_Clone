@@ -25,6 +25,7 @@ void CJohn2Panties::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	vScale *= 0.4f;
 	m_pOwner->Multiply_Scale(&vScale);
+	m_pOwner->GetTransformCom()->Update_Component(0.f);
 }
 
 void CJohn2Panties::Input(const _float& fTimeDelta)

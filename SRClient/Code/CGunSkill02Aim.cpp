@@ -45,6 +45,7 @@ _int CGunSkill02Aim::Update_State(const _float& fTimeDelta)
 	{
 		m_wsTexName = L"John2GunSkill02_Shoot";
 		m_pOwner->Splash_Mine();
+		m_pOwner->Reset_BreakTime();
 
 		m_fSplashDelay = 0.f;
 		m_iSplashCnt++;
@@ -60,7 +61,9 @@ _int CGunSkill02Aim::Update_State(const _float& fTimeDelta)
 	}
 
 	if (m_iSplashCnt > 3)
+	{
 		m_pOwner->Set_State(JOHN2STATE::IDLE);
+	}
 
 	return 0;
 }

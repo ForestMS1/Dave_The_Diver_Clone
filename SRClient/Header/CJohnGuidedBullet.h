@@ -72,6 +72,8 @@ private:
 	_bool m_bSoundMove = false;
 	_bool m_bSoundReturn = false;
 
+	_bool m_bCompleteSetSize = false;
+
 
 	CTransform* m_pTargetTransform = nullptr;
 	CTransform* m_pReturnTargetTransform = nullptr;

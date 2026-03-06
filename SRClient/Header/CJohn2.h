@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CParticleMgr.h"
 #include "CBaseState.h"
 #include "CAABB.h"
 #include "CFSM.h"
@@ -48,7 +49,9 @@ public:
 	{
 		if (m_fIvncTime > 0.f)
 			return;
-
+		_vec3 Pos{};
+		m_pTransformCom->Get_Info(INFO_POS, &Pos);
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
 		// 데미지가 일정 수준 이상일떄만 Hit 상태로 넘어간다
 		//if (fDamage > 30.f)
 			m_bIsHit = true;
@@ -78,6 +81,10 @@ public:
 
 	_float				Get_Hp() const { return m_fHp; }
 
+	_float				Get_BreakTime() const { return m_fBreakTime; }
+	void				Add_BreakTime(const _float& fTimeDelta) { m_fBreakTime += fTimeDelta; }
+	void				Reset_BreakTime() { m_fBreakTime = 0.f; }
+
 	//플레이어랑 처음 마주쳐서 인트로
 	void				EncounterTarget();
 
@@ -99,8 +106,8 @@ private:
 	_vec3 m_vCreatePos; //보스 생성 위치
 
 private:
-	_float m_fMaxHp = 200.f;
-	_float m_fHp = 200.f;
+	_float m_fMaxHp = 100.f;
+	_float m_fHp = 100.f;
 	_float m_fIvncTime = 0.f;
 	_float m_bIsHit = false;
 	_bool m_bIsDie = false;
@@ -116,6 +123,8 @@ private:
 	_float	m_fAccRushDist = 0.f;
 
 	_float m_fSpeed = 10.f;
+
+	_float m_fBreakTime = 0.f;
 private:
 	CFSM<CJohn2, JOHN2STATE>* m_pFSM = nullptr;
 	CTransform* m_pTargetTransform = nullptr;

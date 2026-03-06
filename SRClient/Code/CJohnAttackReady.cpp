@@ -47,7 +47,7 @@ _int CJohnAttackReady::Update_State(const _float& fTimeDelta)
 
 	m_fReadyTime += fTimeDelta;
 
-	if (m_fReadyTime > 3.f)
+	if (m_fReadyTime > 1.5f)
 		m_pOwner->Set_State(JOHNSTATE::SHOT);
 	return 0;
 }
