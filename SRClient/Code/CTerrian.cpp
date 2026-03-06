@@ -1740,22 +1740,33 @@ void CTerrian::Free()
 
 void CTerrian::Set_Fog() {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-    float Start = -50.f;
-    float End   = 400.f;
-
     float dark = CGameMemMgr::GetInstance()->Get_Dark();
     // m_dark는 1 → 0 구조 유지
     float t = 1.f - dark;   // 0 = 밝음, 1 = 어두움
+
+    float _fogStart = 400.f;
+    float _fogEnd = 100.f;
+    float _curFogDistance = _fogStart + (_fogEnd - _fogStart) * t;
+
+
+    float Start = -50.f;
+    float End   = _curFogDistance;
+
 
     // 시작색 (밝은)
     const float r0 = 28.f;
     const float g0 = 188.f;
     const float b0 = 250.f;
 
+    //// 목표색 (어두운)
+    //const float r1 = 8.f;
+    //const float g1 = 56.f;
+    //const float b1 = 74.f;
+
     // 목표색 (어두운)
-    const float r1 = 8.f;
-    const float g1 = 56.f;
-    const float b1 = 74.f;
+    const float r1 = 2.f;
+    const float g1 = 16.f;
+    const float b1 = 21.f;
 
     // 선형보간
     BYTE r = (BYTE)(r0 + (r1 - r0) * t);

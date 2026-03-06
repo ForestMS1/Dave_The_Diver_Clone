@@ -106,11 +106,14 @@ void CBackGroundSea::Render_GameObject()
 	float b0 = 255.f;
 
 
+	//// 목표색 (어두운)
+	//float r1 = 100.f;
+	//float g1 = 100.f;
+	//float b1 = 100.f;
 	// 목표색 (어두운)
-	float r1 = 100.f;
-	float g1 = 100.f;
-	float b1 = 100.f;
-
+	const float r1 = 40.f;
+	const float g1 = 40.f;
+	const float b1 = 40.f;
 
 	// 선형보간
 	BYTE r = (BYTE)(r0 + (r1 - r0) * t);
