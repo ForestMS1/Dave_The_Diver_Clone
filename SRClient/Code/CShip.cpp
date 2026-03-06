@@ -472,6 +472,7 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 			}
 		}
 	}
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	
 	return iExit;
 }
