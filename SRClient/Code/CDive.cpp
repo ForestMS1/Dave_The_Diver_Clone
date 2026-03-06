@@ -988,7 +988,7 @@ void CDive::DeepDark() {
 		_dark += 0.01f;
 		CGameMemMgr::GetInstance()->Set_Dark(_dark);
 	}
-	else if (floor.y <= -130.f && _dark >= 0.12f) {
+	else if (floor.y <= -130.f && _dark >= 0.01f) {
 		_dark -= 0.01f;
 		CGameMemMgr::GetInstance()->Set_Dark(_dark);
 

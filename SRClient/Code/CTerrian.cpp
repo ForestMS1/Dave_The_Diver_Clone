@@ -1649,7 +1649,7 @@ HRESULT CTerrian::Ready_Material()
         light.Attenuation0 = 1.0f;
         light.Attenuation1 = 0.1f;
         light.Attenuation2 = 0.01f;
-        light.Range = 8.f;
+        light.Range = 5.f;
         light.Position = Pos;
 
         pGraphicDev->SetLight(4, &light);
