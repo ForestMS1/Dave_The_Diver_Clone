@@ -10,6 +10,7 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 #include "CTransition.h"
+#include "CSoundMgr.h"
 
 CLogoBtnArea::CLogoBtnArea(float fPosX, float fPosY)
     : CGameObject()
@@ -109,6 +110,8 @@ void		CLogoBtnArea::LateUpdate_GameObject(const _float& fTimeDelta)
                     CTransition::FadedTransition(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP);
                     //CManagement::GetInstance()->Set_Scene(CTransition::Create(CTransition::SCENE_LOGO, CTransition::SCENE_SHIP));
                 }
+
+                CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Logo_ui_button_click", CSoundMgr::SFX, 1.f);
             }
         }
 

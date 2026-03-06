@@ -4,6 +4,9 @@
 #include "CRenderer.h"
 #include "CGraphicDev.h"
 #include "CMapMgr.h"
+#include "CGameMemMgr.h"
+#include "CJohn.h"
+
 CBackGroundSea::CBackGroundSea()
 	: CGameObject()
 {
@@ -89,7 +92,15 @@ void CBackGroundSea::Render_GameObject()
 	}
 	else if (floor.y <= -130.f && m_dark >=0.1f) {
 		m_dark -= 0.01f;
-		
+		if (!CGameMemMgr::GetInstance()->Get_BossAppear()) {
+			CGameMemMgr::GetInstance()->Set_BossAppear(true);
+
+			// º¸½º
+			CGameObject* pGameObject = CJohn::Create(13.f, -87.f, 0.f);
+			CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"John", pGameObject);
+
+
+		}
 	}
 
 	float t = 1.f - m_dark;   

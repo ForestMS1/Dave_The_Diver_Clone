@@ -60,7 +60,7 @@ public:
 			On_Dead();
 		}
 	}
-	void				On_Dead() { m_bIsDie = true; }
+	void				On_Dead();
 
 	// Hit 상태 탈출시 호출
 	void				Hit_Free() { m_bIsHit = false; }

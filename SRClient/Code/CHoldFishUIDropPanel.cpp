@@ -9,6 +9,7 @@
 #include "CManagement.h"
 #include "CHoldFishUIImg.h"
 #include "CColliderMgr.h"
+#include "CSoundMgr.h"
 
 CHoldFishUIDropPanel::CHoldFishUIDropPanel(float fPosX, float fPosY)
     : CGameObject()
@@ -56,6 +57,8 @@ HRESULT		CHoldFishUIDropPanel::Ready_GameObject()
     m_pTransformCom->Set_Pos(0.f, 0.f, 0.f);
     m_pTransformCom->Set_Scale(&vScale);
     m_fViewZ = 0.399;
+
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
 
     return S_OK;
 }
@@ -158,5 +161,6 @@ CHoldFishUIDropPanel* CHoldFishUIDropPanel::Create(float fPosX, float fPosY)
 
 void CHoldFishUIDropPanel::Free()
 {
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
     CGameObject::Free();
 }

@@ -30,6 +30,14 @@ public:
 		BOSS_SFX,
 		BOSS_SFX1,
 		BOSS_SFX2,
+		SFX_SHIP_DIVE_BTN,
+		SFX_SHIP_DAVE_FOOT,
+		SFX_SHIP_UI_APP_CLICK,
+		SFX_SHIP_UI_CLICK,
+		SFX_SHIP_UI_CHOICE,
+		BGM_SHIP_LOBBY,
+		BGM_SHIP_BIRD,
+		BGM_SHIP_LOOP,
 		MAXCHANNEL
 	};
 private:
@@ -49,6 +57,8 @@ public:
 	void StopSound(CHANNELID eID);
 	void StopAll();
 	void SetChannelVolume(CHANNELID eID, float fVolume);
+
+	void UpdateSound();
 
 private:
 

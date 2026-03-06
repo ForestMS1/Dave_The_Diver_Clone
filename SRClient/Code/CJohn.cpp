@@ -290,6 +290,7 @@ void CJohn::EncounterTarget()
 {
 	if (m_bStartCombat)
 		return;
+
 	m_bStartCombat = true;
 
 	CJohnIntro* pIntro = CJohnIntro::Create();

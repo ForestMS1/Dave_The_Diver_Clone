@@ -68,6 +68,8 @@
 #include "CCoral.h"
 #include "CWPAmmoCntText.h"
 #include "CAmmoPack.h"
+#include "CSoundMgr.h"
+#include "CSpaceKeyUI.h"
 CDive::CDive()
 	: CScene()
 {
@@ -118,7 +120,7 @@ HRESULT CDive::Ready_Scene()
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
 
-
+	
 
 	// [LSY] 데이브 아이다이버 수치 연동
 	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
@@ -144,7 +146,7 @@ HRESULT CDive::Ready_Scene()
 
 _int CDive::Update_Scene(const _float& fTimeDelta)
 {
-	//CColliderMgr::GetInstance()->Set_Render(false);
+	//CColliderMgr::GetInstance()->Set_Render(true);
 
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_H))
 	{
@@ -750,6 +752,13 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
+	pGameObject = CSpaceKeyUI::Create();
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"SpaceKeyUI", pGameObject)))
+		return E_FAIL;
+	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
+
 
 
 
@@ -794,5 +803,6 @@ void CDive::Free()
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	Safe_Release(m_pFrustumCollider);
+	CSoundMgr::GetInstance()->StopAll();
 }
 
