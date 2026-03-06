@@ -40,11 +40,11 @@ void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	attribute->_position = _hitPosition;
 
-	float Random = GetRandomFloat(-5.f, 5.f);
+	float Random = GetRandomFloat(-10.f, 10.f);
 	attribute->_position.x += Random;
 
 
-	Random = GetRandomFloat(-5.f, 5.f);
+	Random = GetRandomFloat(-10.f, 10.f);
 	attribute->_position.y += Random;
 
 
@@ -126,8 +126,8 @@ void CBloomBubble::update(float fTimeDelta)
 		i->_position += i->velocity * fTimeDelta;
 		i->_age += fTimeDelta;
 		
-		i->velocity.x += sin(i->_age * 3.1415926 / 180) * fTimeDelta;
-		i->velocity.y += sin(i->_age * 3.1415926 / 180) * fTimeDelta;
+		i->velocity.x += sin(i->_age) * fTimeDelta;
+		i->velocity.y += sin(i->_age) * fTimeDelta;
 	
 
 	
