@@ -20,7 +20,9 @@ public:
 
 private:
     _bool m_bSoundBgm = false;
-
+    _bool m_bJohnDialogCreated = false;
+    _bool m_bDaveDialogCreated = false;
+    
 public:
     static CJohnNoStart* Create(CJohn* pOwner);
 private:

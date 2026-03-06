@@ -68,6 +68,7 @@
 #include "CCoral.h"
 #include "CWPAmmoCntText.h"
 #include "CAmmoPack.h"
+#include "CSoundMgr.h"
 CDive::CDive()
 	: CScene()
 {
@@ -118,7 +119,7 @@ HRESULT CDive::Ready_Scene()
 
 	CParticleMgr::GetInstance()->Set_Player(pDiveDave);
 
-
+	
 
 	// [LSY] 데이브 아이다이버 수치 연동
 	if (const auto& pDave = m_mapLayer[L"0_GameLogic_Layer"]->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
@@ -794,6 +795,7 @@ void CDive::Free()
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	Safe_Release(m_pFrustumCollider);
+	CSoundMgr::GetInstance()->StopAll();
 }
 
 void CDive::DeepDark() {

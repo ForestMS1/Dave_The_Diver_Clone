@@ -118,7 +118,7 @@ private:
 private:
 	CFSM<CJohn, JOHNSTATE>* m_pFSM = nullptr;
 	CTransform* m_pTargetTransform = nullptr;
-
+	int test = 0;
 public:
 	static CJohn* Create(_float x = 0, _float y = 0, _float z = 0);
 

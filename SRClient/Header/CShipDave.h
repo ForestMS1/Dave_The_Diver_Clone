@@ -16,11 +16,7 @@ public:
 	virtual			void		Render_GameObject();
 
 public:
-	void DoDiveReady()
-	{
-		CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
-		m_bDiveReady = true;
-	};
+	void DoDiveReady();
 
 private:
 	HRESULT			Ready_Component();
@@ -36,10 +32,10 @@ private:
 	_uint			m_iFrame;
 	_float m_fAccFrameDelta;
 	bool m_bSeeRight;
-
-
 	bool m_bDiveReady;
-
+	bool m_bTalking;
+	float m_fConvAppearTimer;
+	float m_fTransitionTimer;
 public:
 	static CShipDave* Create();
 

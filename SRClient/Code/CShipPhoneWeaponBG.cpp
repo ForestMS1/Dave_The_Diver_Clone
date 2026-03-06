@@ -12,6 +12,7 @@
 #include "CShipPhoneWeaponImg.h"
 #include "CShipPhoneWeaponArea.h"
 #include "CShipPhoneWeaponCreateSuccess.h"
+#include "CSoundMgr.h"
 
 _uint CShipPhoneWeaponBG::iCurrentIdx = 0;
 
@@ -161,6 +162,7 @@ _int		CShipPhoneWeaponBG::Update_GameObject(const _float& fTimeDelta)
         if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
         {
             pPhone->UnFocus_App();
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
         }
     }
 
@@ -200,6 +202,9 @@ _int		CShipPhoneWeaponBG::Update_GameObject(const _float& fTimeDelta)
                 ->Get_Scene()
                 ->Get_Layer(L"0_GameLogic_Layer")
                 ->Add_GameObject(L"ShipPhoneCreateSuccess", pSuccess);
+
+            //Sound_Ship_ui_Mima_Buff_Popup_02
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_Mima_Buff_Popup_02", CSoundMgr::SFX, 1.f);
         }
        
     }
@@ -225,6 +230,8 @@ void		CShipPhoneWeaponBG::LateUpdate_GameObject(const _float& fTimeDelta)
                 float fDist{};
                 if (pCollider->Intersect(&vRayPos, &vRayDir, fDist))
                 {
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
+
                     // 만약 충돌한다면 태그비교후 보이드포인터 들고와서 캐스팅한다음 조작한다.
                     if (pCollider->Get_Tag() == L"AABB_WeaponArea_0")
                     {

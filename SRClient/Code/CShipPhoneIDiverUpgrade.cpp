@@ -15,6 +15,7 @@
 #include "CShipPhoneIDiverItemImg.h"
 #include "CGameMemMgr.h"
 #include "IDiverInfo.h"
+#include "CSoundMgr.h"
 
 CShipPhoneIDiverUpgrade::CShipPhoneIDiverUpgrade(float fPosX, float fPosY)
     : CGameObject()
@@ -141,6 +142,7 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
         if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
         {
             Set_DeadCascade();
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
         }
     }
     
@@ -207,6 +209,9 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
                         ->Add_GameObject(L"ShipPhoneIDiverUpgradeSuccess", pUpSucess);
 
                     Set_DeadCascade();
+
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_Mima_Buff_Popup_01", CSoundMgr::SFX, 1.f);
+
                     return OBJ_DEAD;
                 }
             }

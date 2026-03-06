@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CDaveConversation.h"
+#include "CJohnConversation.h"
 #include "CAssetMgr.h"
 #include "CGraphicDev.h"
 #include "CAssetTexture.h"
@@ -11,26 +11,26 @@
 #include "CDInputMgr.h"
 
 
-CDaveConversation::CDaveConversation(float fPosX, float fPosY)
+CJohnConversation::CJohnConversation(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
     , m_fPosY(fPosY)
 {
 }
 
-CDaveConversation::~CDaveConversation()
+CJohnConversation::~CJohnConversation()
 {
 }
 
 
-HRESULT		CDaveConversation::Ready_GameObject()
+HRESULT		CJohnConversation::Ready_GameObject()
 {
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
 
     _vec3 vScale = { 1.f , 1.f, 1.f };
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveConversation"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnConversation"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -64,32 +64,21 @@ HRESULT		CDaveConversation::Ready_GameObject()
 
     m_fTimer = 0.f;
 
- /*   m_vecConversation[CONV_1].push_back(L"선생님");
-    m_vecConversation[CONV_1].push_back(L"저 사실\n...\n...\n...");
-    m_vecConversation[CONV_1].push_back(L"중퇴가 하고싶어요");*/
-    m_vecConversation[CONV_1].push_back(L"하아...\n날씨는 맑은데...");
-    m_vecConversation[CONV_1].push_back(L"내 통장은 비가 오는구나...");
-    m_vecConversation[CONV_1].push_back(L"부자가 되서 이 일도 그만하고 싶다...");
-    m_vecConversation[CONV_1].push_back(L"이 일로는 부자는 어림도 없으니\n장비 몇개 강화하고 주식이나 해볼까?");
-    m_vecConversation[CONV_1].push_back(L"맞아... 누군가가 지금은 국장을 넣으라고 할때라고 했어...");
-    m_vecConversation[CONV_1].push_back(L"믿습니다...제발!!!!!!");
+    /*   m_vecConversation[CONV_1].push_back(L"선생님");
+       m_vecConversation[CONV_1].push_back(L"저 사실\n...\n...\n...");
+       m_vecConversation[CONV_1].push_back(L"중퇴가 하고싶어요");*/
+    m_vecConversation[CONV_1].push_back(L"왔군. 나는 존 왓슨, 이 바다의 균형을 지키는 방위대장이다.");
+    m_vecConversation[CONV_1].push_back(L"너를 몇일간 지켜봤지만 너는 이 바다의 규칙을 어기고있다.");
+    m_vecConversation[CONV_1].push_back(L"하루 인당 포획량은 10kg이지만\n너는 항상 그 이상을 가져가더군");
+    m_vecConversation[CONV_1].push_back(L"긴말은 안하겠다.");
+    m_vecConversation[CONV_1].push_back(L"앞으로 규정을 지키겠다고 약속을 하면\n지금까지의 일은 없던걸로 해주겠다.");
 
-    m_vecConversation[CONV_2].push_back(L"으흐흐...\n어디~ 돈이 얼마나 불어있는지 볼까?");
-    m_vecConversation[CONV_2].push_back(L"역시 말을 잘들어야 된다니까~");
+    m_vecConversation[CONV_2].push_back(L"말이 안통하는군.");
+    m_vecConversation[CONV_2].push_back(L"어쩔수 없지. 제압하겠다.");
 
-    m_vecConversation[CONV_3].push_back(L"화성 갈끄니까!!");
+    m_vecConversation[CONV_3].push_back(L"평범한 다이버 주제에 제법이군.");
+    m_vecConversation[CONV_3].push_back(L"진심으로 상대해주지.");
 
-    m_vecConversation[CONV_4].push_back(L"후.. 화성에 도착했나?");
-    m_vecConversation[CONV_4].push_back(L"음??????????");
-
-    m_vecConversation[CONV_5].push_back(L"어디 전쟁이라도 났나?");
-    m_vecConversation[CONV_5].push_back(L"XX!!!!!!!!!!!!");
-
-    m_vecConversation[BOSS_1].push_back(L"뭐라고 하는거야?");
-    m_vecConversation[BOSS_1].push_back(L"말도 안되는소리 하지말고 당장 사라져!");
-
-    m_vecConversation[BOSS_2].push_back(L"정말이지 짜증나게 하고있네.");
-    m_vecConversation[BOSS_2].push_back(L"죽어.");
     m_iCurrentConversationIdx = 0;
     m_eCurrentConversation = CONV_1;
 
@@ -99,7 +88,7 @@ HRESULT		CDaveConversation::Ready_GameObject()
     return S_OK;
 }
 
-_int		CDaveConversation::Update_GameObject(const _float& fTimeDelta)
+_int		CJohnConversation::Update_GameObject(const _float& fTimeDelta)
 {
     if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
@@ -126,26 +115,26 @@ _int		CDaveConversation::Update_GameObject(const _float& fTimeDelta)
         }
         m_fTimer = 0.f;
     }
-    
+
     m_sCurrentTxt.assign(m_vecConversation[m_eCurrentConversation][m_iCurrentConversationIdx], 0, m_iCurrentTxtIdx);
 
-    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA_AFTER_ORTHO_UI, this);
 
     return iExit;
 }
 
-void		CDaveConversation::LateUpdate_GameObject(const _float& fTimeDelta)
+void		CJohnConversation::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void		CDaveConversation::Render_GameObject()
+void		CJohnConversation::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-  
+
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveConversation"))
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_JohnConversation"))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {
@@ -179,7 +168,7 @@ void		CDaveConversation::Render_GameObject()
     }
 }
 
-void CDaveConversation::Update_ImGui()
+void CJohnConversation::Update_ImGui()
 {
     CGameObject::Update_ImGui();
 
@@ -187,7 +176,7 @@ void CDaveConversation::Update_ImGui()
     ImGui::DragFloat("m_DbgY", &m_fDbgY, 0.01);
 }
 
-HRESULT			CDaveConversation::Ready_Component()
+HRESULT			CJohnConversation::Ready_Component()
 {
     // 버퍼
     if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
@@ -200,9 +189,9 @@ HRESULT			CDaveConversation::Ready_Component()
 }
 
 
-CDaveConversation* CDaveConversation::Create(float fPosX, float fPosY)
+CJohnConversation* CJohnConversation::Create(float fPosX, float fPosY)
 {
-    CDaveConversation* pIDiverUpgrade = new CDaveConversation{ fPosX , fPosY };
+    CJohnConversation* pIDiverUpgrade = new CJohnConversation{ fPosX , fPosY };
 
     if (FAILED(pIDiverUpgrade->Ready_GameObject()))
     {
@@ -214,7 +203,7 @@ CDaveConversation* CDaveConversation::Create(float fPosX, float fPosY)
     return pIDiverUpgrade;
 }
 
-void CDaveConversation::Free()
+void CJohnConversation::Free()
 {
     CGameObject::Free();
 }

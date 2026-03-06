@@ -42,6 +42,7 @@
 #include "CDaveConversation.h"
 #include "CBanchoGood.h"
 #include "CStockMarket.h"
+#include "CSoundMgr.h"
 
 
 CShip::CShip()
@@ -95,7 +96,14 @@ HRESULT CShip::Ready_Scene()
 	IDiver::InitIDiverInfo();
 
 	m_fResultTimer = 0.f;
+	m_fConvAppearTimer = 0.f;
 	m_bResultOpend = false;
+
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_BGM", CSoundMgr::BGM_SHIP_LOBBY, 0.1f);
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_amb_lobby_far_bird", CSoundMgr::CHANNELID::BGM_SHIP_BIRD, 0.1f);
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_amb_lobby_loop", CSoundMgr::BGM_SHIP_LOOP, 1.0f);
+
+	m_bTalking = false;
 	return S_OK;
 }
 
@@ -323,6 +331,9 @@ HRESULT CShip::Ready_GameLogic_Layer(wstring_view svLayerTag)
 							->Get_Scene()
 							->Get_Layer(L"0_GameLogic_Layer")
 							->Add_GameObject(L"ShipDiverBoxInventory", CShipDiverBoxInventory::Create());
+
+						//Sound_Ship_ui_button_click
+						CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_CLICK, 1.f);
 					}
 				}
 			}
@@ -473,6 +484,16 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 		CColliderMgr::GetInstance()->Set_Render(!CColliderMgr::GetInstance()->Get_Render());
 	}
 
+	if (ImGui::Button("SOUND TEST"))
+	{
+		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_lobby_dave_foot_01", CSoundMgr::SFX_SHIP_DIVE_BTN, 1.f);
+	}
+
+	if (ImGui::Button("STOP SOUND TEST"))
+	{
+		CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX_SHIP_DIVE_BTN);
+	}
+
 	if (ImGui::Button("StockMarket"))
 	{
 		if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
@@ -581,6 +602,67 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 	{
 		CGameMemMgr::GetInstance()->Set_Money2(CGameMemMgr::GetInstance()->Get_Money() + 1000);
 	}
+
+
+	if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 1.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_1);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 10.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}
+	else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2 && !m_bTalking) {
+		m_fConvAppearTimer += fTimeDelta;
+		if (m_fConvAppearTimer > 10.f) {
+			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+			{
+				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+				{
+					pObj->Set_DeadCascade();
+				}
+				else
+				{
+					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
+					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+					m_fConvAppearTimer = 0;
+					m_bTalking = true;
+				}
+			}
+		}
+	}
 	return iExit;
 }
 
@@ -613,4 +695,5 @@ void CShip::Free()
 {
 	CScene::Free();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
+	CSoundMgr::GetInstance()->StopAll();
 }

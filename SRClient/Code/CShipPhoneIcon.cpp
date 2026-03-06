@@ -10,7 +10,7 @@
 #include "CManagement.h"
 #include "CHelper.h"
 #include "CDInputMgr.h"
-
+#include "CSoundMgr.h"
 
 CShipPhoneIcon::CShipPhoneIcon()
     : CGameObject()
@@ -94,10 +94,12 @@ void		CShipPhoneIcon::LateUpdate_GameObject(const _float& fTimeDelta)
                 if (m_bPhoneOpen)
                 {
                     reinterpret_cast<CShipPhoneIcon*>(m_pAABB->Get_VoidPtr())->Close_Phone();
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_CLICK, 1.f);
                 }
                 else
                 {
                     reinterpret_cast<CShipPhoneIcon*>(m_pAABB->Get_VoidPtr())->Open_Phone();
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_CLICK, 1.f);
                 }
             }
         }

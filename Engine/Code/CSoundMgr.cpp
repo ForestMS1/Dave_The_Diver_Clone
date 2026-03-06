@@ -25,6 +25,8 @@ HRESULT CSoundMgr::Ready_SoundMgr()
 	// 사운드를 담당하는 대표객체를 생성하는 함수
 	FMOD_System_Create(&m_pSystem, FMOD_VERSION);
 
+	FMOD_System_SetDSPBufferSize(m_pSystem, 2048, 4);
+
 	// 1. 시스템 포인터, 2. 사용할 가상채널 수 , 초기화 방식) 
 	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
 
@@ -41,7 +43,7 @@ void CSoundMgr::PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float
 		FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 	}
 
-	FMOD_System_Update(m_pSystem);
+	//FMOD_System_Update(m_pSystem);
 }
 
 void CSoundMgr::PlaySoundOne(std::wstring_view svSoundKey, CHANNELID eID, float fVolume)
@@ -53,7 +55,7 @@ void CSoundMgr::PlaySoundOne(std::wstring_view svSoundKey, CHANNELID eID, float 
 		FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 		
 	}
-	FMOD_System_Update(m_pSystem);
+	//FMOD_System_Update(m_pSystem);
 }
 
 bool CSoundMgr::IsChannelPlaying(CHANNELID eID)
@@ -78,12 +80,17 @@ void CSoundMgr::SetChannelVolume(CHANNELID eID, float fVolume)
 {
 	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 
+	//FMOD_System_Update(m_pSystem);
+}
+
+void CSoundMgr::UpdateSound()
+{
 	FMOD_System_Update(m_pSystem);
 }
 
 
 void CSoundMgr::Free()
 {
-	FMOD_System_Release(m_pSystem);
 	FMOD_System_Close(m_pSystem);
+	FMOD_System_Release(m_pSystem);
 }

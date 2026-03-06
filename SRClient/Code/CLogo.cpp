@@ -35,6 +35,9 @@ HRESULT CLogo::Ready_Scene()
 	CColliderMgr::GetInstance()->Set_Render(false);
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
+
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Logo_BGM", CSoundMgr::BGM, 1.f);
+
 	return S_OK;
 }
 
@@ -178,4 +181,5 @@ void CLogo::Free()
 {
 	CScene::Free();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
+	CSoundMgr::GetInstance()->StopAll();
 }

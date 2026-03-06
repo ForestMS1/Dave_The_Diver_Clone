@@ -7,6 +7,11 @@
 #include "CCollisionMgr.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+#include "CGameMemMgr.h"
+#include "CTimerMgr.h"
+#include "CManagement.h"
+#include "CDaveConversation.h"
+#include "CSoundMgr.h"
 
 CShipDave::CShipDave()
     : CGameObject()
@@ -37,9 +42,11 @@ HRESULT CShipDave::Ready_GameObject()
   
     m_iFrame = 0;
     m_fAccFrameDelta = 0.f;
+    m_fConvAppearTimer = 0.f;
+    m_fTransitionTimer = 0.f;
     m_sCurrentMotion = L"Tex_ShipDave_Idle";
     m_bSeeRight = true;
-
+    m_bTalking = false;
     m_bDiveReady = false;
 
     return S_OK;
@@ -98,58 +105,6 @@ _int CShipDave::Update_GameObject(const _float& fTimeDelta)
 void CShipDave::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
-
-    // Test 레이어에있는 충돌체 리스트를 들고온다. 널체크
-    if (auto pColliders = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_ShipDave"))
-    {
-        // 충돌체 순회
-        for (auto& pCollider : *pColliders)
-        {
-            // 내가 아닌것들과 체크
-            if (m_pAABB != pCollider)
-            {
-                // 충돌체 끼리 충돌 체크
-                if (m_pAABB->Intersect(pCollider))
-                {
-                    // Some Logic
-                    // 
-
-                    if (pCollider->Get_Tag() == L"AABB_Boat")
-                    {
-                        CCollisionMgr::COLL_RECT_EX_INFO info;
-                        if (CCollisionMgr::GetInstance()->Collision_RectEx(m_pAABB, dynamic_cast<CAABB*>(pCollider), &info))
-                        {
-                            _vec3 vPos;
-                            m_pTransformCom->Get_Info(INFO_POS, &vPos);
-                            if (info.eDir == CCollisionMgr::DIR_DOWN)
-                            {
-                                vPos.y += info.fDistance;
-                                m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-                            }
-                            else if (info.eDir == CCollisionMgr::DIR_UP)
-                            {
-                                vPos.y -= info.fDistance;
-                                m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-                            }
-                            else if (info.eDir == CCollisionMgr::DIR_LEFT)
-                            {
-                                vPos.x -= info.fDistance;
-                                m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-                            }
-                            else if (info.eDir == CCollisionMgr::DIR_RIGHT)
-                            {
-                                vPos.x += info.fDistance;
-                                m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-                            }
-
-                            m_pTransformCom->Update_Component(fTimeDelta);
-                            m_pAABB->Transform(m_pTransformCom->Get_World());
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 void CShipDave::Render_GameObject()
@@ -178,6 +133,45 @@ void CShipDave::Render_GameObject()
 
     //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+void CShipDave::DoDiveReady()
+{
+    if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1) {
+        if (!m_bTalking) {
+            m_fConvAppearTimer += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+            if (m_fConvAppearTimer > 1.f) {
+                if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+                    {
+                        pObj->Set_DeadCascade();
+                    }
+                    else
+                    {
+                        CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
+                        pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_3);
+                        pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
+                        m_fConvAppearTimer = 0;
+                        m_bTalking = true;
+                    }
+                }
+            }
+        }
+        else {
+            m_fTransitionTimer += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+            if (m_fTransitionTimer > 3.f) {
+                CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
+                m_bDiveReady = true;
+            }
+        }
+    }
+    else {
+        CTransition::FadedTransition(CTransition::SCENE_SHIP, CTransition::SCENE_DIVE);
+        m_bDiveReady = true;
+    }
+   
+
 }
 
 HRESULT CShipDave::Ready_Component()
@@ -250,6 +244,20 @@ void CShipDave::Key_Input(const _float& fTimeDelta)
     if (!m_bKeyInput)
     {
         Motion_Change(L"Tex_ShipDave_Idle");
+
+        if (CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_SHIP_DAVE_FOOT))
+        {
+            //CLog::Debug(L"StopSound \n");
+            CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX_SHIP_DAVE_FOOT);
+        }
+    }
+    else
+    {
+        if (!CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_SHIP_DAVE_FOOT))
+        {
+            //CLog::Debug(L"StopSound \n");
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_lobby_dave_foot_01", CSoundMgr::SFX_SHIP_DAVE_FOOT, 1.f);
+        }
     }
 
 }
