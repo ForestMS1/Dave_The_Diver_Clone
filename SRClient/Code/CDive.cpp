@@ -602,8 +602,75 @@ HRESULT CDive::Ready_GameLogic_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack4", pGameObject)))
 		return E_FAIL;
-	
-	
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack5", pGameObject)))
+		return E_FAIL;
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack6", pGameObject)))
+		return E_FAIL;
+	pGameObject = CAmmoPack::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_AmmoPack7", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemWood::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Wood_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemWoodPlate::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_WoodPlate_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemWatch::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Watch_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemBone::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Bone_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemDeepseaCoral::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_DeepseaCoral_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemFragment::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Fragment_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemThurible::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Thurible_0", pGameObject)))
+		return E_FAIL;
+
+	pGameObject = CCommonItemRope::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Rope_0", pGameObject)))
+		return E_FAIL;
+	vtmp = { -3, 5, 0.f };
+	pGameObject = CCommonItemUmb::Create(vtmp);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pLayer->Add_GameObject(L"Item_Umb_0", pGameObject)))
+		return E_FAIL;
 	// ¸Ê 
 	pGameObject = CTerrian::Create(L"BackGround_GLB_File");
 	if (nullptr == pGameObject)
