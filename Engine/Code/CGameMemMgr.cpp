@@ -183,12 +183,12 @@ void CGameMemMgr::ClearCookingMenu()
 
 void CGameMemMgr::AddStockMarketIndex()
 {
-	if (Get_DiveInfos().size() == 0) {
+	if (Get_DiveInfos().size() == 0 +1) {
 		if (stockPicIndex < 4) {
 			stockPicIndex++;
 		}
 	}
-	else if (Get_DiveInfos().size() == 1) {
+	else if (Get_DiveInfos().size() ==  1+1) {
 		if (CGameMemMgr::GetInstance()->GetStockCreated() == 2) {
 			if (stockPicIndex < 9) {
 				stockPicIndex++;
@@ -202,7 +202,7 @@ void CGameMemMgr::AddStockMarketIndex()
 		
 
 	}
-	else if(Get_DiveInfos().size() == 2){
+	else if(Get_DiveInfos().size() == 2+1){
 		if (stockPicIndex < 13) {
 			stockPicIndex++;
 		}

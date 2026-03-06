@@ -30,7 +30,7 @@ HRESULT CAmmoPack::Ready_GameObject()
 		return E_FAIL;
 
 	m_eItemType = ITEMTYPE::USEIMMEDIATELY;
-
+	m_eCurState = ITEMSTATE::DROPPED;
 	_vec3 vScale = { 0.2f, 0.2f, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 

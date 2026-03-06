@@ -160,7 +160,7 @@ void CFishFrame::Render_GameObject()
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+       // pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
         pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
         pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
@@ -173,7 +173,7 @@ void CFishFrame::Render_GameObject()
         D3DXMatrixIdentity(&matTmp);
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
 
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+       // pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
         //m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

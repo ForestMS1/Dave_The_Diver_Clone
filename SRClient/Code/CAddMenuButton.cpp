@@ -63,7 +63,7 @@ void CAddMenuButton::Render_GameObject()
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+        //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
         pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
         pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
