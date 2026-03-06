@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CParticleMgr.h"
 #include "CBaseState.h"
 #include "CAABB.h"
 #include "CFSM.h"
@@ -48,7 +49,9 @@ public:
 	{
 		if (m_fIvncTime > 0.f)
 			return;
-
+		_vec3 Pos{};
+		m_pTransformCom->Get_Info(INFO_POS, &Pos);
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, Pos, 2);
 		// 데미지가 일정 수준 이상일떄만 Hit 상태로 넘어간다
 		//if (fDamage > 30.f)
 			m_bIsHit = true;
