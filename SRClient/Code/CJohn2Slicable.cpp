@@ -72,7 +72,7 @@ void CJohn2Slicable::LateUpdate_State(const _float& fTimeDelta)
                 {
                     for (auto pFishDetectBoxCollider : *pFishDetectBoxColliders)
                     {
-                        if (pFishDetectBoxCollider->Get_Tag() == L"AABB_JohnWithGuided")
+                        if (pFishDetectBoxCollider->Get_Tag() == L"AABB_John2WithGuided")
                         {
                             //CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pFishDetectBoxCollider->Get_VoidPtr());
                             if (pDaveCollider->Intersect(pFishDetectBoxCollider))

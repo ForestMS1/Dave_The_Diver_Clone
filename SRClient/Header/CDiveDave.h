@@ -249,7 +249,9 @@ private:
 	EQUIPPED m_eCurEquipped = EQUIPPED::HARPOON;
 
 private:
+	const _float m_fOriginSpeed = 10.f;
 	_float m_fSpeed = 10.f;
+	_float m_fDashPlusSpeed = 30.f;
 	_float m_fFrame = 0.f;
 	_bool  m_bFishCaught = false;
 

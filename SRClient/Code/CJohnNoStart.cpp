@@ -80,7 +80,6 @@ _int CJohnNoStart::Update_State(const _float& fTimeDelta)
 			m_pOwner->Set_RotateDir(&vRotDir);
 
 
-			m_pOwner->AddFrame(fTimeDelta, 5.f, 8, false);
 			CDiveDaveCam* pCam = static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_CurCamera());
 			_vec3 vCurPos;
 			m_pOwner->Get_Pos(&vCurPos);

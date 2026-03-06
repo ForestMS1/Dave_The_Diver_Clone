@@ -5,6 +5,7 @@
 #include "CCollisionMgr.h"
 #include "CFishGameObject.h"
 #include "CJohn.h"
+#include "CJohn2.h"
 CDiveDaveBullet::CDiveDaveBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle)
     : m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -149,6 +150,11 @@ void CDiveDaveBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 				if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
 				{
 					reinterpret_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
+					m_bDead = true;
+				}
+				if (pCollider->Get_Tag() == L"AABB_John2WithGuided")
+				{
+					reinterpret_cast<CJohn2*>(pCollider->Get_VoidPtr())->On_Hit(10.f);
 					m_bDead = true;
 				}
 			}

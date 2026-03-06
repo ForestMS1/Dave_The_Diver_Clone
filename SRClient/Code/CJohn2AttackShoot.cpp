@@ -43,6 +43,7 @@ _int CJohn2AttackShoot::Update_State(const _float& fTimeDelta)
 	if (m_pOwner->Get_Frame() == 3)
 	{
 		m_pOwner->Shot_Bullet();
+		m_pOwner->Reset_BreakTime();
 		m_pOwner->Set_State(JOHN2STATE::IDLE);
 	}
 
