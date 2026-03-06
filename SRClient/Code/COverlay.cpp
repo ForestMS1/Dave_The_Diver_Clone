@@ -58,7 +58,28 @@ void COverlay::Render_GameObject()
 {
     if (m_bRender) {
         LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-        float alphaRatio = 0.5f;
+
+        // 백업
+        DWORD oldAlphaBlend, oldZWrite, oldAlphaTest, oldTFactor;
+        DWORD oldColorOp, oldColorArg1, oldColorArg2;
+        DWORD oldAlphaOp, oldAlphaArg1, oldAlphaArg2;
+
+        pGraphicDev->GetRenderState(D3DRS_ALPHABLENDENABLE, &oldAlphaBlend);
+        pGraphicDev->GetRenderState(D3DRS_ZWRITEENABLE, &oldZWrite);
+        pGraphicDev->GetRenderState(D3DRS_ALPHATESTENABLE, &oldAlphaTest);
+        pGraphicDev->GetRenderState(D3DRS_TEXTUREFACTOR, &oldTFactor);
+
+        pGraphicDev->GetTextureStageState(0, D3DTSS_COLOROP, &oldColorOp);
+        pGraphicDev->GetTextureStageState(0, D3DTSS_COLORARG1, &oldColorArg1);
+        pGraphicDev->GetTextureStageState(0, D3DTSS_COLORARG2, &oldColorArg2);
+
+        pGraphicDev->GetTextureStageState(0, D3DTSS_ALPHAOP, &oldAlphaOp);
+        pGraphicDev->GetTextureStageState(0, D3DTSS_ALPHAARG1, &oldAlphaArg1);
+        pGraphicDev->GetTextureStageState(0, D3DTSS_ALPHAARG2, &oldAlphaArg2);
+
+        // ---- 여기서 원하는 렌더링 수행 ----
+  
+        float alphaRatio = 0.66f;
         DWORD tfactor = D3DCOLOR_ARGB(
             (BYTE)(alphaRatio * 255.f),
             255, 255, 255
@@ -84,11 +105,24 @@ void COverlay::Render_GameObject()
         D3DXMATRIX matTmp;
         D3DXMatrixIdentity(&matTmp);
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        // 복원
+        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, oldAlphaBlend);
+        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, oldZWrite);
+        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, oldAlphaTest);
+        pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, oldTFactor);
 
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-        pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xFFFFFFFF);
-        pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+        pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, oldColorOp);
+        pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, oldColorArg1);
+        pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, oldColorArg2);
+
+        pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, oldAlphaOp);
+        pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, oldAlphaArg1);
+        pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, oldAlphaArg2);
+
+        //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+        //pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, 0xFFFFFFFF);
+        //pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+        //pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
     }
 

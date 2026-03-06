@@ -36,6 +36,7 @@
 #include "CTea.h"
 #include "CSmallMenu.h"
 #include "CSoundMgr.h"
+#include "CParticleMgr.h"
 
 CGameObject* g_pObject = nullptr;
 
@@ -111,7 +112,6 @@ _int CSushi::Update_Scene(const _float& fTimeDelta)
 		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseShop", CSoundMgr::SFX, 1.0f);
 		gameEnd = true;
 	}
-
 	return iExit;
 }
 
@@ -428,7 +428,7 @@ void CSushi::Key_Input()
 void CSushi::Free()
 {
 	CSoundMgr::GetInstance()->StopAll();
-
+	CParticleMgr::GetInstance()->Clear_Particle();
 	CScene::Free();
 	
 }

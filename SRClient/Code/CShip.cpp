@@ -43,6 +43,7 @@
 #include "CBanchoGood.h"
 #include "CStockMarket.h"
 #include "CSoundMgr.h"
+#include "CParticleMgr.h"
 
 
 CShip::CShip()
@@ -97,6 +98,7 @@ HRESULT CShip::Ready_Scene()
 
 	m_fResultTimer = 0.f;
 	m_fConvAppearTimer = 0.f;
+	m_fFireworkTimer = 0.f;
 	m_bResultOpend = false;
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Ship_BGM", CSoundMgr::BGM_SHIP_LOBBY, 0.1f);
@@ -469,53 +471,11 @@ _int CShip::Update_Scene(const _float& fTimeDelta)
 				}
 			}
 		}
-	}else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 10.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_2);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
 	}
-	else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2 && !m_bTalking) {
-		m_fConvAppearTimer += fTimeDelta;
-		if (m_fConvAppearTimer > 10.f) {
-			if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
-			{
-				if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
-				{
-					pObj->Set_DeadCascade();
-				}
-				else
-				{
-					CDaveConversation* pDaveConversation = CDaveConversation::Create(0.f, -2.f);
-					pDaveConversation->SetCurrentConversation(CDaveConversation::CONVERSATION::CONV_4);
-					pLayer->Add_GameObject(L"DaveConversation", pDaveConversation);
-					m_fConvAppearTimer = 0;
-					m_bTalking = true;
-				}
-			}
-		}
-	}
+	
 	return iExit;
 }
 
-void CShip::LateUpdate_Scene(const _float& fTimeDelta)
-{
-	CScene::LateUpdate_Scene(fTimeDelta);
-}
 
 void CShip::Render_Scene()
 {
@@ -681,8 +641,31 @@ void CShip::Render_Scene()
 		CGameMemMgr::GetInstance()->Set_Money2(CGameMemMgr::GetInstance()->Get_Money() + 1000);
 	}
 
+
+
 #endif
 }
+
+void CShip::LateUpdate_Scene(const _float& fTimeDelta)
+{
+	CScene::LateUpdate_Scene(fTimeDelta);
+	
+	if (CGameMemMgr::GetInstance()->Get_ShipNight()) {
+		m_fFireworkTimer += fTimeDelta;
+		if (m_fFireworkTimer > 1.f) {
+
+			//-5 ~ 5
+			float x = (rand() % 10 + 1) - 5;
+			// 0 ~ 2
+			float y = 2.f - (2.f - (rand() % 3));
+
+			CParticleMgr::GetInstance()->spwan_Particle(FIREWORK, { x,y,5.f }, 300);
+			m_fFireworkTimer = 0.f;
+		}
+	}
+}
+
+
 
 CShip* CShip::Create()
 {
@@ -700,6 +683,7 @@ CShip* CShip::Create()
 void CShip::Free()
 {
 	CScene::Free();
+	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CSoundMgr::GetInstance()->StopAll();
 }

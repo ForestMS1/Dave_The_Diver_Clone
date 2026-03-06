@@ -130,18 +130,37 @@ _int CJohnNoStart::Update_State(const _float& fTimeDelta)
 				}
 				
 			}
+
 			if (m_bDaveDialogCreated) {
+				if (!m_bJohnDialog2Created) {
+					if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer"))
+					{
+						if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+						{
+						}
+						else {
+							CJohnConversation* JohnConversation = CJohnConversation::Create(m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].x, m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].y - 2.f);
+							JohnConversation->SetCurrentConversation(CJohnConversation::CONVERSATION::CONV_2);
+							pLayer->Add_GameObject(L"JohnConversation", JohnConversation);
+							m_bDaveDialogCreated = true;
+							m_bJohnDialog2Created = true;
+						}
+					}
+				}
+			}
+
+			if (m_bJohnDialog2Created) {
 				if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer"))
 				{
-					if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
+					if (auto pObj = pLayer->Get_GameObjectFirst(L"JohnConversation"))
 					{
 					}
 					else {
-						if (m_pOwner->Get_Frame() == 7)
-						{
 							m_pOwner->EncounterTarget();
 							m_pOwner->Set_State(JOHNSTATE::IDLE);
-						}
+						//if (m_pOwner->Get_Frame() == 7)
+						//{
+						//}
 					}
 				}
 			}

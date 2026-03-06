@@ -85,7 +85,8 @@ void FireworkTail::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	attribute->velocity *= 2.f;
 	attribute->_color = D3DXCOLOR(GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), 1.0f);
 	attribute->_age = 0.0f;
-	attribute->_lifeTime = 6.0f;
+
+	attribute->_lifeTime = 5.0f;
 }
 
 void FireworkTail::preRender()
@@ -111,8 +112,8 @@ void FireworkTail::update(float fTimeDelta)
 	for (i = _particles.begin(); i != _particles.end(); i++) {
 		if (i->_isAlive) {
 			i->_age += fTimeDelta;
-			if (i->_age < 3.f) {
-				i->_position.y += fabsf(/*i->velocity.y **/ 2 * fTimeDelta);
+			if (i->_age < 2.f) {
+				i->_position.y += fabsf(/*i->velocity.y **/ fTimeDelta);
 
 			}
 			//if (i->_position.y <= (_origin.y + 2.f)) {
@@ -120,7 +121,7 @@ void FireworkTail::update(float fTimeDelta)
 			//}
 			else {
 				if (i->_age < i->_lifeTime) {
-					i->_position += i->velocity * fTimeDelta;
+					i->_position += i->velocity * fTimeDelta * 0.5f;
 				}
 				else {
 					i->_isAlive = false;
