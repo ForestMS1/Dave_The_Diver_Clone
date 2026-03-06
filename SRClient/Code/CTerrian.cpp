@@ -466,6 +466,22 @@ HRESULT CTerrian::Ready_GameObject()
             }
 
 
+            // Coral8
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(8);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+                m_vecCoral.emplace_back(pGameObject);
+                
+            }
 
 
             
@@ -1120,6 +1136,41 @@ HRESULT CTerrian::Ready_GameObject()
 
                 m_vecCoral.emplace_back(pGameObject);
 
+
+                // Coral1
+                {
+                    wstring nameCoral = L"Tex_Coral" + ::to_wstring(1);
+
+                    //------------------------------------------------------------------------------------
+                    wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                    pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                    CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                    if (nullptr == pGameObject)
+                        return E_FAIL;
+                    if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                        return E_FAIL;
+
+                    m_vecCoral.emplace_back(pGameObject);
+                }
+
+
+                // Coral2
+                {
+                    wstring nameCoral = L"Tex_Coral" + ::to_wstring(2);
+
+                    //------------------------------------------------------------------------------------
+                    wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                    pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                    CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                    if (nullptr == pGameObject)
+                        return E_FAIL;
+                    if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                        return E_FAIL;
+
+                    m_vecCoral.emplace_back(pGameObject);
+                }
             }
         }
         if (m_wsName == L"GLB_Terrian4") {
@@ -1348,6 +1399,62 @@ HRESULT CTerrian::Ready_GameObject()
 
                 m_vecCoral.emplace_back(pGameObject);
             }
+
+            // Coral3
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(3);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+            }
+
+
+            // Coral12
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(12);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+            }
+
+
+            // Coral14
+            {
+                wstring nameCoral = L"Tex_Coral" + ::to_wstring(14);
+
+                //------------------------------------------------------------------------------------
+                wstring nameCoralObject = L"CoralObject_" + m_wsName + L"_" + ::to_wstring(iCount++);
+                pGameObject = CCoral::Create(nameCoral, nameCoralObject);
+
+                CLayer* m_pLayer = CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_Environment_Layer");
+                if (nullptr == pGameObject)
+                    return E_FAIL;
+                if (FAILED(m_pLayer->Add_GameObject(nameCoralObject, pGameObject)))
+                    return E_FAIL;
+
+                m_vecCoral.emplace_back(pGameObject);
+            }
+
+
+
         }
 
         
@@ -1542,7 +1649,7 @@ HRESULT CTerrian::Ready_Material()
         light.Attenuation0 = 1.0f;
         light.Attenuation1 = 0.1f;
         light.Attenuation2 = 0.01f;
-        light.Range = 8.f;
+        light.Range = 5.f;
         light.Position = Pos;
 
         pGraphicDev->SetLight(4, &light);
@@ -1633,22 +1740,33 @@ void CTerrian::Free()
 
 void CTerrian::Set_Fog() {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-    float Start = -50.f;
-    float End   = 400.f;
-
     float dark = CGameMemMgr::GetInstance()->Get_Dark();
     // m_dark는 1 → 0 구조 유지
     float t = 1.f - dark;   // 0 = 밝음, 1 = 어두움
+
+    float _fogStart = 400.f;
+    float _fogEnd = 100.f;
+    float _curFogDistance = _fogStart + (_fogEnd - _fogStart) * t;
+
+
+    float Start = -50.f;
+    float End   = _curFogDistance;
+
 
     // 시작색 (밝은)
     const float r0 = 28.f;
     const float g0 = 188.f;
     const float b0 = 250.f;
 
+    //// 목표색 (어두운)
+    //const float r1 = 8.f;
+    //const float g1 = 56.f;
+    //const float b1 = 74.f;
+
     // 목표색 (어두운)
-    const float r1 = 8.f;
-    const float g1 = 56.f;
-    const float b1 = 74.f;
+    const float r1 = 2.f;
+    const float g1 = 16.f;
+    const float b1 = 21.f;
 
     // 선형보간
     BYTE r = (BYTE)(r0 + (r1 - r0) * t);
