@@ -117,16 +117,16 @@ HRESULT			CShipBG::Ready_Component()
 
 CShipBG* CShipBG::Create(float fPosX, float fPosY)
 {
-    CShipBG* pIDiverUpgrade = new CShipBG{ fPosX , fPosY };
+    CShipBG* pShipBG = new CShipBG{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipBG->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipBG);
+        MSG_BOX("pShipBG Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipBG;
 }
 
 void CShipBG::Free()

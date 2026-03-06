@@ -12,6 +12,7 @@
 #include "CShipPhoneIDiverUpgrade.h"
 #include "CShipPhone.h"
 #include "CGameMemMgr.h"
+#include "CSoundMgr.h"
 
 CShipPhoneIDiverBG::CShipPhoneIDiverBG()
 	: CGameObject()
@@ -225,6 +226,8 @@ void		CShipPhoneIDiverBG::LateUpdate_GameObject(const _float& fTimeDelta)
                     // 만약 충돌한다면 태그비교후 보이드포인터 들고와서 캐스팅한다음 조작한다.
                     if (pCollider->Get_Tag() == L"AABB_IDiverItem")
                     {
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
+
                         _uint idx = reinterpret_cast<CShipPhoneIDiverItem*>(pCollider->Get_VoidPtr())->Get_Idx();
                         if (m_iSelectIdx == idx)
                         {

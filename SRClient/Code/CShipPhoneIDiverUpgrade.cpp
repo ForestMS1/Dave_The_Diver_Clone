@@ -15,6 +15,7 @@
 #include "CShipPhoneIDiverItemImg.h"
 #include "CGameMemMgr.h"
 #include "IDiverInfo.h"
+#include "CSoundMgr.h"
 
 CShipPhoneIDiverUpgrade::CShipPhoneIDiverUpgrade(float fPosX, float fPosY)
     : CGameObject()
@@ -141,6 +142,7 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
         if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
         {
             Set_DeadCascade();
+            CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
         }
     }
     
@@ -207,6 +209,9 @@ _int		CShipPhoneIDiverUpgrade::Update_GameObject(const _float& fTimeDelta)
                         ->Add_GameObject(L"ShipPhoneIDiverUpgradeSuccess", pUpSucess);
 
                     Set_DeadCascade();
+
+                    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_Mima_Buff_Popup_01", CSoundMgr::SFX, 1.f);
+
                     return OBJ_DEAD;
                 }
             }
@@ -453,16 +458,16 @@ HRESULT			CShipPhoneIDiverUpgrade::Ready_Component()
 
 CShipPhoneIDiverUpgrade* CShipPhoneIDiverUpgrade::Create(float fPosX, float fPosY)
 {
-    CShipPhoneIDiverUpgrade* pIDiverUpgrade = new CShipPhoneIDiverUpgrade{ fPosX , fPosY };
+    CShipPhoneIDiverUpgrade* pShipPhoneIDiverUpgrade = new CShipPhoneIDiverUpgrade{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipPhoneIDiverUpgrade->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipPhoneIDiverUpgrade);
+        MSG_BOX("pShipPhoneIDiverUpgrade Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipPhoneIDiverUpgrade;
 }
 
 void CShipPhoneIDiverUpgrade::Free()

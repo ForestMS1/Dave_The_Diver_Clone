@@ -30,7 +30,7 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CTransform* m_pTransformCom;
-	float  m_dark{1.f};
+
 public:
 	static CBackGroundSea* Create();
 

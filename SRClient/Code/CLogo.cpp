@@ -35,6 +35,9 @@ HRESULT CLogo::Ready_Scene()
 	CColliderMgr::GetInstance()->Set_Render(false);
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
 		return E_FAIL;
+
+	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Logo_BGM", CSoundMgr::BGM, 1.f);
+
 	return S_OK;
 }
 
@@ -42,6 +45,25 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 {
 	Update_Camera();
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
+
+
+	return iExit;
+}
+
+void CLogo::LateUpdate_Scene(const _float& fTimeDelta)
+{
+	Update_Camera();
+	CScene::LateUpdate_Scene(fTimeDelta);
+}
+
+void CLogo::Render_Scene()
+{
+#ifdef _DEBUG
+	_vec2	vPos{ 0.f, 0.f };
+	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
+	pDefFont->Render_Font(L"Here is CLogo", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
 
 	ImGui::Begin("Curr Scene: CLogo");
 	if (ImGui::Button("Go Ship Scene"))
@@ -63,7 +85,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 			if (!pLayers->empty())
 			{
 				CTransitionFade* pFade = CTransitionFade::Create(0.f, 0.f, CTransitionFade::FADE_IN);
-			
+
 				for (auto& p : *pLayers)
 				{
 					p.second->Add_GameObject(L"99_FADE", pFade);
@@ -96,24 +118,12 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 	}
 
 	if (ImGui::Button("Temp")) {
-	
-		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, {0,0,0}, 4);
+
+		CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, { 0,0,0 }, 4);
 	}
+#endif // !_DEBUG
 
-	return iExit;
-}
 
-void CLogo::LateUpdate_Scene(const _float& fTimeDelta)
-{
-	Update_Camera();
-	CScene::LateUpdate_Scene(fTimeDelta);
-}
-
-void CLogo::Render_Scene()
-{
-	_vec2	vPos{ 0.f, 0.f };
-	CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_Default");
-	pDefFont->Render_Font(L"Here is CLogo", &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CLogo::Ready_Environment_Layer(std::wstring_view svLayerTag)
@@ -178,4 +188,5 @@ void CLogo::Free()
 {
 	CScene::Free();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
+	CSoundMgr::GetInstance()->StopAll();
 }

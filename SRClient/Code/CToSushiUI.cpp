@@ -19,6 +19,8 @@
 #include "CBanchoGood.h"
 #include "CDaveConversation.h"
 
+#include "CSoundMgr.h"
+
 CToSushiUI::CToSushiUI(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -130,6 +132,8 @@ HRESULT		CToSushiUI::Ready_GameObject()
         //    pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
         //}
     }
+
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
 
     return S_OK;
 }

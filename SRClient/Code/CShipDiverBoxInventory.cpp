@@ -12,6 +12,7 @@
 #include "CColliderMgr.h"
 #include "CShipDiverBoxInventoryItemImg.h"
 #include "CShipDiverBoxinventoryDesc.h"
+#include "CSoundMgr.h"
 
 CShipDiverBoxInventory::CShipDiverBoxInventory()
     : CGameObject()
@@ -277,6 +278,7 @@ _int		CShipDiverBoxInventory::Update_GameObject(const _float& fTimeDelta)
     if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
     {
         m_bCloseTween = true;
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX_SHIP_UI_CLICK, 1.f);
     }
 
     if (m_bOpenTween)
@@ -332,6 +334,7 @@ void		CShipDiverBoxInventory::LateUpdate_GameObject(const _float& fTimeDelta)
                     if (pCollider->Get_Tag() == L"AABB_DiverBoxItemArea")
                     {
                         m_iSelectItemIdx = reinterpret_cast<CShipDiverBoxInventoryItemArea*>(pCollider->Get_VoidPtr())->Get_Idx();
+                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CLICK, 1.f);
                     }
                 }
             }

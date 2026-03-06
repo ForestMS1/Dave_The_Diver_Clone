@@ -202,16 +202,16 @@ HRESULT			CDaveConversation::Ready_Component()
 
 CDaveConversation* CDaveConversation::Create(float fPosX, float fPosY)
 {
-    CDaveConversation* pIDiverUpgrade = new CDaveConversation{ fPosX , fPosY };
+    CDaveConversation* pDaveConversation = new CDaveConversation{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pDaveConversation->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pDaveConversation);
+        MSG_BOX("pDaveConversation Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pDaveConversation;
 }
 
 void CDaveConversation::Free()

@@ -14,6 +14,8 @@
 #include "CToSushiUI.h"
 #include "CGameMemMgr.h"
 
+#include "CSoundMgr.h"
+
 
 CDiveResultUI::CDiveResultUI(float fPosX, float fPosY)
     : CGameObject()
@@ -64,7 +66,8 @@ HRESULT		CDiveResultUI::Ready_GameObject()
     m_pTransformCom->Update_Component(0.f);
 
 
-
+    
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_lobby_result_open", CSoundMgr::SFX, 1.0f);
     return S_OK;
 }
 
@@ -692,16 +695,16 @@ HRESULT			CDiveResultUI::Ready_Component()
 
 CDiveResultUI* CDiveResultUI::Create(float fPosX, float fPosY)
 {
-    CDiveResultUI* pIDiverUpgrade = new CDiveResultUI{ fPosX , fPosY };
+    CDiveResultUI* pDiveResultUI = new CDiveResultUI{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pDiveResultUI->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pDiveResultUI);
+        MSG_BOX("pDiveResultUI Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pDiveResultUI;
 }
 
 void CDiveResultUI::Free()

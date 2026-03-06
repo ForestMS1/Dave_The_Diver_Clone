@@ -11,6 +11,7 @@
 #include "CDInputMgr.h"
 #include "CGoToSushiUI.h"
 #include "CGameMemMgr.h"
+#include "CSoundMgr.h"
 CBanchoGood::CBanchoGood(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -60,6 +61,9 @@ HRESULT		CBanchoGood::Ready_GameObject()
         .to(1.f, m_fPosX - 1.f).to(1.f, m_fPosX - 1.f).during(1000)
         .to(1.f, m_fPosX - 1.f).to(0.f, m_fPosX).during(300)
         .via(tweeny::easing::linear);
+
+    //Sound_Ship_ui_lobby_sms
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_lobby_sms", CSoundMgr::SFX, 1.0f);
 
     return S_OK;
 }
@@ -151,16 +155,16 @@ HRESULT			CBanchoGood::Ready_Component()
 
 CBanchoGood* CBanchoGood::Create(float fPosX, float fPosY)
 {
-    CBanchoGood* pIDiverUpgrade = new CBanchoGood{ fPosX , fPosY };
+    CBanchoGood* pBanchoGood = new CBanchoGood{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pBanchoGood->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pBanchoGood);
+        MSG_BOX("pBanchoGood Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pBanchoGood;
 }
 
 void CBanchoGood::Free()

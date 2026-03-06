@@ -16,7 +16,7 @@
 #include "CHoldFishUIImg.h"
 #include "CGameMemMgr.h"
 #include "CDiveDave.h"
-
+#include "CSoundMgr.h"
 #include "CDiveDaveGun.h"
 
 CHoldFishUI::CHoldFishUI(float fPosX, float fPosY)
@@ -191,6 +191,8 @@ HRESULT		CHoldFishUI::Ready_GameObject()
 
        
     }
+
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
     return S_OK;
 }
 
@@ -213,6 +215,7 @@ _int		CHoldFishUI::Update_GameObject(const _float& fTimeDelta)
                         {
                             if (auto pPanel = pLayer->Get_GameObjectFirst(L"HoldFishUIDropPanel"))
                             {
+                                CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
                                 pArea->Set_DeadCascade();
                                 pPanel->Set_DeadCascade();
                                 bReSorting = true;
@@ -410,19 +413,20 @@ HRESULT			CHoldFishUI::Ready_Component()
 
 CHoldFishUI* CHoldFishUI::Create(float fPosX, float fPosY)
 {
-    CHoldFishUI* pIDiverUpgrade = new CHoldFishUI{ fPosX , fPosY };
+    CHoldFishUI* pHoldFishUI = new CHoldFishUI{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pHoldFishUI->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pHoldFishUI);
+        MSG_BOX("pHoldFishUI Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pHoldFishUI;
 }
 
 void CHoldFishUI::Free()
 {
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_click", CSoundMgr::SFX, 1.f);
     CGameObject::Free();
 }

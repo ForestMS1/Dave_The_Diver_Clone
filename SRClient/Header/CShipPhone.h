@@ -24,6 +24,8 @@ public:
 	void Focus_App(wstring_view svFocusAppName);
 	void UnFocus_App();
 
+	bool Get_Focus() const { return m_bFocus; }
+
 private:
 	void OnFocus_App();
 	void OnFocusing_App();

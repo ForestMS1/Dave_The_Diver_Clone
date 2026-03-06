@@ -11,6 +11,7 @@
 #include "CManagement.h"
 #include "CGameMemMgr.h"
 #include "IDiverInfo.h"
+#include "CSoundMgr.h"
 
 CShipPhoneIDiverUpgradeSuccess::CShipPhoneIDiverUpgradeSuccess(float fPosX, float fPosY)
     : CGameObject()
@@ -73,6 +74,7 @@ _int		CShipPhoneIDiverUpgradeSuccess::Update_GameObject(const _float& fTimeDelta
 
     if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
+        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_button_choice", CSoundMgr::SFX_SHIP_UI_CHOICE, 1.f);
         Set_DeadCascade();
     }
 
@@ -202,16 +204,16 @@ HRESULT			CShipPhoneIDiverUpgradeSuccess::Ready_Component()
 
 CShipPhoneIDiverUpgradeSuccess* CShipPhoneIDiverUpgradeSuccess::Create(float fPosX, float fPosY)
 {
-    CShipPhoneIDiverUpgradeSuccess* pIDiverUpgrade = new CShipPhoneIDiverUpgradeSuccess{ fPosX , fPosY };
+    CShipPhoneIDiverUpgradeSuccess* pShipPhoneIDiverUpgradeSuccess = new CShipPhoneIDiverUpgradeSuccess{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipPhoneIDiverUpgradeSuccess->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipPhoneIDiverUpgradeSuccess);
+        MSG_BOX("pShipPhoneIDiverUpgradeSuccess Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipPhoneIDiverUpgradeSuccess;
 }
 
 void CShipPhoneIDiverUpgradeSuccess::Free()

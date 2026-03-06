@@ -191,16 +191,16 @@ HRESULT			CJohnConversation::Ready_Component()
 
 CJohnConversation* CJohnConversation::Create(float fPosX, float fPosY)
 {
-    CJohnConversation* pIDiverUpgrade = new CJohnConversation{ fPosX , fPosY };
+    CJohnConversation* pJohnConversation = new CJohnConversation{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pJohnConversation->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pJohnConversation);
+        MSG_BOX("pJohnConversation Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pJohnConversation;
 }
 
 void CJohnConversation::Free()
