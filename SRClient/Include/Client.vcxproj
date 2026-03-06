@@ -251,6 +251,7 @@
     <ClInclude Include="..\Header\CJohn2AttackReady.h" />
     <ClInclude Include="..\Header\CJohn2AttackShoot.h" />
     <ClInclude Include="..\Header\CJohn2Chase.h" />
+    <ClInclude Include="..\Header\CJohn2Hit.h" />
     <ClInclude Include="..\Header\CJohn2Idle.h" />
     <ClInclude Include="..\Header\CJohn2Intro.h" />
     <ClInclude Include="..\Header\CJohn2MeleeAttack.h" />
@@ -516,6 +517,7 @@
     <ClCompile Include="..\Code\CJohn2AttackReady.cpp" />
     <ClCompile Include="..\Code\CJohn2AttackShoot.cpp" />
     <ClCompile Include="..\Code\CJohn2Chase.cpp" />
+    <ClCompile Include="..\Code\CJohn2Hit.cpp" />
     <ClCompile Include="..\Code\CJohn2Idle.cpp" />
     <ClCompile Include="..\Code\CJohn2Intro.cpp" />
     <ClCompile Include="..\Code\CJohn2MeleeAttack.cpp" />

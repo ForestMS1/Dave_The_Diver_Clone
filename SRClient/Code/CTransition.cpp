@@ -953,6 +953,9 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 		s = L"../Bin/Resource/Texture/JohnWatson2/MeleeSkill01_Return/JohnWatson2_MeleeSkill01_Return_0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"John2MeleeSkill01_Return", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/JohnWatson2/Hit/JohnWatson2_Hit_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"John2Hit", CAssetTexture::Create(s.c_str()));
 	}
 
 	s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill02_Shoot/JohnWatson2_GunSkill02_Shoot_01.png";

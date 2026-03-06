@@ -25,6 +25,7 @@
 #include "CJohn2MeleeAttack.h"
 #include "CJohn2MeleeAttackReturn.h"
 #include "CGameMemMgr.h"
+#include "CJohn2Hit.h"
 
 CJohn2::CJohn2(_float x, _float y, _float z)
 	: m_vCreatePos({ x,y,z })
@@ -137,7 +138,7 @@ HRESULT	CJohn2::Add_State()
 	m_pFSM->Add_State<CJohn2MeleeAttackReady>(JOHN2STATE::MELEEATTACK_READY);
 	m_pFSM->Add_State<CJohn2MeleeAttack>(JOHN2STATE::MELEEATTACK);
 	m_pFSM->Add_State<CJohn2MeleeAttackReturn>(JOHN2STATE::MELEEATTACK_RETURN);
-	//m_pFSM->Add_State<CJohn2Hit>(JOHNSTATE::HIT);
+	m_pFSM->Add_State<CJohn2Hit>(JOHN2STATE::HIT);
 	m_pFSM->Add_State<CGunSkill02Aim>(JOHN2STATE::SPLASH_READY);
 
 	return S_OK;
