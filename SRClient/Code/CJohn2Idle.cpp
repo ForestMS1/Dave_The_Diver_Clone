@@ -47,9 +47,11 @@ _int CJohn2Idle::Update_State(const _float& fTimeDelta)
 		vRotDir = { 0.f,-180.f, 0.f };
 	m_pOwner->Set_RotateDir(&vRotDir);
 
-	m_fBreakTime += fTimeDelta;
 
-	if (m_fBreakTime > 3.f)
+	m_pOwner->Add_BreakTime(fTimeDelta);
+	//m_fBreakTime += fTimeDelta;
+
+	if (m_pOwner->Get_BreakTime() > 3.f)
 	{
 		if (!m_pOwner->Check_TargetInRange(8.f))
 		{
@@ -119,7 +121,7 @@ void CJohn2Idle::Clear()
 	_vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
 
-	m_fBreakTime = 0.f;
+	//m_fBreakTime = 0.f;
 }
 
 CJohn2Idle* CJohn2Idle::Create(CJohn2* pOwner)

@@ -48,6 +48,8 @@ private:
 	wstring_view m_wsTexName;
 
 	STATE m_eCurState = STATE::CHASE;
+	_bool m_bCompleteSetSize = false;
+
 	_float m_fFrame = 0.f;
 
 	_float m_fChaseTime = 0.f;
