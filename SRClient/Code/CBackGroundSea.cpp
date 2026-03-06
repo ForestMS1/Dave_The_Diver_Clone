@@ -88,7 +88,11 @@ void CBackGroundSea::Render_GameObject()
 
 			// º¸½º
 			CGameObject* pGameObject = CJohn::Create(13.f, -87.f, 0.f);
-			CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"John", pGameObject);
+			if (CMapMgr::GetInstance()->GetScene() != nullptr) {
+				if (CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")) {
+					CMapMgr::GetInstance()->GetScene()->Get_Layer(L"0_GameLogic_Layer")->Add_GameObject(L"John", pGameObject);
+				}
+			}
 
 
 		}
