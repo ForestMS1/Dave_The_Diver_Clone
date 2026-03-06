@@ -102,8 +102,8 @@ private:
 	_vec3 m_vCreatePos; //보스 생성 위치
 
 private:
-	_float m_fMaxHp = 200.f;
-	_float m_fHp = 200.f;
+	_float m_fMaxHp = 100.f;
+	_float m_fHp = 100.f;
 	_float m_fIvncTime = 0.f;
 	_float m_bIsHit = false;
 	_bool m_bIsDie = false;
