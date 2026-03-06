@@ -50,7 +50,7 @@ public:
 			return;
 
 		// 데미지가 일정 수준 이상일떄만 Hit 상태로 넘어간다
-		if (fDamage > 30.f)
+		//if (fDamage > 30.f)
 			m_bIsHit = true;
 
 		m_fHp -= fDamage;
@@ -84,6 +84,8 @@ public:
 	CTransform* GetTransformCom() { return m_pTransformCom; };
 
 	void				CollisionWithTarget();
+
+	void				SliceComplete();
 
 
 private:

@@ -279,6 +279,26 @@ void CWasabi::Render_GameObject()
                 soundPlayed = false;
             }
         }
+
+
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_KKey"))
+        {
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+     
+
+        matTmp = *m_pTransformCom->Get_World();
+        matTmp.m[0][0] = 0.6f;
+        matTmp.m[1][1] = 0.6f;
+        matTmp.m[3][0] += 3.7f;
+        matTmp.m[3][1] += 3.3f;
+
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+        m_pBufferCom->Render_Buffer();
+
         pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     }

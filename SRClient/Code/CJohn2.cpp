@@ -25,6 +25,13 @@
 #include "CJohn2MeleeAttack.h"
 #include "CJohn2MeleeAttackReturn.h"
 #include "CGameMemMgr.h"
+#include "CJohn2Hit.h"
+#include "CJohn2Die.h"
+#include "CJohn2Explosion.h"
+#include "CJohn2Panties.h"
+#include "CJohn2PantiesSwim.h"
+#include "CJohn2Slicable.h"
+#include "CGetItemUI.h"
 
 CJohn2::CJohn2(_float x, _float y, _float z)
 	: m_vCreatePos({ x,y,z })
@@ -80,9 +87,12 @@ _int CJohn2::Update_GameObject(const _float& fTimeDelta)
 
 	m_pFSM->Update_State(fTimeDelta);
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	Compute_ViewZ(&vPos);
+	if (m_pFSM->Get_State() != JOHN2STATE::SLICABLE)
+	{
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		Compute_ViewZ(&vPos);
+	}
 
 	return 0;
 }
@@ -92,6 +102,13 @@ void CJohn2::LateUpdate_GameObject(const _float& fTimeDelta)
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 
 	m_pFSM->LateUpdate_State(fTimeDelta);
+
+#ifdef _DEBUG
+	ImGui::Begin("John2");
+	if (ImGui::Button("Die"))
+		m_bIsDie = true;
+	ImGui::End();
+#endif
 
 }
 
@@ -108,6 +125,17 @@ void CJohn2::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 
 	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+	if (m_pFSM->Get_State() == JOHN2STATE::SLICABLE)
+	{
+		pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE); // 보통 기본값도 MODULATE인 경우가 많지만 확인 필요
+		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE); // TFACTOR를 DIFFUSE로 원복
+
+		pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+		pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+		pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE); // TFACTOR를 DIFFUSE로 원복
+	}
 }
 
 HRESULT CJohn2::Ready_Component()
@@ -137,8 +165,13 @@ HRESULT	CJohn2::Add_State()
 	m_pFSM->Add_State<CJohn2MeleeAttackReady>(JOHN2STATE::MELEEATTACK_READY);
 	m_pFSM->Add_State<CJohn2MeleeAttack>(JOHN2STATE::MELEEATTACK);
 	m_pFSM->Add_State<CJohn2MeleeAttackReturn>(JOHN2STATE::MELEEATTACK_RETURN);
-	//m_pFSM->Add_State<CJohn2Hit>(JOHNSTATE::HIT);
+	m_pFSM->Add_State<CJohn2Hit>(JOHN2STATE::HIT);
 	m_pFSM->Add_State<CGunSkill02Aim>(JOHN2STATE::SPLASH_READY);
+	m_pFSM->Add_State<CJohn2Die>(JOHN2STATE::DIESTART);
+	m_pFSM->Add_State<CJohn2Explosion>(JOHN2STATE::EXPLOSION);
+	m_pFSM->Add_State<CJohn2Panties>(JOHN2STATE::PANTIES);
+	m_pFSM->Add_State<CJohn2PantiesSwim>(JOHN2STATE::PANTIES_SWIM);
+	m_pFSM->Add_State<CJohn2Slicable>(JOHN2STATE::SLICABLE);
 
 	return S_OK;
 }
@@ -319,9 +352,9 @@ void CJohn2::CollisionWithTarget()
 
 _bool CJohn2::Check_GlobalState()
 {
-	if (m_bIsDie)
+	if (m_bIsDie && (_uint)m_pFSM->Get_State() < (_uint)JOHN2STATE::DIESTART)
 	{
-		m_pFSM->Set_State(JOHN2STATE::DIE);
+		m_pFSM->Set_State(JOHN2STATE::DIESTART);
 		return true;
 	}
 
@@ -350,4 +383,45 @@ void CJohn2::On_Dead() {
 	 if (!CGameMemMgr::GetInstance()->Get_BossKilled()) {
 		 CGameMemMgr::GetInstance()->Set_BossKilled(true);
 	}
+}
+
+void CJohn2::SliceComplete()
+{
+	if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+	{
+		auto pGetItemUI = CGetItemUI::Create(-500.f, 250.f);
+		pGetItemUI->Set_Title(L"정체불명의 고기");
+		pGetItemUI->Set_Rank(L"Rank " + ::to_wstring(5));
+
+		std::wstringstream wss;
+		wss << std::fixed << std::setprecision(1) << 37.7 << L"kg";
+		std::wstring result = wss.str();
+
+		pGetItemUI->Set_Weight(result);
+		pGetItemUI->Set_StarCnt(5);
+		pGetItemUI->Set_ImgAssetName(L"");//m_sThumbNailAssetName);
+		pGetItemUI->Ready_AfterCreate();
+		pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+	}
+
+	if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
+	{
+		pDave->Change_Weight(37.7);
+	}
+
+	CGameMemMgr::CDiveInfo::DIVE_FISH fish{};
+	fish.fWeight = 37.7;
+	fish.iRank = 5;
+	fish.iStar = 5;
+	fish.sFishName = L"정체불명의 고기";
+	fish.sThumbNailAssetName = L""; // m_sThumbNailAssetName;
+	fish.iMeatCnt = 5;
+	fish.fLength = 5;
+	fish.sSushiThumbNailAssetName = L""; //m_sSushiThumbNailAssetName;
+	fish.iSushiLv = 5;
+	fish.iSushiMoney = 9999;
+	fish.bFish = true;
+	CGameMemMgr::GetInstance()->Get_DiveInfos().back().Add_FishFront(fish);
+
+	Set_DeadCascade();
 }

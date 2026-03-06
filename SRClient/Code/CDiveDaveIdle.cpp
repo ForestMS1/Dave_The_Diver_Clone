@@ -55,6 +55,9 @@ void CDiveDaveIdle::Input(const _float& fTimeDelta)
 	if (m_pOwner->Get_SlicableFish() != nullptr && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
 		m_pOwner->Set_State(DIVEDAVESTATE::TANNING);
 
+	if(m_pOwner->Get_SlicableJohn() != nullptr && CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
+		m_pOwner->Set_State(DIVEDAVESTATE::TANNING);
+
 	// Item 사용 (Item사용은 무조건 ItemSlot1에서만)
 	if (CDInputMgr::GetInstance()->Key_Down(DIK_C))
 	{

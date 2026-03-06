@@ -274,6 +274,7 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
+	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 
 	//stockMarket
 	{
@@ -751,6 +752,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_ChangeTab", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_LB.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_RKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/R_Key_Dark.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_CKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/C_Key_Dark.png"));
+	CAssetMgr::GetInstance()->AddAsset(L"Tex_SpaceKeyUI", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/Space_Key_Dark_Symbol.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Main_Box.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainBoxStroke", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Main_Stroke.png"));
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_WPMainSubBox", CAssetTexture::Create(L"../Bin/Resource/Texture/Dive_Player/UI/UI_WP_Sub_Box.png"));
@@ -952,7 +954,30 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 
 		s = L"../Bin/Resource/Texture/JohnWatson2/MeleeSkill01_Return/JohnWatson2_MeleeSkill01_Return_0" + ::to_wstring(i + 1) + L".png";
 		CAssetMgr::GetInstance()->AddAsset(L"John2MeleeSkill01_Return", CAssetTexture::Create(s.c_str()));
+
+		s = L"../Bin/Resource/Texture/JohnWatson2/Hit/JohnWatson2_Hit_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"John2Hit", CAssetTexture::Create(s.c_str()));
 	}
+
+	// 보스 2 DeathMove
+	for (int i = 0; i < 3; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/DeathMove/JohnWatson2_DeathMove_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_DeathMove", CAssetTexture::Create(s.c_str()));
+	}
+	// 보스 2 빤스
+	for (int i = 0; i < 4; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/Panties/JohnWatson2_Panties_0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_Panties", CAssetTexture::Create(s.c_str()));
+	}
+	for (int i = 0; i < 7; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/JohnWatson2/PantiesSwim/JohnWatson2_Panties_Swim0" + ::to_wstring(i + 1) + L".png";
+		CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_PantiesSwim", CAssetTexture::Create(s.c_str()));
+	}
+	s = L"../Bin/Resource/Texture/JohnWatson2/JohnWatson2_Slicable.png";
+	CAssetMgr::GetInstance()->AddAsset(L"JohnWatson2_Slicable", CAssetTexture::Create(s.c_str()));
 
 	s = L"../Bin/Resource/Texture/JohnWatson2/GunSkill02_Shoot/JohnWatson2_GunSkill02_Shoot_01.png";
 	CAssetMgr::GetInstance()->AddAsset(L"John2GunSkill02_Shoot", CAssetTexture::Create(s.c_str()));
@@ -1047,7 +1072,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_Blood", CAssetTexture::Create(s.c_str()));
 	}
 
-	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	//CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 	for (int i = 0; i < 17; ++i)
 	{
 		wstring s = L"../Bin/Resource/Texture/Coral/Coral" + ::to_wstring(i) + L".png";

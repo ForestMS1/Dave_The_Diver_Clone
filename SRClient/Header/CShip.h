@@ -26,6 +26,7 @@ private:
 	bool m_bTalking;
 	float m_fResultTimer;
 	float m_fConvAppearTimer;
+	float m_fFireworkTimer;
 
 };
 
