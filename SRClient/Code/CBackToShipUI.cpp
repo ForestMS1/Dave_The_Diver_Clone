@@ -132,16 +132,16 @@ HRESULT			CBackToShipUI::Ready_Component()
 
 CBackToShipUI* CBackToShipUI::Create(float fPosX, float fPosY)
 {
-    CBackToShipUI* pIDiverUpgrade = new CBackToShipUI{ fPosX , fPosY };
+    CBackToShipUI* pBackToShipUI = new CBackToShipUI{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pBackToShipUI->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pBackToShipUI);
+        MSG_BOX("pBackToShipUI Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pBackToShipUI;
 }
 
 void CBackToShipUI::Free()

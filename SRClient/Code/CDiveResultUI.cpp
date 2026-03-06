@@ -694,16 +694,16 @@ HRESULT			CDiveResultUI::Ready_Component()
 
 CDiveResultUI* CDiveResultUI::Create(float fPosX, float fPosY)
 {
-    CDiveResultUI* pIDiverUpgrade = new CDiveResultUI{ fPosX , fPosY };
+    CDiveResultUI* pDiveResultUI = new CDiveResultUI{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pDiveResultUI->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pDiveResultUI);
+        MSG_BOX("pDiveResultUI Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pDiveResultUI;
 }
 
 void CDiveResultUI::Free()

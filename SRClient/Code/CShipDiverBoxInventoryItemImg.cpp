@@ -147,16 +147,16 @@ HRESULT			CShipDiverBoxInventoryItemImg::Ready_Component()
 
 CShipDiverBoxInventoryItemImg* CShipDiverBoxInventoryItemImg::Create(float fPosX, float fPosY)
 {
-    CShipDiverBoxInventoryItemImg* pIDiverUpgrade = new CShipDiverBoxInventoryItemImg{ fPosX , fPosY };
+    CShipDiverBoxInventoryItemImg* pShipDiverBoxInventoryItemImg = new CShipDiverBoxInventoryItemImg{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipDiverBoxInventoryItemImg->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipDiverBoxInventoryItemImg);
+        MSG_BOX("pShipDiverBoxInventoryItemImg Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipDiverBoxInventoryItemImg;
 }
 
 void CShipDiverBoxInventoryItemImg::Free()

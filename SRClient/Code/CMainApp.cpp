@@ -171,6 +171,7 @@ CMainApp* CMainApp::Create()
 
 HRESULT CMainApp::Load_PermanentAsset()
 {
+	auto a = CAssetMgr::GetInstance();
 	CAssetMgr::GetInstance()->AddAsset(L"Tex_Transition_BG_Lobby", CAssetTexture::Create(L"../Bin/Resource/Texture/Transition/LoadingBG_Lobby.png"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Tex_Transition_BG_Lobby");
 

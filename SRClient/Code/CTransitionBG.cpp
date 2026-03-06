@@ -81,16 +81,16 @@ HRESULT			CTransitionBG::Ready_Component()
 
 CTransitionBG* CTransitionBG::Create(float fPosX, float fPosY)
 {
-    CTransitionBG* pIDiverUpgrade = new CTransitionBG{ fPosX , fPosY };
+    CTransitionBG* pTransitionBG = new CTransitionBG{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pTransitionBG->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pTransitionBG);
+        MSG_BOX("pTransitionBG Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pTransitionBG;
 }
 
 void CTransitionBG::Free()

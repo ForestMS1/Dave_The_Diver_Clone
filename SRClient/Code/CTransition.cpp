@@ -2019,7 +2019,9 @@ HRESULT CTransition::Ready_Scene()
 
 
 	if (FAILED(Ready_Environment_Layer(L"0_Environment_Layer")))
+	{
 		return E_FAIL;
+	}
 
 
 	m_bFadeEnd = false;

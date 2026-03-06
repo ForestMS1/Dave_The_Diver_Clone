@@ -117,16 +117,16 @@ HRESULT			CShipDiverBoxInventoryEdge::Ready_Component()
 
 CShipDiverBoxInventoryEdge* CShipDiverBoxInventoryEdge::Create(float fPosX, float fPosY)
 {
-    CShipDiverBoxInventoryEdge* pIDiverUpgrade = new CShipDiverBoxInventoryEdge{ fPosX , fPosY };
+    CShipDiverBoxInventoryEdge* pShipDiverBoxInventoryEdge = new CShipDiverBoxInventoryEdge{ fPosX , fPosY };
 
-    if (FAILED(pIDiverUpgrade->Ready_GameObject()))
+    if (FAILED(pShipDiverBoxInventoryEdge->Ready_GameObject()))
     {
-        Safe_Release(pIDiverUpgrade);
-        MSG_BOX("pIDiverUpgrade Create Failed");
+        Safe_Release(pShipDiverBoxInventoryEdge);
+        MSG_BOX("pShipDiverBoxInventoryEdge Create Failed");
         return nullptr;
     }
 
-    return pIDiverUpgrade;
+    return pShipDiverBoxInventoryEdge;
 }
 
 void CShipDiverBoxInventoryEdge::Free()
