@@ -132,7 +132,7 @@ void CShipDave::Render_GameObject()
 
 void CShipDave::DoDiveReady()
 {
-    if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1) {
+    if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1+1) {
         if (!m_bTalking) {
             m_fConvAppearTimer += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
             if (m_fConvAppearTimer > 1.f) {

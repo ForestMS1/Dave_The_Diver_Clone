@@ -128,6 +128,11 @@ void CSushi::Render_Scene()
 		CTransition::FadedTransition(CTransition::SCENE_SUSHI, CTransition::SCENE_SHIP);
 	}
 	ImGui::End();
+
+	if (ImGui::Button("Ending"))
+	{
+		CTransition::FadedTransition(CTransition::SCENE_SUSHI, CTransition::SCENE_ENDING);
+	}
 #endif
 
 }

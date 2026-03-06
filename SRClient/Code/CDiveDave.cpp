@@ -452,6 +452,23 @@ void CDiveDave::DoT(const _float fTimeDelta)
 {
 	m_fDoTTime += fTimeDelta;
 
+	if (m_bOverloaded && m_fDoTTime > 1.5f)
+	{
+		m_fHp -= 3.f;
+		Event e;
+		e.type = EVENTTYPE::CHANGE_HP;
+		e.value = (_uint)m_fHp;
+		e.fValue = m_fHp / m_fMaxHp;
+		CDiveDave::Notify(e);
+
+		if (m_fHp <= 0.f)
+		{
+			m_fHp = 0.f;
+			On_Dead();
+		}
+		m_fDoTTime = 0.f;
+	}
+
 	if (m_fDoTTime > 1.5f)
 	{
 		m_fHp -= 1.f;

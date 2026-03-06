@@ -161,7 +161,7 @@ _int		CToSushiUI::Update_GameObject(const _float& fTimeDelta)
         }
 
         Set_DeadCascade();
-        if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1) {
+        if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 1+1) {
             if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
             {
                 if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))
@@ -176,7 +176,7 @@ _int		CToSushiUI::Update_GameObject(const _float& fTimeDelta)
                 }
             }
         }
-        else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2) {
+        else if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 2+1) {
             if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
             {
                if (auto pObj = pLayer->Get_GameObjectFirst(L"DaveConversation"))

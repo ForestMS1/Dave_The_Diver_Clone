@@ -9,6 +9,7 @@
 #include "CManagement.h"
 #include "CColliderMgr.h"
 #include "CDInputMgr.h"
+#include "CSoundMgr.h"
 
 
 CDaveConversation::CDaveConversation(float fPosX, float fPosY)
@@ -123,6 +124,11 @@ _int		CDaveConversation::Update_GameObject(const _float& fTimeDelta)
         if (m_iCurrentTxtIdx < m_vecConversation[m_eCurrentConversation][m_iCurrentConversationIdx].size())
         {
             ++m_iCurrentTxtIdx;
+            if (m_iCurrentTxtIdx % 2 == 0) {
+                CSoundMgr::GetInstance()->PlaySoundOne(L"talk", CSoundMgr::SFX, 1.f);
+
+            }
+
         }
         m_fTimer = 0.f;
     }

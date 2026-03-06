@@ -33,6 +33,39 @@ void CDiveDaveTanning::Input(const _float& fTimeDelta)
 	if (CDInputMgr::GetInstance()->Key_Pressing(DIK_SPACE))
 	{
 		m_fTanningTime += fTimeDelta * 5.f;
+
+		
+		CJohn2* pSlicableJohn = dynamic_cast<CJohn2*>(m_pOwner->Get_SlicableJohn());
+		if (pSlicableJohn != nullptr)
+		{
+			_vec3 vJohnPos;
+			pSlicableJohn->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vJohnPos);
+			float fRange = 1.f;
+			for (int i = 0; i < 2; ++i)
+			{
+				float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+				float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+				vJohnPos.x += randX;
+				vJohnPos.y += randY;
+				CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, vJohnPos, 1);
+			}
+		}
+
+		CFishGameObject* pSlicableFish = dynamic_cast<CFishGameObject*>(m_pOwner->Get_SlicableFish());
+		if (pSlicableFish != nullptr)
+		{
+			_vec3 vFishPos;
+			pSlicableFish->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vFishPos);
+			float fRange = 1.f;
+			for (int i = 0; i < 1; ++i)
+			{
+				float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+				float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+				vFishPos.x += randX;
+				vFishPos.y += randY;
+				CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOD, vFishPos, 1);
+			}
+		}
 	}
 	if (CDInputMgr::GetInstance()->Key_Up(DIK_SPACE))
 	{

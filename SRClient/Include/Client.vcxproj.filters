@@ -538,6 +538,12 @@
     <Filter Include="02. GameObject\John2\Slicable">
       <UniqueIdentifier>{f574f30f-ab65-4df8-bf83-e57fc04bd2e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\05. Ending">
+      <UniqueIdentifier>{cc44f231-7151-4bc3-a5d4-ff611256b855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\05. Ending\Conversation">
+      <UniqueIdentifier>{b624b17c-8698-4ef7-b283-73985af9a3e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1359,6 +1365,9 @@
     <ClInclude Include="..\Header\CJohn2Slicable.h">
       <Filter>02. GameObject\John2\Slicable</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEnding.h">
+      <Filter>01. Scene\05. Ending</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2158,6 +2167,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CJohn2Slicable.cpp">
       <Filter>02. GameObject\John2\Slicable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEnding.cpp">
+      <Filter>01. Scene\05. Ending</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

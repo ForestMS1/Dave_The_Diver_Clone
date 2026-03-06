@@ -36,6 +36,7 @@ _int CJohnHit::Update_State(const _float& fTimeDelta)
 {
 	Input(fTimeDelta);
 	m_pOwner->Acc_HitTime(fTimeDelta);
+	m_pOwner->Add_BreakTime(fTimeDelta);
 	if (m_pOwner->Get_HitTime() > 0.5f)
 		m_pOwner->Set_State(JOHNSTATE::IDLE);
 	//m_pOwner->AddFrame(fTimeDelta, 10.f, 2);
