@@ -106,7 +106,7 @@ _int CDiveDave::Update_GameObject(const _float& fTimeDelta)
 	}
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	DoT(fTimeDelta);
+	//DoT(fTimeDelta);
 
 	m_pFSM->Update_State(fTimeDelta);
 
