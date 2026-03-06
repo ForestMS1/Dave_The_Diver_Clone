@@ -24,6 +24,8 @@ void CJohn2Explosion::Enter()
 
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pOwner->Multiply_Scale(&vScale);
+
+	m_pOwner->Reset_BreakTime();
 }
 
 void CJohn2Explosion::Input(const _float& fTimeDelta)

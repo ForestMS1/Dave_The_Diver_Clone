@@ -46,6 +46,7 @@ _int CJohnAttackShoot::Update_State(const _float& fTimeDelta)
 
 	if (m_iShotCnt > 3)
 	{
+		m_pOwner->Reset_BreakTime();
 		m_pOwner->Set_State(JOHNSTATE::IDLE);
 	}
 
