@@ -24,15 +24,16 @@ HRESULT CClownfish::Ready_GameObject()
 {
     m_sFishName = L"흰동가리";
     m_sThumbNailAssetName = L"Tex_FishThumb_ClownFish";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 1;  // 랭크 1 (하위)
+    m_iStar = 1;  // 별 1개
+    m_fWeight = 0.1f;  // 0.1kg
+    m_iPrice = 4;  // 가격 4
+    m_fLength = 7.f;  // 길이 7cm
+    m_iMeatCnt = 1;  // 고기 1개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_ClownFish";
-    m_iSushiMoney = 15;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 6;  // 스시 가격 6
+    m_iSushiLv = 1;  // 스시 레벨 1
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

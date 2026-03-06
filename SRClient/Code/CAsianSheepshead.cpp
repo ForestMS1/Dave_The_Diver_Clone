@@ -27,12 +27,12 @@ HRESULT CAsianSheepshead::Ready_GameObject()
 {
     m_sFishName = L"혹돔";
     m_sThumbNailAssetName = L"Tex_FishThumb_Asian_Sheepshead";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 2;  // 중간 랭크
+    m_iStar = 2;  // 두 개 별
+    m_fWeight = 0.5f;  // 0.5kg
+    m_iPrice = 10;  // 가격 10
+    m_fLength = 10.f;  // 길이 10cm
+    m_iMeatCnt = 1;  // 고기 1개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Asian_Sheepshead";
     m_iSushiMoney = 12;
     m_iSushiLv = 1;

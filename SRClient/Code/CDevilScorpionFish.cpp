@@ -28,15 +28,16 @@ HRESULT CDevilScorpionFish::Ready_GameObject()
 
     m_sFishName = L"악마전갈고기";
     m_sThumbNailAssetName = L"Tex_FishThumb_Devil_ScorpionFish";
-    m_iRank = 1;
-    m_iStar = 1;
-    m_fWeight = 0.5f;
-    m_iPrice = 10;
-    m_fLength = 10.f;
-    m_iMeatCnt = 1;
+    m_iRank = 4;  // 랭크 4 (최상위)
+    m_iStar = 4;  // 별 4개
+    m_fWeight = 1.5f;  // 1.5kg
+    m_iPrice = 20;  // 가격 20
+    m_fLength = 25.f;  // 길이 25cm
+    m_iMeatCnt = 3;  // 고기 3개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Devil_ScorpionFish";
-    m_iSushiMoney = 12;
-    m_iSushiLv = 1;
+    m_iSushiMoney = 30;  // 스시 가격 30
+    m_iSushiLv = 3;  // 스시 레벨 3
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;
