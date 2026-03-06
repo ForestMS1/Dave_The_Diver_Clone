@@ -57,7 +57,14 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 
 void CParticleMgr::Update_Particle(float fTimeDelta)
 {
+	if (!preparticles.empty()) {
 
+		for (auto particle : preparticles) {
+			if (particle) {
+				particle->update(fTimeDelta);
+			}
+		}
+	}
 	if (!particles.empty()) {
 
 		for (auto particle : particles) {
@@ -95,6 +102,13 @@ void CParticleMgr::Render_Particle()
 
 void CParticleMgr::PreRender_Particle()
 {
+		for (auto particle : preparticles) {
+			if (particle) {
+
+				particle->render();
+			}
+		}
+
 }
 
 void CParticleMgr::PostRender_Particle()
@@ -112,11 +126,7 @@ void CParticleMgr::PostRender_Particle()
 
 void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPariticles)
 {
-	if (particles.size() == 0) {
-		particles.resize(PARTICLE_END);
-		FireworkTail* firework = FireworkTail::Create(origin);
-		particles[FIREWORK] = (firework);
-	}
+	
 	switch(type) {
 
 	case PARTICLE_BUBBLE:
@@ -147,9 +157,19 @@ void CParticleMgr::spwan_Particle(PARTICLETYPE type, _vec3 origin, int numofPari
 
 	
 	case FIREWORK:
-		for (int i = 0; i < numofPariticles; i++) {
-			particles[FIREWORK]->addParticle(origin, { 1,1,1,1 });
+		if (preparticles[FIREWORK] == nullptr) {
+			FireworkTail* firework = FireworkTail::Create(origin);
+			preparticles[FIREWORK] = (firework);
 		}
+	/*	if (particles.size() == 0) {
+			particles.resize(PARTICLE_END);
+			FireworkTail* firework = FireworkTail::Create(origin);
+			particles[FIREWORK] = (firework);
+		}*/
+		for (int i = 0; i < numofPariticles; i++) {
+			preparticles[FIREWORK]->addParticle(origin, { 1,1,1,1 });
+		}
+		//static_cast<FireworkTail*>(preparticles[FIREWORK])->SetOrigin(origin);
 		break;
 	break;
 	}
@@ -178,6 +198,29 @@ void CParticleMgr::spwan_Weather(WEATHERTYPE type, _vec3 origin, int numofPariti
 
 void CParticleMgr::Clear_Particle()
 {
+	for (auto particle : preparticles) {
+		if (particle != nullptr) {
+			list<Attribute>* atrributes = particle->GetAtrribute();
+
+			for (auto i = atrributes->begin(); i != atrributes->end(); i++) {
+				const float gravity = 1.2f;
+				i->_isAlive = false;
+			}
+
+
+			auto j = atrributes->begin();
+
+			while (j != atrributes->end()) {
+				if (j->_isAlive == false) {
+					j = atrributes->erase(j);
+				}
+				else {
+					j++;
+				}
+			}
+		}
+
+	}
 	for (auto particle : particles) {
 		if (particle != nullptr) {
 			list<Attribute>* atrributes = particle->GetAtrribute();
@@ -231,7 +274,14 @@ void CParticleMgr::Clear_Particle()
 
 void CParticleMgr::Free()
 {
-	
+	for (auto particle : preparticles) {
+		if (particle) {
+			particle->Free();
+			Safe_Release(particle);
+		}
+
+	}
+	preparticles.clear();
 	for (auto particle : particles) {
 		if (particle) {
 			particle->Free();

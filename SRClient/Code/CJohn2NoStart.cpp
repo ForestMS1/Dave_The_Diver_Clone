@@ -86,7 +86,7 @@ _int CJohn2NoStart::Update_State(const _float& fTimeDelta)
 				else
 				{
 					CJohnConversation* JohnConversation = CJohnConversation::Create(m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].x, m_pOwner->GetTransformCom()->m_vInfo[INFO_POS].y - 2.f);
-					JohnConversation->SetCurrentConversation(CJohnConversation::CONVERSATION::CONV_2);
+					JohnConversation->SetCurrentConversation(CJohnConversation::CONVERSATION::CONV_3);
 					pLayer->Add_GameObject(L"JohnConversation", JohnConversation);
 					m_bJohnDialogCreated = true;
 				}
@@ -127,14 +127,18 @@ _int CJohn2NoStart::Update_State(const _float& fTimeDelta)
 				{
 				}
 				else {
-					if (m_pOwner->Get_Frame() == 7)
-					{
 						m_pOwner->EncounterTarget();
 						m_pOwner->Set_State(JOHN2STATE::IDLE);
-					}
+					//if (m_pOwner->Get_Frame() == 7)
+					//{
+					//}
 				}
 			}
 		}
+	}
+	else {
+		_vec3 Dir = { -1.f,0.f,0.f };
+		m_pOwner->CJohn2::Move(&Dir, fTimeDelta);
 	}
 	
 

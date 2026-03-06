@@ -24,7 +24,7 @@ public:
 	void update(float fTimeDelta) override;
 	int numOfParticles;
 	virtual void	Free();
-
+	void SetOrigin(_vec3 ori) { _origin = ori; }
 
 };
 
