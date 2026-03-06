@@ -24,9 +24,11 @@ private:
 private:
 	bool m_bResultOpend;
 	bool m_bTalking;
+	bool m_bFireworkSound;
 	float m_fResultTimer;
 	float m_fConvAppearTimer;
 	float m_fFireworkTimer;
+	float m_fFireworkSoundTimer;
 
 };
 

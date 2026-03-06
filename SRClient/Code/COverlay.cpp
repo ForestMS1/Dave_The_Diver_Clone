@@ -64,8 +64,8 @@ void COverlay::Render_GameObject()
         DWORD oldColorOp, oldColorArg1, oldColorArg2;
         DWORD oldAlphaOp, oldAlphaArg1, oldAlphaArg2;
 
-        pGraphicDev->GetRenderState(D3DRS_ALPHABLENDENABLE, &oldAlphaBlend);
-        pGraphicDev->GetRenderState(D3DRS_ZWRITEENABLE, &oldZWrite);
+        //pGraphicDev->GetRenderState(D3DRS_ALPHABLENDENABLE, &oldAlphaBlend);
+        //pGraphicDev->GetRenderState(D3DRS_ZWRITEENABLE, &oldZWrite);
         pGraphicDev->GetRenderState(D3DRS_ALPHATESTENABLE, &oldAlphaTest);
         pGraphicDev->GetRenderState(D3DRS_TEXTUREFACTOR, &oldTFactor);
 
@@ -84,8 +84,8 @@ void COverlay::Render_GameObject()
             (BYTE)(alphaRatio * 255.f),
             255, 255, 255
         );
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        //pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+        //pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
         pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
         pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, tfactor);
 
@@ -106,8 +106,8 @@ void COverlay::Render_GameObject()
         D3DXMatrixIdentity(&matTmp);
         pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
         // º¹¿ø
-        pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, oldAlphaBlend);
-        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, oldZWrite);
+ /*       pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, oldAlphaBlend);
+        pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, oldZWrite);*/
         pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, oldAlphaTest);
         pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, oldTFactor);
 

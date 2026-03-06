@@ -27,11 +27,13 @@
 #include "CAssetSpine.h"
 #include "CParticleMgr.h"
 #include "CLeah.h"
+#include "CEnding.h"
 
  bool CTransition::s_LogoAssetLoaded = false;
  bool CTransition::s_ShipAssetLoaded = false;
  bool CTransition::s_DiveAssetLoaded = false;
  bool CTransition::s_SushiAssetLoaded = false;
+ bool CTransition::s_EndingAssetLoaded = false;
 
 CTransition::CTransition(SCENE_ID eSrcScene, SCENE_ID eDstScene)
 	: m_eSrcScene(eSrcScene)
@@ -275,7 +277,31 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 	}
 
 	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
-
+	// FinalConversation
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv1", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv1.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv1");
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv2", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv2.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv2");
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv3", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv3.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv3");
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv4", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv4.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv4");
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_finalConv5", CAssetTexture::Create(L"../Bin/Resource/Texture/Conversation/finalConv5.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_finalConv5");
+	}
+	//firework sound
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"beforeExplode", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/beforeExplode.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"firework3", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/firework3.wav"));
+		CAssetMgr::GetInstance()->LoadAsset(L"beforeExplode");
+		CAssetMgr::GetInstance()->LoadAsset(L"firework3");
+	}
+	//talkSound
+	{
+		CAssetMgr::GetInstance()->AddAsset(L"talk", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Firework/talk.mp3"));
+		CAssetMgr::GetInstance()->LoadAsset(L"talk");
+	}
 	//stockMarket
 	{
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_stockMarket", CAssetTexture::Create(L"../Bin/Resource/Texture/Ship/stockMarket/stockMarket1.png"));
@@ -1599,6 +1625,17 @@ HRESULT CTransition::Transition_SUSHI_TO_SHIP()
 	return S_OK;
 }
 
+HRESULT CTransition::Transition_SUSHI_TO_ENDING()
+{
+	m_sComment = L"Transition_SUSHI_TO_ENDING COMPLETE";
+#ifdef _DEBUG
+	//Sleep(500);
+#endif // DEBUG
+	m_bFinish = true;
+
+	return S_OK;
+}
+
 HRESULT CTransition::Common_SHIP_Load()
 {
 	for (int i = 1; i <= 2; ++i)
@@ -2119,6 +2156,14 @@ _int CTransition::Update_Scene(const _float& fTimeDelta)
 				CManagement::GetInstance()->Set_Scene(pLogo);
 				});
 		}
+		else if (m_eDstScene == SCENE_ENDING)
+		{
+			AddFadeOut(this, [=]() {
+				auto pEnding = CEnding::Create();
+				AddFadeIn(pEnding);
+				CManagement::GetInstance()->Set_Scene(pEnding);
+				});
+		}
 	}
 	
 
@@ -2491,6 +2536,18 @@ unsigned int CTransition::Thread_Main(void* pArg)
 			{
 				CTransition::s_ShipAssetLoaded = true;
 				pTransition->Transition_SUSHI_TO_SHIP();
+			}
+			else
+			{
+				pTransition->Set_Finish();
+			}
+		}
+		else if (eDst == SCENE_ENDING)
+		{
+			if (!CTransition::s_EndingAssetLoaded)
+			{
+				CTransition::s_EndingAssetLoaded = true;
+				pTransition->Transition_SUSHI_TO_ENDING();
 			}
 			else
 			{

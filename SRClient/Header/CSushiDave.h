@@ -60,7 +60,9 @@ private:
 	float			walkSoundTime = 0.f;
 	float			DashSoundTime = 0.f;
 	float			fireworkTime = 0.f;
+	float			m_fFireworkSoundTimer = 0.f;
 	bool			tiredSoundPlayed = false;
+	bool			m_bFireworkSound = false;
 
 public:
 	bool			makingWasabi = false;
