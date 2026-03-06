@@ -30,6 +30,7 @@ private:
 private:
 	_bool m_bIsFlip = false;
 	_bool m_bInitComplete = false;
+	_float m_fTime = 0.f;
 
 	_vec3 m_vOffDir;
 public:

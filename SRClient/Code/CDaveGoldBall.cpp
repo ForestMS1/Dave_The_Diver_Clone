@@ -68,10 +68,25 @@ _int CDaveGoldBall::Update_GameObject(const _float& fTimeDelta)
 	if (vDavePos.y <= -130.f)
 	{
 		m_bRender = true;
+		m_fTime += fTimeDelta;
+		if (m_fTime >= 0.5f)
+			m_bRender = false;
+		if(m_fTime >= 0.8f)
+			m_bRender = true;
+		if (m_fTime >= 1.1f)
+			m_bRender = false;
+		if (m_fTime >= 1.4f)
+			m_bRender = true;
+		if (m_fTime >= 1.7f)
+			m_bRender = false;
+		if (m_fTime >= 2.f)
+			m_bRender = true;
+
 	}
 	else
 	{
 		m_bRender = false;
+		m_fTime = 0.f;
 	}
 	
 
