@@ -75,6 +75,7 @@
 #include "CSpaceKeyUI.h"
 #include "CFishTankCollider.h"
 #include "CDaveGoldBall.h"
+
 CDive::CDive()
 	: CScene()
 {
@@ -388,14 +389,41 @@ void CDive::Frustum() {
 	CTransform* pDaveTransform = static_cast<CTransform*>(pDiveDave->Get_Component(ID_DYNAMIC, L"Com_Transform"));
 	CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_TestCamera", m_pFrustumCollider);
 
-	CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
-	_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
-	D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
-	_matrix MoveMatrix;
-	D3DXMatrixIdentity(&MoveMatrix);
-	memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
-	MoveMatrix.m[3][2] = CameraView.m[3][2];
-	m_pFrustumCollider->Transform(&CameraView);
+	if(CDInputMgr::GetInstance()->Key_Down(DIK_1)) {
+		if (!CColliderMgr::GetInstance()->Get_Render()) {
+			CColliderMgr::GetInstance()->Set_Render(true);
+			CCameraMgr::GetInstance()->Change_CurCamera(L"FreeCam");
+
+
+		}
+		else {
+			CColliderMgr::GetInstance()->Set_Render(false);
+			CCameraMgr::GetInstance()->Change_CurCamera(L"ChaseToPlayerCam");
+
+		}
+	}
+
+
+	if (CColliderMgr::GetInstance()->Get_Render()) {
+		_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
+		D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
+		_matrix MoveMatrix;
+		D3DXMatrixIdentity(&MoveMatrix);
+		memcpy(&MoveMatrix.m[3][0], &pDaveTransform->Get_World()->m[3][0], sizeof(_vec3));
+		MoveMatrix.m[3][2] = CameraView.m[3][2];
+		m_pFrustumCollider->Transform(&MoveMatrix);
+
+	}
+	else {
+		CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Update_MatView();
+		_matrix CameraView = CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam")->Get_ViewMatrix();
+		D3DXMatrixInverse(&CameraView, nullptr, &CameraView);
+
+		m_pFrustumCollider->Transform(&CameraView);
+	}
+
+
+	
 }
 
 HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)

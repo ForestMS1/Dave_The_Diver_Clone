@@ -27,6 +27,7 @@ private:
 	CGameObject* m_pDive = nullptr; // Dive구독용 // 여기서 해제하지않는다!
 	CBoundingFrustum* m_pFrustumCollider{nullptr};
 	_bool		m_bFishCreate{ false };
+	
 private:
 	void Free() override;
 
