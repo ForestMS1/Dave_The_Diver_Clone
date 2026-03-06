@@ -18,6 +18,7 @@
 #include "CCollisionMgr.h"
 #include "CAssetSpine.h"
 #include "CMapMgr.h"
+#include "CGoldBallBuffer.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr)
@@ -284,6 +285,9 @@ HRESULT CMainApp::Load_PermanentAsset()
 		return E_FAIL;
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create())))
+		return E_FAIL;
+
+	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_GoldBallBuffer", Engine::CGoldBallBuffer::Create())))
 		return E_FAIL;
 
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Calculator", Engine::CCalculator::Create())))

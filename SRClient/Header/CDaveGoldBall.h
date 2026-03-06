@@ -1,5 +1,6 @@
 #pragma once
-#include "CGameObject.h"
+#include "CGameObject.h" 
+#include "CGoldBallBuffer.h"
 class CDaveGoldBall :
     public CGameObject
 {
@@ -22,13 +23,15 @@ private:
 	void	Rotate_ToMouse();
 
 private:
-	Engine::CRcTex* m_pBufferCom;
+	Engine::CGoldBallBuffer* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 
 
 private:
 	_bool m_bIsFlip = false;
 	_bool m_bInitComplete = false;
+
+	_vec3 m_vOffDir;
 public:
 	static CDaveGoldBall* Create();
 

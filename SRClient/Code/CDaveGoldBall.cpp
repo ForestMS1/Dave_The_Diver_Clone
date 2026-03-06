@@ -4,6 +4,7 @@
 #include "CDiveDave.h"
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
+
 CDaveGoldBall::CDaveGoldBall()
 {
 }
@@ -35,6 +36,8 @@ HRESULT CDaveGoldBall::Ready_GameObject()
 	vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	m_pTransformCom->Multiply_Scale(&vScale);
 
+	m_bRender = false;
+
 	return S_OK;
 }
 
@@ -56,6 +59,37 @@ _int CDaveGoldBall::Update_GameObject(const _float& fTimeDelta)
 
 	m_fViewZ = 10.1f;
 
+	m_bIsFlip = static_cast<CDiveDave*>(m_pParentGameObject)->Is_Flip();
+
+	CTransform* pParentTransformCom = static_cast<CDiveDave*>(m_pParentGameObject)->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+
+	_vec3 vDavePos;
+	pParentTransformCom->Get_Info(INFO_POS, &vDavePos);
+	if (vDavePos.y <= -130.f)
+	{
+		m_bRender = true;
+	}
+	else
+	{
+		m_bRender = false;
+	}
+	
+
+	_float yAngle = pParentTransformCom->m_vAngle.y;
+	_float zAngle = pParentTransformCom->m_vAngle.z;
+
+	if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() == DIVEDAVESTATE::MOVE)
+	{
+		m_pTransformCom->m_vAngle.x = 0.f;
+		m_pTransformCom->m_vAngle.y = yAngle;
+		m_pTransformCom->m_vAngle.z = zAngle;
+	}
+	else if (static_cast<CDiveDave*>(m_pParentGameObject)->Get_State() == DIVEDAVESTATE::IDLE)
+	{
+		m_pTransformCom->m_vAngle.x = 0.f;
+		m_pTransformCom->m_vAngle.y = 0.f;
+		m_pTransformCom->m_vAngle.z = 90.f;
+	}
 	return iExit;
 }
 
@@ -67,8 +101,12 @@ void CDaveGoldBall::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CDaveGoldBall::Render_GameObject()
 {
+	if (!m_bRender)
+		return;
 
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
@@ -82,12 +120,14 @@ void CDaveGoldBall::Render_GameObject()
 	}
 	m_pBufferCom->Render_Buffer();
 
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
 HRESULT CDaveGoldBall::Ready_Component()
 {
 	// 버퍼
-	if (FAILED((AddComponent<Engine::CRcTex, ID_STATIC>(L"Proto_RcTex", L"Com_Buffer", &m_pBufferCom))))
+	if (FAILED((AddComponent<Engine::CGoldBallBuffer, ID_STATIC>(L"Proto_GoldBallBuffer", L"Com_Buffer", &m_pBufferCom))))
 		return E_FAIL;
 
 	// 트랜스폼
