@@ -40,20 +40,24 @@ _int      CWPAmmoCntText::Update_GameObject(const _float& fTimeDelta)
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ORTHO_UI, this);
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-    auto a = dynamic_cast<CWPBoxUI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"WPBoxUI2"));
-    a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
+    if (m_bEndFrame)
+    {
+        auto a = dynamic_cast<CWPBoxUI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"WPBoxUI2"));
+        a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
-    auto gun = static_cast<CDiveDaveGun*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDaveGun"));
-    m_iAmmoCnt = gun->Get_AmmoCnt();
-    m_sTxt = to_wstring(m_iAmmoCnt);
-    
+        auto gun = static_cast<CDiveDaveGun*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDaveGun"));
+        m_iAmmoCnt = gun->Get_AmmoCnt();
+        m_sTxt = to_wstring(m_iAmmoCnt);
 
-    float fOffsetX = 27.5f;
-    float fOffsetY = -12.5f;
-    m_vPos.x += fOffsetX;
-    m_vPos.y += fOffsetY;
 
-    m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+        float fOffsetX = 27.5f;
+        float fOffsetY = -12.5f;
+        m_vPos.x += fOffsetX;
+        m_vPos.y += fOffsetY;
+
+        m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+    }
+
 
     return iExit;
 }
@@ -78,6 +82,7 @@ void      CWPAmmoCntText::Render_GameObject()
         pDefFont->Render_Font(m_sTxt, &vPos, D3DXCOLOR(0.f, 0.f, 0.f, 1.f), (DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP));
     }
 
+    m_bEndFrame = true;
 }
 
 HRESULT         CWPAmmoCntText::Ready_Component()

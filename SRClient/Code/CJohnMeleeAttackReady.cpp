@@ -39,7 +39,7 @@ _int CJohnMeleeAttackReady::Update_State(const _float& fTimeDelta)
 
 	m_fReadyTime += fTimeDelta;
 
-	if (m_fReadyTime > 4.f)
+	if (m_fReadyTime > 1.5f)
 	{
 		//m_pOwner->Shot_Bullet();
 		m_pOwner->Set_State(JOHNSTATE::MELEEATTACK);

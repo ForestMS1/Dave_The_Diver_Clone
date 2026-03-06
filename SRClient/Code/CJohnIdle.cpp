@@ -59,9 +59,8 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 		}
 		else
 		{
-			//1ÆäÀÌÁî
-			if (m_pOwner->Get_Hp() >= 100.f)
-				m_iRand = (m_iRand + 1) % 2;
+
+			m_iRand = m_iRand % 2;
 
 			switch (m_iRand)
 			{
@@ -79,6 +78,7 @@ _int CJohnIdle::Update_State(const _float& fTimeDelta)
 			default:
 				break;
 			}
+			m_iRand++;
 		}
 	}
     return 0;
