@@ -523,6 +523,9 @@
     <Filter Include="01. Scene\05. Ending">
       <UniqueIdentifier>{cc44f231-7151-4bc3-a5d4-ff611256b855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\05. Ending\GameObject">
+      <UniqueIdentifier>{41b49ca4-8582-4629-85bd-40887a888d89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1326,6 +1329,9 @@
     <ClInclude Include="..\Header\CEnding.h">
       <Filter>01. Scene\05. Ending</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFinalConversation.h">
+      <Filter>01. Scene\05. Ending\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2107,6 +2113,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEnding.cpp">
       <Filter>01. Scene\05. Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFinalConversation.cpp">
+      <Filter>01. Scene\05. Ending\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
