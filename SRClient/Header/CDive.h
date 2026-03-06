@@ -13,6 +13,7 @@ public:
 	void		LateUpdate_Scene(const _float& fTimeDelta) override;
 	void		Render_Scene() override;
 	void		Frustum();
+	void		DeepDark();
 private:
 	HRESULT Ready_GameLogic_Layer(std::wstring_view svLayerTag);
 	HRESULT Ready_Environment_Layer(std::wstring_view svLayerTag);
@@ -27,6 +28,8 @@ private:
 
 private:
 	void Free() override;
+
+
 
 };
 
