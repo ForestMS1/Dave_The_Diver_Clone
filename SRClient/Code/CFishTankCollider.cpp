@@ -8,17 +8,14 @@
 #include "CAssetDefaultFont.h"
 #include "CColliderMgr.h"
 
-CFishTankCollider::CFishTankCollider(wstring_view svColliderTag, wstring_view svColliderGroupTag)
+CFishTankCollider::CFishTankCollider(float fPosX, float fPosY)
     : CGameObject()
     //, m_fPosX(fPosX)
     //, m_fPosY(fPosY)
     , m_pTransformCom(nullptr)
     , m_pAABB(nullptr)
-    , m_sColliderTag(svColliderTag)
-    , m_sColliderGroupTag(svColliderGroupTag)
-    , m_funcOnEnter(nullptr)
-    , m_funcOnExit(nullptr)
-    , m_funcOnStay(nullptr)
+    , m_fPosX(fPosX)
+    , m_fPosY(fPosY)
 {
 }
 
@@ -34,11 +31,12 @@ HRESULT		CFishTankCollider::Ready_GameObject()
 
     _vec3 vPos = { 0.0f, 0.0f, 0.0f };
     _vec3 vExtents = { 1.0f, 1.0f, 0.001f };
-    //m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
 
-    m_pAABB = CAABB::Create(&vPos, &vExtents, m_sColliderTag, this);
+    m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_FishTank", this);
     m_pAABB->Set_OriginalColor(D3DXCOLOR(1.f, 1.f, 0.f, 1.f));
     m_pAABB->Set_IntersectColor(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
+
+    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
 
     return S_OK;
 }
@@ -48,7 +46,7 @@ _int		CFishTankCollider::Update_GameObject(const _float& fTimeDelta)
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 
-    CColliderMgr::GetInstance()->AddColliderGroup(m_sColliderGroupTag, m_pAABB);
+    CColliderMgr::GetInstance()->AddColliderGroup(L"Coll_FishTank", m_pAABB);
     m_pAABB->Transform(m_pTransformCom->Get_World());
 
     return iExit;
@@ -72,9 +70,9 @@ HRESULT			CFishTankCollider::Ready_Component()
 }
 
 
-CFishTankCollider* CFishTankCollider::Create(wstring_view svColliderTag, wstring_view svColliderGroupTag)
+CFishTankCollider* CFishTankCollider::Create(float fPosX, float fPosY)
 {
-    CFishTankCollider* pFishTankCollider = new CFishTankCollider{ svColliderTag , svColliderGroupTag };
+    CFishTankCollider* pFishTankCollider = new CFishTankCollider{ fPosX , fPosY };
 
     if (FAILED(pFishTankCollider->Ready_GameObject()))
     {

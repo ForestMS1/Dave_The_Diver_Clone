@@ -454,23 +454,33 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
         {
             //m_vMoveTarget();
 
-            float fRange = 300.0f; 
-           
-            float randX = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
-            float randY = ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+            _vec3 vParentPos;
+            m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
 
-            _vec3 vNewMoveTarget = { m_fPosX + randX, m_fPosY + randY, 0.f };
+            _vec3 vParentScale;
+            m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Scale(&vParentScale);
+
+            float fRangeX = vParentScale.x * 2.f;
+            float fRangeY = vParentScale.y * 2.f;
+
+            
+            //float fRange = 300.0f; 
+           
+            float randX = ((rand() % 101) / 100.f) * fRangeX - (fRangeX * 0.5f);
+            float randY = ((rand() % 101) / 100.f) * fRangeY - (fRangeY * 0.5f);
+
+            _vec3 vNewMoveTarget = { vParentPos.x + randX, vParentPos.y + randY, 0.f };
             m_vMoveTarget = vNewMoveTarget;
 
             m_fMoveTargetReLocateTimer = 0.f;
 
 
             {
-                float fRange = 10.0f;
+                float fRange = 15.0f;
 
-                float randX = ((rand() % 101) / 100.f) * fRange;
+                float randTime = ((rand() % 101) / 100.f) * fRange;
 
-                m_fMoveTargetReLocateTimerRef = randX;
+                m_fMoveTargetReLocateTimerRef = randTime;
             }
         }
 

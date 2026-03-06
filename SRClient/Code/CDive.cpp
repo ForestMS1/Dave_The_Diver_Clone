@@ -381,8 +381,8 @@ HRESULT CDive::Ready_Fish_Layer(std::wstring_view svLayerTag)
 	CFishHQ* pFishHQ = CFishHQ::Create();
 	pLayer->Add_GameObject(L"FishHQ", pFishHQ);
 
-	CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(L"AABB_FishTank", L"Coll_FishTankFishes");
-	pLayer->Add_GameObject(L"FishTankCollider", pFishTankCollider);
+	//CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(L"AABB_FishTank", L"Coll_FishTankFishes");
+	//pLayer->Add_GameObject(L"FishTankCollider", pFishTankCollider);
 
 	//{
 	//	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(0.f, 0.f, 0.05f * 0.3f);
