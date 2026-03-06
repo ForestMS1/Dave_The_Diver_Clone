@@ -11,6 +11,7 @@
 #include "CDiveDave.h"
 #include "CJohn.h"
 #include "CSoundMgr.h"
+#include "CJohn2.h"
 CJohnGuidedBullet::CJohnGuidedBullet(_vec3 vOrigin, _vec3 vDir, _float fZAngle, CGameObject* pOwner)
 	: m_vDir(vDir)
 	, m_fZAngle(fZAngle)
@@ -125,7 +126,7 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 			{
 				if (m_pAABB->Intersect(pCollider))
 				{
-					if (pCollider->Get_Tag() == L"AABB_JohnWithGuided")
+					if (pCollider->Get_Tag() == L"AABB_JohnWithGuided" || pCollider->Get_Tag() == L"AABB_John2WithGuided")
 					{
 						_float fWidth = 28.f;
 						_float fHeight = 17.f;
@@ -141,7 +142,10 @@ void CJohnGuidedBullet::LateUpdate_GameObject(const _float& fTimeDelta)
 					}
 					if (m_eCurState == EXLPOSION)
 					{
-						static_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
+						if(pCollider->Get_Tag() == L"AABB_JohnWithGuided")
+							reinterpret_cast<CJohn*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
+						if(pCollider->Get_Tag() == L"AABB_John2WithGuided")
+							reinterpret_cast<CJohn2*>(pCollider->Get_VoidPtr())->On_Hit(50.f);
 					}
 				}
 			}

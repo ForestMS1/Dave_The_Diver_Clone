@@ -67,7 +67,7 @@ HRESULT CJohn2::Ready_GameObject()
 
 	_vec3 vPos = { 0.0f, 0.0f, 0.0f };
 
-	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_JohnWithGuided", this);
+	m_pAABB = CAABB::Create(&vPos, &vExtents, L"AABB_John2WithGuided", this);
 
 	return S_OK;
 }
