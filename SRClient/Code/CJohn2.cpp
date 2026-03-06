@@ -416,7 +416,7 @@ void CJohn2::SliceComplete()
 	fish.sFishName = L"정체불명의 고기";
 	fish.sThumbNailAssetName = L"Tex_FishThumb_JohnHead"; // m_sThumbNailAssetName;
 	fish.iMeatCnt = 5;
-	fish.fLength = 5;
+	fish.fLength = 180.f;
 	fish.sSushiThumbNailAssetName = L"Tex_SushiThumb_John"; //m_sSushiThumbNailAssetName;
 	fish.iSushiLv = 5;
 	fish.iSushiMoney = 9999;

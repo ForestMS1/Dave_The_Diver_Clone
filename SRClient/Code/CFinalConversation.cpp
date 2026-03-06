@@ -47,7 +47,7 @@ HRESULT		CFinalConversation::Ready_GameObject()
     }
 
     //_vec3 vPos = { 0.0f, -10.0f, 0.0f };
-    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 0.f);
+    m_pTransformCom->Set_Pos(m_fPosX, m_fPosY, 7.2f);
     m_pTransformCom->Set_Scale(&vScale);
 
     m_fDbgX = 0.f;
@@ -85,22 +85,22 @@ HRESULT		CFinalConversation::Ready_GameObject()
 _int		CFinalConversation::Update_GameObject(const _float& fTimeDelta)
 {
     if (m_iCurrentConversationIdx <= 1) {
-        m_sTex = L"Tex_finalConv5";
-    }
-    else  if (m_iCurrentConversationIdx == 2) {
         m_sTex = L"Tex_finalConv1";
     }
-    else if (m_iCurrentConversationIdx == 3) {
+    else  if (m_iCurrentConversationIdx == 2) {
         m_sTex = L"Tex_finalConv2";
     }
-    else if (m_iCurrentConversationIdx == 4) {
+    else if (m_iCurrentConversationIdx == 3) {
         m_sTex = L"Tex_finalConv3";
     }
-    else if (m_iCurrentConversationIdx == 5) {
+    else if (m_iCurrentConversationIdx == 4) {
         m_sTex = L"Tex_finalConv4";
     }
-    else if (m_iCurrentConversationIdx == 6) {
+    else if (m_iCurrentConversationIdx == 5) {
         m_sTex = L"Tex_finalConv5";
+    }
+    else if (m_iCurrentConversationIdx == 6) {
+        m_sTex = L"Tex_finalConv1";
     }
     if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {

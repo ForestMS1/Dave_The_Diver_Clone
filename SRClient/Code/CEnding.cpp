@@ -87,7 +87,7 @@ HRESULT CEnding::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"CLogoBG", pLogoBG)))
 		return E_FAIL;
 
-	CLogoTitle* LogoTitle = CLogoTitle::Create(0.f, 0.f);
+	CLogoTitle* LogoTitle = CLogoTitle::Create(0.f, 0.4f);
 	if (nullptr == LogoTitle)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"CLogoTitle", LogoTitle)))
@@ -108,7 +108,7 @@ void CEnding::Update_Camera()
 {
 	LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	D3DXMATRIX matView, matProj;
-	D3DXVECTOR3 vEye(0.0f, 0.0f, -10.0f);
+	D3DXVECTOR3 vEye(0.0f, 0.0f, -2.0f);
 	D3DXVECTOR3 vAt(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
 	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
