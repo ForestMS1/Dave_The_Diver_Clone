@@ -98,6 +98,42 @@ HRESULT		CToSushiUI::Ready_GameObject()
             float fRefY = 3.16f;
 
             int i = 0;
+
+            //정체불명의 고기
+
+            for(auto iter = mapFish.begin(); iter != mapFish.end();)
+            {
+                if (iter->first == L"정체불명의 고기")
+                {
+					auto pCaughtFishes = *iter;
+
+                    auto pToSushiItem = CToSushiUIItem::Create(-2.73f, fRefY);
+                    pToSushiItem->Set_Parent(this);
+                    pToSushiItem->Set_Title(pCaughtFishes.first);
+                    pToSushiItem->Set_Cnt(std::to_wstring(pCaughtFishes.second.iMeatCnt));
+                    pToSushiItem->Set_Money(::to_wstring(pCaughtFishes.second.iSushiMoney));
+                    pToSushiItem->Set_Lv(L"Lv " + ::to_wstring(pCaughtFishes.second.iSushiLv));
+                    pToSushiItem->Set_FishImgAssetName(pCaughtFishes.second.sThumbNailAssetName);
+                    pToSushiItem->Set_SushiImgAssetName(pCaughtFishes.second.sSushiThumbNailAssetName);
+                    pToSushiItem->Ready_AfterCreate();
+                    pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
+
+                    fRefY -= 1.16;
+
+                    iter = mapFish.erase(iter);
+
+                    i = 1;
+                    break;
+                }
+                else
+                {
+					++iter;
+                }
+
+			}
+
+
+
             for (auto& pCaughtFishes : mapFish)
             {
                 if (i > 5) break;
