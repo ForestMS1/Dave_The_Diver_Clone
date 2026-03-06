@@ -1838,6 +1838,19 @@ HRESULT CTransition::Common_SHIP_Load()
 		//ui_Mima_Buff_Popup_02.ogg
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_Mima_Buff_Popup_02", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_Mima_Buff_Popup_02.ogg"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_Mima_Buff_Popup_02");
+
+
+		//ui_lobby_sushi_openpopup.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_sushi_openpopup", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_sushi_openpopup.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_sushi_openpopup");
+
+		//ui_lobby_result_open.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_result_open", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_result_open.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_result_open");
+
+		// ui_lobby_sms.ogg
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_Ship_ui_lobby_sms", CAssetFmodSound::Create(L"../Bin/Resource/Sound/Ship/ui_lobby_sms.ogg"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Ship_ui_lobby_sms");
 	}
 
 	return S_OK;

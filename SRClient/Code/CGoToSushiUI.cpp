@@ -9,6 +9,7 @@
 #include "CManagement.h"
 #include "CColliderMgr.h"
 #include "CDInputMgr.h"
+#include "CSoundMgr.h"
 
 
 CGoToSushiUI::CGoToSushiUI(float fPosX, float fPosY)
@@ -61,6 +62,10 @@ HRESULT		CGoToSushiUI::Ready_GameObject()
         .to(1.f).to(1.f).during(1000)
         .to(1.f).to(0.f).during(1000)
         .via(tweeny::easing::linear);
+
+
+    //Sound_Ship_ui_lobby_sushi_openpopup
+    CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_Ship_ui_lobby_sushi_openpopup", CSoundMgr::SFX, 1.0f);
 
     return S_OK;
 }
