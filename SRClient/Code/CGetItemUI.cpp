@@ -9,7 +9,7 @@
 #include "CManagement.h"
 #include "CGetItemUIStar.h"
 #include "CGetItemUIImg.h"
-
+#include "CGameMemMgr.h"
 CGetItemUI::CGetItemUI(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -84,6 +84,37 @@ HRESULT CGetItemUI::Ready_AfterCreate()
             pGetItemImg->Set_Parent(this);
             pLayer->Add_GameObject(L"GetItemUIImg", pGetItemImg);
         }
+
+        if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+        {
+            for (auto& diveInfo : CGameMemMgr::GetInstance()->Get_DiveInfos())
+            {
+                for (auto& fish : diveInfo.Get_Fishes())
+                {
+                    //fish.sThumbNailAssetName
+                    if (m_sImgAssetName == fish.sThumbNailAssetName)
+                    {
+                        m_bNew = false;
+                        break;
+                    }
+                }
+                if (!m_bNew)
+                {
+                    break;
+                }
+            }
+
+            // new
+            if (m_bNew)
+            {
+                auto pGetItemImg = CGetItemUIImg::Create(105.f, 45.f);
+                pGetItemImg->Set_AssetName(L"Tex_GetItemUINew");
+                pGetItemImg->Ready_After_Create();
+                pGetItemImg->Set_Parent(this);
+                pLayer->Add_GameObject(L"GetItemUIImgNew", pGetItemImg);
+            }
+        }
+        
     }
     return S_OK;
 }

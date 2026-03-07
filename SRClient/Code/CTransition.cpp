@@ -648,6 +648,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_GetItemUIStar", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/GetItemUIStar.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_GetItemUIStar");
 
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_GetItemUINew", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/GetItemUINew.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_GetItemUINew");
+
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_HoldFishUI", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/HoldFishUI.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_HoldFishUI");
 
