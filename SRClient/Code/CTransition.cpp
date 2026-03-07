@@ -2382,7 +2382,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		 srand((unsigned int)time(0));  // 랜덤 시드 초기화
 		int randomIndex = rand() % 13;  // 0부터 12까지 랜덤 인덱스 생성
 
-		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f); // 텍스트 전환 객체 생성
+		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.65f); // 텍스트 전환 객체 생성
 		pTxt->Set_Txt(tipTxt[randomIndex]);  // 랜덤 팁 텍스트 설정
 
 		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
@@ -2391,7 +2391,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
 			return E_FAIL;
 
-		CTransitionImg* pTransitionTip = CTransitionImg::Create(-0.6f, -0.6f);
+		CTransitionImg* pTransitionTip = CTransitionImg::Create(0.f, -0.6f);
 		pTransitionTip->Set_AssetName(L"Tex_Transition_Tip");
 		pTransitionTip->Set_CustomScaleX(0.2f);
 		pTransitionTip->Set_CustomScaleY(0.2f);
