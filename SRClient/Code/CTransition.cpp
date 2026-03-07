@@ -577,6 +577,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResult_Best", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/Best.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResult_Best");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResult_PinkBest", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/DiveResultPinkBest.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResult_PinkBest");
 	}
 
 	// 스파인
