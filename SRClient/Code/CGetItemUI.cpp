@@ -67,15 +67,24 @@ HRESULT CGetItemUI::Ready_AfterCreate()
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         //Stars
-        //float fStarRefX = 0.5;
-        //for (int i = 0; i < m_iStartCnt; ++i)
-        //{
-        //    auto pGetItemUIStart = CGetItemUIStar::Create(fStarRefX, -0.2f);
-        //    pGetItemUIStart->Set_Parent(this);
-        //    pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+        float fStarRefX = 42.f;
+        for (int i = 0; i < m_iStartCnt; ++i)
+        {
+            
+        }
 
-        //    fStarRefX += 0.5f;
-        //}
+        for (int i = 1; i <= 3; ++i)
+        {
+            auto pGetItemUIStart = CGetItemUIStar::Create(fStarRefX, -10.f);
+            pGetItemUIStart->Set_Parent(this);
+            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+            if (i > m_iStartCnt)
+            {
+                pGetItemUIStart->Set_Empty();
+            }
+            
+            fStarRefX += 18.f;
+        }
 
         {
             auto pGetItemImg = CGetItemUIImg::Create(-83.2f, -23.f);

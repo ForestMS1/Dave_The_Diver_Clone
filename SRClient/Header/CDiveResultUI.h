@@ -52,6 +52,7 @@ private:
 	std::wstring m_sBiggestFishName;
 	std::wstring m_sBiggestFishSize;
 	std::wstring m_sBiggestFishImgAsseName;
+	_uint m_iBiggestFishStar = 1;
 
 public:
 	static CDiveResultUI* Create(float fPosX, float fPosY);

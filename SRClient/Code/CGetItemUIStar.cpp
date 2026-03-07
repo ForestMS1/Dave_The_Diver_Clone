@@ -18,6 +18,12 @@ CGetItemUIStar::~CGetItemUIStar()
 {
 }
 
+void CGetItemUIStar::Update_ImGui()
+{
+    ImGui::DragFloat("m_fDbgX", &m_fDbgX, 0.1f);
+    ImGui::DragFloat("m_fDbgY", &m_fDbgY, 0.1f);
+}
+
 
 HRESULT		CGetItemUIStar::Ready_GameObject()
 {
@@ -55,8 +61,8 @@ _int		CGetItemUIStar::Update_GameObject(const _float& fTimeDelta)
 
     _vec3 vParentPos;
     pTransform->Get_Info(INFO_POS, &vParentPos);
-    vParentPos.x += m_fPosX;
-    vParentPos.y += m_fPosY;
+    vParentPos.x += m_fPosX + m_fDbgX;
+    vParentPos.y += m_fPosY + m_fDbgY;
 
     m_pTransformCom->Set_Pos(vParentPos.x, vParentPos.y, vParentPos.z);
 
@@ -81,7 +87,16 @@ void		CGetItemUIStar::Render_GameObject()
 
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_GetItemUIStar"))
+    wstring star;
+    if (m_bEmpty)
+    {
+        star = L"Tex_GetItemUIEmptyStar";
+    }
+    else
+    {
+        star = L"Tex_GetItemUIStar";
+    }
+    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(star))
     {
         if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
         {

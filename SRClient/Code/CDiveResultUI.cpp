@@ -102,12 +102,15 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                     return a.fLength > b.fLength;
                     });
 
+
+                auto BiggestFIsh = fishes.front();
                 std::wstringstream wss;
-                wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
+                wss << std::fixed << std::setprecision(1) << BiggestFIsh.fLength << L"cm";
                 std::wstring result = wss.str();
                 m_sBiggestFishSize = result;
-                m_sBiggestFishName = fishes.front().sFishName;
-                m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
+                m_sBiggestFishName = BiggestFIsh.sFishName;
+                m_sBiggestFishImgAsseName = BiggestFIsh.sThumbNailAssetName;
+                m_iBiggestFishStar = BiggestFIsh.iStar;
             }
         }
 
@@ -411,6 +414,8 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
 
     }
 
+    
+    if (!m_sBiggestFishImgAsseName.empty())
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
@@ -423,23 +428,31 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"BiggestFishImg", pImg);
-        }
-    }
 
-    //{
-    //    if (auto pLayer = CManagement::GetInstance()
-    //        ->Get_Scene()
-    //        ->Get_Layer(L"0_GameLogic_Layer"))
-    //    {
-    //        auto pImg = CDiveResultUIImg::Create(0.f, 0.f); // -0.290
-    //        pImg->Set_Scale(0.1f);
-    //        pImg->Set_ViewZ(0.49f);
-    //        pImg->Set_AssetName(L"Tex_DiveResult_Best");
-    //        pImg->Set_Parent(this);
-    //        pImg->Ready_After_Create();
-    //        pLayer->Add_GameObject(L"DiveResult_Best", pImg);
-    //    }
-    //}
+
+
+            float refX = 1.65f;
+            for (int i = 1; i <= 3; ++i)
+            {
+                auto pStar = CDiveResultUIImg::Create(refX, -0.03f);
+                pStar->Set_Scale(0.13f);
+                pStar->Set_ViewZ(0.49f);
+                pStar->Set_AssetName(L"Tex_GetItemUIStar");
+                pStar->Set_Parent(this);
+                pStar->Ready_After_Create();
+                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+
+                if (i > m_iBiggestFishStar)
+                {
+                    pStar->Set_AssetName(L"Tex_GetItemUIEmptyStar");
+                }
+                refX += 0.35f;
+            }
+        }
+
+
+    }
+   
 
     // Items 8 * 4 0.73
     {
@@ -557,7 +570,7 @@ _int		CDiveResultUI::Update_GameObject(const _float& fTimeDelta)
             }
         }
         Set_DeadCascade();
-        
+        return OBJ_DEAD;
     }
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
