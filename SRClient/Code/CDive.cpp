@@ -62,7 +62,7 @@
 #include "CCommonItemUmb.h"
 #include "CAllLight.h"
 #include "CDInputMgr.h"
-
+#include "CDeepSeaEffect.h"
 #include "CHoldFishUI.h"
 #include "CLightMgr.h"
 #include "CCoral.h"
@@ -1324,6 +1324,7 @@ void CDive::Place_Fish() {
 
 		}
 
+		Get_Layer(L"0_Environment_Layer")->Add_GameObject(L"BloomBubble_Test", CDeepSeaEffect::Create(L""));
 		m_bFishCreate = true;
 	}
 	

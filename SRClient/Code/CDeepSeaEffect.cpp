@@ -1,7 +1,8 @@
 #include "CDeepSeaEffect.h"
 #include "CColliderMgr.h"
 #include "CGraphicDev.h"
-
+#include "CLightMgr.h"
+#include "CParticleMgr.h"
 CDeepSeaEffect::CDeepSeaEffect() : CGameObject()
 {
 }
@@ -19,7 +20,13 @@ HRESULT CDeepSeaEffect::Ready_GameObject()
 	if (FAILED(Add_Component()))
 		return E_FAIL;
 
-	return E_NOTIMPL;
+	
+	//CLightMgr::GetInstance()->Add_Light()
+	_vec3 vPos{-30,-20,0};
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos,15);
+	return S_OK;
 }
 
 
@@ -28,12 +35,8 @@ HRESULT CDeepSeaEffect::Ready_GameObject()
 _int CDeepSeaEffect::Update_GameObject(const _float& fTimeDelta)
 {
 
-	CColliderMgr::GetInstance()->AddColliderGroup(L"", m_pAABB);
-	m_pAABB->Transform(m_pTransformCom->Get_World());
+
 	
-
-
-
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 
@@ -70,6 +73,8 @@ void CDeepSeaEffect::Render_GameObject()
 	D3DXMATRIX matTmp;
 	D3DXMatrixIdentity(&matTmp);
 	pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+
+
 	
 }
 
@@ -100,6 +105,6 @@ CDeepSeaEffect* CDeepSeaEffect::Create( wstring _objectName)
 
 void CDeepSeaEffect::Free()
 {
-	Safe_Release(m_pAABB);
+
 	CGameObject::Free();
 }

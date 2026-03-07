@@ -33,8 +33,6 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 
-	CAABB* m_pAABB;
-
 public:
 	static CDeepSeaEffect* Create(wstring _objectName);
 

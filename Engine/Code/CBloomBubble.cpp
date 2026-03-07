@@ -3,7 +3,7 @@
 
 CBloomBubble::CBloomBubble()
 {
-	_size = { 0.1f,0.1f,0.1f };
+	_size = { 0.15f,0.15f,0.15f };
 	_origin = { 0,0,0 };
 }
 
@@ -38,6 +38,7 @@ CBloomBubble* CBloomBubble::Create()
 
 void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
+	attribute->_origin = _hitPosition;
 	attribute->_position = _hitPosition;
 
 	float Random = GetRandomFloat(-1.f, 1.f);
@@ -77,6 +78,10 @@ void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	attribute->_color = { 1.f, 1.f, 1.f, 1.f };
 	attribute->_age = 0.f;
 	attribute->_lifeTime = 50.f;
+
+	attribute->_phaseZ.x = ((rand() % 1000) / 1000.f) * 6.28318f;
+	attribute->_phaseZ.y = ((rand() % 1000) / 1000.f) * 6.28318f;
+	attribute->_phaseZ.z = 0;
 
 
 }
@@ -126,42 +131,36 @@ void CBloomBubble::update(float fTimeDelta)
 		if (!p._isAlive)
 			continue;
 
-		// 시간 누적
 		p._age += fTimeDelta;
 
-		// 수명 끝
 		if (p._age >= p._lifeTime)
-		{
-			p._isAlive = false;
-			continue;
-		}
+			p._age = 0.f;
 
-		float t = p._age / p._lifeTime;
+		float nx = sinf(p._age * 2.3f + p._phaseZ.x)
+			+ 0.5f * cosf(p._age * 4.7f + p._phaseZ.x * 1.7f);
 
-
-		p.velocity *= 0.98f;
-
-		// 위로 아주 약하게 상승
-		p.velocity.y += 0.15f * fTimeDelta;
-
-		float sway1 = sinf(p._age * 1.7f + p._position.y * 0.05f);
-		float sway2 = cosf(p._age * 2.3f + p._position.x * 0.03f);
-
-		p.velocity.x += sway1 * 0.25f * fTimeDelta;
+		float ny = cosf(p._age * 1.9f + p._phaseZ.y)
+			+ 0.4f * sinf(p._age * 3.8f + p._phaseZ.y * 1.3f);
 
 
-		p.velocity.y += sinf(p._age * 0.8f) * 0.03f * fTimeDelta;
+
+		_vec3 wanderForce = {
+			nx * 1.2f,
+			ny * 0.35f,
+			0.f
+		};
+
+
+
+
+	
+		p.velocity += (wanderForce ) * fTimeDelta;
+
+
+		p.velocity *= 0.92f;
+
 
 		p._position += p.velocity * fTimeDelta;
-
-
-		float flicker = 0.65f
-			+ 0.35f * sinf(p._age * 6.0f + p._position.x * 0.2f);
-
-		float fadeIn = min(t * 3.0f, 1.0f);
-		float fadeOut = min((1.0f - t) * 2.0f, 1.0f);
-
-		//p._color = flicker * fadeIn * fadeOut;
 
 
 	}
