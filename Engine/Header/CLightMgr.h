@@ -3,6 +3,8 @@
 #include "CLight.h"
 #include "Engine_Enum.h"
 
+class CLight;
+
 BEGIN(Engine)
 
 class ENGINE_DLL CLightMgr : public CBase
@@ -13,7 +15,10 @@ private:
 	explicit CLightMgr();
 	virtual ~CLightMgr();
 
+public:
 	void UpdateLight();
+
+	void OffLight();
 
 public:
 

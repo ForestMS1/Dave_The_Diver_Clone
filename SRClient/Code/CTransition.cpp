@@ -28,6 +28,8 @@
 #include "CParticleMgr.h"
 #include "CLeah.h"
 #include "CEnding.h"
+#include "CLightMgr.h"
+
 
  bool CTransition::s_LogoAssetLoaded = false;
  bool CTransition::s_ShipAssetLoaded = false;

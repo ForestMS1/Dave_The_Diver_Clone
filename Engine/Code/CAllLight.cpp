@@ -1,6 +1,7 @@
 #include "CLight.h"
 #include "CAllLight.h"
 #include "CGraphicDev.h"
+#include "CGameMemMgr.h"
 CAllLight::CAllLight()
 {
 }
@@ -18,35 +19,51 @@ HRESULT CAllLight::Ready_Light( const _uint& iIndex)
     D3DLIGHT9 tLight{};
     ZeroMemory(&tLight, sizeof(D3DLIGHT9));
 
-
-    // 해저용 전체광
     tLight.Type = D3DLIGHT_DIRECTIONAL;
 
-    // 위에서 아래로 비추는 느낌
-    tLight.Direction = D3DXVECTOR3(0.15f, -1.0f, 0.2f);
+    D3DXVECTOR3 vDir(0.15f, -1.f, 0.2f);
+    D3DXVec3Normalize(&vDir, &vDir);
+    tLight.Direction = vDir;
+    m_iIndex = iIndex;
+  
+    float dark = CGameMemMgr::GetInstance()->Get_Dark();
 
-    // 메인 색
-    tLight.Diffuse = D3DXCOLOR(0.20f, 0.45f, 0.50f, 1.f);
-
-    // 반짝임은 약하게
-    tLight.Specular = D3DXCOLOR(0.08f, 0.15f, 0.18f, 1.f);
-
-    // 라이트 자체 Ambient는 크게 의미 없지만 같이 세팅
-    tLight.Ambient = D3DXCOLOR(0.03f, 0.08f, 0.10f, 1.f);
-    
+    tLight.Diffuse = D3DXCOLOR(0.20f * dark, 0.45f * dark, 0.50f * dark, 1.f);
+    tLight.Ambient = D3DXCOLOR(0.03f * dark, 0.08f * dark, 0.10f * dark, 1.f);
+    tLight.Specular = D3DXCOLOR(0.08f * dark, 0.15f * dark, 0.18f * dark, 1.f);
 
     pGraphicDev->SetLight(iIndex, &tLight);
     pGraphicDev->LightEnable(iIndex, TRUE);
-
     pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-    // 장면 전체 환경광
-    pGraphicDev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(8, 20, 24));
 
-    // 필요하면 스페큘러 켜기
+    int r = int(8 * dark);
+    int g = int(20 * dark);
+    int b = int(24 * dark);
+
+    pGraphicDev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(r, g, b));
     pGraphicDev->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
 
     return S_OK;
+
+    
+
+
+}
+
+void CAllLight::Off_Light()
+{
+    LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
+
+
+
+    pGraphicDev->LightEnable(m_iIndex, FALSE);
+
+    pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+
+
+    pGraphicDev->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 }
 
 CAllLight* CAllLight::Create(const _uint& iIndex)

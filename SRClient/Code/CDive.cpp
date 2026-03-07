@@ -60,11 +60,11 @@
 #include "CCommonItemThurible.h"
 #include "CCommonItemRope.h"
 #include "CCommonItemUmb.h"
-
+#include "CAllLight.h"
 #include "CDInputMgr.h"
 
 #include "CHoldFishUI.h"
-
+#include "CLightMgr.h"
 #include "CCoral.h"
 #include "CWPAmmoCntText.h"
 #include "CAmmoPack.h"
@@ -431,7 +431,9 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
 		return E_FAIL;
+	
 
+	CLightMgr::GetInstance()->Add_Light(CAllLight::Create(5), LIGHT_ALL);
 	CGameObject* pGameObject = nullptr;
 
 

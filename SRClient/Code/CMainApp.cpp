@@ -309,7 +309,7 @@ void CMainApp::Free()
 {
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
-	
+	CLightMgr::GetInstance()->DestroyInstance();
 	CMapMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();

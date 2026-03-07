@@ -12,16 +12,14 @@ protected:
 	virtual ~CLight();
 
 public:
-	virtual		 HRESULT			Ready_Light();
+	virtual		 HRESULT			Ready_Light(const _uint& iIndex) =0;
+	virtual		 void				Off_Light() {};
 
-private:
+	_uint Get_Index() { return m_iIndex; }
+protected:
 	_uint				m_iIndex;
 	D3DLIGHT9			m_tLight;
 
-public:
-	static CLight* Create(
-		const D3DLIGHT9* pLightInfo,
-		const _uint& iIndex);
 
 private:
 	virtual void	Free();

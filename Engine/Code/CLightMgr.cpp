@@ -13,13 +13,26 @@ CLightMgr::~CLightMgr()
 
 void CLightMgr::UpdateLight() {
     for (auto list : m_LightList) {
-        if (list.size()!= 0) {
-            list.front()->Ready_Light();
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Light->Ready_Light(Light->Get_Index());
+            }
         }
+      
         
     }
 }
 
+void CLightMgr::OffLight() {
+    for (auto list : m_LightList) {
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Light->Off_Light();
+            }
+        }
+   
+    }
+}
 
 HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
 {

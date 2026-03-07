@@ -10,27 +10,8 @@ CLight::~CLight()
 {
 }
 
-HRESULT CLight::Ready_Light()
-{
 
 
-	return S_OK;
-}
-
-
-CLight* CLight::Create( const D3DLIGHT9* pLightInfo, const _uint& iIndex)
-{
-	CLight* pLight = new CLight();
-
-	if (FAILED(pLight->Ready_Light()))
-	{
-		Safe_Release(pLight);
-		MSG_BOX("Light Create Failed");
-		return nullptr;
-	}
-
-	return pLight;
-}
 
 void CLight::Free()
 {
