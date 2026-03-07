@@ -1292,7 +1292,7 @@ void CDive::Place_Fish() {
 
 				Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
-				Fish::AddLayer_Fish<Fish::CBlobfish>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 			}
 			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_8"))
 			{
@@ -1314,10 +1314,10 @@ void CDive::Place_Fish() {
 				Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 				Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
-				Fish::AddLayer_Fish<Fish::CBlobfish>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
 
-				Fish::AddLayer_Fish<Fish::CBlobfish>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 		
 			}
 

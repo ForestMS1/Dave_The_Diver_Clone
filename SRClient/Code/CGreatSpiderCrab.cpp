@@ -37,6 +37,8 @@ HRESULT CGreatSpiderCrab::Ready_GameObject()
     m_iSushiMoney = 50;  // 스시 가격 50
     m_iSushiLv = 3;  // 스시 레벨 3
 
+    m_iHP = 2;
+
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

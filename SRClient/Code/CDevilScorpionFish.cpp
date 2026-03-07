@@ -38,6 +38,9 @@ HRESULT CDevilScorpionFish::Ready_GameObject()
     m_iSushiMoney = 30;  // 스시 가격 30
     m_iSushiLv = 3;  // 스시 레벨 3
 
+    m_iHP = 2;
+
+    m_sRunFromSpineAniName = L"sprint";
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

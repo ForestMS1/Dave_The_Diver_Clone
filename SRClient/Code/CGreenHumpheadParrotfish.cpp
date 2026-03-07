@@ -37,6 +37,10 @@ HRESULT CGreenHumpheadParrotfish::Ready_GameObject()
     m_iSushiMoney = 25;  // 스시 가격 25
     m_iSushiLv = 2;  // 스시 레벨 2
 
+    m_bNeedSlice = true;
+    m_iHP = 5;
+
+    m_sRunFromSpineAniName = L"sprint";
 
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -51,7 +55,7 @@ HRESULT CGreenHumpheadParrotfish::Ready_GameObject()
 
     m_pSpineCom->Set_AniState(L"swim");
 
-    m_bNeedSlice = true;
+   
 
     return S_OK;
 }

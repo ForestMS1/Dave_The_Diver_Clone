@@ -65,6 +65,8 @@ public:
 
 	bool Get_NeedSlice() const { return m_bNeedSlice; }
 
+	int Get_AttackPower() const { return m_iAttackPower; }
+
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
 	void LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -140,6 +142,7 @@ protected:
 	float m_fAttackToTimer;
 	float m_fAttackIntervalTimer;
 	std::wstring m_sAttackSpineAniName;
+	int m_iAttackPower = 0;
 
 	bool m_bIntersectHitboxDave;
 	bool m_bIntersectDetetboxDave;

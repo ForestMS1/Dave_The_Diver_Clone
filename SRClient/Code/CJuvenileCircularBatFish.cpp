@@ -37,6 +37,10 @@ HRESULT CJuvenileCircularBatFish::Ready_GameObject()
     m_iSushiMoney = 8;  // 스시 가격 8
     m_iSushiLv = 1;  // 스시 레벨 1
 
+    m_iHP = 1;
+
+    m_sRunFromSpineAniName = L"sprint";
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

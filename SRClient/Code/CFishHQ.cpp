@@ -309,7 +309,7 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                             // TODO: 데이브쪽에서 무적시간 존재해야함
                                             if (pFish->TryAttackTimer(fTimeDelta))
                                             {
-                                                pDave->On_Hit(1);
+                                                pDave->On_Hit(pFish->Get_AttackPower());
                                             }
                                         }
                                     }
