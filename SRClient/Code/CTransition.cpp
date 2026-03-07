@@ -641,6 +641,35 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Spine_GreyTriggerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/GreyTriggerfish/Grey_Triggerfish"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Spine_GreyTriggerfish");
+
+
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_Great_Barracuda", CAssetSpine::Create(L"../Bin/Resource/Spine/GreatBarracuda/Great_Barracuda"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_Great_Barracuda");
+
+		//CowPatternSnapper
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_CowPatternSnapper", CAssetSpine::Create(L"../Bin/Resource/Spine/CowPatternSnapper/Cow_Pattern_Snapper"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_CowPatternSnapper");
+
+		//CuttleFish
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_CuttleFish", CAssetSpine::Create(L"../Bin/Resource/Spine/CuttleFish/CuttleFish"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_CuttleFish");
+
+		//AtlanticBonito
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_AtlanticBonito", CAssetSpine::Create(L"../Bin/Resource/Spine/AtlanticBonito/Atlantic_Bonito"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_AtlanticBonito");
+
+		//Spine_AtlanticAnglerfish
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_AtlanticAnglerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/AtlanticAnglerfish/Atlantic_Anglerfish"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_AtlanticAnglerfish");
+
+		//ChamberedNautilus
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_ChamberedNautilus", CAssetSpine::Create(L"../Bin/Resource/Spine/ChamberedNautilus/Chambered_Nautilus"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_ChamberedNautilus");
+
+		//BigeyeTrevally
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_BigeyeTrevally", CAssetSpine::Create(L"../Bin/Resource/Spine/BigeyeTrevally/Bigeye_Trevally"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_BigeyeTrevally");
+
 	}
 
 	// Fish 유아이

@@ -39,6 +39,7 @@ CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     , m_sAttackSpineAniName(L"swim")
     , m_fRunFromTimer(0.f)
     , m_sRunFromSpineAniName(L"swim")
+    , m_sSwimSpineAniName(L"swim")
     , m_bIntersectHitboxDave(false)
     , m_bIntersectDetetboxDave(false)
     , m_bDieAndAcquire(false)
@@ -241,7 +242,7 @@ void CFishGameObject::Swim()
 
     if (m_eFishState != Fish::FS_SWIM)
     {
-        m_pSpineCom->Set_AniState(L"swim");
+        m_pSpineCom->Set_AniState(m_sSwimSpineAniName);
     }
     m_eFishState = Fish::FS_SWIM;
 

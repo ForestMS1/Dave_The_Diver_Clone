@@ -556,6 +556,27 @@
     <Filter Include="02. GameObject\DiveDave\DaveGoldBall">
       <UniqueIdentifier>{10cf98a1-5af8-4e8a-b640-c566911c6558}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Fish\Species\GreatBarracuda">
+      <UniqueIdentifier>{5b852777-0c22-455a-bab7-aa54b6b83ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\CowPatternSnapper">
+      <UniqueIdentifier>{6f4b8298-7b61-4524-96b7-c7f400876997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\AtlanticBonito">
+      <UniqueIdentifier>{fbc093ca-dd3f-44e4-8bd2-175ae9a79ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\ChamberedNautilus">
+      <UniqueIdentifier>{b76cd804-8266-42a5-925f-a4106382766a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\AtlanticAnglerfish">
+      <UniqueIdentifier>{5c609905-6122-4210-8eab-3c3c84459144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\CuttleFish">
+      <UniqueIdentifier>{e239ee32-2dfd-4442-8614-d793cdc82b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Fish\Species\BigeyeTrevally">
+      <UniqueIdentifier>{0a109a5e-a9ec-459e-b34a-277cb4f6828c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1392,6 +1413,27 @@
     <ClInclude Include="..\Header\CDaveGoldBall.h">
       <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGreatBarracuda.h">
+      <Filter>02. GameObject\Fish\Species\GreatBarracuda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCowPatternSnapper.h">
+      <Filter>02. GameObject\Fish\Species\CowPatternSnapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCuttleFish.h">
+      <Filter>02. GameObject\Fish\Species\CuttleFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAtlanticBonito.h">
+      <Filter>02. GameObject\Fish\Species\AtlanticBonito</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAtlanticAnglerfish.h">
+      <Filter>02. GameObject\Fish\Species\AtlanticAnglerfish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CChamberedNautilus.h">
+      <Filter>02. GameObject\Fish\Species\ChamberedNautilus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBigeyeTrevally.h">
+      <Filter>02. GameObject\Fish\Species\BigeyeTrevally</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2206,6 +2248,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDaveGoldBall.cpp">
       <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGreatBarracuda.cpp">
+      <Filter>02. GameObject\Fish\Species\GreatBarracuda</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCowPatternSnapper.cpp">
+      <Filter>02. GameObject\Fish\Species\CowPatternSnapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCuttleFish.cpp">
+      <Filter>02. GameObject\Fish\Species\CuttleFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAtlanticBonito.cpp">
+      <Filter>02. GameObject\Fish\Species\AtlanticBonito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAtlanticAnglerfish.cpp">
+      <Filter>02. GameObject\Fish\Species\AtlanticAnglerfish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CChamberedNautilus.cpp">
+      <Filter>02. GameObject\Fish\Species\ChamberedNautilus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBigeyeTrevally.cpp">
+      <Filter>02. GameObject\Fish\Species\BigeyeTrevally</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

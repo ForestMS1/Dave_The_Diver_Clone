@@ -117,6 +117,8 @@ protected:
 	_uint m_iSushiLv;
 
 protected:
+	std::wstring m_sSwimSpineAniName;
+
 	float m_fCurrSpeed;
 	float m_fSpeed;
 	float m_fSprintSpeed;

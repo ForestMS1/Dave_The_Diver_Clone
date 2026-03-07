@@ -16,6 +16,13 @@
 #include "CDevilScorpionFish.h"
 #include "CAsianSheepshead.h"
 #include "CGreyTriggerfish.h"
+#include "CGreatBarracuda.h"
+#include "CCowPatternSnapper.h"
+#include "CCuttleFish.h"
+#include "CAtlanticBonito.h"
+#include "CAtlanticAnglerfish.h"
+#include "CChamberedNautilus.h"
+#include "CBigeyeTrevally.h"
 #include "CLayer.h"
 
 #include "CFishAABBCollider.h"

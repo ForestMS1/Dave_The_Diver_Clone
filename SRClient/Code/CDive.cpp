@@ -1113,6 +1113,42 @@ void CDive::Place_Fish() {
 				Fish::AddLayer_Fish<Fish::CBlueTang>(L"BlueTang", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
 
+				Fish::AddLayer_Fish<Fish::CGreatBarracuda>(L"GreatBarracuda", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CGreatBarracuda>(L"GreatBarracuda", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CGreatBarracuda>(L"GreatBarracuda", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+
+				Fish::AddLayer_Fish<Fish::CCowPatternSnapper>(L"CowPatternSnapper", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCowPatternSnapper>(L"CowPatternSnapper", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCowPatternSnapper>(L"CowPatternSnapper", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+				
+				Fish::AddLayer_Fish<Fish::CCuttleFish>(L"CuttleFish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCuttleFish>(L"CuttleFish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCuttleFish>(L"CuttleFish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+				
+				Fish::AddLayer_Fish<Fish::CAtlanticBonito>(L"AtlanticBonito", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticBonito>(L"AtlanticBonito", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticBonito>(L"AtlanticBonito", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+				
+				Fish::AddLayer_Fish<Fish::CAtlanticAnglerfish>(L"AtlanticAnglerfish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticAnglerfish>(L"AtlanticAnglerfish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticAnglerfish>(L"AtlanticAnglerfish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+
+				Fish::AddLayer_Fish<Fish::CChamberedNautilus>(L"ChamberedNautilus", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CChamberedNautilus>(L"ChamberedNautilus", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CChamberedNautilus>(L"ChamberedNautilus", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				//CBigeyeTrevally
+				Fish::AddLayer_Fish<Fish::CBigeyeTrevally>(L"BigeyeTrevally", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CBigeyeTrevally>(L"BigeyeTrevally", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CBigeyeTrevally>(L"BigeyeTrevally", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+
+
 				//---------------------------------------------------------------------------------------------
 
 				Fish::AddLayer_Fish<Fish::CBlueTang>(L"BlueTang", pLayer, vPos.x, vPos.y, 0.3f, pColl);
