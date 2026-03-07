@@ -30,5 +30,7 @@ namespace Engine
 
 	enum GAMEOBJECTID { OBJ_PLAYER, OBJ_FISH,OBJ_END };
 
+	enum LIGHTID {LIGHT_ALL, LIGHT_SEAEFFECT, LIGHT_END};
+
 }
 #endif // Engine_Enum_h__

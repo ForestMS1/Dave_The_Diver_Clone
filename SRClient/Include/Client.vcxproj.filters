@@ -556,6 +556,9 @@
     <Filter Include="02. GameObject\DiveDave\DaveGoldBall">
       <UniqueIdentifier>{10cf98a1-5af8-4e8a-b640-c566911c6558}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DeepSeaEffect">
+      <UniqueIdentifier>{bf71f27b-1656-41f6-9f74-83183872328a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1392,6 +1395,9 @@
     <ClInclude Include="..\Header\CDaveGoldBall.h">
       <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDeepSeaEffect.h">
+      <Filter>02. GameObject\DeepSeaEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2206,6 +2212,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDaveGoldBall.cpp">
       <Filter>02. GameObject\DiveDave\DaveGoldBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDeepSeaEffect.cpp">
+      <Filter>02. GameObject\DeepSeaEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

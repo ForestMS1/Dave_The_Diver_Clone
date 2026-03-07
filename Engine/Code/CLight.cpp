@@ -1,36 +1,28 @@
 #include "CLight.h"
-
-CLight::CLight(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev), m_iIndex(0)
+#include "CGraphicDev.h"
+CLight::CLight()
 {
 	ZeroMemory(&m_tLight, sizeof(D3DLIGHT9));
-	m_pGraphicDev->AddRef();
+
 }
 
 CLight::~CLight()
 {
 }
 
-HRESULT CLight::Ready_Light(const D3DLIGHT9* pLightInfo, const _uint& iIndex)
+HRESULT CLight::Ready_Light()
 {
-	memcpy(&m_tLight, pLightInfo, sizeof(D3DLIGHT9));
-
-	m_iIndex = iIndex;
-
-	m_pGraphicDev->SetLight(iIndex, pLightInfo);
-
-	m_pGraphicDev->LightEnable(iIndex, TRUE);
 
 
 	return S_OK;
 }
 
 
-CLight* CLight::Create(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex)
+CLight* CLight::Create( const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 {
-	CLight* pLight = new CLight(pGraphicDev);
+	CLight* pLight = new CLight();
 
-	if (FAILED(pLight->Ready_Light(pLightInfo, iIndex)))
+	if (FAILED(pLight->Ready_Light()))
 	{
 		Safe_Release(pLight);
 		MSG_BOX("Light Create Failed");
@@ -42,6 +34,7 @@ CLight* CLight::Create(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInf
 
 void CLight::Free()
 {
+	LPDIRECT3DDEVICE9 m_pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
 	m_pGraphicDev->LightEnable(m_iIndex, FALSE);
 
 	Safe_Release(m_pGraphicDev);

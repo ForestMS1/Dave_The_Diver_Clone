@@ -40,11 +40,11 @@ void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
 	attribute->_position = _hitPosition;
 
-	float Random = GetRandomFloat(-10.f, 10.f);
+	float Random = GetRandomFloat(-1.f, 1.f);
 	attribute->_position.x += Random;
 
 
-	Random = GetRandomFloat(-10.f, 10.f);
+	Random = GetRandomFloat(-1.f, 1.f);
 	attribute->_position.y += Random;
 
 
@@ -121,25 +121,53 @@ void CBloomBubble::postRender()
 
 void CBloomBubble::update(float fTimeDelta)
 {
-	list<Attribute>::iterator i;
-	for (i = _particles.begin(); i != _particles.end(); i++) {
-		i->_position += i->velocity * fTimeDelta;
-		i->_age += fTimeDelta;
-		
-		i->velocity.x += sin(i->_age) * fTimeDelta;
-		i->velocity.y += sin(i->_age) * fTimeDelta;
-	
+	for (auto& p : _particles)
+	{
+		if (!p._isAlive)
+			continue;
 
-	
-		const double PI = 3.1415926;
-		if (i->_age > (i->_lifeTime)) {
-			i->_isAlive = false;
+		// 시간 누적
+		p._age += fTimeDelta;
+
+		// 수명 끝
+		if (p._age >= p._lifeTime)
+		{
+			p._isAlive = false;
+			continue;
 		}
+
+		float t = p._age / p._lifeTime;
+
+
+		p.velocity *= 0.98f;
+
+		// 위로 아주 약하게 상승
+		p.velocity.y += 0.15f * fTimeDelta;
+
+		float sway1 = sinf(p._age * 1.7f + p._position.y * 0.05f);
+		float sway2 = cosf(p._age * 2.3f + p._position.x * 0.03f);
+
+		p.velocity.x += sway1 * 0.25f * fTimeDelta;
+
+
+		p.velocity.y += sinf(p._age * 0.8f) * 0.03f * fTimeDelta;
+
+		p._position += p.velocity * fTimeDelta;
+
+
+		float flicker = 0.65f
+			+ 0.35f * sinf(p._age * 6.0f + p._position.x * 0.2f);
+
+		float fadeIn = min(t * 3.0f, 1.0f);
+		float fadeOut = min((1.0f - t) * 2.0f, 1.0f);
+
+		//p._color = flicker * fadeIn * fadeOut;
+
+
 	}
+
 	removeDeadParticles();
-
 }
-
 void CBloomBubble::Free()
 {
 	PSystem::Free();

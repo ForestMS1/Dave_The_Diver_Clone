@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
@@ -185,6 +185,7 @@
     <ClInclude Include="..\Header\CCommonItemWoodPlate.h" />
     <ClInclude Include="..\Header\CCommonItemWatch.h" />
     <ClInclude Include="..\Header\CDaveGoldBall.h" />
+    <ClInclude Include="..\Header\CDeepSeaEffect.h" />
     <ClInclude Include="..\Header\CDiveDaveInitStart.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
     <ClInclude Include="..\Header\CDiveGetWeaponUI.h" />
@@ -458,6 +459,7 @@
     <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp" />
     <ClCompile Include="..\Code\CCommonItemWatch.cpp" />
     <ClCompile Include="..\Code\CDaveGoldBall.cpp" />
+    <ClCompile Include="..\Code\CDeepSeaEffect.cpp" />
     <ClCompile Include="..\Code\CDiveDaveInitStart.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
     <ClCompile Include="..\Code\CDiveGetWeaponUI.cpp" />

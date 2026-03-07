@@ -11,21 +11,27 @@ CLightMgr::~CLightMgr()
     Free();
 }
 
-HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
-    const D3DLIGHT9* pLightInfo,
-    const _uint& iIndex)
+void CLightMgr::UpdateLight() {
+    for (auto list : m_LightList) {
+        if (list.size()!= 0) {
+            list.front()->Ready_Light();
+        }
+        
+    }
+}
+
+
+HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
 {
-    CLight* pLight = CLight::Create(pGraphicDev, pLightInfo, iIndex);
-    if (nullptr == pLight)
-        return E_FAIL;
-
-    m_LightList.push_back(pLight);
-
+    m_LightList[_ID].push_back(Light);
     return S_OK;
 }
 
 void CLightMgr::Free()
 {
-    for_each(m_LightList.begin(), m_LightList.end(), CDeleteObj());
-    m_LightList.clear();
+    for (auto list : m_LightList) {
+        for_each(list.begin(), list.end(), CDeleteObj());
+        list.clear();
+    }
+  
 }
