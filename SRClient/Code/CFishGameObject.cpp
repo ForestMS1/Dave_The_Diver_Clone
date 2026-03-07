@@ -444,6 +444,96 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
     m_fAttackIntervalTimer += fTimeDelta;
 
 
+
+
+
+
+
+
+
+
+    auto fDark = CGameMemMgr::GetInstance()->Get_Dark();
+    if (fDark < 1.f)
+    {
+        if (m_eFishState != Fish::FS_DIE)
+        {
+            /*float fDarkNess = m_pSpineCom->Get_ColorDarkness();
+            m_pSpineCom->Set_ColorDarkness(fDark);
+
+            if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"))
+            {
+                auto pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+                _vec3 vDavePos;
+                pDaveTransform->Get_Info(INFO_POS, &vDavePos);
+
+                _vec3 vFishPos;
+                m_pTransformCom->Get_Info(INFO_POS, &vFishPos);
+
+                _vec3 vMag = vDavePos - vFishPos;
+                float fLen = D3DXVec3Length(&vMag);
+                if (fLen < 5.f)
+                {
+                    float fFive = 5.f;
+                }
+
+                if (fLen < 4.f)
+                {
+                    m_pSpineCom->Set_ColorDarkness(1.f);
+                    int x = 0;
+                }
+            }*/
+
+
+            float fDarkNess = m_pSpineCom->Get_ColorDarkness();
+            // 기본값으로 설정 (거리가 5 이상일 때)
+            float fFinalDarkness = fDark;
+
+            if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDave"))
+            {
+                auto pDaveTransform = pDave->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
+                _vec3 vDavePos;
+                pDaveTransform->Get_Info(INFO_POS, &vDavePos);
+
+                _vec3 vFishPos;
+                m_pTransformCom->Get_Info(INFO_POS, &vFishPos);
+
+                _vec3 vMag = vDavePos - vFishPos;
+                float fLen = D3DXVec3Length(&vMag);
+
+                // 4.f ~ 5.f 사이 구간에서 보간 처리
+                if (fLen <= 4.f)
+                {
+                    fFinalDarkness = 1.f;
+                }
+                else if (fLen < 5.f)
+                {
+                    // 5.f일 때 0, 4.f일 때 1이 되는 비율(t) 계산
+                    // (현재거리 - 시작지점) / (끝지점 - 시작지점)
+                    float t = (fLen - 5.f) / (4.f - 5.f);
+
+                    // fDark에서 1.f 사이를 t 비율만큼 섞음
+                    fFinalDarkness = fDark + t * (1.f - fDark);
+                }
+                else
+                {
+                    fFinalDarkness = fDark;
+                }
+            }
+
+            // 최종적으로 계산된 값을 적용
+            m_pSpineCom->Set_ColorDarkness(fFinalDarkness);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
     if (m_eFishState == Fish::FS_STOP)
     {
 

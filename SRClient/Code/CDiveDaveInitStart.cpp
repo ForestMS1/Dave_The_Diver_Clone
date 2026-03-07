@@ -30,7 +30,7 @@ void CDiveDaveInitStart::Enter()
 
 
 	CTransform* pTransformCom = m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform");
-	pTransformCom->Set_Pos(-20.f, 20.f, 0.f);
+	pTransformCom->Set_Pos(-50.f, 0.f, 0.f);
 	pTransformCom->Get_Info(INFO_POS, &m_vOriginPos);
 
 	CSoundMgr::GetInstance()->StopAll();
@@ -63,7 +63,7 @@ _int CDiveDaveInitStart::Update_State(const _float& fTimeDelta)
 
 	_float y = -Depth * (1.f - exp(-Speed * t));
 
-	_vec3 vFinalPos = _vec3(-10.f + t * 3.f, 5.f + y, 0.f);
+	_vec3 vFinalPos = _vec3(-40.f + t * 3.f, -20.f + 5.f + y, 0.f);
 
 	if (vFinalPos.y > 0)
 	{
