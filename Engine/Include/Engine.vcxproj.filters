@@ -283,6 +283,9 @@
     <Filter Include="00. Manager\12. LightMgr\AllLight">
       <UniqueIdentifier>{504946f7-b893-483c-a222-b598469aab50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\12. LightMgr\CSeaPointLight">
+      <UniqueIdentifier>{500ffe37-ab5e-4475-aa77-9acf364fc52d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -777,6 +780,9 @@
     <ClCompile Include="..\Code\CAllLight.cpp">
       <Filter>00. Manager\12. LightMgr\AllLight</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CSeaPointLight.cpp">
+      <Filter>00. Manager\12. LightMgr\CSeaPointLight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CGraphicDev.h">
@@ -1072,6 +1078,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CAllLight.h">
       <Filter>00. Manager\12. LightMgr\AllLight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSeaPointLight.h">
+      <Filter>00. Manager\12. LightMgr\CSeaPointLight</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
