@@ -24,13 +24,13 @@
 
 namespace Fish
 {
-	HRESULT AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
-	HRESULT AddLayer_TitanTriggerfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
-	HRESULT AddLayer_Clownfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
-	HRESULT AddLayer_SmallspottedDart(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
-	HRESULT AddLayer_YellowbackFusilier(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
-	HRESULT AddLayer_YellowTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
-	HRESULT AddLayer_Blobfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_TitanTriggerfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_Clownfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_SmallspottedDart(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_YellowbackFusilier(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_YellowTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
+	//HRESULT AddLayer_Blobfish(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent = nullptr);
 
 
 	template<typename T>
@@ -54,11 +54,14 @@ namespace Fish
 			_vec3 vExt = *pHitboxExtents;
 			vExt *= fScale;
 
+			auto pAABB = CAABB::Create(&vPos, &vExt, L"AABB_FishHitbox", pFish);
 			CFishAABBCollider* pCollider = CFishAABBCollider::Create(
-				CAABB::Create(&vPos, &vExt, L"AABB_FishHitbox", pFish),
+				pAABB,
 				L"Coll_FishesHitbox");
 			pCollider->Set_Parent(pFish);
 			pLayer->Add_GameObject(L"FishHitboxCollider", pCollider);
+
+			pFish->Set_HitboxAABB(pAABB);
 		}
 
 		{

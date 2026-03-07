@@ -340,7 +340,8 @@ void CDive::Render_Scene()
 			{
 				_vec3 vPos;
 				pColl1->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
-				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl1);
+				//Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl1);
+				
 			}
 			if (auto pColl2 = pLayer->Get_GameObjectFirst(L"FishTankCollider_2"))
 			{

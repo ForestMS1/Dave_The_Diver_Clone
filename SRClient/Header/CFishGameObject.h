@@ -2,7 +2,7 @@
 #include "CGameObject.h"
 #include "CFishState.h"
 #include "CFishStateMachine.h"
-
+#include "CAABB.h"
 //namespace Fish
 //{
 //	class CFishStateMachine;
@@ -151,6 +151,7 @@ protected:
 
 	bool m_bNeedSlice;
 
+	float m_fForceMoveTimer = 0.f;
 
 public:
 	void Set_Frustum(_bool _Frustrum) { m_bFrustum = _Frustrum; }
@@ -158,6 +159,12 @@ public:
 	void Frustrum();
 private:
 	bool m_bFrustum{ false };
+
+
+public:
+	void Set_HitboxAABB(CAABB* pAABB) { m_pAABBHitBox = pAABB; }
+protected:
+	CAABB* m_pAABBHitBox = nullptr;
 	
 protected:
 	bool m_bManual;
