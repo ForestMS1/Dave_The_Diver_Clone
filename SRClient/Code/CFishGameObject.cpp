@@ -586,7 +586,10 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 
         if (m_fForceMoveTimer > 2.f)
         {
-            m_eFishState = Fish::FS_SWIM;
+            if (m_eFishState != Fish::FS_DIE)
+            {
+                m_eFishState = Fish::FS_SWIM;
+            }
         }
         MoveTo(&m_vMoveTarget, fTimeDelta);
     }
@@ -727,7 +730,7 @@ void CFishGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
 
 
     {
-        if (m_eFishState != Fish::FS_FORCEMOVE)
+        if (m_eFishState != Fish::FS_FORCEMOVE && m_eFishState != Fish::FS_DIE)
         {
             if (m_pAABBHitBox != nullptr)
             {
