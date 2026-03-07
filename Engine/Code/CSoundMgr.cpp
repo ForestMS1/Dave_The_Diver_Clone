@@ -38,9 +38,9 @@ void CSoundMgr::PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float
 {
 	if (auto pSound = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetFmodSound>(svSoundKey)->Get_FmodSound())
 	{
-		FMOD_System_PlaySound(m_pSystem, pSound, 0, FALSE, &m_pChannelArr[eID]);
 		FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_LOOP_NORMAL);
 		FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
+		FMOD_System_PlaySound(m_pSystem, pSound, 0, FALSE, &m_pChannelArr[eID]);
 	}
 
 	//FMOD_System_Update(m_pSystem);
