@@ -12,8 +12,8 @@ CLightMgr::~CLightMgr()
 }
 
 void CLightMgr::UpdateLight() {
-    for (auto list : m_LightList) {
-        for (auto Light : list) {
+    for (auto& list : m_LightList) {
+        for (auto& Light : list) {
             if (list.size() != 0) {
                 Light->Ready_Light(Light->Get_Index());
             }
@@ -24,8 +24,8 @@ void CLightMgr::UpdateLight() {
 }
 
 void CLightMgr::OffLight() {
-    for (auto list : m_LightList) {
-        for (auto Light : list) {
+    for (auto& list : m_LightList) {
+        for (auto& Light : list) {
             if (list.size() != 0) {
                 Light->Off_Light();
             }
@@ -35,8 +35,8 @@ void CLightMgr::OffLight() {
 }
 
 void CLightMgr::ResetLight() {
-    for (auto list : m_LightList) {
-        for (auto Light : list) {
+    for (auto& list : m_LightList) {
+        for (auto& Light : list) {
             if (list.size() != 0) {
                 Safe_Release(Light);
             }
@@ -56,8 +56,8 @@ HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
 
 void CLightMgr::Free()
 {
-    for (auto list : m_LightList) {
-        for (auto Light : list) {
+    for (auto& list : m_LightList) {
+        for (auto& Light : list) {
             if (list.size() != 0) {
                 Safe_Release(Light);
             }
