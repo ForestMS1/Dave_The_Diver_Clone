@@ -154,7 +154,7 @@ void		CToSushiUIItem::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"RANK 1", &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
+            pDefFont->Render_Font(m_sRank, &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 

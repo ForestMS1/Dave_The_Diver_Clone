@@ -25,6 +25,7 @@ CAsianSheepshead::~CAsianSheepshead()
 
 HRESULT CAsianSheepshead::Ready_GameObject()
 {
+    
     m_sFishName = L"È¤µ¼";
     m_sThumbNailAssetName = L"Tex_FishThumb_Asian_Sheepshead";
     m_iRank = 2;  // Áß°£ ·©Å©

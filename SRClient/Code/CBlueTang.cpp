@@ -25,16 +25,18 @@ CBlueTang::~CBlueTang()
 
 HRESULT CBlueTang::Ready_GameObject()
 {
+    
+
     m_sFishName = L"블루탱";
     m_sThumbNailAssetName = L"Tex_FishThumb_Bluetang";
     m_iRank = 1;  // 랭크 1 (하위)
     m_iStar = 1;  // 별 1개
-    m_fWeight = 0.2f;  // 0.2kg
+    m_fWeight = 0.2f + CHelper::RandRangeFromZero(5.f);  // 0.2kg
     m_iPrice = 5;  // 가격 5
-    m_fLength = 8.f;  // 길이 8cm
+    m_fLength = 8.f + CHelper::RandRangeFromZero(5.f);  // 길이 8cm
     m_iMeatCnt = 1;  // 고기 1개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Bluetang";
-    m_iSushiMoney = 8;  // 스시 가격 8
+    m_iSushiMoney = 11;  // 스시 가격 8
     m_iSushiLv = 1;  // 스시 레벨 1
 
     m_iHP = 1;
