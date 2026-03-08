@@ -15,6 +15,7 @@
 #include "CDiveDaveCam.h"
 #include "CColliderMgr.h"
 #include "CFishAABBCollider.h"
+#include "CSoundMgr.h"
 CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     : m_sFishName({})
     , m_fCurrSpeed(0.f)
@@ -274,6 +275,7 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
             pGetItemUI->Set_ImgAssetName(m_sThumbNailAssetName);
             pGetItemUI->Ready_AfterCreate();
             pLayer->Add_GameObject(L"GetItemUI", pGetItemUI);
+			CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX2, 0.5f);
         }
 
         if (auto pDave = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst<CDiveDave>(L"DiveDave"))
