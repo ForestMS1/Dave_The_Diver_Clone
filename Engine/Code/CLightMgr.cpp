@@ -36,9 +36,16 @@ void CLightMgr::OffLight() {
 
 void CLightMgr::ResetLight() {
     for (auto list : m_LightList) {
-        for_each(list.begin(), list.end(), CDeleteObj());
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Safe_Release(Light);
+            }
+        }
         list.clear();
+
     }
+
+
 }
 
 HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
@@ -50,8 +57,14 @@ HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
 void CLightMgr::Free()
 {
     for (auto list : m_LightList) {
-        for_each(list.begin(), list.end(), CDeleteObj());
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Safe_Release(Light);
+            }
+        }
         list.clear();
+
     }
+
   
 }

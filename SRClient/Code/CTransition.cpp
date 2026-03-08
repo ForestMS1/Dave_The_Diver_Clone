@@ -257,8 +257,39 @@ HRESULT CTransition::Transition_INIT_TO_LOGO()
 		CAssetMgr::GetInstance()->LoadAsset(L"Sound_Logo_ui_button_click");
 	}
 
+	// Particle
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Bubble" + ::to_wstring(i) + L".png";
 
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Bubble", CAssetTexture::Create(s.c_str()));
+	}
 
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/SeaBubble" + ::to_wstring(0) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SeaBubble", CAssetTexture::Create(s.c_str()));
+	}
+
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Coin" + ::to_wstring(0) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Coin", CAssetTexture::Create(s.c_str()));
+	}
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/BloomBubble" + ::to_wstring(2) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_BloomBubble", CAssetTexture::Create(s.c_str()));
+	}
+
+	for (int i = 0; i < 2; ++i)
+	{
+		wstring s = L"../Bin/Resource/Texture/Particle/Blood" + ::to_wstring(i) + L".png";
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_Blood", CAssetTexture::Create(s.c_str()));
+	}
+	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+	CAssetMgr::GetInstance()->LoadAsset();
 	// Write By SY
 	{
 		Common_Logo_Env_Load();
@@ -281,7 +312,7 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		return E_FAIL;
 	}
 
-	CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
+
 	//close shop sound
 	CAssetMgr::GetInstance()->AddAsset(L"Sound_CloseShop", CAssetFmodSound::Create(L"../Bin/Resource/Sound/SushiBar/ui_sushibar_close.ogg"));
 	CAssetMgr::GetInstance()->LoadAsset(L"Sound_CloseShop");
@@ -1097,37 +1128,6 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 	if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TestFishTexture", Engine::CTexture::Create(L"Tex_TestFish"))))
 		return E_FAIL;
 
-	// Particle
-	for (int i = 0; i < 2; ++i)
-	{
-		wstring s = L"../Bin/Resource/Texture/Particle/Bubble" + ::to_wstring(i) + L".png";
-	
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_Bubble", CAssetTexture::Create(s.c_str()));
-	}
-
-	{
-		wstring s = L"../Bin/Resource/Texture/Particle/SeaBubble" + ::to_wstring(0) + L".png";
-
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_SeaBubble", CAssetTexture::Create(s.c_str()));
-	}
-
-	{
-		wstring s = L"../Bin/Resource/Texture/Particle/Coin" + ::to_wstring(0) + L".png";
-	
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_Coin", CAssetTexture::Create(s.c_str()));
-	}
-	{
-		wstring s = L"../Bin/Resource/Texture/Particle/BloomBubble" + ::to_wstring(2) + L".png";
-	
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_BloomBubble", CAssetTexture::Create(s.c_str()));
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		wstring s = L"../Bin/Resource/Texture/Particle/Blood" + ::to_wstring(i) + L".png";
-
-		CAssetMgr::GetInstance()->AddAsset(L"Tex_Blood", CAssetTexture::Create(s.c_str()));
-	}
 
 	//CParticleMgr::GetInstance()->Ready_Particle(CInfoMgr::GetInstance()->Get_HWND());
 	for (int i = 0; i < 17; ++i)

@@ -37,9 +37,6 @@ HRESULT CParticleMgr::Ready_Particle(HWND hWnd)
 	CBubble* bubble = CBubble::Create(m_pPlayer);
 	particles[PARTICLE_BUBBLE]=(bubble);
 
-
-
-
 	CSeaBubble* SeaBubble = CSeaBubble::Create(m_pPlayer);
 	postparticles[POST_PARTICLE_SEABUBBLE] = (SeaBubble);
 
