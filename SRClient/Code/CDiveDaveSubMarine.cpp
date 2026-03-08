@@ -7,6 +7,7 @@
 #include "CAssetTexture.h"
 #include "CColliderMgr.h"
 #include "CFishGameObject.h"
+#include "CSoundMgr.h"
 CDiveDaveSubMarine::CDiveDaveSubMarine(CDiveDave* pOwner)
 	:CBaseState<CDiveDave>(pOwner)
 {
@@ -32,6 +33,8 @@ void CDiveDaveSubMarine::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	vScale *= 4.f;
 	m_pOwner->Multiply_Scale(&vScale);
+
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-40.f, -20.f, 0.f);
 }
 
 void CDiveDaveSubMarine::Input(const _float& fTimeDelta)
@@ -121,7 +124,17 @@ void CDiveDaveSubMarine::LateUpdate_State(const _float& fTimeDelta)
 			{
 				if (pCollider->Get_Tag() == L"AABB_FishHitbox")
 				{
-					reinterpret_cast<CFishGameObject*>(pCollider->Get_VoidPtr())->Damaged(100000);
+					CFishGameObject* pFish = reinterpret_cast<CFishGameObject*>(pCollider->Get_VoidPtr());
+					if (pFish->Get_FishState() != Fish::FS_DIE)
+					{
+						if (!CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_DIVE_SUBMARINE_COLL1))
+							CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_SubMarine_Coll", CSoundMgr::SFX_DIVE_SUBMARINE_COLL1, 1.f);
+						//else if (!CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_DIVE_SUBMARINE_COLL2))
+						//	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_SubMarine_Coll", CSoundMgr::SFX_DIVE_SUBMARINE_COLL2, 1.f);
+						//else if (!CSoundMgr::GetInstance()->IsChannelPlaying(CSoundMgr::SFX_DIVE_SUBMARINE_COLL3))
+						//	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_SubMarine_Coll", CSoundMgr::SFX_DIVE_SUBMARINE_COLL3, 1.f);
+					}
+					pFish->Damaged(100000);
 				}
 			}
 		}

@@ -10,6 +10,9 @@
 #include "CColliderMgr.h"
 #include "CDInputMgr.h"
 #include "CSoundMgr.h"
+#include "CGameMemMgr.h"
+#include "CTimerMgr.h"
+
 
 
 CDaveConversation::CDaveConversation(float fPosX, float fPosY)
@@ -64,7 +67,7 @@ HRESULT		CDaveConversation::Ready_GameObject()
     //    .via(tweeny::easing::linear);
 
     m_fTimer = 0.f;
-
+	m_fAppear = 0.f;
  /*   m_vecConversation[CONV_1].push_back(L"선생님");
     m_vecConversation[CONV_1].push_back(L"저 사실\n...\n...\n...");
     m_vecConversation[CONV_1].push_back(L"중퇴가 하고싶어요");*/
@@ -148,41 +151,82 @@ void		CDaveConversation::LateUpdate_GameObject(const _float& fTimeDelta)
 void		CDaveConversation::Render_GameObject()
 {
     LPDIRECT3DDEVICE9 pGraphicDev = CGraphicDev::GetInstance()->Get_GraphicDev();
-  
     pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveConversation"))
-    {
-        if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+    if (m_eCurrentConversation == CONV_2 || m_eCurrentConversation == CONV_4) {
+        m_fAppear += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+        if (m_fAppear > 2.5f) {
+            if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveConversation"))
+            {
+                if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+                {
+                    pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+                }
+            }
+            m_pBufferCom->Render_Buffer();
+
+            D3DXMATRIX matTmp;
+            D3DXMatrixIdentity(&matTmp);
+            pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+
+
+            // Conversation
+            {
+                _vec3 vInfoPos;
+                m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+                float fOffsetX = -3.4f;
+                float fOffsetY = 0.f;
+                vInfoPos.x += fOffsetX;
+                vInfoPos.y += fOffsetY;
+
+                _vec3 vScreenPos;
+                CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+                _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+                if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+                {
+                    pDefFont->Render_Font(m_sCurrentTxt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+                }
+            }
+		}
+    }
+    else {
+        if (auto vecAsset = CAssetMgr::GetInstance()->Get_Asset(L"Tex_DaveConversation"))
         {
-            pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            if (auto pTexture = dynamic_cast<CAssetTexture*>(vecAsset->at(0)))
+            {
+                pGraphicDev->SetTexture(0, pTexture->Get_Texture());
+            }
+        }
+        m_pBufferCom->Render_Buffer();
+
+        D3DXMATRIX matTmp;
+        D3DXMatrixIdentity(&matTmp);
+        pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
+
+
+        // Conversation
+        {
+            _vec3 vInfoPos;
+            m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
+            float fOffsetX = -3.4f;
+            float fOffsetY = 0.f;
+            vInfoPos.x += fOffsetX;
+            vInfoPos.y += fOffsetY;
+
+            _vec3 vScreenPos;
+            CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
+
+            _vec2 vPos = { vScreenPos.x , vScreenPos.y };
+            if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
+            {
+                pDefFont->Render_Font(m_sCurrentTxt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+            }
         }
     }
-    m_pBufferCom->Render_Buffer();
+  
 
-    D3DXMATRIX matTmp;
-    D3DXMatrixIdentity(&matTmp);
-    pGraphicDev->SetTransform(D3DTS_WORLD, &matTmp);
-
-
-    // Conversation
-    {
-        _vec3 vInfoPos;
-        m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -3.4f;
-        float fOffsetY = 0.f;
-        vInfoPos.x += fOffsetX;
-        vInfoPos.y += fOffsetY;
-
-        _vec3 vScreenPos;
-        CHelper::GetScreenPointFromWorld(&vScreenPos, &vInfoPos);
-
-        _vec2 vPos = { vScreenPos.x , vScreenPos.y };
-        if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL"))
-        {
-            pDefFont->Render_Font(m_sCurrentTxt, &vPos, D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-        }
-    }
+   
 }
 
 void CDaveConversation::Update_ImGui()

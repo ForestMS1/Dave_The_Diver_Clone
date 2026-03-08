@@ -10,6 +10,7 @@
 #include "CGetItemUIStar.h"
 #include "CGetItemUIImg.h"
 #include "CGameMemMgr.h"
+#include "CSoundMgr.h"
 CGetItemUI::CGetItemUI(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -58,6 +59,7 @@ HRESULT		CGetItemUI::Ready_GameObject()
 
     m_tween = m_tween.from(-640.f - 200.f).to(m_fPosX).during(500).to(m_fPosX).during(1000).to(-640.f - 200.f).during(500);
 
+	CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_sound_gain_itembox", CSoundMgr::SFX_DIVE_UI, 1.f);
     
     return S_OK;
 }

@@ -577,6 +577,9 @@
     <Filter Include="02. GameObject\Fish\Species\BigeyeTrevally">
       <UniqueIdentifier>{0a109a5e-a9ec-459e-b34a-277cb4f6828c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\DeepSeaEffect">
+      <UniqueIdentifier>{bf71f27b-1656-41f6-9f74-83183872328a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1434,6 +1437,9 @@
     <ClInclude Include="..\Header\CBigeyeTrevally.h">
       <Filter>02. GameObject\Fish\Species\BigeyeTrevally</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDeepSeaEffect.h">
+      <Filter>02. GameObject\DeepSeaEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -2269,6 +2275,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBigeyeTrevally.cpp">
       <Filter>02. GameObject\Fish\Species\BigeyeTrevally</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDeepSeaEffect.cpp">
+      <Filter>02. GameObject\DeepSeaEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

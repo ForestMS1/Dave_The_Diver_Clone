@@ -43,6 +43,7 @@ private:
 	Engine::CTransform* m_pTransformCom;
 
 	float m_fTimer;
+	float m_fAppear;
 
 	CONVERSATION m_eCurrentConversation;
 	_uint m_iCurrentConversationIdx;

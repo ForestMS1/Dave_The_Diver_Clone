@@ -206,6 +206,9 @@ _int		CToSushiUI::Update_GameObject(const _float& fTimeDelta)
         }
 
         Set_DeadCascade();
+
+
+
         if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() == 0 + 1 ) {
             if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer"))
             {

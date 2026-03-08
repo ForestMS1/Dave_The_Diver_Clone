@@ -1,6 +1,9 @@
 #pragma once
 #include "CBase.h"
 #include "CLight.h"
+#include "Engine_Enum.h"
+
+class CLight;
 
 BEGIN(Engine)
 
@@ -13,12 +16,20 @@ private:
 	virtual ~CLightMgr();
 
 public:
-	HRESULT Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
-		const D3DLIGHT9* pLightInfo,
-		const _uint& iIndex);
+	void UpdateLight();
+
+	void OffLight();
+
+	void ResetLight();
+
+public:
+
+
+
+	HRESULT Add_Light(CLight* Light, LIGHTID _ID);
 
 private:
-	list<CLight*>			m_LightList;
+	list<CLight*>			m_LightList[LIGHT_END];
 
 private:
 	virtual void		Free();

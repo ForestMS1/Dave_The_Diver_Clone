@@ -65,11 +65,11 @@ HRESULT		CFinalConversation::Ready_GameObject()
 
     m_fTimer = 0.f;
 
-    m_vecConversation[CONV_1].push_back(L"벌써 한달이 지나 SR시연회가 끝이 나네요.");
-    m_vecConversation[CONV_1].push_back(L"마지막으로 한마디씩 하고 마무리 하겠습니다.");
-    m_vecConversation[CONV_1].push_back(L"팀장님 한마디");
-    m_vecConversation[CONV_1].push_back(L"민수 한마디");
-    m_vecConversation[CONV_1].push_back(L"아 예비군");
+    m_vecConversation[CONV_1].push_back(L"벌써 한달이 지나 SR시연회가\n끝이 나네요.");
+    m_vecConversation[CONV_1].push_back(L"마지막으로 한마디씩 하고\n 마무리 하겠습니다.");
+    m_vecConversation[CONV_1].push_back(L"우리 팀 너무 고생 많았습니다.");
+    m_vecConversation[CONV_1].push_back(L"저희 취직 잘 해봅시다!");
+    m_vecConversation[CONV_1].push_back(L"끝까지 열심히 한 우리팀 감사합니다.");
     m_vecConversation[CONV_1].push_back(L"TextRpg는 꼭 많이 치세요.");
     m_vecConversation[CONV_1].push_back(L"시청해주셔서 감사합니다!");
 
@@ -170,7 +170,7 @@ void		CFinalConversation::Render_GameObject()
     {
         _vec3 vInfoPos;
         m_pTransformCom->Get_Info(INFO_POS, &vInfoPos);
-        float fOffsetX = -1.8f;
+        float fOffsetX = -1.f;
         float fOffsetY = -1.f;
         vInfoPos.x += fOffsetX;
         vInfoPos.y += fOffsetY;

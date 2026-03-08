@@ -257,7 +257,7 @@ void PSystem::Set_Texture(std::wstring_view svLayerTag,const _uint& iIndex)
 	{
 		pGraphicDev->SetTexture(0, pAssTex->Get_Texture());
 	
-		pAssTex->Get_Texture()->GetLevelDesc(0, &desc);
+
 	}
 	else if (auto pAssTex = dynamic_cast<CAssetCubeTexture*>((*CAssetMgr::GetInstance()->Get_Asset(svLayerTag))[iIndex]))
 	{

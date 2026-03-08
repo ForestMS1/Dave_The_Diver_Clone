@@ -45,6 +45,8 @@ void CAttackSubFire::Enter()
             (CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDaveGun"));
         pGun->Fire();
     }
+
+    m_fReboundTime = 0.f;
 }
 
 void CAttackSubFire::Input(const _float& fTimeDelta)
@@ -55,6 +57,14 @@ _int CAttackSubFire::Update_State(const _float& fTimeDelta)
 {
     if (m_pDiveDave->Get_State() != DIVEDAVESTATE::ATTACK)
         return 0;
+
+
+    if (m_fReboundTime <= 0.5f)
+    {
+        m_fReboundTime += fTimeDelta;
+		_vec3 vReboundDir = m_pDiveDave->Is_Flip() ? _vec3{ 1.f, 0.f, 0.f } : _vec3{ -1.f, 0.f, 0.f };
+        m_pDiveDave->Move(&vReboundDir, fTimeDelta, 1.f);
+    }
 
     Input(fTimeDelta);
     m_pDiveDave->AddFrame(fTimeDelta, 10.f, 1);
@@ -101,6 +111,7 @@ void CAttackSubFire::Exit()
 
 void CAttackSubFire::Clear()
 {
+    m_fReboundTime = 0.f;
 }
 CAttackSubFire* CAttackSubFire::Create(CDiveDaveAttack* pParentState)
 {

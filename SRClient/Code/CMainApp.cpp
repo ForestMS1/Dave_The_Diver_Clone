@@ -309,9 +309,8 @@ void CMainApp::Free()
 {
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pGraphicDev);
-	
-	CMapMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
+	CMapMgr::GetInstance()->DestroyInstance();
 	CInfoMgr::GetInstance()->DestroyInstance();
 	CDInputMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
@@ -327,5 +326,7 @@ void CMainApp::Free()
 	CColliderMgr::GetInstance()->DestroyInstance();
 	CAssetMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();
+	CLightMgr::GetInstance()->DestroyInstance();
+
 	m_pDeviceClass->DestroyInstance();
 }
