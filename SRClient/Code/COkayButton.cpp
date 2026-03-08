@@ -129,6 +129,10 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                                 scale = pTransform->m_vScale;
                                 pos = pTransform->m_vInfo[INFO_POS];
                                 Safe_Release(*iter);
+								iter = addButton->erase(iter);
+							
+                                //(*iter)->Set_Dead();
+
                             }
                         }
                         CGameObject* frameObject = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"FishConfirmFrame");
