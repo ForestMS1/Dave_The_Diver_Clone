@@ -474,6 +474,29 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_John", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_John.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_John");
+
+		
+		
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_GreatBarracuda", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_GreatBarracuda.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_GreatBarracuda");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_CowPatternSnapper", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_CowPatternSnapper.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_CowPatternSnapper");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_CuttleFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_CuttleFish.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_CuttleFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_AtlanticBonito", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_AtlanticBonito.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_AtlanticBonito");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_AtlanticAnglerfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_AtlanticAnglerfish.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_AtlanticAnglerfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_ChamberedNautilus", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_ChamberedNautilus.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_ChamberedNautilus");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_BigeyeTrevally", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_BigeyeTrevally.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_BigeyeTrevally");
 	}
 
 	// Fish Thumbnails
@@ -539,6 +562,29 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_JohnHead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/O_JohnHead_Thumbnail.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_JohnHead");
+
+
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Great_Barracuda", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Great_Barracuda_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Great_Barracuda");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_CowPatternSnapper", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Cow_Pattern_Snapper_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_CowPatternSnapper");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_CuttleFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/CuttleFish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_CuttleFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_AtlanticBonito", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Atlantic_Bonito_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_AtlanticBonito");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_AtlanticAnglerfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Atlantic_Anglerfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_AtlanticAnglerfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_ChamberedNautilus", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Chambered_Nautilus_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_ChamberedNautilus");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_BigeyeTrevally", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Bigeye_Trevally_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_BigeyeTrevally");
 }
 
 	// DaveConversation
@@ -643,6 +689,7 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 		CAssetMgr::GetInstance()->LoadAsset(L"Spine_GreyTriggerfish");
 
 
+		//Great_Barracuda
 		CAssetMgr::GetInstance()->AddAsset(L"Spine_Great_Barracuda", CAssetSpine::Create(L"../Bin/Resource/Spine/GreatBarracuda/Great_Barracuda"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Spine_Great_Barracuda");
 

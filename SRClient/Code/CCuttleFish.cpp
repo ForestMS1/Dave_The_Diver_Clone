@@ -26,15 +26,15 @@ CCuttleFish::~CCuttleFish()
 HRESULT CCuttleFish::Ready_GameObject()
 {
 
-    m_sFishName = L"훔볼트 오징어";
-    m_sThumbNailAssetName = L"Tex_FishThumb_Humboldt_Squid";
+    m_sFishName = L"갑오징어";
+    m_sThumbNailAssetName = L"Tex_FishThumb_CuttleFish";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
     m_fWeight = 1.0f;  // 1.0kg
     m_iPrice = 13;  // 가격 13
     m_fLength = 25.f;  // 길이 25cm
     m_iMeatCnt = 2;  // 고기 2개
-    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Humboldt_Squid";
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_CuttleFish";
     m_iSushiMoney = 20;  // 스시 가격 20
     m_iSushiLv = 2;  // 스시 레벨 2
 
