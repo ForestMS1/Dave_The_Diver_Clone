@@ -107,6 +107,8 @@ void CAttackSubFire::Exit()
 
     _vec3 vScale = { fAspect / fWidth, fAspect / fHeight, 1.f };
     m_pDiveDave->Multiply_Scale(&vScale);
+
+	CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX);
 }
 
 void CAttackSubFire::Clear()
