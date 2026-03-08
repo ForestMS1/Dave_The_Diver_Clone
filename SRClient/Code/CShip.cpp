@@ -641,12 +641,12 @@ void CShip::LateUpdate_Scene(const _float& fTimeDelta)
 
 		if (!m_bFireworkSound) {
 			if (m_fFireworkSoundTimer > 3.f) {
-				CSoundMgr::GetInstance()->PlaySoundLoop(L"firework3", CSoundMgr::SFX_FIREWORK2, 0.4f);
+				CSoundMgr::GetInstance()->PlaySoundLoop(L"firework3", CSoundMgr::SFX_FIREWORK2, 0.2f);
 				m_bFireworkSound = true;
 			}
 			else {
 				if (!m_bBeforeSound) {
-					CSoundMgr::GetInstance()->PlaySoundLoop(L"beforeExplode", CSoundMgr::SFX_FIREWORK1, 1.f);
+					CSoundMgr::GetInstance()->PlaySoundLoop(L"beforeExplode", CSoundMgr::SFX_FIREWORK1, 0.2f);
 					m_bBeforeSound = true;
 				}
 			}

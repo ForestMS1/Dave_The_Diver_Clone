@@ -39,6 +39,8 @@ HRESULT CGreatBarracuda::Ready_GameObject()
 
     m_iAttackPower = 5;
 
+    m_iHP = 2;
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

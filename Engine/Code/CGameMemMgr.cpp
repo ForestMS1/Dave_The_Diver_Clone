@@ -57,7 +57,7 @@ std::wstring CGameMemMgr::Get_ItemDesc(DAVE_ITEM eItem)
 }
 
 CGameMemMgr::CGameMemMgr()
-	: m_iMoney(300)
+	: m_iMoney(1500)
 	, m_bShipNight(false)
 {
 	m_mapIDiverCurrentLevel[L"Tex_Ship_IDiver_Item_Sanso"] = 1;

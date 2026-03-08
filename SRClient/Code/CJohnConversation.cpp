@@ -85,12 +85,13 @@ HRESULT		CJohnConversation::Ready_GameObject()
 
     m_iCurrentTxtIdx = 0;
     m_sCurrentTxt = L"";
-
+    CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX_BOSSTALK1, 0.5f);
     return S_OK;
 }
 
 _int		CJohnConversation::Update_GameObject(const _float& fTimeDelta)
 {
+    
     if (CDInputMgr::GetInstance()->Key_Down(DIK_SPACE))
     {
         ++m_iCurrentConversationIdx;
@@ -100,7 +101,8 @@ _int		CJohnConversation::Update_GameObject(const _float& fTimeDelta)
             return OBJ_DEAD;
         }
         else {
-            CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX, 1.f);
+            CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX_BOSSTALK1, 0.3f);
+           
         }
         m_iCurrentTxtIdx = 0;
         m_fTimer = 0.f;
@@ -206,7 +208,7 @@ CJohnConversation* CJohnConversation::Create(float fPosX, float fPosY)
         MSG_BOX("pJohnConversation Create Failed");
         return nullptr;
     }
-    CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX, 1.f);
+    //CSoundMgr::GetInstance()->PlaySoundOne(L"bosstalk", CSoundMgr::SFX, 1.f);
 
     return pJohnConversation;
 }

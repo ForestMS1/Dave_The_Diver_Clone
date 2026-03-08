@@ -40,7 +40,7 @@ void CSoundMgr::PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float
 	{
 		FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 		FMOD_System_PlaySound(m_pSystem, pSound, 0, FALSE, &m_pChannelArr[eID]);
-
+		FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 		FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_LOOP_NORMAL);
 		//// 사운드 원본에 루프 모드 설정
 		//FMOD_Sound_SetMode(pSound, FMOD_LOOP_NORMAL);
@@ -50,19 +50,43 @@ void CSoundMgr::PlaySoundLoop(std::wstring_view svSoundKey, CHANNELID eID, float
 		//FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 	}
 
-	FMOD_System_Update(m_pSystem);
+	//FMOD_System_Update(m_pSystem);
 }
 
 void CSoundMgr::PlaySoundOne(std::wstring_view svSoundKey, CHANNELID eID, float fVolume)
 {
-	if (auto pSound = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetFmodSound>(svSoundKey)->Get_FmodSound())
+	//if (auto pSound = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetFmodSound>(svSoundKey)->Get_FmodSound())
+	//{
+	//	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
+	//	FMOD_System_PlaySound(m_pSystem, pSound, 0, FALSE, &m_pChannelArr[eID]);
+	//	FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_DEFAULT);
+	//	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
+	//	
+	//}
+	//FMOD_System_Update(m_pSystem);
+
+	auto pAsset = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetFmodSound>(svSoundKey);
+	if (!pAsset) return;
+
+	FMOD_SOUND* pSound = pAsset->Get_FmodSound();
+	if (pSound)
 	{
-		FMOD_System_PlaySound(m_pSystem, pSound, 0, FALSE, &m_pChannelArr[eID]);
-		FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_DEFAULT);
-		FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
-		
+		// 1. 우선 일시정지(Paused) 상태로 사운드 생성 (세 번째 인자 TRUE)
+		FMOD_System_PlaySound(m_pSystem, pSound, nullptr, TRUE, &m_pChannelArr[eID]);
+
+		// 2. 채널 핸들이 유효한지 확인 후 설정 적용
+		if (m_pChannelArr[eID])
+		{
+			FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_DEFAULT); // 루프 해제 등 기본 설정
+			FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);    // 여기서 0.f가 확실히 적용됨
+
+			// 3. 설정이 끝났으니 일시정지 해제 (소리 출력 시작)
+			FMOD_Channel_SetPaused(m_pChannelArr[eID], FALSE);
+		}
 	}
-	FMOD_System_Update(m_pSystem);
+
+	// Update는 매 프레임 메인 루프에서 한 번만 호출하는 것이 성능상 좋습니다.
+	//FMOD_System_Update(m_pSystem);
 }
 
 bool CSoundMgr::IsChannelPlaying(CHANNELID eID)

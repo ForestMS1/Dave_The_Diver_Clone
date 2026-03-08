@@ -126,10 +126,10 @@ _int		CFinalConversation::Update_GameObject(const _float& fTimeDelta)
         {
             ++m_iCurrentTxtIdx;
             if (m_iCurrentTxtIdx % 2 == 0) {
-                CSoundMgr::GetInstance()->PlaySoundOne(L"talk", CSoundMgr::SFX, 1.f);
+                CSoundMgr::GetInstance()->PlaySoundOne(L"talk", CSoundMgr::SFX_DAVETALK1, 1.f);
 
             }
-
+          
         }
         m_fTimer = 0.f;
     }
