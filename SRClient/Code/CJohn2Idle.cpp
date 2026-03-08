@@ -59,19 +59,19 @@ _int CJohn2Idle::Update_State(const _float& fTimeDelta)
 		}
 		else
 		{
-			//1ÆäÀÌÁî
-			if (m_pOwner->Get_Hp() >= 100.f)
-				m_iRand = (m_iRand + 1) % 2;
-			else // 2ÆäÀÌÁî (Ã¼·Â 50%ÀÌÇÏ)
-				m_iRand = ((m_iRand + 1) % 3) + 1;
+			//1íŽ˜ì´ì¦ˆ
+			if (m_pOwner->Get_Hp() >= 50.f)
+				m_iRand = (m_iRand) % 2;
+			else // 2íŽ˜ì´ì¦ˆ (ì²´ë ¥ 50%ì´í•˜)
+				m_iRand = ((m_iRand) % 2) + 1;
 			switch (m_iRand)
 			{
 			case 0:
-				// ·¯½¬ ÁØºñ
+				// ëŸ¬ì‰¬ ì¤€ë¹„
 				m_pOwner->Set_State(JOHN2STATE::MELEEATTACK_READY);
 				break;
 			case 1:
-				// ÃÑ½î±â ÁØºñ
+				// ì´ì˜ê¸° ì¤€ë¹„
 				m_pOwner->Set_State(JOHN2STATE::ATTACK_READY);
 				break;
 			case 2:
@@ -80,6 +80,7 @@ _int CJohn2Idle::Update_State(const _float& fTimeDelta)
 			default:
 				break;
 			}
+			m_iRand++;
 		}
 	}
 	return 0;
