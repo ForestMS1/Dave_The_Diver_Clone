@@ -618,7 +618,7 @@ CSushiDave* CSushiDave::Create()
 void CSushiDave::Free()
 {
     Safe_Release(m_pAABB);
-
+    CSoundMgr::GetInstance()->StopAll();
     CGameObject::Free();
 
 }
