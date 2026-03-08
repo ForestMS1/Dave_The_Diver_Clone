@@ -3,7 +3,7 @@
 
 CBloomBubble::CBloomBubble()
 {
-	_size = { 0.1f,0.1f,0.1f };
+	_size = { 0.05f,0.05f,0.05f };
 	_origin = { 0,0,0 };
 }
 
@@ -38,6 +38,7 @@ CBloomBubble* CBloomBubble::Create()
 
 void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 {
+	attribute->_origin = _hitPosition;
 	attribute->_position = _hitPosition;
 
 	float Random = GetRandomFloat(-10.f, 10.f);
@@ -77,6 +78,10 @@ void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	attribute->_color = { 1.f, 1.f, 1.f, 1.f };
 	attribute->_age = 0.f;
 	attribute->_lifeTime = 50.f;
+
+	attribute->_phaseZ.x = ((rand() % 1000) / 1000.f) * 6.28318f;
+	attribute->_phaseZ.y = ((rand() % 1000) / 1000.f) * 6.28318f;
+	attribute->_phaseZ.z = 0;
 
 
 }
@@ -121,25 +126,47 @@ void CBloomBubble::postRender()
 
 void CBloomBubble::update(float fTimeDelta)
 {
-	list<Attribute>::iterator i;
-	for (i = _particles.begin(); i != _particles.end(); i++) {
-		i->_position += i->velocity * fTimeDelta;
-		i->_age += fTimeDelta;
-		
-		i->velocity.x += sin(i->_age) * fTimeDelta;
-		i->velocity.y += sin(i->_age) * fTimeDelta;
-	
+	for (auto& p : _particles)
+	{
+		if (!p._isAlive)
+			continue;
+
+		p._age += fTimeDelta;
+
+		if (p._age >= p._lifeTime)
+			p._age = 0.f;
+
+		float nx = sinf(p._age * 2.3f + p._phaseZ.x)
+			+ 0.5f * cosf(p._age * 4.7f + p._phaseZ.x * 1.7f);
+
+		float ny = cosf(p._age * 1.9f + p._phaseZ.y)
+			+ 0.4f * sinf(p._age * 3.8f + p._phaseZ.y * 1.3f);
+
+
+
+		_vec3 wanderForce = {
+			nx * 1.2f,
+			ny * 0.35f,
+			0.f
+		};
+
+
+
 
 	
-		const double PI = 3.1415926;
-		if (i->_age > (i->_lifeTime)) {
-			i->_isAlive = false;
-		}
+		p.velocity += (wanderForce ) * fTimeDelta;
+
+
+		p.velocity *= 0.92f;
+
+
+		p._position += p.velocity * fTimeDelta;
+
+
 	}
+
 	removeDeadParticles();
-
 }
-
 void CBloomBubble::Free()
 {
 	PSystem::Free();

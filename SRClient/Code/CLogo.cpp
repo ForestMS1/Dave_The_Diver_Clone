@@ -38,6 +38,12 @@ HRESULT CLogo::Ready_Scene()
 
 	CSoundMgr::GetInstance()->PlaySoundLoop(L"Sound_Logo_BGM", CSoundMgr::BGM, 1.f);
 
+
+
+	CParticleMgr::GetInstance()->Clear_Particle();
+	CParticleMgr::GetInstance()->Set_ParicleOn(true);
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, { 0.f,0.f,5.f }, 200);
+
 	return S_OK;
 }
 
@@ -46,7 +52,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 	Update_Camera();
 	_int		iExit = CScene::Update_Scene(fTimeDelta);
 
-
+	CParticleMgr::GetInstance()->Update_Particle(fTimeDelta);
 	return iExit;
 }
 
@@ -188,6 +194,7 @@ CLogo* CLogo::Create()
 void CLogo::Free()
 {
 	CScene::Free();
+	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CSoundMgr::GetInstance()->StopAll();
 }

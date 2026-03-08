@@ -7,22 +7,19 @@ BEGIN(Engine)
 
 class ENGINE_DLL CLight : public CBase
 {
-private:
-	explicit CLight(LPDIRECT3DDEVICE9 pGraphicDev);
+protected:
+	explicit CLight();
 	virtual ~CLight();
 
 public:
-	HRESULT			Ready_Light(const D3DLIGHT9* pLightInfo, const _uint& iIndex);
+	virtual		 HRESULT			Ready_Light(const _uint& iIndex) =0;
+	virtual		 void				Off_Light() {};
 
-private:
-	LPDIRECT3DDEVICE9	m_pGraphicDev;
+	_uint Get_Index() { return m_iIndex; }
+protected:
 	_uint				m_iIndex;
 	D3DLIGHT9			m_tLight;
 
-public:
-	static CLight* Create(LPDIRECT3DDEVICE9 pGraphicDev,
-		const D3DLIGHT9* pLightInfo,
-		const _uint& iIndex);
 
 private:
 	virtual void	Free();

@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
@@ -161,6 +161,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
   <ItemGroup>
     <ClInclude Include="..\Header\AssetList.h" />
     <ClInclude Include="..\Header\CAABB.h" />
+    <ClInclude Include="..\Header\CAllLight.h" />
     <ClInclude Include="..\Header\CAsset.h" />
     <ClInclude Include="..\Header\CAssetCubeTexture.h" />
     <ClInclude Include="..\Header\CAssetDefaultFont.h" />
@@ -234,6 +235,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CSeaBubble.h" />
+    <ClInclude Include="..\Header\CSeaPointLight.h" />
     <ClInclude Include="..\Header\CSoundMgr.h" />
     <ClInclude Include="..\Header\CSpine.h" />
     <ClInclude Include="..\Header\CTargetArrowTex.h" />
@@ -259,6 +261,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAABB.cpp" />
+    <ClCompile Include="..\Code\CAllLight.cpp" />
     <ClCompile Include="..\Code\CAsset.cpp" />
     <ClCompile Include="..\Code\CAssetCubeTexture.cpp" />
     <ClCompile Include="..\Code\CAssetDefaultFont.cpp" />
@@ -332,6 +335,7 @@ call Copy.bat &amp;&amp; call CopySR.bat</Command>
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CSeaBubble.cpp" />
+    <ClCompile Include="..\Code\CSeaPointLight.cpp" />
     <ClCompile Include="..\Code\CSoundMgr.cpp" />
     <ClCompile Include="..\Code\CSpine.cpp" />
     <ClCompile Include="..\Code\CTargetArrowTex.cpp" />

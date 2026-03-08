@@ -1646,9 +1646,9 @@ HRESULT CTerrian::Ready_Material()
         light.Diffuse.g = 1.5f;
         light.Diffuse.b = 1.5f;
 
-        light.Attenuation0 = 1.0f;
-        light.Attenuation1 = 0.1f;
-        light.Attenuation2 = 0.01f;
+        light.Attenuation0 = 0.0f;
+        light.Attenuation1 = 0.18f;
+        light.Attenuation2 = 0.03f;
         light.Range = 5.f;
         light.Position = Pos;
 

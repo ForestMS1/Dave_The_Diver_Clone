@@ -60,11 +60,11 @@
 #include "CCommonItemThurible.h"
 #include "CCommonItemRope.h"
 #include "CCommonItemUmb.h"
-
+#include "CAllLight.h"
 #include "CDInputMgr.h"
-
+#include "CDeepSeaEffect.h"
 #include "CHoldFishUI.h"
-
+#include "CLightMgr.h"
 #include "CCoral.h"
 #include "CWPAmmoCntText.h"
 #include "CAmmoPack.h"
@@ -432,7 +432,9 @@ HRESULT CDive::Ready_Environment_Layer(std::wstring_view svLayerTag)
 	CLayer* pLayer = CLayer::Create();
 	if (nullptr == pLayer)
 		return E_FAIL;
+	
 
+	CLightMgr::GetInstance()->Add_Light(CAllLight::Create(5), LIGHT_ALL);
 	CGameObject* pGameObject = nullptr;
 
 
@@ -1049,7 +1051,7 @@ void CDive::Free()
 	
 
 	CScene::Free();
-
+	CLightMgr::GetInstance()->ResetLight();
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();
@@ -1359,6 +1361,7 @@ void CDive::Place_Fish() {
 
 		}
 
+		Get_Layer(L"0_Environment_Layer")->Add_GameObject(L"BloomBubble_Test", CDeepSeaEffect::Create(L""));
 		m_bFishCreate = true;
 	}
 	
