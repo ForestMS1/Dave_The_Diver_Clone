@@ -67,10 +67,6 @@ void CAttackSubFight::Input(const _float& fTimeDelta)
             m_pOwner->Set_State(ATTACKSUBSTATE::ATTACK_FAIL);
         }
     }
-
-    ImGui::Begin("AttackGauge");
-    ImGui::Text("m_fAttackGauge : %f", m_fAttackGauge);
-    ImGui::End();
 }
 
 _int CAttackSubFight::Update_State(const _float& fTimeDelta)
