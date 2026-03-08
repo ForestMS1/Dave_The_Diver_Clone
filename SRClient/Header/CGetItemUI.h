@@ -32,6 +32,7 @@ public:
 	void Set_Weight(std::wstring_view svWeight) { m_sWeight = svWeight; }
 	void Set_StarCnt(_uint iCnt) { m_iStartCnt = iCnt; }
 	void Set_ImgAssetName(std::wstring_view sv) { m_sImgAssetName = sv; }
+	void Set_New() { m_bNew = true; }
 
 private:
 	tweeny::tween<float> m_tween;
@@ -40,6 +41,8 @@ private:
 	std::wstring m_sWeight;
 	_uint m_iStartCnt;
 	std::wstring m_sImgAssetName;
+
+	bool m_bNew = true;
 
 public:
 	static CGetItemUI* Create(float fPosX, float fPosY);

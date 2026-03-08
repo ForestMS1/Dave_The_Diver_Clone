@@ -43,14 +43,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <EnableUnitySupport>true</EnableUnitySupport>
@@ -163,6 +163,8 @@
     <ClInclude Include="..\Header\CAddMenuButton.h" />
     <ClInclude Include="..\Header\CAmmoPack.h" />
     <ClInclude Include="..\Header\CAsianSheepshead.h" />
+    <ClInclude Include="..\Header\CAtlanticAnglerfish.h" />
+    <ClInclude Include="..\Header\CAtlanticBonito.h" />
     <ClInclude Include="..\Header\CAttackSubFail.h" />
     <ClInclude Include="..\Header\CAttackSubFight.h" />
     <ClInclude Include="..\Header\CAttackSubFire.h" />
@@ -173,9 +175,11 @@
     <ClInclude Include="..\Header\CBancho.h" />
     <ClInclude Include="..\Header\CBanchoGood.h" />
     <ClInclude Include="..\Header\CBanchoR.h" />
+    <ClInclude Include="..\Header\CBigeyeTrevally.h" />
     <ClInclude Include="..\Header\CBlobfish.h" />
     <ClInclude Include="..\Header\CBluejongP.h" />
     <ClInclude Include="..\Header\CBluejongR.h" />
+    <ClInclude Include="..\Header\CChamberedNautilus.h" />
     <ClInclude Include="..\Header\CCommonItemBone.h" />
     <ClInclude Include="..\Header\CCommonItemDeepseaCoral.h" />
     <ClInclude Include="..\Header\CCommonItemFragment.h" />
@@ -184,6 +188,8 @@
     <ClInclude Include="..\Header\CCommonItemUmb.h" />
     <ClInclude Include="..\Header\CCommonItemWoodPlate.h" />
     <ClInclude Include="..\Header\CCommonItemWatch.h" />
+    <ClInclude Include="..\Header\CCowPatternSnapper.h" />
+    <ClInclude Include="..\Header\CCuttleFish.h" />
     <ClInclude Include="..\Header\CDaveGoldBall.h" />
     <ClInclude Include="..\Header\CDiveDaveInitStart.h" />
     <ClInclude Include="..\Header\CDiveDaveSubMarine.h" />
@@ -194,6 +200,7 @@
     <ClInclude Include="..\Header\CEndingBG.h" />
     <ClInclude Include="..\Header\CFinalConversation.h" />
     <ClInclude Include="..\Header\CFishTankCollider.h" />
+    <ClInclude Include="..\Header\CGreatBarracuda.h" />
     <ClInclude Include="..\Header\CGunSkill02Aim.h" />
     <ClInclude Include="..\Header\CBackToShipUI.h" />
     <ClInclude Include="..\Header\CDaveConversation.h" />
@@ -442,13 +449,17 @@
     <ClCompile Include="..\Code\CAddMenuButton.cpp" />
     <ClCompile Include="..\Code\CAmmoPack.cpp" />
     <ClCompile Include="..\Code\CAsianSheepshead.cpp" />
+    <ClCompile Include="..\Code\CAtlanticAnglerfish.cpp" />
+    <ClCompile Include="..\Code\CAtlanticBonito.cpp" />
     <ClCompile Include="..\Code\CAttackReadyArm.cpp" />
     <ClCompile Include="..\Code\CBackGroundSea.cpp" />
     <ClCompile Include="..\Code\CBanchoGood.cpp" />
     <ClCompile Include="..\Code\CBanchoR.cpp" />
+    <ClCompile Include="..\Code\CBigeyeTrevally.cpp" />
     <ClCompile Include="..\Code\CBlobfish.cpp" />
     <ClCompile Include="..\Code\CBluejongP.cpp" />
     <ClCompile Include="..\Code\CBluejongR.cpp" />
+    <ClCompile Include="..\Code\CChamberedNautilus.cpp" />
     <ClCompile Include="..\Code\CCommonItemBone.cpp" />
     <ClCompile Include="..\Code\CCommonItemDeepseaCoral.cpp" />
     <ClCompile Include="..\Code\CCommonItemFragment.cpp" />
@@ -457,6 +468,8 @@
     <ClCompile Include="..\Code\CCommonItemUmb.cpp" />
     <ClCompile Include="..\Code\CCommonItemWoodPlate.cpp" />
     <ClCompile Include="..\Code\CCommonItemWatch.cpp" />
+    <ClCompile Include="..\Code\CCowPatternSnapper.cpp" />
+    <ClCompile Include="..\Code\CCuttleFish.cpp" />
     <ClCompile Include="..\Code\CDaveGoldBall.cpp" />
     <ClCompile Include="..\Code\CDiveDaveInitStart.cpp" />
     <ClCompile Include="..\Code\CDiveDaveSubMarine.cpp" />
@@ -467,6 +480,7 @@
     <ClCompile Include="..\Code\CEndingBG.cpp" />
     <ClCompile Include="..\Code\CFinalConversation.cpp" />
     <ClCompile Include="..\Code\CFishTankCollider.cpp" />
+    <ClCompile Include="..\Code\CGreatBarracuda.cpp" />
     <ClCompile Include="..\Code\CGunSkill02Aim.cpp" />
     <ClCompile Include="..\Code\CBackToShipUI.cpp" />
     <ClCompile Include="..\Code\CDaveConversation.cpp" />

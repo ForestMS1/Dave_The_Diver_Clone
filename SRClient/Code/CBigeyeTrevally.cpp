@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CSmallspottedDart.h"
+#include "CBigeyeTrevally.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
@@ -11,26 +11,26 @@
 
 using namespace Fish;
 
-CSmallspottedDart::CSmallspottedDart(float fPosX, float fPosY, float fScale)
+CBigeyeTrevally::CBigeyeTrevally(float fPosX, float fPosY, float fScale)
     : CFishGameObject(fPosX, fPosY, fScale)
 {
 }
 
-CSmallspottedDart::~CSmallspottedDart()
+CBigeyeTrevally::~CBigeyeTrevally()
 {
 }
 
-HRESULT CSmallspottedDart::Ready_GameObject()
+HRESULT CBigeyeTrevally::Ready_GameObject()
 {
-    m_sFishName = L"타원전갱이";
-    m_sThumbNailAssetName = L"Tex_FishThumb_Smallspotted_dart";
+    m_sFishName = L"줄전갱이";
+    m_sThumbNailAssetName = L"Tex_FishThumb_BigeyeTrevally";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
     m_fWeight = 0.6f;  // 0.6kg
     m_iPrice = 12;  // 가격 12
     m_fLength = 15.f;  // 길이 15cm
     m_iMeatCnt = 2;  // 고기 2개
-    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_SmallspottedDart";
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_BigeyeTrevally";
     m_iSushiMoney = 18;  // 스시 가격 18
     m_iSushiLv = 2;  // 스시 레벨 2
 
@@ -53,33 +53,33 @@ HRESULT CSmallspottedDart::Ready_GameObject()
     return S_OK;
 }
 
-_int CSmallspottedDart::Update_GameObject(const _float& fTimeDelta)
+_int CBigeyeTrevally::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CFishGameObject::Update_GameObject(fTimeDelta);
 
     return iExit;
 }
 
-void CSmallspottedDart::LateUpdate_GameObject(const _float& fTimeDelta)
+void CBigeyeTrevally::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CFishGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void CSmallspottedDart::Render_GameObject()
+void CBigeyeTrevally::Render_GameObject()
 {
     CFishGameObject::Render();
 }
 
-HRESULT CSmallspottedDart::Ready_Component()
+HRESULT CBigeyeTrevally::Ready_Component()
 {
-    CFishGameObject::Ready(L"Spine_SmallspottedDart");
+    CFishGameObject::Ready(L"Spine_BigeyeTrevally");
     return S_OK;
 }
 
 
-CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY, float fScale)
+CBigeyeTrevally* CBigeyeTrevally::Create(float fPosX, float fPosY, float fScale)
 {
-    CSmallspottedDart* pFish = new CSmallspottedDart{ fPosX, fPosY, fScale };
+    CBigeyeTrevally* pFish = new CBigeyeTrevally{ fPosX, fPosY, fScale };
 
     if (FAILED(pFish->Ready_GameObject()))
     {
@@ -91,7 +91,7 @@ CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY, float fSc
     return pFish;
 }
 
-void CSmallspottedDart::Free()
+void CBigeyeTrevally::Free()
 {
     CFishGameObject::Free();
 }

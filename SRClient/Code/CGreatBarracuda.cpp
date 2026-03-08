@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CGreatSpiderCrab.h"
+#include "CGreatBarracuda.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
@@ -14,31 +14,30 @@
 
 using namespace Fish;
 
-CGreatSpiderCrab::CGreatSpiderCrab(float fPosX, float fPosY, float fScale)
+CGreatBarracuda::CGreatBarracuda(float fPosX, float fPosY, float fScale)
     : CFishGameObject(fPosX, fPosY, fScale)
 {
 }
 
-CGreatSpiderCrab::~CGreatSpiderCrab()
+CGreatBarracuda::~CGreatBarracuda()
 {
 }
 
-HRESULT CGreatSpiderCrab::Ready_GameObject()
+HRESULT CGreatBarracuda::Ready_GameObject()
 {
-    m_sFishName = L"키다리게";
-    m_sThumbNailAssetName = L"Tex_FishThumb_Great_Spider_Crab";
-    m_iRank = 3;  // 랭크 3 (상위)
-    m_iStar = 3;  // 별 3개
-    m_fWeight = 3.0f;  // 3.0kg
-    m_iPrice = 30;  // 가격 30
+    m_sFishName = L"대왕꼬치고기";
+    m_sThumbNailAssetName = L"Tex_FishThumb_Great_Barracuda";
+    m_iRank = 4;  // 랭크 4 (최상위)
+    m_iStar = 3;  // 별 4개
+    m_fWeight = 2.5f;  // 2.5kg
+    m_iPrice = 28;  // 가격 28
     m_fLength = 40.f;  // 길이 40cm
     m_iMeatCnt = 4;  // 고기 4개
-    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreatSpiderCrab";
-    m_iSushiMoney = 50;  // 스시 가격 50
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreatBarracuda";
+    m_iSushiMoney = 45;  // 스시 가격 45
     m_iSushiLv = 3;  // 스시 레벨 3
 
-    m_iHP = 2;
-
+    m_iAttackPower = 5;
 
     if (FAILED(Ready_Component()))
         return E_FAIL;
@@ -53,36 +52,38 @@ HRESULT CGreatSpiderCrab::Ready_GameObject()
 
     m_pSpineCom->Set_AniState(L"swim");
 
+    m_eFishType = Fish::FT_AGRESSIVE;
+    m_sAttackSpineAniName = L"sprint";
     return S_OK;
 }
 
-_int CGreatSpiderCrab::Update_GameObject(const _float& fTimeDelta)
+_int CGreatBarracuda::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CFishGameObject::Update_GameObject(fTimeDelta);
 
     return iExit;
 }
 
-void CGreatSpiderCrab::LateUpdate_GameObject(const _float& fTimeDelta)
+void CGreatBarracuda::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CFishGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void CGreatSpiderCrab::Render_GameObject()
+void CGreatBarracuda::Render_GameObject()
 {
     CFishGameObject::Render();
 }
 
-HRESULT CGreatSpiderCrab::Ready_Component()
+HRESULT CGreatBarracuda::Ready_Component()
 {
-    CFishGameObject::Ready(L"Spine_GreatSpiderCrab");
+    CFishGameObject::Ready(L"Spine_Great_Barracuda");
     return S_OK;
 }
 
 
-CGreatSpiderCrab* CGreatSpiderCrab::Create(float fPosX, float fPosY, float fScale)
+CGreatBarracuda* CGreatBarracuda::Create(float fPosX, float fPosY, float fScale)
 {
-    CGreatSpiderCrab* pFish = new CGreatSpiderCrab{ fPosX, fPosY, fScale };
+    CGreatBarracuda* pFish = new CGreatBarracuda{ fPosX, fPosY, fScale };
 
     if (FAILED(pFish->Ready_GameObject()))
     {
@@ -94,7 +95,7 @@ CGreatSpiderCrab* CGreatSpiderCrab::Create(float fPosX, float fPosY, float fScal
     return pFish;
 }
 
-void CGreatSpiderCrab::Free()
+void CGreatBarracuda::Free()
 {
     CFishGameObject::Free();
 }

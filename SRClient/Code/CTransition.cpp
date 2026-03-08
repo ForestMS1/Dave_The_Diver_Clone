@@ -474,6 +474,29 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_John", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_John.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_John");
+
+		
+		
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_GreatBarracuda", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_GreatBarracuda.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_GreatBarracuda");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_CowPatternSnapper", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_CowPatternSnapper.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_CowPatternSnapper");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_CuttleFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_CuttleFish.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_CuttleFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_AtlanticBonito", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_AtlanticBonito.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_AtlanticBonito");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_AtlanticAnglerfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_AtlanticAnglerfish.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_AtlanticAnglerfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_ChamberedNautilus", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_ChamberedNautilus.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_ChamberedNautilus");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_SushiThumb_BigeyeTrevally", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedSushiThumbnail/Sushi_BigeyeTrevally.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_SushiThumb_BigeyeTrevally");
 	}
 
 	// Fish Thumbnails
@@ -539,6 +562,29 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_JohnHead", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/O_JohnHead_Thumbnail.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_JohnHead");
+
+
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_Great_Barracuda", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Great_Barracuda_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_Great_Barracuda");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_CowPatternSnapper", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Cow_Pattern_Snapper_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_CowPatternSnapper");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_CuttleFish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/CuttleFish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_CuttleFish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_AtlanticBonito", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Atlantic_Bonito_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_AtlanticBonito");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_AtlanticAnglerfish", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Atlantic_Anglerfish_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_AtlanticAnglerfish");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_ChamberedNautilus", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Chambered_Nautilus_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_ChamberedNautilus");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_FishThumb_BigeyeTrevally", CAssetTexture::Create(L"../Bin/Resource/Texture/UI/usedThumbnail/Bigeye_Trevally_Thumbnail.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_FishThumb_BigeyeTrevally");
 }
 
 	// DaveConversation
@@ -577,6 +623,9 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResult_Best", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/Best.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResult_Best");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_DiveResult_PinkBest", CAssetTexture::Create(L"../Bin/Resource/Texture/DiveResultInShip/DiveResultPinkBest.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_DiveResult_PinkBest");
 	}
 
 	// 스파인
@@ -638,6 +687,36 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Spine_GreyTriggerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/GreyTriggerfish/Grey_Triggerfish"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Spine_GreyTriggerfish");
+
+
+		//Great_Barracuda
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_Great_Barracuda", CAssetSpine::Create(L"../Bin/Resource/Spine/GreatBarracuda/Great_Barracuda"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_Great_Barracuda");
+
+		//CowPatternSnapper
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_CowPatternSnapper", CAssetSpine::Create(L"../Bin/Resource/Spine/CowPatternSnapper/Cow_Pattern_Snapper"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_CowPatternSnapper");
+
+		//CuttleFish
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_CuttleFish", CAssetSpine::Create(L"../Bin/Resource/Spine/CuttleFish/CuttleFish"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_CuttleFish");
+
+		//AtlanticBonito
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_AtlanticBonito", CAssetSpine::Create(L"../Bin/Resource/Spine/AtlanticBonito/Atlantic_Bonito"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_AtlanticBonito");
+
+		//Spine_AtlanticAnglerfish
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_AtlanticAnglerfish", CAssetSpine::Create(L"../Bin/Resource/Spine/AtlanticAnglerfish/Atlantic_Anglerfish"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_AtlanticAnglerfish");
+
+		//ChamberedNautilus
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_ChamberedNautilus", CAssetSpine::Create(L"../Bin/Resource/Spine/ChamberedNautilus/Chambered_Nautilus"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_ChamberedNautilus");
+
+		//BigeyeTrevally
+		CAssetMgr::GetInstance()->AddAsset(L"Spine_BigeyeTrevally", CAssetSpine::Create(L"../Bin/Resource/Spine/BigeyeTrevally/Bigeye_Trevally"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Spine_BigeyeTrevally");
+
 	}
 
 	// Fish 유아이
@@ -647,6 +726,12 @@ HRESULT CTransition::Transition_LOGO_TO_SHIP()
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_GetItemUIStar", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/GetItemUIStar.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_GetItemUIStar");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_GetItemUIEmptyStar", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/GetItemUIEmptyStar.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_GetItemUIEmptyStar");
+
+		CAssetMgr::GetInstance()->AddAsset(L"Tex_GetItemUINew", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/GetItemUINew.png"));
+		CAssetMgr::GetInstance()->LoadAsset(L"Tex_GetItemUINew");
 
 		CAssetMgr::GetInstance()->AddAsset(L"Tex_HoldFishUI", CAssetTexture::Create(L"../Bin/Resource/Texture/FishUI/HoldFishUI.png"));
 		CAssetMgr::GetInstance()->LoadAsset(L"Tex_HoldFishUI");
@@ -2373,7 +2458,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		 srand((unsigned int)time(0));  // 랜덤 시드 초기화
 		int randomIndex = rand() % 13;  // 0부터 12까지 랜덤 인덱스 생성
 
-		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.6f); // 텍스트 전환 객체 생성
+		CTransitionTxt* pTxt = CTransitionTxt::Create(0.f, -0.65f); // 텍스트 전환 객체 생성
 		pTxt->Set_Txt(tipTxt[randomIndex]);  // 랜덤 팁 텍스트 설정
 
 		pTxt->Set_Opt(DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOCLIP);
@@ -2382,7 +2467,7 @@ HRESULT			CTransition::Ready_Environment_Layer(std::wstring_view svLayerTag)
 		if (FAILED(pLayer->Add_GameObject(L"TransitionTipTxt", pTxt)))
 			return E_FAIL;
 
-		CTransitionImg* pTransitionTip = CTransitionImg::Create(-0.6f, -0.6f);
+		CTransitionImg* pTransitionTip = CTransitionImg::Create(0.f, -0.6f);
 		pTransitionTip->Set_AssetName(L"Tex_Transition_Tip");
 		pTransitionTip->Set_CustomScaleX(0.2f);
 		pTransitionTip->Set_CustomScaleY(0.2f);

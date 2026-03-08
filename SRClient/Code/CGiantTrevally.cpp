@@ -37,6 +37,10 @@ HRESULT CGiantTrevally::Ready_GameObject()
     m_iSushiMoney = 40;  // 스시 가격 40
     m_iSushiLv = 3;  // 스시 레벨 3
 
+    m_bNeedSlice = true;
+    m_iHP = 5;
+
+    m_sRunFromSpineAniName = L"sprint";
 
     if (FAILED(Ready_Component()))
         return E_FAIL;
