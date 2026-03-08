@@ -1,6 +1,7 @@
 #include "CRenderer.h"
 #include "CCameraMgr.h"
 #include "CParticleMgr.h"
+#include "CLightMgr.h"
 
 IMPLEMENT_SINGLETON(CRenderer)
 
@@ -25,6 +26,7 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	Render_Priority(pGraphicDev);
+	CLightMgr::GetInstance()->UpdateLight();
 	Render_NonAlpha(pGraphicDev);
 	Render_Terrian(pGraphicDev);
 	Render_SushiBGAlpha(pGraphicDev);
@@ -32,6 +34,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	CParticleMgr::GetInstance()->Render_Particle();
 	Render_Alpha(pGraphicDev);
 	CParticleMgr::GetInstance()->PostRender_Particle();
+	CLightMgr::GetInstance()->OffLight();
 	Render_UI(pGraphicDev);
 	Render_Ortho(pGraphicDev);
 	Render_AlphaAfterOrtho(pGraphicDev);

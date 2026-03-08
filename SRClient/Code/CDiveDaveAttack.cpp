@@ -47,10 +47,12 @@ _int CDiveDaveAttack::Update_State(const _float& fTimeDelta)
 void CDiveDaveAttack::LateUpdate_State(const _float& fTimeDelta)
 {
 	m_pSubState->LateUpdate_State(fTimeDelta);
+#ifdef _DEBUG
 	ImGui::Begin("DiveDave Info");
 	string state = "AttackSubState : " + debugSubState[(_uint)m_eCurSubState];
 	ImGui::Text(state.c_str());
 	ImGui::End();
+#endif
 }
 
 void CDiveDaveAttack::Render_State()

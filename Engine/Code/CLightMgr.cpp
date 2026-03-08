@@ -11,21 +11,60 @@ CLightMgr::~CLightMgr()
     Free();
 }
 
-HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
-    const D3DLIGHT9* pLightInfo,
-    const _uint& iIndex)
+void CLightMgr::UpdateLight() {
+    for (auto list : m_LightList) {
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Light->Ready_Light(Light->Get_Index());
+            }
+        }
+      
+        
+    }
+}
+
+void CLightMgr::OffLight() {
+    for (auto list : m_LightList) {
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Light->Off_Light();
+            }
+        }
+   
+    }
+}
+
+void CLightMgr::ResetLight() {
+    for (auto list : m_LightList) {
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Safe_Release(Light);
+            }
+        }
+        list.clear();
+
+    }
+
+
+}
+
+HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
 {
-    CLight* pLight = CLight::Create(pGraphicDev, pLightInfo, iIndex);
-    if (nullptr == pLight)
-        return E_FAIL;
-
-    m_LightList.push_back(pLight);
-
+    m_LightList[_ID].push_back(Light);
     return S_OK;
 }
 
 void CLightMgr::Free()
 {
-    for_each(m_LightList.begin(), m_LightList.end(), CDeleteObj());
-    m_LightList.clear();
+    for (auto list : m_LightList) {
+        for (auto Light : list) {
+            if (list.size() != 0) {
+                Safe_Release(Light);
+            }
+        }
+        list.clear();
+
+    }
+
+  
 }

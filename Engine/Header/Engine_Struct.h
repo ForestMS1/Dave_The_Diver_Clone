@@ -90,7 +90,8 @@ namespace Engine
 		float _age;
 		D3DXCOLOR _color;
 		D3DXCOLOR _colorFade;
-		
+		D3DXVECTOR3 _origin;
+		D3DXVECTOR3 _phaseZ;
 		int  _type;
 		bool _isAlive;
 	};
