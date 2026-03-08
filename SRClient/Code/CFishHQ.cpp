@@ -41,25 +41,25 @@ HRESULT CFishHQ::Ready_GameObject()
 _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
 {
 
-    if (ImGui::Button("FishTankCollider"))
-    {
-        if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
-        {
-            CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(1.f, 1.f);
-            pLayer->Add_GameObject(L"FishTankCollider", pFishTankCollider);
+    //if (ImGui::Button("FishTankCollider"))
+    //{
+    //    if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
+    //    {
+    //        CFishTankCollider* pFishTankCollider = CFishTankCollider::Create(1.f, 1.f);
+    //        pLayer->Add_GameObject(L"FishTankCollider", pFishTankCollider);
 
-            _vec3 vScale = {3.f, 3.f, 1.f};
-            pFishTankCollider->Get_Transform()->Set_Scale(&vScale);
+    //        _vec3 vScale = {3.f, 3.f, 1.f};
+    //        pFishTankCollider->Get_Transform()->Set_Scale(&vScale);
 
-            _vec3 vPos;
-            pFishTankCollider->Get_Transform()->Get_Info(INFO_POS, &vPos);
-            
-            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-        }
-    }
+    //        _vec3 vPos;
+    //        pFishTankCollider->Get_Transform()->Get_Info(INFO_POS, &vPos);
+    //        
+    //        //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+    //        //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+    //        //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+    //        //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+    //    }
+    //}
     
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);
