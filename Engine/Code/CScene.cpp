@@ -60,16 +60,19 @@ _int CScene::Update_Scene(const _float& fTimeDelta)
 
 		for (auto& pObj : hier)
 		{
-			if (!pObj->Get_Dead())
-			{
-				int iRes = pObj->Update_GameObject(fTimeDelta);
-				if (iRes & 0x80000000)
+			if (pObj != nullptr) {
+
+				if (!pObj->Get_Dead())
 				{
-					return iRes;
-				}
-				else if (iRes == OBJ_DEAD)
-				{
-					pObj->Set_Dead();
+					int iRes = pObj->Update_GameObject(fTimeDelta);
+					if (iRes & 0x80000000)
+					{
+						return iRes;
+					}
+					else if (iRes == OBJ_DEAD)
+					{
+						pObj->Set_Dead();
+					}
 				}
 			}
 		}
@@ -113,10 +116,13 @@ void CScene::LateUpdate_Scene(const _float& fTimeDelta)
         {
             for (auto& pObj : pObjMap.second)
             {
-                if (!pObj->Get_Parent())
-                {
-                    pRootObjectList.push_back(pObj);
-                }
+				if (pObj != nullptr) {
+					if (!pObj->Get_Parent())
+					{
+						pRootObjectList.push_back(pObj);
+					}
+				}
+               
             }
         }
     }

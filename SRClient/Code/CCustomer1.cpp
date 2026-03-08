@@ -640,8 +640,8 @@ CCustomer1* CCustomer1::Create()
 void CCustomer1::Free()
 {
 
-    Safe_Release(MenuBubble);
-    Safe_Release(TeaBubble);
+/*    Safe_Release(MenuBubble);
+    Safe_Release(TeaBubble);*/
     CGameObject::Free();
  
 }

@@ -192,7 +192,7 @@ void COpenShop::Key_Input()
     {
         CScene* scene = CManagement::GetInstance()->Get_Scene();
         CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenShop", CSoundMgr::SFX, 1.0f);
-
+    
         static_cast<CSushi*>(scene)->Set_Open(true);
         openPressed = true;
         //m_bDead = true;

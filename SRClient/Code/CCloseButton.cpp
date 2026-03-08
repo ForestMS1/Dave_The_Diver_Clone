@@ -94,7 +94,9 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         CGameObject* menuFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
                         static_cast<CMenuFrame*>(menuFrame)->Hide();
                         list<CGameObject*>* addButton = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"AddButton");
-                        if (addButton->size() == 0) {
+                        list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
+
+                        if (selectedFrame->size() == 4) {
                             CGameObject* openShop = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"Environment_Layer")->Get_GameObjectFirst(L"OpenShop");
                             openShop->Set_Render(true);
                         }
@@ -118,7 +120,7 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         for (iter; iter != frame->end(); iter++) {
                             static_cast<CSushiFrame*>(*iter)->ConfirmOpened = false;
                         }
-                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
+                        //CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
 
                     }
                     else if (whichFrame == L"RecipeFrame") {
@@ -131,7 +133,7 @@ void CCloseButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         CGameObject* menuFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
                         static_cast<CMenuFrame*>(menuFrame)->Hide();
                         static_cast<CMenuFrame*>(menuFrame)->Reset_Frame();
-                        CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
+                        //CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_CloseButton", CSoundMgr::SFX, 1.0f);
 
                     }
                     else if (whichFrame == L"UpgradeConfirmFrame") {

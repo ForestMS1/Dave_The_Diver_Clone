@@ -364,7 +364,7 @@ CSushiList* CSushiList::Create()
 void CSushiList::Free()
 {
     CGameObject::Free();
-    for_each(pictures.begin(), pictures.end(), Safe_Release<CGameObject*>);
-    pictures.clear();
+ /*   for_each(pictures.begin(), pictures.end(), Safe_Release<CGameObject*>);
+    pictures.clear();*/
     
 }

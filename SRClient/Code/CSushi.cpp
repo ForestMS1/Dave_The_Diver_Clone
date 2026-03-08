@@ -426,7 +426,7 @@ void CSushi::Key_Input()
 		}
 		CGameObject* button2 = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"Close_3");
 		button2->Set_Render(true);
-		CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenButton", CSoundMgr::SFX, 1.0f);
+		//CSoundMgr::GetInstance()->PlaySoundOne(L"Sound_OpenButton", CSoundMgr::SFX, 1.0f);
 
 	}
 

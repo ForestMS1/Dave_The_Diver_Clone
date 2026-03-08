@@ -128,8 +128,8 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                                 pTransform = static_cast<CTransform*>((*iter)->Get_Component(ID_DYNAMIC, L"Com_Transform"));
                                 scale = pTransform->m_vScale;
                                 pos = pTransform->m_vInfo[INFO_POS];
-                                Safe_Release(*iter);
-								iter = addButton->erase(iter);
+                               /* Safe_Release(*iter);
+								iter = addButton->erase(iter);*/
 							
                                 //(*iter)->Set_Dead();
 
@@ -182,20 +182,28 @@ void COkayButton::LateUpdate_GameObject(const _float& fTimeDelta)
                         }
                         CGameObject* menuFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjectFirst(L"MenuFrame");
                         vector<CGameObject*>& addButtons = static_cast<CMenuFrame*>(menuFrame)->Get_Buttons();
+                        static_cast<CMenuFrame*>(menuFrame)->curButton = 0;
+                        static_cast<CMenuFrame*>(menuFrame)->Reset_Frame();
                         vector<CGameObject*>::iterator iter3 = addButtons.begin();
-                        for (iter3; iter3 != addButtons.end();) {
+                        for (iter3; iter3 != addButtons.end();iter3++) {
                             if (static_cast<CAddMenuButton*>(*iter3)->m_bSelected == true) {
-                                iter3 = addButtons.erase(iter3);
-                                static_cast<CMenuFrame*>(menuFrame)->curButton = 0;
-                                static_cast<CMenuFrame*>(menuFrame)->Reset_Frame();
+                             
+                                //Safe_Release(*iter3);
+                                //(*iter3)->Set_Dead();
+                                //iter3 = addButtons.erase(iter3);
                             }
-                            else {
+                           /* else {
                                 iter3++;
-                            }
+                            }*/
                         }
-                        if (addButtons.size() != 0) {
-                            static_cast<CAddMenuButton*>(addButtons[0])->Set_Selected(true);
+                        list<CGameObject*>* selectedFrame = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"UI_Layer")->Get_GameObjects(L"SelectedFrame");
+
+
+                        //if (addButtons.size() != 0) {
+                        if (selectedFrame->size() < 4) {
+                            static_cast<CAddMenuButton*>(addButtons[selectedFrame->size()])->Set_Selected(true);
                         }
+                       // }
 
                         pGameObject = CSmallMenu::Create();
                         static_cast<CSmallMenu*>(pGameObject)->Set_SushiTex(fishName);

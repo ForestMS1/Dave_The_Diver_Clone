@@ -427,10 +427,10 @@ CUpgradeFrame* CUpgradeFrame::Create()
 void CUpgradeFrame::Free()
 {
     CGameObject::Free();
-    for_each(fishPictures.begin(), fishPictures.end(), Safe_Release<CGameObject*>);
+ /*   for_each(fishPictures.begin(), fishPictures.end(), Safe_Release<CGameObject*>);
     fishPictures.clear();
     for_each(sushiPictures.begin(), sushiPictures.end(), Safe_Release<CGameObject*>);
     sushiPictures.clear();
     for_each(frameGameObjects.begin(), frameGameObjects.end(), Safe_Release<CGameObject*>);
-    frameGameObjects.clear();
+    frameGameObjects.clear();*/
 }

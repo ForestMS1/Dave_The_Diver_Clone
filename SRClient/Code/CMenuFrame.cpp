@@ -125,6 +125,7 @@ _int CMenuFrame::Update_GameObject(const _float& fTimeDelta)
             button->Set_Render(false);
         }
     }
+ 
     return iExit;
 }
 
@@ -420,7 +421,7 @@ CMenuFrame* CMenuFrame::Create()
 void CMenuFrame::Free()
 {
     CGameObject::Free();
-    for_each(addButtons.begin(), addButtons.end(), Safe_Release<CGameObject*>);
-    addButtons.clear();
+/*    for_each(addButtons.begin(), addButtons.end(), Safe_Release<CGameObject*>);
+    addButtons.clear();*/
     
 }
