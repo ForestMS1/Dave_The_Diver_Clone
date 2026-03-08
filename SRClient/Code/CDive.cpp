@@ -1050,7 +1050,7 @@ void CDive::Free()
 	
 
 	CScene::Free();
-
+	CLightMgr::GetInstance()->ResetLight();
 	CParticleMgr::GetInstance()->Clear_Particle();
 	CColliderMgr::GetInstance()->Clear_ColliderGroup();
 	CCameraMgr::GetInstance()->DestroyInstance();

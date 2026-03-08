@@ -37,9 +37,9 @@ HRESULT CAllLight::Ready_Light( const _uint& iIndex)
     pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 
-    int r = int(8 * dark);
-    int g = int(20 * dark);
-    int b = int(24 * dark);
+    int r = int(186 * dark);
+    int g = int(254 * dark);
+    int b = int(249 * dark);
 
     pGraphicDev->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(r, g, b));
     pGraphicDev->SetRenderState(D3DRS_SPECULARENABLE, TRUE);

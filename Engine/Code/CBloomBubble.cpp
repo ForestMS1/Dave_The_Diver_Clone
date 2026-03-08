@@ -3,7 +3,7 @@
 
 CBloomBubble::CBloomBubble()
 {
-	_size = { 0.15f,0.15f,0.15f };
+	_size = { 0.05f,0.05f,0.05f };
 	_origin = { 0,0,0 };
 }
 
@@ -41,11 +41,11 @@ void CBloomBubble::resetParticle(Attribute* attribute, D3DXCOLOR color)
 	attribute->_origin = _hitPosition;
 	attribute->_position = _hitPosition;
 
-	float Random = GetRandomFloat(-1.f, 1.f);
+	float Random = GetRandomFloat(-10.f, 10.f);
 	attribute->_position.x += Random;
 
 
-	Random = GetRandomFloat(-1.f, 1.f);
+	Random = GetRandomFloat(-10.f, 10.f);
 	attribute->_position.y += Random;
 
 

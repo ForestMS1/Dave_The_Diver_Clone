@@ -34,6 +34,13 @@ void CLightMgr::OffLight() {
     }
 }
 
+void CLightMgr::ResetLight() {
+    for (auto list : m_LightList) {
+        for_each(list.begin(), list.end(), CDeleteObj());
+        list.clear();
+    }
+}
+
 HRESULT CLightMgr::Add_Light(CLight* Light, LIGHTID _ID)
 {
     m_LightList[_ID].push_back(Light);

@@ -3,6 +3,7 @@
 #include "CGraphicDev.h"
 #include "CLightMgr.h"
 #include "CParticleMgr.h"
+#include "CSeaPointLight.h"
 CDeepSeaEffect::CDeepSeaEffect() : CGameObject()
 {
 }
@@ -22,10 +23,24 @@ HRESULT CDeepSeaEffect::Ready_GameObject()
 
 	
 	//CLightMgr::GetInstance()->Add_Light()
-	_vec3 vPos{-30,-20,0};
+	_vec3 vPos{-32,-163,0};
 	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos,15);
+	vPos = { 40, - 151 ,0 };
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos, 30);
+
+	vPos = { 45, -170 ,0 };
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos, 30);
+
+	vPos = { 55, -170 ,0 };
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos, 30);
+
+	vPos = { 60, - 170 ,0 };
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos, 30);
+
+
+	vPos = { 65, -170 ,0 };
+	CParticleMgr::GetInstance()->spwan_Particle(PARTICLE_BLOOMBUBBLE, vPos, 30);
 	return S_OK;
 }
 

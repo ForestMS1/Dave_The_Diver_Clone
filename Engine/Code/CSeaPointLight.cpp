@@ -31,7 +31,7 @@ HRESULT CSeaPointLight::Ready_Light(const _uint& iIndex)
     tLight.Ambient = D3DXCOLOR(0.04f, 0.12f, 0.10f, 1.f);
     tLight.Specular = D3DXCOLOR(0.16f, 0.40f, 0.35f, 1.f);
 
-    tLight.Range = 10.f;
+    tLight.Range = 8.f;
     tLight.Attenuation0 = 0.0f;
     tLight.Attenuation1 = 0.18f;
     tLight.Attenuation2 = 0.03f;
