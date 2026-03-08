@@ -32,6 +32,8 @@ void CDiveDaveSubMarine::Enter()
 	_vec3 vScale = { fWidth / fAspect, fHeight / fAspect, 1.f };
 	vScale *= 4.f;
 	m_pOwner->Multiply_Scale(&vScale);
+
+	m_pOwner->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Set_Pos(-40.f, -20.f, 0.f);
 }
 
 void CDiveDaveSubMarine::Input(const _float& fTimeDelta)
