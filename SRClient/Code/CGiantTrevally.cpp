@@ -29,9 +29,9 @@ HRESULT CGiantTrevally::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Giant_Trevally";
     m_iRank = 4;  // 랭크 4 (최상위)
     m_iStar = 4;  // 별 4개
-    m_fWeight = 2.0f + CHelper::RandRangeFromZero(5.f);  // 2.0kg
+    m_fWeight = 2.0f + CHelper::RandRangeFromZero(0.5f);  // 2.0kg
     m_iPrice = 25;  // 가격 25
-    m_fLength = 35.f + CHelper::RandRangeFromZero(5.f);  // 길이 35cm
+    m_fLength = 35.f + CHelper::RandRangeFromZero(0.5f);  // 길이 35cm
     m_iMeatCnt = 3;  // 고기 3개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GiantTrevally";
     m_iSushiMoney = 40;  // 스시 가격 40

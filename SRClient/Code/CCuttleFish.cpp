@@ -30,9 +30,9 @@ HRESULT CCuttleFish::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_CuttleFish";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
-    m_fWeight = 1.0f + CHelper::RandRangeFromZero(5.f);  // 1.0kg
+    m_fWeight = 1.0f + CHelper::RandRangeFromZero(0.5f);  // 1.0kg
     m_iPrice = 13;  // 가격 13
-    m_fLength = 25.f + CHelper::RandRangeFromZero(5.f);  // 길이 25cm
+    m_fLength = 25.f + CHelper::RandRangeFromZero(0.5f);  // 길이 25cm
     m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_CuttleFish";
     m_iSushiMoney = 20;  // 스시 가격 20

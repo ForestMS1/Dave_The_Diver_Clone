@@ -30,9 +30,9 @@ HRESULT CDevilScorpionFish::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Devil_ScorpionFish";
     m_iRank = 4;  // 랭크 4 (최상위)
     m_iStar = 3;  // 별 4개
-    m_fWeight = 1.5f + CHelper::RandRangeFromZero(5.f);  // 1.5kg
+    m_fWeight = 1.5f + CHelper::RandRangeFromZero(0.5f);  // 1.5kg
     m_iPrice = 20;  // 가격 20
-    m_fLength = 25.f + CHelper::RandRangeFromZero(5.f);  // 길이 25cm
+    m_fLength = 25.f + CHelper::RandRangeFromZero(0.5f);  // 길이 25cm
     m_iMeatCnt = 3;  // 고기 3개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Devil_ScorpionFish";
     m_iSushiMoney = 30;  // 스시 가격 30

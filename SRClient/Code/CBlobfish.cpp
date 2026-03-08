@@ -29,9 +29,9 @@ HRESULT CBlobfish::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Blobfish";
     m_iRank = 3;  // 랭크 3 (상위)
     m_iStar = 3;  // 별 3개
-    m_fWeight = 1.2f;  // 1.2kg
+    m_fWeight = 1.2f + CHelper::RandRangeFromZero(0.5f);  // 1.2kg
     m_iPrice = 15;  // 가격 15
-    m_fLength = 20.f;  // 길이 20cm
+    m_fLength = 20.f + CHelper::RandRangeFromZero(0.5f);  // 길이 20cm
     m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_Blobfish";
     m_iSushiMoney = 18;  // 스시 가격 18

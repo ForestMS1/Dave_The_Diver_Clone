@@ -29,9 +29,9 @@ HRESULT CGreatSpiderCrab::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Great_Spider_Crab";
     m_iRank = 3;  // 랭크 3 (상위)
     m_iStar = 3;  // 별 3개
-    m_fWeight = 3.0f + CHelper::RandRangeFromZero(5.f);  // 3.0kg
+    m_fWeight = 3.0f + CHelper::RandRangeFromZero(0.5f);  // 3.0kg
     m_iPrice = 30;  // 가격 30
-    m_fLength = 40.f + CHelper::RandRangeFromZero(5.f);  // 길이 40cm
+    m_fLength = 40.f + CHelper::RandRangeFromZero(0.5f);  // 길이 40cm
     m_iMeatCnt = 4;  // 고기 4개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreatSpiderCrab";
     m_iSushiMoney = 50;  // 스시 가격 50

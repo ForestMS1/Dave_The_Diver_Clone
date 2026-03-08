@@ -26,9 +26,9 @@ HRESULT CCowPatternSnapper::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_CowPatternSnapper";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
-    m_fWeight = 0.6f + CHelper::RandRangeFromZero(5.f);  // 0.6kg
+    m_fWeight = 0.8f + CHelper::RandRangeFromZero(0.5f);  // 0.6kg
     m_iPrice = 12;  // 가격 12
-    m_fLength = 15.f + CHelper::RandRangeFromZero(5.f);  // 길이 15cm
+    m_fLength = 15.f + CHelper::RandRangeFromZero(0.5f);  // 길이 15cm
     m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_CowPatternSnapper";
     m_iSushiMoney = 18;  // 스시 가격 18

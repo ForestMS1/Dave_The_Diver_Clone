@@ -29,9 +29,9 @@ HRESULT CRedLionfish::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Red_Lionfish";
     m_iRank = 3;  // 랭크 3 (상위)
     m_iStar = 3;  // 별 3개
-    m_fWeight = 1.8f + CHelper::RandRangeFromZero(5.f);  // 1.8kg
+    m_fWeight = 1.8f + CHelper::RandRangeFromZero(0.5f);  // 1.8kg
     m_iPrice = 22;  // 가격 22
-    m_fLength = 28.f + CHelper::RandRangeFromZero(5.f);  // 길이 28cm
+    m_fLength = 28.f + CHelper::RandRangeFromZero(0.5f);  // 길이 28cm
     m_iMeatCnt = 3;  // 고기 3개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_RedLionfish";
     m_iSushiMoney = 35;  // 스시 가격 35
