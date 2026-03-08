@@ -38,6 +38,10 @@ HRESULT CHumboldtSquid::Ready_GameObject()
     m_iSushiMoney = 20;  // 스시 가격 20
     m_iSushiLv = 2;  // 스시 레벨 2
 
+    m_iHP = 2;
+
+    m_sRunFromSpineAniName = L"sprint";
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 

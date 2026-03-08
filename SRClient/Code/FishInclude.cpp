@@ -1,7 +1,7 @@
 #include "FishInclude.h"
 #include "CLayer.h"
 #include "CAABB.h"
-
+/*
 HRESULT Fish::AddLayer_BlueTang(Engine::CLayer* pLayer, float fPosX, float fPosY, float fScale, CGameObject* pParent)
 {
 	Fish::CBlueTang* pFish = Fish::CBlueTang::Create(fPosX, fPosY, 0.05f * fScale);
@@ -263,3 +263,4 @@ HRESULT Fish::AddLayer_Blobfish(Engine::CLayer* pLayer, float fPosX, float fPosY
 	}
 	return S_OK;
 }
+*/

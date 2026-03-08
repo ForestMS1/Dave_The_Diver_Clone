@@ -79,25 +79,7 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
 
     
         auto info = CGameMemMgr::GetInstance()->Get_DiveInfos().back();
-        m_sDiveNo = std::to_wstring(CGameMemMgr::GetInstance()->Get_DiveInfos().size());
-
-        _uint fCaught = info.Get_CaughtFish();
-        m_sCaught = std::to_wstring(fCaught);
-
-        _float fDepth = info.Get_Depth();
-        {
-            std::wstringstream wss;
-            wss << std::fixed << std::setprecision(1) << fDepth << L"";
-            std::wstring result = wss.str();
-            m_sDepth = result;
-        }
        
-
-        _uint fObtained = info.Get_Obtained();
-        m_sObtained = std::to_wstring(fObtained);
-
-        float fTime = info.CalcDiveTime();
-        m_sTime = info.CalcDiveTimeStr();
 
         if (!info.Get_Fishes().empty())
         {
@@ -120,39 +102,136 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                     return a.fLength > b.fLength;
                     });
 
+
+                auto BiggestFIsh = fishes.front();
                 std::wstringstream wss;
-                wss << std::fixed << std::setprecision(1) << fishes.front().fLength << L"cm";
+                wss << std::fixed << std::setprecision(1) << BiggestFIsh.fLength << L"cm";
                 std::wstring result = wss.str();
                 m_sBiggestFishSize = result;
-                m_sBiggestFishName = fishes.front().sFishName;
-                m_sBiggestFishImgAsseName = fishes.front().sThumbNailAssetName;
+                m_sBiggestFishName = BiggestFIsh.sFishName;
+                m_sBiggestFishImgAsseName = BiggestFIsh.sThumbNailAssetName;
+                m_iBiggestFishStar = BiggestFIsh.iStar;
             }
         }
 
 
 
+        m_sDiveNo = std::to_wstring(CGameMemMgr::GetInstance()->Get_DiveInfos().size());
+
+        // currCaught
+        _uint fCaught = info.Get_CaughtFish();
+        m_sCaught = std::to_wstring(fCaught);
+
+        // currDepth
+        _float fDepth = info.Get_Depth();
+        {
+            std::wstringstream wss;
+            wss << std::fixed << std::setprecision(1) << fDepth << L"";
+            std::wstring result = wss.str();
+            m_sDepth = result;
+        }
+
+        // currObtained
+        _uint fObtained = info.Get_Obtained();
+        m_sObtained = std::to_wstring(fObtained);
+
+        // currTime
+        float fTime = info.CalcDiveTime();
+        m_sTime = info.CalcDiveTimeStr();
+
         if (CGameMemMgr::GetInstance()->Get_DiveInfos().size() > 1)
         {
-            auto info2 = CGameMemMgr::GetInstance()->Get_DiveInfos()[CGameMemMgr::GetInstance()->Get_DiveInfos().size() - 2];
-            float fTime2 = info2.CalcDiveTime(); 
-            m_sTime2 = info2.CalcDiveTimeStr();
-            
-            _uint fCaught2 = info2.Get_CaughtFish();
-            m_sCaught2 = std::to_wstring(fCaught2);
+            vector<CGameMemMgr::CDiveInfo> vec = CGameMemMgr::GetInstance()->Get_DiveInfos();
+            vector<CGameMemMgr::CDiveInfo> sub_vector(vec.begin(), vec.begin() + CGameMemMgr::GetInstance()->Get_DiveInfos().size() - 1);
 
-            _float fDepth2 = info2.Get_Depth();
+            float fTime2 = 0.f; 
+            wstring sBestDiveTime = L"";
+            //m_sTime2 = info2.CalcDiveTimeStr();
+
             {
-                std::wstringstream wss;
-                wss << std::fixed << std::setprecision(1) << fDepth2 << L"";
-                std::wstring result = wss.str();
-                m_sDepth2 = result;
+                //float fBestDiveTIme = 0.f;
+                
+                for (auto& diveInfo: sub_vector)
+                {
+                    float fDiveTime = diveInfo.CalcDiveTime();
+                    if (fDiveTime > fTime2)
+                    {
+                        fTime2 = fDiveTime;
+                        sBestDiveTime = diveInfo.CalcDiveTimeStr();
+                    }
+                }
+
+                m_sTime2 = sBestDiveTime;
+            }
+            
+
+
+
+            //auto info2 = CGameMemMgr::GetInstance()->Get_DiveInfos()[CGameMemMgr::GetInstance()->Get_DiveInfos().size() - 2];
+            _uint fCaught2 = 0;
+            {
+                for (auto& diveInfo : sub_vector)
+                {
+                    _uint fCaught = diveInfo.Get_CaughtFish();
+                    if (fCaught > fCaught2)
+                    {
+                        fCaught2 = fCaught;
+                    }
+                }
+                m_sCaught2 = std::to_wstring(fCaught2);
             }
 
-            _uint fObtained2 = info2.Get_Obtained();
-            m_sObtained2 = std::to_wstring(fObtained2);
+            _float fDepth2 = 0.f;
+            {
+                for (auto& diveInfo : sub_vector)
+                {
+                    _float fDepth = diveInfo.Get_Depth();
+                    if (fDepth > fDepth2)
+                    {
+                        fDepth2 = fDepth;
+                    }
+                }
+
+                {
+                    std::wstringstream wss;
+                    wss << std::fixed << std::setprecision(1) << fDepth2 << L"";
+                    std::wstring result = wss.str();
+                    m_sDepth2 = result;
+                }
+            }
+
+            _uint fObtained2 = 0;
+            {
+                for (auto& diveInfo : sub_vector)
+                {
+                    _uint iOptain = diveInfo.Get_Obtained();
+                    if (iOptain > fObtained2)
+                    {
+                        fObtained2 = iOptain;
+                    }
+                }
+
+                m_sObtained2 = std::to_wstring(fObtained2);
+            }
 
             
             if (fTime > fTime2)
+            {
+                //Time Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    auto pImg = CDiveResultUIImg::Create(-0.34f, 2.4f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+                }
+            }
+            else
             {
                 //Time Best
                 if (auto pLayer = CManagement::GetInstance()
@@ -169,7 +248,24 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                 }
             }
 
+
             if (fCaught > fCaught2)
+            {
+                // Caught Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
+                    auto pImg = CDiveResultUIImg::Create(-0.64f, 1.46f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+                }
+            }
+            else
             {
                 // Caught Best
                 if (auto pLayer = CManagement::GetInstance()
@@ -193,6 +289,22 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                     ->Get_Scene()
                     ->Get_Layer(L"0_GameLogic_Layer"))
                 {
+                    auto pImg = CDiveResultUIImg::Create(2.4f, 2.4f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+                }
+            }
+            else
+            {
+                // Depth Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
                     auto pImg = CDiveResultUIImg::Create(2.4f, 2.1f);
                     pImg->Set_Scale(0.1f);
                     pImg->Set_ViewZ(0.49f);
@@ -210,6 +322,23 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                     ->Get_Scene()
                     ->Get_Layer(L"0_GameLogic_Layer"))
                 {
+                    auto pImg = CDiveResultUIImg::Create(2.3f, 1.46f);
+                    pImg->Set_Scale(0.1f);
+                    pImg->Set_ViewZ(0.49f);
+                    pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                    pImg->Set_Parent(this);
+                    pImg->Ready_After_Create();
+                    pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+                }
+
+            }
+            else
+            {
+                // Obtaine Best
+                if (auto pLayer = CManagement::GetInstance()
+                    ->Get_Scene()
+                    ->Get_Layer(L"0_GameLogic_Layer"))
+                {
                     auto pImg = CDiveResultUIImg::Create(2.3f, 1.16f);
                     pImg->Set_Scale(0.1f);
                     pImg->Set_ViewZ(0.49f);
@@ -218,13 +347,75 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
                     pImg->Ready_After_Create();
                     pLayer->Add_GameObject(L"DiveResultBest", pImg);
                 }
-
             }
 
+        }
+        // 무조건 새로운
+        else
+        {
+            //Time Best
+            if (auto pLayer = CManagement::GetInstance()
+                ->Get_Scene()
+                ->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                auto pImg = CDiveResultUIImg::Create(-0.34f, 2.4f);
+                pImg->Set_Scale(0.1f);
+                pImg->Set_ViewZ(0.49f);
+                pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                pImg->Set_Parent(this);
+                pImg->Ready_After_Create();
+                pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+            }
+
+
+            // Caught Best
+            if (auto pLayer = CManagement::GetInstance()
+                ->Get_Scene()
+                ->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                auto pImg = CDiveResultUIImg::Create(-0.64f, 1.46f);
+                pImg->Set_Scale(0.1f);
+                pImg->Set_ViewZ(0.49f);
+                pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                pImg->Set_Parent(this);
+                pImg->Ready_After_Create();
+                pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+            }
+
+
+            // Obtaine Best
+            if (auto pLayer = CManagement::GetInstance()
+                ->Get_Scene()
+                ->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                auto pImg = CDiveResultUIImg::Create(2.3f, 1.46f);
+                pImg->Set_Scale(0.1f);
+                pImg->Set_ViewZ(0.49f);
+                pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                pImg->Set_Parent(this);
+                pImg->Ready_After_Create();
+                pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+            }
+
+            // Depth Best
+            if (auto pLayer = CManagement::GetInstance()
+                ->Get_Scene()
+                ->Get_Layer(L"0_GameLogic_Layer"))
+            {
+                auto pImg = CDiveResultUIImg::Create(2.4f, 2.4f);
+                pImg->Set_Scale(0.1f);
+                pImg->Set_ViewZ(0.49f);
+                pImg->Set_AssetName(L"Tex_DiveResult_PinkBest");
+                pImg->Set_Parent(this);
+                pImg->Ready_After_Create();
+                pLayer->Add_GameObject(L"Tex_DiveResult_PinkBest", pImg);
+            }
         }
 
     }
 
+    
+    if (!m_sBiggestFishImgAsseName.empty())
     {
         if (auto pLayer = CManagement::GetInstance()
             ->Get_Scene()
@@ -237,23 +428,31 @@ HRESULT CDiveResultUI::Ready_AfterCreate()
             pImg->Set_Parent(this);
             pImg->Ready_After_Create();
             pLayer->Add_GameObject(L"BiggestFishImg", pImg);
-        }
-    }
 
-    //{
-    //    if (auto pLayer = CManagement::GetInstance()
-    //        ->Get_Scene()
-    //        ->Get_Layer(L"0_GameLogic_Layer"))
-    //    {
-    //        auto pImg = CDiveResultUIImg::Create(0.f, 0.f); // -0.290
-    //        pImg->Set_Scale(0.1f);
-    //        pImg->Set_ViewZ(0.49f);
-    //        pImg->Set_AssetName(L"Tex_DiveResult_Best");
-    //        pImg->Set_Parent(this);
-    //        pImg->Ready_After_Create();
-    //        pLayer->Add_GameObject(L"DiveResult_Best", pImg);
-    //    }
-    //}
+
+
+            float refX = 1.65f;
+            for (int i = 1; i <= 3; ++i)
+            {
+                auto pStar = CDiveResultUIImg::Create(refX, -0.03f);
+                pStar->Set_Scale(0.13f);
+                pStar->Set_ViewZ(0.49f);
+                pStar->Set_AssetName(L"Tex_GetItemUIStar");
+                pStar->Set_Parent(this);
+                pStar->Ready_After_Create();
+                pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+
+                if (i > m_iBiggestFishStar)
+                {
+                    pStar->Set_AssetName(L"Tex_GetItemUIEmptyStar");
+                }
+                refX += 0.35f;
+            }
+        }
+
+
+    }
+   
 
     // Items 8 * 4 0.73
     {
@@ -371,7 +570,7 @@ _int		CDiveResultUI::Update_GameObject(const _float& fTimeDelta)
             }
         }
         Set_DeadCascade();
-        
+        return OBJ_DEAD;
     }
 
     _int iExit = CGameObject::Update_GameObject(fTimeDelta);

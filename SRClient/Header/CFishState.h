@@ -24,6 +24,7 @@ namespace Fish
 		FS_SPRINT,
 		FS_DIE,
 		FS_QTE,
+		FS_FORCEMOVE,
 		FS_END
 	};
 

@@ -40,7 +40,17 @@ void CProjectileReturn::Render_State()
 
 void CProjectileReturn::Exit()
 {
+	CHarpoonProjectile* pProjectile = static_cast<CHarpoonProjectile*>(m_pOwner);
+	// [LSY] 여기가 물고기 실패했을때인가??
+	if (pProjectile->m_pCaughtFish != nullptr && !static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
+	{
+		if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
+		{
+			pFish->QTERelease();
+		}
+	}
 	Clear();
+
 }
 
 void CProjectileReturn::Clear()
@@ -112,15 +122,7 @@ void CProjectileReturn::Return_Act(const _float& fTimeDelta)
 	}
 
 
-
-	// [LSY] 여기가 물고기 실패했을때인가??
-	if (pProjectile->m_pCaughtFish != nullptr && !static_cast<CDiveDave*>(pProjectile->m_pParentGameObject)->Is_FishCaught())
-	{
-		if (auto pFish = dynamic_cast<CFishGameObject*>(pProjectile->m_pCaughtFish))
-		{
-			pFish->QTERelease();
-		}
-	}
+	
 }
 
 void CProjectileReturn::Set_ParentTransform()

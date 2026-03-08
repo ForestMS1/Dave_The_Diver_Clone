@@ -340,7 +340,8 @@ void CDive::Render_Scene()
 			{
 				_vec3 vPos;
 				pColl1->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vPos);
-				Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl1);
+				//Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pColl1);
+				
 			}
 			if (auto pColl2 = pLayer->Get_GameObjectFirst(L"FishTankCollider_2"))
 			{
@@ -1112,6 +1113,42 @@ void CDive::Place_Fish() {
 				Fish::AddLayer_Fish<Fish::CBlueTang>(L"BlueTang", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
 
+				Fish::AddLayer_Fish<Fish::CGreatBarracuda>(L"GreatBarracuda", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CGreatBarracuda>(L"GreatBarracuda", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CGreatBarracuda>(L"GreatBarracuda", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+
+				Fish::AddLayer_Fish<Fish::CCowPatternSnapper>(L"CowPatternSnapper", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCowPatternSnapper>(L"CowPatternSnapper", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCowPatternSnapper>(L"CowPatternSnapper", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+				
+				Fish::AddLayer_Fish<Fish::CCuttleFish>(L"CuttleFish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCuttleFish>(L"CuttleFish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CCuttleFish>(L"CuttleFish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+				
+				Fish::AddLayer_Fish<Fish::CAtlanticBonito>(L"AtlanticBonito", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticBonito>(L"AtlanticBonito", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticBonito>(L"AtlanticBonito", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+				
+				Fish::AddLayer_Fish<Fish::CAtlanticAnglerfish>(L"AtlanticAnglerfish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticAnglerfish>(L"AtlanticAnglerfish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAtlanticAnglerfish>(L"AtlanticAnglerfish", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				
+
+				Fish::AddLayer_Fish<Fish::CChamberedNautilus>(L"ChamberedNautilus", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CChamberedNautilus>(L"ChamberedNautilus", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CChamberedNautilus>(L"ChamberedNautilus", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+				//CBigeyeTrevally
+				Fish::AddLayer_Fish<Fish::CBigeyeTrevally>(L"BigeyeTrevally", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CBigeyeTrevally>(L"BigeyeTrevally", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CBigeyeTrevally>(L"BigeyeTrevally", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+
+
+
 				//---------------------------------------------------------------------------------------------
 
 				Fish::AddLayer_Fish<Fish::CBlueTang>(L"BlueTang", pLayer, vPos.x, vPos.y, 0.3f, pColl);
@@ -1291,7 +1328,7 @@ void CDive::Place_Fish() {
 
 				Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
-				Fish::AddLayer_Fish<Fish::CBlobfish>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 			}
 			if (auto pColl = pLayer->Get_GameObjectFirst(L"FishTankCollider_8"))
 			{
@@ -1313,10 +1350,10 @@ void CDive::Place_Fish() {
 				Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 				Fish::AddLayer_Fish<Fish::CHumboldtSquid>(L"HumboldtSquid", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
-				Fish::AddLayer_Fish<Fish::CBlobfish>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 
 
-				Fish::AddLayer_Fish<Fish::CBlobfish>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
+				Fish::AddLayer_Fish<Fish::CAsianSheepshead>(L"Asiansheepshead", pLayer, vPos.x, vPos.y, 0.3f, pColl);
 		
 			}
 

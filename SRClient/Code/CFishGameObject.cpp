@@ -15,6 +15,7 @@
 #include "CDiveDaveCam.h"
 #include "CColliderMgr.h"
 #include "CFishAABBCollider.h"
+#include "CFishTankCollider.h"
 #include "CSoundMgr.h"
 CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     : m_sFishName({})
@@ -39,6 +40,7 @@ CFishGameObject::CFishGameObject(float fPosX, float fPosY, float fScale)
     , m_sAttackSpineAniName(L"swim")
     , m_fRunFromTimer(0.f)
     , m_sRunFromSpineAniName(L"swim")
+    , m_sSwimSpineAniName(L"swim")
     , m_bIntersectHitboxDave(false)
     , m_bIntersectDetetboxDave(false)
     , m_bDieAndAcquire(false)
@@ -132,6 +134,7 @@ void CFishGameObject::Die()
 void CFishGameObject::RunFrom(_vec3 const* pDavePos)
 {
     if (m_eFishState == Fish::FS_DIE) return;
+    if (m_eFishState == Fish::FS_FORCEMOVE) return;
 
     if (m_eFishState != Fish::FS_RUNFROM)
     {
@@ -172,9 +175,9 @@ void CFishGameObject::QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos)
     _vec3 vDir = *pJaksalPos - *pDavePos;
     D3DXVec3Normalize(&vDir, &vDir);
 
-    _vec3 vNewTarget = vMyPos + vDir * 0.5f;
+    _vec3 vNewTarget = vMyPos + vDir * 0.8f;
     m_vMoveTarget = vNewTarget;
-    m_fCurrSpeed = 30.f;
+    m_fCurrSpeed = 10.f;
     m_fCurrRotateSpeed = D3DXToRadian(360.f * 10.f);
 
 
@@ -194,12 +197,14 @@ void CFishGameObject::QTE(_vec3 const* pJaksalPos, _vec3 const* pDavePos)
 void CFishGameObject::QTERelease()
 {
     Swim();
+    m_fMoveTargetReLocateTimer = 99.f;
 }
 
 void CFishGameObject::AttackTo(_vec3 const* pDavePos)
 {
     if (m_eFishState == Fish::FS_DIE) return;
     if (m_eFishState == Fish::FS_QTE) return;
+    if (m_eFishState == Fish::FS_FORCEMOVE) return;
    
     // State Enter
     if (m_eFishState != Fish::FS_ATTACKTO)
@@ -238,7 +243,7 @@ void CFishGameObject::Swim()
 
     if (m_eFishState != Fish::FS_SWIM)
     {
-        m_pSpineCom->Set_AniState(L"swim");
+        m_pSpineCom->Set_AniState(m_sSwimSpineAniName);
     }
     m_eFishState = Fish::FS_SWIM;
 
@@ -255,7 +260,7 @@ void CFishGameObject::AcquireTo(_vec3 const* pDavePos)
 
     m_bMoveToRotateEnable = false;
 
-    m_fCurrSpeed = 5.f;
+    m_fCurrSpeed = 9.f;
 
     float fLen = D3DXVec3Length(&vMag);
     if (fLen < 0.1f)
@@ -410,8 +415,14 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 {
     auto tmp = CCameraMgr::GetInstance()->Get_CurCamera();
     _float fTimeDelta = _fTimeDelta;
-    if (static_cast<CDiveDaveCam*>(tmp)->GetFov() < D3DXToRadian(60.f))
-        fTimeDelta *= 0.25f;
+    if (m_eFishState != Fish::FS_QTE)
+    {
+        if (static_cast<CDiveDaveCam*>(tmp)->GetFov() < D3DXToRadian(60.f))
+        {
+            fTimeDelta *= 0.25f;
+        }
+    }
+    
 
     _uint iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -450,7 +461,8 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
 
 
 
-
+     _vec3 vFishPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vFishPos);
 
 
 
@@ -496,9 +508,6 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
                 _vec3 vDavePos;
                 pDaveTransform->Get_Info(INFO_POS, &vDavePos);
 
-                _vec3 vFishPos;
-                m_pTransformCom->Get_Info(INFO_POS, &vFishPos);
-
                 _vec3 vMag = vDavePos - vFishPos;
                 float fLen = D3DXVec3Length(&vMag);
 
@@ -529,20 +538,75 @@ _int CFishGameObject::Update_GameObject(const _float& _fTimeDelta)
     }
 
 
+    // check out of fish tank
+    if (false && m_eFishState != Fish::FS_FORCEMOVE)
+    {
+        if (m_pAABBHitBox != nullptr)
+        {
+            if (auto pMyTank = dynamic_cast<CFishTankCollider*>(m_pParentGameObject))
+            {
+                if (!pMyTank->Get_AABB()->Intersect(m_pAABBHitBox))
+                {
+                    m_eFishState = Fish::FS_FORCEMOVE;
+
+                    _vec3 vParentPos;
+                    m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+
+                    _vec3 vParentScale;
+                    m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Scale(&vParentScale);
+
+                    float fRangeX = vParentScale.x * 2.f;
+                    float fRangeY = vParentScale.y * 2.f;
 
 
+                    //float fRange = 300.0f; 
 
+                    float randX = ((rand() % 101) / 100.f) * fRangeX - (fRangeX * 0.5f);
+                    float randY = ((rand() % 101) / 100.f) * fRangeY - (fRangeY * 0.5f);
 
+                    _vec3 vNewMoveTarget = { vParentPos.x + randX, vParentPos.y + randY, 0.f };
+                    m_vMoveTarget = vNewMoveTarget;
 
-
+                    m_fForceMoveTimer = 0.f;
+                }
+            }
+        }
+    }
 
     if (m_eFishState == Fish::FS_STOP)
     {
 
     }
+    else if (m_eFishState == Fish::FS_FORCEMOVE)
+    {
+        m_fForceMoveTimer += fTimeDelta;
+
+        _vec3 vMag = m_vMoveTarget - vFishPos;
+        if (D3DXVec3Length(&vMag) < 0.01f)
+        {
+            m_fForceMoveTimer = 99.f;
+        }
+
+        if (m_fForceMoveTimer > 2.f)
+        {
+            if (m_eFishState != Fish::FS_DIE)
+            {
+                m_eFishState = Fish::FS_SWIM;
+            }
+        }
+        MoveTo(&m_vMoveTarget, fTimeDelta);
+    }
     else if (m_eFishState == Fish::FS_SWIM)
     {
         m_fMoveTargetReLocateTimer += fTimeDelta;
+
+        //목표 다가가면 초기화초기화
+        //_vec3 vMag = m_vMoveTarget - vFishPos;
+        //if (D3DXVec3Length(&vMag) < 0.01f && (m_fMoveTargetReLocateTimer - m_fMoveTargetReLocateTimerRef) < 1.f)
+        //{
+        //    m_fMoveTargetReLocateTimer = 99.f;
+        //}
+
 
         if (m_fMoveTargetReLocateTimer > m_fMoveTargetReLocateTimerRef)
         {
@@ -666,6 +730,44 @@ void CFishGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CGameObject::LateUpdate_GameObject(fTimeDelta);
     Frustrum();
+
+
+    {
+        if (m_eFishState != Fish::FS_FORCEMOVE && m_eFishState != Fish::FS_DIE)
+        {
+            if (m_pAABBHitBox != nullptr)
+            {
+                if (auto pMyTank = dynamic_cast<CFishTankCollider*>(m_pParentGameObject))
+                {
+                    if (!pMyTank->Get_AABB()->Intersect(m_pAABBHitBox))
+                    {
+                        m_eFishState = Fish::FS_FORCEMOVE;
+
+                        _vec3 vParentPos;
+                        m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &vParentPos);
+
+                        _vec3 vParentScale;
+                        m_pParentGameObject->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Scale(&vParentScale);
+
+                        float fRangeX = vParentScale.x * 2.f;
+                        float fRangeY = vParentScale.y * 2.f;
+
+
+                        //float fRange = 300.0f; 
+
+                        float randX = ((rand() % 101) / 100.f) * fRangeX - (fRangeX * 0.5f);
+                        float randY = ((rand() % 101) / 100.f) * fRangeY - (fRangeY * 0.5f);
+
+                        _vec3 vNewMoveTarget = { vParentPos.x + randX, vParentPos.y + randY, 0.f };
+                        m_vMoveTarget = vNewMoveTarget;
+
+                        m_fForceMoveTimer = 0.f;
+                    }
+                }
+            }
+        }
+        
+    }
 }
 
 void CFishGameObject::Render(function<void()> beforeDrawLambda)
@@ -957,34 +1059,17 @@ void CFishGameObject::Free()
 
 void CFishGameObject::Frustrum() {
     //L"AABB_FishHitbox"
+    if (!m_pAABBHitBox) return;
 
     if (CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera") != nullptr) {
         CCollider* CameraCollider = CColliderMgr::GetInstance()->Get_Colliders(L"Coll_TestCamera")->front();
 
-        if (auto pChildren = this->Get_Children()) {
-            for (auto& Collider : *pChildren) {
-                if (Collider->Get_Tag() == L"FishHitBoxCollider") {
-
-                    if (CameraCollider->Intersect(dynamic_cast<CFishAABBCollider*>(Collider)->Get_AABB() ))
-                    {
-
-                        m_bFrustum = false;
-
-
-                    }
-
-                    else{
-
-                        m_bFrustum = true;
-
-                    }
-                }
-            }
-
+        if (CameraCollider->Intersect(m_pAABBHitBox))
+        {
+            m_bFrustum = false;
         }
-
+        else {
+            m_bFrustum = true;
+        }
     }
-            
-
-    
 }

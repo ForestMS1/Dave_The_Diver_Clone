@@ -2,7 +2,7 @@
 #include "CGameObject.h"
 #include "CFishState.h"
 #include "CFishStateMachine.h"
-
+#include "CAABB.h"
 //namespace Fish
 //{
 //	class CFishStateMachine;
@@ -65,6 +65,8 @@ public:
 
 	bool Get_NeedSlice() const { return m_bNeedSlice; }
 
+	int Get_AttackPower() const { return m_iAttackPower; }
+
 public:
 	_int Update_GameObject(const _float& fTimeDelta) override;
 	void LateUpdate_GameObject(const _float& fTimeDelta) override;
@@ -115,6 +117,8 @@ protected:
 	_uint m_iSushiLv;
 
 protected:
+	std::wstring m_sSwimSpineAniName;
+
 	float m_fCurrSpeed;
 	float m_fSpeed;
 	float m_fSprintSpeed;
@@ -140,6 +144,7 @@ protected:
 	float m_fAttackToTimer;
 	float m_fAttackIntervalTimer;
 	std::wstring m_sAttackSpineAniName;
+	int m_iAttackPower = 0;
 
 	bool m_bIntersectHitboxDave;
 	bool m_bIntersectDetetboxDave;
@@ -151,6 +156,7 @@ protected:
 
 	bool m_bNeedSlice;
 
+	float m_fForceMoveTimer = 0.f;
 
 public:
 	void Set_Frustum(_bool _Frustrum) { m_bFrustum = _Frustrum; }
@@ -158,6 +164,12 @@ public:
 	void Frustrum();
 private:
 	bool m_bFrustum{ false };
+
+
+public:
+	void Set_HitboxAABB(CAABB* pAABB) { m_pAABBHitBox = pAABB; }
+protected:
+	CAABB* m_pAABBHitBox = nullptr;
 	
 protected:
 	bool m_bManual;

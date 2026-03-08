@@ -54,10 +54,10 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
             _vec3 vPos;
             pFishTankCollider->Get_Transform()->Get_Info(INFO_POS, &vPos);
             
-            Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-            Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-            Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
-            Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
+            //Fish::AddLayer_BlueTang(pLayer, vPos.x, vPos.y, 0.3f, pFishTankCollider);
         }
     }
     
@@ -75,7 +75,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_BlueTang(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_BlueTang(pLayer, randX, randY, 0.3f, this);
                    
                 }
             }
@@ -85,7 +85,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_TitanTriggerfish(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_TitanTriggerfish(pLayer, randX, randY, 0.3f, this);
                 }
             }
 
@@ -94,7 +94,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_YellowTang(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_YellowTang(pLayer, randX, randY, 0.3f, this);
                    
                 }
             }
@@ -104,7 +104,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_Clownfish(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_Clownfish(pLayer, randX, randY, 0.3f, this);
                    
                 }
             }
@@ -114,7 +114,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_SmallspottedDart(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_SmallspottedDart(pLayer, randX, randY, 0.3f, this);
                    
                 }
             }
@@ -124,7 +124,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_YellowbackFusilier(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_YellowbackFusilier(pLayer, randX, randY, 0.3f, this);
                    
                 }
             }
@@ -134,7 +134,7 @@ _int CFishHQ::Update_GameObject(const _float& fTimeDelta)
                 float randY = rand() % 15;
                 if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
                 {
-                    Fish::AddLayer_Blobfish(pLayer, randX, randY, 0.3f, this);
+                    //Fish::AddLayer_Blobfish(pLayer, randX, randY, 0.3f, this);
                 }
             }
 
@@ -309,7 +309,7 @@ void CFishHQ::LateUpdate_GameObject(const _float& fTimeDelta)
                                             // TODO: 데이브쪽에서 무적시간 존재해야함
                                             if (pFish->TryAttackTimer(fTimeDelta))
                                             {
-                                                pDave->On_Hit(1);
+                                                pDave->On_Hit(pFish->Get_AttackPower());
                                             }
                                         }
                                     }

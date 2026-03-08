@@ -119,7 +119,20 @@ HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
         if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
         {
             float refX = -0.57;
-            for (int i = 0; i < m_iStar; ++i)
+            //for (int i = 0; i < m_iStar; ++i)
+            //{
+            //    auto pStar = CHoldFishUIImg::Create(refX, -0.03f);
+            //    pStar->Set_Render(false);
+            //    pStar->Set_Scale(0.0175f);
+            //    pStar->Set_ViewZ(0.49f);
+            //    pStar->Set_AssetName(L"Tex_GetItemUIStar");
+            //    pStar->Set_Parent(this);
+            //    pStar->Ready_After_Create();
+            //    pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+
+            //    refX += 0.05;
+            //}
+            for (int i = 1; i <= 3; ++i)
             {
                 auto pStar = CHoldFishUIImg::Create(refX, -0.03f);
                 pStar->Set_Render(false);
@@ -129,6 +142,11 @@ HRESULT CHoldFishUIItemArea::Ready_AfterCreate()
                 pStar->Set_Parent(this);
                 pStar->Ready_After_Create();
                 pLayer->Add_GameObject(L"HoldFishStarImg", pStar);
+
+                if (i > m_iStar)
+                {
+                    pStar->Set_AssetName(L"Tex_GetItemUIEmptyStar");
+                }
 
                 refX += 0.05;
             }

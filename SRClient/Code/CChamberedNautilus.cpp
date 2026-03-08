@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CSmallspottedDart.h"
+#include "CChamberedNautilus.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
@@ -11,26 +11,26 @@
 
 using namespace Fish;
 
-CSmallspottedDart::CSmallspottedDart(float fPosX, float fPosY, float fScale)
+CChamberedNautilus::CChamberedNautilus(float fPosX, float fPosY, float fScale)
     : CFishGameObject(fPosX, fPosY, fScale)
 {
 }
 
-CSmallspottedDart::~CSmallspottedDart()
+CChamberedNautilus::~CChamberedNautilus()
 {
 }
 
-HRESULT CSmallspottedDart::Ready_GameObject()
+HRESULT CChamberedNautilus::Ready_GameObject()
 {
-    m_sFishName = L"타원전갱이";
-    m_sThumbNailAssetName = L"Tex_FishThumb_Smallspotted_dart";
+    m_sFishName = L"앵무조개";
+    m_sThumbNailAssetName = L"Tex_FishThumb_ChamberedNautilus";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
     m_fWeight = 0.6f;  // 0.6kg
     m_iPrice = 12;  // 가격 12
     m_fLength = 15.f;  // 길이 15cm
     m_iMeatCnt = 2;  // 고기 2개
-    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_SmallspottedDart";
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_ChamberedNautilus";
     m_iSushiMoney = 18;  // 스시 가격 18
     m_iSushiLv = 2;  // 스시 레벨 2
 
@@ -53,33 +53,33 @@ HRESULT CSmallspottedDart::Ready_GameObject()
     return S_OK;
 }
 
-_int CSmallspottedDart::Update_GameObject(const _float& fTimeDelta)
+_int CChamberedNautilus::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CFishGameObject::Update_GameObject(fTimeDelta);
 
     return iExit;
 }
 
-void CSmallspottedDart::LateUpdate_GameObject(const _float& fTimeDelta)
+void CChamberedNautilus::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CFishGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void CSmallspottedDart::Render_GameObject()
+void CChamberedNautilus::Render_GameObject()
 {
     CFishGameObject::Render();
 }
 
-HRESULT CSmallspottedDart::Ready_Component()
+HRESULT CChamberedNautilus::Ready_Component()
 {
-    CFishGameObject::Ready(L"Spine_SmallspottedDart");
+    CFishGameObject::Ready(L"Spine_ChamberedNautilus");
     return S_OK;
 }
 
 
-CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY, float fScale)
+CChamberedNautilus* CChamberedNautilus::Create(float fPosX, float fPosY, float fScale)
 {
-    CSmallspottedDart* pFish = new CSmallspottedDart{ fPosX, fPosY, fScale };
+    CChamberedNautilus* pFish = new CChamberedNautilus{ fPosX, fPosY, fScale };
 
     if (FAILED(pFish->Ready_GameObject()))
     {
@@ -91,7 +91,7 @@ CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY, float fSc
     return pFish;
 }
 
-void CSmallspottedDart::Free()
+void CChamberedNautilus::Free()
 {
     CFishGameObject::Free();
 }
