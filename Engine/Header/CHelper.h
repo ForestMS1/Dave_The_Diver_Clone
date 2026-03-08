@@ -170,6 +170,11 @@ public:
 		}
 		return s;
 	}
+
+	static float RandRangeFromZero(float fRange)
+	{
+		return ((rand() % 101) / 100.f) * fRange - (fRange * 0.5f);
+	}
 };
 
 END

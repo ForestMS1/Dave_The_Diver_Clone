@@ -251,7 +251,16 @@ void		CHoldFishUIItemArea::Render_GameObject()
         _vec2 vPos = { vScreenPos.x , vScreenPos.y };
         if (CAssetDefaultFont* pDefFont = CAssetMgr::GetInstance()->Get_AssetFirst<CAssetDefaultFont>(L"Font_210YouthL_Size15"))
         {
-            pDefFont->Render_Font(L"Rank "+::to_wstring(m_iRank), &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
+            wstring s;
+            if (m_iRank == 0)
+            {
+                s = L"Rank _" ;
+            }
+            else
+            {
+                s = L"Rank " + ::to_wstring(m_iRank);
+            }
+            pDefFont->Render_Font(s, &vPos, D3DXCOLOR(0.764f, 0.937f, 1.0f, 1.0f));
         }
     }
 

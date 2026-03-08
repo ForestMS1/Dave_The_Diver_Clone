@@ -27,7 +27,7 @@ HRESULT		CGetItemUI::Ready_GameObject()
     m_sTitle = L"Title";
     m_sRank = L"Rank 1";
     m_sWeight = L"0.5kg";
-    m_iStartCnt = 1;
+    m_iStartCnt = 0;
     m_sImgAssetName = L"Tex_PhoneBG";
 
 

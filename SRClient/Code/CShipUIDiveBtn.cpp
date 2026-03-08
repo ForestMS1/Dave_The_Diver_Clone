@@ -71,7 +71,7 @@ _int		CShipUIDiveBtn::Update_GameObject(const _float& fTimeDelta)
             m_bSpacePressed = true;
             if (m_iFrame < 37)
             {
-                if (m_fAccFrameDelta > 0.055f)
+                if (m_fAccFrameDelta > 0.05f)
                 {
                     ++m_iFrame;
                     m_fAccFrameDelta = 0;
