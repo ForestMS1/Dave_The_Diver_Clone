@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CSmallspottedDart.h"
+#include "CCuttleFish.h"
 #include "CDInputMgr.h"
 #include "CRenderer.h"
 #include "CGraphicDev.h"
@@ -8,35 +8,40 @@
 #include "CAssetMgr.h"
 #include "CAssetTexture.h"
 #include "CAssetSpine.h"
+#include "CFishAABBCollider.h"
+#include "CManagement.h"
+
 
 using namespace Fish;
 
-CSmallspottedDart::CSmallspottedDart(float fPosX, float fPosY, float fScale)
+CCuttleFish::CCuttleFish(float fPosX, float fPosY, float fScale)
     : CFishGameObject(fPosX, fPosY, fScale)
 {
 }
 
-CSmallspottedDart::~CSmallspottedDart()
+CCuttleFish::~CCuttleFish()
 {
 }
 
-HRESULT CSmallspottedDart::Ready_GameObject()
+HRESULT CCuttleFish::Ready_GameObject()
 {
-    m_sFishName = L"타원전갱이";
-    m_sThumbNailAssetName = L"Tex_FishThumb_Smallspotted_dart";
+
+    m_sFishName = L"갑오징어";
+    m_sThumbNailAssetName = L"Tex_FishThumb_CuttleFish";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
-    m_fWeight = 0.6f;  // 0.6kg
-    m_iPrice = 12;  // 가격 12
-    m_fLength = 15.f;  // 길이 15cm
+    m_fWeight = 1.0f;  // 1.0kg
+    m_iPrice = 13;  // 가격 13
+    m_fLength = 25.f;  // 길이 25cm
     m_iMeatCnt = 2;  // 고기 2개
-    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_SmallspottedDart";
-    m_iSushiMoney = 18;  // 스시 가격 18
+    m_sSushiThumbNailAssetName = L"Tex_SushiThumb_CuttleFish";
+    m_iSushiMoney = 20;  // 스시 가격 20
     m_iSushiLv = 2;  // 스시 레벨 2
 
     m_iHP = 2;
 
     m_sRunFromSpineAniName = L"sprint";
+
     if (FAILED(Ready_Component()))
         return E_FAIL;
 
@@ -53,33 +58,33 @@ HRESULT CSmallspottedDart::Ready_GameObject()
     return S_OK;
 }
 
-_int CSmallspottedDart::Update_GameObject(const _float& fTimeDelta)
+_int CCuttleFish::Update_GameObject(const _float& fTimeDelta)
 {
     _int iExit = CFishGameObject::Update_GameObject(fTimeDelta);
 
     return iExit;
 }
 
-void CSmallspottedDart::LateUpdate_GameObject(const _float& fTimeDelta)
+void CCuttleFish::LateUpdate_GameObject(const _float& fTimeDelta)
 {
     CFishGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void CSmallspottedDart::Render_GameObject()
+void CCuttleFish::Render_GameObject()
 {
     CFishGameObject::Render();
 }
 
-HRESULT CSmallspottedDart::Ready_Component()
+HRESULT CCuttleFish::Ready_Component()
 {
-    CFishGameObject::Ready(L"Spine_SmallspottedDart");
+    CFishGameObject::Ready(L"Spine_CuttleFish");
     return S_OK;
 }
 
 
-CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY, float fScale)
+CCuttleFish* CCuttleFish::Create(float fPosX, float fPosY, float fScale)
 {
-    CSmallspottedDart* pFish = new CSmallspottedDart{ fPosX, fPosY, fScale };
+    CCuttleFish* pFish = new CCuttleFish{ fPosX, fPosY, fScale };
 
     if (FAILED(pFish->Ready_GameObject()))
     {
@@ -91,7 +96,7 @@ CSmallspottedDart* CSmallspottedDart::Create(float fPosX, float fPosY, float fSc
     return pFish;
 }
 
-void CSmallspottedDart::Free()
+void CCuttleFish::Free()
 {
     CFishGameObject::Free();
 }

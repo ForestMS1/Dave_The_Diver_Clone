@@ -37,7 +37,13 @@ HRESULT CAsianSheepshead::Ready_GameObject()
     m_iSushiMoney = 12;
     m_iSushiLv = 1;
 
-    
+    m_iHP = 4;
+
+    //m_sRunFromSpineAniName = L"sprint";
+
+    m_iAttackPower = 7;
+    m_eFishType = Fish::FT_AGRESSIVE;
+    m_sAttackSpineAniName = L"sprint";
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

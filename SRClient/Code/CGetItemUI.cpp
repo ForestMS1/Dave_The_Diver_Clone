@@ -9,7 +9,7 @@
 #include "CManagement.h"
 #include "CGetItemUIStar.h"
 #include "CGetItemUIImg.h"
-
+#include "CGameMemMgr.h"
 CGetItemUI::CGetItemUI(float fPosX, float fPosY)
     : CGameObject()
     , m_fPosX(fPosX)
@@ -67,15 +67,24 @@ HRESULT CGetItemUI::Ready_AfterCreate()
     if (auto pLayer = CManagement::GetInstance()->Get_Scene()->Get_Layer(L"2_Fish_Layer"))
     {
         //Stars
-        //float fStarRefX = 0.5;
-        //for (int i = 0; i < m_iStartCnt; ++i)
-        //{
-        //    auto pGetItemUIStart = CGetItemUIStar::Create(fStarRefX, -0.2f);
-        //    pGetItemUIStart->Set_Parent(this);
-        //    pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+        float fStarRefX = 42.f;
+        for (int i = 0; i < m_iStartCnt; ++i)
+        {
+            
+        }
 
-        //    fStarRefX += 0.5f;
-        //}
+        for (int i = 1; i <= 3; ++i)
+        {
+            auto pGetItemUIStart = CGetItemUIStar::Create(fStarRefX, -10.f);
+            pGetItemUIStart->Set_Parent(this);
+            pLayer->Add_GameObject(L"GetItemUIStar", pGetItemUIStart);
+            if (i > m_iStartCnt)
+            {
+                pGetItemUIStart->Set_Empty();
+            }
+            
+            fStarRefX += 18.f;
+        }
 
         {
             auto pGetItemImg = CGetItemUIImg::Create(-83.2f, -23.f);
@@ -84,6 +93,37 @@ HRESULT CGetItemUI::Ready_AfterCreate()
             pGetItemImg->Set_Parent(this);
             pLayer->Add_GameObject(L"GetItemUIImg", pGetItemImg);
         }
+
+        if (!CGameMemMgr::GetInstance()->Get_DiveInfos().empty())
+        {
+            for (auto& diveInfo : CGameMemMgr::GetInstance()->Get_DiveInfos())
+            {
+                for (auto& fish : diveInfo.Get_Fishes())
+                {
+                    //fish.sThumbNailAssetName
+                    if (m_sImgAssetName == fish.sThumbNailAssetName)
+                    {
+                        m_bNew = false;
+                        break;
+                    }
+                }
+                if (!m_bNew)
+                {
+                    break;
+                }
+            }
+
+            // new
+            if (m_bNew)
+            {
+                auto pGetItemImg = CGetItemUIImg::Create(105.f, 45.f);
+                pGetItemImg->Set_AssetName(L"Tex_GetItemUINew");
+                pGetItemImg->Ready_After_Create();
+                pGetItemImg->Set_Parent(this);
+                pLayer->Add_GameObject(L"GetItemUIImgNew", pGetItemImg);
+            }
+        }
+        
     }
     return S_OK;
 }

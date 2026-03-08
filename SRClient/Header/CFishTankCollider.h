@@ -10,6 +10,8 @@ private:
 
 public:
 	Engine::CTransform* Get_Transform() const { return m_pTransformCom; }
+	CAABB* Get_AABB() const { return m_pAABB; }
+
 
 public:
 	virtual			HRESULT		Ready_GameObject();

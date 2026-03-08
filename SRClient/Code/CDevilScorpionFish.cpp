@@ -29,7 +29,7 @@ HRESULT CDevilScorpionFish::Ready_GameObject()
     m_sFishName = L"악마전갈고기";
     m_sThumbNailAssetName = L"Tex_FishThumb_Devil_ScorpionFish";
     m_iRank = 4;  // 랭크 4 (최상위)
-    m_iStar = 4;  // 별 4개
+    m_iStar = 3;  // 별 4개
     m_fWeight = 1.5f;  // 1.5kg
     m_iPrice = 20;  // 가격 20
     m_fLength = 25.f;  // 길이 25cm
@@ -38,6 +38,9 @@ HRESULT CDevilScorpionFish::Ready_GameObject()
     m_iSushiMoney = 30;  // 스시 가격 30
     m_iSushiLv = 3;  // 스시 레벨 3
 
+    m_iHP = 2;
+
+    m_sRunFromSpineAniName = L"sprint";
 
     if (FAILED(Ready_Component()))
         return E_FAIL;

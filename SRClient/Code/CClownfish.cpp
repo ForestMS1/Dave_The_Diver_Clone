@@ -34,6 +34,9 @@ HRESULT CClownfish::Ready_GameObject()
     m_iSushiMoney = 6;  // 스시 가격 6
     m_iSushiLv = 1;  // 스시 레벨 1
 
+    m_iHP = 1;
+
+    m_sRunFromSpineAniName = L"sprint";
 
     if (FAILED(Ready_Component()))
         return E_FAIL;
