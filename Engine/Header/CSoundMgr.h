@@ -26,6 +26,7 @@ public:
 		SFX,
 		SFX1,
 		SFX2,
+		SFX_DIVE_UI,
 		BOSS_BGM,
 		BOSS_SFX,
 		BOSS_SFX1,
