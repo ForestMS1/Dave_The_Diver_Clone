@@ -29,9 +29,9 @@ HRESULT CGreatBarracuda::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Great_Barracuda";
     m_iRank = 4;  // 랭크 4 (최상위)
     m_iStar = 3;  // 별 4개
-    m_fWeight = 2.5f;  // 2.5kg
+    m_fWeight = 2.5f + CHelper::RandRangeFromZero(5.f);  // 2.5kg
     m_iPrice = 28;  // 가격 28
-    m_fLength = 40.f;  // 길이 40cm
+    m_fLength = 40.f + CHelper::RandRangeFromZero(5.f);  // 길이 40cm
     m_iMeatCnt = 4;  // 고기 4개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreatBarracuda";
     m_iSushiMoney = 45;  // 스시 가격 45

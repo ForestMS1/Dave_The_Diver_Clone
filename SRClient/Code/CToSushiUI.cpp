@@ -115,6 +115,7 @@ HRESULT		CToSushiUI::Ready_GameObject()
                     pToSushiItem->Set_Lv(L"Lv " + ::to_wstring(pCaughtFishes.second.iSushiLv));
                     pToSushiItem->Set_FishImgAssetName(pCaughtFishes.second.sThumbNailAssetName);
                     pToSushiItem->Set_SushiImgAssetName(pCaughtFishes.second.sSushiThumbNailAssetName);
+                    pToSushiItem->Set_Rank(L"Rank" + to_wstring(pCaughtFishes.second.iRank));
                     pToSushiItem->Ready_AfterCreate();
                     pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
 
@@ -146,6 +147,7 @@ HRESULT		CToSushiUI::Ready_GameObject()
                 pToSushiItem->Set_Lv(L"Lv " + ::to_wstring(pCaughtFishes.second.iSushiLv));
                 pToSushiItem->Set_FishImgAssetName(pCaughtFishes.second.sThumbNailAssetName);
                 pToSushiItem->Set_SushiImgAssetName(pCaughtFishes.second.sSushiThumbNailAssetName);
+                pToSushiItem->Set_Rank(L"Rank" + to_wstring(pCaughtFishes.second.iRank));
                 pToSushiItem->Ready_AfterCreate();
                 pLayer->Add_GameObject(L"pToSushiItem", pToSushiItem);
 

@@ -26,12 +26,12 @@ HRESULT CYellowbackFusilier::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Yellowback_Fusilier";
     m_iRank = 2;  // 랭크 2 (중간)
     m_iStar = 2;  // 별 2개
-    m_fWeight = 0.7f;  // 0.7kg
+    m_fWeight = 0.7f + CHelper::RandRangeFromZero(5.f);  // 0.7kg
     m_iPrice = 14;  // 가격 14
-    m_fLength = 22.f;  // 길이 22cm
+    m_fLength = 22.f + CHelper::RandRangeFromZero(5.f);  // 길이 22cm
     m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_YellowbackFusilier";
-    m_iSushiMoney = 20;  // 스시 가격 20
+    m_iSushiMoney = 12;  // 스시 가격 20
     m_iSushiLv = 2;  // 스시 레벨 2
 
     m_iHP = 2;

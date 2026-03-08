@@ -29,9 +29,9 @@ HRESULT CGreenHumpheadParrotfish::Ready_GameObject()
     m_sThumbNailAssetName = L"Tex_FishThumb_Green_Humphead_Parrotfish";
     m_iRank = 3;  // 랭크 3 (상위)
     m_iStar = 3;  // 별 3개
-    m_fWeight = 1.5f;  // 1.5kg
+    m_fWeight = 1.5f + CHelper::RandRangeFromZero(5.f);  // 1.5kg
     m_iPrice = 18;  // 가격 18
-    m_fLength = 28.f;  // 길이 28cm
+    m_fLength = 28.f + CHelper::RandRangeFromZero(5.f);  // 길이 28cm
     m_iMeatCnt = 2;  // 고기 2개
     m_sSushiThumbNailAssetName = L"Tex_SushiThumb_GreenHumpheadParrotfish";
     m_iSushiMoney = 25;  // 스시 가격 25

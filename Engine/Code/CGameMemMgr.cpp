@@ -263,14 +263,14 @@ void CGameMemMgr::CDaveInfo::InventoryInitialize()
 
 	{
 		m_mapInventory[32].sItemName = L"작살";
-		m_mapInventory[32].sItemDesc = L"작살난다.";
+		m_mapInventory[32].sItemDesc = L"물고기를 잡기 위해 작대기\n끝에 뾰족한 쇠를 박아 만드는 도구";
 		m_mapInventory[32].sAssetName = L"Tex_Ship_InventoryUpperItem_Jaksal";
 		m_mapInventory[32].iCnt = 0;
 	}
 
 	{
 		m_mapInventory[33].sItemName = L"총";
-		m_mapInventory[33].sItemDesc = L"살살 맞으면 살지도?";
+		m_mapInventory[33].sItemDesc = L"인류를 먹이사슬의 \n최정점에 자리하게 해준 도구이자 \n인류 과학기술 진보의 역사 \n그 자체인 도구이다";
 		m_mapInventory[33].sAssetName = L"Tex_Ship_InventoryUpperItem_Gun";
 		//m_mapInventory[33].sAssetName = L"Tex_UI_Gun_Triple_Accel";
 		m_mapInventory[33].iCnt = 0;
@@ -278,21 +278,21 @@ void CGameMemMgr::CDaveInfo::InventoryInitialize()
 
 	{
 		m_mapInventory[34].sItemName = L"칼";
-		m_mapInventory[34].sItemDesc = L"목이 칼칼하군.";
+		m_mapInventory[34].sItemDesc = L"물건을 베거나 썰거나 깎는 데 쓰는 도구.";
 		m_mapInventory[34].sAssetName = L"Tex_Ship_InventoryUpperItem_Knief";
 		m_mapInventory[34].iCnt = 0;
 	}
 
 	{
 		m_mapInventory[35].sItemName = L"쥬신";
-		m_mapInventory[35].sItemDesc = L"저 취업 할수 있는거 맞죠?";
+		m_mapInventory[35].sItemDesc = L"지니고 있으면\n취업 확률을 높여준다.";
 		m_mapInventory[35].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
 		m_mapInventory[35].iCnt = 0;
 	}
 
 	{
 		m_mapInventory[36].sItemName = L"쥬신";
-		m_mapInventory[36].sItemDesc = L"저 취업 할수 있는거 맞죠?";
+		m_mapInventory[36].sItemDesc = L"지니고 있으면\n취업 확률을 높여준다.";
 		m_mapInventory[36].sAssetName = L"Tex_Ship_InventoryUpperItem_Jusin";
 		m_mapInventory[36].iCnt = 0;
 	}

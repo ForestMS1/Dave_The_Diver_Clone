@@ -3,6 +3,7 @@
 #include "CFishState.h"
 #include "CFishStateMachine.h"
 #include "CAABB.h"
+#include "CHelper.h"
 //namespace Fish
 //{
 //	class CFishStateMachine;
