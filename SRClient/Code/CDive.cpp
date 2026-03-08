@@ -902,14 +902,14 @@ HRESULT CDive::Ready_UI_Layer(std::wstring_view svLayerTag)
 		return E_FAIL;
 
 	// WPBox
-	pGameObject = CWPBoxUI::Create(true);
+	pGameObject = CWPBoxUI::Create(false);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI1", pGameObject)))
 		return E_FAIL;
 	static_cast<CDiveDave*>(m_pDive)->Add_Observer(static_cast<IObserver*>(pGameObject)); // 플레이어 관찰
 
-	pGameObject = CWPBoxUI::Create(false);
+	pGameObject = CWPBoxUI::Create(true);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pLayer->Add_GameObject(L"WPBoxUI2", pGameObject)))

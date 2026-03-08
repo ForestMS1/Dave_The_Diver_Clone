@@ -109,6 +109,8 @@ public:
 
 		if (m_fIvncTime > 0.f)
 			return;
+		if (m_bSubMarine)
+			return;
 
 		_vec3 Pos{};
 		m_pTransformCom->Get_Info(INFO_POS, &Pos);

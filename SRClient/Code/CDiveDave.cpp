@@ -450,6 +450,9 @@ void CDiveDave::Mouse_Input()
 
 void CDiveDave::DoT(const _float fTimeDelta)
 {
+	if (m_bSubMarine)
+		return;
+
 	m_fDoTTime += fTimeDelta;
 
 	if (m_bOverloaded && m_fDoTTime > 1.5f)

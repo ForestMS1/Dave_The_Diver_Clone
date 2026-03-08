@@ -1206,6 +1206,7 @@ HRESULT CTransition::Transition_SHIP_TO_DIVE()
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_Cutting", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Vib/Vib_sound_cuting.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_John_Shoot", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/Boss_JohnWatson3_Attack_01.wav"));
 		CAssetMgr::GetInstance()->AddAsset(L"Sound_John1To2", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/VO_JohnWatson/VO_JohnWatson_Angry_02.wav"));
+		CAssetMgr::GetInstance()->AddAsset(L"Sound_SubMarine_Coll", CAssetFmodSound::Create(L"../Bin/Resource/Sound/DiveDave/SFX_Explosion_[cut_1sec].wav"));
 	}
 
 	//테스트용

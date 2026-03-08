@@ -16,6 +16,9 @@ public:
     void Exit() override;
     void Clear() override;
 
+private:
+    _float m_fReboundTime = 0.f;
+
 public:
     static CAttackSubFire* Create(CDiveDaveAttack* pParentState);
 

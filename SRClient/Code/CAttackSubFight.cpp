@@ -133,6 +133,7 @@ void CAttackSubFight::Clear()
 
 
     CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX);
+    CSoundMgr::GetInstance()->StopSound(CSoundMgr::SFX2);
     // 카메라 쉐이킹 강종
     static_cast<CDiveDaveCam*>(CCameraMgr::GetInstance()->Get_Camera(L"ChaseToPlayerCam"))->FightShakingEnd();
 }

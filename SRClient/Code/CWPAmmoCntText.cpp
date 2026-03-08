@@ -42,7 +42,7 @@ _int      CWPAmmoCntText::Update_GameObject(const _float& fTimeDelta)
 
     if (m_bEndFrame)
     {
-        auto a = dynamic_cast<CWPBoxUI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"WPBoxUI1"));
+        auto a = dynamic_cast<CWPBoxUI*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_UI_Layer")->Get_GameObjectFirst(L"WPBoxUI2"));
         a->GetComponent<CTransform, ID_DYNAMIC>(L"Com_Transform")->Get_Info(INFO_POS, &m_vPos);
 
         auto gun = static_cast<CDiveDaveGun*>(CManagement::GetInstance()->Get_Scene()->Get_Layer(L"0_GameLogic_Layer")->Get_GameObjectFirst(L"DiveDaveGun"));
