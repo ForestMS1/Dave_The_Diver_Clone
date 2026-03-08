@@ -63,6 +63,7 @@ private:
 	float			m_fFireworkSoundTimer = 0.f;
 	bool			tiredSoundPlayed = false;
 	bool			m_bFireworkSound = false;
+	bool			m_bBeforeSound = false;
 
 public:
 	bool			makingWasabi = false;

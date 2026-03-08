@@ -30,5 +30,9 @@ private:
 	float m_fFireworkTimer;
 	float m_fFireworkSoundTimer;
 
+
+
+	bool			m_bBeforeSound = false;
+
 };
 

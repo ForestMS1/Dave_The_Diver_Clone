@@ -422,12 +422,13 @@ void CSushiDave::Render_GameObject()
     m_fFireworkSoundTimer += CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
     if (!m_bFireworkSound) {
         if (m_fFireworkSoundTimer > 3.f) {
-            CSoundMgr::GetInstance()->PlaySoundLoop(L"firework3", CSoundMgr::SFX, 0.1f);
+            CSoundMgr::GetInstance()->PlaySoundLoop(L"firework3", CSoundMgr::SFX_FIREWORK2, 1.0f);
             m_bFireworkSound = true;
         }
         else {
-            if (fireworkTime < 0.02f) {
-                CSoundMgr::GetInstance()->PlaySoundLoop(L"beforeExplode", CSoundMgr::SFX, 0.05f);
+            if (!m_bBeforeSound) {
+                CSoundMgr::GetInstance()->PlaySoundLoop(L"beforeExplode", CSoundMgr::SFX_FIREWORK1, 1.f);
+                m_bBeforeSound = true;
             }
         }
     }
@@ -618,7 +619,7 @@ CSushiDave* CSushiDave::Create()
 void CSushiDave::Free()
 {
     Safe_Release(m_pAABB);
-    CSoundMgr::GetInstance()->StopAll();
+    //CSoundMgr::GetInstance()->StopAll();
     CGameObject::Free();
 
 }

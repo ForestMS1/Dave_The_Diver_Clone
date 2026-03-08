@@ -159,10 +159,10 @@ _int		CShipPhone::Update_GameObject(const _float& fTimeDelta)
 
     if (m_bFocus)
     {
-        if (ImGui::Button("UnFocus"))
-        {
-            UnFocus_App();
-        }
+        //if (ImGui::Button("UnFocus"))
+        //{
+        //    UnFocus_App();
+        //}
 
         if (!m_bOnFocus)
         {
